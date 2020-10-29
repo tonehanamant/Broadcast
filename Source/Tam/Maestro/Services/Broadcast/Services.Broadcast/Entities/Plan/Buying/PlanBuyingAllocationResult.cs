@@ -14,6 +14,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
 
         public string BuyingVersion { get; set; }
 
-        public List<PlanBuyingAllocatedSpot> Spots { get; set; } = new List<PlanBuyingAllocatedSpot>();
+        public List<PlanBuyingAllocatedSpot> AllocatedSpots { get; set; } = new List<PlanBuyingAllocatedSpot>();
+
+        public List<PlanBuyingAllocatedSpot> UnallocatedSpots { get; set; } = new List<PlanBuyingAllocatedSpot>();
     }
 }

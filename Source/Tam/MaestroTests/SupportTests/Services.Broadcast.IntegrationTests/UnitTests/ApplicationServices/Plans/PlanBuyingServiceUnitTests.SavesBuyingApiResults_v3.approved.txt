@@ -1,16 +1,25 @@
 [
   {
-    "BuyingCpm": 0.1803301428769593563601054000,
-    "BuyingVersion": "3",
-    "JobId": 1,
-    "PlanVersionId": 0,
-    "RequestId": "djj4j4399fmmf1m212",
-    "Spots": [
+    "AllocatedSpots": [
       {
-        "ContractMediaWeek": null,
+        "ContractMediaWeek": {
+          "_EndDate": "2019-09-22T00:00:00",
+          "_Id": 821,
+          "_MediaMonthId": 456,
+          "_StartDate": "2019-09-16T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": false
+        },
         "Id": 1,
         "Impressions30sec": 1000.0,
-        "InventoryMediaWeek": null,
+        "InventoryMediaWeek": {
+          "_EndDate": "2017-10-22T00:00:00",
+          "_Id": 721,
+          "_MediaMonthId": 433,
+          "_StartDate": "2017-10-16T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": false
+        },
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
@@ -43,22 +52,36 @@
         "TotalSpots": 2
       },
       {
-        "ContractMediaWeek": null,
-        "Id": 1,
+        "ContractMediaWeek": {
+          "_EndDate": "2019-09-29T00:00:00",
+          "_Id": 822,
+          "_MediaMonthId": 456,
+          "_StartDate": "2019-09-23T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": false
+        },
+        "Id": 4,
         "Impressions30sec": 1000.0,
-        "InventoryMediaWeek": null,
+        "InventoryMediaWeek": {
+          "_EndDate": "2017-10-29T00:00:00",
+          "_Id": 722,
+          "_MediaMonthId": 433,
+          "_StartDate": "2017-10-23T00:00:00",
+          "_WeekNumber": 5,
+          "IsDirty": false
+        },
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
+            "SpotCost": 10.0,
+            "SpotCostWithMargin": 12.5,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
             "Impressions": 500.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
+            "SpotCost": 20.0,
+            "SpotCostWithMargin": 25.0,
             "SpotLengthId": 2,
             "Spots": 1
           }
@@ -73,160 +96,30 @@
           "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
-        "TotalCost": 100.0,
-        "TotalCostWithMargin": 125.0,
+        "TotalCost": 30.0,
+        "TotalCostWithMargin": 37.5,
         "TotalImpressions": 1500.0,
         "TotalSpots": 2
       },
       {
-        "ContractMediaWeek": null,
-        "Id": 1,
-        "Impressions30sec": 1000.0,
-        "InventoryMediaWeek": null,
-        "SpotFrequencies": [
-          {
-            "Impressions": 1000.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 500.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 2,
-            "Spots": 1
-          }
-        ],
-        "StandardDaypart": {
-          "Code": "AMN",
-          "DaypartType": 1,
-          "DefaultEndTimeSeconds": 46799,
-          "DefaultStartTimeSeconds": 14400,
-          "FullName": "AM News",
-          "Id": 15,
-          "VpvhCalculationSourceType": 1
+        "ContractMediaWeek": {
+          "_EndDate": "2019-09-22T00:00:00",
+          "_Id": 821,
+          "_MediaMonthId": 456,
+          "_StartDate": "2019-09-16T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": false
         },
-        "StationInventoryManifestId": 0,
-        "TotalCost": 100.0,
-        "TotalCostWithMargin": 125.0,
-        "TotalImpressions": 1500.0,
-        "TotalSpots": 2
-      },
-      {
-        "ContractMediaWeek": null,
-        "Id": 1,
-        "Impressions30sec": 1000.0,
-        "InventoryMediaWeek": null,
-        "SpotFrequencies": [
-          {
-            "Impressions": 1000.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 500.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 2,
-            "Spots": 1
-          }
-        ],
-        "StandardDaypart": {
-          "Code": "AMN",
-          "DaypartType": 1,
-          "DefaultEndTimeSeconds": 46799,
-          "DefaultStartTimeSeconds": 14400,
-          "FullName": "AM News",
-          "Id": 15,
-          "VpvhCalculationSourceType": 1
-        },
-        "StationInventoryManifestId": 0,
-        "TotalCost": 100.0,
-        "TotalCostWithMargin": 125.0,
-        "TotalImpressions": 1500.0,
-        "TotalSpots": 2
-      },
-      {
-        "ContractMediaWeek": null,
-        "Id": 1,
-        "Impressions30sec": 1000.0,
-        "InventoryMediaWeek": null,
-        "SpotFrequencies": [
-          {
-            "Impressions": 1000.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 500.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 2,
-            "Spots": 1
-          }
-        ],
-        "StandardDaypart": {
-          "Code": "AMN",
-          "DaypartType": 1,
-          "DefaultEndTimeSeconds": 46799,
-          "DefaultStartTimeSeconds": 14400,
-          "FullName": "AM News",
-          "Id": 15,
-          "VpvhCalculationSourceType": 1
-        },
-        "StationInventoryManifestId": 0,
-        "TotalCost": 100.0,
-        "TotalCostWithMargin": 125.0,
-        "TotalImpressions": 1500.0,
-        "TotalSpots": 2
-      },
-      {
-        "ContractMediaWeek": null,
-        "Id": 1,
-        "Impressions30sec": 1000.0,
-        "InventoryMediaWeek": null,
-        "SpotFrequencies": [
-          {
-            "Impressions": 1000.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 500.0,
-            "SpotCost": 50.0,
-            "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 2,
-            "Spots": 1
-          }
-        ],
-        "StandardDaypart": {
-          "Code": "AMN",
-          "DaypartType": 1,
-          "DefaultEndTimeSeconds": 46799,
-          "DefaultStartTimeSeconds": 14400,
-          "FullName": "AM News",
-          "Id": 15,
-          "VpvhCalculationSourceType": 1
-        },
-        "StationInventoryManifestId": 0,
-        "TotalCost": 100.0,
-        "TotalCostWithMargin": 125.0,
-        "TotalImpressions": 1500.0,
-        "TotalSpots": 2
-      },
-      {
-        "ContractMediaWeek": null,
         "Id": 2,
         "Impressions30sec": 1500.0,
-        "InventoryMediaWeek": null,
+        "InventoryMediaWeek": {
+          "_EndDate": "2017-10-22T00:00:00",
+          "_Id": 721,
+          "_MediaMonthId": 433,
+          "_StartDate": "2017-10-16T00:00:00",
+          "_WeekNumber": 4,
+          "IsDirty": false
+        },
         "SpotFrequencies": [
           {
             "Impressions": 1500.0,
@@ -258,6 +151,12 @@
         "TotalImpressions": 2250.0,
         "TotalSpots": 2
       }
-    ]
+    ],
+    "BuyingCpm": 0.115210571611004691707615000,
+    "BuyingVersion": "3",
+    "JobId": 1,
+    "PlanVersionId": 0,
+    "RequestId": "djj4j4399fmmf1m212",
+    "UnallocatedSpots": []
   }
 ]

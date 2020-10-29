@@ -28,6 +28,12 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return result;
         }
 
+        public static MediaWeek GetMediaWeek(int mediaWeekId)
+        {
+            var result = _MediaWeeks.FirstOrDefault(w => w.Id == mediaWeekId);
+            return result;
+        }
+
         #region Big Lists
 
         private static List<MediaWeek> _MediaWeeks = new List<MediaWeek>

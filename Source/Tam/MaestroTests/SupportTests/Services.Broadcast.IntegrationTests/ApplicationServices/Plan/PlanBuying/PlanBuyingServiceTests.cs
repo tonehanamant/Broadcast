@@ -25,7 +25,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 {
     [TestFixture]
     [UseReporter(typeof(DiffReporter))]
-
     public class PlanBuyingServiceTests
     {
         private readonly IPlanBuyingService _PlanBuyingService;
@@ -388,48 +387,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void SaveBuyingResultsTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var planBuyingRequestDto = new PlanBuyingParametersDto
-                {
-                    PlanId = 1197,
-                    PlanVersionId = 47,
-                    MaxCpm = 100m,
-                    MinCpm = 1m,
-                    Budget = 1000,
-                    CompetitionFactor = 0.1,
-                    CPM = 5m,
-                    DeliveryImpressions = 50000,
-                    InflationFactor = 0.5,
-                    ProprietaryBlend = 0.2,
-                    UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None
-                };
-
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
-
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
-
-                var result = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingAllocatedSpot), "Id");
-                jsonResolver.Ignore(typeof(PlanBuyingAllocationResult), "JobId");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-            }
-        }
-
-        [Test]
-        [Category("long_running")]
         public void GetBuyingBandsTest()
         {
             using (new TransactionScopeWrapper())
@@ -561,48 +518,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 ContractResolver = jsonResolver
             };
             return jsonSettings;
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void SaveBuyingRequestTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var planBuyingRequestDto = new PlanBuyingParametersDto
-                {
-                    PlanId = 1197,
-                    PlanVersionId = 47,
-                    MaxCpm = 100m,
-                    MinCpm = 1m,
-                    Budget = 1000,
-                    CompetitionFactor = 0.1,
-                    CPM = 5m,
-                    DeliveryImpressions = 50000,
-                    InflationFactor = 0.5,
-                    ProprietaryBlend = 0.2,
-                    UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None
-                };
-
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
-
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
-
-                var result = _PlanBuyingRepository.GetPlanBuyingRuns(planBuyingRequestDto.PlanId.Value);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingApiRequestParametersDto), "JobId");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-            }
         }
 
         [Test]

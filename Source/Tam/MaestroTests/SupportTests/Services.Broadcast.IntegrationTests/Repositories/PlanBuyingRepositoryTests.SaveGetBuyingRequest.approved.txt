@@ -1,29 +1,25 @@
 [
   {
-    "BudgetGoal": 1000.0000,
+    "BudgetGoal": 1200.0000,
     "CompetitionFactor": 0.1,
     "CoverageGoalPercent": 80.5,
-    "CpmGoal": 5.0000,
+    "CpmGoal": 8.0000,
     "ImpressionsGoal": 50000.0,
     "InflationFactor": 0.5,
-    "Margin": null,
+    "Margin": 20.0,
     "Markets": [
       {
         "MarketId": 100,
-        "MarketName": null,
-        "MarketSegment": 0,
         "MarketShareOfVoice": 22.2
       },
       {
         "MarketId": 101,
-        "MarketName": null,
-        "MarketSegment": 0,
         "MarketShareOfVoice": 34.5
       }
     ],
     "MaxCpm": 100.0000,
     "MinCpm": 1.0000,
-    "PlanId": 1197,
+    "PlanId": 7454,
     "ProprietaryBlend": 0.2,
     "UnitCaps": 10,
     "UnitCapsType": 3

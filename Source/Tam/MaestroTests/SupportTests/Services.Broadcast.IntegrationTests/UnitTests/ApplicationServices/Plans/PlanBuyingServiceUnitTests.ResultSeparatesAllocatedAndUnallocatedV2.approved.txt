@@ -1,0 +1,264 @@
+{
+  "Allocated": [
+    {
+      "ContractMediaWeek": {
+        "_EndDate": "2019-09-15T00:00:00",
+        "_Id": 820,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-09T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": false
+      },
+      "Id": 1,
+      "Impressions30sec": 1000.0,
+      "InventoryMediaWeek": {
+        "_EndDate": "2017-10-15T00:00:00",
+        "_Id": 720,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-09T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": false
+      },
+      "SpotFrequencies": [
+        {
+          "Impressions": 1000.0,
+          "SpotCost": 50.0,
+          "SpotCostWithMargin": 62.5,
+          "SpotLengthId": 1,
+          "Spots": 5
+        }
+      ],
+      "StandardDaypart": {
+        "Code": "DAY",
+        "DaypartType": 2,
+        "DefaultEndTimeSeconds": 57599,
+        "DefaultStartTimeSeconds": 32400,
+        "FullName": "Daytime",
+        "Id": 12,
+        "VpvhCalculationSourceType": 3
+      },
+      "StationInventoryManifestId": 0,
+      "TotalCost": 250.0,
+      "TotalCostWithMargin": 312.5,
+      "TotalImpressions": 5000.0,
+      "TotalSpots": 5
+    },
+    {
+      "ContractMediaWeek": {
+        "_EndDate": "2019-09-29T00:00:00",
+        "_Id": 822,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-23T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": false
+      },
+      "Id": 1,
+      "Impressions30sec": 1000.0,
+      "InventoryMediaWeek": {
+        "_EndDate": "2017-10-29T00:00:00",
+        "_Id": 722,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-23T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": false
+      },
+      "SpotFrequencies": [
+        {
+          "Impressions": 1000.0,
+          "SpotCost": 50.0,
+          "SpotCostWithMargin": 62.5,
+          "SpotLengthId": 1,
+          "Spots": 2
+        }
+      ],
+      "StandardDaypart": {
+        "Code": "DAY",
+        "DaypartType": 2,
+        "DefaultEndTimeSeconds": 57599,
+        "DefaultStartTimeSeconds": 32400,
+        "FullName": "Daytime",
+        "Id": 12,
+        "VpvhCalculationSourceType": 3
+      },
+      "StationInventoryManifestId": 0,
+      "TotalCost": 100.0,
+      "TotalCostWithMargin": 125.0,
+      "TotalImpressions": 2000.0,
+      "TotalSpots": 2
+    },
+    {
+      "ContractMediaWeek": {
+        "_EndDate": "2019-09-15T00:00:00",
+        "_Id": 820,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-09T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": false
+      },
+      "Id": 3,
+      "Impressions30sec": 1000.0,
+      "InventoryMediaWeek": {
+        "_EndDate": "2017-10-15T00:00:00",
+        "_Id": 720,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-09T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": false
+      },
+      "SpotFrequencies": [
+        {
+          "Impressions": 1000.0,
+          "SpotCost": 50.0,
+          "SpotCostWithMargin": 62.5,
+          "SpotLengthId": 1,
+          "Spots": 3
+        }
+      ],
+      "StandardDaypart": {
+        "Code": "DAY",
+        "DaypartType": 2,
+        "DefaultEndTimeSeconds": 57599,
+        "DefaultStartTimeSeconds": 32400,
+        "FullName": "Daytime",
+        "Id": 12,
+        "VpvhCalculationSourceType": 3
+      },
+      "StationInventoryManifestId": 0,
+      "TotalCost": 150.0,
+      "TotalCostWithMargin": 187.5,
+      "TotalImpressions": 3000.0,
+      "TotalSpots": 3
+    }
+  ],
+  "Unallocated": [
+    {
+      "ContractMediaWeek": {
+        "_EndDate": "2019-09-22T00:00:00",
+        "_Id": 821,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-16T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": false
+      },
+      "Id": 1,
+      "Impressions30sec": 1000.0,
+      "InventoryMediaWeek": {
+        "_EndDate": "2017-10-22T00:00:00",
+        "_Id": 721,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-16T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": false
+      },
+      "SpotFrequencies": [
+        {
+          "Impressions": 1000.0,
+          "SpotCost": 50.0,
+          "SpotCostWithMargin": 62.5,
+          "SpotLengthId": 1,
+          "Spots": 0
+        }
+      ],
+      "StandardDaypart": {
+        "Code": "DAY",
+        "DaypartType": 2,
+        "DefaultEndTimeSeconds": 57599,
+        "DefaultStartTimeSeconds": 32400,
+        "FullName": "Daytime",
+        "Id": 12,
+        "VpvhCalculationSourceType": 3
+      },
+      "StationInventoryManifestId": 0,
+      "TotalCost": 0.0,
+      "TotalCostWithMargin": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
+    },
+    {
+      "ContractMediaWeek": {
+        "_EndDate": "2019-09-22T00:00:00",
+        "_Id": 821,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-16T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": false
+      },
+      "Id": 3,
+      "Impressions30sec": 1000.0,
+      "InventoryMediaWeek": {
+        "_EndDate": "2017-10-22T00:00:00",
+        "_Id": 721,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-16T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": false
+      },
+      "SpotFrequencies": [
+        {
+          "Impressions": 1000.0,
+          "SpotCost": 50.0,
+          "SpotCostWithMargin": 62.5,
+          "SpotLengthId": 1,
+          "Spots": 0
+        }
+      ],
+      "StandardDaypart": {
+        "Code": "DAY",
+        "DaypartType": 2,
+        "DefaultEndTimeSeconds": 57599,
+        "DefaultStartTimeSeconds": 32400,
+        "FullName": "Daytime",
+        "Id": 12,
+        "VpvhCalculationSourceType": 3
+      },
+      "StationInventoryManifestId": 0,
+      "TotalCost": 0.0,
+      "TotalCostWithMargin": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
+    },
+    {
+      "ContractMediaWeek": {
+        "_EndDate": "2019-09-29T00:00:00",
+        "_Id": 822,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-23T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": false
+      },
+      "Id": 3,
+      "Impressions30sec": 1000.0,
+      "InventoryMediaWeek": {
+        "_EndDate": "2017-10-29T00:00:00",
+        "_Id": 722,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-23T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": false
+      },
+      "SpotFrequencies": [
+        {
+          "Impressions": 1000.0,
+          "SpotCost": 50.0,
+          "SpotCostWithMargin": 62.5,
+          "SpotLengthId": 1,
+          "Spots": 0
+        }
+      ],
+      "StandardDaypart": {
+        "Code": "DAY",
+        "DaypartType": 2,
+        "DefaultEndTimeSeconds": 57599,
+        "DefaultStartTimeSeconds": 32400,
+        "FullName": "Daytime",
+        "Id": 12,
+        "VpvhCalculationSourceType": 3
+      },
+      "StationInventoryManifestId": 0,
+      "TotalCost": 0.0,
+      "TotalCostWithMargin": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
+    }
+  ]
+}

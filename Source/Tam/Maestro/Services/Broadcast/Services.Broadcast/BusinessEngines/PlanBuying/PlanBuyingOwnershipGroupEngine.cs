@@ -37,7 +37,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         {
             var inventoryDictionary = inventory.ToDictionary(x => x.ManifestId, x => x);
             // flatten out to something we can easily aggregate.
-            var flatSpots = allocationResult.Spots.Select(s =>
+            var flatSpots = allocationResult.AllocatedSpots.Select(s =>
             {
                 PlanBuyingInventoryProgram inventoryItem = inventoryDictionary[s.Id];
                 var item = new

@@ -2,19 +2,19 @@
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Buying;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
-using Services.Broadcast.Helpers;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities;
-using Services.Broadcast.Entities.Buying;
-using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories
 {
@@ -160,20 +160,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="jobId">The job identifier.</param>
         /// <returns>Decimal Goal CPM</returns>
         decimal GetGoalCpm(int jobId);
-
-        /// <summary>
-        /// Gets the plan buying allocated spots by plan identifier.
-        /// </summary>
-        /// <param name="planId">The plan identifier.</param>
-        /// <returns>List of PlanBuyingAllocatedSpot objects</returns>
-        List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId);
-
-        /// <summary>
-        /// Gets the plan buying allocated spots by plan version identifier.
-        /// </summary>
-        /// <param name="planVersionId">The plan version identifier.</param>
-        /// <returns>List of PlanBuyingAllocatedSpot objects</returns>
-        List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanVersionId(int planVersionId);
 
         /// <summary>
         /// Updates the plan buying version identifier.
@@ -459,6 +445,25 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc/>
         public void SaveBuyingApiResults(PlanBuyingAllocationResult result)
         {
+            // merge allocated and unallocated into one list
+            // figure we'll have less allocated than unallocated.
+            var spots = result.UnallocatedSpots;
+            foreach (var allocated in result.AllocatedSpots)
+            {
+                var existingSpot = spots.SingleOrDefault(s => 
+                    s.Id == allocated.Id && 
+                    s.ContractMediaWeek == allocated.ContractMediaWeek);
+
+                if (existingSpot == null)
+                {
+                    spots.Add(allocated);
+                }
+                else
+                {
+                    existingSpot.SpotFrequencies.AddRange(allocated.SpotFrequencies);
+                }
+            }
+
             _InReadUncommitedTransaction(context =>
             {
                 var propertiesToIgnore = new List<string>() { "id" };
@@ -473,12 +478,12 @@ namespace Services.Broadcast.Repositories
 
                 context.SaveChanges();
 
-                var pkSpots = context.plan_version_buying_api_result_spots.Any() ? context.plan_version_buying_api_result_spots.Max(x => x.id) + 1 : 0;
+                var pkSpots = context.plan_version_buying_api_result_spots.Any() ? context.plan_version_buying_api_result_spots.Max(x => x.id) + 1 : 1;
 
                 var planBuyingApiResultSpots = new List<plan_version_buying_api_result_spots>();
                 var planBuyingApiResultSpotFrequencies = new List<plan_version_buying_api_result_spot_frequencies>();
 
-                foreach (var spot in result.Spots)
+                foreach (var spot in spots)
                 {
                     var currentSpotId = pkSpots++;
 
@@ -528,42 +533,23 @@ namespace Services.Broadcast.Repositories
                 if (apiResult == null)
                     return null;
 
-                return new PlanBuyingAllocationResult
+                var planVersionId = apiResult.plan_version_buying_job.plan_version_id.HasValue
+                    ? apiResult.plan_version_buying_job.plan_version_id.Value
+                    : 0;
+
+                var resultSpotLists = _MapToResultSpotLists(apiResult.plan_version_buying_api_result_spots);
+                
+                var allocationResult = new PlanBuyingAllocationResult
                 {
                     BuyingCpm = apiResult.optimal_cpm,
                     JobId = apiResult.plan_version_buying_job_id,
-                    Spots = apiResult.plan_version_buying_api_result_spots.Select(x => new PlanBuyingAllocatedSpot
-                    {
-                        Id = x.id,
-                        StationInventoryManifestId = x.station_inventory_manifest_id,
-                        // impressions are for :30 sec only for buying v3
-                        Impressions30sec = x.impressions30sec,
-                        SpotFrequencies = x.plan_version_buying_api_result_spot_frequencies.Select(y => new SpotFrequency
-                        {
-                            SpotLengthId = y.spot_length_id,
-                            SpotCost = y.cost,
-                            Spots = y.spots,
-                            Impressions = y.impressions
-                        }).ToList(),
-                        InventoryMediaWeek = new MediaWeek
-                        {
-                            Id = x.inventory_media_week.id,
-                            MediaMonthId = x.inventory_media_week.media_month_id,
-                            WeekNumber = x.inventory_media_week.week_number,
-                            StartDate = x.inventory_media_week.start_date,
-                            EndDate = x.inventory_media_week.end_date
-                        },
-                        ContractMediaWeek = new MediaWeek
-                        {
-                            Id = x.contract_media_week.id,
-                            MediaMonthId = x.contract_media_week.media_month_id,
-                            WeekNumber = x.contract_media_week.week_number,
-                            StartDate = x.contract_media_week.start_date,
-                            EndDate = x.contract_media_week.end_date
-                        },
-                        StandardDaypart = _MapToStandardDaypartDto(x.standard_dayparts)
-                    }).ToList()
+                    BuyingVersion = apiResult.buying_version,
+                    PlanVersionId = planVersionId,
+                    AllocatedSpots = resultSpotLists.Allocated,
+                    UnallocatedSpots = resultSpotLists.Unallocated
                 };
+
+                return allocationResult;
             });
         }
 
@@ -937,85 +923,6 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var plan = context.plans.Single(x => x.id == planId);
-                var planVersionId = plan.latest_version_id;
-
-                var apiResult = (from job in context.plan_version_buying_job
-                                 from apiResults in job.plan_version_buying_api_results
-                                 where job.plan_version_id == planVersionId
-                                 select apiResults)
-                    .Include(x => x.plan_version_buying_api_result_spots)
-                    .Include(x => x.plan_version_buying_api_result_spots.Select(s => s.inventory_media_week))
-                    .OrderByDescending(p => p.id)
-                    .FirstOrDefault();
-
-                if (apiResult == null)
-                    throw new Exception($"No buying runs were found for the plan {planId}");
-
-                return apiResult.plan_version_buying_api_result_spots.Select(_MapToPlanBuyingAllocatedSpot).ToList();
-            });
-        }
-
-        /// <inheritdoc/>
-        public List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanVersionId(int planVersionId)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var apiResult = (from job in context.plan_version_buying_job
-                                 from apiResults in job.plan_version_buying_api_results
-                                 where job.plan_version_id == planVersionId
-                                 select apiResults)
-                    .Include(x => x.plan_version_buying_api_result_spots)
-                    .Include(x => x.plan_version_buying_api_result_spots.Select(s => s.inventory_media_week))
-                    .OrderByDescending(p => p.id)
-                    .FirstOrDefault();
-
-                if (apiResult == null)
-                    throw new Exception($"No buying runs were found for the version {planVersionId}");
-
-                return apiResult.plan_version_buying_api_result_spots.Select(_MapToPlanBuyingAllocatedSpot).ToList();
-            });
-        }
-
-        private PlanBuyingAllocatedSpot _MapToPlanBuyingAllocatedSpot(plan_version_buying_api_result_spots spot)
-        {
-            return new PlanBuyingAllocatedSpot
-            {
-                Id = spot.id,
-                StationInventoryManifestId = spot.station_inventory_manifest_id,
-                Impressions30sec = spot.impressions30sec,
-                SpotFrequencies = spot.plan_version_buying_api_result_spot_frequencies.Select(x => new SpotFrequency
-                {
-                    SpotLengthId = x.spot_length_id,
-                    SpotCost = x.cost,
-                    Spots = x.spots,
-                    Impressions = x.impressions
-                }).ToList(),
-                InventoryMediaWeek = new MediaWeek
-                {
-                    Id = spot.inventory_media_week.id,
-                    MediaMonthId = spot.inventory_media_week.media_month_id,
-                    WeekNumber = spot.inventory_media_week.week_number,
-                    StartDate = spot.inventory_media_week.start_date,
-                    EndDate = spot.inventory_media_week.end_date
-                },
-                ContractMediaWeek = new MediaWeek
-                {
-                    Id = spot.contract_media_week.id,
-                    MediaMonthId = spot.contract_media_week.media_month_id,
-                    WeekNumber = spot.contract_media_week.week_number,
-                    StartDate = spot.contract_media_week.start_date,
-                    EndDate = spot.contract_media_week.end_date
-                },
-                StandardDaypart = _MapToStandardDaypartDto(spot.standard_dayparts)
-            };
-        }
-
-        /// <inheritdoc/>
         public void UpdatePlanBuyingVersionId(int versionId, int oldPlanVersionId)
         {
             _InReadUncommitedTransaction(context =>
@@ -1174,6 +1081,86 @@ namespace Services.Broadcast.Repositories
                     }).OrderByDescending(p => p.ImpressionsPercentage).ThenByDescending(p => p.Budget).ToList()
                 };
             });
+        }
+
+        private ResultSpotLists _MapToResultSpotLists(IEnumerable<plan_version_buying_api_result_spots> allSpots)
+        {
+            var resultLists = new ResultSpotLists();
+
+            foreach (var spot in allSpots)
+            {
+                var allocatedFreqs = new List<plan_version_buying_api_result_spot_frequencies>();
+                var unallocatedFreqs = new List<plan_version_buying_api_result_spot_frequencies>();
+
+                spot.plan_version_buying_api_result_spot_frequencies.ForEach(f =>
+                {
+                    if (f.spots > 0)
+                    {
+                        allocatedFreqs.Add(f);
+                    }
+                    else
+                    {
+                        unallocatedFreqs.Add(f);
+                    }
+                });
+
+                if (allocatedFreqs.Any())
+                {
+                    var resultSpot = _MapToPlanBuyingAllocatedSpot(spot, allocatedFreqs);
+                    resultLists.Allocated.Add(resultSpot);
+                }
+
+                if (unallocatedFreqs.Any())
+                {
+                    var resultSpot = _MapToPlanBuyingAllocatedSpot(spot, unallocatedFreqs);
+                    resultLists.Unallocated.Add(resultSpot);
+                }
+            }
+
+            return resultLists;
+        }
+
+        private PlanBuyingAllocatedSpot _MapToPlanBuyingAllocatedSpot(plan_version_buying_api_result_spots spot, List<plan_version_buying_api_result_spot_frequencies> spotLengths)
+        {
+            var resultSpot = new PlanBuyingAllocatedSpot
+            {
+                Id = spot.id,
+                StationInventoryManifestId = spot.station_inventory_manifest_id,
+                // impressions are for :30 sec only for buying v3
+                Impressions30sec = spot.impressions30sec,
+                SpotFrequencies = spotLengths
+                    .Select(y => new SpotFrequency
+                    {
+                        SpotLengthId = y.spot_length_id,
+                        SpotCost = y.cost,
+                        Spots = y.spots,
+                        Impressions = y.impressions
+                    }).ToList(),
+                InventoryMediaWeek = new MediaWeek
+                {
+                    Id = spot.inventory_media_week.id,
+                    MediaMonthId = spot.inventory_media_week.media_month_id,
+                    WeekNumber = spot.inventory_media_week.week_number,
+                    StartDate = spot.inventory_media_week.start_date,
+                    EndDate = spot.inventory_media_week.end_date
+                },
+                ContractMediaWeek = new MediaWeek
+                {
+                    Id = spot.contract_media_week.id,
+                    MediaMonthId = spot.contract_media_week.media_month_id,
+                    WeekNumber = spot.contract_media_week.week_number,
+                    StartDate = spot.contract_media_week.start_date,
+                    EndDate = spot.contract_media_week.end_date
+                },
+                StandardDaypart = _MapToStandardDaypartDto(spot.standard_dayparts)
+            };
+            return resultSpot;
+        }
+
+        private class ResultSpotLists
+        {
+            public List<PlanBuyingAllocatedSpot> Allocated = new List<PlanBuyingAllocatedSpot>();
+            public List<PlanBuyingAllocatedSpot> Unallocated = new List<PlanBuyingAllocatedSpot>();
         }
     }
 }

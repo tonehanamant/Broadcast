@@ -119,7 +119,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         private List<DisplayBroadcastStation> _GetAllocatedStations(PlanBuyingAllocationResult apiResponse
             , List<PlanBuyingManifestWithManifestDaypart> programInventory)
         {
-            var manifestIds = apiResponse.Spots.Select(s => s.Id).Distinct();
+            var manifestIds = apiResponse.AllocatedSpots.Select(s => s.Id).Distinct();
             var result = new List<PlanBuyingManifestWithManifestDaypart>();
             return programInventory.Where(p => manifestIds.Contains(p.Manifest.ManifestId)).Select(p => p.Manifest.Station).ToList();
         }
@@ -129,7 +129,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         {
             var result = new List<PlanBuyingAllocatedSpot>();
 
-            foreach (var spot in apiResponse.Spots)
+            foreach (var spot in apiResponse.AllocatedSpots)
             {
                 // until we use only OpenMarket inventory it`s fine
                 // this needs to be updated when we start using inventory that can have more than one daypart

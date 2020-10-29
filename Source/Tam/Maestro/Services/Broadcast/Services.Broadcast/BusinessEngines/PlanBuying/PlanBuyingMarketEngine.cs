@@ -42,7 +42,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
             List<MarketCoverage> marketCoverages)
         {
             // flatten out to something we can easily aggregate.
-            var flatSpots = allocationResult.Spots.Select(s =>
+            var flatSpots = allocationResult.AllocatedSpots.Select(s =>
             {
                 var inventoryItem = inventory.Single(i => i.ManifestId.Equals(s.Id));
                 var item = new

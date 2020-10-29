@@ -130,7 +130,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = new List<PlanBuyingProgram>();
 
-            foreach(var spot in allocationResult.Spots)
+            foreach(var spot in allocationResult.AllocatedSpots)
             {
                 var pricingProgram = new PlanBuyingProgram
                 {
