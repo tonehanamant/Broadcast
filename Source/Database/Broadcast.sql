@@ -1110,12 +1110,12 @@ BEGIN
 		UPDATE
 			pvps
 		SET
-			pvps.posting_type = pv.posting_type
+			pvps.posting_type = COALESCE(pv.posting_type, 1)
 		FROM 
 			[plan_version_pricing_stations] pvps
 			  INNER JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvps.plan_version_pricing_job_id
-			  INNER JOIN [plan_versions] pv
+			  LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
 
 	ALTER TABLE [plan_version_pricing_stations] ALTER COLUMN [posting_type] INT NOT NULL
@@ -1131,12 +1131,12 @@ BEGIN
 		UPDATE
 			pvpm
 		SET
-			pvpm.posting_type = pv.posting_type
+			pvpm.posting_type = COALESCE(pv.posting_type, 1)
 		FROM 
 			[plan_version_pricing_markets] pvpm
 				INNER JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvpm.plan_version_pricing_job_id
-				INNER JOIN [plan_versions] pv
+				LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
 
 	ALTER TABLE [plan_version_pricing_markets] ALTER COLUMN [posting_type] INT NOT NULL
@@ -1151,12 +1151,12 @@ BEGIN
 		 UPDATE
 			pvpr
 		 SET
-			pvpr.posting_type = pv.posting_type
+			pvpr.posting_type = COALESCE(pv.posting_type, 1)
 		 FROM 
 			[plan_version_pricing_results] pvpr
-			  INNER JOIN [plan_version_pricing_job] pvpj
+			  JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvpr.plan_version_pricing_job_id
-			  INNER JOIN [plan_versions] pv
+			  LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
 
 	ALTER TABLE [plan_version_pricing_results] ALTER COLUMN [posting_type] INT NOT NULL
