@@ -92,7 +92,7 @@ namespace Services.Broadcast.BusinessEngines
             _PlanValidator = planValidator;
             _MediaWeekCache = mediaWeekCache;
             _CreativeLengthEngine = creativeLengthEngine;
-            _SpotLengthMultiplier = spotLengthEngine.GetDeliveryMultipliersBySpotLengthId();
+            _SpotLengthMultiplier = spotLengthEngine.GetDeliveryMultipliers();
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         }
 

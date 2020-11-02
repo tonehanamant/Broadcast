@@ -16,8 +16,11 @@ namespace Services.Broadcast.IntegrationTests.TestData
 			spotLengthMap.Add(300, 6);
 			spotLengthMap.Add(90, 7);
 			spotLengthMap.Add(45, 8);
-
-			return spotLengthMap;
+            spotLengthMap.Add(10, 9);
+            spotLengthMap.Add(150, 10);
+            spotLengthMap.Add(75, 11);
+            spotLengthMap.Add(5, 12);
+            return spotLengthMap;
 		}
 
         public static List<LookupDto> GetAllSpotLengths()
@@ -33,7 +36,9 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 new LookupDto { Id = 7, Display = "90" },
                 new LookupDto { Id = 8, Display = "45" },
                 new LookupDto { Id = 9, Display = "10" },
-                new LookupDto { Id = 10, Display = "150" }
+                new LookupDto { Id = 10, Display = "150" },
+                new LookupDto { Id = 11, Display = "75" },
+                new LookupDto { Id = 12, Display = "5" },
             };
         }
 
@@ -41,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.TestData
         {
             var deliveryMultipliersBySpotLengthId = new Dictionary<int, double>
             {
-				{1,1},
+                {1,1},
                 {2,2},
                 {3,0.5},
                 {4,4},
@@ -49,11 +54,34 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 {6,10},
                 {7,3},
                 {8,1.5},
-                {9,0.3},
-                {10,5}
-			};
+                {9,0.333333},
+                {10,5},
+                {11,2.5},
+                {12,1.66667},
+            };
 
             return deliveryMultipliersBySpotLengthId;
         }
-	}
+
+        public static Dictionary<int, double> GetCostMultipliersBySpotLengthId()
+        {
+            var deliveryMultipliersBySpotLengthId = new Dictionary<int, double>
+            {
+                {1,1},
+                {2,2},
+                {3,0.65},
+                {4,4},
+                {7,3},
+                {8,1.5},
+                {5,6},
+                {6,10},
+                {9,0.333333},
+                {10,5},
+                {11,2.5},
+                {12,1.66667},
+            };
+
+            return deliveryMultipliersBySpotLengthId;
+        }
+    }
 }

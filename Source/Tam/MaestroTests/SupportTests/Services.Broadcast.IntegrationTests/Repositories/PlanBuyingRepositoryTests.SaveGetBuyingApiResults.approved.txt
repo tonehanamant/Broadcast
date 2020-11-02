@@ -2,20 +2,20 @@
   "AllocatedSpots": [
     {
       "ContractMediaWeek": {
-        "_EndDate": "2019-09-22T00:00:00",
-        "_Id": 821,
-        "_MediaMonthId": 456,
-        "_StartDate": "2019-09-16T00:00:00",
+        "_EndDate": "2017-10-22T00:00:00",
+        "_Id": 721,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
       "Id": 1,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
-        "_EndDate": "2017-10-22T00:00:00",
-        "_Id": 721,
-        "_MediaMonthId": 433,
-        "_StartDate": "2017-10-16T00:00:00",
+        "_EndDate": "2019-09-22T00:00:00",
+        "_Id": 821,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
@@ -42,20 +42,20 @@
     },
     {
       "ContractMediaWeek": {
-        "_EndDate": "2019-09-22T00:00:00",
-        "_Id": 821,
-        "_MediaMonthId": 456,
-        "_StartDate": "2019-09-16T00:00:00",
+        "_EndDate": "2017-10-22T00:00:00",
+        "_Id": 721,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
       "Id": 3,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
-        "_EndDate": "2017-10-22T00:00:00",
-        "_Id": 721,
-        "_MediaMonthId": 433,
-        "_StartDate": "2017-10-16T00:00:00",
+        "_EndDate": "2019-09-22T00:00:00",
+        "_Id": 821,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
@@ -95,20 +95,20 @@
   "UnallocatedSpots": [
     {
       "ContractMediaWeek": {
-        "_EndDate": "2019-09-22T00:00:00",
-        "_Id": 821,
-        "_MediaMonthId": 456,
-        "_StartDate": "2019-09-16T00:00:00",
+        "_EndDate": "2017-10-22T00:00:00",
+        "_Id": 721,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
       "Id": 1,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
-        "_EndDate": "2017-10-22T00:00:00",
-        "_Id": 721,
-        "_MediaMonthId": 433,
-        "_StartDate": "2017-10-16T00:00:00",
+        "_EndDate": "2019-09-22T00:00:00",
+        "_Id": 821,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
@@ -135,20 +135,20 @@
     },
     {
       "ContractMediaWeek": {
-        "_EndDate": "2019-09-22T00:00:00",
-        "_Id": 821,
-        "_MediaMonthId": 456,
-        "_StartDate": "2019-09-16T00:00:00",
+        "_EndDate": "2017-10-22T00:00:00",
+        "_Id": 721,
+        "_MediaMonthId": 433,
+        "_StartDate": "2017-10-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },
       "Id": 2,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
-        "_EndDate": "2017-10-22T00:00:00",
-        "_Id": 721,
-        "_MediaMonthId": 433,
-        "_StartDate": "2017-10-16T00:00:00",
+        "_EndDate": "2019-09-22T00:00:00",
+        "_Id": 821,
+        "_MediaMonthId": 456,
+        "_StartDate": "2019-09-16T00:00:00",
         "_WeekNumber": 4,
         "IsDirty": true
       },

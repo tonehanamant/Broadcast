@@ -40,7 +40,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(_GetMockStandardDaypartRepository().Object);
 
-            _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
+            _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
 
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
@@ -384,7 +384,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Returns(_GetMockStandardDaypartRepository().Object);
 
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -405,7 +405,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Returns(_GetMockStandardDaypartRepository().Object);
 
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -426,7 +426,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Returns(_GetMockStandardDaypartRepository().Object);
 
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,

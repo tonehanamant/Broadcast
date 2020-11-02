@@ -149,7 +149,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto_v3 buyingApiRequest);
+
+        PlanBuyingScxExportResponse ExportPlanBuyingScx(PlanBuyingScxExportRequest request);
     }
+
     /// <summary>
     /// This is a temporary solution for running pricing inside plan
     /// </summary>
@@ -267,6 +270,124 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _WeeklyBreakdownEngine);
 
             return data;
+        }
+
+        public PlanBuyingScxExportResponse ExportPlanBuyingScx(PlanBuyingScxExportRequest request)
+        {
+            _ValidatePlanBuyingScxExportRequest(request);
+            var generated = _DateTimeEngine.GetCurrentMoment();
+
+            var job = _PlanBuyingRepository.GetLatestBuyingJob(request.PlanId);
+            if (job == null)
+            {
+                throw new InvalidOperationException($"A buying job execution was not found for plan id '{request.PlanId}'.");
+            }
+            if (!job.PlanVersionId.HasValue)
+            {
+                throw new InvalidOperationException($"The buying job '{job.Id}' for plan '{request.PlanId}' does not have a plan version.");
+            }
+
+            var planVersionId = job.PlanVersionId.Value;
+            var plan = _PlanRepository.GetPlan(request.PlanId, planVersionId);
+
+            if (!plan.TargetCPM.HasValue)
+            {
+                throw new InvalidOperationException($"The plan '{request.PlanId}' version id '{planVersionId}' does not have a required target cpm.");
+            }
+            
+            var jobParams = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(job.Id);
+            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
+
+            var planTargetCpm = plan.TargetCPM.Value;
+            var appliedMargin = jobParams.Margin;
+
+            var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
+
+            var unallocated = request.UnallocatedCpmThreshold.HasValue
+                ? _ApplyCpmThreshold(request.UnallocatedCpmThreshold.Value, planTargetCpm, appliedMargin, jobSpotsResults.UnallocatedSpots)
+                : jobSpotsResults.UnallocatedSpots;
+
+            var filteredUnallocatedCount = unallocated.Count;
+
+            _LogInfo($"Exporting Buying Scx for job id '{job.Id}'. UnallocatedCpmThreshold filtered '{unfilteredUnallocatedCount}' records to '{filteredUnallocatedCount}'.");
+
+            var response = new PlanBuyingScxExportResponse
+            {
+                PlanId = request.PlanId,
+                PlanVersionId = planVersionId,
+                PlanBuyingJobId = job.Id,
+                Generated = generated,
+                PlanTargetCpm = planTargetCpm,
+                UnallocatedCpmThreshold = request.UnallocatedCpmThreshold,
+                AppliedMargin = appliedMargin,
+                Allocated = jobSpotsResults.AllocatedSpots,
+                Unallocated = unallocated
+            };
+            return response;
+        }
+
+        internal void _ValidatePlanBuyingScxExportRequest(PlanBuyingScxExportRequest request)
+        {
+            if (request.UnallocatedCpmThreshold.HasValue && 
+                (request.UnallocatedCpmThreshold.Value < 1 || request.UnallocatedCpmThreshold.Value > 100))
+            {
+                throw new InvalidOperationException($"Invalid value for UnallocatedCpmThreshold : '{request.UnallocatedCpmThreshold.Value}'; Valid range is 1-100.");
+            }
+        }
+
+        internal List<PlanBuyingAllocatedSpot> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm, double? margin, List<PlanBuyingAllocatedSpot> spots)
+        {
+            var results = new List<PlanBuyingAllocatedSpot>();
+
+            var tolerance = goalCpm * (cpmThresholdPercent / 100.0m);
+            var maxCpm = goalCpm + tolerance;
+            var minCpm = goalCpm - tolerance;
+
+            var deliveryMultipliers = _SpotLengthEngine.GetDeliveryMultipliers();
+            var costMultipliers = _SpotLengthEngine.GetCostMultipliers();
+            
+            spots.ForEach(s =>
+                {
+                    var keptFrequencies = new List<SpotFrequency>();
+                    // PlanBuyingAllocatedSpot.Total* methods are sum([metric] * [frequency]);
+                    // When called with unallocated spots the frequency will be 0.
+                    // Therefore we cannot use the PlanBuyingAllocatedSpot.Total* methods and must calculate manually.
+                    s.SpotFrequencies.ForEach(f =>
+                    {
+                        var totalImpressionsPerSpot30Sec = f.Impressions * deliveryMultipliers[f.SpotLengthId];
+                        var totalCostWithMargin = _CalculateSpotCostPer30sWithMargin(f.SpotCost, costMultipliers[f.SpotLengthId], margin);
+                        var spotCpm = ProposalMath.CalculateCpm(totalCostWithMargin, totalImpressionsPerSpot30Sec);
+                        if (spotCpm >= minCpm && spotCpm <= maxCpm)
+                        {
+                            keptFrequencies.Add(f);
+                        }
+                    });
+
+                    if (keptFrequencies.Any())
+                    {
+                        var keptSpot = new PlanBuyingAllocatedSpot
+                        {
+                            Id = s.Id,
+                            StationInventoryManifestId = s.StationInventoryManifestId,
+                            InventoryMediaWeek = s.InventoryMediaWeek,
+                            ContractMediaWeek = s.ContractMediaWeek,
+                            Impressions30sec = s.Impressions30sec,
+                            StandardDaypart = s.StandardDaypart,
+                            SpotFrequencies = keptFrequencies
+                        };
+                        results.Add(keptSpot);
+                    }
+                }
+            );
+            return results;
+        }
+
+        private decimal _CalculateSpotCostPer30sWithMargin(decimal spotCost, double spotCostMultiplier, double? margin)
+        {
+            var costPer30s = spotCost * Convert.ToDecimal(spotCostMultiplier);
+            var marginAmount = costPer30s * Convert.ToDecimal(margin.HasValue ? margin.Value / 100.0 : 0);
+            var spotCostWithMargin = costPer30s + marginAmount;
+            return spotCostWithMargin;
         }
 
         public PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto

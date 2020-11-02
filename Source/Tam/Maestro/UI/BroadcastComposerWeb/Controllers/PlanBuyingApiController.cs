@@ -154,5 +154,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId));
         }
+
+        [HttpPost]
+        [Route("ExportBuyingScx")]
+        public BaseResponse<PlanBuyingScxExportResponse> ExportBuyingScx(PlanBuyingScxExportRequest request)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().ExportPlanBuyingScx(request));
+        }
     }
 }

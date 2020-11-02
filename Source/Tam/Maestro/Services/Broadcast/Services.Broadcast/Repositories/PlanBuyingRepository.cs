@@ -1122,6 +1122,13 @@ namespace Services.Broadcast.Repositories
 
         private PlanBuyingAllocatedSpot _MapToPlanBuyingAllocatedSpot(plan_version_buying_api_result_spots spot, List<plan_version_buying_api_result_spot_frequencies> spotLengths)
         {
+            // HACK : When the entity is retrieved the ContractWeek and InventoryWeek entities are sometimes getting flipped.
+            // Be sure to use the correct one by referencing the explicitly stored id.
+            var weeks = new List<media_weeks> {spot.inventory_media_week, spot.contract_media_week};
+            // they both may be same week, so don't use single().
+            var inventoryWeek = weeks.First(w => w.id == spot.inventory_media_week_id);
+            var contractWeek = weeks.First(w => w.id == spot.contract_media_week_id);
+
             var resultSpot = new PlanBuyingAllocatedSpot
             {
                 Id = spot.id,
@@ -1138,19 +1145,19 @@ namespace Services.Broadcast.Repositories
                     }).ToList(),
                 InventoryMediaWeek = new MediaWeek
                 {
-                    Id = spot.inventory_media_week.id,
-                    MediaMonthId = spot.inventory_media_week.media_month_id,
-                    WeekNumber = spot.inventory_media_week.week_number,
-                    StartDate = spot.inventory_media_week.start_date,
-                    EndDate = spot.inventory_media_week.end_date
+                    Id = inventoryWeek.id,
+                    MediaMonthId = inventoryWeek.media_month_id,
+                    WeekNumber = inventoryWeek.week_number,
+                    StartDate = inventoryWeek.start_date,
+                    EndDate = inventoryWeek.end_date
                 },
                 ContractMediaWeek = new MediaWeek
                 {
-                    Id = spot.contract_media_week.id,
-                    MediaMonthId = spot.contract_media_week.media_month_id,
-                    WeekNumber = spot.contract_media_week.week_number,
-                    StartDate = spot.contract_media_week.start_date,
-                    EndDate = spot.contract_media_week.end_date
+                    Id = contractWeek.id,
+                    MediaMonthId = contractWeek.media_month_id,
+                    WeekNumber = contractWeek.week_number,
+                    StartDate = contractWeek.start_date,
+                    EndDate = contractWeek.end_date
                 },
                 StandardDaypart = _MapToStandardDaypartDto(spot.standard_dayparts)
             };

@@ -119,7 +119,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
-                .Returns(_GetLatestMarketCoverages());
+                .Returns(MarketsTestData.GetLatestMarketCoverages());
+
+            _SpotLengthEngineMock.Setup(s => s.GetDeliveryMultipliers())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+            _SpotLengthEngineMock.Setup(s => s.GetCostMultipliers())
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanBuyingRepository>())
@@ -269,11 +274,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanBuyingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
-                .Returns(_GetMultipleInventoryPrograms());
-
-            _MarketCoverageRepositoryMock
-                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
-                .Returns(_GetLatestMarketCoverages());
+                .Returns(_GetMultipleInventoryPrograms());            
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
@@ -929,10 +930,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanBuyingInventoryEngineMock
                     .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
                     .Returns(_GetMultipleInventoryPrograms_v3());
-
-                _MarketCoverageRepositoryMock
-                    .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
-                    .Returns(_GetLatestMarketCoverages());
 
                 _WeeklyBreakdownEngineMock
                     .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
@@ -1801,11 +1798,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanBuyingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
-                .Returns(_GetMultipleInventoryPrograms());
-
-            _MarketCoverageRepositoryMock
-                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
-                .Returns(_GetLatestMarketCoverages());
+                .Returns(_GetMultipleInventoryPrograms());            
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
@@ -1839,19 +1832,285 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
         }
 
-        private MarketCoverageDto _GetLatestMarketCoverages()
+        [Test]
+        [TestCase(null, true)]
+        [TestCase(50, true)]
+        [TestCase(0, false)]
+        [TestCase(101, false)]
+        public void ValidatePlanBuyingScxExportRequest(int? unallocatedCpmThreshold, bool expectSuccess)
         {
-            return new MarketCoverageDto
+            var request = new PlanBuyingScxExportRequest { UnallocatedCpmThreshold = unallocatedCpmThreshold };
+            var service = _GetService();
+
+            if (expectSuccess)
             {
-                MarketCoverageFileId = 1,
-                MarketCoveragesByMarketCode = new Dictionary<int, double>
+                Assert.DoesNotThrow(() => service._ValidatePlanBuyingScxExportRequest(request));
+            }
+            else
+            {
+                Assert.Throws<InvalidOperationException>(() => service._ValidatePlanBuyingScxExportRequest(request));
+            }
+        }
+
+        [Test]
+        public void ApplyCpmThreshold()
+        {
+            // Arrange
+            var cpmThresholdPercent = 10;
+            var goalCpm = 10;
+            var margin = 20;
+            var beforeSpots = new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
                 {
-                    { 101, 0.101d },
-                    { 100, 0.1d },
-                    { 302, 0.302d }
+                    Id = 1, StationInventoryManifestId = 10,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400}, // stays
+                        new SpotFrequency {SpotLengthId = 2, SpotCost = 40, Impressions = 3500}, // filtered - too big
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 2, StationInventoryManifestId = 20,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500}, // stays
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 3, StationInventoryManifestId = 30,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 1, SpotCost = 40, Impressions = 6000}, // filtered - too small
+                        new SpotFrequency {SpotLengthId = 5, SpotCost = 30, Impressions = 3500}, // stays
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 4, StationInventoryManifestId = 40,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 3, SpotCost = 30, Impressions = 3500}, // filtered -- too big
+                    }
+                }
+                ,
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 5, StationInventoryManifestId = 50,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 6, SpotCost = 60, Impressions = 8000}, // stays
+                    }
                 }
             };
+            var expectedResult = new []
+            {
+                new {Id = 1, SpotLengthId = 1},
+                new {Id = 2, SpotLengthId = 2},
+                new {Id = 3, SpotLengthId = 5},
+                new {Id = 5, SpotLengthId = 6},
+            };
+
+            var service = _GetService();
+
+            // Act
+            var afterSpots = service._ApplyCpmThreshold(cpmThresholdPercent, goalCpm, margin, beforeSpots);
+
+            // Assert
+            var resultIds = afterSpots.SelectMany(s =>
+                    s.SpotFrequencies.Select(f => new {s.Id, f.SpotLengthId}))
+                .ToArray();
+            Assert.AreEqual(expectedResult.Length, resultIds.Length);
+            for (var i = 0; i < expectedResult.Length; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Id, resultIds[i].Id);
+                Assert.AreEqual(expectedResult[i].SpotLengthId, resultIds[i].SpotLengthId);
+            }
         }
+
+        [Test]
+        public void ApplyCpmThresholdWithNullMargin()
+        {
+            // Arrange
+            var cpmThresholdPercent = 20;
+            var goalCpm = 10;
+            double? margin = null;
+            var beforeSpots = new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 10,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400}, // stays
+                        new SpotFrequency {SpotLengthId = 2, SpotCost = 40, Impressions = 3500}, // stays
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 2, StationInventoryManifestId = 20,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500}, // stays
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 3, StationInventoryManifestId = 30,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 1, SpotCost = 40, Impressions = 6000}, // filtered - too small
+                        new SpotFrequency {SpotLengthId = 5, SpotCost = 30, Impressions = 3500}, // stays
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 4, StationInventoryManifestId = 40,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 3, SpotCost = 30, Impressions = 3500}, // stays
+                    }
+                }
+                ,
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 5, StationInventoryManifestId = 50,
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency {SpotLengthId = 6, SpotCost = 60, Impressions = 3000}, // filtered - to big
+                    }
+                }
+            };
+            var expectedResult = new[]
+            {
+                new {Id = 1, SpotLengthId = 1},
+                new {Id = 1, SpotLengthId = 2},
+                new {Id = 2, SpotLengthId = 2},
+                new {Id = 3, SpotLengthId = 5},
+                new {Id = 4, SpotLengthId = 3},
+            };
+
+            var service = _GetService();
+
+            // Act
+            var afterSpots = service._ApplyCpmThreshold(cpmThresholdPercent, goalCpm, margin, beforeSpots);
+
+            // Assert
+            var resultIds = afterSpots.SelectMany(s =>
+                    s.SpotFrequencies.Select(f => new { s.Id, f.SpotLengthId }))
+                .ToArray();
+            Assert.AreEqual(expectedResult.Length, resultIds.Length);
+            for (var i = 0; i < expectedResult.Length; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Id, resultIds[i].Id);
+                Assert.AreEqual(expectedResult[i].SpotLengthId, resultIds[i].SpotLengthId);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ExportPlanBuyingScx()
+        {
+            var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
+            var job = new PlanBuyingJob { Id = 1, PlanVersionId = 57 };
+            var plan = new PlanDto { Id = 21, TargetCPM = 10 };
+            var jobParams = new PlanBuyingParametersDto { Margin = 20 };
+            var jobResult = new PlanBuyingAllocationResult
+            {
+                AllocatedSpots = new List<PlanBuyingAllocatedSpot>
+                {
+                    new PlanBuyingAllocatedSpot
+                    {
+                        Id = 1, StationInventoryManifestId = 10,
+                        SpotFrequencies = new List<SpotFrequency> {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400}}
+                    }
+                },
+                UnallocatedSpots = new List<PlanBuyingAllocatedSpot>
+                {
+                    new PlanBuyingAllocatedSpot
+                    {
+                        Id = 1, StationInventoryManifestId = 10,
+                        SpotFrequencies = new List<SpotFrequency> {new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500 } } // stay
+                    },
+                    new PlanBuyingAllocatedSpot
+                    {
+                        Id = 1, StationInventoryManifestId = 10,
+                        SpotFrequencies = new List<SpotFrequency> {new SpotFrequency {SpotLengthId = 3, SpotCost = 30, Impressions = 3500}} // filtered - too big
+                    }
+                }
+            };
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(new DateTime(2020, 10, 30, 12, 15, 23));
+            _PlanBuyingRepositoryMock.Setup(s => s.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(job);
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
+            _PlanBuyingRepositoryMock.Setup(s => s.GetLatestParametersForPlanBuyingJob(It.IsAny<int>()))
+                .Returns(jobParams);
+            _PlanBuyingRepositoryMock.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>()))
+                .Returns(jobResult);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.ExportPlanBuyingScx(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void ExportPlanBuyingScx_NoJob()
+        {
+            var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
+            var expectedMessage = "A buying job execution was not found for plan id '21'.";
+            PlanBuyingJob job = null;
+            _PlanBuyingRepositoryMock.Setup(s => s.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(job);
+
+            var service = _GetService();
+
+            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request));
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void ExportPlanBuyingScx_NoPlanVersion()
+        {
+            var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
+            var expectedMessage = "The buying job '1' for plan '21' does not have a plan version.";
+            var job = new PlanBuyingJob {Id = 1, PlanVersionId = null};
+            _PlanBuyingRepositoryMock.Setup(s => s.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(job);
+
+            var service = _GetService();
+
+            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request));
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void ExportPlanBuyingScx_NoTargetCpm()
+        {
+            var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
+            var expectedMessage = "The plan '21' version id '57' does not have a required target cpm.";
+            var job = new PlanBuyingJob { Id = 1, PlanVersionId = 57 };
+            var plan = new PlanDto { Id = 21, TargetCPM = null};
+
+            _PlanBuyingRepositoryMock.Setup(s => s.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(job);
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
+
+            var service = _GetService();
+
+            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request));
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
 
         private List<InventoryProprietaryQuarterSummaryDto> _GetInventoryProprietaryQuarterSummary(bool highProprietaryNumbers)
         {

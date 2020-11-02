@@ -44,10 +44,16 @@ namespace Services.Broadcast.BusinessEngines
         Dictionary<int, int> GetSpotLengths();
 
         /// <summary>
-        /// Gets the spot length multipliers.
+        /// Gets the spot length delivery multipliers.
         /// </summary>
         /// <returns>Dictionary of spot length id and spot multiplier</returns>
-        Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId();
+        Dictionary<int, double> GetDeliveryMultipliers();
+
+        /// <summary>
+        /// Gets the spot length cost multipliers.
+        /// </summary>
+        /// <returns>Dictionary of spot length id and spot multiplier</returns>
+        Dictionary<int, double> GetCostMultipliers();
 
         double GetDeliveryMultiplierBySpotLengthId(int spotLengthId);
 
@@ -78,9 +84,15 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc/>
-        public Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId()
+        public Dictionary<int, double> GetDeliveryMultipliers()
         {
             return _DeliveryMultipliersBySpotLengthId;
+        }
+
+        /// <inheritdoc/>
+        public Dictionary<int, double> GetCostMultipliers()
+        {
+            return _SpotCostMultipliersBySpotLengthId;
         }
 
         public double GetDeliveryMultiplierBySpotLengthId(int spotLengthId)

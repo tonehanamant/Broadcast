@@ -1,0 +1,55 @@
+{
+  "Allocated": [
+    {
+      "ContractMediaWeek": null,
+      "Id": 1,
+      "Impressions30sec": 0.0,
+      "InventoryMediaWeek": null,
+      "SpotFrequencies": [
+        {
+          "Impressions": 2400.0,
+          "SpotCost": 20.0,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 1,
+          "Spots": 0
+        }
+      ],
+      "StandardDaypart": null,
+      "StationInventoryManifestId": 10,
+      "TotalCost": 0.0,
+      "TotalCostWithMargin": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
+    }
+  ],
+  "AppliedMargin": 20.0,
+  "Generated": "2020-10-30T12:15:23",
+  "PlanBuyingJobId": 1,
+  "PlanId": 21,
+  "PlanTargetCpm": 10.0,
+  "PlanVersionId": 57,
+  "Unallocated": [
+    {
+      "ContractMediaWeek": null,
+      "Id": 1,
+      "Impressions30sec": 0.0,
+      "InventoryMediaWeek": null,
+      "SpotFrequencies": [
+        {
+          "Impressions": 3500.0,
+          "SpotCost": 30.0,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 0
+        }
+      ],
+      "StandardDaypart": null,
+      "StationInventoryManifestId": 10,
+      "TotalCost": 0.0,
+      "TotalCostWithMargin": 0.0,
+      "TotalImpressions": 0.0,
+      "TotalSpots": 0
+    }
+  ],
+  "UnallocatedCpmThreshold": 12
+}
