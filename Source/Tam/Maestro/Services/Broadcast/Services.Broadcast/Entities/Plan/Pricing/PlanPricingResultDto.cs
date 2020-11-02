@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -10,6 +11,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int? JobId { get; set; }
         public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
+        public PostingTypeEnum PostingType { get; internal set; }
     }
 
     public class PlanPricingResultDto : PlanPricingResultBaseDto

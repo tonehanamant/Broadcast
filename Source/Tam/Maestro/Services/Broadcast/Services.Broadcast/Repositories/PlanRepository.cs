@@ -1631,6 +1631,7 @@ namespace Services.Broadcast.Repositories
                     total_impressions = planPricingStationResult.Totals.Impressions,
                     total_spots = planPricingStationResult.Totals.Spots,
                     total_stations = planPricingStationResult.Totals.Station,
+                    posting_type = (int)planPricingStationResult.PostingType,
                     plan_version_pricing_station_details = planPricingStationResult.Stations
                             .Select(stationDto => new plan_version_pricing_station_details
                             {
@@ -1641,7 +1642,7 @@ namespace Services.Broadcast.Repositories
                                 impressions_percentage = stationDto.ImpressionsPercentage,
                                 market = stationDto.Market,
                                 station = stationDto.Station,
-                                is_proprietary = stationDto.IsProprietary
+                                is_proprietary = stationDto.IsProprietary                                
                             }).ToList()
                 });
 
@@ -1705,6 +1706,7 @@ namespace Services.Broadcast.Repositories
                     total_impressions = planPricingResultMarkets.Totals.Impressions,
                     total_cpm = Convert.ToDouble(planPricingResultMarkets.Totals.Cpm),
                     total_budget = Convert.ToDouble(planPricingResultMarkets.Totals.Budget),
+                    posting_type = (int)planPricingResultMarkets.PostingType,
                     plan_version_pricing_market_details = planPricingResultMarkets.MarketDetails.Select(d => new plan_version_pricing_market_details
                     {
                         market_name = d.MarketName,
@@ -1755,7 +1757,8 @@ namespace Services.Broadcast.Repositories
                     total_impressions = pricingResult.Totals.Impressions,
                     plan_version_pricing_job_id = pricingResult.JobId,
                     goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
-                    total_spots = pricingResult.Totals.Spots
+                    total_spots = pricingResult.Totals.Spots,
+                    posting_type = (int)pricingResult.PostingType
                 };
 
                 context.plan_version_pricing_results.Add(planPricingResult);
@@ -1779,7 +1782,7 @@ namespace Services.Broadcast.Repositories
                         budget = program.Budget,
                         spots = program.Spots,
                         impressions = program.Impressions,
-                        is_proprietary = program.IsProprietary
+                        is_proprietary = program.IsProprietary,
                     };
 
                     spots.Add(planPricingResultSpots);

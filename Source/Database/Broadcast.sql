@@ -1097,6 +1097,73 @@ GO
 
 /*************************************** END - BP-1592 ****************************************************/
 
+
+/*************************************** START - BP-1516 **************************************************/
+--Stations
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_stations') 
+				AND name = 'posting_type')
+BEGIN
+
+	ALTER TABLE [plan_version_pricing_stations] ADD [posting_type] INT NULL
+
+	EXEC ('
+		UPDATE
+			pvps
+		SET
+			pvps.posting_type = pv.posting_type
+		FROM 
+			[plan_version_pricing_stations] pvps
+			  INNER JOIN [plan_version_pricing_job] pvpj
+				ON	pvpj.id = pvps.plan_version_pricing_job_id
+			  INNER JOIN [plan_versions] pv
+				ON pv.id = pvpj.plan_version_id')
+
+	ALTER TABLE [plan_version_pricing_stations] ALTER COLUMN [posting_type] INT NOT NULL
+END
+
+--Markets
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_markets') 
+				AND name = 'posting_type')
+BEGIN
+	ALTER TABLE [plan_version_pricing_markets] ADD [posting_type] INT NULL
+
+	EXEC ('
+		UPDATE
+			pvpm
+		SET
+			pvpm.posting_type = pv.posting_type
+		FROM 
+			[plan_version_pricing_markets] pvpm
+				INNER JOIN [plan_version_pricing_job] pvpj
+				ON	pvpj.id = pvpm.plan_version_pricing_job_id
+				INNER JOIN [plan_versions] pv
+				ON pv.id = pvpj.plan_version_id')
+
+	ALTER TABLE [plan_version_pricing_markets] ALTER COLUMN [posting_type] INT NOT NULL
+END
+
+--Programs
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_results') 
+				AND name = 'posting_type')
+BEGIN
+	ALTER TABLE [plan_version_pricing_results] ADD [posting_type] INT NULL
+	EXEC ('
+		 UPDATE
+			pvpr
+		 SET
+			pvpr.posting_type = pv.posting_type
+		 FROM 
+			[plan_version_pricing_results] pvpr
+			  INNER JOIN [plan_version_pricing_job] pvpj
+				ON	pvpj.id = pvpr.plan_version_pricing_job_id
+			  INNER JOIN [plan_versions] pv
+				ON pv.id = pvpj.plan_version_id')
+
+	ALTER TABLE [plan_version_pricing_results] ALTER COLUMN [posting_type] INT NOT NULL
+END
+
+/*************************************** END - BP-1516 ****************************************************/
+
 /*************************************** START - BP-1587 ****************************************************/
 
 DECLARE @GenreId_Various INT

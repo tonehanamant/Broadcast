@@ -521,7 +521,7 @@
     <Compile Include="ApplicationServices\GenreService.cs" />
     <Compile Include="ApplicationServices\ContainTypeService.cs" />
     <Compile Include="ApplicationServices\InventoryProgramsProcessingService.cs" />
-    <Compile Include="ApplicationServices\PlanPricingService.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanPricingService.cs" />
     <Compile Include="ApplicationServices\Buying\BuyingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ProgramService.cs" />

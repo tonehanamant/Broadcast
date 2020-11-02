@@ -35,7 +35,7 @@ using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using static Services.Broadcast.ApplicationServices.PlanPricingService;
+using static Services.Broadcast.ApplicationServices.Plan.PlanPricingService;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
@@ -925,7 +925,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -1071,11 +1071,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.UpdatePlanPricingJob(It.IsAny<PlanPricingJob>()))
                 .Callback<PlanPricingJob>(jobUpdate =>
-                 {
-                     // to skip row number 
-                     jobUpdate.DiagnosticResult = jobUpdate.DiagnosticResult?.Substring(0, 80);
-                     jobUpdates.Add(jobUpdate);
-                 });
+                {
+                    // to skip row number 
+                    jobUpdate.DiagnosticResult = jobUpdate.DiagnosticResult?.Substring(0, 80);
+                    jobUpdates.Add(jobUpdate);
+                });
 
             var service = _GetService();
 
@@ -1136,6 +1136,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 1,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "wnbc",
@@ -1195,6 +1196,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 2,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "wabc",
@@ -1249,6 +1251,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 3,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "kpdx",
@@ -1303,6 +1306,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 4,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "kabc",
@@ -1357,6 +1361,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 5,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "wnbc",
@@ -1395,6 +1400,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 6,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "wabc",
@@ -1433,6 +1439,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "kpdx",
@@ -1492,6 +1499,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "kpdx",
@@ -1546,6 +1554,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
+                    PostingType = PostingTypeEnum.NSI,
                     Station = new DisplayBroadcastStation
                     {
                         LegacyCallLetters = "kpdx",
@@ -1624,7 +1633,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetPlanPricingInventoryPrograms());
 
             var jobUpdates = new List<PlanPricingJob>();
@@ -1682,8 +1691,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
                 var passedInventorySourceIds = new List<IEnumerable<int>>();
                 _PlanPricingInventoryEngineMock
-                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
-                    .Callback<PlanDto, ProgramInventoryOptionalParametersDto, IEnumerable<int>, PlanPricingJobDiagnostic, Guid>((p1, p2, p3, p4, P5) =>
+                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
+                    .Callback<PlanDto, ProgramInventoryOptionalParametersDto, IEnumerable<int>, PlanPricingJobDiagnostic, Guid, bool>((p1, p2, p3, p4, P5, p6) =>
                     {
                         passedInventorySourceIds.Add(p3);
                     })
@@ -1729,7 +1738,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>());
 
             var jobUpdates = new List<PlanPricingJob>();
@@ -1802,6 +1811,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     FlightEndDate = new DateTime(2005, 12, 18),
                     FlightDays = new List<int>(),
                     TargetRatingPoints = 1000,
+                    PostingType = PostingTypeEnum.NSI,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek
@@ -1826,12 +1836,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
                     {
                         ManifestId = 1,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        PostingType = PostingTypeEnum.NTI,
                         Station = new DisplayBroadcastStation
                         {
                             LegacyCallLetters = "wnbc",
@@ -1945,7 +2021,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 new InventoryProprietaryQuarterSummaryDto
                 {
-                    UnitCost = 100,                    
+                    UnitCost = 100,
                     SummaryByStationByAudience = new List<InventoryProprietarySummaryByStationByAudience>
                     {
                         new InventoryProprietarySummaryByStationByAudience
@@ -2145,7 +2221,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Returns(_GetWeeklyBreakDownWeeks());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -2549,7 +2625,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -3000,7 +3076,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -3440,7 +3516,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -3784,6 +3860,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     FlightEndDate = new DateTime(2005, 12, 18),
                     FlightDays = new List<int>(),
                     TargetRatingPoints = 1000,
+                    PostingType = PostingTypeEnum.NSI,
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -3874,13 +3951,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
                     {
                         ManifestId = 1,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -3953,6 +4031,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 2,
                         StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 6,
@@ -4013,6 +4092,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 3,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -4082,6 +4162,281 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 4,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                                InventoryMediaWeekId = 90
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                                InventoryMediaWeekId = 91
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                                InventoryMediaWeekId = 92
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 6,
+                            LegacyCallLetters = "wabc",
+                            MarketCode = 100,
+                        },
+                        ProjectedImpressions = 1500,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 4,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Wednesday = true,
+                                    Friday = true,
+                                    StartTime = 64800, // 6pm
+                                    EndTime = 71999 // 8pm
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                                InventoryMediaWeekId = 90
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 3,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 0,
+                        ProjectedImpressions = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 4,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -4239,6 +4594,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     VersionId = 77,
                     CoverageGoalPercent = 80,
+                    PostingType = PostingTypeEnum.NSI,
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
@@ -4338,13 +4694,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
                     {
                         ManifestId = 1,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -4417,6 +4774,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 2,
                         StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 6,
@@ -4477,6 +4835,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 3,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -4546,6 +4905,281 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 4,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld_2",
+                                        Genre = "Sport"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld_2",
+                                    Genre = "Sport"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                                InventoryMediaWeekId = 90
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                                InventoryMediaWeekId = 91
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                                InventoryMediaWeekId = 92
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 6,
+                            LegacyCallLetters = "wabc",
+                            MarketCode = 100,
+                        },
+                        ProjectedImpressions = 1500,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 4,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Wednesday = true,
+                                    Friday = true,
+                                    StartTime = 64800, // 6pm
+                                    EndTime = 71999 // 8pm
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                                InventoryMediaWeekId = 90
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 3,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 0,
+                        ProjectedImpressions = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 4,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -5635,7 +6269,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             // Verify these since they're excluded from the json due version increments
             var passedJob = ((dynamic)passedParameters[0]).job;
-            Assert.AreEqual("Services.Broadcast.ApplicationServices.IPlanPricingService", passedJob.Type.FullName);
+            Assert.AreEqual("Services.Broadcast.ApplicationServices.Plan.IPlanPricingService", passedJob.Type.FullName);
             Assert.AreEqual("RunPricingJob", passedJob.Method.Name);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -7271,7 +7905,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7338,7 +7972,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7395,7 +8029,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             parameters.MarketGroup = MarketGroupEnum.Top100;
             parameters.Margin = 10;
             parameters.JobId = jobId;
-            parameters.ProprietaryInventory = new List<InventoryProprietarySummary> 
+            parameters.ProprietaryInventory = new List<InventoryProprietarySummary>
             {
                 new InventoryProprietarySummary { Id = 1 },
                 new InventoryProprietarySummary { Id = 2 }
@@ -7410,7 +8044,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7434,7 +8068,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
                 .Returns(new PlanPricingApiSpotsResponseDto
-                { 
+                {
                     RequestId = "q1w2e3r4",
                     Results = new List<PlanPricingApiSpotsResultDto>()
                 })
@@ -7494,7 +8128,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(plan);
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7566,7 +8200,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7633,7 +8267,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7700,7 +8334,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7756,7 +8390,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanPricingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>()
-                    , It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                    , It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -7831,7 +8465,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlanTiered());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetTieredInventory());
 
             _MarketCoverageRepositoryMock
@@ -7898,7 +8532,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlanTiered());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetTieredInventory());
 
             _MarketCoverageRepositoryMock
@@ -7925,12 +8559,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var allocations = new List<PlanPricingAllocationResult>();
             _PlanPricingBandCalculationEngineMock
                 .Setup(x => x.CalculatePricingBands(
-                    It.IsAny<List<PlanPricingInventoryProgram>>(), 
-                    It.IsAny<PlanPricingAllocationResult>(), 
+                    It.IsAny<List<PlanPricingInventoryProgram>>(),
+                    It.IsAny<PlanPricingAllocationResult>(),
                     It.IsAny<PlanPricingParametersDto>(),
                     It.IsAny<ProprietaryInventoryData>()))
-                .Callback<List<PlanPricingInventoryProgram>, 
-                          PlanPricingAllocationResult, 
+                .Callback<List<PlanPricingInventoryProgram>,
+                          PlanPricingAllocationResult,
                           PlanPricingParametersDto,
                           ProprietaryInventoryData>((inventory, allocation, pricingParameters, proprietaryInventoryData) => allocations.Add(allocation));
 
@@ -8276,7 +8910,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -8339,7 +8973,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                 .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
@@ -8578,7 +9212,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Returns(plan);
 
                 _PlanPricingInventoryEngineMock
-                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                     .Returns(_GetMultipleInventoryPrograms_v3());
 
                 _MarketCoverageRepositoryMock
@@ -8835,7 +9469,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Returns(plan);
 
                 _PlanPricingInventoryEngineMock
-                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
+                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>(), It.IsAny<bool>()))
                     .Returns(_GetMultipleInventoryPrograms_v3());
 
                 _MarketCoverageRepositoryMock
@@ -9116,6 +9750,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 1,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -9185,6 +9820,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 2,
                         StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -9244,6 +9880,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 3,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -9313,6 +9950,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 4,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 6,
@@ -9662,6 +10300,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 1,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -9737,6 +10376,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 2,
                         StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 6,
@@ -9802,6 +10442,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 3,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -9877,6 +10518,302 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 4,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 10
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 20
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 6,
+                            LegacyCallLetters = "wabc",
+                            MarketCode = 100,
+                        },
+                        ProjectedImpressions = 1500,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 4,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Wednesday = true,
+                                    Friday = true,
+                                    StartTime = 64800, // 6pm
+                                    EndTime = 71999 // 8pm
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 3,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 0,
+                        ProjectedImpressions = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 4,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NTI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -9958,6 +10895,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 1197,
                 CoverageGoalPercent = 80,
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
+                PostingType = PostingTypeEnum.NSI,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -10027,6 +10965,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 CoverageGoalPercent = 80,
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
+                PostingType = PostingTypeEnum.NSI,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto

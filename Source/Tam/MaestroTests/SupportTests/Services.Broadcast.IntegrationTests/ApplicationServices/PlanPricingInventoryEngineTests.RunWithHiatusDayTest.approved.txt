@@ -88,6 +88,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 33431.66875,
     "ProvidedImpressions": 29325.0,
     "SpotLengthId": 1,
@@ -198,6 +199,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 74.545,
     "ProvidedImpressions": 255.0,
     "SpotLengthId": 1,

@@ -3,6 +3,7 @@
   "JobId": 1,
   "OptimalCpm": 10.0,
   "PlanVersionId": 1,
+  "PostingType": 0,
   "Programs": [
     {
       "AvgCpm": 10.00,

@@ -89,6 +89,7 @@ namespace Services.Broadcast.BusinessEngines
             result.OptimalCpm = apiResponse.PricingCpm;
             result.JobId = apiResponse.JobId;
             result.PlanVersionId = apiResponse.PlanVersionId;
+            result.PostingType = inventory.First().PostingType;
 
             return result;
         }

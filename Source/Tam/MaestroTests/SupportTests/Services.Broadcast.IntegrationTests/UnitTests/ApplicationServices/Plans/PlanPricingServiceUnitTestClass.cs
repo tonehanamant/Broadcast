@@ -8,6 +8,7 @@ using System;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Validators;
+using Services.Broadcast.ApplicationServices.Plan;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {

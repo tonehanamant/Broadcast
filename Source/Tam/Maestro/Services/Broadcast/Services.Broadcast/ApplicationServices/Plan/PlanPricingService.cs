@@ -21,6 +21,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -30,7 +31,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
-namespace Services.Broadcast.ApplicationServices
+namespace Services.Broadcast.ApplicationServices.Plan
 {
     public interface IPlanPricingService : IApplicationService
     {
@@ -247,7 +248,7 @@ namespace Services.Broadcast.ApplicationServices
             var generatedTimeStamp = _DateTimeEngine.GetCurrentMoment();
             var allAudiences = _AudienceService.GetAudiences();
             var allMarkets = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-            
+
             _LogInfo("Starting to gather inventory...", processingId);
             var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request, processingId);
             _LogInfo($"Finished gather inventory.  Gathered {programs.Count} programs.", processingId);
@@ -735,7 +736,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return pricingModelSpots;
         }
-        
+
         private List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
             PlanDto plan,
             PlanPricingParametersDto parameters,
@@ -849,7 +850,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private List<ShareOfVoice> _GetShareOfVoice(
-            MarketCoverageDto topMarkets, 
+            MarketCoverageDto topMarkets,
             IEnumerable<PlanAvailableMarketDto> marketsWithSov,
             ProprietaryInventoryData proprietaryInventoryData,
             double planImpressionsGoal)
@@ -874,7 +875,7 @@ namespace Services.Broadcast.ApplicationServices
             var impressionsPerMarket = proprietaryInventoryData.ProprietarySummaries
                 .SelectMany(x => x.ProprietarySummaryByStations)
                 .GroupBy(x => x.MarketCode)
-                .ToDictionary(x => x.Key, 
+                .ToDictionary(x => x.Key,
                               x => x.Sum(y => y.TotalImpressions));
 
             foreach (var market in topMarketsShareOfVoice)
@@ -940,6 +941,14 @@ namespace Services.Broadcast.ApplicationServices
             return newJobId;
         }
 
+        private enum PricingJobTaskNameEnum
+        {
+            AggregateResults,
+            CalculatePricingBands,
+            CalculatePricingStations,
+            AggregateMarketResults
+        }
+
         private void _RunPricingJob(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
             // used to tie the logging messages together.
@@ -979,7 +988,8 @@ namespace Services.Broadcast.ApplicationServices
                     programInventoryParameters,
                     inventorySourceIds,
                     diagnostic,
-                    processingId);
+                    processingId,
+                    true);
 
                 _ValidateInventory(inventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
@@ -1003,22 +1013,25 @@ namespace Services.Broadcast.ApplicationServices
                     Spots = new List<PlanPricingAllocatedSpot>(),
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
-                    PricingVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion
+                    PricingVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion,
+                    PostingType = plan.PostingType
                 };
+
+                //Send it to the DS Model based on one posting type, as selected in the plan detail.
+                var planPostingTypeInventory = inventory.Where(x => x.PostingType == plan.PostingType)
+                            .ToList();
 
                 if (!goalsFulfilledByProprietaryInventory)
                 {
                     _SendPricingRequest(
                         allocationResult,
                         plan,
-                        inventory,
+                        planPostingTypeInventory,
                         token,
                         diagnostic,
                         planPricingParametersDto,
                         proprietaryInventoryData);
                 }
-
-                token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_CPM);
                 allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryInventoryData);
@@ -1032,80 +1045,116 @@ namespace Services.Broadcast.ApplicationServices
 
                 token.ThrowIfCancellationRequested();
 
-                var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() =>
-                {
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    var aggregatedResults = _PlanPricingProgramCalculationEngine.CalculateProgramResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory, proprietaryInventoryData);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    return aggregatedResults;
-                });
+                var aggregationTasks = new List<(PostingTypeEnum PostingType, PricingJobTaskNameEnum TaskName, Task Task)>();
 
-                var calculatePricingBandsTask = new Task<PlanPricingBand>(() =>
+                foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
                 {
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
-                    var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
-                    return pricingBands;
-                });
+                    var postingTypeInventory = inventory.Where(x => x.PostingType == postingType)
+                        .ToList();
 
-                var calculatePricingStationsTask = new Task<PlanPricingStationResult>(() =>
-                {
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
-                    var pricingStations = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
-                    return pricingStations;
-                });
+                    _ValidateInventory(postingTypeInventory);
 
-                var aggregateMarketResultsTask = new Task<PlanPricingResultMarkets>(() =>
-                {
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
-                    var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-                    var pricingMarketResults = _PlanPricingMarketResultsEngine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryInventoryData);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
-                    return pricingMarketResults;
-                });
+                    token.ThrowIfCancellationRequested();
 
-                aggregateResultsTask.Start();
-                calculatePricingBandsTask.Start();
-                calculatePricingStationsTask.Start();
-                aggregateMarketResultsTask.Start();
+                    var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() =>
+                    {
+                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                        var aggregatedResults = _PlanPricingProgramCalculationEngine.CalculateProgramResults(postingTypeInventory, allocationResult, goalsFulfilledByProprietaryInventory, proprietaryInventoryData);
+                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                        return aggregatedResults;
+                    });
+
+                    aggregationTasks.Add((postingType, PricingJobTaskNameEnum.AggregateResults, aggregateResultsTask));
+                    aggregateResultsTask.Start();
+
+                    //Dont calculate both NTI and NSI just the posting type for the plan
+                    if (postingType == plan.PostingType)
+                    {
+                        var calculatePricingBandsTask = new Task<PlanPricingBand>(() =>
+                        {
+                            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+                            var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(postingTypeInventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
+                            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+                            return pricingBands;
+                        });
+
+                        aggregationTasks.Add((postingType, PricingJobTaskNameEnum.CalculatePricingBands, calculatePricingBandsTask));
+                        calculatePricingBandsTask.Start();
+                    }
+
+                    var calculatePricingStationsTask = new Task<PlanPricingStationResult>(() =>
+                    {
+                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
+                        var pricingStations = _PlanPricingStationCalculationEngine.Calculate(postingTypeInventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
+                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
+                        return pricingStations;
+                    });
+
+                    aggregationTasks.Add((postingType, PricingJobTaskNameEnum.CalculatePricingStations, calculatePricingStationsTask));
+                    calculatePricingStationsTask.Start();
+
+                    var aggregateMarketResultsTask = new Task<PlanPricingResultMarkets>(() =>
+                    {
+                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                        var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+                        var pricingMarketResults = _PlanPricingMarketResultsEngine.Calculate(postingTypeInventory, allocationResult, plan, marketCoverages, proprietaryInventoryData);
+                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                        return pricingMarketResults;
+                    });
+
+                    aggregationTasks.Add((postingType, PricingJobTaskNameEnum.AggregateMarketResults, aggregateMarketResultsTask));
+                    aggregateMarketResultsTask.Start();
+                }
 
                 token.ThrowIfCancellationRequested();
 
-                aggregateResultsTask.Wait();
-                var aggregateTaskResult = aggregateResultsTask.Result;
-
-                calculatePricingBandsTask.Wait();
-                var calculatePricingBandTaskResult = calculatePricingBandsTask.Result;
-
-                calculatePricingStationsTask.Wait();
-                var calculatePricingStationTaskResult = calculatePricingStationsTask.Result;
-
-                aggregateMarketResultsTask.Wait();
-                var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
+                //Wait for all tasks nti and nsi to finish
+                var allAggregationTasks = Task.WhenAll(aggregationTasks.Select(x => x.Task).ToArray());
+                allAggregationTasks.Wait();
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
+                    //We only get one set of allocation results
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
                     _PlanRepository.SavePricingApiResults(allocationResult);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
 
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-                    _PlanRepository.SavePricingAggregateResults(aggregateTaskResult);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+                    //Pricing bands are calculated for the type of the plan only
+                    var calculatePricingBandTask = (Task<PlanPricingBand>)aggregationTasks
+                        .First(x => x.PostingType == plan.PostingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingBands)
+                        .Task;
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
-                    _PlanRepository.SavePlanPricingBands(calculatePricingBandTaskResult);
+                    _PlanRepository.SavePlanPricingBands(calculatePricingBandTask.Result);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
 
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
-                    _PlanRepository.SavePlanPricingStations(calculatePricingStationTaskResult);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
 
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
-                    _PlanRepository.SavePlanPricingMarketResults(aggregateMarketResultsTaskResult);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                    foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
+                    {
+                        var aggregateTask = (Task<PlanPricingResultBaseDto>)aggregationTasks
+                            .First(x => x.PostingType == plan.PostingType && x.TaskName == PricingJobTaskNameEnum.AggregateResults)
+                            .Task;
+                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+                        _PlanRepository.SavePricingAggregateResults(aggregateTask.Result);
+                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
+                        var calculatePricingStationTask = (Task<PlanPricingStationResult>)aggregationTasks
+                            .First(x => x.PostingType == plan.PostingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingStations)
+                            .Task;
+                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
+                        _PlanRepository.SavePlanPricingStations(calculatePricingStationTask.Result);
+                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
+
+
+                        var aggregateMarketResultsTask = (Task<PlanPricingResultMarkets>)aggregationTasks
+                            .First(x => x.PostingType == plan.PostingType && x.TaskName == PricingJobTaskNameEnum.AggregateMarketResults)
+                            .Task;
+                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                        _PlanRepository.SavePlanPricingMarketResults(aggregateMarketResultsTask.Result);
+                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                    }
+
+                    //Finsh up the job
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
                     pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
@@ -1298,7 +1347,7 @@ namespace Services.Broadcast.ApplicationServices
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var pricingModelWeeks = _GetPricingModelWeeks(
-                plan, 
+                plan,
                 parameters,
                 proprietaryInventoryData,
                 out List<int> skippedWeeksIds);
@@ -1348,7 +1397,7 @@ namespace Services.Broadcast.ApplicationServices
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var pricingModelWeeks = _GetPricingModelWeeks_v3(
-                plan, 
+                plan,
                 parameters,
                 proprietaryInventoryData,
                 out List<int> skippedWeeksIds);
@@ -1918,7 +1967,7 @@ namespace Services.Broadcast.ApplicationServices
                 MarketGroup = requestParameters.MarketGroup,
                 Margin = requestParameters.Margin
             };
-            
+
             var plan = _PlanRepository.GetPlan(planId);
             var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
 

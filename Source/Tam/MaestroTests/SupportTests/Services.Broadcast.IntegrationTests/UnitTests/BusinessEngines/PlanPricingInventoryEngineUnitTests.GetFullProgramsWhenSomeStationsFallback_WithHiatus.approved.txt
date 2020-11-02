@@ -16,6 +16,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -54,6 +55,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -92,6 +94,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -130,6 +133,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -168,6 +172,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -206,6 +211,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -244,6 +250,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -282,6 +289,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -320,6 +328,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -358,6 +367,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -396,6 +406,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -434,6 +445,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,

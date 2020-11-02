@@ -2,6 +2,7 @@
 using ApprovalTests.Reporters;
 using Common.Services;
 using Common.Services.Repositories;
+using FizzWare.NBuilder;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -1355,7 +1356,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-                var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
+            var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1551,6 +1552,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedCount, result.Count);
         }
 
+
+        [Test]
+        public void _AppendNTIConversions_AppendsNtiInventoryToInputInventory()
+        {
+            //Arrange
+            var defaultInventory = Builder<PlanPricingInventoryProgram>.CreateListOfSize(2).Build()
+                .ToList();
+
+            //Act
+            _PlanPricingInventoryEngine._AppendNTIConversions(defaultInventory);
+
+            //Assert
+            Assert.AreEqual(4, defaultInventory.Count); //The list should double we started with 2 after the method should have 4
+            Assert.AreEqual(2, defaultInventory.Count(x => x.PostingType == PostingTypeEnum.NSI)); //Should have 2 NSI
+            Assert.AreEqual(2, defaultInventory.Count(x => x.PostingType == PostingTypeEnum.NTI)); //And 2 NTI
+        }
+
         [Test]
         public void GetsPlanDaypartDaysFromPlanFlight()
         {
@@ -1561,7 +1579,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
             var planFlightDateRanges = _GetPlanFlightDateRanges();
             var flightDays = new List<int> { 1, 3, 5, 7 };
-            var planDaypartDayIds = new List<int> {1, 2, 3, 4, 5, 6, 7};
+            var planDaypartDayIds = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
 
             var result = _PlanPricingInventoryEngine._GetDaypartDaysFromFlight(flightDays, planFlightDateRanges, planDaypartDayIds);
 
@@ -2572,21 +2590,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
                 .Returns(DaypartsTestData.GetAllDisplayDayparts());
 
-                object passedParameters = null;
-                _ImpressionsCalculationEngineMock
-                    .Setup(x => x.ApplyProjectedImpressions(
-                        It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
-                        It.IsAny<ImpressionsRequestDto>(),
-                        It.IsAny<int>()))
-                    .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
-                    {
+            object passedParameters = null;
+            _ImpressionsCalculationEngineMock
+                .Setup(x => x.ApplyProjectedImpressions(
+                    It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
+                    It.IsAny<ImpressionsRequestDto>(),
+                    It.IsAny<int>()))
+                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
+                {
                         // deep copy
                         passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
-                        {
-                            programs,
-                            request,
-                            audienceId
-                        })));
+                    {
+                        programs,
+                        request,
+                        audienceId
+                    })));
 
                     foreach (var program in programs)
                     {
@@ -2595,8 +2613,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-                // Act
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
+            // Act
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2725,8 +2743,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     It.IsAny<bool>()))
                 .Callback<List<PlanPricingInventoryProgram>, int, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
                 {
-                        // deep copy
-                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                    // deep copy
+                    passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
                     {
                         programs,
                         audienceId,
@@ -2741,8 +2759,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-                // Act
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
+            // Act
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2876,8 +2894,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     It.IsAny<bool>()))
                 .Callback<List<PlanPricingInventoryProgram>, int, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
                 {
-                        // deep copy
-                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                    // deep copy
+                    passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
                     {
                         programs,
                         audienceId,
@@ -2892,8 +2910,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-                // Act
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
+            // Act
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3300,7 +3318,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     new PlanDaypartDto
                     {
-                        DaypartCodeId = wkdDaypart.Id, 
+                        DaypartCodeId = wkdDaypart.Id,
                         StartTimeSeconds = wkdDaypart.DefaultStartTimeSeconds,
                         EndTimeSeconds = wkdDaypart.DefaultEndTimeSeconds,
                         Restrictions = new PlanDaypartDto.RestrictionsDto
@@ -3981,7 +3999,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     },
                     new PlanDaypartDto
                     {
-                        DaypartCodeId = 3, 
+                        DaypartCodeId = 3,
                         StartTimeSeconds = 72000, // 8pm
                         EndTimeSeconds = 79199, // 10pm
                         Restrictions = new PlanDaypartDto.RestrictionsDto

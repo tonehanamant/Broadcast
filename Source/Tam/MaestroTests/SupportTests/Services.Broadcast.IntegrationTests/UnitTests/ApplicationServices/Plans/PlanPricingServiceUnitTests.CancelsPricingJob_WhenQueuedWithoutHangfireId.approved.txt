@@ -17,6 +17,7 @@
       "Notes": null,
       "OptimalCpm": 0.0,
       "PlanVersionId": 0,
+      "PostingType": 0,
       "Programs": [],
       "Totals": {
         "AvgCpm": 0.0,

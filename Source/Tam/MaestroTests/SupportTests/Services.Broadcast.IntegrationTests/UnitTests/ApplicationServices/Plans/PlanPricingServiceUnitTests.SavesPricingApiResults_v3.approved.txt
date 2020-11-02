@@ -2,6 +2,7 @@
   {
     "JobId": 1,
     "PlanVersionId": 0,
+    "PostingType": 1,
     "PricingCpm": 0.2351238922047386507505878000,
     "PricingVersion": "3",
     "RequestId": "djj4j4399fmmf1m212",

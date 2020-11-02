@@ -45,7 +45,7 @@ namespace Services.Broadcast.BusinessEngines
             result.Totals = _GetTotals(result.Stations);
 
             result.Stations.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, result.Totals.Impressions));
-
+            result.PostingType = inventories.First().PostingType;
             return result;
         }
 

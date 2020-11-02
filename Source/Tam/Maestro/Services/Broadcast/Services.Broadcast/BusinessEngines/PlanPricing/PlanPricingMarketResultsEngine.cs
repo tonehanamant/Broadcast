@@ -56,6 +56,8 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             result.MarketDetails.ForEach(x => x.ImpressionsPercentage = (x.Impressions / result.Totals.Impressions) * 100);
             result.MarketDetails.ForEach(x => x.StationsPerMarket = stationsByMarketCode[x.MarketCode].Count);
 
+            result.PostingType = inventory.First().PostingType;
+
             return result;
         }
 

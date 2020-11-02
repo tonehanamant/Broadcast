@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Amazon.MissingTypes;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
-    public class PlanPricingInventoryProgram : BasePlanInventoryProgram
+    public class PlanPricingInventoryProgram : BasePlanInventoryProgram, ICloneable
     {
         public double ProjectedImpressions { get; set; }
 
@@ -32,6 +33,30 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int SpotLengthId { get; set; }
 
         public List<ManifestWeek> ManifestWeeks { get; set; }
+
+        public PostingTypeEnum PostingType { get; set; }
+
+        public object Clone()
+        {
+            return new PlanPricingInventoryProgram
+            {
+                ManifestId = ManifestId,
+                StandardDaypartId = StandardDaypartId,
+                Station = Station,
+                ManifestRates = ManifestRates,
+                ManifestAudiences = ManifestAudiences,
+                ManifestDayparts = ManifestDayparts,
+                ProjectedImpressions = ProjectedImpressions,
+                ProvidedImpressions = ProvidedImpressions,
+                Cpm = Cpm,
+                Unit = Unit,
+                InventorySource = InventorySource,
+                InventoryPricingQuarterType = InventoryPricingQuarterType,
+                SpotLengthId = SpotLengthId,
+                ManifestWeeks = ManifestWeeks,
+                PostingType = PostingType
+            };
+        }
 
         public class ManifestWeek
         {

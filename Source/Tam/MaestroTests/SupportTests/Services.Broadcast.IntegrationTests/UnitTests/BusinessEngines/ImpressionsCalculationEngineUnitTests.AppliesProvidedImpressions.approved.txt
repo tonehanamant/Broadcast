@@ -15,6 +15,7 @@
       "ManifestId": 0,
       "ManifestRates": null,
       "ManifestWeeks": null,
+      "PostingType": 0,
       "ProjectedImpressions": 0.0,
       "ProvidedImpressions": 1500.0,
       "SpotLengthId": 1,

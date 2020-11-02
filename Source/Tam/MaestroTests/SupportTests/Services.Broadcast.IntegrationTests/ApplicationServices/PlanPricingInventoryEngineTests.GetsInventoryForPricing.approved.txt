@@ -110,6 +110,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 33431.66875,
     "ProvidedImpressions": 29325.0,
     "SpotLengthId": 1,
@@ -242,6 +243,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 38248.5125,
     "ProvidedImpressions": 25670.0,
     "SpotLengthId": 1,
@@ -374,6 +376,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 34029.484375,
     "ProvidedImpressions": 19890.0,
     "SpotLengthId": 1,
@@ -506,6 +509,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 74.545,
     "ProvidedImpressions": 255.0,
     "SpotLengthId": 1,
@@ -638,6 +642,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 184.715625,
     "ProvidedImpressions": 255.0,
     "SpotLengthId": 1,
@@ -770,6 +775,7 @@
         "Spots": 0
       }
     ],
+    "PostingType": 2,
     "ProjectedImpressions": 246.5,
     "ProvidedImpressions": 170.0,
     "SpotLengthId": 1,

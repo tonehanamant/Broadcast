@@ -18,6 +18,7 @@
       }
     ],
     "ManifestWeeks": null,
+    "PostingType": 0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 10000.0,
     "SpotLengthId": 0,

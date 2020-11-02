@@ -1209,6 +1209,7 @@
           <Property Name="total_impressions" Type="float" Nullable="false" />
           <Property Name="total_cpm" Type="float" Nullable="false" />
           <Property Name="total_budget" Type="float" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_parameter_inventory_proprietary_summaries">
           <Key>
@@ -1278,6 +1279,7 @@
           <Property Name="total_budget" Type="money" Nullable="false" />
           <Property Name="plan_version_pricing_job_id" Type="int" />
           <Property Name="total_spots" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_station_details">
           <Key>
@@ -1305,6 +1307,7 @@
           <Property Name="total_cpm" Type="money" Nullable="false" />
           <Property Name="total_budget" Type="money" Nullable="false" />
           <Property Name="total_stations" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_secondary_audiences">
           <Key>
@@ -14751,6 +14754,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="total_budget" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_market_details" Relationship="BroadcastModel.FK_plan_version_pricing_market_details_pricing_market" FromRole="plan_version_pricing_markets" ToRole="plan_version_pricing_market_details" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_markets_pricing_job" FromRole="plan_version_pricing_markets" ToRole="plan_version_pricing_job" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_results">
           <Key>
@@ -14769,6 +14773,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="total_spots" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" FromRole="plan_version_pricing_results" ToRole="plan_version_pricing_result_spots" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" FromRole="plan_version_pricing_results" ToRole="plan_version_pricing_job" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_stations">
           <Key>
@@ -14783,6 +14788,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="total_stations" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_station_details" Relationship="BroadcastModel.FK_plan_version_pricing_stations_plan_version_pricing_station_details" FromRole="plan_version_pricing_stations" ToRole="plan_version_pricing_station_details" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_job_plan_version_pricing_stations" FromRole="plan_version_pricing_stations" ToRole="plan_version_pricing_job" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_band_details_plan_version_pricing_bands">
           <End Type="BroadcastModel.plan_version_pricing_bands" Role="plan_version_pricing_bands" Multiplicity="1">
@@ -18455,6 +18461,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_markets">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_markets">
               <MappingFragment StoreEntitySet="plan_version_pricing_markets">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="total_budget" ColumnName="total_budget" />
                 <ScalarProperty Name="total_cpm" ColumnName="total_cpm" />
                 <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
@@ -18470,6 +18477,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_results">
               <MappingFragment StoreEntitySet="plan_version_pricing_results">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="total_spots" ColumnName="total_spots" />
                 <ScalarProperty Name="plan_version_pricing_job_id" ColumnName="plan_version_pricing_job_id" />
                 <ScalarProperty Name="total_budget" ColumnName="total_budget" />
@@ -18487,6 +18495,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_stations">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_stations">
               <MappingFragment StoreEntitySet="plan_version_pricing_stations">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="total_stations" ColumnName="total_stations" />
                 <ScalarProperty Name="total_budget" ColumnName="total_budget" />
                 <ScalarProperty Name="total_cpm" ColumnName="total_cpm" />

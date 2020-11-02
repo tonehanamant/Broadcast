@@ -31,8 +31,9 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanPricingJobDiagnostic diagnostic, 
-            Guid processingId);
+            PlanPricingJobDiagnostic diagnostic,
+            Guid processingId,
+            bool includeNtiandNsi = false);
 
         List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request, Guid processingId);
     }
@@ -186,7 +187,8 @@ namespace Services.Broadcast.BusinessEngines
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
             PlanPricingJobDiagnostic diagnostic,
-            Guid processingId)
+            Guid processingId,
+            bool includeNtiAndNsi = false)
         {
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
 
@@ -207,7 +209,7 @@ namespace Services.Broadcast.BusinessEngines
             var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic, processingId);
 
             _LogInfo($"Completed gathering inventory.  Gathered {allPrograms.Count} records. Plan Id : {plan.Id};", processingId);
-            
+
             // we don't expect spots other than 30 length spots for OpenMarket
             var thirtySecondSpotPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
             _LogInfo($"Filtered to only 30 sec spots.  Input Record Count : {allPrograms.Count}; Output Record Count : {thirtySecondSpotPrograms.Count}; Plan Id : {plan.Id};", processingId);
@@ -239,19 +241,76 @@ namespace Services.Broadcast.BusinessEngines
             _ApplyProvidedImpressions(filteredPrograms, plan);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
 
-            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
-            ApplyNTIConversionToNSI(plan, filteredPrograms);
-            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+            var calculatedFiltered = new List<PlanPricingInventoryProgram>();
 
-            _LogInfo($"Beginning filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
-            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            var calculatedFiltered = CalculateProgramCpmAndFilterByMinAndMaxCpm(filteredPrograms, parameters?.MinCPM, parameters?.MaxCPM);
-            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            _LogInfo($"Completed filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Output Record Count : {calculatedFiltered.Count}; Plan Id : {plan.Id};", processingId);
+            if (includeNtiAndNsi)
+            {
+                _LogInfo($"Beginning conversion and appending of NSI items. Input Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+                _AppendNTIConversions(filteredPrograms);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+                _LogInfo($"Completed conversion and appending of NSI items. Input Record Count : {filteredPrograms.Count}; Output Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
+
+                foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
+                {
+                    var postingTypeFilteredProgram = filteredPrograms.Where(x => x.PostingType == postingType)
+                        .ToList();
+
+                    _LogInfo($"Beginning filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
+                    calculatedFiltered.AddRange(CalculateProgramCpmAndFilterByMinAndMaxCpm(postingTypeFilteredProgram, parameters?.MinCPM, parameters?.MaxCPM));
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
+                    _LogInfo($"Completed filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Output Record Count : {calculatedFiltered.Count}; Plan Id : {plan.Id};", processingId);
+                }
+            }
+            else
+            {
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+                ApplyNTIConversionToNSI(plan, filteredPrograms);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+
+                _LogInfo($"Beginning filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
+                calculatedFiltered = CalculateProgramCpmAndFilterByMinAndMaxCpm(filteredPrograms, parameters?.MinCPM, parameters?.MaxCPM);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
+                _LogInfo($"Completed filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Output Record Count : {calculatedFiltered.Count}; Plan Id : {plan.Id};", processingId);
+            }
 
             _LogInfo($"Completed and returning {calculatedFiltered.Count} records. Plan Id : {plan.Id};", processingId);
 
+
             return calculatedFiltered;
+        }
+
+        internal void _AppendNTIConversions(List<PlanPricingInventoryProgram> programs)
+        {
+            var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
+                    .GetLatestNtiToNsiConversionRates()
+                    .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
+
+            var ntiPrograms = new List<PlanPricingInventoryProgram>();
+
+            foreach (var program in programs)
+            {
+                var conversionRate = conversionRatesByDaypartCodeId[program.StandardDaypartId];
+                //Programs are NSI by default so we populate existing posting type to NSI
+                program.PostingType = PostingTypeEnum.NSI;
+
+                //Create a copy of the program and convert it to NTI
+                var ntiProgram = (PlanPricingInventoryProgram)program.Clone();
+                ntiProgram.PostingType = PostingTypeEnum.NTI;
+
+                ntiProgram.ProjectedImpressions *= conversionRate;
+
+                if (ntiProgram.ProvidedImpressions.HasValue)
+                    ntiProgram.ProvidedImpressions *= conversionRate;
+
+                //Add to the list of nsi converted programs
+                ntiPrograms.Add(ntiProgram);
+            }
+
+            //Append to existing NTI program list the converted NSI program list
+            programs.AddRange(ntiPrograms);
         }
 
         private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
@@ -794,6 +853,8 @@ namespace Services.Broadcast.BusinessEngines
 
                 if (program.ProvidedImpressions.HasValue)
                     program.ProvidedImpressions *= conversionRate;
+
+                program.PostingType = PostingTypeEnum.NTI;
             }
         }
 

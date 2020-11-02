@@ -3,7 +3,7 @@
     "Method": {
       "Name": "<_SendPricingRequest_v2>b__0",
       "AssemblyName": "Services.Broadcast, Version=20.10.1.0, Culture=neutral, PublicKeyToken=null",
-      "ClassName": "Services.Broadcast.ApplicationServices.PlanPricingService+<>c__DisplayClass68_0",
+      "ClassName": "Services.Broadcast.ApplicationServices.Plan.PlanPricingService+<>c__DisplayClass69_0",
       "Signature": "Void <_SendPricingRequest_v2>b__0()",
       "Signature2": "System.Void <_SendPricingRequest_v2>b__0()",
       "MemberType": 8,
