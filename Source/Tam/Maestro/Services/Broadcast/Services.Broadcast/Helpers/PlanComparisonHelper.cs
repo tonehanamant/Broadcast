@@ -67,7 +67,8 @@ namespace Services.Broadcast.Helpers
             jsonResolver.Ignore(typeof(PlanDto), "ModifiedDate");
             jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
             jsonResolver.Ignore(typeof(PlanDto), "JobId");
-            jsonResolver.Ignore(typeof(PlanDto), "IsOutOfSync");
+            jsonResolver.Ignore(typeof(PlanDto), "IsOutOfSync");            
+            jsonResolver.Ignore(typeof(PlanDto), "AvailableMarketsWithSovCount");
 
             // ignored - not pricing inputs
             jsonResolver.Ignore(typeof(PlanDto), "Name");
