@@ -1113,7 +1113,7 @@ BEGIN
 			pvps.posting_type = COALESCE(pv.posting_type, 1)
 		FROM 
 			[plan_version_pricing_stations] pvps
-			  INNER JOIN [plan_version_pricing_job] pvpj
+			  LEFT JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvps.plan_version_pricing_job_id
 			  LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
@@ -1134,7 +1134,7 @@ BEGIN
 			pvpm.posting_type = COALESCE(pv.posting_type, 1)
 		FROM 
 			[plan_version_pricing_markets] pvpm
-				INNER JOIN [plan_version_pricing_job] pvpj
+				LEFT JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvpm.plan_version_pricing_job_id
 				LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
@@ -1146,6 +1146,8 @@ END
 IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_results') 
 				AND name = 'posting_type')
 BEGIN
+	DELETE FROM [plan_version_pricing_results] WHERE plan_Version_pricing_job_id IS NULL
+
 	ALTER TABLE [plan_version_pricing_results] ADD [posting_type] INT NULL
 	EXEC ('
 		 UPDATE
@@ -1154,7 +1156,7 @@ BEGIN
 			pvpr.posting_type = COALESCE(pv.posting_type, 1)
 		 FROM 
 			[plan_version_pricing_results] pvpr
-			  JOIN [plan_version_pricing_job] pvpj
+			  LEFT JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvpr.plan_version_pricing_job_id
 			  LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
