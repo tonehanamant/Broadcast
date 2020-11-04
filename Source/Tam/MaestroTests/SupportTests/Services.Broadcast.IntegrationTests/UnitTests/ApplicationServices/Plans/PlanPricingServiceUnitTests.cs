@@ -10027,6 +10027,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 1,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -10096,6 +10097,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 2,
                         StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 6,
@@ -10155,6 +10157,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 3,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
@@ -10224,6 +10227,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         ManifestId = 4,
                         StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
                         Station = new DisplayBroadcastStation
                         {
                             Id = 5,
