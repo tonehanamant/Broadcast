@@ -558,6 +558,7 @@
     <Compile Include="UnitTests\Helpers\DaypartHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\KeyHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\PlanPricingBuyingFileHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\WebUtilityHelperUnitTests.cs" />
     <Compile Include="UnitTests\InventoryRatingsProcessing\MediaMonthCrunchStatusTests.cs" />
     <Compile Include="UnitTests\PostingBookServiceTests.cs" />

@@ -144,11 +144,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto buyingApiRequest);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest);
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto_v3 buyingApiRequest);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest);
 
         PlanBuyingScxExportResponse ExportPlanBuyingScx(PlanBuyingScxExportRequest request);
     }
@@ -931,6 +931,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _SendBuyingRequest(
                         allocationResult,
                         plan,
+                        jobId,
                         inventory,
                         token,
                         diagnostic,
@@ -1207,6 +1208,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SendBuyingRequest(
             PlanBuyingAllocationResult allocationResult,
             PlanDto plan,
+            int jobId,
             List<PlanBuyingInventoryProgram> inventory,
             CancellationToken token,
             PlanBuyingJobDiagnostic diagnostic,
@@ -1218,6 +1220,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _SendBuyingRequest_v2(
                     allocationResult,
                     plan,
+                    jobId,
                     inventory,
                     token,
                     diagnostic,
@@ -1229,6 +1232,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _SendBuyingRequest_v3(
                     allocationResult,
                     plan,
+                    jobId,
                     inventory,
                     token,
                     diagnostic,
@@ -1244,6 +1248,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SendBuyingRequest_v2(
             PlanBuyingAllocationResult allocationResult,
             PlanDto plan,
+            int jobId,
             List<PlanBuyingInventoryProgram> inventory,
             CancellationToken token,
             PlanBuyingJobDiagnostic diagnostic,
@@ -1265,7 +1270,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spotsAndMappings.Spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, buyingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -1292,6 +1297,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SendBuyingRequest_v3(
             PlanBuyingAllocationResult allocationResult,
             PlanDto plan,
+            int jobId,
             List<PlanBuyingInventoryProgram> inventory,
             CancellationToken token,
             PlanBuyingJobDiagnostic diagnostic,
@@ -1313,7 +1319,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spotsAndMappings.Spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, buyingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -1564,11 +1570,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return grouped;
         }
 
-        public void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto buyingApiRequest)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest)
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, buyingApiRequest);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest);
             }
             catch (Exception exception)
             {
@@ -1576,11 +1582,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto_v3 buyingApiRequest)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest)
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, buyingApiRequest);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest);
             }
             catch (Exception exception)
             {

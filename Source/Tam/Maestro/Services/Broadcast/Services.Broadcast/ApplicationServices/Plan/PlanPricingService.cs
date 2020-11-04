@@ -126,10 +126,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanPricingBandDto GetPricingBandsForVersion(int planId, int planVersionId);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest);
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
     }
 
@@ -1026,6 +1026,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _SendPricingRequest(
                         allocationResult,
                         plan,
+                        jobId,
                         planPostingTypeInventory,
                         token,
                         diagnostic,
@@ -1301,6 +1302,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SendPricingRequest(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
+            int jobId,
             List<PlanPricingInventoryProgram> inventory,
             CancellationToken token,
             PlanPricingJobDiagnostic diagnostic,
@@ -1312,6 +1314,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _SendPricingRequest_v2(
                     allocationResult,
                     plan,
+                    jobId,
                     inventory,
                     token,
                     diagnostic,
@@ -1323,6 +1326,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _SendPricingRequest_v3(
                     allocationResult,
                     plan,
+                    jobId,
                     inventory,
                     token,
                     diagnostic,
@@ -1338,6 +1342,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SendPricingRequest_v2(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
+            int jobId,
             List<PlanPricingInventoryProgram> inventory,
             CancellationToken token,
             PlanPricingJobDiagnostic diagnostic,
@@ -1364,7 +1369,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, pricingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId,  pricingApiRequest));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1388,6 +1393,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SendPricingRequest_v3(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
+            int jobId,
             List<PlanPricingInventoryProgram> inventory,
             CancellationToken token,
             PlanPricingJobDiagnostic diagnostic,
@@ -1414,7 +1420,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, pricingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1658,12 +1664,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return grouped.ToList();
         }
 
-        public void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest)
         {
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, pricingApiRequest);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest);
             }
             catch (Exception exception)
             {
@@ -1671,12 +1677,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest)
         {
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, pricingApiRequest);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest);
             }
             catch (Exception exception)
             {

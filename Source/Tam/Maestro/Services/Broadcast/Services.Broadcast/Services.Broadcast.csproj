@@ -828,6 +828,7 @@
     <Compile Include="Helpers\Json\JsonSerializerHelper.cs" />
     <Compile Include="Helpers\PlanComparisonHelper.cs" />
     <Compile Include="Helpers\PlanGoalHelper.cs" />
+    <Compile Include="Helpers\PlanPricingBuyingFileHelper.cs" />
     <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />

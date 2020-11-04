@@ -1,11 +1,6 @@
-﻿using Amazon;
-using Amazon.S3;
-using Amazon.S3.Transfer;
-using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Helpers;
 using System;
-using System.IO;
-using System.IO.Compression;
-using Tam.Maestro.Common;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 
@@ -13,9 +8,9 @@ namespace Services.Broadcast.Clients
 {
     public interface IPricingRequestLogClient
     {
-        void SavePricingRequest(int planId, PlanPricingApiRequestDto planPricingApiRequestDto);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto planPricingApiRequestDto);
 
-        void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto);
     }
 
     public class PricingRequestLogClientAmazonS3 : IPricingRequestLogClient
@@ -29,26 +24,26 @@ namespace Services.Broadcast.Clients
             _LogToAmazonS3 = requestLogClientAmazonS3;
         }
 
-        public void SavePricingRequest(int planId, PlanPricingApiRequestDto planPricingApiRequestDto)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto planPricingApiRequestDto)
         {
-            var fileName = _GetFileName(planId);
+            var fileName = _GetFileName(planId, jobId);
             var keyName = _GetKeyName(fileName);
             _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planPricingApiRequestDto);
         }
 
-        public void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto)
         {
-            var fileName = _GetFileName(planId);
+            var fileName = _GetFileName(planId, jobId);
             var keyName = _GetKeyName(fileName);
             _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planPricingApiRequestDto);
         }
 
-        private string _GetFileName(int planId)
+        private string _GetFileName(int planId, int jobId)
         {
             var appSettings = new AppSettings();
             var environment = appSettings.Environment.ToString().ToLower();
-            var ticks = DateTime.Now.Ticks;
-            return $"{environment}-request-{planId}-{ticks}.log";
+            var fileName = PlanPricingBuyingFileHelper.GetRequestFileName(environment, planId, jobId, DateTime.Now);
+            return fileName;
         }
 
         private string _GetKeyName(string fileName)

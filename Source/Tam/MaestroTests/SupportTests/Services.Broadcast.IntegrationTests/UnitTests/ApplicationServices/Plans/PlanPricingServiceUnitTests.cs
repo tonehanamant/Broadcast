@@ -158,7 +158,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_BroadcastAudienceRepositoryMock.Object);
 
             _PricingRequestLogClient
-                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto>()));
+                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto>()));
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
