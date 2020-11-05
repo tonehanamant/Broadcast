@@ -8992,7 +8992,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" });
+                .Returns(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" } );
 
             var service = _GetService();
 
@@ -9001,14 +9001,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(WaitHandle), "Handle");
-            jsonResolver.Ignore(typeof(Job), "Type");
-            jsonResolver.Ignore(typeof(Job), "Method");
             var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
-            var passedParameters = _AsyncTaskHelperStub.TaskFireAndForgetActions;
+            var passedParameters = _AsyncTaskHelperStub.TaskFireAndForgetActions.Select(s => s.Target).ToList();
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));
@@ -9252,15 +9250,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(WaitHandle), "Handle");
-                jsonResolver.Ignore(typeof(Job), "Type");
-                jsonResolver.Ignore(typeof(Job), "Method");
+                jsonResolver.Ignore(typeof(WaitHandle), "Handle");                
                 var settings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                var passedParameters = _AsyncTaskHelperStub.TaskFireAndForgetActions;
+                var passedParameters = _AsyncTaskHelperStub.TaskFireAndForgetActions.Select(s => s.Target).ToList();
 
                 // Assert
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));

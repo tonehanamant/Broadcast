@@ -217,12 +217,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var creatingNewPlan = PlanComparisonHelper.IsCreatingNewPLan(plan);
 
+            // get the "before plan" before we save.
+            // used later for comparison
             PlanDto beforePlan = null;
             if (creatingNewPlan == false)
-            {
-                // get the "before plan" before we save.
-                // used later for comparison
-                beforePlan = _PlanRepository.GetPlan(plan.Id);
+            {                
+                beforePlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
             }
 
             if (plan.CreativeLengths.Count == 1)
@@ -269,7 +269,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                     else
                     {
-                        // TODO: SDE If pricing was already run do we have pricing parameters here?
                         _PlanRepository.SavePlan(plan, createdBy, createdDate);
                     }
                 }
@@ -293,7 +292,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SetPlanPricingParameters(plan);
 
             /*** Handle Pricing ***/
-            var afterPlan = _PlanRepository.GetPlan(plan.Id);
+            
+            // This plan.id and plan.versionId were updated in their respective saves.
+            // if a new version was published then the VersionId is the latest published version.
+            // if a draft was saved then the VersionId is the draft version instead.
+            // either way it gets us the after plan as expected.
+            var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
 
             var hasJobResultsForThisPlan = false;
             var planPropertiesOutOfSync = false;

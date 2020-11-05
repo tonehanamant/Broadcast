@@ -8,7 +8,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         [JsonProperty("request_id")]
         public string RequestId { get; set; }
         [JsonProperty("results")]
-        public List<PlanPricingApiSpotsResultDto> Results { get; set; }
+        public List<PlanPricingApiSpotsResultDto> Results { get; set; } = new List<PlanPricingApiSpotsResultDto>();
         [JsonProperty("error")]
         public PlanPricingApiSpotsErrorDto Error { get; set; }
     }
