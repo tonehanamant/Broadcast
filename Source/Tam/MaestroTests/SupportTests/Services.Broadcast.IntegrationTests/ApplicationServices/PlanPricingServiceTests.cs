@@ -1174,8 +1174,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             _PlanPricingService.RunPricingJob(pricingParameters, job.Id, CancellationToken.None);
 
+            var savedPlanAfter = _PlanRepository.GetPlan(planId);
+
             plan.Id = planId;
-            plan.VersionId = 1;
+            plan.VersionId = savedPlanAfter.VersionId;
             plan.IsDraft = true;
 
             var draftId = _PlanService.SavePlan(plan, username, currentDate);
