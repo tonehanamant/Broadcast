@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Castle.Components.DictionaryAdapter;
+using FizzWare.NBuilder.Extensions;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -9526,6 +9527,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Setup(x => x.SavePricingApiResults(It.IsAny<PlanPricingAllocationResult>()))
                     .Callback<PlanPricingAllocationResult>(p => passedParameters.Add(p));
 
+                _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeekById(It.IsAny<int>()))
+                    .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeek);
+
                 var service = _GetService();
 
                 // Act
@@ -9557,47 +9561,388 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new ManifestRate { SpotLengthId = 1, Cost = 50 },
                 new ManifestRate { SpotLengthId = 2, Cost = 25 },
             };
+            inventory[1].ManifestId = 2;
+            inventory[1].Station = new DisplayBroadcastStation {Id = 6, LegacyCallLetters = "WCBS", MarketCode = 106,};
             inventory[1].ManifestRates = new List<ManifestRate>
             {
                 new ManifestRate { SpotLengthId = 1, Cost = 0 },
                 new ManifestRate { SpotLengthId = 2, Cost = 25 },
             };
+            inventory[2].ManifestId = 3;
+            inventory[2].Station = new DisplayBroadcastStation { Id = 7, LegacyCallLetters = "WWWW", MarketCode = 107, };
             inventory[2].ManifestRates = new List<ManifestRate>
             {
                 new ManifestRate { SpotLengthId = 1, Cost = 50 },
                 new ManifestRate { SpotLengthId = 2, Cost = 0 },
             };
+            inventory[3].ManifestId = 4;
+            inventory[3].Station = new DisplayBroadcastStation { Id = 8, LegacyCallLetters = "WYYY", MarketCode = 108, };
             inventory[3].ManifestRates = new List<ManifestRate>
             {
                 new ManifestRate { SpotLengthId = 1, Cost = 0 },
                 new ManifestRate { SpotLengthId = 2, Cost = 0 },
             };
 
-            var flattedProgramsWithDayparts = inventory
-                .SelectMany(x => x.ManifestDayparts.Select(d => new PlanPricingService.ProgramWithManifestDaypart
-                {
-                    Program = x,
-                    ManifestDaypart = d
-                })).ToList();
-
-            var groupedInventory = flattedProgramsWithDayparts.GroupBy(x =>
-                new PlanPricingInventoryGroup
-                {
-                    StationId = x.Program.Station.Id,
-                    DaypartId = x.ManifestDaypart.Daypart.Id,
-                    PrimaryProgramName = x.ManifestDaypart.PrimaryProgram.Name
-                }).ToList();
+            var groupedInventory = PlanPricingService._GroupInventory(inventory);
 
             var skippedWeekIds = new List<int>();
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
-                .Returns(_GetLatestMarketCoverages());
+                .Returns(MarketsTestData.GetLatestMarketCoverages);
 
             var service = _GetService();
 
             // Act
             var result = service._GetPricingModelSpots_v3(groupedInventory, skippedWeekIds);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingModelSpots_V3_HandleDupWeekInventory()
+        {
+            // Arrange
+            var inventory = new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 103,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 104,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 105,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 100
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 103,
+                            }
+                        }
+                    }
+                };
+            var skippedWeekIds = new List<int>();
+            var groupedInventory = PlanPricingService._GroupInventory(inventory);
+            
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(MarketsTestData.GetLatestMarketCoverages());
+
+            var service = _GetService();
+
+            // Act
+            var result = service._GetPricingModelSpots_v3(groupedInventory, skippedWeekIds);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingModelSpots_HandleDupWeekInventory()
+        {
+            // Arrange
+            var inventory = new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 103,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 104,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 105,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 100
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 103,
+                            }
+                        }
+                    }
+                };
+            var skippedWeekIds = new List<int>();
+            var groupedInventory = PlanPricingService._GroupInventory(inventory);
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(MarketsTestData.GetLatestMarketCoverages());
+
+            var service = _GetService();
+
+            // Act
+            var result = service._GetPricingModelSpots(groupedInventory, skippedWeekIds);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -10358,17 +10703,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 100,
+                                ContractMediaWeekId = 735,
+                                InventoryMediaWeekId = 735
                             },
                             new ManifestWeek
                             {
                                 Spots = 2,
-                                ContractMediaWeekId = 101,
+                                ContractMediaWeekId = 736,
+                                InventoryMediaWeekId = 736
                             },
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 102,
+                                ContractMediaWeekId = 737,
+                                InventoryMediaWeekId = 737
                             }
                         }
                     },
@@ -10500,17 +10848,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 100,
+                                ContractMediaWeekId = 735,
+                                InventoryMediaWeekId = 735
                             },
                             new ManifestWeek
                             {
                                 Spots = 2,
-                                ContractMediaWeekId = 101,
+                                ContractMediaWeekId = 736,
+                                InventoryMediaWeekId = 736
                             },
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 102,
+                                ContractMediaWeekId = 737,
+                                InventoryMediaWeekId = 737
                             }
                         }
                     },
@@ -10576,17 +10927,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 100,
+                                ContractMediaWeekId = 735,
+                                InventoryMediaWeekId = 735
                             },
                             new ManifestWeek
                             {
                                 Spots = 2,
-                                ContractMediaWeekId = 101,
+                                ContractMediaWeekId = 736,
+                                InventoryMediaWeekId = 736
                             },
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 102,
+                                ContractMediaWeekId = 737,
+                                InventoryMediaWeekId = 737
                             }
                         }
                     },
@@ -10653,17 +11007,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 100,
+                                ContractMediaWeekId = 735,
+                                InventoryMediaWeekId = 735
                             },
                             new ManifestWeek
                             {
                                 Spots = 2,
-                                ContractMediaWeekId = 101,
+                                ContractMediaWeekId = 736,
+                                InventoryMediaWeekId = 736
                             },
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 102,
+                                ContractMediaWeekId = 737,
+                                InventoryMediaWeekId = 737
                             }
                         }
                     },
@@ -10795,17 +11152,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 100,
+                                ContractMediaWeekId = 735,
+                                InventoryMediaWeekId = 735
                             },
                             new ManifestWeek
                             {
                                 Spots = 2,
-                                ContractMediaWeekId = 101,
+                                ContractMediaWeekId = 736,
+                                InventoryMediaWeekId = 736
                             },
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 102,
+                                ContractMediaWeekId = 737,
+                                InventoryMediaWeekId = 737
                             }
                         }
                     },
@@ -10871,17 +11231,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 100,
+                                ContractMediaWeekId = 735,
+                                InventoryMediaWeekId = 735
                             },
                             new ManifestWeek
                             {
                                 Spots = 2,
-                                ContractMediaWeekId = 101,
+                                ContractMediaWeekId = 736,
+                                InventoryMediaWeekId = 736
                             },
                             new ManifestWeek
                             {
                                 Spots = 1,
-                                ContractMediaWeekId = 102,
+                                ContractMediaWeekId = 737,
+                                InventoryMediaWeekId = 737
                             }
                         }
                     }

@@ -1,0 +1,104 @@
+[
+  {
+    "daypart_id": 15,
+    "id": 1,
+    "impressions": 1000.0,
+    "market_code": 101,
+    "percentage_of_us": 0.06309,
+    "spot_cost": [
+      {
+        "spot_length_cost": 50.0,
+        "spot_length_id": 1
+      }
+    ],
+    "spot_days": 1,
+    "spot_hours": 1.0,
+    "station_id": 5,
+    "week_id": 100
+  },
+  {
+    "daypart_id": 15,
+    "id": 1,
+    "impressions": 1000.0,
+    "market_code": 101,
+    "percentage_of_us": 0.06309,
+    "spot_cost": [
+      {
+        "spot_length_cost": 50.0,
+        "spot_length_id": 1
+      }
+    ],
+    "spot_days": 1,
+    "spot_hours": 1.0,
+    "station_id": 5,
+    "week_id": 101
+  },
+  {
+    "daypart_id": 15,
+    "id": 1,
+    "impressions": 1000.0,
+    "market_code": 101,
+    "percentage_of_us": 0.06309,
+    "spot_cost": [
+      {
+        "spot_length_cost": 100.0,
+        "spot_length_id": 1
+      }
+    ],
+    "spot_days": 1,
+    "spot_hours": 1.0,
+    "station_id": 5,
+    "week_id": 102
+  },
+  {
+    "daypart_id": 15,
+    "id": 1,
+    "impressions": 1000.0,
+    "market_code": 101,
+    "percentage_of_us": 0.06309,
+    "spot_cost": [
+      {
+        "spot_length_cost": 100.0,
+        "spot_length_id": 1
+      }
+    ],
+    "spot_days": 1,
+    "spot_hours": 1.0,
+    "station_id": 5,
+    "week_id": 103
+  },
+  {
+    "daypart_id": 15,
+    "id": 1,
+    "impressions": 1000.0,
+    "market_code": 101,
+    "percentage_of_us": 0.06309,
+    "spot_cost": [
+      {
+        "spot_length_cost": 50.0,
+        "spot_length_id": 1
+      }
+    ],
+    "spot_days": 1,
+    "spot_hours": 1.0,
+    "station_id": 5,
+    "week_id": 104
+  },
+  {
+    "daypart_id": 15,
+    "id": 1,
+    "impressions": 1000.0,
+    "market_code": 101,
+    "percentage_of_us": 0.06309,
+    "spot_cost": [
+      {
+        "spot_length_cost": 50.0,
+        "spot_length_id": 1
+      }
+    ],
+    "spot_days": 1,
+    "spot_hours": 1.0,
+    "station_id": 5,
+    "week_id": 105
+  }
+]

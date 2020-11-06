@@ -687,22 +687,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _PlanRepository.GetPlanPricingRuns(planId);
         }
 
-        private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
+        internal List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
             List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> groupedInventory,
             List<int> skippedWeeksIds)
         {
             var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
 
-            foreach (var inventoryGroupping in groupedInventory)
+            foreach (var inventoryGrouping in groupedInventory)
             {
-                var programsInGrouping = inventoryGroupping.Select(x => x.Program).ToList();
+                var programSpots = new List<ProgramDaypartWeekGroupItem>();
+
+                var programsInGrouping = inventoryGrouping.Select(x => x.Program).ToList();
                 var manifestId = programsInGrouping.First().ManifestId;
 
                 foreach (var program in programsInGrouping)
                 {
+                    var programMinimumContractMediaWeekId = program.ManifestWeeks.Select(w => w.ContractMediaWeekId).Min();
+
                     foreach (var daypart in program.ManifestDayparts)
                     {
+                        var programInventoryDaypartId = daypart.Daypart.Id;
+
                         var impressions = program.Impressions;
                         var spotCost = program.ManifestRates.Single().Cost;
 
@@ -715,21 +721,61 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         //filter out skipped weeks
                         var spots = program.ManifestWeeks
                             .Where(x => !skippedWeeksIds.Contains(x.ContractMediaWeekId))
-                            .Select(manifestWeek => new PlanPricingApiRequestSpotsDto
+                            .Select(manifestWeek => new ProgramDaypartWeekGroupItem
                             {
-                                Id = manifestId,
-                                MediaWeekId = manifestWeek.ContractMediaWeekId,
-                                DaypartId = program.StandardDaypartId,
-                                Impressions = impressions,
-                                Cost = spotCost,
-                                StationId = program.Station.Id,
-                                MarketCode = program.Station.MarketCode.Value,
-                                PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
-                                SpotDays = daypart.Daypart.ActiveDays,
-                                SpotHours = daypart.Daypart.GetDurationPerDayInHours()
+                                ContractedInventoryId = manifestId,
+                                ContractedMediaWeekId = manifestWeek.ContractMediaWeekId,
+                                InventoryDaypartId = programInventoryDaypartId,
+                                Spot = new PlanPricingApiRequestSpotsDto
+                                {
+                                    Id = manifestId,
+                                    MediaWeekId = manifestWeek.ContractMediaWeekId,
+                                    DaypartId = program.StandardDaypartId,
+                                    Impressions = impressions,
+                                    Cost = spotCost,
+                                    StationId = program.Station.Id,
+                                    MarketCode = program.Station.MarketCode.Value,
+                                    PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
+                                    SpotDays = daypart.Daypart.ActiveDays,
+                                    SpotHours = daypart.Daypart.GetDurationPerDayInHours()
+                                },
+                                ProgramMinimumContractMediaWeekId = programMinimumContractMediaWeekId
                             });
 
-                        pricingModelSpots.AddRange(spots);
+                        programSpots.AddRange(spots);
+                    }
+                }
+
+                var groupedProgramSpots = programSpots.GroupBy(i => new { i.ContractedInventoryId, i.ContractedMediaWeekId, i.InventoryDaypartId }).ToList();
+                foreach (var group in groupedProgramSpots)
+                {
+                    if (group.Count() == 1)
+                    {
+                        pricingModelSpots.Add(group.First().Spot);
+                        continue;
+                    }
+
+                    var currentMediaWeek = group.Key.ContractedMediaWeekId;
+
+                    // keep the one with the most recent start day : the program would have all the weeks that generated that spot
+                    ProgramDaypartWeekGroupItem keptItem = null;
+                    foreach (var item in group)
+                    {
+                        if (keptItem == null)
+                        {
+                            keptItem = item;
+                            continue;
+                        }
+
+                        if (item.ProgramMinimumContractMediaWeekId > keptItem.ProgramMinimumContractMediaWeekId)
+                        {
+                            keptItem = item;
+                        }
+                    }
+
+                    if (keptItem != null)
+                    {
+                        pricingModelSpots.Add(keptItem.Spot);
                     }
                 }
             }
@@ -1450,6 +1496,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             foreach (var inventoryGrouping in groupedInventory)
             {
+                var programSpots = new List<ProgramDaypartWeekGroupItem_V3>();
+
                 var programsInGrouping = inventoryGrouping.Select(x => x.Program).ToList();
                 var manifestId = programsInGrouping.First().ManifestId;
 
@@ -1466,8 +1514,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         continue;
                     }
 
+                    var programMinimumContractMediaWeekId = program.ManifestWeeks.Select(w => w.ContractMediaWeekId).Min();
+
                     foreach (var daypart in program.ManifestDayparts)
                     {
+                        var programInventoryDaypartId = daypart.Daypart.Id;
+
                         var impressions = program.Impressions;
 
                         if (impressions <= 0)
@@ -1476,21 +1528,61 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         //filter out skipped weeks
                         var spots = program.ManifestWeeks
                             .Where(x => !skippedWeeksIds.Contains(x.ContractMediaWeekId))
-                            .Select(manifestWeek => new PlanPricingApiRequestSpotsDto_v3
+                            .Select(manifestWeek => new ProgramDaypartWeekGroupItem_V3
                             {
-                                Id = manifestId,
-                                MediaWeekId = manifestWeek.ContractMediaWeekId,
-                                Impressions30sec = impressions,
-                                StationId = program.Station.Id,
-                                MarketCode = program.Station.MarketCode.Value,
-                                DaypartId = program.StandardDaypartId,
-                                PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
-                                SpotDays = daypart.Daypart.ActiveDays,
-                                SpotHours = daypart.Daypart.GetDurationPerDayInHours(),
-                                SpotCost = validSpotCosts
-                            });
+                                ContractedInventoryId = manifestId,
+                                ContractedMediaWeekId = manifestWeek.ContractMediaWeekId,
+                                InventoryDaypartId = programInventoryDaypartId,
+                                Spot = new PlanPricingApiRequestSpotsDto_v3
+                                {
+                                    Id = manifestId,
+                                    MediaWeekId = manifestWeek.ContractMediaWeekId,
+                                    Impressions30sec = impressions,
+                                    StationId = program.Station.Id,
+                                    MarketCode = program.Station.MarketCode.Value,
+                                    DaypartId = program.StandardDaypartId,
+                                    PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
+                                    SpotDays = daypart.Daypart.ActiveDays,
+                                    SpotHours = daypart.Daypart.GetDurationPerDayInHours(),
+                                    SpotCost = validSpotCosts
+                                },
+                                ProgramMinimumContractMediaWeekId = programMinimumContractMediaWeekId
+                            }).ToList();
 
-                        pricingModelSpots.AddRange(spots);
+                        programSpots.AddRange(spots);
+                    }
+                }
+
+                var groupedProgramSpots = programSpots.GroupBy(i => new {i.ContractedInventoryId, i.ContractedMediaWeekId, i.InventoryDaypartId}).ToList();
+                foreach (var group in groupedProgramSpots)
+                {
+                    if (group.Count() == 1)
+                    {
+                        pricingModelSpots.Add(group.First().Spot);
+                        continue;
+                    }
+
+                    var currentMediaWeek = group.Key.ContractedMediaWeekId;
+
+                    // keep the one with the most recent start day : the program would have all the weeks that generated that spot
+                    ProgramDaypartWeekGroupItem_V3 keptItem = null;
+                    foreach (var item in group)
+                    {
+                        if (keptItem == null)
+                        {
+                            keptItem = item;
+                            continue;
+                        }
+
+                        if (item.ProgramMinimumContractMediaWeekId > keptItem.ProgramMinimumContractMediaWeekId)
+                        {
+                            keptItem = item;
+                        }
+                    }
+
+                    if (keptItem != null)
+                    {
+                        pricingModelSpots.Add(keptItem.Spot);
                     }
                 }
             }
@@ -1644,7 +1736,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 x => plan.Equivalized ? _SpotLengthEngine.GetDeliveryMultiplierBySpotLengthId(x.SpotLengthId) : 1);
         }
 
-        private List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> _GroupInventory(List<PlanPricingInventoryProgram> inventory)
+        internal static List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> _GroupInventory(List<PlanPricingInventoryProgram> inventory)
         {
             var flattedProgramsWithDayparts = inventory
                 .SelectMany(x => x.ManifestDayparts.Select(d => new ProgramWithManifestDaypart
@@ -2318,6 +2410,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
             public PlanPricingInventoryProgram Program { get; set; }
 
             public PlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
+        }
+
+        private class ProgramDaypartWeekGroupItem
+        {
+            public int ContractedInventoryId { get; set; }
+            public int ContractedMediaWeekId { get; set; }
+            public int InventoryDaypartId { get; set; }
+            public PlanPricingApiRequestSpotsDto Spot { get; set; }
+            public int ProgramMinimumContractMediaWeekId { get; set; }
+        }
+
+        private class ProgramDaypartWeekGroupItem_V3
+        {
+            public int ContractedInventoryId { get; set; }
+            public int ContractedMediaWeekId { get; set; }
+            public int InventoryDaypartId { get; set; }
+            public PlanPricingApiRequestSpotsDto_v3 Spot { get; set; }
+            public int ProgramMinimumContractMediaWeekId { get; set; }
         }
     }
 }
