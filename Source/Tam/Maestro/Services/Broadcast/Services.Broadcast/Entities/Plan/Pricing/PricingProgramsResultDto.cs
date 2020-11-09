@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -12,6 +13,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public PricingProgramsResultTotalsDto Totals { get; set; }
         public List<PlanPricingProgramProgramDto> Programs { get; set; }
+        public PostingTypeEnum PostingType { get; set; }
     }
 
     public class PricingProgramsResultTotalsDto

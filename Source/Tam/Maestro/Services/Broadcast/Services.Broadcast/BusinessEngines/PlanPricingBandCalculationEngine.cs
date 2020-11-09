@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,8 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
             PlanPricingParametersDto parametersDto,
-            ProprietaryInventoryData proprietaryInventoryData);
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType);
     }
 
     public class PlanPricingBandCalculationEngine : IPlanPricingBandCalculationEngine
@@ -27,14 +29,16 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
             PlanPricingParametersDto parametersDto,
-            ProprietaryInventoryData proprietaryInventoryData)
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType)
         {
             var allocatedInventory = _GetAllocatedInventory(allocationResult);
             var pricingBand = new PlanPricingBand
             {
                 PlanVersionId = allocationResult.PlanVersionId,
                 JobId = allocationResult.JobId,
-                Totals = _GetPricingBandTotals(allocatedInventory, proprietaryInventoryData)
+                Totals = _GetPricingBandTotals(allocatedInventory, proprietaryInventoryData),
+                PostingType = postingType
             };
 
             var allBands = _CreateBands(parametersDto.AdjustedCPM);
@@ -200,7 +204,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = new List<PlanPricingProgram>();
 
-            foreach(var spot in allocationResult.Spots)
+            foreach (var spot in allocationResult.Spots)
             {
                 var pricingProgram = new PlanPricingProgram
                 {

@@ -92,6 +92,7 @@
     }
   ],
   "PlanVersionId": 0,
+  "PostingType": 2,
   "Totals": {
     "Budget": 13969.5000,
     "Cpm": 18.4867,

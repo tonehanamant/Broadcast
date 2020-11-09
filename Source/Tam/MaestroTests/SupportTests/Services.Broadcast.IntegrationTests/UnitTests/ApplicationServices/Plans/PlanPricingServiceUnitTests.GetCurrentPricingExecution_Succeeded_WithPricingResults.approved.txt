@@ -17,6 +17,7 @@
     "JobId": 12,
     "Notes": "Proprietary goals meet plan goals",
     "OptimalCpm": 5.0,
-    "PlanVersionId": 11
+    "PlanVersionId": 11,
+    "PostingType": 0
   }
 }

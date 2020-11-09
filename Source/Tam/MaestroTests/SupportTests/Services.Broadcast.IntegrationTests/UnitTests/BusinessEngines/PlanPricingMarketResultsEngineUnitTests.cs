@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -132,7 +133,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new PlanPricingMarketResultsEngine();
 
             // Act
-            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData);
+            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData, PostingTypeEnum.NSI);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -193,7 +194,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new PlanPricingMarketResultsEngine();
 
             // Act
-            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData);
+            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData, PostingTypeEnum.NSI);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -254,7 +255,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new PlanPricingMarketResultsEngine();
 
             // Act
-            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData);
+            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData, PostingTypeEnum.NSI);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

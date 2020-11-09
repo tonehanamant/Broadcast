@@ -237,6 +237,29 @@ END
 GO
 /*************************************** END - BP-1623 : Add Spot Lengths ****************************************************/
 
+/*************************************** START - BP-1517 **************************************************/
+--Stations
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_bands') 
+				AND name = 'posting_type')
+BEGIN
+
+	ALTER TABLE [plan_version_pricing_bands] ADD [posting_type] INT NULL
+
+	EXEC ('
+		UPDATE
+			pvpb
+		SET
+			pvpb.posting_type = COALESCE(pv.posting_type, 1)
+		FROM 
+			[plan_version_pricing_bands] pvpb
+			  LEFT JOIN [plan_version_pricing_job] pvpj
+				ON	pvpj.id = pvpb.plan_version_pricing_job_id
+			  LEFT JOIN [plan_versions] pv
+				ON pv.id = pvpj.plan_version_id')
+
+	ALTER TABLE [plan_version_pricing_bands] ALTER COLUMN [posting_type] INT NOT NULL
+END
+/*************************************** END - BP-1517 **************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

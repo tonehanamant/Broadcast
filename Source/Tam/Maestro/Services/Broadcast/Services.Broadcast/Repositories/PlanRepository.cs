@@ -13,15 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Services.Broadcast.Entities;
-using static Services.Broadcast.Entities.Campaign.ProgramLineupReportData;
 using Tam.Maestro.Data.Entities;
-using Common.Services;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Campaign;
@@ -1554,9 +1550,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
+                //Temporary
+                var postingType = context.plan_version_pricing_job
+                                        .Include(x => x.plan_versions)
+                                        .First(x => x.id == jobId)
+                                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet dafult to NSI;
+
                 var result = context.plan_version_pricing_bands
                     .Include(x => x.plan_version_pricing_band_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1565,6 +1567,7 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanPricingBandDto
                 {
+                    PostingType = (PostingTypeEnum)result.posting_type,
                     Totals = new PlanPricingBandTotalsDto
                     {
                         Cpm = result.total_cpm,
@@ -1599,6 +1602,7 @@ namespace Services.Broadcast.Repositories
                     total_cpm = planPricingBand.Totals.Cpm,
                     total_impressions = planPricingBand.Totals.Impressions,
                     total_spots = planPricingBand.Totals.Spots,
+                    posting_type = (int)planPricingBand.PostingType,
                     plan_version_pricing_band_details = planPricingBand.Bands.Select(x =>
                         new plan_version_pricing_band_details
                         {
@@ -1654,9 +1658,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
+                //Temporary
+                var postingType = context.plan_version_pricing_job
+                                        .Include(x => x.plan_versions)
+                                        .First(x => x.id == jobId)
+                                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet dafult to NSI;
+
                 var entity = context.plan_version_pricing_markets
                     .Include(x => x.plan_version_pricing_market_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1665,6 +1675,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PlanPricingResultMarketsDto
                 {
+                    PostingType = (PostingTypeEnum)entity.posting_type,
                     Totals = new PlanPricingResultMarketsTotalsDto
                     {
                         Markets = entity.total_markets,
@@ -1799,9 +1810,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
+                //Temporary
+                var postingType = context.plan_version_pricing_job
+                                        .Include(x => x.plan_versions)
+                                        .First(x => x.id == jobId)
+                                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet dafult to NSI
+
                 var result = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1810,6 +1827,7 @@ namespace Services.Broadcast.Repositories
 
                 return new PricingProgramsResultDto
                 {
+                    PostingType = (PostingTypeEnum)result.posting_type,
                     Totals = new PricingProgramsResultTotalsDto
                     {
                         MarketCount = result.total_market_count,
@@ -1844,9 +1862,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
+                //Temporary
+                var postingType = context.plan_version_pricing_job
+                                        .Include(x => x.plan_versions)
+                                        .First(x => x.id == jobId)
+                                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet dafult to NSI;
+
                 var result = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1855,6 +1879,7 @@ namespace Services.Broadcast.Repositories
 
                 return new CurrentPricingExecutionResultDto
                 {
+                    PostingType = (PostingTypeEnum)result.posting_type,
                     OptimalCpm = result.optimal_cpm,
                     JobId = result.plan_version_pricing_job_id,
                     PlanVersionId = result.plan_version_pricing_job.plan_version_id,
@@ -1868,9 +1893,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
+                //Temporary
+                var postingType = context.plan_version_pricing_job
+                                        .Include(x => x.plan_versions)
+                                        .First(x => x.id == jobId)
+                                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet dafult to NSI;
+
                 var result = context.plan_version_pricing_stations
                     .Include(p => p.plan_version_pricing_station_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1882,6 +1913,7 @@ namespace Services.Broadcast.Repositories
                     Id = result.id,
                     JobId = result.plan_version_pricing_job_id,
                     PlanVersionId = result.plan_version_pricing_job.plan_version_id,
+                    PostingType = (PostingTypeEnum)result.posting_type,
                     Totals = new PlanPricingStationTotalsDto
                     {
                         Budget = result.total_budget,

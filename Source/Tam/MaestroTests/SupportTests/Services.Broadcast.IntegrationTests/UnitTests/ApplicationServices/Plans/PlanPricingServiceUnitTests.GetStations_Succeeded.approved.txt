@@ -2,6 +2,7 @@
   "Id": 0,
   "JobId": 5,
   "PlanVersionId": 3,
+  "PostingType": 0,
   "Stations": [
     {
       "Budget": 1131.0,

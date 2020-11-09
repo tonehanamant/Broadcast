@@ -1,5 +1,6 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanPricingInventoryProgram> inventories,
             PlanPricingAllocationResult apiResponse,
             PlanPricingParametersDto parametersDto,
-            ProprietaryInventoryData proprietaryInventoryData);
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType);
     }
 
     public class PlanPricingStationCalculationEngine : IPlanPricingStationCalculationEngine
@@ -31,7 +33,8 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanPricingInventoryProgram> inventories, 
             PlanPricingAllocationResult apiResponse, 
             PlanPricingParametersDto parametersDto,
-            ProprietaryInventoryData proprietaryInventoryData)
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType)
         {
             var result = new PlanPricingStationResult()
             {
@@ -45,7 +48,7 @@ namespace Services.Broadcast.BusinessEngines
             result.Totals = _GetTotals(result.Stations);
 
             result.Stations.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, result.Totals.Impressions));
-            result.PostingType = inventories.First().PostingType;
+            result.PostingType = postingType;
             return result;
         }
 

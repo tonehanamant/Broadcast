@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             List<MarketCoverage> marketCoverages,
-            ProprietaryInventoryData proprietaryInventoryData);
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType);
     }
 
     public class PlanPricingMarketResultsEngine : IPlanPricingMarketResultsEngine
@@ -22,7 +24,8 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             List<MarketCoverage> marketCoverages,
-            ProprietaryInventoryData proprietaryInventoryData)
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType)
         {
             var result = new PlanPricingResultMarkets
             {
@@ -56,7 +59,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             result.MarketDetails.ForEach(x => x.ImpressionsPercentage = (x.Impressions / result.Totals.Impressions) * 100);
             result.MarketDetails.ForEach(x => x.StationsPerMarket = stationsByMarketCode[x.MarketCode].Count);
 
-            result.PostingType = inventory.First().PostingType;
+            result.PostingType = postingType;
 
             return result;
         }

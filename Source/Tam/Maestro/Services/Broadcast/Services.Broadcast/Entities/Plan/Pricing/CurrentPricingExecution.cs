@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities.Plan.Pricing
+﻿using Services.Broadcast.Entities.Enums;
+
+namespace Services.Broadcast.Entities.Plan.Pricing
 {
     public class CurrentPricingExecution
     {
@@ -20,5 +22,6 @@
         public string Notes { get; set; }
         public bool HasResults { get; set; }
         public int CpmPercentage { get; set; }
+        public PostingTypeEnum PostingType { get; set; }
     }
 }

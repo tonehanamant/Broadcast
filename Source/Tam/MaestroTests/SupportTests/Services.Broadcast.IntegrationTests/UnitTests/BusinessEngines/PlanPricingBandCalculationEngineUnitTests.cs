@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands));
         }
@@ -154,7 +154,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands));
         }
@@ -197,7 +197,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Assert.AreEqual(9, pricingBand.Bands.GroupBy(x => new { x.MinBand, x.MaxBand }).Count());
         }
@@ -240,7 +240,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Assert.AreEqual(1, pricingBand.Bands[0].MaxBand);
         }
@@ -283,7 +283,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Assert.AreEqual(20, pricingBand.Bands[16].MinBand);
         }
@@ -326,7 +326,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
            
             Assert.AreEqual(7, pricingBand.Bands[2].MinBand);
             Assert.AreEqual(26, pricingBand.Bands[2].MaxBand);
@@ -371,7 +371,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Assert.AreEqual(0, pricingBand.Bands[0].Impressions);
             Assert.AreEqual(1000, pricingBand.Bands[2].Impressions);
@@ -416,7 +416,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Assert.AreEqual(100, pricingBand.Bands[2].ImpressionsPercentage);
             Assert.AreEqual(20, pricingBand.Bands[2].AvailableInventoryPercent);

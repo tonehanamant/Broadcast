@@ -28,6 +28,7 @@
     }
   ],
   "PlanVersionId": 0,
+  "PostingType": 2,
   "PricingJobId": null,
   "Totals": {
     "Budget": 13969.5,

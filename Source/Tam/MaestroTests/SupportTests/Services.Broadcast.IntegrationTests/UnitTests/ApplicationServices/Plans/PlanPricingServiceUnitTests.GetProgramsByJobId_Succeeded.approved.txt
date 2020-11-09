@@ -1,4 +1,5 @@
 {
+  "PostingType": 0,
   "Programs": [
     {
       "AvgCpm": 6.0,

@@ -1,5 +1,6 @@
 {
   "PlanVersionId": null,
+  "PostingType": 1,
   "Stations": [
     {
       "Budget": 13504.6875,

@@ -81,7 +81,7 @@
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 5.1091954,
+      "AvailableInventoryPercent": 4.34281609,
       "Budget": 13969.5000,
       "Cpm": 18.486733275987560378482101500,
       "Impressions": 755.65,
@@ -92,6 +92,7 @@
     }
   ],
   "PlanVersionId": 0,
+  "PostingType": 1,
   "Totals": {
     "Budget": 13969.5000,
     "Cpm": 18.4867,

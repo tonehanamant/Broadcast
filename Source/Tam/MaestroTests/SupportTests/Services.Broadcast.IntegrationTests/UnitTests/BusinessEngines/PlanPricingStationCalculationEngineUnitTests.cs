@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
@@ -169,7 +170,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var allocationResult = _GetPlanPricingAllocationResult();
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory);
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -186,7 +187,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var allocationResult = _GetPlanPricingAllocationResult();
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory);
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -203,7 +204,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var allocationResult = _GetPlanPricingAllocationResultWithMargin();
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory);
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory, PostingTypeEnum.NSI);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }

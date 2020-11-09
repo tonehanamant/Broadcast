@@ -105,7 +105,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var bands = _ProgramEngine.CalculateProgramResults(inventory, allocationResult, false, proprietaryInventory);
+            var bands = _ProgramEngine.CalculateProgramResults(inventory, allocationResult, false, proprietaryInventory, PostingTypeEnum.NSI);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands));
         }

@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse,
             bool goalsFulfilledByProprietaryInventory,
-            ProprietaryInventoryData proprietaryInventoryData);
+            ProprietaryInventoryData proprietaryInventoryData,
+           PostingTypeEnum postingType);
     }
 
     public class PlanPricingProgramCalculationEngine : IPlanPricingProgramCalculationEngine
@@ -21,7 +23,8 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse,
             bool goalsFulfilledByProprietaryInventory,
-            ProprietaryInventoryData proprietaryInventoryData)
+            ProprietaryInventoryData proprietaryInventoryData,
+            PostingTypeEnum postingType)
         {
             var result = new PlanPricingResultBaseDto();
 
@@ -89,7 +92,7 @@ namespace Services.Broadcast.BusinessEngines
             result.OptimalCpm = apiResponse.PricingCpm;
             result.JobId = apiResponse.JobId;
             result.PlanVersionId = apiResponse.PlanVersionId;
-            result.PostingType = inventory.First().PostingType;
+            result.PostingType = postingType;
 
             return result;
         }

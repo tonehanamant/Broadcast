@@ -15,6 +15,7 @@
   "Id": 0,
   "JobId": 5,
   "PlanVersionId": 3,
+  "PostingType": 0,
   "Totals": {
     "Budget": 1131.0,
     "Cpm": 22.0,

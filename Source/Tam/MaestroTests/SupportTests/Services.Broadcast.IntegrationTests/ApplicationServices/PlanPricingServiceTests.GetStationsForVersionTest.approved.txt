@@ -1,4 +1,5 @@
 {
+  "PostingType": 2,
   "Stations": [
     {
       "Budget": 5375.0000,

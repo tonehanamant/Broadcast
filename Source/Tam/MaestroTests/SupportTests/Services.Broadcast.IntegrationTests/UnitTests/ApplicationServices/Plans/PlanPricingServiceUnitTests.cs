@@ -1999,7 +1999,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanPricingProgramCalculationEngine.Setup(s => s.CalculateProgramResults(
                     It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
-                    It.IsAny<bool>(), It.IsAny<ProprietaryInventoryData>()))
+                    It.IsAny<bool>(), It.IsAny<ProprietaryInventoryData>(), It.IsAny<PostingTypeEnum>()))
                 .Returns(new PlanPricingResultBaseDto
                 {
                     GoalFulfilledByProprietary = true,
@@ -5294,7 +5294,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanPricingProgramCalculationEngine.Setup(s => s.CalculateProgramResults(
                     It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
-                    It.IsAny<bool>(), It.IsAny<ProprietaryInventoryData>()))
+                    It.IsAny<bool>(), It.IsAny<ProprietaryInventoryData>(), It.IsAny<PostingTypeEnum>()))
                 .Returns(new PlanPricingResultBaseDto
                 {
                     GoalFulfilledByProprietary = false,
@@ -8563,11 +8563,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     It.IsAny<List<PlanPricingInventoryProgram>>(),
                     It.IsAny<PlanPricingAllocationResult>(),
                     It.IsAny<PlanPricingParametersDto>(),
-                    It.IsAny<ProprietaryInventoryData>()))
+                    It.IsAny<ProprietaryInventoryData>(),
+                     It.IsAny<PostingTypeEnum>()))
                 .Callback<List<PlanPricingInventoryProgram>,
                           PlanPricingAllocationResult,
                           PlanPricingParametersDto,
-                          ProprietaryInventoryData>((inventory, allocation, pricingParameters, proprietaryInventoryData) => allocations.Add(allocation));
+                          ProprietaryInventoryData,
+                          PostingTypeEnum>((inventory, allocation, pricingParameters, proprietaryInventoryData, postingType) => allocations.Add(allocation));
 
             var service = _GetService();
 
