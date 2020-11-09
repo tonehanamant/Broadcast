@@ -549,6 +549,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void DeletePlanDraftWithPricingResults()
+        {
+            // Arrange
+            const int plan_id = 11725;
+
+            var draftPlanVersionIdBefore = -1;
+            var deletedDraft = false;
+            var draftPlanVersionIdAfter = -1;
+
+            using (new TransactionScopeWrapper())
+            {
+                // Act
+                draftPlanVersionIdBefore = _PlanService.CheckForDraft(plan_id);
+                deletedDraft = _PlanService.DeletePlanDraft(plan_id);
+                draftPlanVersionIdAfter = _PlanService.CheckForDraft(plan_id);
+            }
+
+            // Assert
+            Assert.IsTrue(draftPlanVersionIdBefore > 0);
+            Assert.IsTrue(deletedDraft);
+            Assert.IsTrue(draftPlanVersionIdAfter == 0);
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void GetPricingBandsTest()

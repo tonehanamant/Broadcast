@@ -259,7 +259,44 @@ BEGIN
 
 	ALTER TABLE [plan_version_pricing_bands] ALTER COLUMN [posting_type] INT NOT NULL
 END
+
+GO
+
 /*************************************** END - BP-1517 **************************************************/
+
+/*************************************** END - BP-1663 ****************************************************/
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_pricing_api_results_plan_version_pricing_job')
+   AND parent_object_id = OBJECT_ID(N'plan_version_pricing_api_results'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_api_results DROP CONSTRAINT FK_plan_version_pricing_api_results_plan_version_pricing_job
+END 
+
+ALTER TABLE [dbo].[plan_version_pricing_api_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_api_results_plan_version_pricing_job] FOREIGN KEY([plan_version_pricing_job_id])
+REFERENCES [dbo].[plan_version_pricing_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_pricing_api_results] CHECK CONSTRAINT [FK_plan_version_pricing_api_results_plan_version_pricing_job]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_pricing_job_plan_versions')
+   AND parent_object_id = OBJECT_ID(N'plan_version_pricing_job'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_job DROP CONSTRAINT FK_plan_version_pricing_job_plan_versions
+END 
+
+ALTER TABLE [dbo].[plan_version_pricing_job]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_job_plan_versions] FOREIGN KEY([plan_version_id])
+REFERENCES [dbo].[plan_versions] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_pricing_job] CHECK CONSTRAINT [FK_plan_version_pricing_job_plan_versions]
+GO
+
+/*************************************** END - BP-1663 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
