@@ -1596,8 +1596,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
         {
-            var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
-
+            var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value, planPricingParametersDto.PlanVersionId);
             _RunPricingJob(planPricingParametersDto, plan, jobId, token);
         }
 
