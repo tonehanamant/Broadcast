@@ -296,6 +296,232 @@ GO
 ALTER TABLE [dbo].[plan_version_pricing_job] CHECK CONSTRAINT [FK_plan_version_pricing_job_plan_versions]
 GO
 
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots')
+   AND parent_object_id = OBJECT_ID(N'plan_version_pricing_api_result_spot_frequencies'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_api_result_spot_frequencies DROP CONSTRAINT FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots
+END 
+
+ALTER TABLE [dbo].[plan_version_pricing_api_result_spot_frequencies]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots] FOREIGN KEY([plan_version_pricing_api_result_spot_id])
+REFERENCES [dbo].[plan_version_pricing_api_result_spots] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_pricing_api_result_spot_frequencies] CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_pricing_results_plan_version_pricing_job')
+   AND parent_object_id = OBJECT_ID(N'plan_version_pricing_results'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_results DROP CONSTRAINT FK_plan_version_pricing_results_plan_version_pricing_job
+END 
+
+
+ALTER TABLE [dbo].[plan_version_pricing_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_results_plan_version_pricing_job] FOREIGN KEY([plan_version_pricing_job_id])
+REFERENCES [dbo].[plan_version_pricing_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_pricing_results] CHECK CONSTRAINT [FK_plan_version_pricing_results_plan_version_pricing_job]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_pricing_bands_plan_version_pricing_job')
+   AND parent_object_id = OBJECT_ID(N'plan_version_pricing_bands'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_bands DROP CONSTRAINT FK_plan_version_pricing_bands_plan_version_pricing_job
+END 
+
+ALTER TABLE [dbo].[plan_version_pricing_bands]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_bands_plan_version_pricing_job] FOREIGN KEY([plan_version_pricing_job_id])
+REFERENCES [dbo].[plan_version_pricing_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_pricing_bands] CHECK CONSTRAINT [FK_plan_version_pricing_bands_plan_version_pricing_job]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_pricing_job_plan_version_pricing_stations')
+   AND parent_object_id = OBJECT_ID(N'plan_version_pricing_stations'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_stations DROP CONSTRAINT FK_plan_version_pricing_job_plan_version_pricing_stations
+END 
+
+ALTER TABLE [dbo].[plan_version_pricing_stations]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_job_plan_version_pricing_stations] FOREIGN KEY([plan_version_pricing_job_id])
+REFERENCES [dbo].[plan_version_pricing_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_pricing_stations] CHECK CONSTRAINT [FK_plan_version_pricing_job_plan_version_pricing_stations]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_job_plan_versions')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_job'))
+BEGIN 
+	ALTER TABLE plan_version_buying_job DROP CONSTRAINT FK_plan_version_buying_job_plan_versions
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_job]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_job_plan_versions] FOREIGN KEY([plan_version_id])
+REFERENCES [dbo].[plan_versions] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_job] CHECK CONSTRAINT [FK_plan_version_buying_job_plan_versions]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_api_results_plan_version_buying_job')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_api_results'))
+BEGIN 
+	ALTER TABLE plan_version_buying_api_results DROP CONSTRAINT FK_plan_version_buying_api_results_plan_version_buying_job
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_api_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_results_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+REFERENCES [dbo].[plan_version_buying_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_api_results] CHECK CONSTRAINT [FK_plan_version_buying_api_results_plan_version_buying_job]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_api_result_spot_frequencies'))
+BEGIN 
+	ALTER TABLE plan_version_buying_api_result_spot_frequencies DROP CONSTRAINT FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_api_result_spot_frequencies]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots] FOREIGN KEY([plan_version_buying_api_result_spot_id])
+REFERENCES [dbo].[plan_version_buying_api_result_spots] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_api_result_spot_frequencies] CHECK CONSTRAINT [FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_parameters_plan_version_buying_job')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_parameters'))
+BEGIN 
+	ALTER TABLE plan_version_buying_parameters DROP CONSTRAINT FK_plan_version_buying_parameters_plan_version_buying_job
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_parameters]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_parameters_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+REFERENCES [dbo].[plan_version_buying_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_parameters] CHECK CONSTRAINT [FK_plan_version_buying_parameters_plan_version_buying_job]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_results_plan_version_buying_job')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_results'))
+BEGIN 
+	ALTER TABLE plan_version_buying_results DROP CONSTRAINT FK_plan_version_buying_results_plan_version_buying_job
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_results_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+REFERENCES [dbo].[plan_version_buying_job] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_results] CHECK CONSTRAINT [FK_plan_version_buying_results_plan_version_buying_job]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_market_details_plan_version_buying_results')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_market_details'))
+BEGIN 
+	ALTER TABLE plan_version_buying_market_details DROP CONSTRAINT FK_plan_version_buying_market_details_plan_version_buying_results
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_market_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_market_details_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+REFERENCES [dbo].[plan_version_buying_results] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_market_details] CHECK CONSTRAINT [FK_plan_version_buying_market_details_plan_version_buying_results]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_station_details_plan_version_buying_results')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_station_details'))
+BEGIN 
+	ALTER TABLE plan_version_buying_station_details DROP CONSTRAINT FK_plan_version_buying_station_details_plan_version_buying_results
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_station_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_station_details_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+REFERENCES [dbo].[plan_version_buying_results] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_station_details] CHECK CONSTRAINT [FK_plan_version_buying_station_details_plan_version_buying_results]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_band_details_plan_version_buying_results')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_band_details'))
+BEGIN 
+	ALTER TABLE plan_version_buying_band_details DROP CONSTRAINT FK_plan_version_buying_band_details_plan_version_buying_results
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_band_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_band_details_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+REFERENCES [dbo].[plan_version_buying_results] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_band_details] CHECK CONSTRAINT [FK_plan_version_buying_band_details_plan_version_buying_results]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_ownership_group_details_plan_version_buying_results')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_ownership_group_details'))
+BEGIN 
+	ALTER TABLE plan_version_buying_ownership_group_details DROP CONSTRAINT FK_plan_version_buying_ownership_group_details_plan_version_buying_results
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_ownership_group_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_ownership_group_details_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+REFERENCES [dbo].[plan_version_buying_results] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_ownership_group_details] CHECK CONSTRAINT [FK_plan_version_buying_ownership_group_details_plan_version_buying_results]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_buying_rep_firm_details_plan_version_buying_results')
+   AND parent_object_id = OBJECT_ID(N'plan_version_buying_rep_firm_details'))
+BEGIN 
+	ALTER TABLE plan_version_buying_rep_firm_details DROP CONSTRAINT FK_plan_version_buying_rep_firm_details_plan_version_buying_results
+END 
+
+ALTER TABLE [dbo].[plan_version_buying_rep_firm_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_rep_firm_details_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+REFERENCES [dbo].[plan_version_buying_results] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_buying_rep_firm_details] CHECK CONSTRAINT [FK_plan_version_buying_rep_firm_details_plan_version_buying_results]
+GO
+
+IF EXISTS (SELECT * FROM sys.foreign_keys 
+   WHERE object_id = OBJECT_ID(N'FK_plan_version_summaries_plan_versions')
+   AND parent_object_id = OBJECT_ID(N'plan_version_summaries'))
+BEGIN 
+	ALTER TABLE plan_version_summaries DROP CONSTRAINT FK_plan_version_summaries_plan_versions
+END 
+
+ALTER TABLE [dbo].[plan_version_summaries]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_summaries_plan_versions] FOREIGN KEY([plan_version_id])
+REFERENCES [dbo].[plan_versions] ([id])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[plan_version_summaries] CHECK CONSTRAINT [FK_plan_version_summaries_plan_versions]
+GO
+
 /*************************************** END - BP-1663 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
