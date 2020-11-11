@@ -378,6 +378,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
                 }
             }
+
+            if (plan.BuyingParameters != null)
+            {
+                if (creatingNewPlan)
+                {
+                    _LogInfo($"Relating previous buying results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
+                    _PlanRepository.SetBuyingPlanVersionId(plan.BuyingParameters.JobId.Value, plan.VersionId);
+                }
+                else
+                {
+                    _LogInfo($"Relating previous buying results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                    _PlanRepository.UpdatePlanBuyingVersionId(afterPlan.VersionId, beforePlan.VersionId);
+                }
+            }
             
             return plan.Id;
         }

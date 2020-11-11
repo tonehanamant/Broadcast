@@ -177,6 +177,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="versionId">Current version id</param>
         /// <param name="oldPlanVersionId">Previous version id</param>
         void UpdatePlanPricingVersionId(int versionId, int oldPlanVersionId);
+
+        void UpdatePlanBuyingVersionId(int versionId, int oldPlanVersionId);
+
+        void SetBuyingPlanVersionId(int jobId, int planVersionId);
+
         PlanPricingParametersDto GetPricingParametersForVersion(int versionId);
         PlanPricingParametersDto GetLatestPricingParameters(int planId);
 
@@ -2062,6 +2067,53 @@ namespace Services.Broadcast.Repositories
                     parameter.plan_version_id = versionId;
                     context.SaveChanges();
                 }
+            });
+        }
+
+        public void SetBuyingPlanVersionId(int jobId, int planVersionId)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_buying_job.OrderByDescending(x => x.id).FirstOrDefault(x => x.id == jobId);
+                if (job != null)
+                {
+                    job.plan_version_id = planVersionId;
+                }
+                
+                var parameters = context.plan_version_buying_parameters.FirstOrDefault(x => x.plan_version_buying_job_id == jobId);
+                if (parameters != null)
+                {
+                    parameters.plan_version_id = planVersionId;
+                }
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc/>
+        public void UpdatePlanBuyingVersionId(int versionId, int oldPlanVersionId)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var job = (from j in context.plan_version_buying_job
+                    where j.plan_version_id == oldPlanVersionId
+                    orderby j.id descending
+                    select j).FirstOrDefault();
+
+                if (job != null)
+                {
+                    job.plan_version_id = versionId;
+                }
+
+                var parameter = (from p in context.plan_version_buying_parameters
+                    where p.plan_version_id == oldPlanVersionId
+                    orderby p.id descending
+                    select p).FirstOrDefault();
+
+                if (parameter != null)
+                {
+                    parameter.plan_version_id = versionId;
+                }
+                context.SaveChanges();
             });
         }
 
