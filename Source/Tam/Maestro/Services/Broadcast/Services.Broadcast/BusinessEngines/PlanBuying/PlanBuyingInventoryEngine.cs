@@ -43,8 +43,6 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IDaypartCache _DaypartCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
-        private readonly IMarketCoverageRepository _MarketCoverageRepository;
-        private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
@@ -76,8 +74,6 @@ namespace Services.Broadcast.BusinessEngines
             _DaypartCache = daypartCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _SpotLengthEngine = spotLengthEngine;
-            _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
-            _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
 
@@ -929,7 +925,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private HashSet<string> _GetCoveredDayNamesHashSet(List<int> flightDays, List<int> planDaypartDayIds)
         {
-            var days = _DayRepository.GetDays();
+            var days = _CadentDayDefinitions.Value;
             var coveredDayIds = flightDays.Intersect(planDaypartDayIds);
 
             var coveredDayNames = days
@@ -941,7 +937,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private HashSet<string> _GetCoveredDayNamesHashSet(List<int> planDaypartDayIds)
         {
-            var days = _DayRepository.GetDays();
+            var days = _CadentDayDefinitions.Value;
             var coveredDayIds = planDaypartDayIds;
 
             var coveredDayNames = days

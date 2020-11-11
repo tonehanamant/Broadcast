@@ -726,6 +726,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                 ContractedInventoryId = manifestId,
                                 ContractedMediaWeekId = manifestWeek.ContractMediaWeekId,
                                 InventoryDaypartId = programInventoryDaypartId,
+                                ProgramMinimumContractMediaWeekId = programMinimumContractMediaWeekId,
                                 Spot = new PlanPricingApiRequestSpotsDto
                                 {
                                     Id = manifestId,
@@ -738,8 +739,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                     PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
                                     SpotDays = daypart.Daypart.ActiveDays,
                                     SpotHours = daypart.Daypart.GetDurationPerDayInHours()
-                                },
-                                ProgramMinimumContractMediaWeekId = programMinimumContractMediaWeekId
+                                }
                             });
 
                         programSpots.AddRange(spots);
@@ -755,19 +755,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         continue;
                     }
 
-                    var currentMediaWeek = group.Key.ContractedMediaWeekId;
-
                     // keep the one with the most recent start day : the program would have all the weeks that generated that spot
                     ProgramDaypartWeekGroupItem keptItem = null;
                     foreach (var item in group)
                     {
-                        if (keptItem == null)
-                        {
-                            keptItem = item;
-                            continue;
-                        }
-
-                        if (item.ProgramMinimumContractMediaWeekId > keptItem.ProgramMinimumContractMediaWeekId)
+                        if (keptItem == null ||
+                            item.ProgramMinimumContractMediaWeekId > keptItem.ProgramMinimumContractMediaWeekId)
                         {
                             keptItem = item;
                         }
@@ -1529,6 +1522,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                 ContractedInventoryId = manifestId,
                                 ContractedMediaWeekId = manifestWeek.ContractMediaWeekId,
                                 InventoryDaypartId = programInventoryDaypartId,
+                                ProgramMinimumContractMediaWeekId = programMinimumContractMediaWeekId,
                                 Spot = new PlanPricingApiRequestSpotsDto_v3
                                 {
                                     Id = manifestId,
@@ -1541,9 +1535,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                     SpotDays = daypart.Daypart.ActiveDays,
                                     SpotHours = daypart.Daypart.GetDurationPerDayInHours(),
                                     SpotCost = validSpotCosts
-                                },
-                                ProgramMinimumContractMediaWeekId = programMinimumContractMediaWeekId
-                            }).ToList();
+                                }
+                        }).ToList();
 
                         programSpots.AddRange(spots);
                     }
@@ -1558,19 +1551,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         continue;
                     }
 
-                    var currentMediaWeek = group.Key.ContractedMediaWeekId;
-
                     // keep the one with the most recent start day : the program would have all the weeks that generated that spot
                     ProgramDaypartWeekGroupItem_V3 keptItem = null;
                     foreach (var item in group)
                     {
-                        if (keptItem == null)
-                        {
-                            keptItem = item;
-                            continue;
-                        }
-
-                        if (item.ProgramMinimumContractMediaWeekId > keptItem.ProgramMinimumContractMediaWeekId)
+                        if (keptItem == null ||
+                            item.ProgramMinimumContractMediaWeekId > keptItem.ProgramMinimumContractMediaWeekId)
                         {
                             keptItem = item;
                         }
