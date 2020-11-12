@@ -1,0 +1,70 @@
+[
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "Id"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "VersionId"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "VersionNumber"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "ModifiedBy"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "JobId"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "IsOutOfSync"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "AvailableMarketsWithSovCount"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "BlackoutMarketCount"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "BlackoutMarketTotalUsCoveragePercent"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "IsDraft"
+  },
+  {
+    "ClassTypeName": "PlanMarketDto",
+    "PropertyName": "Id"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "Name"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "ProductId"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "FlightNotes"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "Status"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "PricingParameters"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "BuyingParameters"
+  }
+]

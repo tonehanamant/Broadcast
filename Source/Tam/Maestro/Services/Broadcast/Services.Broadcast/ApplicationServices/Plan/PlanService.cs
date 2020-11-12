@@ -215,7 +215,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The pricing model is running for the plan");
             }
 
-            var creatingNewPlan = PlanComparisonHelper.IsCreatingNewPLan(plan);
+            var creatingNewPlan = PlanComparisonHelper.IsCreatingNewPlan(plan);
 
             // get the "before plan" before we save.
             // used later for comparison

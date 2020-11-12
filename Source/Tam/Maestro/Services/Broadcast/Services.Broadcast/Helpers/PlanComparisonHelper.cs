@@ -1,21 +1,41 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers.Json;
+using System;
 using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Helpers
 {
     public static class PlanComparisonHelper
     {
-        public static bool IsCreatingNewPLan(PlanDto plan)
+        internal static ComparisonMinorProperty[] MinorProperties { get; } = new []
         {
-            if (plan.VersionId == 0 || plan.Id == 0)
-            {
-                return true;
-            }
+            // instance items - not pricing inputs
+            new ComparisonMinorProperty(typeof(PlanDto), "Id"),
+            new ComparisonMinorProperty(typeof(PlanDto), "VersionId"),
+            new ComparisonMinorProperty(typeof(PlanDto), "VersionNumber"),
+            new ComparisonMinorProperty(typeof(PlanDto), "ModifiedBy"),
+            new ComparisonMinorProperty(typeof(PlanDto), "JobId"),
+            new ComparisonMinorProperty(typeof(PlanDto), "IsOutOfSync"),
+            new ComparisonMinorProperty(typeof(PlanDto), "AvailableMarketsWithSovCount"),
+            new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketCount"),
+            new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketTotalUsCoveragePercent"),
+            new ComparisonMinorProperty(typeof(PlanDto), "IsDraft"),
+            new ComparisonMinorProperty(typeof(PlanMarketDto), "Id"),
+            // ignored - not pricing inputs
+            new ComparisonMinorProperty(typeof(PlanDto), "Name"),
+            new ComparisonMinorProperty(typeof(PlanDto), "ProductId"),
+            new ComparisonMinorProperty(typeof(PlanDto), "FlightNotes"),
+            new ComparisonMinorProperty(typeof(PlanDto), "Status"),
+            // ignored - out of scope for this compare
+            new ComparisonMinorProperty(typeof(PlanDto), "PricingParameters"),
+            new ComparisonMinorProperty(typeof(PlanDto), "BuyingParameters")
+        };
 
-            return false;
+        public static bool IsCreatingNewPlan(PlanDto plan)
+        {
+            var result = plan.VersionId == 0 || plan.Id == 0;
+            return result;
         }
 
         public static bool PlanPricingInputsAreOutOfSync(PlanDto beforePlan, PlanDto afterPlan)
@@ -58,27 +78,10 @@ namespace Services.Broadcast.Helpers
         private static string _GetSerializedPlanPricingInputs(PlanDto plan)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-
-            // instance items - not pricing inputs
-            jsonResolver.Ignore(typeof(PlanDto), "Id");
-            jsonResolver.Ignore(typeof(PlanDto), "VersionId");
-            jsonResolver.Ignore(typeof(PlanDto), "VersionNumber");
-            jsonResolver.Ignore(typeof(PlanDto), "ModifiedBy");
-            jsonResolver.Ignore(typeof(PlanDto), "ModifiedDate");
-            jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
-            jsonResolver.Ignore(typeof(PlanDto), "JobId");
-            jsonResolver.Ignore(typeof(PlanDto), "IsOutOfSync");            
-            jsonResolver.Ignore(typeof(PlanDto), "AvailableMarketsWithSovCount");
-
-            // ignored - not pricing inputs
-            jsonResolver.Ignore(typeof(PlanDto), "Name");
-            jsonResolver.Ignore(typeof(PlanDto), "ProductId");
-            jsonResolver.Ignore(typeof(PlanDto), "FlightNotes");
-            jsonResolver.Ignore(typeof(PlanDto), "Status");
-
-            // ignored - out of scope for this compare
-            jsonResolver.Ignore(typeof(PlanDto), "PricingParameters");
-            jsonResolver.Ignore(typeof(PlanDto), "BuyingParameters");
+            MinorProperties.ForEach(p =>
+            {
+                jsonResolver.Ignore(p.ClassType, p.PropertyName);
+            });
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -88,6 +91,18 @@ namespace Services.Broadcast.Helpers
 
             var serializedPlan = JsonSerializerHelper.ConvertToJson(plan, jsonSettings);
             return serializedPlan;
+        }
+
+        internal class ComparisonMinorProperty
+        {
+            public Type ClassType { get; private set; }
+            public string PropertyName { get; private set; }
+
+            public ComparisonMinorProperty(Type classType, string propertyName)
+            {
+                ClassType = classType;
+                PropertyName = propertyName;
+            }
         }
     }
 }
