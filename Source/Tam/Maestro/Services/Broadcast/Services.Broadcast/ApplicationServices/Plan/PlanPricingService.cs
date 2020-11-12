@@ -709,7 +709,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         var programInventoryDaypartId = daypart.Daypart.Id;
 
-                        var impressions = program.Impressions;
+                        var impressions = program.PostingTypeImpressions;
                         var spotCost = program.ManifestRates.Single().Cost;
 
                         if (impressions <= 0)
@@ -1027,8 +1027,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     programInventoryParameters,
                     inventorySourceIds,
                     diagnostic,
-                    processingId,
-                    true);
+                    processingId);
 
                 _ValidateInventory(inventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
@@ -1056,17 +1055,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     PostingType = plan.PostingType
                 };
 
-                //Send it to the DS Model based on one posting type, as selected in the plan detail.
-                var planPostingTypeInventory = inventory.Where(x => x.PostingType == plan.PostingType)
-                            .ToList();
-
+                //Send it to the DS Model based on the plan posting type, as selected in the plan detail.
                 if (!goalsFulfilledByProprietaryInventory)
                 {
                     _SendPricingRequest(
                         allocationResult,
                         plan,
                         jobId,
-                        planPostingTypeInventory,
+                        inventory,
                         token,
                         diagnostic,
                         planPricingParametersDto,
@@ -1087,19 +1083,45 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 var aggregationTasks = new List<(PostingTypeEnum PostingType, PricingJobTaskNameEnum TaskName, Task Task)>();
 
-                foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
+                //Always loop the posting type that matches the plan firts so that we convert from nti to nsi only one time
+                foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>()
+                    .OrderByDescending(x => x == plan.PostingType)) //order by desc to prioritize true values
                 {
-                    var postingTypeInventory = inventory.Where(x => x.PostingType == postingType)
-                        .ToList();
+                    List<PlanPricingInventoryProgram> postingTypeInventory;
+                    PlanPricingAllocationResult postingAllocationResults;
+
+                    if (postingType == plan.PostingType)
+                    {
+                        postingTypeInventory = inventory;
+                        postingAllocationResults = allocationResult;                                           
+                    }
+                    else
+                    {
+                        //We have to make copies of the list and the item for thread-safety and 
+                        //not modifing certain properties on original allocation results
+                        postingTypeInventory = new List<PlanPricingInventoryProgram>(inventory);
+
+                        _PlanPricingInventoryEngine.ConvertPostingType(postingType, postingTypeInventory);
+
+                        postingAllocationResults = new PlanPricingAllocationResult
+                        {
+                            Spots = new List<PlanPricingAllocatedSpot>(allocationResult.Spots),
+                            JobId = jobId,
+                            PlanVersionId = plan.VersionId,
+                            PricingVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion
+                        };
+                    }
 
                     _ValidateInventory(postingTypeInventory);
+
+                    _MapAllocationResultsPostingType(postingAllocationResults, postingTypeInventory, postingType);                    
 
                     token.ThrowIfCancellationRequested();
 
                     var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() =>
                     {
                         diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                        var aggregatedResults = _PlanPricingProgramCalculationEngine.CalculateProgramResults(postingTypeInventory, allocationResult, goalsFulfilledByProprietaryInventory, proprietaryInventoryData, postingType);
+                        var aggregatedResults = _PlanPricingProgramCalculationEngine.CalculateProgramResults(postingTypeInventory, postingAllocationResults, goalsFulfilledByProprietaryInventory, proprietaryInventoryData, postingType);
                         diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
                         return aggregatedResults;
                     });
@@ -1111,7 +1133,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     var calculatePricingBandsTask = new Task<PlanPricingBand>(() =>
                     {
                         diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
-                        var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(postingTypeInventory, allocationResult, planPricingParametersDto, proprietaryInventoryData, postingType);
+                        var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(postingTypeInventory, postingAllocationResults, planPricingParametersDto, proprietaryInventoryData, postingType);
                         diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
                         return pricingBands;
                     });
@@ -1123,7 +1145,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     var calculatePricingStationsTask = new Task<PlanPricingStationResult>(() =>
                     {
                         diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
-                        var pricingStations = _PlanPricingStationCalculationEngine.Calculate(postingTypeInventory, allocationResult, planPricingParametersDto, proprietaryInventoryData, postingType);
+                        var pricingStations = _PlanPricingStationCalculationEngine.Calculate(postingTypeInventory, postingAllocationResults, planPricingParametersDto, proprietaryInventoryData, postingType);
                         diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
                         return pricingStations;
                     });
@@ -1135,7 +1157,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                         var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-                        var pricingMarketResults = _PlanPricingMarketResultsEngine.Calculate(postingTypeInventory, allocationResult, plan, marketCoverages, proprietaryInventoryData, postingType);
+                        var pricingMarketResults = _PlanPricingMarketResultsEngine.Calculate(postingTypeInventory, postingAllocationResults, plan, marketCoverages, proprietaryInventoryData, postingType);
                         diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                         return pricingMarketResults;
                     });
@@ -1216,6 +1238,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             catch (Exception exception)
             {
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model");
+            }
+        }
+
+        private void _MapAllocationResultsPostingType(PlanPricingAllocationResult allocationResult, List<PlanPricingInventoryProgram> inventory,
+            PostingTypeEnum postingType)
+        {
+            allocationResult.PostingType = postingType;
+            foreach (var spot in allocationResult.Spots)
+            {
+                spot.PostingType = postingType;
+                spot.NtiImpressionConversionRate = inventory.First(y => y.ManifestId == spot.Id).NtiImpressionConversionRate;
             }
         }
 
@@ -1509,7 +1542,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         var programInventoryDaypartId = daypart.Daypart.Id;
 
-                        var impressions = program.Impressions;
+                        var impressions = program.PostingTypeImpressions;
 
                         if (impressions <= 0)
                             continue;
@@ -1542,7 +1575,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                 }
 
-                var groupedProgramSpots = programSpots.GroupBy(i => new {i.ContractedInventoryId, i.ContractedMediaWeekId, i.InventoryDaypartId}).ToList();
+                var groupedProgramSpots = programSpots.GroupBy(i => new { i.ContractedInventoryId, i.ContractedMediaWeekId, i.InventoryDaypartId }).ToList();
                 foreach (var group in groupedProgramSpots)
                 {
                     if (group.Count() == 1)

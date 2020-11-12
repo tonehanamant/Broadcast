@@ -10,7 +10,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int PlanVersionId { get; set; }
         public List<PlanPricingBandDetailDto> Bands { get; set; } = new List<PlanPricingBandDetailDto>();
         public PlanPricingBandTotalsDto Totals { get; set; } = new PlanPricingBandTotalsDto();
-        public PostingTypeEnum PostingType { get; internal set; }
+        public PostingTypeEnum PostingType { get; set; }
     }
 
     public class PlanPricingBandDetailDto

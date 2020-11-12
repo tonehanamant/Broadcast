@@ -1554,19 +1554,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
 
         [Test]
-        public void _AppendNTIConversions_AppendsNtiInventoryToInputInventory()
+        public void ConvertPostingType_ConvertsInputInventoryToNti()
         {
             //Arrange
             var defaultInventory = Builder<PlanPricingInventoryProgram>.CreateListOfSize(2).Build()
                 .ToList();
 
             //Act
-            _PlanPricingInventoryEngine._AppendNTIConversions(defaultInventory);
+            _PlanPricingInventoryEngine.ConvertPostingType(PostingTypeEnum.NTI, defaultInventory);
 
             //Assert
-            Assert.AreEqual(4, defaultInventory.Count); //The list should double we started with 2 after the method should have 4
-            Assert.AreEqual(2, defaultInventory.Count(x => x.PostingType == PostingTypeEnum.NSI)); //Should have 2 NSI
-            Assert.AreEqual(2, defaultInventory.Count(x => x.PostingType == PostingTypeEnum.NTI)); //And 2 NTI
+            Assert.AreEqual(2, defaultInventory.Count(x => x.PostingType == PostingTypeEnum.NTI)); 
         }
 
         [Test]

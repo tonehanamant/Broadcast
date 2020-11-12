@@ -20,7 +20,7 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var stationGroup in groupedByStation)
             {
-                var programWithHighestImpressions = stationGroup.OrderByDescending(x => x.Impressions).FirstOrDefault();
+                var programWithHighestImpressions = stationGroup.OrderByDescending(x => x.PostingTypeImpressions).FirstOrDefault();
 
                 if (programWithHighestImpressions == null)
                     continue;
@@ -34,12 +34,12 @@ namespace Services.Broadcast.BusinessEngines
                     case UnitCapEnum.PerMonth:
                         totalInventoryImpressions += numberOfMonths * 
                                 parametersDto.UnitCaps * 
-                                programWithHighestImpressions.Impressions;
+                                programWithHighestImpressions.PostingTypeImpressions;
                         break;
                     case UnitCapEnum.PerWeek:
                         totalInventoryImpressions += numberOfWeeks * 
                                 parametersDto.UnitCaps * 
-                                programWithHighestImpressions.Impressions;
+                                programWithHighestImpressions.PostingTypeImpressions;
                         break;
                     case UnitCapEnum.PerDay:
                         foreach (var manifestDaypart in programWithHighestImpressions.ManifestDayparts)
@@ -47,7 +47,7 @@ namespace Services.Broadcast.BusinessEngines
                             totalInventoryImpressions += numberOfWeeks * 
                                     manifestDaypart.Daypart.ActiveDays * 
                                     parametersDto.UnitCaps * 
-                                    programWithHighestImpressions.Impressions;
+                                    programWithHighestImpressions.PostingTypeImpressions;
                         }
                         break;
                     case UnitCapEnum.PerHour:
@@ -60,7 +60,7 @@ namespace Services.Broadcast.BusinessEngines
                                     manifestDaypart.Daypart.ActiveDays * 
                                     hours * 
                                     parametersDto.UnitCaps *
-                                    programWithHighestImpressions.Impressions;
+                                    programWithHighestImpressions.PostingTypeImpressions;
                         }
                         break;
                     case UnitCapEnum.Per30Min:
@@ -75,7 +75,7 @@ namespace Services.Broadcast.BusinessEngines
                                 manifestDaypart.Daypart.ActiveDays * 
                                 hours * 
                                 parametersDto.UnitCaps * 
-                                programWithHighestImpressions.Impressions;
+                                programWithHighestImpressions.PostingTypeImpressions;
                         }
                         break;
                 }

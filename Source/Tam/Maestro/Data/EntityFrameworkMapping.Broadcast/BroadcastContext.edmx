@@ -3678,7 +3678,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots">
-          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="1" />
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_api_result_spot_frequencies" Type="Self.plan_version_buying_api_result_spot_frequencies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_api_result_spots">
@@ -3768,7 +3770,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_api_results_plan_version_buying_job">
-          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_api_results" Type="Self.plan_version_buying_api_results" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_job">
@@ -3780,7 +3784,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_band_details_plan_version_buying_results">
-          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1" />
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_band_details" Type="Self.plan_version_buying_band_details" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_results">
@@ -3792,7 +3798,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_job_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="0..1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -3804,7 +3812,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_market_details_plan_version_buying_results">
-          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1" />
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_market_details" Type="Self.plan_version_buying_market_details" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_results">
@@ -3816,7 +3826,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_ownership_group_details_plan_version_buying_results">
-          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1" />
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_ownership_group_details" Type="Self.plan_version_buying_ownership_group_details" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_results">
@@ -3852,7 +3864,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_parameters_plan_version_buying_job">
-          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_parameters" Type="Self.plan_version_buying_parameters" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_job">
@@ -3876,7 +3890,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_rep_firm_details_plan_version_buying_results">
-          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1" />
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_rep_firm_details" Type="Self.plan_version_buying_rep_firm_details" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_results">
@@ -3902,7 +3918,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_results_plan_version_buying_job">
-          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_job">
@@ -3914,7 +3932,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_buying_station_details_plan_version_buying_results">
-          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1" />
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_buying_station_details" Type="Self.plan_version_buying_station_details" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_buying_results">
@@ -4098,7 +4118,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots">
-          <End Role="plan_version_pricing_api_result_spots" Type="Self.plan_version_pricing_api_result_spots" Multiplicity="1" />
+          <End Role="plan_version_pricing_api_result_spots" Type="Self.plan_version_pricing_api_result_spots" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_pricing_api_result_spot_frequencies" Type="Self.plan_version_pricing_api_result_spot_frequencies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_pricing_api_result_spots">
@@ -4188,7 +4210,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_api_results_plan_version_pricing_job">
-          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1" />
+          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_pricing_api_results" Type="Self.plan_version_pricing_api_results" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_pricing_job">
@@ -4214,7 +4238,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_bands_plan_version_pricing_job">
-          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1" />
+          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_pricing_bands" Type="Self.plan_version_pricing_bands" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_pricing_job">
@@ -4226,7 +4252,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_job_plan_version_pricing_stations">
-          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1" />
+          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_pricing_stations" Type="Self.plan_version_pricing_stations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_pricing_job">
@@ -4238,7 +4266,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_job_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="0..1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -4342,7 +4372,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_results_plan_version_pricing_job">
-          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1" />
+          <End Role="plan_version_pricing_job" Type="Self.plan_version_pricing_job" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_pricing_results" Type="Self.plan_version_pricing_results" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_version_pricing_job">
@@ -4382,7 +4414,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_summaries_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_summaries" Type="Self.plan_version_summaries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">

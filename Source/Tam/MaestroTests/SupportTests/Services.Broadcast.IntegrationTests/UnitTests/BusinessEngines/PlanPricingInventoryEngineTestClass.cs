@@ -46,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             PlanDto plan,
             List<PlanPricingInventoryProgram> programs)
         {
-            ApplyNTIConversionToNSI(plan, programs);
+            ConvertPostingType(plan.PostingType, programs);
         }
     }
 }
