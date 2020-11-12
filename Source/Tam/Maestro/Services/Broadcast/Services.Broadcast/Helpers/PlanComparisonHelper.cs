@@ -15,6 +15,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "VersionId"),
             new ComparisonMinorProperty(typeof(PlanDto), "VersionNumber"),
             new ComparisonMinorProperty(typeof(PlanDto), "ModifiedBy"),
+            new ComparisonMinorProperty(typeof(PlanDto), "ModifiedDate"),
             new ComparisonMinorProperty(typeof(PlanDto), "JobId"),
             new ComparisonMinorProperty(typeof(PlanDto), "IsOutOfSync"),
             new ComparisonMinorProperty(typeof(PlanDto), "AvailableMarketsWithSovCount"),

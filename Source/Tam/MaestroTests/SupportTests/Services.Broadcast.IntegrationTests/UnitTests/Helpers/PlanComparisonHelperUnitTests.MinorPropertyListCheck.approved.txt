@@ -17,6 +17,10 @@
   },
   {
     "ClassTypeName": "PlanDto",
+    "PropertyName": "ModifiedDate"
+  },
+  {
+    "ClassTypeName": "PlanDto",
     "PropertyName": "JobId"
   },
   {
