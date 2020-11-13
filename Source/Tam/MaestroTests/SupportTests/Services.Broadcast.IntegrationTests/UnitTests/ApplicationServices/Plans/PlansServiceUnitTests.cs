@@ -626,7 +626,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 plan.JobId = 12;
                 beforePlan.PricingParameters.JobId = 12;
-                var pricingJobs = new List<PlanPricingJob> {new PlanPricingJob {Completed = pricingWasRunAfterLastSave ? modifiedDate.AddHours(2) : modifiedDate}};
+                var pricingJobs = new List<PlanPricingJob> {new PlanPricingJob { Queued = pricingWasRunAfterLastSave ? modifiedDate.AddHours(2) : modifiedDate}};
                 _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
                     .Returns(pricingJobs);
             }

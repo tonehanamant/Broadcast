@@ -424,9 +424,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return true;
             }
 
+            // use the queued timestamp to differentiate auto-trigger on last save.
             var jobs = _PlanRepository.GetSuccessfulPricingJobs(beforePlan.VersionId);
-            var mostRecentJobCompletedDate = jobs.OrderByDescending(j => j.Id).First().Completed;
-            pricingWasRunAfterLastSave = mostRecentJobCompletedDate > beforePlan.ModifiedDate;
+            var mostRecentJobQueuedDate = jobs.OrderByDescending(j => j.Id).First().Queued;
+            pricingWasRunAfterLastSave = mostRecentJobQueuedDate > beforePlan.ModifiedDate;
 
             if (saveState != SaveState.CreatingNewDraft)
             {
