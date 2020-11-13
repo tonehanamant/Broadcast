@@ -2758,29 +2758,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavePlan_VersionOutOfSync_EnablePricingInEdit()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, true);
-                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, true);
-
-                var newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
-                _ForceCompletePlanPricingJob(newPlanId);
-
-                var editPlan = _PlanService.GetPlan(newPlanId);
-                editPlan.IsOutOfSync = true;
-                var editPlanId = _PlanService.SavePlan(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
-
-                var finalPlan = _PlanService.GetPlan(newPlanId);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SavePlan_VersionOutOfSync_DisablePricingInEdit()
         {
             using (new TransactionScopeWrapper())

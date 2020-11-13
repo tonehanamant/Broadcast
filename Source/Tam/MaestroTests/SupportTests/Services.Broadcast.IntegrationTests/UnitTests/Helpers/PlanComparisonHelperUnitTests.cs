@@ -17,19 +17,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
     public class PlanComparisonHelperUnitTests
     {
         [Test]
-        [TestCase(0,1,true)]
-        [TestCase(1,0, true)]
-        [TestCase(1,1,false)]
-        public void IsCreatingNewPlan(int versionId, int planId, bool expectedResult)
-        {
-            var plan = new PlanDto {Id = planId, VersionId = versionId };
-
-            var result = PlanComparisonHelper.IsCreatingNewPlan(plan);
-
-            Assert.AreEqual(expectedResult, result);
-        }
-
-        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MinorPropertyListCheck()
         {
@@ -44,17 +31,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
         }
 
         [Test]
-        public void CompareNoChange()
+        public void DidPlanPricingInputsChangeNoChange()
         {
             var plan = _GetNewPlan();
 
-            var result = PlanComparisonHelper.PlanPricingInputsAreOutOfSync(plan, plan);
+            var result = PlanComparisonHelper.DidPlanPricingInputsChange(plan, plan);
 
             Assert.IsFalse(result);
         }
 
         [Test]
-        public void CompareMinorChange()
+        public void DidPlanPricingInputsChangeMinorChange()
         {
             var beforePlan = _GetNewPlan();
             var afterPlan = _GetNewPlan();
@@ -64,13 +51,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             afterPlan.Name = beforePlan.Name + " Edited";
             afterPlan.IsDraft = !afterPlan.IsDraft;
 
-            var result = PlanComparisonHelper.PlanPricingInputsAreOutOfSync(beforePlan, afterPlan);
+            var result = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
 
             Assert.IsFalse(result);
         }
 
         [Test]
-        public void CompareMajorChange()
+        public void DidPlanPricingInputsChangeMajorChange()
         {
             var beforePlan = _GetNewPlan();
             var afterPlan = _GetNewPlan();
@@ -78,7 +65,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             afterPlan.Budget += 10m;
             afterPlan.CoverageGoalPercent += 10;
 
-            var result = PlanComparisonHelper.PlanPricingInputsAreOutOfSync(beforePlan, afterPlan);
+            var result = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
 
             Assert.IsTrue(result);
         }

@@ -303,6 +303,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void SavePlanUpdatedVersionNoChangeToPlan()
         {
             // Arrange
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                 .Returns(new List<WeeklyBreakdownWeek>());
@@ -324,6 +327,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
                 .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
 
+            _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
+                .Returns(new List<PlanPricingJob> {
+                new PlanPricingJob { Completed = modifiedWhen } });
+
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
             var aggregateReturn = new PlanSummaryDto();
@@ -333,9 +340,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
-            var modifiedWho = "ModificationUser";
-            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+            plan.JobId = 42;
             plan.PricingParameters = _GetPricingParameters(plan.Id, plan.VersionId);
+            plan.PricingParameters.JobId = plan.JobId;
+            plan.ModifiedDate = modifiedWhen;
 
             plan.Id = 1;
             plan.VersionId = 526;
@@ -350,6 +358,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.IsDraft = plan.IsDraft;
             beforePlan.JobId = plan.JobId;
             beforePlan.PricingParameters = _GetPricingParameters(beforePlan.Id, beforePlan.VersionId);
+            beforePlan.PricingParameters.JobId = plan.JobId;
 
             // mock an after plan
             var afterPlan = _GetNewPlan();
@@ -388,8 +397,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var expectedQueuePricingJobCallCount = 0;
             var expectedUpdatePlanPricingVersionIdCalls = 1;
             var expectedSetPricingPlanVersionIdCallCount = 0;
-
-            plan.JobId = 42;
+            
             plan.IsOutOfSync = false;
 
             // Act
@@ -414,7 +422,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void SavePlanUpdatedVersionMinorChangeToPlan()
         {
-            // Arrange
+            // Arrange            
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                 .Returns(new List<WeeklyBreakdownWeek>());
@@ -436,6 +447,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
                 .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
 
+            _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
+                .Returns(new List<PlanPricingJob> { 
+                new PlanPricingJob { Completed = modifiedWhen } });
+
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
             var aggregateReturn = new PlanSummaryDto();
@@ -445,14 +460,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var plan = _GetNewPlan();
             var campaignId = plan.CampaignId;
-            var modifiedWho = "ModificationUser";
-            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
             plan.Id = 1;
             plan.VersionId = 526;
             plan.VersionNumber = 1;
             plan.IsDraft = false;
             plan.JobId = 42;
             plan.PricingParameters = _GetPricingParameters(plan.Id, plan.VersionId);
+            plan.PricingParameters.JobId = plan.JobId;
+            plan.ModifiedDate = modifiedWhen;
 
             // mock a before plan
             var beforePlan = _GetNewPlan();
@@ -462,6 +477,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.IsDraft = plan.IsDraft;
             beforePlan.JobId = plan.JobId;
             beforePlan.PricingParameters = _GetPricingParameters(beforePlan.Id, beforePlan.VersionId);
+            beforePlan.PricingParameters.JobId = plan.JobId;
 
             // make a minor change to the plan
             plan.Name = "Minor Change";
@@ -531,6 +547,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void SavePlanUpdatedVersionMajorChangeToPlanProperties()
         {
             // Arrange
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                 .Returns(new List<WeeklyBreakdownWeek>());
@@ -552,6 +571,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
                 .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
 
+            _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
+                .Returns(new List<PlanPricingJob> {
+                new PlanPricingJob { Completed = modifiedWhen } });
+
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
             var aggregateReturn = new PlanSummaryDto();
@@ -560,9 +583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(aggregateReturn);
 
             var plan = _GetNewPlan();
-            var campaignId = plan.CampaignId;
-            var modifiedWho = "ModificationUser";
-            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+            var campaignId = plan.CampaignId;            
             plan.Id = 1;
             plan.VersionId = 526;
             plan.VersionNumber = 1;
@@ -570,6 +591,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             plan.JobId = 42;
             plan.IsOutOfSync = false;
             plan.PricingParameters = _GetPricingParameters(plan.Id, plan.VersionId);
+            plan.PricingParameters.JobId = plan.JobId;            
 
             // mock a before plan
             var beforePlan = _GetNewPlan();
@@ -579,6 +601,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.IsDraft = plan.IsDraft;
             beforePlan.JobId = plan.JobId;
             beforePlan.PricingParameters = _GetPricingParameters(beforePlan.Id, beforePlan.VersionId);
+            beforePlan.PricingParameters.JobId = plan.JobId;
+            beforePlan.ModifiedDate = modifiedWhen;
 
             // make a major change to the plan properties
             plan.Budget += 1000;
@@ -920,9 +944,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     LockedUserName = "IntegrationUser"
                 });
 
+            var beforePlan = _GetNewPlan();
+            beforePlan.Id = 1;
+            beforePlan.VersionId = 1;
+
             PlanDto plan = _GetNewPlan();
             plan.Id = 1;
-            plan.VersionId = 1;
+            plan.VersionId = 2;
+
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(beforePlan);
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))

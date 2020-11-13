@@ -33,13 +33,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "BuyingParameters")
         };
 
-        public static bool IsCreatingNewPlan(PlanDto plan)
-        {
-            var result = plan.VersionId == 0 || plan.Id == 0;
-            return result;
-        }
-
-        public static bool PlanPricingInputsAreOutOfSync(PlanDto beforePlan, PlanDto afterPlan)
+        public static bool DidPlanPricingInputsChange(PlanDto beforePlan, PlanDto afterPlan)
         {
             if (beforePlan == null)
             {

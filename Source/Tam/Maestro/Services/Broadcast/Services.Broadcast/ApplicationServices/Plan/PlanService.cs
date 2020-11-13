@@ -215,15 +215,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The pricing model is running for the plan");
             }
 
-            var creatingNewPlan = PlanComparisonHelper.IsCreatingNewPlan(plan);
-
-            // get the "before plan" before we save.
-            // used later for comparison
-            PlanDto beforePlan = null;
-            if (creatingNewPlan == false)
-            {                
-                beforePlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
-            }
+            PlanDto beforePlan;
+            var saveState = _DeriveSaveState(plan, out beforePlan);
 
             if (plan.CreativeLengths.Count == 1)
             {//if there is only 1 creative length, set the weight to 100%
@@ -252,7 +245,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
 
-            if (creatingNewPlan)
+            if (saveState == SaveState.CreatingNewPlan)
             {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
             }
@@ -286,102 +279,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
             }
 
-            // plan pricing parameters is null when passed by UI.
-            //      if populated, they cannot be trusted, so don't use them, they may be cloned from somewhere...
-            // This sets the default parameters
-            _SetPlanPricingParameters(plan);
-
-            /*** Handle Pricing ***/
-            
+            /*** Handle Pricing and Buying ***/
             // This plan.id and plan.versionId were updated in their respective saves.
             // if a new version was published then the VersionId is the latest published version.
             // if a draft was saved then the VersionId is the draft version instead.
-            // either way it gets us the after plan as expected.
             var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
 
-            var hasJobResultsForThisPlan = false;
-            var planPropertiesOutOfSync = false;
+            _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy);
+            _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan);
 
-            // do we have job results and are they for this plan (or came along with a copied plan?)
-            if (plan.JobId.HasValue)
-            {
-                var jobPlanId = _PlanRepository.GetPlanIdFromPricingJob(plan.JobId.Value);
+            return plan.Id;
+        }
 
-                if (creatingNewPlan && jobPlanId.HasValue == false)
-                {
-                    hasJobResultsForThisPlan = true;
-                }
-                else
-                {
-                    hasJobResultsForThisPlan = jobPlanId.HasValue && plan.Id == jobPlanId;
-                }
-            }
-            
-            if (hasJobResultsForThisPlan)
-            {
-                // are the inputs the same?
-
-                // 1) compare the plan itself, sans the pricing parameters
-                if (creatingNewPlan)
-                {
-                    // if we're creating a new plan then we don't have a plan structure to rely upon...
-                    // We will give the user the benefit of the doubt and assume they ran pricing then saved without further changes.
-                    planPropertiesOutOfSync = false;
-                }
-                else
-                {
-                    // if modifying an existing plan then we can compare the previous to the new
-                    planPropertiesOutOfSync = PlanComparisonHelper.PlanPricingInputsAreOutOfSync(beforePlan, afterPlan);
-                }
-
-                // 2) compare the pricing parameters
-                // we can get the pricing parameters for the referenced job to say "was run with this",
-                //      but we don't have the pricing parameters for "now".
-                // thus no point in comparing at all.
-                // and we'll give the user the benefit of the doubt that they hit run pricing then hit save.
-
-                // changes towards better
-                // if BE could get 100% of the picture these gaps could be closed:
-                // 1) when BE runs pricing it stores the plan properties relevant to pricing with the pricing job outside the plan tables
-                // 2) when FE saves it sends the last pricing parameters used for this plan (if they ran during this session)
-            }
-
-            var planPricingResultsAreCurrent = hasJobResultsForThisPlan && planPropertiesOutOfSync == false;
-
-            var autoTriggeredPricing = false;
-            if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY))
-            {
-                if (planPricingResultsAreCurrent == false)
-                {
-                    _LogInfo($"Automatically triggering Pricing. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
-                    
-                    _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
-                    autoTriggeredPricing = true;
-                }
-            }
-            else
-            {
-                _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-            }
-
-            // do we have to tie a job result to the new plan version?
-            if (autoTriggeredPricing == false && planPricingResultsAreCurrent)
-            {
-                if (creatingNewPlan)
-                {
-                    _LogInfo($"Pricing not triggered while creating a new plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
-                    _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
-                }
-                else
-                {
-                    _LogInfo($"Pricing not triggered while updating an existing plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
-                    _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
-                }
-            }
-
+        internal void _HandleBuyingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan)
+        {
             if (plan.BuyingParameters != null)
             {
-                if (creatingNewPlan)
+                if (saveState == SaveState.CreatingNewPlan)
                 {
                     _LogInfo($"Relating previous buying results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
                     _PlanRepository.SetBuyingPlanVersionId(plan.BuyingParameters.JobId.Value, plan.VersionId);
@@ -392,8 +306,136 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _PlanRepository.UpdatePlanBuyingVersionId(afterPlan.VersionId, beforePlan.VersionId);
                 }
             }
-            
-            return plan.Id;
+        }
+
+        internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy)
+        {
+            var canRunPricingDuringEdit = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT);
+            var canTriggerPricing = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY);
+
+            var shouldPromotePricingResults = false;
+            var pricingWasRunAfterLastSave = false;
+            var couldPromotePricingResultsSafely = _CanPromotePricingResultsSafely(saveState, plan, beforePlan, canRunPricingDuringEdit, out pricingWasRunAfterLastSave);
+
+            // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
+            // This sets the default parameters in case we don't promote existing results.
+            _SetPlanPricingParameters(plan);
+
+            if (couldPromotePricingResultsSafely)
+            {
+                if (saveState == SaveState.CreatingNewPlan)
+                {
+                    shouldPromotePricingResults = true;
+                }
+                else
+                {
+                    var goalsHaveChanged = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);                    
+                    shouldPromotePricingResults = !goalsHaveChanged || goalsHaveChanged && pricingWasRunAfterLastSave;
+                }
+            }
+
+            if (shouldPromotePricingResults)
+            {
+                if (saveState == SaveState.CreatingNewPlan)
+                {
+                    _LogInfo($"Pricing not triggered while creating a new plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
+                    _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
+                }
+                else
+                {
+                    _LogInfo($"Pricing not triggered while updating an existing plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                    _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
+                }
+            }
+            else if (canTriggerPricing)
+            {
+                _LogInfo($"Automatically triggering Pricing. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+
+                _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+            }
+            else
+            {
+                _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+            }
+        }
+
+        internal enum SaveState
+        {
+            CreatingNewPlan,
+            CreatingNewDraft,
+            PromotingDraft,
+            UpdatingExisting
+        }
+
+        internal SaveState _DeriveSaveState(PlanDto plan, out PlanDto beforePlan)
+        {
+            beforePlan = null;
+            if (plan.VersionId == 0 || plan.Id == 0)
+            {
+                return SaveState.CreatingNewPlan;
+            }
+            beforePlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
+
+            if (!beforePlan.IsDraft && plan.IsDraft)
+            {
+                return SaveState.CreatingNewDraft;
+            }
+
+            if (beforePlan.IsDraft && !plan.IsDraft)
+            {
+                return SaveState.PromotingDraft;
+            }
+
+            return SaveState.UpdatingExisting;
+        }
+
+        internal bool _CanPromotePricingResultsSafely(SaveState saveState, PlanDto plan, PlanDto beforePlan, bool canRunPricingDuringEdit, out bool pricingWasRunAfterLastSave)
+        {
+            pricingWasRunAfterLastSave = false;
+            var hasResults = saveState == SaveState.CreatingNewPlan ? 
+                plan.JobId.HasValue : 
+                beforePlan.PricingParameters?.JobId.HasValue ?? false;
+
+            // no results then there is nothing to promote
+            if (!hasResults)
+            {
+                return false;
+            }
+
+            // was pricing run during this session?
+            if (saveState == SaveState.CreatingNewPlan)
+            {
+                // special case where we can just promote them.
+                pricingWasRunAfterLastSave = true;
+                return true;
+            }
+
+            var jobs = _PlanRepository.GetSuccessfulPricingJobs(beforePlan.VersionId);
+            var mostRecentJobCompletedDate = jobs.OrderByDescending(j => j.Id).First().Completed;
+            pricingWasRunAfterLastSave = mostRecentJobCompletedDate > beforePlan.ModifiedDate;
+
+            if (saveState != SaveState.CreatingNewDraft)
+            {
+                // no problem if we promote them.
+                return true;
+            }
+
+            // creating a new draft,
+            // this action yields two active plan_version records : the draft and the published version.
+            // we do not want to leave the published draft without a pricing result.
+            if (!canRunPricingDuringEdit)
+            {
+                // easy, do not promote.
+                return false;
+            }
+
+            if (pricingWasRunAfterLastSave)
+            {
+                // assume it was run during this session and allow promotion
+                return true;
+            }
+
+            return false;
         }
 
         private void _UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy)

@@ -191,6 +191,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="jobId">The job identifier.</param>
         /// <returns>List of ProgramLineupProprietaryInventory objects</returns>
         List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForProgramLineup(int jobId);
+
+        List<PlanPricingJob> GetSuccessfulPricingJobs(int planVersionId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -2143,6 +2145,29 @@ namespace Services.Broadcast.Repositories
                               select parameters);
 
                 return _MapPricingParameters(entity.FirstOrDefault());
+            });
+        }
+
+        public List<PlanPricingJob> GetSuccessfulPricingJobs(int planVersionId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var jobs = context.plan_version_pricing_job
+                    .Where(j => j.plan_version_id == planVersionId &&
+                                j.status == (int)BackgroundJobProcessingStatus.Succeeded)
+                    .ToList();
+
+                var results = jobs.Select(j =>
+                    new PlanPricingJob
+                    {
+                        Id = j.id,
+                        HangfireJobId = j.hangfire_job_id,
+                        PlanVersionId = j.plan_version_id,
+                        Status = (BackgroundJobProcessingStatus)j.status,
+                        Queued = j.queued_at,
+                        Completed = j.completed_at,
+                    }).ToList();
+                return results;
             });
         }
 
