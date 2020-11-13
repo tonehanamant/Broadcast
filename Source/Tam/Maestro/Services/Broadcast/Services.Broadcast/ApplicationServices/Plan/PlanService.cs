@@ -311,29 +311,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
         internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy)
         {
             var canRunPricingDuringEdit = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT);
-            var canTriggerPricing = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY);
-
-            var shouldPromotePricingResults = false;
-            var pricingWasRunAfterLastSave = false;
-            var couldPromotePricingResultsSafely = _CanPromotePricingResultsSafely(saveState, plan, beforePlan, canRunPricingDuringEdit, out pricingWasRunAfterLastSave);
+            var canAutoTriggerPricing = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY);
 
             // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
             // This sets the default parameters in case we don't promote existing results.
             _SetPlanPricingParameters(plan);
 
-            if (couldPromotePricingResultsSafely)
-            {
-                if (saveState == SaveState.CreatingNewPlan)
-                {
-                    shouldPromotePricingResults = true;
-                }
-                else
-                {
-                    var goalsHaveChanged = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);                    
-                    shouldPromotePricingResults = !goalsHaveChanged || goalsHaveChanged && pricingWasRunAfterLastSave;
-                }
-            }
+            bool pricingWasRunAfterLastSave;
+            var couldPromotePricingResultsSafely = _CanPromotePricingResultsSafely(saveState, plan, beforePlan, canRunPricingDuringEdit, out pricingWasRunAfterLastSave);
+            var shouldPromotePricingResults = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan, couldPromotePricingResultsSafely, pricingWasRunAfterLastSave);
 
+            _FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults, canAutoTriggerPricing);
+        }
+
+        internal void _FinalizePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy, 
+            bool shouldPromotePricingResults, bool canAutoTriggerPricing)
+        {
             if (shouldPromotePricingResults)
             {
                 if (saveState == SaveState.CreatingNewPlan)
@@ -347,7 +340,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
                 }
             }
-            else if (canTriggerPricing)
+            else if (canAutoTriggerPricing)
             {
                 _LogInfo($"Automatically triggering Pricing. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
 
@@ -359,7 +352,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal enum SaveState
+        internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan, 
+            bool couldPromotePricingResultsSafely, bool pricingWasRunAfterLastSave)
+        {
+            var shouldPromotePricingResults = false;
+
+            if (couldPromotePricingResultsSafely)
+            {
+                if (saveState == SaveState.CreatingNewPlan)
+                {
+                    shouldPromotePricingResults = true;
+                }
+                else
+                {
+                    var goalsHaveChanged = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
+                    shouldPromotePricingResults = !goalsHaveChanged || goalsHaveChanged && pricingWasRunAfterLastSave;
+                }
+            }
+
+            return shouldPromotePricingResults;
+        }
+
+        public enum SaveState
         {
             CreatingNewPlan,
             CreatingNewDraft,
