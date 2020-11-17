@@ -27,11 +27,23 @@ namespace Services.Broadcast.ReportGenerators.Quote
 
             _PopulateHeader(worksheet, reportData);
             _PopulateDetailLines(worksheet, reportData, tableDimensions);
+            _CleanupDetailLines(worksheet, tableDimensions);
         }
 
         private void _PopulateHeader(ExcelWorksheet worksheet, QuoteReportData reportData)
         {
             worksheet.Cells[HEADER_TIME_GENERATED_ROW, HEADER_DATA_COLUMN].Value = reportData.GeneratedTimeStamp;
+        }
+
+        private void _CleanupDetailLines(ExcelWorksheet worksheet, TableDimensions tableDimensions)
+        {
+            if (tableDimensions.RowCount < 2)
+            {
+                // remove that extra row in the template because it looks strange.
+                // it's needed for the formulas to work though.
+                var rowToRemove = TABLE_DATA_ROW_START + 1;
+                worksheet.DeleteRow(rowToRemove);
+            }
         }
 
         private void _PopulateDetailLines(ExcelWorksheet worksheet, QuoteReportData reportData, TableDimensions tableDimensions)
