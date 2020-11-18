@@ -629,7 +629,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.Cpm);
+                Assert.AreEqual(1848.67, bands.Totals.Cpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
             }
         }

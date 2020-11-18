@@ -1,8 +1,7 @@
 ﻿{
   "inventory": [
     {
-      "Cpm": 8.888888888888888888888888900,
-      "Impressions": 1125.0,
+      "Cpm": 6.6666666666666666666666667000,
       "InventoryPricingQuarterType": "Plan",
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -63,8 +62,10 @@
           "Spots": 0
         }
       ],
+      "NtiToNsiImpressionConversionRate": 0.75,
       "PostingType": 2,
-      "ProjectedImpressions": 1125.0,
+      "PostingTypeImpressions": 1500.0,
+      "ProjectedImpressions": 1500.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 1,
       "StandardDaypartId": 1,
@@ -91,7 +92,7 @@
       {
         "ProjectedImpressions": 0.0,
         "ProvidedImpressions": null,
-        "Impressions": 0.0,
+        "PostingTypeImpressions": 0.0,
         "Cpm": 0.0,
         "Unit": null,
         "InventorySource": null,
@@ -106,6 +107,7 @@
           }
         ],
         "PostingType": 0,
+        "NtiToNsiImpressionConversionRate": 0.0,
         "ManifestId": 0,
         "StandardDaypartId": 1,
         "Station": {

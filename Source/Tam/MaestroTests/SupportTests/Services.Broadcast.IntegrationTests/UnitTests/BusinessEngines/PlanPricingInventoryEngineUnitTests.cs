@@ -1660,8 +1660,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs);
 
-            Assert.AreEqual(850, programs.Single().ProjectedImpressions);
-            Assert.AreEqual(1700, programs.Single().ProvidedImpressions);
+            Assert.AreEqual(1000, programs.Single().ProjectedImpressions);
+            Assert.AreEqual(2000, programs.Single().ProvidedImpressions);
         }
 
         /// <summary>

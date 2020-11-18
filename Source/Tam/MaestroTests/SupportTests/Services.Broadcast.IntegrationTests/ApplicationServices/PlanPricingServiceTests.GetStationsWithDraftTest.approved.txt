@@ -3,8 +3,8 @@
   "Stations": [
     {
       "Budget": 5375.0000,
-      "Cpm": 14.355344862121920277759230800,
-      "Impressions": 374.425,
+      "Cpm": 12.202043132803632236095346200,
+      "Impressions": 440.5,
       "ImpressionsPercentage": 99.10011249,
       "Market": "New York",
       "Spots": 15,
@@ -12,8 +12,8 @@
     },
     {
       "Budget": 185.0000,
-      "Cpm": 54.411764705882352941176470600,
-      "Impressions": 3.4,
+      "Cpm": 46.25000,
+      "Impressions": 4.0,
       "ImpressionsPercentage": 0.89988751,
       "Market": "Portland-Auburn",
       "Spots": 15,
@@ -22,8 +22,8 @@
   ],
   "Totals": {
     "Budget": 5560.0000,
-    "Cpm": 14.7158,
-    "Impressions": 377.825,
+    "Cpm": 12.5084,
+    "Impressions": 444.5,
     "ImpressionsPercentage": 100.0,
     "Spots": 30,
     "Station": 2

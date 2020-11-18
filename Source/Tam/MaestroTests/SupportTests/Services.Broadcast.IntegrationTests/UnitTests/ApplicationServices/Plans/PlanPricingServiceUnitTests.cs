@@ -1693,7 +1693,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 var passedInventorySourceIds = new List<IEnumerable<int>>();
                 _PlanPricingInventoryEngineMock
                     .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
-                    .Callback<PlanDto, ProgramInventoryOptionalParametersDto, IEnumerable<int>, PlanPricingJobDiagnostic, Guid, bool>((p1, p2, p3, p4, P5, p6) =>
+                    .Callback<PlanDto, ProgramInventoryOptionalParametersDto, IEnumerable<int>, PlanPricingJobDiagnostic, Guid>((p1, p2, p3, p4, P5) =>
                     {
                         passedInventorySourceIds.Add(p3);
                     })

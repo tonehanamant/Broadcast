@@ -76,7 +76,6 @@
   "programs": [
     {
       "Cpm": 0.0,
-      "Impressions": 3450.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -133,7 +132,9 @@
       "ManifestId": 0,
       "ManifestRates": null,
       "ManifestWeeks": null,
+      "NtiToNsiImpressionConversionRate": 0.0,
       "PostingType": 0,
+      "PostingTypeImpressions": 3450.0,
       "ProjectedImpressions": 3450.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 0,
@@ -157,7 +158,6 @@
     },
     {
       "Cpm": 0.0,
-      "Impressions": 2100.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -190,7 +190,9 @@
       "ManifestId": 0,
       "ManifestRates": null,
       "ManifestWeeks": null,
+      "NtiToNsiImpressionConversionRate": 0.0,
       "PostingType": 0,
+      "PostingTypeImpressions": 2100.0,
       "ProjectedImpressions": 2100.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 0,

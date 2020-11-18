@@ -2,7 +2,6 @@
   "programs": [
     {
       "Cpm": 0.0,
-      "Impressions": 1500.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": [
@@ -15,7 +14,9 @@
       "ManifestId": 0,
       "ManifestRates": null,
       "ManifestWeeks": null,
+      "NtiToNsiImpressionConversionRate": 0.0,
       "PostingType": 0,
+      "PostingTypeImpressions": 1500.0,
       "ProjectedImpressions": 0.0,
       "ProvidedImpressions": 1500.0,
       "SpotLengthId": 1,

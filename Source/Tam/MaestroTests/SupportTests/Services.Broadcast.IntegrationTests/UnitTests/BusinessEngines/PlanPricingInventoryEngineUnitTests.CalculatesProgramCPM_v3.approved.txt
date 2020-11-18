@@ -1,7 +1,6 @@
 [
   {
     "Cpm": 2.5000,
-    "Impressions": 10000.0,
     "InventoryPricingQuarterType": 0,
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -18,7 +17,9 @@
       }
     ],
     "ManifestWeeks": null,
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 10000.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 10000.0,
     "SpotLengthId": 0,

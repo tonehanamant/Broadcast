@@ -259,7 +259,7 @@ namespace Services.Broadcast.BusinessEngines
 
 
         internal void _AppendConversionRates(List<PlanPricingInventoryProgram> programs, PostingTypeEnum postingType)
-        {
+        {           
             var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
                     .GetLatestNtiToNsiConversionRates()
                     .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
@@ -267,7 +267,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var conversionRate = conversionRatesByDaypartCodeId[program.StandardDaypartId];
-                program.NtiImpressionConversionRate = conversionRate;
+                program.NtiToNsiImpressionConversionRate = conversionRate;
 
                 program.PostingType = postingType;
             }

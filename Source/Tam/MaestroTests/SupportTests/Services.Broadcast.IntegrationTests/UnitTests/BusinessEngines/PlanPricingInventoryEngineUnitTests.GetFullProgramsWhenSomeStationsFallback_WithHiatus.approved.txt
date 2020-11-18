@@ -1,7 +1,6 @@
 ﻿[
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -16,7 +15,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -40,7 +41,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -55,7 +55,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -79,7 +81,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -94,7 +95,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -118,7 +121,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -133,7 +135,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -157,7 +161,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -172,7 +175,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -196,7 +201,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -211,7 +215,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -235,7 +241,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -250,7 +255,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -274,7 +281,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -289,7 +295,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -313,7 +321,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -328,7 +335,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -352,7 +361,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -367,7 +375,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -391,7 +401,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -406,7 +415,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
@@ -430,7 +441,6 @@
   },
   {
     "Cpm": 0.0,
-    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -445,7 +455,9 @@
         "Spots": 0
       }
     ],
+    "NtiToNsiImpressionConversionRate": 0.0,
     "PostingType": 0,
+    "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotLengthId": 0,
