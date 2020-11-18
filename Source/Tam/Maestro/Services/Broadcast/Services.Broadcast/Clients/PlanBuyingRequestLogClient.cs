@@ -8,9 +8,9 @@ namespace Services.Broadcast.Clients
 {
     public interface IPlanBuyingRequestLogClient
     {
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion);
 
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto, string apiVersion);
     }
 
     public class PlanBuyingRequestLogClientAmazonS3 : IPlanBuyingRequestLogClient
@@ -24,27 +24,27 @@ namespace Services.Broadcast.Clients
             _LogToAmazonS3 = requestLogClientAmazonS3;
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion)
         {
-            var fileName = _GetFileName(planId, jobId);
+            var fileName = _GetFileName(planId, jobId, apiVersion);
             var keyName = _GetKeyName(fileName);
 
             _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planBuyingApiRequestDto);            
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto, string apiVersion)
         {
-            var fileName = _GetFileName(planId, jobId);
+            var fileName = _GetFileName(planId, jobId, apiVersion);
             var keyName = _GetKeyName(fileName);
 
             _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planBuyingApiRequestDto);
         }
 
-        private string _GetFileName(int planId, int jobId)
+        private string _GetFileName(int planId, int jobId, string apiVersion)
         {
             var appSettings = new AppSettings();
             var environment = appSettings.Environment.ToString().ToLower();
-            var fileName = PlanPricingBuyingFileHelper.GetRequestFileName(environment, planId, jobId, DateTime.Now);
+            var fileName = PlanPricingBuyingFileHelper.GetRequestFileName(environment, planId, jobId, apiVersion, DateTime.Now);
             return fileName;
         }
 

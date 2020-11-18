@@ -144,11 +144,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest, string apiVersion);
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
 
         PlanBuyingScxExportResponse ExportPlanBuyingScx(PlanBuyingScxExportRequest request);
     }
@@ -1295,6 +1295,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanBuyingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
+            var apiVersion = "2";
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var buyingModelWeeks = _GetBuyingModelWeeks(plan, parameters, proprietaryInventoryData, out List<int> skippedWeeksIds);
@@ -1310,7 +1311,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spotsAndMappings.Spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -1344,6 +1345,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanBuyingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
+            var apiVersion = "3";
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var buyingModelWeeks = _GetBuyingModelWeeks_v3(plan, parameters, proprietaryInventoryData, out List<int> skippedWeeksIds);
@@ -1359,7 +1361,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spotsAndMappings.Spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -1650,11 +1652,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return grouped;
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest, string apiVersion)
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion);
             }
             catch (Exception exception)
             {
@@ -1662,11 +1664,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion)
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion);
             }
             catch (Exception exception)
             {

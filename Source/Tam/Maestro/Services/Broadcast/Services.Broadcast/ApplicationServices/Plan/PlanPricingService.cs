@@ -126,10 +126,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanPricingBandDto GetPricingBandsForVersion(int planId, int planVersionId);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest, string apiVersion);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion);
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
     }
 
@@ -1438,6 +1438,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
+            var apiVersion = "2";
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var pricingModelWeeks = _GetPricingModelWeeks(
@@ -1458,7 +1459,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1489,6 +1490,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
+            var apiVersion = "3";
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var pricingModelWeeks = _GetPricingModelWeeks_v3(
@@ -1509,7 +1511,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1791,12 +1793,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return grouped.ToList();
         }
 
-        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest, string apiVersion)
         {
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion);
             }
             catch (Exception exception)
             {
@@ -1804,12 +1806,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion)
         {
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion);
             }
             catch (Exception exception)
             {
