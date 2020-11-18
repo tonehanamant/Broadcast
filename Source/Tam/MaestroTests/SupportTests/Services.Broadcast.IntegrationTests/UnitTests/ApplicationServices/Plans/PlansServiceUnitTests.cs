@@ -1225,6 +1225,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanGetPlanStatuses()
         {
             var planStatuses = _PlanService.GetPlanStatuses();

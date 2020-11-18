@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Services.Broadcast.Helpers.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
@@ -22,5 +24,25 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public List<PlanBuyingAllocatedSpot> Allocated { get; set; }
 
         public List<PlanBuyingAllocatedSpot> Unallocated { get; set; }
+
+        public Stream Stream()
+        {
+            var json = JsonSerializerHelper.ConvertToJson(this);
+            var memoryStream = new MemoryStream();
+            var streamWriter = new StreamWriter(memoryStream);
+            streamWriter.Write(json);
+            streamWriter.Flush();
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+        public string FileName
+        {
+            get
+            {
+                var fileName = $"BuyingExport_Plan_{PlanId}_v{PlanBuyingJobId}.scx";
+                return fileName;
+            }
+        }
     }
 }

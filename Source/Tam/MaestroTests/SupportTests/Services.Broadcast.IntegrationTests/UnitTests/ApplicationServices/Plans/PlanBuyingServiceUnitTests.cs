@@ -22,8 +22,10 @@ using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
+using Newtonsoft.Json;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanBuyingInventoryEngine;
 using static Services.Broadcast.Entities.Plan.Buying.PlanBuyingInventoryProgram;
@@ -62,6 +64,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IBroadcastAudienceRepository> _BroadcastAudienceRepositoryMock;
         private Mock<IPlanBuyingRepository> _PlanBuyingRepositoryMock;
         private IAsyncTaskHelper _AsyncTaskHelper;
+        private Mock<ISharedFolderService> _SharedFolderService;
 
         protected PlanBuyingService _GetService()
         {
@@ -82,7 +85,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanBuyingRequestLogClient.Object,
                 _PlanBuyingOwnershipGroupEngine.Object,
                 _PlanBuyingRepFirmEngine.Object,
-                _AsyncTaskHelper
+                _AsyncTaskHelper,
+                _SharedFolderService.Object
             );
         }
 
@@ -116,6 +120,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _BroadcastAudienceRepositoryMock = new Mock<IBroadcastAudienceRepository>();
             _PlanBuyingRepositoryMock = new Mock<IPlanBuyingRepository>();
             _AsyncTaskHelper = new AsyncTaskHelperStub();
+            _SharedFolderService = new Mock<ISharedFolderService>();
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
@@ -2367,6 +2372,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void ExportPlanBuyingScx()
         {
+            const string username = "testUser";
             var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
             var job = new PlanBuyingJob { Id = 1, PlanVersionId = 57 };
             var plan = new PlanDto { Id = 21, TargetCPM = 10 };
@@ -2407,18 +2413,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanBuyingRepositoryMock.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>()))
                 .Returns(jobResult);
 
+            var savedSharedFiles = new List<SharedFolderFile>();
+            var testGuid = Guid.NewGuid();
+            _SharedFolderService.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
+                .Callback<SharedFolderFile>((f) => savedSharedFiles.Add(f))
+                .Returns(testGuid);
+
             var service = _GetService();
 
             // Act
-            var result = service.ExportPlanBuyingScx(request);
+            var savedFileGuid = service.ExportPlanBuyingScx(request, username);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(testGuid, savedFileGuid);
+            Assert.AreEqual(1, savedSharedFiles.Count);
+
+            var savedSharedFile = savedSharedFiles[0];
+            Assert.IsTrue(savedSharedFile.FolderPath.EndsWith(@"\PlanBuyingScx"));
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(SharedFolderFile), "FileContent");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "FolderPath");
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            var savedSharedFileJson = IntegrationTestHelper.ConvertToJson(savedSharedFile, jsonSettings);
+
+            var reader = new StreamReader(savedSharedFile.FileContent);
+            var savedFileContent = reader.ReadToEnd();
+            reader.Dispose();
+
+            var resultToValidate = new
+            {
+                SavedSharedFile = savedSharedFileJson,
+                SavedFileContent = savedFileContent
+            };
+
+            Approvals.Verify(resultToValidate);
         }
 
         [Test]
         public void ExportPlanBuyingScx_NoJob()
         {
+            const string username = "testUser";
             var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
             var expectedMessage = "A buying job execution was not found for plan id '21'.";
             PlanBuyingJob job = null;
@@ -2427,13 +2466,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request));
+            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request, username));
             Assert.AreEqual(expectedMessage, caught.Message);
         }
 
         [Test]
         public void ExportPlanBuyingScx_NoPlanVersion()
         {
+            const string username = "testUser";
             var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
             var expectedMessage = "The buying job '1' for plan '21' does not have a plan version.";
             var job = new PlanBuyingJob {Id = 1, PlanVersionId = null};
@@ -2442,13 +2482,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request));
+            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request, username));
             Assert.AreEqual(expectedMessage, caught.Message);
         }
 
         [Test]
         public void ExportPlanBuyingScx_NoTargetCpm()
         {
+            const string username = "testUser";
             var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
             var expectedMessage = "The plan '21' version id '57' does not have a required target cpm.";
             var job = new PlanBuyingJob { Id = 1, PlanVersionId = 57 };
@@ -2461,7 +2502,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request));
+            var caught = Assert.Throws<InvalidOperationException>(() => service.ExportPlanBuyingScx(request, username));
             Assert.AreEqual(expectedMessage, caught.Message);
         }
 

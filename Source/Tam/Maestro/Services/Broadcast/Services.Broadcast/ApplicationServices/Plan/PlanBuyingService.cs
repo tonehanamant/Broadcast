@@ -17,6 +17,7 @@ using Services.Broadcast.ReportGenerators.BuyingResults;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -150,7 +151,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
 
-        PlanBuyingScxExportResponse ExportPlanBuyingScx(PlanBuyingScxExportRequest request);
+        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username);
     }
 
     /// <summary>
@@ -184,6 +185,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _AudienceRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
+        private readonly ISharedFolderService _SharedFolderService;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -201,7 +203,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanBuyingRequestLogClient buyingRequestLogClient,
                                   IPlanBuyingOwnershipGroupEngine planBuyingOwnershipGroupEngine,
                                   IPlanBuyingRepFirmEngine planBuyingRepFirmEngine,
-                                  IAsyncTaskHelper asyncTaskHelper)
+                                  IAsyncTaskHelper asyncTaskHelper,
+                                  ISharedFolderService sharedFolderService)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -229,6 +232,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
+            _SharedFolderService = sharedFolderService;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -272,7 +276,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return data;
         }
 
-        public PlanBuyingScxExportResponse ExportPlanBuyingScx(PlanBuyingScxExportRequest request)
+        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username)
         {
             _ValidatePlanBuyingScxExportRequest(request);
             var generated = _DateTimeEngine.GetCurrentMoment();
@@ -311,7 +315,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _LogInfo($"Exporting Buying Scx for job id '{job.Id}'. UnallocatedCpmThreshold filtered '{unfilteredUnallocatedCount}' records to '{filteredUnallocatedCount}'.");
 
-            var response = new PlanBuyingScxExportResponse
+            var reportContent = new PlanBuyingScxExportResponse
             {
                 PlanId = request.PlanId,
                 PlanVersionId = planVersionId,
@@ -323,7 +327,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Allocated = jobSpotsResults.AllocatedSpots,
                 Unallocated = unallocated
             };
-            return response;
+
+            var savedFileGuid = _SharedFolderService.SaveFile(new SharedFolderFile
+            {
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), "PlanBuyingScx"),
+                FileNameWithExtension = reportContent.FileName,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.Quote,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = username,
+                FileContent = reportContent.Stream()
+            });
+
+            return savedFileGuid;
         }
 
         internal void _ValidatePlanBuyingScxExportRequest(PlanBuyingScxExportRequest request)

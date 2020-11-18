@@ -157,9 +157,10 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ExportBuyingScx")]
-        public BaseResponse<PlanBuyingScxExportResponse> ExportBuyingScx(PlanBuyingScxExportRequest request)
+        public BaseResponse<Guid> ExportBuyingScx(PlanBuyingScxExportRequest request)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().ExportPlanBuyingScx(request));
+            var username = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().ExportPlanBuyingScx(request, username));
         }
     }
 }

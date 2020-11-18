@@ -1,4 +1,13 @@
-{
+{ SavedSharedFile = {
+  "CreatedBy": "testUser",
+  "CreatedDate": "2020-10-30T12:15:23",
+  "FileExtension": ".scx",
+  "FileMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "FileName": "BuyingExport_Plan_21_v1",
+  "FileNameWithExtension": "BuyingExport_Plan_21_v1.scx",
+  "FileUsage": 3,
+  "Id": "00000000-0000-0000-0000-000000000000"
+}, SavedFileContent = {
   "Allocated": [
     {
       "ContractMediaWeek": null,
@@ -23,6 +32,7 @@
     }
   ],
   "AppliedMargin": 20.0,
+  "FileName": "BuyingExport_Plan_21_v1.scx",
   "Generated": "2020-10-30T12:15:23",
   "PlanBuyingJobId": 1,
   "PlanId": 21,
@@ -52,4 +62,4 @@
     }
   ],
   "UnallocatedCpmThreshold": 12
-}
+} }
