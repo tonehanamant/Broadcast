@@ -40,7 +40,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public PostingTypeEnum PostingType { get; set; } = PostingTypeEnum.NSI; //Default NSI
 
-        public double NtiToNsiImpressionConversionRate { get; set; }
+        public double NtiToNsiImpressionConversionRate { get; set; } = 1; //Default to 1
 
         public class ManifestWeek
         {

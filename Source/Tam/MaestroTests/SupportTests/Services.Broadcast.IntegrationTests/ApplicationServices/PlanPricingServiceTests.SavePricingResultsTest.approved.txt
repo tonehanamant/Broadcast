@@ -1,6 +1,6 @@
 ﻿{
   "PlanVersionId": 0,
-  "PricingCpm": 12.5709,
+  "PricingCpm": 14.7893,
   "PricingVersion": null,
   "RequestId": null,
   "Spots": [
@@ -13,7 +13,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 69000.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -22,11 +22,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 69000.0,
+          "Impressions": 49852.5,
           "SpotCost": 753.7500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -42,7 +40,7 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 69000.0,
+      "TotalImpressions": 49852.5,
       "TotalSpots": 1
     },
     {
@@ -54,7 +52,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions30sec": 69000.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -63,11 +61,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 69000.0,
+          "Impressions": 49852.5,
           "SpotCost": 753.7500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -83,7 +79,7 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 69000.0,
+      "TotalImpressions": 49852.5,
       "TotalSpots": 1
     },
     {
@@ -95,7 +91,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions30sec": 69000.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -104,11 +100,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 69000.0,
+          "Impressions": 49852.5,
           "SpotCost": 753.7500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -124,7 +118,7 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 69000.0,
+      "TotalImpressions": 49852.5,
       "TotalSpots": 1
     },
     {
@@ -136,7 +130,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions30sec": 69000.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -145,11 +139,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 69000.0,
+          "Impressions": 49852.5,
           "SpotCost": 753.7500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -165,7 +157,7 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 69000.0,
+      "TotalImpressions": 49852.5,
       "TotalSpots": 1
     },
     {
@@ -177,7 +169,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 69000.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -186,11 +178,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 69000.0,
+          "Impressions": 49852.5,
           "SpotCost": 753.7500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -206,7 +196,7 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 69000.0,
+      "TotalImpressions": 49852.5,
       "TotalSpots": 1
     },
     {
@@ -218,7 +208,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 60400.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -227,11 +217,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 60400.0,
+          "Impressions": 43639.0,
           "SpotCost": 804.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -247,7 +235,7 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 60400.0,
+      "TotalImpressions": 43639.0,
       "TotalSpots": 1
     },
     {
@@ -259,7 +247,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions30sec": 60400.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -268,11 +256,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 60400.0,
+          "Impressions": 43639.0,
           "SpotCost": 804.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -288,7 +274,7 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 60400.0,
+      "TotalImpressions": 43639.0,
       "TotalSpots": 1
     },
     {
@@ -300,7 +286,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions30sec": 60400.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -309,11 +295,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 60400.0,
+          "Impressions": 43639.0,
           "SpotCost": 804.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -329,7 +313,7 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 60400.0,
+      "TotalImpressions": 43639.0,
       "TotalSpots": 1
     },
     {
@@ -341,7 +325,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions30sec": 60400.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -350,11 +334,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 60400.0,
+          "Impressions": 43639.0,
           "SpotCost": 804.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -370,7 +352,7 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 60400.0,
+      "TotalImpressions": 43639.0,
       "TotalSpots": 1
     },
     {
@@ -382,7 +364,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 60400.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -391,11 +373,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 60400.0,
+          "Impressions": 43639.0,
           "SpotCost": 804.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -411,7 +391,7 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 60400.0,
+      "TotalImpressions": 43639.0,
       "TotalSpots": 1
     },
     {
@@ -423,7 +403,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 46800.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -432,11 +412,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 46800.0,
+          "Impressions": 33813.0,
           "SpotCost": 603.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -452,7 +430,7 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 46800.0,
+      "TotalImpressions": 33813.0,
       "TotalSpots": 1
     },
     {
@@ -464,7 +442,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions30sec": 46800.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -473,11 +451,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 46800.0,
+          "Impressions": 33813.0,
           "SpotCost": 603.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -493,7 +469,7 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 46800.0,
+      "TotalImpressions": 33813.0,
       "TotalSpots": 1
     },
     {
@@ -505,7 +481,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions30sec": 46800.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -514,11 +490,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 46800.0,
+          "Impressions": 33813.0,
           "SpotCost": 603.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -534,7 +508,7 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 46800.0,
+      "TotalImpressions": 33813.0,
       "TotalSpots": 1
     },
     {
@@ -546,7 +520,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions30sec": 46800.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -555,11 +529,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 46800.0,
+          "Impressions": 33813.0,
           "SpotCost": 603.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -575,7 +547,7 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 46800.0,
+      "TotalImpressions": 33813.0,
       "TotalSpots": 1
     },
     {
@@ -587,7 +559,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 46800.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -596,11 +568,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 46800.0,
+          "Impressions": 33813.0,
           "SpotCost": 603.0000,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -616,7 +586,7 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 46800.0,
+      "TotalImpressions": 33813.0,
       "TotalSpots": 1
     },
     {
@@ -628,7 +598,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -637,11 +607,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 50.2500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -657,7 +625,7 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -669,7 +637,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -678,11 +646,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 50.2500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -698,7 +664,7 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -710,7 +676,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -719,11 +685,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 50.2500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -739,7 +703,7 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -751,7 +715,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -760,11 +724,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 50.2500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -780,7 +742,7 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -792,7 +754,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -801,11 +763,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 50.2500,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -821,7 +781,7 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -833,7 +793,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -842,11 +802,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -862,7 +820,7 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -874,7 +832,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -883,11 +841,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -903,7 +859,7 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -915,7 +871,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -924,11 +880,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -944,7 +898,7 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -956,7 +910,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -965,11 +919,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -985,7 +937,7 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -997,7 +949,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 600.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -1006,11 +958,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 600.0,
+          "Impressions": 433.5,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -1026,7 +976,7 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 600.0,
+      "TotalImpressions": 433.5,
       "TotalSpots": 1
     },
     {
@@ -1038,7 +988,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 400.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -1047,11 +997,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 400.0,
+          "Impressions": 289.0,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -1067,7 +1015,7 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 400.0,
+      "TotalImpressions": 289.0,
       "TotalSpots": 1
     },
     {
@@ -1079,7 +1027,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions30sec": 400.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -1088,11 +1036,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 400.0,
+          "Impressions": 289.0,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -1108,7 +1054,7 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 400.0,
+      "TotalImpressions": 289.0,
       "TotalSpots": 1
     },
     {
@@ -1120,7 +1066,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions30sec": 400.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -1129,11 +1075,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 400.0,
+          "Impressions": 289.0,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -1149,7 +1093,7 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 400.0,
+      "TotalImpressions": 289.0,
       "TotalSpots": 1
     },
     {
@@ -1161,7 +1105,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions30sec": 400.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -1170,11 +1114,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 400.0,
+          "Impressions": 289.0,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -1190,7 +1132,7 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 400.0,
+      "TotalImpressions": 289.0,
       "TotalSpots": 1
     },
     {
@@ -1202,7 +1144,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions30sec": 400.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -1211,11 +1153,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "NtiToNsiImpressionConversionRate": 0.0,
-      "PostingType": 0,
       "SpotFrequencies": [
         {
-          "Impressions": 400.0,
+          "Impressions": 289.0,
           "SpotCost": 12.0600,
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 2,
@@ -1231,7 +1171,7 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 400.0,
+      "TotalImpressions": 289.0,
       "TotalSpots": 1
     }
   ]

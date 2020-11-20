@@ -15,8 +15,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -55,8 +55,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -95,8 +95,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -135,8 +135,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -175,8 +175,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -215,8 +215,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -255,8 +255,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -295,8 +295,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -335,8 +335,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -375,8 +375,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -415,8 +415,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
@@ -455,8 +455,8 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 0.0,
-    "PostingType": 0,
+    "NtiToNsiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,

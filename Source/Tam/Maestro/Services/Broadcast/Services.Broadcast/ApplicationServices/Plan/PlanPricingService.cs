@@ -1252,7 +1252,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var spot in allocationResult.Spots)
             {
                 var ntiToNsiConverisonRate = inventory.First(y => y.ManifestId == spot.Id).NtiToNsiImpressionConversionRate;
-
                 foreach (var spotFrequency in spot.SpotFrequencies)
                 {
                     if (sourcePostingType == PostingTypeEnum.NTI)
@@ -1261,8 +1260,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                     else if (sourcePostingType == PostingTypeEnum.NSI)
                     {
-                        var nsiToNtiConversionRate = spotFrequency.Impressions / ntiToNsiConverisonRate;
-                        spotFrequency.Impressions *= nsiToNtiConversionRate;
+                        spotFrequency.Impressions /= ntiToNsiConverisonRate;
                     }
                     else
                     {
