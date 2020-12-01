@@ -2,11 +2,11 @@
   "PostingType": 2,
   "Programs": [
     {
-      "AvgCpm": 16.8886,
-      "AvgImpressions": 21.21741667,
+      "AvgCpm": 10.3717,
+      "AvgImpressions": 34.54901961,
       "Budget": 5375.0000,
       "Genre": "Children",
-      "Impressions": 318.26125,
+      "Impressions": 518.23529412,
       "ImpressionsPercentage": 99.10011249,
       "MarketCount": 1,
       "ProgramName": "Early news",
@@ -14,11 +14,11 @@
       "StationCount": 1
     },
     {
-      "AvgCpm": 64.0138,
-      "AvgImpressions": 0.19266667,
+      "AvgCpm": 39.3125,
+      "AvgImpressions": 0.31372549,
       "Budget": 185.0000,
       "Genre": "Comedy",
-      "Impressions": 2.89,
+      "Impressions": 4.70588235,
       "ImpressionsPercentage": 0.89988751,
       "MarketCount": 1,
       "ProgramName": "Late news",
@@ -27,10 +27,10 @@
     }
   ],
   "Totals": {
-    "AvgCpm": 17.3127,
-    "AvgImpressions": 10.70504167,
+    "AvgCpm": 10.6321,
+    "AvgImpressions": 17.43137255,
     "Budget": 5560.0000,
-    "Impressions": 321.15125,
+    "Impressions": 522.94117647,
     "ImpressionsPercentage": 100.0,
     "MarketCount": 2,
     "Spots": 30,

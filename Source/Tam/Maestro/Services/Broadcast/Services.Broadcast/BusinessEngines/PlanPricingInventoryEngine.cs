@@ -267,7 +267,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var conversionRate = conversionRatesByDaypartCodeId[program.StandardDaypartId];
-                program.NtiToNsiImpressionConversionRate = conversionRate;
+                program.NsiToNtiImpressionConversionRate = conversionRate;
 
                 program.PostingType = postingType;
             }

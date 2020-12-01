@@ -1251,16 +1251,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             foreach (var spot in allocationResult.Spots)
             {
-                var ntiToNsiConverisonRate = inventory.First(y => y.ManifestId == spot.Id).NtiToNsiImpressionConversionRate;
+                var nsiToNtiConverisonRate = inventory.First(y => y.ManifestId == spot.Id).NsiToNtiImpressionConversionRate;
                 foreach (var spotFrequency in spot.SpotFrequencies)
                 {
-                    if (sourcePostingType == PostingTypeEnum.NTI)
+                    if (sourcePostingType == PostingTypeEnum.NSI)
                     {
-                        spotFrequency.Impressions *= ntiToNsiConverisonRate;
+                        spotFrequency.Impressions *= nsiToNtiConverisonRate;
                     }
-                    else if (sourcePostingType == PostingTypeEnum.NSI)
+                    else if (sourcePostingType == PostingTypeEnum.NTI)
                     {
-                        spotFrequency.Impressions /= ntiToNsiConverisonRate;
+                        spotFrequency.Impressions /= nsiToNtiConverisonRate;
                     }
                     else
                     {

@@ -16,10 +16,11 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         {
             get
             {
+                //Impresions are by default NSI
                 var impressions = ProvidedImpressions ?? ProjectedImpressions;
 
                 if (PostingType == PostingTypeEnum.NTI)
-                    impressions *= NtiToNsiImpressionConversionRate;
+                    impressions *= NsiToNtiImpressionConversionRate;
 
                 return impressions;
             }
@@ -40,7 +41,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public PostingTypeEnum PostingType { get; set; } = PostingTypeEnum.NSI; //Default NSI
 
-        public double NtiToNsiImpressionConversionRate { get; set; } = 1; //Default to 1
+        public double NsiToNtiImpressionConversionRate { get; set; } = 1; //Default to 1
 
         public class ManifestWeek
         {
