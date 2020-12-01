@@ -2081,6 +2081,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return pricingApiRequest;
         }
 
+        private void _SetPlanPricingParameters(PlanDto plan)
+        {
+            var pricingDefaults = GetPlanPricingDefaults();
+
+            plan.PricingParameters = new PlanPricingParametersDto
+            {
+                PlanId = plan.Id,
+                Budget = Convert.ToDecimal(plan.Budget),
+                CPM = Convert.ToDecimal(plan.TargetCPM),
+                CPP = Convert.ToDecimal(plan.TargetCPP),
+                Currency = plan.Currency,
+                DeliveryImpressions = Convert.ToDouble(plan.TargetImpressions) / 1000,
+                DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
+                UnitCaps = pricingDefaults.UnitCaps,
+                UnitCapsType = pricingDefaults.UnitCapsType,
+                Margin = pricingDefaults.Margin,
+                PlanVersionId = plan.VersionId,
+                MarketGroup = pricingDefaults.MarketGroup,
+            };
+
+            ValidateAndApplyMargin(plan.PricingParameters);
+        }
+
         public PlanPricingApiRequestDto_v3 GetPricingApiRequestPrograms_v3(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
             // used to tie the logging messages together.
@@ -2102,6 +2125,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
 
             var plan = _PlanRepository.GetPlan(planId);
+            if (plan.PricingParameters == null)
+            {
+                _SetPlanPricingParameters(plan);
+            }
             var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
 
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
