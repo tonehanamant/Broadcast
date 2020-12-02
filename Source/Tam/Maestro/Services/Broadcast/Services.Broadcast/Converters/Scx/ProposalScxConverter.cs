@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.ApplicationServices;
-using Common.Services.Extensions;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.OpenMarketInventory;
-using Services.Broadcast.Entities.Scx;
-using Services.Broadcast.Entities.spotcableXML;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.Converters.Scx
 {
@@ -29,7 +19,9 @@ namespace Services.Broadcast.Converters.Scx
         private readonly IProposalScxDataPrep _proposalScxDataPrep;
 
         public ProposalScxConverter(IProposalScxDataPrep proposalScxDataPrep
-                                    , IDaypartCache daypartCache) : base(daypartCache)
+                                    , IDaypartCache daypartCache
+                                    , IDateTimeEngine dateTimeEngine) 
+            : base(daypartCache, dateTimeEngine)
         {
             _proposalScxDataPrep = proposalScxDataPrep;
         }

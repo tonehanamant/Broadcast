@@ -17,8 +17,8 @@ namespace Services.Broadcast.Converters.Scx
         private readonly IMarketDmaMapRepository _MarketDmaMapRepository;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
-        private readonly ISpotLengthEngine _SpotLengthEngine;
-        
+
+        protected readonly ISpotLengthEngine _SpotLengthEngine;
         protected readonly IInventoryRepository InventoryRepository;
 
         public BaseScxDataPrep(

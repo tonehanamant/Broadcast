@@ -5,6 +5,7 @@ using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanBuying;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -186,6 +187,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IBroadcastAudienceRepository _AudienceRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
         private readonly ISharedFolderService _SharedFolderService;
+        private readonly IPlanBuyingScxDataPrep _PlanBuyingScxDataPrep;
+        private readonly IPlanBuyingScxDataConverter _PlanBuyingScxDataConverter;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -204,7 +207,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanBuyingOwnershipGroupEngine planBuyingOwnershipGroupEngine,
                                   IPlanBuyingRepFirmEngine planBuyingRepFirmEngine,
                                   IAsyncTaskHelper asyncTaskHelper,
-                                  ISharedFolderService sharedFolderService)
+                                  ISharedFolderService sharedFolderService,
+                                  IPlanBuyingScxDataPrep planBuyingScxDataPrep,
+                                  IPlanBuyingScxDataConverter planBuyingScxDataConverter)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -233,6 +238,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
             _SharedFolderService = sharedFolderService;
+            _PlanBuyingScxDataPrep = planBuyingScxDataPrep;
+            _PlanBuyingScxDataConverter = planBuyingScxDataConverter;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -278,66 +285,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username)
         {
-            _ValidatePlanBuyingScxExportRequest(request);
+            const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var generated = _DateTimeEngine.GetCurrentMoment();
 
-            var job = _PlanBuyingRepository.GetLatestBuyingJob(request.PlanId);
-            if (job == null)
-            {
-                throw new InvalidOperationException($"A buying job execution was not found for plan id '{request.PlanId}'.");
-            }
-            if (!job.PlanVersionId.HasValue)
-            {
-                throw new InvalidOperationException($"The buying job '{job.Id}' for plan '{request.PlanId}' does not have a plan version.");
-            }
-
-            var planVersionId = job.PlanVersionId.Value;
-            var plan = _PlanRepository.GetPlan(request.PlanId, planVersionId);
-
-            if (!plan.TargetCPM.HasValue)
-            {
-                throw new InvalidOperationException($"The plan '{request.PlanId}' version id '{planVersionId}' does not have a required target cpm.");
-            }
+            _ValidatePlanBuyingScxExportRequest(request);
             
-            var jobParams = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(job.Id);
-            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
-
-            var planTargetCpm = plan.TargetCPM.Value;
-            var appliedMargin = jobParams.Margin;
-
-            var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
-
-            var unallocated = request.UnallocatedCpmThreshold.HasValue
-                ? _ApplyCpmThreshold(request.UnallocatedCpmThreshold.Value, planTargetCpm, appliedMargin, jobSpotsResults.UnallocatedSpots)
-                : jobSpotsResults.UnallocatedSpots;
-
-            var filteredUnallocatedCount = unallocated.Count;
-
-            _LogInfo($"Exporting Buying Scx for job id '{job.Id}'. UnallocatedCpmThreshold filtered '{unfilteredUnallocatedCount}' records to '{filteredUnallocatedCount}'.");
-
-            var reportContent = new PlanBuyingScxExportResponse
+            var scxData = _PlanBuyingScxDataPrep.GetScxData(request, generated);
+            var scxFile = _PlanBuyingScxDataConverter.ConvertData(scxData);
+            
+            var sharedFile = new SharedFolderFile
             {
-                PlanId = request.PlanId,
-                PlanVersionId = planVersionId,
-                PlanBuyingJobId = job.Id,
-                Generated = generated,
-                PlanTargetCpm = planTargetCpm,
-                UnallocatedCpmThreshold = request.UnallocatedCpmThreshold,
-                AppliedMargin = appliedMargin,
-                Allocated = jobSpotsResults.AllocatedSpots,
-                Unallocated = unallocated
-            };
-
-            var savedFileGuid = _SharedFolderService.SaveFile(new SharedFolderFile
-            {
-                FolderPath = Path.Combine(_GetBroadcastAppFolder(), "PlanBuyingScx"),
-                FileNameWithExtension = reportContent.FileName,
-                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                FileUsage = SharedFolderFileUsage.Quote,
-                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PLAN_BUYING_SCX),
+                FileNameWithExtension = scxFile.FileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.PlanBuyingScx,
+                CreatedDate = generated,
                 CreatedBy = username,
-                FileContent = reportContent.Stream()
-            });
+                FileContent = scxFile.ScxStream
+            };
+            var savedFileGuid = _SharedFolderService.SaveFile(sharedFile);
 
             return savedFileGuid;
         }
@@ -349,61 +315,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 throw new InvalidOperationException($"Invalid value for UnallocatedCpmThreshold : '{request.UnallocatedCpmThreshold.Value}'; Valid range is 1-100.");
             }
-        }
-
-        internal List<PlanBuyingAllocatedSpot> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm, double? margin, List<PlanBuyingAllocatedSpot> spots)
-        {
-            var results = new List<PlanBuyingAllocatedSpot>();
-
-            var tolerance = goalCpm * (cpmThresholdPercent / 100.0m);
-            var maxCpm = goalCpm + tolerance;
-            var minCpm = goalCpm - tolerance;
-
-            var deliveryMultipliers = _SpotLengthEngine.GetDeliveryMultipliers();
-            var costMultipliers = _SpotLengthEngine.GetCostMultipliers();
-            
-            spots.ForEach(s =>
-                {
-                    var keptFrequencies = new List<SpotFrequency>();
-                    // PlanBuyingAllocatedSpot.Total* methods are sum([metric] * [frequency]);
-                    // When called with unallocated spots the frequency will be 0.
-                    // Therefore we cannot use the PlanBuyingAllocatedSpot.Total* methods and must calculate manually.
-                    s.SpotFrequencies.ForEach(f =>
-                    {
-                        var totalImpressionsPerSpot30Sec = f.Impressions * deliveryMultipliers[f.SpotLengthId];
-                        var totalCostWithMargin = _CalculateSpotCostPer30sWithMargin(f.SpotCost, costMultipliers[f.SpotLengthId], margin);
-                        var spotCpm = ProposalMath.CalculateCpm(totalCostWithMargin, totalImpressionsPerSpot30Sec);
-                        if (spotCpm >= minCpm && spotCpm <= maxCpm)
-                        {
-                            keptFrequencies.Add(f);
-                        }
-                    });
-
-                    if (keptFrequencies.Any())
-                    {
-                        var keptSpot = new PlanBuyingAllocatedSpot
-                        {
-                            Id = s.Id,
-                            StationInventoryManifestId = s.StationInventoryManifestId,
-                            InventoryMediaWeek = s.InventoryMediaWeek,
-                            ContractMediaWeek = s.ContractMediaWeek,
-                            Impressions30sec = s.Impressions30sec,
-                            StandardDaypart = s.StandardDaypart,
-                            SpotFrequencies = keptFrequencies
-                        };
-                        results.Add(keptSpot);
-                    }
-                }
-            );
-            return results;
-        }
-
-        private decimal _CalculateSpotCostPer30sWithMargin(decimal spotCost, double spotCostMultiplier, double? margin)
-        {
-            var costPer30s = spotCost * Convert.ToDecimal(spotCostMultiplier);
-            var marginAmount = costPer30s * Convert.ToDecimal(margin.HasValue ? margin.Value / 100.0 : 0);
-            var spotCostWithMargin = costPer30s + marginAmount;
-            return spotCostWithMargin;
         }
 
         public PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto

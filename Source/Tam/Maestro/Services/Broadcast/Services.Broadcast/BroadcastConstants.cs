@@ -37,6 +37,7 @@
             public const string CAMPAIGN_EXPORT_REPORTS = "CampaignExportReports";
             public const string INVENTORY_EXPORTS = "InventoryExports";
             public const string QUOTE_REPORTS = "QuoteReports";
+            public const string PLAN_BUYING_SCX = "PlanBuyingScx";
         }
     }
 

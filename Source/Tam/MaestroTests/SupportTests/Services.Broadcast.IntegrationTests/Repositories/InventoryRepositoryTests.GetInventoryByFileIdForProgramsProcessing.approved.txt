@@ -742,7 +742,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14753,
         "ProgramName": "News 10 @ Noon",
         "Programs": [
           {
@@ -1663,7 +1663,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14754,
         "ProgramName": "News 10 @ Noon",
         "Programs": [
           {

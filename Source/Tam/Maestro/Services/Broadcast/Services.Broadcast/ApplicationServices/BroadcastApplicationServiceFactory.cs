@@ -290,6 +290,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingMarketResultsEngine, PlanBuyingMarketEngine>();
             unityContainer.RegisterType<IPlanBuyingRepFirmEngine, PlanBuyingRepFirmEngine>();
 
+            unityContainer.RegisterType<IPlanBuyingScxDataPrep, PlanBuyingScxDataPrep>();
+            unityContainer.RegisterType<IPlanBuyingScxDataConverter, PlanBuyingScxDataConverter>();
+
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();

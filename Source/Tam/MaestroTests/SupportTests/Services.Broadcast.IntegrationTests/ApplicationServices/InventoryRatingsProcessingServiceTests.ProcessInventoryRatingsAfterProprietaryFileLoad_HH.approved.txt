@@ -313,7 +313,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14755,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -1262,7 +1262,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14756,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -2211,7 +2211,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14757,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -3160,7 +3160,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14758,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -3198,7 +3198,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14759,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -3236,7 +3236,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14760,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -4185,7 +4185,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14761,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -5134,7 +5134,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14762,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -6083,7 +6083,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14763,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -7032,7 +7032,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14764,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -7070,7 +7070,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14765,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -7108,7 +7108,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14766,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -8057,7 +8057,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14767,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -9006,7 +9006,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14768,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -9955,7 +9955,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14769,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -10904,7 +10904,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14770,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -10942,7 +10942,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14771,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -10980,7 +10980,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14772,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -11929,7 +11929,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14773,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -12878,7 +12878,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14774,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -13827,7 +13827,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14775,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -14776,7 +14776,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14776,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -14814,7 +14814,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14777,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -14852,7 +14852,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14778,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -15801,7 +15801,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14779,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -16750,7 +16750,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14780,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -17699,7 +17699,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14781,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -18648,7 +18648,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14782,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -18686,7 +18686,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14783,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -18724,7 +18724,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14784,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -19673,7 +19673,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14785,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -20622,7 +20622,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14786,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -21571,7 +21571,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14787,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -22520,7 +22520,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14788,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -22558,7 +22558,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14789,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -22596,7 +22596,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14790,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -23545,7 +23545,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14791,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -24494,7 +24494,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14792,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -25443,7 +25443,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14793,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -26392,7 +26392,7 @@
           "_Wednesday": true
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14794,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -26430,7 +26430,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14795,
         "ProgramName": "Early Morning News",
         "Programs": [
           {
@@ -26468,7 +26468,7 @@
           "_Wednesday": false
         },
         "Genres": [],
-        "PrimaryProgramId": null,
+        "PrimaryProgramId": 14796,
         "ProgramName": "Early Morning News",
         "Programs": [
           {

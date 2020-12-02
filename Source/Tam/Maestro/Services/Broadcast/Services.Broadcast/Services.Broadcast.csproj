@@ -489,6 +489,8 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingOwnershipGroupEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingRepFirmEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
+    <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
+    <Compile Include="Converters\Scx\PlanBuyingScxDataConverter.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />
@@ -581,10 +583,11 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportResponse.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingBand.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarkets.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
+    <Compile Include="Entities\Scx\PlanBuyingScxFile.cs" />
+    <Compile Include="Entities\Scx\PlanScxData.cs" />
     <Compile Include="Entities\StandardDaypartWeightingGoal.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\ProgramMappingMatchTypeEnum.cs" />

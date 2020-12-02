@@ -4,6 +4,7 @@ using Services.Broadcast.Entities.spotcableXML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.BusinessEngines;
 using Tam.Maestro.Data.Entities;
 using static Services.Broadcast.Entities.Scx.ScxMarketDto;
 using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation;
@@ -18,18 +19,22 @@ namespace Services.Broadcast.Converters.Scx
         protected const string DocType = "Order";
 
         protected readonly IDaypartCache _DaypartCache;
+        protected readonly IDateTimeEngine _DateTimeEngine;
 
-        public ScxBaseConverter(IDaypartCache daypartCache)
+        public ScxBaseConverter(IDaypartCache daypartCache, 
+            IDateTimeEngine dateTimeEngine)
         {
             _DaypartCache = daypartCache;
+            _DateTimeEngine = dateTimeEngine;
         }
 
         /// <summary>
         /// Creates an adx object from the ScxData object
         /// </summary>
         /// <param name="data">ScxData object to be converted</param>
+        /// <param name="filterUnallocated">When true will filter out inventory that do not have spots allocated.</param>
         /// <returns>adx object</returns>
-        public adx CreateAdxObject(ScxData data)
+        protected adx CreateAdxObject(ScxData data, bool filterUnallocated = true)
         {
             adx xp = new adx
             {
@@ -49,18 +54,20 @@ namespace Services.Broadcast.Converters.Scx
             _SetScxEstimate(camp);
             _SetScxMakeGoodPolicy(camp);
             _SetScxDemographics(data, camp);
-            _SetScxOrders(data, camp);
+            _SetScxOrders(data, camp, filterUnallocated);
 
             return xp;
         }
 
-        private void _SetScxOrders(ScxData data, campaign camp)
+        private void _SetScxOrders(ScxData data, campaign camp, bool filterUnallocated)
         {
             var orders = new List<order>();
 
             foreach (var order in data.Orders)
             {
-                var markets = order.InventoryMarkets.Where(x => x.TotalSpots > 0);
+                var markets = filterUnallocated
+                    ? order.InventoryMarkets.Where(x => x.TotalSpots > 0)
+                    : order.InventoryMarkets;
 
                 foreach (var market in markets)
                 {
@@ -81,7 +88,7 @@ namespace Services.Broadcast.Converters.Scx
                     {
                         scxOrder.systemOrder = stations
                             .Where(x => x.TotalSpots > 0)
-                            .Select(station => _GetSystemOrders(data, station))
+                            .Select(station => _GetSystemOrders(data, station, filterUnallocated))
                             .ToArray();
                     }
 
@@ -101,9 +108,9 @@ namespace Services.Broadcast.Converters.Scx
             };
         }
 
-        private static void _SetDocumentParts(adx xp)
+        private void _SetDocumentParts(adx xp)
         {
-            xp.document.date = DateTime.Today;
+            xp.document.date = _DateTimeEngine.GetCurrentMoment().Date;
             xp.document.mediaType = documentMediaType.Spotcable;
             xp.document.schemaVersion = "1.0";
             xp.document.name = " ";
@@ -111,7 +118,7 @@ namespace Services.Broadcast.Converters.Scx
             xp.document.documentType = DocType;
         }
 
-        private systemOrder _GetSystemOrders(ScxData data, ScxStation station)
+        private systemOrder _GetSystemOrders(ScxData data, ScxStation station, bool filterUnallocated)
         {
             systemOrder sysOrder = new systemOrder
             {
@@ -128,12 +135,18 @@ namespace Services.Broadcast.Converters.Scx
             _SetSystemOrderWeekInfo(sysOrder, data.AllSortedMediaWeeks);
             
             var detLines = new List<detailLine>();
-            var programs = station.Programs.Where(x => x.TotalSpots > 0);
+            var programs = filterUnallocated 
+                ? station.Programs.Where(x => x.TotalSpots > 0) 
+                : station.Programs;
+
+            var detLineIndex = 0;
 
             foreach (var program in programs)
             {
+                detLineIndex++;
                 var detLine = new detailLine
                 {
+                    detailLineID = detLineIndex,
                     program = program.ProgramName,
                     length = $"PT{program.SpotLength}S",
                     comment = " ",
@@ -210,7 +223,14 @@ namespace Services.Broadcast.Converters.Scx
                 Sunday = daypart.Sunday ? "Y" : "N"
             };
 
-            detLine.daypartCode = daypartCode;
+            if (!string.IsNullOrWhiteSpace(daypartCode))
+            {
+                detLine.daypartCode = daypartCode;
+            }
+            else if (!string.IsNullOrWhiteSpace(program.ProgramAssignedDaypartCode))
+            {
+                detLine.daypartCode = program.ProgramAssignedDaypartCode;
+            }
         }
 
         private void _SetDetailLineDemoValue(detailLine detLine, ScxData data, ScxProgram program)

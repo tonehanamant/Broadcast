@@ -48,6 +48,12 @@ namespace Services.Broadcast.Repositories
         List<int> GetStandardDaypartIds(List<int> daypartIds);
 
         /// <summary>
+        /// For all the Standard Dayparts get a dictionary where the Key is
+        /// the StandardDaypart.Id and the Value is related the Daypart.Id.
+        /// </summary>
+        Dictionary<int, int> GetStandardDaypartIdDaypartIds();
+
+        /// <summary>
         /// Gets the distinct daypart ids related to the daypart defaults.
         /// </summary>
         /// <param name="standardDaypartIds">The ids for the daypart_default records.</param>
@@ -116,12 +122,20 @@ namespace Services.Broadcast.Repositories
                 .Select(d => d.id).ToList()));
         }
 
+        ///<inheritdoc/>
+        public Dictionary<int, int> GetStandardDaypartIdDaypartIds()
+        {
+            return _InReadUncommitedTransaction(context => context.standard_dayparts
+                .ToDictionary(d => d.id, d => d.daypart_id));
+        }
+
         public List<int> GetDayPartIds(List<int> standardDaypartIds)
         {
             return _InReadUncommitedTransaction(context => (context.standard_dayparts
                 .Where(d => standardDaypartIds.Contains(d.id)))
                 .Select(d => d.daypart_id).ToList());
         }
+
         public List<StandardDaypartDto> GetAllStandardDayparts()
         {
             return _InReadUncommitedTransaction(context =>

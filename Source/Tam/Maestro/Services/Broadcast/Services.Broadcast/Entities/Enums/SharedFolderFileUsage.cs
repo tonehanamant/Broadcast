@@ -4,6 +4,7 @@
     {
         CampaignExport = 1,
         ProgramLineup = 2,
-        Quote = 3
+        Quote = 3,
+        PlanBuyingScx = 4
     }
 }

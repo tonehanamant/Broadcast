@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities.Plan;
 using System.Collections.Generic;
 using System.Linq;
+using EntityFrameworkMapping.Broadcast;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
@@ -80,6 +81,18 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 Rank = m.Rank.HasValue ? m.Rank.Value : -1
             }).ToList();
 
+            return result;
+        }
+
+        public static List<market_dma_map> GetMarketMapFromMarketCodes(IEnumerable<int> marketCodes)
+        {
+            var markets = GetMarketsWithLatestCoverage();
+            var result = markets.Where(m => marketCodes.Contains(m.MarketCode))
+                .Select(m => new market_dma_map
+                {
+                    market_code = (short)m.MarketCode,
+                    dma_mapped_value = m.Market
+                }).ToList();
             return result;
         }
 

@@ -1,46 +1,44 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
-	public static class SpotLengthTestData
+    public static class SpotLengthTestData
 	{
-		public static Dictionary<int, int> GetSpotLengthAndIds()
-		{
-			var spotLengthMap = new Dictionary<int, int>();
-			spotLengthMap.Add(30, 1);
-			spotLengthMap.Add(60, 2);
-			spotLengthMap.Add(15, 3);
-			spotLengthMap.Add(120, 4);
-			spotLengthMap.Add(180, 5);
-			spotLengthMap.Add(300, 6);
-			spotLengthMap.Add(90, 7);
-			spotLengthMap.Add(45, 8);
-            spotLengthMap.Add(10, 9);
-            spotLengthMap.Add(150, 10);
-            spotLengthMap.Add(75, 11);
-            spotLengthMap.Add(5, 12);
-            return spotLengthMap;
-		}
-
         public static List<LookupDto> GetAllSpotLengths()
         {
-            return new List<LookupDto>
-            {
-                new LookupDto { Id = 1, Display = "30" },
-                new LookupDto { Id = 2, Display = "60" },
-                new LookupDto { Id = 3, Display = "15" },
-                new LookupDto { Id = 4, Display = "120" },
-                new LookupDto { Id = 5, Display = "180" },
-                new LookupDto { Id = 6, Display = "300" },
-                new LookupDto { Id = 7, Display = "90" },
-                new LookupDto { Id = 8, Display = "45" },
-                new LookupDto { Id = 9, Display = "10" },
-                new LookupDto { Id = 10, Display = "150" },
-                new LookupDto { Id = 11, Display = "75" },
-                new LookupDto { Id = 12, Display = "5" },
-            };
+            return _SpotLengths;
         }
+
+        public static Dictionary<int, int> GetSpotLengthAndIds()
+		{
+            // length, id
+	        return _SpotLengths.ToDictionary(k => int.Parse(k.Display), v => v.Id);
+        }
+
+        public static int GetSpotLengthValueById(int id)
+        {
+            var dict = _SpotLengths.ToDictionary(k => k.Id, v => int.Parse(v.Display));
+            var result = dict[id];
+            return result;
+        }
+
+        private static List<LookupDto> _SpotLengths = new List<LookupDto>
+        {
+            new LookupDto { Id = 1, Display = "30" },
+            new LookupDto { Id = 2, Display = "60" },
+            new LookupDto { Id = 3, Display = "15" },
+            new LookupDto { Id = 4, Display = "120" },
+            new LookupDto { Id = 5, Display = "180" },
+            new LookupDto { Id = 6, Display = "300" },
+            new LookupDto { Id = 7, Display = "90" },
+            new LookupDto { Id = 8, Display = "45" },
+            new LookupDto { Id = 9, Display = "10" },
+            new LookupDto { Id = 10, Display = "150" },
+            new LookupDto { Id = 11, Display = "75" },
+            new LookupDto { Id = 12, Display = "5" },
+        };
 
         public static Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId()
         {

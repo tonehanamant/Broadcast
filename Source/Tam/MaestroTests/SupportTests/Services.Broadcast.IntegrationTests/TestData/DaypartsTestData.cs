@@ -51,6 +51,11 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return dayIdDict;
         }
 
+        public static Dictionary<int, int> GetStandardDaypartIdDaypartIds()
+        {
+            return _StandardDaypartIdDaypartIds;
+        }
+
         #region Lists Data
 
         private static List<DisplayDaypart> _DisplayDayparts = new List<DisplayDaypart>
@@ -171,6 +176,31 @@ namespace Services.Broadcast.IntegrationTests.TestData
             new StandardDaypartFullDto  { Id = 21, Code = "ROSP", FullName = "ROS Programming", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
             new StandardDaypartFullDto  { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)5, DaypartType = (DaypartTypeEnum)3, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 7499},
             new StandardDaypartFullDto  { Id = 23, Code = "WKD", FullName = "Weekend", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 32400, DefaultEndTimeSeconds = 71999},
+        };
+
+        private static Dictionary<int, int> _StandardDaypartIdDaypartIds = new Dictionary<int, int>
+        {
+            {1,59803},
+            {2,42219},
+            {3,107},
+            {4,75644},
+            {5,70923},
+            {6,101},
+            {7,19},
+            {8,33},
+            {9,6029},
+            {10,73039},
+            {11,1583},
+            {12,9},
+            {14,1441},
+            {15,70922},
+            {16,75643},
+            {17,73038},
+            {19,73039},
+            {20,73039},
+            {21,73039},
+            {22,73207},
+            {23,1546}
         };
 
         #endregion // #region Lists Data

@@ -21,6 +21,12 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return result;
         }
 
+        public static MediaMonth GetMediaMonthById(int id)
+        {
+            var result = _MediaMonths.First(m => m.Id == id);
+            return result;
+        }
+
         public static List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId)
         {
             var result = _MediaWeeks.Where(w => w.MediaMonthId == mediaMonthId)

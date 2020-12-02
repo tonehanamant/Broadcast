@@ -3,63 +3,8 @@
   "CreatedDate": "2020-10-30T12:15:23",
   "FileExtension": ".scx",
   "FileMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "FileName": "BuyingExport_Plan_21_v1",
-  "FileNameWithExtension": "BuyingExport_Plan_21_v1.scx",
-  "FileUsage": 3,
+  "FileName": "PlanBuying_Test Plan Name_20201030_121523",
+  "FileNameWithExtension": "PlanBuying_Test Plan Name_20201030_121523.scx",
+  "FileUsage": 4,
   "Id": "00000000-0000-0000-0000-000000000000"
-}, SavedFileContent = {
-  "Allocated": [
-    {
-      "ContractMediaWeek": null,
-      "Id": 1,
-      "Impressions30sec": 0.0,
-      "InventoryMediaWeek": null,
-      "SpotFrequencies": [
-        {
-          "Impressions": 2400.0,
-          "SpotCost": 20.0,
-          "SpotCostWithMargin": 0.0,
-          "SpotLengthId": 1,
-          "Spots": 0
-        }
-      ],
-      "StandardDaypart": null,
-      "StationInventoryManifestId": 10,
-      "TotalCost": 0.0,
-      "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
-    }
-  ],
-  "AppliedMargin": 20.0,
-  "FileName": "BuyingExport_Plan_21_v1.scx",
-  "Generated": "2020-10-30T12:15:23",
-  "PlanBuyingJobId": 1,
-  "PlanId": 21,
-  "PlanTargetCpm": 10.0,
-  "PlanVersionId": 57,
-  "Unallocated": [
-    {
-      "ContractMediaWeek": null,
-      "Id": 1,
-      "Impressions30sec": 0.0,
-      "InventoryMediaWeek": null,
-      "SpotFrequencies": [
-        {
-          "Impressions": 3500.0,
-          "SpotCost": 30.0,
-          "SpotCostWithMargin": 0.0,
-          "SpotLengthId": 2,
-          "Spots": 0
-        }
-      ],
-      "StandardDaypart": null,
-      "StationInventoryManifestId": 10,
-      "TotalCost": 0.0,
-      "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
-    }
-  ],
-  "UnallocatedCpmThreshold": 12
-} }
+}, SavedFileContent = <xml>TestContent<xml/> }

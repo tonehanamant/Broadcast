@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.spotcableXML;
 using System.Collections.Generic;
@@ -27,16 +28,18 @@ namespace Services.Broadcast.Converters.Scx
 
     public class InventoryScxDataConverter : ScxBaseConverter, IInventoryScxDataConverter
     {
-
-        public InventoryScxDataConverter(IDaypartCache daypartCache) : base(daypartCache)
+        public InventoryScxDataConverter(IDaypartCache daypartCache, IDateTimeEngine dateTimeEngine) 
+            : base(daypartCache, dateTimeEngine)
         {
         }
 
-        /// <summary>
-        /// Converts a list of ScxData objects into a list of InventoryScxFile objects
-        /// </summary>
-        /// <param name="data">List of ScxData objects to convert</param>
-        /// <returns>List of InventoryScxFile objects</returns>
+        /// <inheritdoc />
+        public adx CreateAdxObject(ScxData data)
+        {
+            return CreateAdxObject(data, filterUnallocated: true);
+        }
+
+        /// <inheritdoc />
         public List<InventoryScxFile> ConvertInventoryData(List<ScxData> data)
         {
             List<InventoryScxFile> scxFiles = new List<InventoryScxFile>();
@@ -63,6 +66,5 @@ namespace Services.Broadcast.Converters.Scx
 
             return scxFiles;
         }
-
     }
 }

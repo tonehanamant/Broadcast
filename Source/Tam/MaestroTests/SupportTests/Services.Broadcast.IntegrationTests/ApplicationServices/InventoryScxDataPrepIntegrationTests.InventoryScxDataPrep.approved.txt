@@ -149,6 +149,7 @@
                         "Impressions": 24007.675
                       }
                     ],
+                    "ProgramAssignedDaypartCode": null,
                     "ProgramName": "CNN Block",
                     "SpotCost": 15857.0693,
                     "SpotLength": "30",
@@ -305,6 +306,7 @@
                         "Impressions": 17339.15
                       }
                     ],
+                    "ProgramAssignedDaypartCode": null,
                     "ProgramName": "CNN Block",
                     "SpotCost": 11452.5086,
                     "SpotLength": "30",
@@ -469,6 +471,7 @@
                         "Impressions": 14146.15625
                       }
                     ],
+                    "ProgramAssignedDaypartCode": null,
                     "ProgramName": "CNN Block",
                     "SpotCost": 9343.5362,
                     "SpotLength": "30",
@@ -777,6 +780,7 @@
                         "Impressions": 42185.8
                       }
                     ],
+                    "ProgramAssignedDaypartCode": null,
                     "ProgramName": "CNN Block",
                     "SpotCost": 27863.7209,
                     "SpotLength": "30",
@@ -1085,6 +1089,7 @@
                         "Impressions": 40595.19642857
                       }
                     ],
+                    "ProgramAssignedDaypartCode": null,
                     "ProgramName": "CNN Block",
                     "SpotCost": 26813.1272,
                     "SpotLength": "30",

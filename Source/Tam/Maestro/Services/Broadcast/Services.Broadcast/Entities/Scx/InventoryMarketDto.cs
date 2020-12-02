@@ -23,6 +23,7 @@ namespace Services.Broadcast.Entities.Scx
             {
                 public string ProgramName { get; set; }
                 public int DaypartId { get; set; }
+                public string ProgramAssignedDaypartCode { get; set; }
                 public string SpotLength { get; set; }
                 public decimal SpotCost { get; set; }
                 public int TotalSpots { get; set; }

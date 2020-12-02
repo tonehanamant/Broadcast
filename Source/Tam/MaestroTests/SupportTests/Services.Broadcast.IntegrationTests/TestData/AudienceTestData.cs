@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Entities.Plan;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
@@ -108,6 +109,25 @@ namespace Services.Broadcast.IntegrationTests.TestData
             var audiences = GetAudiences();
             var found = audiences.First(a => a.Id == id);
             return found;
+        }
+
+        public static BroadcastAudience GetBroadcastAudienceById(int id)
+        {
+            var audiences = GetAllEntities();
+            var found = audiences.First(a => a.Id == id);
+            return found;
+        }
+
+        public static List<BroadcastAudience> GetAllEntities()
+        {
+            var audiences = GetAudiences();
+            var entities = audiences.Select(a => new BroadcastAudience
+            {
+                Id = a.Id,
+                Name = a.Display,
+                Code = a.Code
+            }).ToList();
+            return entities;
         }
     }
 }
