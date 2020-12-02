@@ -1251,6 +1251,7 @@ namespace Services.Broadcast.Repositories
                     var manifests = context.plan_version_buying_api_result_spots
                         .Where(c => c.plan_version_buying_api_results.plan_version_buying_job_id == planBuyingJobId)
                         .Select(c => c.station_inventory_manifest)
+                        .Distinct()
                         .ToList()
                         .Select(c => _MapToInventoryManifest(c, null))
                         .ToList();

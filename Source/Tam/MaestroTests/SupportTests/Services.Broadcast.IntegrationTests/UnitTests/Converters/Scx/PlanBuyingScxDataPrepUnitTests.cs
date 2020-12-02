@@ -358,7 +358,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 CampaignName = "MyTestCampaign",
                 TargetCPM = 10,
                 FlightStartDate = new DateTime(2020, 8, 31),
-                FlightEndDate = new DateTime(2020, 9, 6),
+                FlightEndDate = new DateTime(2020, 9, 13),
                 AudienceId = 31,
                 ShareBookId = 460
             };
@@ -371,6 +371,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     {
                         Id = 1, StationInventoryManifestId = 10,
                         ContractMediaWeek = new MediaWeek { Id = 871 },
+                        StandardDaypart = new StandardDaypartDto{ Id = 1},
+                        SpotFrequencies = new List<SpotFrequency>
+                            {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                    },
+                    new PlanBuyingAllocatedSpot
+                    {
+                        Id = 1, StationInventoryManifestId = 10,
+                        ContractMediaWeek = new MediaWeek { Id = 872 },
                         StandardDaypart = new StandardDaypartDto{ Id = 1},
                         SpotFrequencies = new List<SpotFrequency>
                             {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
@@ -388,6 +396,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                             new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500, Spots = 0}, // stay
                             new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
                         } 
+                    },
+                    new PlanBuyingAllocatedSpot
+                    {
+                        Id = 1, StationInventoryManifestId = 10,
+                        ContractMediaWeek = new MediaWeek { Id = 872 },
+                        StandardDaypart = new StandardDaypartDto{ Id = 1},
+                        SpotFrequencies = new List<SpotFrequency>
+                        {
+                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500, Spots = 0}, // stay
+                            new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
+                        }
                     }
                 }
             };

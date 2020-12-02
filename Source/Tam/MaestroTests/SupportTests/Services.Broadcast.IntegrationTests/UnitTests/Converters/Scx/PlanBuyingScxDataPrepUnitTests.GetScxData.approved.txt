@@ -7,6 +7,14 @@
       "_StartDate": "2020-08-31T00:00:00",
       "_WeekNumber": 1,
       "IsDirty": false
+    },
+    {
+      "_EndDate": "2020-09-13T00:00:00",
+      "_Id": 872,
+      "_MediaMonthId": 468,
+      "_StartDate": "2020-09-07T00:00:00",
+      "_WeekNumber": 2,
+      "IsDirty": false
     }
   ],
   "DaypartCode": null,
@@ -27,7 +35,7 @@
       "DemoRank": 1
     }
   ],
-  "EndDate": "2020-09-06T00:00:00",
+  "EndDate": "2020-09-13T00:00:00",
   "Generated": "2020-10-17T12:34:56",
   "InventorySource": null,
   "Orders": [
@@ -52,8 +60,8 @@
                   "ProgramName": "MyTestProgram",
                   "SpotCost": 25.0,
                   "SpotLength": "30",
-                  "TotalCost": 75.0,
-                  "TotalSpots": 3,
+                  "TotalCost": 150.0,
+                  "TotalSpots": 6,
                   "Weeks": [
                     {
                       "MediaWeek": {
@@ -62,6 +70,17 @@
                         "_MediaMonthId": 468,
                         "_StartDate": "2020-08-31T00:00:00",
                         "_WeekNumber": 1,
+                        "IsDirty": false
+                      },
+                      "Spots": 3
+                    },
+                    {
+                      "MediaWeek": {
+                        "_EndDate": "2020-09-13T00:00:00",
+                        "_Id": 872,
+                        "_MediaMonthId": 468,
+                        "_StartDate": "2020-09-07T00:00:00",
+                        "_WeekNumber": 2,
                         "IsDirty": false
                       },
                       "Spots": 3
@@ -93,22 +112,33 @@
                         "IsDirty": false
                       },
                       "Spots": 0
+                    },
+                    {
+                      "MediaWeek": {
+                        "_EndDate": "2020-09-13T00:00:00",
+                        "_Id": 872,
+                        "_MediaMonthId": 468,
+                        "_StartDate": "2020-09-07T00:00:00",
+                        "_WeekNumber": 2,
+                        "IsDirty": false
+                      },
+                      "Spots": 0
                     }
                   ]
                 }
               ],
               "StationCode": 102,
-              "TotalCost": 75.0,
-              "TotalSpots": 3
+              "TotalCost": 150.0,
+              "TotalSpots": 6
             }
           ],
-          "TotalCost": 75.0,
-          "TotalSpots": 3
+          "TotalCost": 150.0,
+          "TotalSpots": 6
         }
       ],
       "SurveyString": "Jan20 DMA Nielsen Live+3",
-      "TotalCost": 75.0,
-      "TotalSpots": 3
+      "TotalCost": 150.0,
+      "TotalSpots": 6
     }
   ],
   "PlanName": "MyTestPlan",

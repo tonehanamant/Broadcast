@@ -151,7 +151,7 @@ namespace Services.Broadcast.Converters.Scx
                         {
                             var firstFreq = daypartGroup
                                 .SelectMany(g => g.Spot.SpotFrequencies)
-                                .SingleOrDefault(f => f.SpotLengthId == spotLengthId);
+                                .FirstOrDefault(f => f.SpotLengthId == spotLengthId);
 
                             if (firstFreq == null)
                             {
