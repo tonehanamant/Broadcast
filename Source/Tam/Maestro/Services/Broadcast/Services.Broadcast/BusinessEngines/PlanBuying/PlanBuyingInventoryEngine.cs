@@ -107,14 +107,10 @@ namespace Services.Broadcast.BusinessEngines
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
             var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
-
-            // we don't expect spots other than 30 length spots for OpenMarket
-            var thirtyLengthPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
-
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
-            var programs = _FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, thirtyLengthPrograms, daypartDays);
+            var programs = _FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, allPrograms, daypartDays);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);

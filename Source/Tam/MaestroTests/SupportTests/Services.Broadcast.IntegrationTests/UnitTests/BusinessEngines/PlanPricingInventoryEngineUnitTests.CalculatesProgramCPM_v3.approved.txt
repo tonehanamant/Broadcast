@@ -17,7 +17,7 @@
       }
     ],
     "ManifestWeeks": null,
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 10000.0,
     "ProjectedImpressions": 0.0,

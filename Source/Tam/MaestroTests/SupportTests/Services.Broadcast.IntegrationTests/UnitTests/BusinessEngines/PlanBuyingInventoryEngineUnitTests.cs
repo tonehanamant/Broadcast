@@ -2291,8 +2291,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(resultJson);
         }
 
-        [Test]
-        public void UsesTwoBooks_ToProjectImpressions_WhenGatheringInventory_ForBuying()
+        /// <summary>
+        /// This allows diff reporter for the two variences.
+        /// </summary>
+        /// <param name="programSpotLengthId">The spotlength id for the program.</param>
+        private void BaseUsesTwoBooksForPricingTest(int programSpotLengthId)
         {
             // Arrange
             var parameters = new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto();
@@ -2304,7 +2307,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             plan.HUTBookId = 202;
             plan.PostingType = PostingTypeEnum.NSI;
             plan.ShareBookId = 201;
-            plan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 5, Weight = 50 } };
+            plan.CreativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength { SpotLengthId = 5, Weight = 50 },
+                new CreativeLength { SpotLengthId = 1, Weight = 50 }
+            };
             plan.AudienceId = 25;
 
             _StationRepositoryMock
@@ -2322,7 +2329,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     new PlanBuyingInventoryProgram
                     {
-                        SpotLengthId = 1,
+                        SpotLengthId = programSpotLengthId,
                         Station = new DisplayBroadcastStation
                         {
                             LegacyCallLetters = "KOB"
@@ -2351,8 +2358,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         {
                             new PlanBuyingInventoryProgram.ManifestRate
                             {
-                                SpotLengthId = 1,
-                                Cost = 10
+                                SpotLengthId = programSpotLengthId,
+                                Cost = (10 * programSpotLengthId)
                             }
                         }
                     }
@@ -2425,6 +2432,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             });
 
             Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        public void UsesTwoBooks_ToProjectImpressions_WhenGatheringInventory_ForBuying()
+        {
+            // 30s SpotLength
+            const int spotLengthId = 1;
+            BaseUsesTwoBooksForPricingTest(spotLengthId);
+        }
+
+        [Test]
+        public void GetInventoryForPlanForNonThirtySpotLength()
+        {
+            // Non-30s SpotLength
+            const int spotLengthId = 5;
+            BaseUsesTwoBooksForPricingTest(spotLengthId);
         }
 
         [Test]

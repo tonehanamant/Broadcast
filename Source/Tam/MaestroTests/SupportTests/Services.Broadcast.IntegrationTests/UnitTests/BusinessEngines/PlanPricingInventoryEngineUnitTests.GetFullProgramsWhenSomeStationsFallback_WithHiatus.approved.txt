@@ -15,7 +15,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -55,7 +55,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -95,7 +95,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -135,7 +135,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -175,7 +175,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -215,7 +215,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -255,7 +255,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -295,7 +295,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -335,7 +335,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -375,7 +375,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -415,7 +415,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,
@@ -455,7 +455,7 @@
         "Spots": 0
       }
     ],
-    "NtiToNsiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 1.0,
     "PostingType": 1,
     "PostingTypeImpressions": 0.0,
     "ProjectedImpressions": 0.0,

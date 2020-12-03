@@ -206,17 +206,17 @@ namespace Services.Broadcast.BusinessEngines
             _LogInfo($"Completed gathering inventory.  Gathered {allPrograms.Count} records. Plan Id : {plan.Id};", processingId);
 
             // we don't expect spots other than 30 length spots for OpenMarket
-            var thirtySecondSpotPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
-            _LogInfo($"Filtered to only 30 sec spots.  Input Record Count : {allPrograms.Count}; Output Record Count : {thirtySecondSpotPrograms.Count}; Plan Id : {plan.Id};", processingId);
+            //var thirtySecondSpotPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
+            //_LogInfo($"Filtered to only 30 sec spots.  Input Record Count : {allPrograms.Count}; Output Record Count : {thirtySecondSpotPrograms.Count}; Plan Id : {plan.Id};", processingId);
 
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
-            _LogInfo($"Starting to filter by Daypart... Input Record Count : {thirtySecondSpotPrograms.Count}; Plan Id : {plan.Id}; ", processingId);
+            _LogInfo($"Starting to filter by Daypart... Input Record Count : {allPrograms.Count}; Plan Id : {plan.Id}; ", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
-            var filteredPrograms = FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, thirtySecondSpotPrograms, daypartDays);
+            var filteredPrograms = FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, allPrograms, daypartDays);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
-            _LogInfo($"Filtering complete. Input Record Count : {thirtySecondSpotPrograms.Count}; Output Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
+            _LogInfo($"Filtering complete. Input Record Count : {allPrograms.Count}; Output Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
 
             _LogInfo($"Beginning calculations on {filteredPrograms.Count} records. Plan Id : {plan.Id};", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);

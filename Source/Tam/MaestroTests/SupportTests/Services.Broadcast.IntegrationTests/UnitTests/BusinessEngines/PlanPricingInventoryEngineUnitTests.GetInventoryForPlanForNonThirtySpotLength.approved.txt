@@ -1,7 +1,7 @@
 {
   "inventory": [
     {
-      "Cpm": 6.6666666666666666666666667000,
+      "Cpm": 33.333333333333333333333333300,
       "InventoryPricingQuarterType": "Plan",
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -50,8 +50,8 @@
       "ManifestId": 0,
       "ManifestRates": [
         {
-          "Cost": 10.0,
-          "SpotLengthId": 1
+          "Cost": 50.0,
+          "SpotLengthId": 5
         }
       ],
       "ManifestWeeks": [
@@ -67,7 +67,7 @@
       "PostingTypeImpressions": 1500.0,
       "ProjectedImpressions": 1500.0,
       "ProvidedImpressions": null,
-      "SpotLengthId": 1,
+      "SpotLengthId": 5,
       "StandardDaypartId": 1,
       "Station": {
         "Affiliation": null,
@@ -97,7 +97,7 @@
         "Unit": null,
         "InventorySource": null,
         "InventoryPricingQuarterType": "Plan",
-        "SpotLengthId": 1,
+        "SpotLengthId": 5,
         "ManifestWeeks": [
           {
             "Id": 2,
@@ -127,8 +127,8 @@
         },
         "ManifestRates": [
           {
-            "SpotLengthId": 1,
-            "Cost": 10.0
+            "SpotLengthId": 5,
+            "Cost": 50.0
           }
         ],
         "ManifestAudiences": null,
@@ -180,7 +180,7 @@
       "PlaybackType": 4,
       "ShareProjectionBookId": 201,
       "HutProjectionBookId": 202,
-      "Equivalized": false,
+      "Equivalized": true,
       "SpotLengthId": 5,
       "PostType": 1
     },

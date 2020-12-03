@@ -62,7 +62,7 @@
           "Spots": 0
         }
       ],
-      "NtiToNsiImpressionConversionRate": 0.75,
+      "NsiToNtiImpressionConversionRate": 0.75,
       "PostingType": 2,
       "PostingTypeImpressions": 1125.0,
       "ProjectedImpressions": 1500.0,
@@ -107,7 +107,7 @@
           }
         ],
         "PostingType": 1,
-        "NtiToNsiImpressionConversionRate": 1.0,
+        "NsiToNtiImpressionConversionRate": 1.0,
         "ManifestId": 0,
         "StandardDaypartId": 1,
         "Station": {

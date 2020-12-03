@@ -1,8 +1,9 @@
 {
   "inventory": [
     {
-      "Cpm": 6.6666666666666666666666667000,
-      "InventoryPricingQuarterType": "Plan",
+      "Cpm": 33.333333333333333333333333300,
+      "Impressions": 1500.0,
+      "InventoryBuyingQuarterType": "Plan",
       "InventorySource": null,
       "ManifestAudiences": null,
       "ManifestDayparts": [
@@ -50,8 +51,8 @@
       "ManifestId": 0,
       "ManifestRates": [
         {
-          "Cost": 10.0,
-          "SpotLengthId": 1
+          "Cost": 50.0,
+          "SpotLengthId": 5
         }
       ],
       "ManifestWeeks": [
@@ -62,12 +63,9 @@
           "Spots": 0
         }
       ],
-      "NsiToNtiImpressionConversionRate": 0.75,
-      "PostingType": 1,
-      "PostingTypeImpressions": 1500.0,
       "ProjectedImpressions": 1500.0,
       "ProvidedImpressions": null,
-      "SpotLengthId": 1,
+      "SpotLengthId": 5,
       "StandardDaypartId": 1,
       "Station": {
         "Affiliation": null,
@@ -92,12 +90,12 @@
       {
         "ProjectedImpressions": 0.0,
         "ProvidedImpressions": null,
-        "PostingTypeImpressions": 0.0,
+        "Impressions": 0.0,
         "Cpm": 0.0,
         "Unit": null,
         "InventorySource": null,
-        "InventoryPricingQuarterType": "Plan",
-        "SpotLengthId": 1,
+        "InventoryBuyingQuarterType": "Plan",
+        "SpotLengthId": 5,
         "ManifestWeeks": [
           {
             "Id": 2,
@@ -106,8 +104,6 @@
             "Spots": 0
           }
         ],
-        "PostingType": 1,
-        "NsiToNtiImpressionConversionRate": 1.0,
         "ManifestId": 0,
         "StandardDaypartId": 1,
         "Station": {
@@ -127,8 +123,8 @@
         },
         "ManifestRates": [
           {
-            "SpotLengthId": 1,
-            "Cost": 10.0
+            "SpotLengthId": 5,
+            "Cost": 50.0
           }
         ],
         "ManifestAudiences": null,
@@ -180,7 +176,7 @@
       "PlaybackType": 4,
       "ShareProjectionBookId": 201,
       "HutProjectionBookId": 202,
-      "Equivalized": false,
+      "Equivalized": true,
       "SpotLengthId": 5,
       "PostType": 1
     },
