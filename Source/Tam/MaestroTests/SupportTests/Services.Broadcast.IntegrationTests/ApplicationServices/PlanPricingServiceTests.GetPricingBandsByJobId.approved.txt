@@ -81,10 +81,10 @@
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 4.34281609,
+      "AvailableInventoryPercent": 5.1091954,
       "Budget": 13969.5000,
-      "Cpm": 18.486733275987560378482101500,
-      "Impressions": 755.65,
+      "Cpm": 15.713723284589426321709786300,
+      "Impressions": 889.0,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
       "MinBand": 0.0320,
@@ -95,8 +95,8 @@
   "PostingType": 1,
   "Totals": {
     "Budget": 13969.5000,
-    "Cpm": 18.4867,
-    "Impressions": 755.65,
+    "Cpm": 15.7137,
+    "Impressions": 889.0,
     "Spots": 30
   }
 }

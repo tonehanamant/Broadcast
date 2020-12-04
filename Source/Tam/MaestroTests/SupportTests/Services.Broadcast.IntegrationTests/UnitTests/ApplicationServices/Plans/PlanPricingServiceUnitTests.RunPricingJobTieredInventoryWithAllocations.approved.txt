@@ -115,9 +115,9 @@
   {
     "JobId": 1,
     "PlanVersionId": 0,
-    "PricingCpm": 0.0,
+    "PricingCpm": 0.1616530106063676809789899000,
     "PricingVersion": "2",
-    "RequestId": null,
+    "RequestId": "AAA",
     "Spots": [
       {
         "ContractMediaWeek": null,

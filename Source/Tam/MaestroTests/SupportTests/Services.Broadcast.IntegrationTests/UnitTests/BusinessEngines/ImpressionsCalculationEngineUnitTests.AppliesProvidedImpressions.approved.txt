@@ -14,7 +14,7 @@
       "ManifestId": 0,
       "ManifestRates": null,
       "ManifestWeeks": null,
-      "NtiToNsiImpressionConversionRate": 1.0,
+      "NsiToNtiImpressionConversionRate": 1.0,
       "PostingType": 1,
       "PostingTypeImpressions": 1500.0,
       "ProjectedImpressions": 0.0,
