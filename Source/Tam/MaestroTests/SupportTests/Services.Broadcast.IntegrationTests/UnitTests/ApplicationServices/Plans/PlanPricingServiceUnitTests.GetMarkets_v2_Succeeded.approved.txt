@@ -1,0 +1,56 @@
+{
+  "NsiResults": {
+    "MarketDetails": [
+      {
+        "Budget": 1131.0,
+        "Cpm": 5.655000,
+        "Impressions": 200.0,
+        "ImpressionsPercentage": 96.0,
+        "MarketCode": 0,
+        "MarketCoveragePercent": 70.0,
+        "MarketName": "Chicago",
+        "Rank": 2,
+        "ShareOfVoiceGoalPercentage": 70.0,
+        "Spots": 3,
+        "Stations": 5
+      }
+    ],
+    "Totals": {
+      "Budget": 1131.0,
+      "CoveragePercent": 70.0,
+      "Cpm": 22.0,
+      "Impressions": 200.0,
+      "Markets": 1,
+      "Spots": 3,
+      "Stations": 5
+    }
+  },
+  "NtiResults": {
+    "MarketDetails": [
+      {
+        "Budget": 1131.0,
+        "Cpm": 6.2833333333333333333333333000,
+        "Impressions": 180.0,
+        "ImpressionsPercentage": 96.0,
+        "MarketCode": 0,
+        "MarketCoveragePercent": 70.0,
+        "MarketName": "Chicago",
+        "Rank": 2,
+        "ShareOfVoiceGoalPercentage": 70.0,
+        "Spots": 3,
+        "Stations": 5
+      }
+    ],
+    "Totals": {
+      "Budget": 1131.0,
+      "CoveragePercent": 70.0,
+      "Cpm": 25.0,
+      "Impressions": 180.0,
+      "Markets": 1,
+      "Spots": 3,
+      "Stations": 5
+    }
+  },
+  "PlanVersionId": 3,
+  "PricingJobId": 2
+}

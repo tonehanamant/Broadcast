@@ -150,6 +150,8 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId);
 
+        PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId);
+
         void SavePlanPricingMarketResults(PlanPricingResultMarkets planPricingResultMarkets);
 
         /// <summary>
@@ -1398,7 +1400,7 @@ namespace Services.Broadcast.Repositories
                 AdjustedCPM = entity.cpm_adjusted,
                 MarketGroup = (MarketGroupEnum)entity.market_group,
                 ProprietaryInventory = entity.plan_version_pricing_parameter_inventory_proprietary_summaries.Where(p => p.inventory_proprietary_summary.is_active)
-                    .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id, NumberOfUnit = x.unit_number } )
+                    .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id, NumberOfUnit = x.unit_number })
                     .ToList()
             };
             return dto;
@@ -1653,7 +1655,7 @@ namespace Services.Broadcast.Repositories
                                 impressions_percentage = stationDto.ImpressionsPercentage,
                                 market = stationDto.Market,
                                 station = stationDto.Station,
-                                is_proprietary = stationDto.IsProprietary                                
+                                is_proprietary = stationDto.IsProprietary
                             }).ToList()
                 });
 
@@ -1708,6 +1710,62 @@ namespace Services.Broadcast.Repositories
                 };
                 return dto;
             });
+        }
+
+        public PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entities = context.plan_version_pricing_markets
+                     .Include(x => x.plan_version_pricing_market_details)
+                     .Where(x => x.plan_version_pricing_job_id == jobId)
+                     .OrderByDescending(p => p.id);
+
+                if (!entities.Any())
+                    return null;
+
+                var dto = new PlanPricingResultMarketsDto_v2
+                {
+                    NsiResults = _GetPostingTypePlanPricingResultMarkets(entities, PostingTypeEnum.NSI),
+                    NtiResults = _GetPostingTypePlanPricingResultMarkets(entities, PostingTypeEnum.NTI)
+                };
+                return dto;
+            });
+        }
+
+        private PostingTypePlanPricingResultMarkets _GetPostingTypePlanPricingResultMarkets(IQueryable<plan_version_pricing_markets> entities, PostingTypeEnum postingType)
+        {
+            var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
+
+            if (entity == null) return null;
+
+            var result = new PostingTypePlanPricingResultMarkets
+            {
+                Totals = new PlanPricingResultMarketsTotalsDto
+                {
+                    Markets = entity.total_markets,
+                    CoveragePercent = entity.total_coverage_percent,
+                    Stations = entity.total_stations,
+                    Spots = entity.total_spots,
+                    Impressions = entity.total_impressions,
+                    Cpm = Convert.ToDecimal(entity.total_cpm),
+                    Budget = Convert.ToDecimal(entity.total_budget)
+                },
+                MarketDetails = entity.plan_version_pricing_market_details.Select(s => new PlanPricingResultMarketDetailsDto
+                {
+                    MarketName = s.market_name,
+                    Rank = s.rank,
+                    MarketCoveragePercent = s.market_coverage_percent,
+                    Stations = s.stations_per_market,
+                    Spots = s.spots,
+                    Impressions = s.impressions,
+                    Budget = Convert.ToDecimal(s.budget),
+                    ShareOfVoiceGoalPercentage = s.share_of_voice_goal_percentage,
+                    ImpressionsPercentage = s.impressions_percentage
+                }).ToList()
+            };
+
+            return result;
         }
 
         public void SavePlanPricingMarketResults(PlanPricingResultMarkets planPricingResultMarkets)
@@ -1857,7 +1915,7 @@ namespace Services.Broadcast.Repositories
                         StationCount = r.station_count,
                         Impressions = r.impressions,
                         Budget = r.budget,
-                        Spots = r.spots                        
+                        Spots = r.spots
                     }).OrderByDescending(p => p.ImpressionsPercentage)
                        .ThenByDescending(p => p.AvgCpm)
                        .ThenBy(p => p.ProgramName).ToList()
@@ -2081,7 +2139,7 @@ namespace Services.Broadcast.Repositories
                 {
                     job.plan_version_id = planVersionId;
                 }
-                
+
                 var parameters = context.plan_version_buying_parameters.FirstOrDefault(x => x.plan_version_buying_job_id == jobId);
                 if (parameters != null)
                 {
@@ -2097,9 +2155,9 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var job = (from j in context.plan_version_buying_job
-                    where j.plan_version_id == oldPlanVersionId
-                    orderby j.id descending
-                    select j).FirstOrDefault();
+                           where j.plan_version_id == oldPlanVersionId
+                           orderby j.id descending
+                           select j).FirstOrDefault();
 
                 if (job != null)
                 {
@@ -2107,9 +2165,9 @@ namespace Services.Broadcast.Repositories
                 }
 
                 var parameter = (from p in context.plan_version_buying_parameters
-                    where p.plan_version_id == oldPlanVersionId
-                    orderby p.id descending
-                    select p).FirstOrDefault();
+                                 where p.plan_version_id == oldPlanVersionId
+                                 orderby p.id descending
+                                 select p).FirstOrDefault();
 
                 if (parameter != null)
                 {

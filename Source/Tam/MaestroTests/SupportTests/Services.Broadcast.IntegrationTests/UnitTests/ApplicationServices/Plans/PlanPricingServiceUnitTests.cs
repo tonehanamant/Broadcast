@@ -6755,6 +6755,251 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMarketsByJobId_v2_Succeeded()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId_v2(jobId))
+                .Returns(new PlanPricingResultMarketsDto_v2
+                {
+                    PricingJobId = jobId,
+                    PlanVersionId = 3,
+                    NsiResults = new PostingTypePlanPricingResultMarkets
+                    {
+                        MarketDetails = new List<PlanPricingResultMarketDetailsDto>
+                    {
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5,
+                            MarketName = "Chicago"
+                         }
+                    },
+                        Totals = new PlanPricingResultMarketsTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 200000,
+                            Cpm = 22,
+                            Stations = 5,
+                            CoveragePercent = 70,
+                            Markets = 1
+                        }
+                    },
+
+                    NtiResults = new PostingTypePlanPricingResultMarkets
+                    {
+                        MarketDetails = new List<PlanPricingResultMarketDetailsDto>
+                    {
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 180000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5,
+                            MarketName = "Chicago"
+                         }
+                    },
+                        Totals = new PlanPricingResultMarketsTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 180000,
+                            Cpm = 25,
+                            Stations = 5,
+                            CoveragePercent = 70,
+                            Markets = 1
+                        }
+                    }
+                });
+
+            // Act
+            var result = service.GetMarketsByJobId_v2(jobId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetMarketsByJobId_v2_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarketsByJobId_v2(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetMarketsByJobId_v2_JobNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarketsByJobId_v2(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetMarketsByJobId_v2_ReturnsNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarketsByJobId_v2(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMarkets_v2_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 5,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId_v2(It.IsAny<int>()))
+                .Returns(new PlanPricingResultMarketsDto_v2
+                {
+                    PricingJobId = 2,
+                    PlanVersionId = 3,
+                    NsiResults = new PostingTypePlanPricingResultMarkets
+                    {
+                        MarketDetails = new List<PlanPricingResultMarketDetailsDto>
+                    {
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5,
+                            MarketName = "Chicago"
+                         }
+                    },
+                        Totals = new PlanPricingResultMarketsTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 200000,
+                            Cpm = 22,
+                            Stations = 5,
+                            CoveragePercent = 70,
+                            Markets = 1
+                        }
+                    },
+
+                    NtiResults = new PostingTypePlanPricingResultMarkets
+                    {
+                        MarketDetails = new List<PlanPricingResultMarketDetailsDto>
+                    {
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 180000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5,
+                            MarketName = "Chicago"
+                         }
+                    },
+                        Totals = new PlanPricingResultMarketsTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 180000,
+                            Cpm = 25,
+                            Stations = 5,
+                            CoveragePercent = 70,
+                            Markets = 1
+                        }
+                    }
+                });
+
+            // Act
+            var result = service.GetMarkets_v2(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         [TestCase(BackgroundJobProcessingStatus.Failed)]
         [TestCase(BackgroundJobProcessingStatus.Canceled)]
         [TestCase(BackgroundJobProcessingStatus.Processing)]
@@ -8447,7 +8692,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" } );
+                .Returns(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" });
 
             var service = _GetService();
 
@@ -8705,7 +8950,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(WaitHandle), "Handle");                
+                jsonResolver.Ignore(typeof(WaitHandle), "Handle");
                 var settings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -9016,7 +9261,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new ManifestRate { SpotLengthId = 2, Cost = 25 },
             };
             inventory[1].ManifestId = 2;
-            inventory[1].Station = new DisplayBroadcastStation {Id = 6, LegacyCallLetters = "WCBS", MarketCode = 106,};
+            inventory[1].Station = new DisplayBroadcastStation { Id = 6, LegacyCallLetters = "WCBS", MarketCode = 106, };
             inventory[1].ManifestRates = new List<ManifestRate>
             {
                 new ManifestRate { SpotLengthId = 1, Cost = 0 },
@@ -9214,7 +9459,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
             var skippedWeekIds = new List<int>();
             var groupedInventory = PlanPricingService._GroupInventory(inventory);
-            
+
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(MarketsTestData.GetLatestMarketCoverages());

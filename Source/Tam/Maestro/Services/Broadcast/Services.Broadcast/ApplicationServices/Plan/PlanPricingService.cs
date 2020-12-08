@@ -91,12 +91,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// For troubleshooting
         /// </summary>
         string ForceCompletePlanPricingJob(int jobId, string username);
+        PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId);
+
         /// <summary>
         /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
         /// </summary>
         /// <param name="jobId">The id of the job to rerun.</param>
         /// <returns>The new JobId</returns>
         int ReRunPricingJob(int jobId);
+        PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId);
+
         /// <summary>
         /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
         /// </summary>
@@ -120,6 +124,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Retrieves the Pricing Results Markets Summary
         /// </summary>
         PlanPricingResultMarketsDto GetMarketsByJobId(int jobId);
+        PlanPricingResultMarketsDto_v2 GetMarketsByJobId_v2(int jobId);
         PlanPricingResultMarketsDto GetMarketsForVersion(int planId, int planVersionId);
         PlanPricingBandDto GetPricingBands(int planId);
         PlanPricingBandDto GetPricingBandsByJobId(int jobId);
@@ -2303,6 +2308,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetMarkets(job);
         }
 
+        /// <inheritdoc />
+        public PlanPricingResultMarketsDto_v2 GetMarketsByJobId_v2(int jobId)
+        {
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+
+            return _GetMarkets_v2(job);
+        }
+
         private PlanPricingResultMarketsDto _GetMarkets(PlanPricingJob job)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
@@ -2325,6 +2338,40 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return results;
         }
+
+        private PlanPricingResultMarketsDto_v2 _GetMarkets_v2(PlanPricingJob job)
+        {
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+            {
+                return null;
+            }
+
+            var results = _PlanRepository.GetPlanPricingResultMarketsByJobId_v2(job.Id);
+
+            if (results == null)
+            {
+                return null;
+            }
+
+            if (results.NsiResults != null)
+            {
+                results.NsiResults.MarketDetails = _GroupMarketDetailsByMarket(results.NsiResults.MarketDetails)
+                    .OrderBy(s => s.Rank).ToList();           
+
+            _ConvertPricingMarketResultsToUserFormat_v2(results.NsiResults);
+            }
+
+            if (results.NtiResults != null)
+            {
+                results.NtiResults.MarketDetails = _GroupMarketDetailsByMarket(results.NtiResults?.MarketDetails)
+                .OrderBy(s => s.Rank).ToList();
+                _ConvertPricingMarketResultsToUserFormat_v2(results.NtiResults);
+            }
+
+            return results;
+        }
+
+
 
         private List<PlanPricingResultMarketDetailsDto> _GroupMarketDetailsByMarket(List<PlanPricingResultMarketDetailsDto> details)
         {
@@ -2366,6 +2413,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
             return _GetMarkets(job);
+        }
+
+        public PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId)
+        {
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
+
+            return _GetMarkets_v2(job);
+        }
+
+        public PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
+
+            return _GetMarkets_v2(job);
         }
 
         public PlanPricingStationResultDto GetStationsByJobId(int jobId)
@@ -2450,6 +2511,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private void _ConvertPricingMarketResultsToUserFormat(PlanPricingResultMarketsDto results)
+        {
+            results.Totals.Impressions /= 1000;
+
+            foreach (var detail in results.MarketDetails)
+            {
+                detail.Impressions /= 1000;
+            }
+        }
+
+        private void _ConvertPricingMarketResultsToUserFormat_v2(PostingTypePlanPricingResultMarkets results)
         {
             results.Totals.Impressions /= 1000;
 
