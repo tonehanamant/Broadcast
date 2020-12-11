@@ -19,6 +19,21 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PostingTypeEnum PostingType { get; set; }
     }
 
+    public class PlanPricingStationResultDto_v2
+    {
+        public int Id { get; set; }
+        public int? JobId { get; set; }
+        public int? PlanVersionId { get; set; }
+        public PostingTypePlanPricingResultStations NsiResults { get; set; }
+        public PostingTypePlanPricingResultStations NtiResults { get; set; }
+    }
+
+    public class PostingTypePlanPricingResultStations
+    {
+        public PlanPricingStationTotalsDto Totals { get; set; }
+        public List<PlanPricingStationDto> StationDetails { get; set; } = new List<PlanPricingStationDto>();
+    }
+
     public class PlanPricingStationDto
     {
         public int Id { get; set; }

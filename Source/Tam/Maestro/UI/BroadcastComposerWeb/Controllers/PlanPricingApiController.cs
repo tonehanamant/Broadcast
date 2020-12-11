@@ -65,6 +65,25 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetProgramsForVersion(planId, planVersionId));
         }
 
+        /// <summary>
+        /// Get programs data from the lastest pricing execution
+        /// </summary>
+        /// <param name="planId">Plan ID</param>
+        /// <returns>Programs from the lastest pricing execution</returns>
+        [HttpGet]
+        [Route("~/api/v2/PricingService/Programs/{planId}")]
+        public BaseResponse<PricingProgramsResultDto_v2> GetPrograms_v2(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPrograms_v2(planId));
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/PricingService/Programs/{planId}/{planVersionId}")]
+        public BaseResponse<PricingProgramsResultDto_v2> GetPrograms_v2(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetProgramsForVersion_v2(planId, planVersionId));
+        }
+
         [HttpGet]
         [Route("Bands/{planId}")]
         public BaseResponse<PlanPricingBandDto> GetPricingBands(int planId)
@@ -77,6 +96,20 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PlanPricingBandDto> GetPricingBands(int planId, int planVersionId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBandsForVersion(planId, planVersionId));
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/PricingService/Bands/{planId}")]
+        public BaseResponse<PlanPricingBandDto_v2> GetPricingBands_v2(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBands_v2(planId));
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/PricingService/Bands/{planId}/{planVersionId}")]
+        public BaseResponse<PlanPricingBandDto_v2> GetPricingBands_v2(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBandsForVersion_v2(planId, planVersionId));
         }
 
         [HttpGet]
@@ -190,6 +223,20 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PlanPricingStationResultDto> GetStationsForVersion(int planId, int planVersionId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStationsForVersion(planId, planVersionId));
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/PricingService/Stations/{planId}")]
+        public BaseResponse<PlanPricingStationResultDto_v2> GetStations_v2(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStations_v2(planId));
+        }
+
+        [HttpGet]
+        [Route("~/api/v2/PricingService/Stations/{planId}/{planVersionId}")]
+        public BaseResponse<PlanPricingStationResultDto_v2> GetStationsForVersion_v2(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStationsForVersion_v2(planId, planVersionId));
         }
 
         /// <summary>

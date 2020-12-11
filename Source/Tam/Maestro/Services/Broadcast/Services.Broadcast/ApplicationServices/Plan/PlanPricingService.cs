@@ -66,6 +66,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// For troubleshooting
         /// </summary>
         PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters);
+        PricingProgramsResultDto_v2 GetPrograms_v2(int planId);
+
         /// <summary>
         /// For troubleshooting
         /// </summary>
@@ -74,6 +76,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// For troubleshooting
         /// </summary>
         List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
+        PricingProgramsResultDto_v2 GetProgramsForVersion_v2(int planId, int planVersionId);
+
         /// <summary>
         /// Gets the unit caps.
         /// </summary>
@@ -92,6 +96,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         string ForceCompletePlanPricingJob(int jobId, string username);
         PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId);
+        PlanPricingBandDto_v2 GetPricingBands_v2(int planId);
 
         /// <summary>
         /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
@@ -100,6 +105,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns>The new JobId</returns>
         int ReRunPricingJob(int jobId);
         PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId);
+        PlanPricingBandDto_v2 GetPricingBandsForVersion_v2(int planId, int planVersionId);
 
         /// <summary>
         /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
@@ -136,6 +142,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion);
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
+        PlanPricingStationResultDto_v2 GetStations_v2(int planId);
+        PlanPricingStationResultDto_v2 GetStationsForVersion_v2(int planId, int planVersionId);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -2207,6 +2215,31 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
+        private PricingProgramsResultDto_v2 _GetPrograms_v2(PlanPricingJob job)
+        {
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
+
+            var results = _PlanRepository.GetPricingProgramsResultByJobId_v2(job.Id);
+
+            if (results == null) return null;
+
+            if (results.NsiResults != null)
+            {
+                results.NsiResults.Totals.ImpressionsPercentage = 100;
+            }
+
+
+            if (results.NtiResults != null)
+            {
+                results.NtiResults.Totals.ImpressionsPercentage = 100; 
+            }
+
+            _ConvertImpressionsToUserFormat_v2(results);
+
+            return results;
+        }
+
         public PricingProgramsResultDto GetPrograms(int planId)
         {
             var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
@@ -2221,6 +2254,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetPrograms(job);
         }
 
+        public PricingProgramsResultDto_v2 GetPrograms_v2(int planId)
+        {
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
+
+            return _GetPrograms_v2(job);
+        }
+
+        public PricingProgramsResultDto_v2 GetProgramsForVersion_v2(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
+
+            return _GetPrograms_v2(job);
+        }
+
         private void _ConvertImpressionsToUserFormat(PricingProgramsResultDto planPricingResult)
         {
             if (planPricingResult == null)
@@ -2233,6 +2280,34 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 program.AvgImpressions /= 1000;
                 program.Impressions /= 1000;
+            }
+        }
+
+        private void _ConvertImpressionsToUserFormat_v2(PricingProgramsResultDto_v2 planPricingResult)
+        {
+            if (planPricingResult == null)
+                return;
+
+            if (planPricingResult.NsiResults != null)
+            {
+                planPricingResult.NsiResults.Totals.AvgImpressions /= 1000;
+
+                foreach (var program in planPricingResult.NsiResults.ProgramDetails)
+                {
+                    program.AvgImpressions /= 1000;
+                    program.Impressions /= 1000;
+                } 
+            }
+
+            if (planPricingResult.NsiResults != null)
+            {
+                planPricingResult.NtiResults.Totals.Impressions /= 1000;
+
+                foreach (var program in planPricingResult.NtiResults.ProgramDetails)
+                {
+                    program.AvgImpressions /= 1000;
+                    program.Impressions /= 1000;
+                } 
             }
         }
 
@@ -2298,6 +2373,59 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
             return _GetPricingBands(job);
+        }
+
+        public PlanPricingBandDto_v2 GetPricingBands_v2(int planId)
+        {
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
+
+            return _GetPricingBands_v2(job);
+        }
+
+        public PlanPricingBandDto_v2 GetPricingBandsForVersion_v2(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
+
+            return _GetPricingBands_v2(job);
+        }
+
+        private PlanPricingBandDto_v2 _GetPricingBands_v2(PlanPricingJob job)
+        {
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
+
+            var results = _PlanRepository.GetPlanPricingBandByJobId_v2(job.Id);
+
+            if (results == null) return null;
+
+            if (results.NsiResults != null)
+            {
+                results.NsiResults.BandsDetails = _GroupBandsByRange(results.NsiResults.BandsDetails);
+
+                _ConvertPricingBandImpressionsToUserFormat_v2(results.NsiResults);
+
+                results.NsiResults.BandsDetails = results.NsiResults.BandsDetails.OrderBy(x => x.MinBand).ToList();
+            }
+
+            if (results.NtiResults != null)
+            {
+                results.NtiResults.BandsDetails = _GroupBandsByRange(results.NtiResults.BandsDetails);
+
+                _ConvertPricingBandImpressionsToUserFormat_v2(results.NtiResults);
+
+                results.NtiResults.BandsDetails = results.NtiResults.BandsDetails.OrderBy(x => x.MinBand).ToList();
+            }
+            return results;
+        }
+
+        private void _ConvertPricingBandImpressionsToUserFormat_v2(PostingTypePlanPricingResultBands results)
+        {
+            results.Totals.Impressions /= 1000;
+
+            foreach (var band in results.BandsDetails)
+            {
+                band.Impressions /= 1000;
+            }
         }
 
         /// <inheritdoc />
@@ -2490,6 +2618,56 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetStations(job);
         }
 
+        public PlanPricingStationResultDto_v2 GetStations_v2(int planId)
+        {
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
+
+            return _GetStations_v2(job);
+        }
+
+        public PlanPricingStationResultDto_v2 GetStationsForVersion_v2(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
+
+            return _GetStations_v2(job);
+        }
+
+        private PlanPricingStationResultDto_v2 _GetStations_v2(PlanPricingJob job)
+        {
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
+
+            var result = _PlanRepository.GetPricingStationsResultByJobId_v2(job.Id);
+
+            if (result == null) return null;
+
+            if (result.NsiResults != null)
+            {
+                result.NsiResults.StationDetails = _GroupStationDetailsByStation(result.NsiResults.StationDetails);
+
+                _ConvertPricingStationResultDtoToUserFormat(result.NsiResults);
+            }
+
+            if (result.NtiResults != null)
+            {
+                result.NtiResults.StationDetails = _GroupStationDetailsByStation(result.NtiResults.StationDetails);
+
+                _ConvertPricingStationResultDtoToUserFormat(result.NtiResults);
+            }
+
+            return result;
+        }
+
+        private void _ConvertPricingStationResultDtoToUserFormat(PostingTypePlanPricingResultStations results)
+        {
+                results.Totals.Impressions /= 1000;
+
+                foreach (var band in results.StationDetails)
+                {
+                    band.Impressions /= 1000;
+                }
+        }
+
         private void _ConvertPricingStationResultDtoToUserFormat(PlanPricingStationResultDto results)
         {
             results.Totals.Impressions /= 1000;
@@ -2529,6 +2707,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 detail.Impressions /= 1000;
             }
         }
+
+
+
 
         internal class ProgramWithManifestDaypart
         {

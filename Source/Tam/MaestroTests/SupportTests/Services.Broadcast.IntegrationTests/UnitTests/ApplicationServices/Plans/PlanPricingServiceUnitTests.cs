@@ -6134,6 +6134,222 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_v2_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingProgramsResultByJobId_v2(It.IsAny<int>()))
+                .Returns(new PricingProgramsResultDto_v2
+                {
+                    NsiResults = new PostingTypePlanPricingResultPrograms
+                    {
+                        ProgramDetails = new List<PlanPricingProgramProgramDto>
+                    {
+                        new PlanPricingProgramProgramDto
+                        {
+                            Id = 7,
+                            ProgramName = "1+1",
+                            Genre = "Comedy",
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 111000,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                        }
+                    },
+                        Totals = new PricingProgramsResultTotalsDto
+                        {
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 111000,
+                            ImpressionsPercentage = 100,
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 200000
+                        }
+                    },
+                    NtiResults = new PostingTypePlanPricingResultPrograms
+                    {
+                        ProgramDetails = new List<PlanPricingProgramProgramDto>
+                    {
+                        new PlanPricingProgramProgramDto
+                        {
+                            Id = 7,
+                            ProgramName = "1+1",
+                            Genre = "Comedy",
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 111000,
+                            Impressions = 180000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                        }
+                    },
+                        Totals = new PricingProgramsResultTotalsDto
+                        {
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 110000,
+                            ImpressionsPercentage = 100,
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 180000
+                        }
+                    }
+                });
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetPrograms_v2_JobStatusFailed()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Failed,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_v2_JobStatusCanceled()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Canceled,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_v2_JobStatusProcessing()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Processing,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_v2_JobStatusQueued()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_v2_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_v2_GetPricingProgramsResultReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetProgramsByJobId_Succeeded()
         {
             // Arrange
@@ -6556,6 +6772,153 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var result = service.GetStations(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStations_v2_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 5,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingStationsResultByJobId_v2(It.IsAny<int>()))
+                .Returns(new PlanPricingStationResultDto_v2
+                {
+                    JobId = 5,
+                    PlanVersionId = 3,
+                    NsiResults = new PostingTypePlanPricingResultStations
+                    {
+                        StationDetails = new List<PlanPricingStationDto>
+                    {
+                         new PlanPricingStationDto
+                         {
+                            Id = 7,
+                            Cpm = 22,
+                            Market = "NY",
+                            Station = "ESPN",
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                         }
+                    },
+                        Totals = new PlanPricingStationTotalsDto
+                        {
+                            ImpressionsPercentage = 100,
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 200000,
+                            Cpm = 22,
+                            Station = 1
+                        }
+                    },
+                    NtiResults = new PostingTypePlanPricingResultStations
+                    {
+                        StationDetails = new List<PlanPricingStationDto>
+                        {
+                        new PlanPricingStationDto
+                        {
+                            Id = 7,
+                            Cpm = 25,
+                            Market = "NY",
+                            Station = "ESPN",
+                            Impressions = 180000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                        }
+                    },
+                        Totals = new PlanPricingStationTotalsDto
+                        {
+                            ImpressionsPercentage = 100,
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 180000,
+                            Cpm = 25,
+                            Station = 1
+                        }
+                    }
+                });
+
+            // Act
+            var result = service.GetStations_v2(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetStations_v2_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStations_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetStations_v2_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStations_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetStations_v2_ReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStations_v2(planId);
 
             // Assert
             Assert.IsNull(result);
@@ -7327,6 +7690,294 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsNull(result);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingBandsByJobId_v2_Succeeded()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingBandByJobId_v2(jobId))
+                .Returns(new PlanPricingBandDto_v2
+                {
+                    PlanVersionId = 3,
+                    JobId = jobId,
+                    NsiResults = new PostingTypePlanPricingResultBands
+                    {
+                        BandsDetails = new List<PlanPricingBandDetailDto>
+                     {
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 32,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 20,
+                            MaxBand = 5,
+                            MinBand = 1
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 10,
+                            Impressions = 100000,
+                            ImpressionsPercentage = 22,
+                            Budget = 2131,
+                            Spots = 4,
+                            AvailableInventoryPercent = 10,
+                            MaxBand = 5,
+                            MinBand = 1
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 32,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 20,
+                            MaxBand = 5,
+                            MinBand = null
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 10,
+                            Impressions = 100000,
+                            ImpressionsPercentage = 22,
+                            Budget = 2131,
+                            Spots = 4,
+                            AvailableInventoryPercent = 10,
+                            MaxBand = 5,
+                            MinBand = null
+                         }
+                     },
+                        Totals = new PlanPricingBandTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 200000,
+                            Cpm = 22,
+                        }
+                    },
+                    NtiResults = new PostingTypePlanPricingResultBands
+                    {
+                        BandsDetails = new List<PlanPricingBandDetailDto>
+                     {
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 25,
+                            Impressions = 180000,
+                            ImpressionsPercentage = 32,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 20,
+                            MaxBand = 5,
+                            MinBand = 1
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 10,
+                            Impressions = 100000,
+                            ImpressionsPercentage = 25,
+                            Budget = 2131,
+                            Spots = 4,
+                            AvailableInventoryPercent = 10,
+                            MaxBand = 5,
+                            MinBand = 1
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 25,
+                            Impressions = 180000,
+                            ImpressionsPercentage = 32,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 20,
+                            MaxBand = 5,
+                            MinBand = null
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 10,
+                            Impressions = 100000,
+                            ImpressionsPercentage = 25,
+                            Budget = 2131,
+                            Spots = 4,
+                            AvailableInventoryPercent = 10,
+                            MaxBand = 5,
+                            MinBand = null
+                         }
+                     },
+                        Totals = new PlanPricingBandTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 180000,
+                            Cpm = 25,
+                        }
+                    }
+                });
+
+            // Act
+            var result = service.GetPricingBandsByJobId(jobId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingBands_v2_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 5,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingBandByJobId_v2(It.IsAny<int>()))
+                .Returns(new PlanPricingBandDto_v2
+                {
+                    PlanVersionId = 3,
+                    JobId = 5,
+                    NsiResults = new PostingTypePlanPricingResultBands
+                    {
+                        BandsDetails = new List<PlanPricingBandDetailDto>
+                     {
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 70,
+                            MaxBand = 5,
+                            MinBand = 1,
+                         }
+                     },
+                        Totals = new PlanPricingBandTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 200000,
+                            Cpm = 22,
+                        }
+                    },
+                    NtiResults = new PostingTypePlanPricingResultBands
+                    {
+                        BandsDetails = new List<PlanPricingBandDetailDto>
+                     {
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 25,
+                            Impressions = 180000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 70,
+                            MaxBand = 5,
+                            MinBand = 1,
+                         }
+                     },
+                        Totals = new PlanPricingBandTotalsDto
+                        {
+                            Budget = 1131,
+                            Spots = 3,
+                            Impressions = 180000,
+                            Cpm = 25,
+                        }
+                    }
+                });
+
+            // Act
+            var result = service.GetPricingBands_v2(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetPricingBands_v2_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBands_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPricingBands_v2_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBands_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPricingBands_v2_ReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBands_v2(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

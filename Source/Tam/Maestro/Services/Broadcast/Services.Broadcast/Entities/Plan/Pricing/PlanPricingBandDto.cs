@@ -13,6 +13,21 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PostingTypeEnum PostingType { get; set; }
     }
 
+    public class PlanPricingBandDto_v2
+    {
+        public int Id { get; set; }
+        public int? JobId { get; set; }
+        public int PlanVersionId { get; set; }
+        public PostingTypePlanPricingResultBands NsiResults { get; set; }
+        public PostingTypePlanPricingResultBands NtiResults { get; set; }
+    }
+
+    public class PostingTypePlanPricingResultBands
+    {
+        public PlanPricingBandTotalsDto Totals { get; set; }
+        public List<PlanPricingBandDetailDto> BandsDetails { get; set; } = new List<PlanPricingBandDetailDto>();
+    }
+
     public class PlanPricingBandDetailDto
     {
         public int Id { get; set; }

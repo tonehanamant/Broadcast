@@ -195,6 +195,9 @@ namespace Services.Broadcast.Repositories
         List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForProgramLineup(int jobId);
 
         List<PlanPricingJob> GetSuccessfulPricingJobs(int planVersionId);
+        PricingProgramsResultDto_v2 GetPricingProgramsResultByJobId_v2(int id);
+        PlanPricingBandDto_v2 GetPlanPricingBandByJobId_v2(int id);
+        PlanPricingStationResultDto_v2 GetPricingStationsResultByJobId_v2(int id);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1600,6 +1603,58 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public PlanPricingBandDto_v2 GetPlanPricingBandByJobId_v2(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entities = context.plan_version_pricing_bands
+                    .Include(x => x.plan_version_pricing_band_details)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id);
+
+                if (!entities.Any())
+                    return null;
+
+                return new PlanPricingBandDto_v2
+                {
+                    NsiResults = _GetPostingTypePlanPricingResultsBands(entities, PostingTypeEnum.NSI),
+                    NtiResults = _GetPostingTypePlanPricingResultsBands(entities, PostingTypeEnum.NTI)
+                };
+            });
+        }
+
+        private PostingTypePlanPricingResultBands _GetPostingTypePlanPricingResultsBands(IOrderedQueryable<plan_version_pricing_bands> entities, PostingTypeEnum postingType)
+        {
+            var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
+
+            if (entity == null) return null;
+
+            var result = new PostingTypePlanPricingResultBands
+            {
+                Totals = new PlanPricingBandTotalsDto
+                {
+                    Cpm = entity.total_cpm,
+                    Budget = entity.total_budget,
+                    Impressions = entity.total_impressions,
+                    Spots = entity.total_spots
+                },
+                BandsDetails = entity.plan_version_pricing_band_details.Select(r => new PlanPricingBandDetailDto
+                {
+                    Id = r.id,
+                    MinBand = r.min_band,
+                    MaxBand = r.max_band,
+                    Spots = r.spots,
+                    Impressions = r.impressions,
+                    Budget = r.budget,
+                    Cpm = r.cpm,
+                    ImpressionsPercentage = r.impressions_percentage,
+                    AvailableInventoryPercent = r.available_inventory_percentage
+                }).ToList()
+            };
+
+            return result;
+        }
+
         public void SavePlanPricingBands(PlanPricingBand planPricingBand)
         {
             _InReadUncommitedTransaction(context =>
@@ -1923,6 +1978,66 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public PricingProgramsResultDto_v2 GetPricingProgramsResultByJobId_v2(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entities = context.plan_version_pricing_results
+                    .Include(x => x.plan_version_pricing_result_spots)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id);
+
+                if (!entities.Any()) return null;
+
+                var dto = new PricingProgramsResultDto_v2
+                {
+                    NsiResults = _GetPostingTypePlanPricingResultPrograms(entities, PostingTypeEnum.NSI),
+                    NtiResults = _GetPostingTypePlanPricingResultPrograms(entities, PostingTypeEnum.NTI)
+                };
+
+                return dto;
+            });
+        }
+
+        private PostingTypePlanPricingResultPrograms _GetPostingTypePlanPricingResultPrograms(IOrderedQueryable<plan_version_pricing_results> entities, PostingTypeEnum postingType)
+        {
+            var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
+
+            if (entity == null) return null;
+
+            var programResult = new PostingTypePlanPricingResultPrograms
+            {
+                Totals = new PricingProgramsResultTotalsDto
+                {
+                    MarketCount = entity.total_market_count,
+                    StationCount = entity.total_station_count,
+                    AvgCpm = entity.total_avg_cpm,
+                    AvgImpressions = entity.total_avg_impressions,
+                    Budget = entity.total_budget,
+                    Spots = entity.total_spots,
+                    Impressions = entity.total_impressions
+                },
+                ProgramDetails = entity.plan_version_pricing_result_spots.Select(r => new PlanPricingProgramProgramDto
+                {
+                    Id = r.id,
+                    ProgramName = r.program_name,
+                    Genre = r.genre,
+                    AvgCpm = r.avg_cpm,
+                    AvgImpressions = r.avg_impressions,
+                    ImpressionsPercentage = r.percentage_of_buy,
+                    MarketCount = r.market_count,
+                    StationCount = r.station_count,
+                    Impressions = r.impressions,
+                    Budget = r.budget,
+                    Spots = r.spots
+                }).OrderByDescending(p => p.ImpressionsPercentage)
+                      .ThenByDescending(p => p.AvgCpm)
+                      .ThenBy(p => p.ProgramName).ToList()
+            };
+
+            return programResult;
+        }
+
         public CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -2001,6 +2116,63 @@ namespace Services.Broadcast.Repositories
                     }).ToList()
                 };
             });
+        }
+
+        public PlanPricingStationResultDto_v2 GetPricingStationsResultByJobId_v2(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entities = context.plan_version_pricing_stations
+                    .Include(p => p.plan_version_pricing_station_details)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id);
+
+                if (!entities.Any()) return null;
+
+                var result = new PlanPricingStationResultDto_v2
+                {
+                    Id = entities.First().id,
+                    JobId = jobId,
+                    PlanVersionId = entities.First().plan_version_pricing_job.plan_version_id,
+                    NsiResults = _GetPostingTypePlanPricingResultStations(entities, PostingTypeEnum.NSI),
+                    NtiResults = _GetPostingTypePlanPricingResultStations(entities, PostingTypeEnum.NTI),
+                };
+
+                return result;
+            });
+        }
+
+        private PostingTypePlanPricingResultStations _GetPostingTypePlanPricingResultStations(IOrderedQueryable<plan_version_pricing_stations> entities, PostingTypeEnum postingType)
+        {
+            var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
+
+            if (entity == null) return null;
+
+            var result = new PostingTypePlanPricingResultStations
+            {
+                Totals = new PlanPricingStationTotalsDto
+                {
+                    Budget = entity.total_budget,
+                    Cpm = entity.total_cpm,
+                    Impressions = entity.total_impressions,
+                    ImpressionsPercentage = 100,
+                    Spots = entity.total_spots,
+                    Station = entity.total_stations
+                },
+                StationDetails = entity.plan_version_pricing_station_details.Select(d => new PlanPricingStationDto
+                {
+                    Budget = d.budget,
+                    Cpm = d.cpm,
+                    Impressions = d.impressions,
+                    Id = d.id,
+                    ImpressionsPercentage = d.impressions_percentage,
+                    Market = d.market,
+                    Spots = d.spots,
+                    Station = d.station
+                }).ToList()
+            };
+
+            return result;
         }
 
         public decimal GetGoalCpm(int planVersionId, int jobId)
@@ -2301,5 +2473,6 @@ namespace Services.Broadcast.Repositories
                 .ToList();
             });
         }
+
     }
 }
