@@ -88,6 +88,18 @@ namespace BroadcastComposerWeb.Controllers
             });
         }
 
+        [Route("test-apm3")]
+        [HttpGet]
+        public string TestAPM3(bool throwError = false)
+        {
+			if (throwError)
+            {
+                throw new ApplicationException($"Throwing because '{nameof(throwError)}' is true.");
+            }
+
+            return $"All is well.  '{nameof(throwError)}' is false.";
+		}
+
 		#endregion
 	}
 }
