@@ -73,6 +73,21 @@ namespace BroadcastComposerWeb.Controllers
 			return _ConvertToBaseResponse(() => message);
 		}
 
+		[Route("test-apm2")]
+		[HttpGet]
+		public BaseResponse<string> TestAPM2(bool throwError = false)
+        {
+            return _ConvertToBaseResponse(() =>
+            {
+                if (throwError)
+                {
+                    throw new ApplicationException($"Throwing because '{nameof(throwError)}' is true.");
+                }
+
+                return $"All is well.  '{nameof(throwError)}' is false.";
+            });
+        }
+
 		#endregion
 	}
 }
