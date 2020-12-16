@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading;
 using System.Web.Http;
+using Datadog.Trace;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Services.Cable.Entities;
@@ -43,7 +45,40 @@ namespace BroadcastComposerWeb.Controllers
 			}
 			
 		}
+		[Route("test-apm")]
+		[HttpGet]
+		public BaseResponse<bool> TestAPM()
+		{
+			using (var scope = Tracer.Instance.StartActive("TestAPM"))
+			{
+				var span = scope.Span;
 
+				// Always keep this trace
+				span.SetTag(Tags.ManualKeep, "true");
+
+				//method impl follows
+
+			}
+
+			return _ConvertToBaseResponse(() => true);
+		}
+		[Route("test-apm2")]
+		[HttpGet]
+		public BaseResponse<bool> TestAPM2()
+		{
+			using (var scope = Tracer.Instance.StartActive("TestAPM2"))
+			{
+				var span = scope.Span;
+
+				// Always keep this trace
+				span.SetTag(Tags.ManualKeep, "true");
+				Random rnd = new Random();
+				int number = rnd.Next(1, 5);
+				Thread.Sleep(number*1000);
+			}
+
+			return _ConvertToBaseResponse(() => true);
+		}
 		#endregion
 	}
 }
