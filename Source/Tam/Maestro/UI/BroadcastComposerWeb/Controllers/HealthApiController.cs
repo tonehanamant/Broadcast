@@ -37,19 +37,20 @@ namespace BroadcastComposerWeb.Controllers
 			}
 			catch (Exception e)
 			{
-				return new BaseResponse<HealthResponseDto>()
+				return new BaseResponse<HealthResponseDto>
 				{
 					Success = false,
 					Message = e.Message
 				};
 			}
-			
 		}
-		[Route("test-apm")]
+
+		[Route("test-apm0")]
 		[HttpGet]
-		public BaseResponse<bool> TestAPM()
+		public BaseResponse<string> TestAPM0()
 		{
-			using (var scope = Tracer.Instance.StartActive("TestAPM"))
+			var message = string.Empty;
+			using (var scope = Tracer.Instance.StartActive("TestAPM0"))
 			{
 				var span = scope.Span;
 
@@ -59,26 +60,19 @@ namespace BroadcastComposerWeb.Controllers
 				//method impl follows
 
 			}
-
-			return _ConvertToBaseResponse(() => true);
+			message = "Hello!  I've reported metric 'BroadcastFirstMetricTest.'";
+			return _ConvertToBaseResponse(() => message);
 		}
-		[Route("test-apm2")]
+
+		[Route("test-apm1")]
 		[HttpGet]
-		public BaseResponse<bool> TestAPM2()
+		public BaseResponse<string> TestAPM1(int number)
 		{
-			using (var scope = Tracer.Instance.StartActive("TestAPM2"))
-			{
-				var span = scope.Span;
-
-				// Always keep this trace
-				span.SetTag(Tags.ManualKeep, "true");
-				Random rnd = new Random();
-				int number = rnd.Next(1, 5);
-				Thread.Sleep(number*1000);
-			}
-
-			return _ConvertToBaseResponse(() => true);
+			Thread.Sleep(number * 1000);
+			var message = $"Hello!  Total time for this call is {number} seconds!";
+			return _ConvertToBaseResponse(() => message);
 		}
+
 		#endregion
 	}
 }
