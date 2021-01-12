@@ -11,10 +11,16 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return _SpotLengths;
         }
 
-        public static Dictionary<int, int> GetSpotLengthAndIds()
+        public static Dictionary<int, int> GetSpotLengthIdsByDuration()
 		{
             // length, id
 	        return _SpotLengths.ToDictionary(k => int.Parse(k.Display), v => v.Id);
+        }
+
+        public static Dictionary<int, int> GetSpotLengthDurationsById()
+        {
+            // length, id
+            return _SpotLengths.ToDictionary(k => k.Id, v => int.Parse(v.Display));
         }
 
         public static int GetSpotLengthValueById(int id)

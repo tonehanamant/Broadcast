@@ -1,0 +1,2084 @@
+{
+  "Before": [
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 1,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 1,
+      "Station": {
+        "Id": 2
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 1,
+      "Station": {
+        "Id": 3
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 2,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 2,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 2,
+      "Station": {
+        "Id": 3
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 3,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": 7,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 3,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 3,
+      "Station": {
+        "Id": 3
+      }
+    },
+    {
+      "Id": 9,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 4,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 110.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 120.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 130.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 140.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 4,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 4,
+      "Station": {
+        "Id": 3
+      }
+    }
+  ],
+  "Result": [
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 1,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 1,
+      "Station": {
+        "Id": 2
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 1,
+      "Station": {
+        "Id": 3
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 2,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 2,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 2,
+      "Station": {
+        "Id": 3
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 3,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 3,
+      "Station": {
+        "Id": 3
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 110.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 120.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 130.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 140.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 4,
+      "Station": {
+        "Id": 1
+      }
+    },
+    {
+      "Id": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": true,
+            "_Tuesday": true,
+            "_Wednesday": true
+          },
+          "ProgramName": "ProgramOne"
+        }
+      ],
+      "ManifestRates": [
+        {
+          "SpotCost": 10.0,
+          "SpotLengthId": 1
+        },
+        {
+          "SpotCost": 20.0,
+          "SpotLengthId": 2
+        },
+        {
+          "SpotCost": 30.0,
+          "SpotLengthId": 3
+        },
+        {
+          "SpotCost": 40.0,
+          "SpotLengthId": 4
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-06T00:00:00",
+            "_Id": 1,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-11-30T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-13T00:00:00",
+            "_Id": 2,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-07T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-20T00:00:00",
+            "_Id": 3,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-14T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2020-12-27T00:00:00",
+            "_Id": 4,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-21T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        },
+        {
+          "MediaWeek": {
+            "_EndDate": "2021-01-03T00:00:00",
+            "_Id": 5,
+            "_MediaMonthId": 0,
+            "_StartDate": "2020-12-28T00:00:00",
+            "_WeekNumber": 0,
+            "IsDirty": true
+          }
+        }
+      ],
+      "SpotLengthId": 4,
+      "Station": {
+        "Id": 3
+      }
+    }
+  ]
+}

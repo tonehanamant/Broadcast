@@ -57,8 +57,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					.Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
 					.Returns(_MarketCoverageRepositoryMock.Object);
 				_DataRepositoryFactoryMock
-					.Setup(x => x.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds())
-					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
+					.Setup(x => x.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration())
+					.Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 				
 				_InventoryProprietarySummaryServiceMock =
 					new InventoryProprietarySummaryService(_DataRepositoryFactoryMock.Object,null );
@@ -108,8 +108,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
 				};
 				_SpotLengthRepositoryMock
-					.Setup(x => x.GetSpotLengthAndIds())
-					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
+					.Setup(x => x.GetSpotLengthIdsByDuration())
+					.Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 
 				var request = new InventoryProprietarySummaryRequest
 				{
@@ -159,8 +159,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_2.xlsx",
 					processInventoryRatings: false);
 				_SpotLengthRepositoryMock
-					.Setup(x => x.GetSpotLengthAndIds())
-					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
+					.Setup(x => x.GetSpotLengthIdsByDuration())
+					.Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
 					.GetApplicationService<IInventoryProprietarySummaryService>();
@@ -234,8 +234,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_3.xlsx",
 					processInventoryRatings: false);
 				_SpotLengthRepositoryMock
-					.Setup(x => x.GetSpotLengthAndIds())
-					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
+					.Setup(x => x.GetSpotLengthIdsByDuration())
+					.Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
 					.GetApplicationService<IInventoryProprietarySummaryService>();
 
@@ -309,8 +309,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
 
                 _SpotLengthRepositoryMock
-	                .Setup(x => x.GetSpotLengthAndIds())
-	                .Returns(SpotLengthTestData.GetSpotLengthAndIds());
+	                .Setup(x => x.GetSpotLengthIdsByDuration())
+	                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 				var planDaypartRequests = new List<PlanDaypartRequest>
                 {
                     new PlanDaypartRequest
@@ -378,8 +378,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
                 _SpotLengthRepositoryMock
-	                .Setup(x => x.GetSpotLengthAndIds())
-	                .Returns(SpotLengthTestData.GetSpotLengthAndIds());
+	                .Setup(x => x.GetSpotLengthIdsByDuration())
+	                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 
 				var planDaypartRequests = new List<PlanDaypartRequest>
                 {
@@ -450,8 +450,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
                 _SpotLengthRepositoryMock
-	                .Setup(x => x.GetSpotLengthAndIds())
-	                .Returns(SpotLengthTestData.GetSpotLengthAndIds());
+	                .Setup(x => x.GetSpotLengthIdsByDuration())
+	                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 
 				var planDaypartRequests = new List<PlanDaypartRequest>
                 {

@@ -2020,9 +2020,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var numberOfWeeksSecondFile = secondFileManifests.Sum(x => x.ManifestWeeks.Count);
 
-                Assert.AreEqual(23332, numberOfWeeksFirstFile);
+                Assert.AreEqual(23193, numberOfWeeksFirstFile);
 
-                Assert.AreEqual(6871, numberOfWeeksSecondFile);
+                Assert.AreEqual(6832, numberOfWeeksSecondFile);
             }
         }
     }

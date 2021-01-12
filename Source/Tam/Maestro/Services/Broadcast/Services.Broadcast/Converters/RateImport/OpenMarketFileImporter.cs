@@ -1,32 +1,32 @@
-﻿using System.Linq;
-using System;
-using Services.Broadcast.Entities;
-using System.Collections.Generic;
-using System.IO;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using Services.Broadcast.Repositories;
-using Tam.Maestro.Services.ContractInterfaces.Common;
-using System.Xml.Serialization;
-using System.Xml;
-using Services.Broadcast.Extensions;
-using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods;
-using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes;
-using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.Period;
-using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes.AvailLineWithPeriodsDayTimesDayTime;
-using Services.Broadcast.Entities.StationInventory;
-using System.Diagnostics;
-using Tam.Maestro.Common;
+﻿using Common.Services;
 using Common.Services.ApplicationServices;
-using Services.Broadcast.Entities.Enums;
 using Common.Services.Repositories;
-using Common.Services;
-using Services.Broadcast.Exceptions;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Cache;
-using System.Threading.Tasks;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Exceptions;
+using Services.Broadcast.Extensions;
+using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Concurrent;
-using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.ApplicationServices;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
+using Tam.Maestro.Common;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
+using Tam.Maestro.Services.ContractInterfaces.Common;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.AvailLineWithPeriodsDayTimes.AvailLineWithPeriodsDayTimesDayTime;
+using static Services.Broadcast.Converters.RateImport.OpenMarketFileImporter.AvailLineWithPeriods.Period;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -54,16 +54,26 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IDaypartCache _DaypartCache;
         private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
-        private readonly StationProcessingEngine _StationEngine;
+        private readonly IStationProcessingEngine _StationEngine;
         private readonly IStationMappingService _StationMappingService;
         private readonly List<DisplayBroadcastStation> _AvailableStations;
+
+        /// <summary>
+        /// Spot lengths dictionary where key is the duration and value is the id
+        /// </summary>
+        private readonly Lazy<Dictionary<int, int>> _SpotLengthIdsByDuration;
+
+        /// <summary>
+        /// Spot lengths dictionary where key is the id and value is the duration
+        /// </summary>
+        private readonly Lazy<Dictionary<int, int>> _SpotLengthDurationsById;
 
         public OpenMarketFileImporter(IDataRepositoryFactory dataRepositoryFactory
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IDaypartCache daypartCache
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
-            , StationProcessingEngine stationProcessingEngine
+            , IStationProcessingEngine stationProcessingEngine
             , IStationMappingService stationMappingService)
         {
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
@@ -74,23 +84,10 @@ namespace Services.Broadcast.Converters.RateImport
             _StationEngine = stationProcessingEngine;
             _StationMappingService = stationMappingService;
             _AvailableStations = dataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStations();
-        }
 
-        /// <summary>
-        /// Spot lengths dictionary where key is the length and value is the id
-        /// </summary>
-        private Dictionary<int, int> SpotLengths
-        {
-            get
-            {
-                if (_SpotLengths == null)
-                {
-                    _SpotLengths = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
-                }
-                return _SpotLengths;
-            }
+            _SpotLengthIdsByDuration = new Lazy<Dictionary<int, int>>(() => _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration());
+            _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
         }
-        private Dictionary<int, int> _SpotLengths { get; set; }
 
         protected Dictionary<int, double> _SpotLengthMultipliers;
 
@@ -124,7 +121,6 @@ namespace Services.Broadcast.Converters.RateImport
             inventoryFile.UniqueIdentifier = proposal.uniqueIdentifier;
 
             rowsProcessed = _PopulateStationProgramList(message.Proposal, inventoryFile);
-
             if (inventoryFile.ValidationProblems.Any() || FileProblems.Any()) return;
 
             inventoryFile.StationContacts = _ExtractContactData(message);
@@ -139,8 +135,8 @@ namespace Services.Broadcast.Converters.RateImport
                 return 0;
             }
 
-            var results = new ConcurrentBag<StationInventoryManifest>();
-            var problems = new ConcurrentBag<InventoryFileProblem>();
+            var taskResults = new ConcurrentBag<StationInventoryManifest>();
+            var taskProblems = new ConcurrentBag<InventoryFileProblem>();
             var taskList = new List<Task<int>>();
 
             foreach (var availList in proposal.AvailList)
@@ -159,15 +155,20 @@ namespace Services.Broadcast.Converters.RateImport
                         availLines.AddRange(availList.AvailLineWithPeriods.Select(_Map));
                     }
 
-                    var processed = _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, problems, results);
+                    var processed = _PopulateProgramsFromAvailLineWithPeriods(proposal, availList, availLines, taskProblems, taskResults);
                     return processed;
                 }));
             }
 
             var totalRowsProcessed = Task.WhenAll(taskList).GetAwaiter().GetResult().Sum();
 
-            inventoryFile.InventoryManifests = results.ToList();
-            FileProblems = problems.ToList();
+            var taskResultInventoryManifests = taskResults.ToList();
+            var taskResultProblems = taskProblems.ToList();
+
+            var cleanInventoryManifests = OpenMarketFileImporterHelper.ScrubInventoryManifests(taskResultInventoryManifests, _SpotLengthDurationsById.Value);
+
+            inventoryFile.InventoryManifests = cleanInventoryManifests;
+            FileProblems = taskResultProblems;
 
             return totalRowsProcessed;
         }
@@ -185,7 +186,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         private InventoryFileProblem _CheckSpotLength(int spotLength, string stationLetters, string programName)
         {
-            return !SpotLengths.ContainsKey(spotLength) ? new InventoryFileProblem()
+            return !_SpotLengthIdsByDuration.Value.ContainsKey(spotLength) ? new InventoryFileProblem()
             {
                 ProblemDescription = $"Unknown spot length found: {spotLength}",
                 ProgramName = programName,
@@ -266,7 +267,7 @@ namespace Services.Broadcast.Converters.RateImport
                         continue;
                     }
 
-                    var spotLengthId = SpotLengths[spotLength];
+                    var spotLengthId = _SpotLengthIdsByDuration.Value[spotLength];
 
                     foreach (var availLinePeriod in availLine.Periods)
                     {
@@ -443,7 +444,7 @@ namespace Services.Broadcast.Converters.RateImport
             // load spot Length ids and multipliers
             var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
 
-            return (from c in SpotLengths
+            return (from c in _SpotLengthIdsByDuration.Value
                     join d in spotMultipliers on c.Value equals d.Key
                     select new { c.Key, d.Value }).ToDictionary(x => x.Key, y => y.Value);
 
@@ -453,7 +454,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var manifestRates = new List<StationInventoryManifestRate>();
 
-            foreach (var spotLength in SpotLengths)
+            foreach (var spotLength in _SpotLengthIdsByDuration.Value)
             {
                 var manifestRate = new StationInventoryManifestRate
                 {

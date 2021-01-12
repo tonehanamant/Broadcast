@@ -540,6 +540,7 @@
     <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\BarterFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
+    <Compile Include="UnitTests\Converters\RateImport\OpenMarketFileImporterHelperUnitTests.cs" />
     <Compile Include="UnitTests\Converters\Scx\PlanBuyingScxDataConverterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\Scx\PlanBuyingScxDataPrepUnitTests.cs" />
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />

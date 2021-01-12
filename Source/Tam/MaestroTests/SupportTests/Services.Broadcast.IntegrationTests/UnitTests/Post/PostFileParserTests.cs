@@ -182,7 +182,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
             _Worksheet.Cells.LoadFromCollection(new List<PostFileRow> { _ValidRow }, true);
 
             var mock = new Mock<ISpotLengthRepository>();
-            mock.Setup(r => r.GetSpotLengthAndIds()).Returns(new Dictionary<int, int>());
+            mock.Setup(r => r.GetSpotLengthIdsByDuration()).Returns(new Dictionary<int, int>());
 
             try
             {

@@ -27,7 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
                 .Returns(new DisplayBroadcastStation());
 
             var _mockSpotLengthRepository = new Mock<ISpotLengthRepository>();
-            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthAndIds())
+            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthIdsByDuration())
                 .Returns(new Dictionary<int, int>());
 
             //var _mockRatesRepository = new Mock<IStationProgramRepository>();
@@ -94,7 +94,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WDEF"))
                 .Returns(new DisplayBroadcastStation());
             var _mockSpotLengthRepository = new Mock<ISpotLengthRepository>();
-            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthAndIds())
+            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthIdsByDuration())
                 .Returns(new Dictionary<int, int>());
 
             //var _mockRatesRepository = new Mock<IStationProgramRepository>();
@@ -139,7 +139,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WDEF"))
                 .Returns(new DisplayBroadcastStation());
             var _mockSpotLengthRepository = new Mock<ISpotLengthRepository>();
-            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthAndIds())
+            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthIdsByDuration())
                 .Returns(new Dictionary<int, int>());
 
             //var _mockRatesRepository = new Mock<IStationProgramRepository>();
@@ -211,7 +211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             _mockStationRepository.Setup(a => a.GetBroadcastStationByLegacyCallLetters("WDEF"))
                 .Returns(new DisplayBroadcastStation());
             var _mockSpotLengthRepository = new Mock<ISpotLengthRepository>();
-            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthAndIds())
+            _mockSpotLengthRepository.Setup(a => a.GetSpotLengthIdsByDuration())
                 .Returns(new Dictionary<int, int>());
 
             //var existingPrograms = new List<StationProgram>();

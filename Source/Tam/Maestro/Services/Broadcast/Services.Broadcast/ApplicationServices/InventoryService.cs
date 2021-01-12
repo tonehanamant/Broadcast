@@ -128,7 +128,7 @@ namespace Services.Broadcast.ApplicationServices
             _GenreRepository = _broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _SmsClient = smsClient;
             _InventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _SpotLengthMap = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _SpotLengthMap = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
             _SpotLengthCostMultipliers = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;

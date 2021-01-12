@@ -74,7 +74,7 @@ namespace Services.Broadcast.Converters.Scx
 
         private List<schedule_details> _MapDetails()
         {
-            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
 
             var demos = _FindMatchingAudiences(_RawScx.campaign.demo.ToList());
             var details = new List<schedule_details>();

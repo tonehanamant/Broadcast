@@ -31,9 +31,15 @@ namespace Services.Broadcast.Repositories
         List<LookupDto> GetSpotLengthsByLengths(List<int> lengthList);
 
         /// <summary>
-        /// Returns a dictionary of lengths where key is the length and value is the Id
+        /// Returns a dictionary of spot lengths where key is the length and value is the Id.
         /// </summary>
-        Dictionary<int, int> GetSpotLengthAndIds();
+        Dictionary<int, int> GetSpotLengthIdsByDuration();
+
+        /// <summary>
+        /// Returns a dictionary of spot lengths where key is id and value is length.
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<int, int> GetSpotLengthDurationsById();
         
         Dictionary<int, double> GetDeliveryMultipliersBySpotLength();
         Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId();
@@ -90,15 +96,23 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        /// <summary>
-        /// Returns a dictionary of lengths where key is the length and value is the Id
-        /// </summary>
-        public Dictionary<int, int> GetSpotLengthAndIds()
+        /// <inheritdoc />
+        public Dictionary<int, int> GetSpotLengthIdsByDuration()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context => context.spot_lengths.ToDictionary(y => y.length, x => x.id));
+            }
+        }
+
+        /// <inheritdoc />
+        public Dictionary<int, int> GetSpotLengthDurationsById()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                return _InReadUncommitedTransaction(
+                    context => context.spot_lengths.ToDictionary(y => y.id, x => x.length));
             }
         }
 

@@ -489,6 +489,7 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingOwnershipGroupEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingRepFirmEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
+    <Compile Include="Converters\RateImport\OpenMarketFileImporterHelper.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataConverter.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />

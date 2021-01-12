@@ -97,7 +97,7 @@ namespace Services.Broadcast.Converters
         {
             _DateAdjustmentEngine = dateAdjustmentEngine;
             _PostLogBaseFileConverter = postLogBaseFileConverter;
-            _SpotLengthsAndIds = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _SpotLengthsAndIds = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
         }
 
         public List<string> GetValidationResults(string filePath)

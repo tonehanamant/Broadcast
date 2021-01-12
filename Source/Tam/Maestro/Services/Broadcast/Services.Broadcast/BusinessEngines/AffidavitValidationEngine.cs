@@ -80,7 +80,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             if (spotLengthDict == null)
                 spotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>()
-                    .GetSpotLengthAndIds();
+                    .GetSpotLengthIdsByDuration();
 
             return spotLengthDict.ContainsKey(spotLength);
         }

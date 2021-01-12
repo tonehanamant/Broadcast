@@ -86,7 +86,7 @@ namespace Services.Broadcast.Converters.Post
             if (allParsingExceptions.Any())
                 throw new PostParsingException(allParsingExceptions);
 
-            var spotLengthDict = DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            var spotLengthDict = DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
             var fileDetails = new List<post_file_details>();
 
             for (var row = 2; row <= worksheet.Dimension.End.Row; row++)

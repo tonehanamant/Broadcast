@@ -523,7 +523,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var advertiser = _SmsClient.FindAdvertiserById(proposalDto.AdvertiserId);
 
-            var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
+            var spotLengths = _SpotLengthRepository.GetSpotLengthIdsByDuration();
             proposalDto.Details.ForEach(detail =>
             {
                 if (proposalDto.PostType.Equals(PostingTypeEnum.NTI))
@@ -884,7 +884,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ValidateProposalDetailBeforeSave(ProposalDto proposalDto)
         {
-            var validSpothLengths = _SpotLengthRepository.GetSpotLengthAndIds();
+            var validSpothLengths = _SpotLengthRepository.GetSpotLengthIdsByDuration();
 
             const int secondsPerMinute = 60;
             const int secondsPerDay = 60 * 60 * 24;
@@ -1066,7 +1066,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetProposalSpotLengths(ProposalDto proposal)
         {
-            var spotsLengths = _SpotLengthRepository.GetSpotLengthAndIds().OrderBy(m => m.Key);
+            var spotsLengths = _SpotLengthRepository.GetSpotLengthIdsByDuration().OrderBy(m => m.Key);
             var detailSpots = proposal.Details.Select(a => a.SpotLengthId).Distinct().ToList();
             proposal.SpotLengths =
                 spotsLengths.Where(d => detailSpots.Any(a => a == d.Value))
@@ -1461,7 +1461,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var scxFile = new ScxFile(request.FileStream);
             var allStations = _StationRepository.GetBroadcastStations();
-            var spotLengthsDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            var spotLengthsDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
 
             var proposalBuy = new ProposalBuyFile(scxFile, request.EstimateId, request.FileName, request.ProposalVersionDetailId,
                 allStations, _MediaMonthAndWeekAggregateCache, _AudiencesCache, _DaypartCache, spotLengthsDict);

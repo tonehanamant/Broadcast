@@ -26,7 +26,7 @@ namespace Services.Broadcast.BusinessEngines
         public PostLogValidationEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
-            _SpotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _SpotLengthDict = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
         }
 
         /// <summary>

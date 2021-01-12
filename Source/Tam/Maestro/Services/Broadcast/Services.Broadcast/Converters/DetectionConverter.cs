@@ -133,7 +133,7 @@ namespace Services.Broadcast.Converters
         {
             lineInfo = new Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int>();
 
-            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            Dictionary<int, int> spotLengthDict = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
             TrackerFile<DetectionFileDetail> detectionFile = new TrackerFile<DetectionFileDetail>();
             int row;
             int cableTvCount = 0;

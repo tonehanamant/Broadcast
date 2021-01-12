@@ -270,7 +270,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private void _SetupInventoryServiceDependencies()
         {
             _SpotLengthRepository
-                .Setup(x => x.GetSpotLengthAndIds())
+                .Setup(x => x.GetSpotLengthIdsByDuration())
                 .Returns(new Dictionary<int, int>());
 
             _SpotLengthRepository

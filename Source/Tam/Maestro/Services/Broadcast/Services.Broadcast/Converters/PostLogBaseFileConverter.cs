@@ -32,7 +32,7 @@ namespace Services.Broadcast.Converters
         public PostLogBaseFileConverter(IDataRepositoryFactory dataRepositoryFactory)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
-            _SpotLengthsAndIds = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _SpotLengthsAndIds = _DataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
         }
         
         public void ValidateSigmaFieldData(string[] fields, Dictionary<string, int> headers, int rowNumber, List<string> requiredFields)

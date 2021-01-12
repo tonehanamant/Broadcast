@@ -137,7 +137,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposalAudiences = _BroadcastAudienceRepository.GetAudienceDtosById(proposalAudienceIds)
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
             var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
-            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthAndIds();
+            var spotLengthMappings = _SpotLengthRepository.GetSpotLengthIdsByDuration();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()
                 .GetBroadcastStationListByLegacyCallLetters(inspecSpots.Select(s => _StationProcessingEngine.StripStationSuffix(s.Station)).Distinct().ToList())
@@ -268,7 +268,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<MyEventsReportData> GetMyEventsReportData(int proposalId)
         {
             var myEventsReportDataList = _AffidavitRepository.GetMyEventsReportData(proposalId);
-            var spotLengths = _SpotLengthRepository.GetSpotLengthAndIds();
+            var spotLengths = _SpotLengthRepository.GetSpotLengthIdsByDuration();
 
             foreach (var report in myEventsReportDataList)
             {

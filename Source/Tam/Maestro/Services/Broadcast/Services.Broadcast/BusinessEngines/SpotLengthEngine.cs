@@ -71,7 +71,7 @@ namespace Services.Broadcast.BusinessEngines
         public SpotLengthEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             var spotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            _SpotLengthIdByValue = spotLengthRepository.GetSpotLengthAndIds();
+            _SpotLengthIdByValue = spotLengthRepository.GetSpotLengthIdsByDuration();
             _SpotLengthValueById = _SpotLengthIdByValue.ToDictionary(x => x.Value, x => x.Key);
             _DeliveryMultipliersBySpotLengthId = spotLengthRepository.GetDeliveryMultipliersBySpotLengthId();
             _SpotCostMultipliersBySpotLengthId = spotLengthRepository.GetSpotLengthIdsAndCostMultipliers();

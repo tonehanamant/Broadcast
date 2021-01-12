@@ -155,6 +155,7 @@ namespace Services.Broadcast.ApplicationServices
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         
                         fileImporter.PopulateManifests(proprietaryFile, stations);
+
                         fileImporter.PopulateInventoryFileDateRange(proprietaryFile);
                         _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
                         WebUtilityHelper.HtmlDecodeProgramNames(proprietaryFile);
