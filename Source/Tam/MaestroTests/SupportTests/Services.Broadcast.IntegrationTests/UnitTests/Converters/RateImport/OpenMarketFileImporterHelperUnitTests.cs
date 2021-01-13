@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
 {
@@ -42,9 +43,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 new StationInventoryManifestWeek
                     {MediaWeek = new MediaWeek {Id = 5, StartDate = new DateTime(2020, 12, 28), EndDate = new DateTime(2021, 1, 3)}},
             };
+            /** 
+             * Hack!!! Why do I have to make a copy of this? 
+             *      When I run ALL unit tests these fail 
+             *          becase someother test in another class is changing the values.
+             * I should be using : DaypartsTestData.GetDisplayDaypart(1)             
+             ***/
+            var testDaypart = new DisplayDaypart
+            {
+                Id = 1,
+                Monday = true,
+                Tuesday = true,
+                Wednesday = true,
+                Thursday = true,
+                Friday = true,
+                Saturday = false,
+                Sunday = false,
+                StartTime = 3600, // 1am
+                EndTime = 7199 // 2am
+            };
             _TestDaypartsSet = new List<StationInventoryManifestDaypart>
             {
-                new StationInventoryManifestDaypart {Daypart = DaypartsTestData.GetDisplayDaypart(1), ProgramName = "ProgramOne"}
+                new StationInventoryManifestDaypart {Daypart = testDaypart, ProgramName = "ProgramOne"}
             };
             _TestSpotRateSets = new List<List<StationInventoryManifestRate>>
             {
