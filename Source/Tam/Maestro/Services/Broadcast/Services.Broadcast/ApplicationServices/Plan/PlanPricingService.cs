@@ -1043,6 +1043,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     processingId);
 
                 _ValidateInventory(inventory);
+
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
 
                 token.ThrowIfCancellationRequested();
@@ -1233,18 +1234,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             catch (PricingModelException exception)
             {
-                _HandlePricingJobError(jobId, BackgroundJobProcessingStatus.Failed, exception.Message);
+                var msg = $"Exception : {exception.Message}; Diagnostics : {diagnostic}";
+                _HandlePricingJobError(jobId, BackgroundJobProcessingStatus.Failed, msg);
             }
             catch (Exception exception) when (exception is ObjectDisposedException || exception is OperationCanceledException)
             {
-                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, "Running the pricing model was canceled");
+                var msg = $"Running the pricing model was canceled.  Diagnostics : {diagnostic}";
+                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, msg);
             }
             catch (Exception exception)
             {
-                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model");
+                var msg = $"Error attempting to run the pricing model.  Diagnostics : {diagnostic}";
+                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, msg);
             }
         }
-
 
         private void _MapAllocationResultsPostingType(PlanPricingAllocationResult allocationResult, List<PlanPricingInventoryProgram> inventory,
             PostingTypeEnum targetPostingType, PostingTypeEnum sourcePostingType)
@@ -1483,6 +1486,38 @@ namespace Services.Broadcast.ApplicationServices.Plan
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_MAPPING_ALLOCATED_SPOTS);
         }
 
+        internal void _HandleMissingSpotCosts(List<int> planSpotLengthIds, PlanPricingApiRequestDto_v3 request)
+        {
+            const decimal missingLengthCost = 100000m;
+            var spotLengthCount = planSpotLengthIds.Count;
+            var missingSpotCosts = request.Spots.Where(s => s.SpotCost.Count != spotLengthCount).ToList();
+
+            foreach (var missingSpot in missingSpotCosts)
+            {
+                // which one is missing?
+                var accountedFor = missingSpot.SpotCost.Select(s => s.SpotLengthId).ToList();
+                var missingLengths = planSpotLengthIds.Except(accountedFor).ToList();
+
+                foreach (var missingLength in missingLengths)
+                {
+                    // add it with a high cost (decimal.MaxValue)
+                    var toAdd = new SpotCost_v3
+                    {
+                        SpotLengthId = missingLength,
+                        SpotLengthCost = missingLengthCost
+                    };
+                    missingSpot.SpotCost.Add(toAdd);
+                }
+            }
+
+            // Verify the request was filled in.
+            var afterCount = request.Spots.Count(s => s.SpotCost.Count != spotLengthCount);
+            if (afterCount > 0)
+            {
+                throw new ApplicationException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
+            }
+        }
+
         private void _SendPricingRequest_v3(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
@@ -1513,6 +1548,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Weeks = pricingModelWeeks,
                 Spots = spots
             };
+
+            var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();
+            _HandleMissingSpotCosts(planSpotLengthIds, pricingApiRequest);
 
             _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion));
 
