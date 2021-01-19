@@ -520,7 +520,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UnitCaps = 1,
                 UnitCapsType = UnitCapEnum.Per30Min,
                 Margin = defaultMargin,
-                MarketGroup = MarketGroupEnum.Top100
+                MarketGroup = MarketGroupEnum.All
             };
         }
 

@@ -1,6 +1,6 @@
 ﻿{
   "Margin": 20.0,
-  "MarketGroup": 1,
+  "MarketGroup": 4,
   "UnitCaps": 1,
   "UnitCapsType": 1
 }
