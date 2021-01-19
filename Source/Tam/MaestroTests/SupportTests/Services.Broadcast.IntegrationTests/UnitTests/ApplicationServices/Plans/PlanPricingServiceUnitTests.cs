@@ -1084,7 +1084,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates));
+            Assert.AreEqual(2, jobUpdates.Count);
+            Assert.IsNull(jobUpdates[0].ErrorMessage);
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Error attempting to run the pricing model.  Diagnostics :"));
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
         protected PlanPricingServiceUnitTestClass _GetService()
@@ -1650,8 +1661,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             task.GetAwaiter().GetResult();
 
             // Assert
+            Assert.AreEqual(2, jobUpdates.Count);
+            Assert.IsNullOrEmpty(jobUpdates[0].ErrorMessage);
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Running the pricing model was canceled."));
+
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -1758,7 +1774,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");            
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
         [Test]
@@ -2947,7 +2971,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates));
+            Assert.AreEqual(2, jobUpdates.Count);
+            Assert.IsNull(jobUpdates[0].ErrorMessage);
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Exception : Pricing Model returned the following error:"));
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
         [Test]
@@ -3387,7 +3423,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates));
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
         [Test]
@@ -3820,7 +3863,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates));
+            Assert.AreEqual(2, jobUpdates.Count);
+            Assert.IsNull(jobUpdates[0].ErrorMessage);
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Error attempting to run the pricing model.  Diagnostics :"));
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
         [Test]
