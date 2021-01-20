@@ -165,7 +165,7 @@ namespace Services.Broadcast.Converters.RateImport
             var taskResultInventoryManifests = taskResults.ToList();
             var taskResultProblems = taskProblems.ToList();
 
-            var cleanInventoryManifests = OpenMarketFileImporterHelper.ScrubInventoryManifests(taskResultInventoryManifests, _SpotLengthDurationsById.Value);
+            var cleanInventoryManifests = InventoryImportManifestDuplicateHandler.ScrubInventoryManifests(taskResultInventoryManifests, _SpotLengthDurationsById.Value);
 
             inventoryFile.InventoryManifests = cleanInventoryManifests;
             FileProblems = taskResultProblems;

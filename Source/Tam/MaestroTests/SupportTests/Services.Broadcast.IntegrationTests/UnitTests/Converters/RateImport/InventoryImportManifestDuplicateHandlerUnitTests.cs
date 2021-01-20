@@ -10,6 +10,7 @@ using Services.Broadcast.IntegrationTests.TestData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -17,7 +18,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
 {
     [TestFixture]
-    public class OpenMarketFileImporterHelperUnitTests
+    public class InventoryImportManifestDuplicateHandlerUnitTests
     {
         private List<DisplayBroadcastStation> _TestStationsSet;
         private List<StationInventoryManifestWeek> _TestMediaWeekSet;
@@ -101,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var currentMediaWeekStartDate = new DateTime(currentWeekStartYear, currentWeekStartMonth, currentWeekStartDay);
 
             // Act
-            var result = OpenMarketFileImporterHelper._CalculateNumWeeksSinceWeekStartDate(currentMediaWeekStartDate, itemStartMediaWeekStartDate);
+            var result = InventoryImportManifestDuplicateHandler._CalculateNumWeeksSinceWeekStartDate(currentMediaWeekStartDate, itemStartMediaWeekStartDate);
 
             // Assert
             Assert.AreEqual(expectedResult, result);
@@ -120,7 +121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var weeks = _TestMediaWeekSet;
 
             // Act
-            var result = OpenMarketFileImporterHelper._RemoveWeek(weeks, mediaWeekIdToRemove);
+            var result = InventoryImportManifestDuplicateHandler._RemoveWeek(weeks, mediaWeekIdToRemove);
 
             // Assert
             var resultWeekIds = result.Select(w => w.MediaWeek.Id).ToList();
@@ -135,6 +136,97 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void ScrubInventoryManifestGroups()
+        {
+            // Arrange
+            var inventoryGroups = _GetInventoryGroups();
+
+            // Act
+            var result = InventoryImportManifestDuplicateHandler.ScrubInventoryManifestGroups(inventoryGroups, _TestSpotLengthDurationsById);
+
+            // Assert
+            // verify that everything has weeks...
+            var itemsWithNoWeeks = result.SelectMany(s => s.Manifests).Where(i => i.ManifestWeeks.Count == 0).ToList();
+            Assert.AreEqual(0, itemsWithNoWeeks.Count);
+            // verify that all ids were removed.
+            var hasItemsWithIds = result.SelectMany(s => s.Manifests).Where(i => i.Id.HasValue).ToList();
+            Assert.AreEqual(0, hasItemsWithIds.Count);
+            // verify the result details
+            var toVerify = new
+            {
+                Before = inventoryGroups,
+                Result = result
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify, _GetCleanupSettingsForFlattenedInventory()));
+        }
+
+        private List<StationInventoryGroup> _GetInventoryGroups()
+        {
+            var inventoryGroups = new List<StationInventoryGroup>();
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "SourceOne",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.Barter
+            };
+
+            var slotNumberIndex = 1;
+            var hasDup = false;
+            foreach (var station in _TestStationsSet)
+            {
+                var inventory = _GetInventoryForStationGroup(station, hasDup);
+                var group = new StationInventoryGroup
+                {
+                    Name = station.LegacyCallLetters,
+                    SlotNumber = slotNumberIndex,
+                    InventorySource = inventorySource,
+                    Manifests = inventory
+                };
+
+                inventoryGroups.Add(group);
+
+                slotNumberIndex++;
+                hasDup = !hasDup;
+            }
+
+            return inventoryGroups;
+        }
+
+        private List<StationInventoryManifest> _GetInventoryForStationGroup(DisplayBroadcastStation station, bool hasDup)
+        {
+            var inventory = new List<StationInventoryManifest>
+            {
+                new StationInventoryManifest
+                {
+                    SpotLengthId = 1,
+                    ManifestDayparts = _TestDaypartsSet,
+                    ManifestWeeks = _TestMediaWeekSet,
+                    Station = station,
+                    ManifestRates = _TestSpotRateSets[0]
+                },
+                new StationInventoryManifest
+                {
+                    SpotLengthId = hasDup ? 1 : 2,
+                    ManifestDayparts = _TestDaypartsSet,
+                    ManifestWeeks = _TestMediaWeekSet,
+                    Station = station,
+                    ManifestRates = _TestSpotRateSets[0]
+                },
+                new StationInventoryManifest
+                {
+                    SpotLengthId = 3,
+                    ManifestDayparts = _TestDaypartsSet,
+                    ManifestWeeks = _TestMediaWeekSet,
+                    Station = station,
+                    ManifestRates = _TestSpotRateSets[0]
+                }
+            };
+            return inventory;
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ScrubInventoryManifestsCleanWithAllDupForms()
         {
             // Arrange
@@ -144,7 +236,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             inventory.AddRange(_GetInventoryWithScheduleDups(4));
 
             // Act
-            var result = OpenMarketFileImporterHelper.ScrubInventoryManifests(inventory, _TestSpotLengthDurationsById);
+            var result = InventoryImportManifestDuplicateHandler.ScrubInventoryManifests(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             // verify that everything has weeks...
@@ -170,7 +262,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetCleanInventory();
 
             // Act
-            var flattenedItems = OpenMarketFileImporterHelper._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
+            var flattenedItems = InventoryImportManifestDuplicateHandler._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(flattenedItems, _GetCleanupSettingsForFlattenedInventory()));
@@ -184,7 +276,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetInventoryWithOverlaps();
 
             // Act
-            var flattenedItems = OpenMarketFileImporterHelper._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
+            var flattenedItems = InventoryImportManifestDuplicateHandler._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(flattenedItems, _GetCleanupSettingsForFlattenedInventory()));
@@ -198,7 +290,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetInventoryWithFullDups();
 
             // Act
-            var flattenedItems = OpenMarketFileImporterHelper._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
+            var flattenedItems = InventoryImportManifestDuplicateHandler._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(flattenedItems, _GetCleanupSettingsForFlattenedInventory()));
@@ -212,7 +304,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetInventoryWithScheduleDups();
 
             // Act
-            var flattenedItems = OpenMarketFileImporterHelper._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
+            var flattenedItems = InventoryImportManifestDuplicateHandler._GetFlattenedInventoryItems(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(flattenedItems, _GetCleanupSettingsForFlattenedInventory()));
@@ -226,7 +318,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetCleanInventory();
 
             // Act
-            OpenMarketFileImporterHelper._HandleOverlaps(inventory, _TestSpotLengthDurationsById);
+            InventoryImportManifestDuplicateHandler._HandleOverlaps(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventory, _GetCleanupSettingsForFlattenedInventory()));
@@ -240,7 +332,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetInventoryWithOverlaps();
 
             // Act
-            OpenMarketFileImporterHelper._HandleOverlaps(inventory, _TestSpotLengthDurationsById);
+            InventoryImportManifestDuplicateHandler._HandleOverlaps(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventory, _GetCleanupSettingsForFlattenedInventory()));
@@ -254,7 +346,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetCleanInventory();
 
             // Act
-            var results = OpenMarketFileImporterHelper._HandleFullDuplicates(inventory, _TestSpotLengthDurationsById);
+            var results = InventoryImportManifestDuplicateHandler._HandleFullDuplicates(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetCleanupSettingsForFlattenedInventory()));
@@ -268,7 +360,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetInventoryWithFullDups();
 
             // Act
-            var results = OpenMarketFileImporterHelper._HandleFullDuplicates(inventory, _TestSpotLengthDurationsById);
+            var results = InventoryImportManifestDuplicateHandler._HandleFullDuplicates(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetCleanupSettingsForFlattenedInventory()));
@@ -282,7 +374,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             var inventory = _GetInventoryWithScheduleDups();
 
             // Act
-            var results = OpenMarketFileImporterHelper._HandleFullDuplicates(inventory, _TestSpotLengthDurationsById);
+            var results = InventoryImportManifestDuplicateHandler._HandleFullDuplicates(inventory, _TestSpotLengthDurationsById);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetCleanupSettingsForFlattenedInventory()));

@@ -1,16 +1,45 @@
-﻿using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.StationInventory;
+﻿using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Interception.Utilities;
 
 namespace Services.Broadcast.Converters.RateImport
 {
-    public static class OpenMarketFileImporterHelper
+    public static class InventoryImportManifestDuplicateHandler
     {
+        public static List<StationInventoryGroup> ScrubInventoryManifestGroups(List<StationInventoryGroup> inventoryGroups, Dictionary<int, int> spotLengthDurationsById)
+        {
+            if (inventoryGroups?.Any() != true)
+            {
+                return inventoryGroups;
+            }
+
+            var cleanedGroups = new List<StationInventoryGroup>();
+
+            foreach (var group in inventoryGroups)
+            {
+                var cleanInventory = ScrubInventoryManifests(group.Manifests, spotLengthDurationsById);
+                var cleanGroup = new StationInventoryGroup
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    SlotNumber = group.SlotNumber,
+                    InventorySource = group.InventorySource,
+                    Manifests = cleanInventory
+                };
+                cleanedGroups.Add(cleanGroup);
+            }
+
+            return cleanedGroups;
+        }
+
         public static List<StationInventoryManifest> ScrubInventoryManifests(List<StationInventoryManifest> inventory, Dictionary<int, int> spotLengthDurationsById)
         {
+            if (inventory?.Any() != true)
+            {
+                return inventory;
+            }
+
             var cleanInventory = _HandleFullDuplicates(inventory, spotLengthDurationsById);
             _HandleOverlaps(cleanInventory, spotLengthDurationsById);
             _RemoveTempInventoryIds(cleanInventory);
@@ -38,9 +67,12 @@ namespace Services.Broadcast.Converters.RateImport
 
                 var spotLengthId = item.SpotLengthId;
                 var spotLengthDuration = spotLengthDurationsById[spotLengthId];
+                // Some proprietary sources will come-in without rates.  
+                // For our purposes they might as well be the same rate and just use $1.
                 var spotCost = item.ManifestRates
-                    .Single(r => r.SpotLengthId == spotLengthId)
-                    .SpotCost;
+                    .FirstOrDefault(r => r.SpotLengthId == spotLengthId)
+                    ?.SpotCost
+                    ?? 1m;
 
                 foreach (var manifestWeek in item.ManifestWeeks)
                 {
@@ -194,7 +226,7 @@ namespace Services.Broadcast.Converters.RateImport
         }
 
         /// <summary>
-        /// Flattened data class used for aggregation within the <see cref="OpenMarketFileImporterHelper"/>.
+        /// Flattened data class used for aggregation within the <see cref="InventoryImportManifestDuplicateHandler"/>.
         /// </summary>
         internal class InventoryStationDaypartWeek
         {

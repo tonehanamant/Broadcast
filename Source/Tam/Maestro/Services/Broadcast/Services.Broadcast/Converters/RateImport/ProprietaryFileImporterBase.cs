@@ -52,6 +52,13 @@ namespace Services.Broadcast.Converters.RateImport
         void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile);
 
         void PopulateManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations);
+
+        /// <summary>
+        /// Handles duplicates within the parsed out manifests.
+        /// </summary>
+        /// <param name="proprietaryFile">The proprietary file.</param>
+        /// <param name="spotLengthDurationsById">The spot length durations by identifier.</param>
+        void HandleManifestDuplicates(ProprietaryInventoryFile proprietaryFile, Dictionary<int, int> spotLengthDurationsById);
     }
 
     public abstract class ProprietaryFileImporterBase : BaseInventoryFileImporter, IProprietaryFileImporter
@@ -201,6 +208,16 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
+        }
+
+        /// <inheritdoc />
+        public void HandleManifestDuplicates(ProprietaryInventoryFile proprietaryFile, Dictionary<int, int> spotLengthDurationsById)
+        {
+            var cleanInventoryGroups = InventoryImportManifestDuplicateHandler.ScrubInventoryManifestGroups(proprietaryFile.InventoryGroups, spotLengthDurationsById);
+            proprietaryFile.InventoryGroups = cleanInventoryGroups;
+
+            var cleanInventory = InventoryImportManifestDuplicateHandler.ScrubInventoryManifests(proprietaryFile.InventoryManifests, spotLengthDurationsById);
+            proprietaryFile.InventoryManifests = cleanInventory;
         }
 
         public virtual void LoadAndValidateSecondWorksheet(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)

@@ -73,6 +73,11 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IStationMappingService _IStationMappingService;
 
+        /// <summary>
+        /// Spot lengths dictionary where key is the id and value is the duration
+        /// </summary>
+        private readonly Lazy<Dictionary<int, int>> _SpotLengthDurationsById;
+
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
             , IStationProcessingEngine stationProcessingEngine
@@ -111,6 +116,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryScxDataPrepFactory = inventoryScxDataPrepFactory;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _IStationMappingService = stationMappingService;
+            _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
         }
 
         ///<inheritdoc/>
@@ -155,6 +161,9 @@ namespace Services.Broadcast.ApplicationServices
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         
                         fileImporter.PopulateManifests(proprietaryFile, stations);
+
+                        var spotLEngthDurationsById = _SpotLengthDurationsById.Value;
+                        fileImporter.HandleManifestDuplicates(proprietaryFile, spotLEngthDurationsById);
 
                         fileImporter.PopulateInventoryFileDateRange(proprietaryFile);
                         _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
