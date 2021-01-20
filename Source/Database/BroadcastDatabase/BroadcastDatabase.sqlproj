@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>BroadcastDatabase</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{e4993136-5393-4274-891b-293f4a0c3e45}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>BroadcastDatabase</RootNamespace>
+    <AssemblyName>BroadcastDatabase</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <GenerateCreateScript>True</GenerateCreateScript>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="PreDeployment" />
+    <Folder Include="PostDeployment" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\User Defined Types\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\vw_ccc_daypart.sql" />
+    <Build Include="dbo\Tables\vpvhs.sql" />
+    <Build Include="dbo\Tables\vpvh_quarters.sql" />
+    <Build Include="dbo\Tables\vpvh_files.sql" />
+    <Build Include="dbo\Tables\vpvh_audience_mappings.sql" />
+    <Build Include="dbo\Tables\timespans.sql" />
+    <Build Include="dbo\Tables\system_component_parameters.sql" />
+    <Build Include="dbo\Tables\stations.sql" />
+    <Build Include="dbo\Tables\station_month_details.sql" />
+    <Build Include="dbo\Tables\station_mappings.sql" />
+    <Build Include="dbo\Tables\station_inventory_spots.sql" />
+    <Build Include="dbo\Tables\station_inventory_spot_snapshots.sql" />
+    <Build Include="dbo\Tables\station_inventory_spot_audiences.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_weeks_history.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_weeks.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_staging.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_rates.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_genres.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_generation.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_dayparts.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_daypart_programs.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_daypart_genres.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest_audiences.sql" />
+    <Build Include="dbo\Tables\station_inventory_manifest.sql" />
+    <Build Include="dbo\Tables\station_inventory_loaded.sql" />
+    <Build Include="dbo\Tables\station_inventory_group.sql" />
+    <Build Include="dbo\Tables\station_contacts.sql" />
+    <Build Include="dbo\Tables\standard_dayparts.sql" />
+    <Build Include="dbo\Tables\spot_tracker_files.sql" />
+    <Build Include="dbo\Tables\spot_tracker_file_details.sql" />
+    <Build Include="dbo\Tables\spot_lengths.sql" />
+    <Build Include="dbo\Tables\spot_length_cost_multipliers.sql" />
+    <Build Include="dbo\Tables\show_types.sql" />
+    <Build Include="dbo\Tables\show_type_mappings.sql" />
+    <Build Include="dbo\Tables\shared_folder_files.sql" />
+    <Build Include="dbo\Tables\scx_generation_jobs.sql" />
+    <Build Include="dbo\Tables\scx_generation_job_units.sql" />
+    <Build Include="dbo\Tables\scx_generation_job_files.sql" />
+    <Build Include="dbo\Tables\schedules.sql" />
+    <Build Include="dbo\Tables\schedule_restriction_markets.sql" />
+    <Build Include="dbo\Tables\schedule_restriction_dayparts.sql" />
+    <Build Include="dbo\Tables\schedule_iscis.sql" />
+    <Build Include="dbo\Tables\schedule_details.sql" />
+    <Build Include="dbo\Tables\schedule_detail_weeks.sql" />
+    <Build Include="dbo\Tables\schedule_detail_audiences.sql" />
+    <Build Include="dbo\Tables\schedule_audiences.sql" />
+    <Build Include="dbo\Tables\rep_firms.sql" />
+    <Build Include="dbo\Tables\rating_adjustments.sql" />
+    <Build Include="dbo\Tables\proposals.sql" />
+    <Build Include="dbo\Tables\proposal_versions.sql" />
+    <Build Include="dbo\Tables\proposal_version_spot_length.sql" />
+    <Build Include="dbo\Tables\proposal_version_markets.sql" />
+    <Build Include="dbo\Tables\proposal_version_flight_weeks.sql" />
+    <Build Include="dbo\Tables\proposal_version_details.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_quarters.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_quarter_weeks.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_quarter_week_iscis.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_criteria_show_types.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_criteria_programs.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_criteria_genres.sql" />
+    <Build Include="dbo\Tables\proposal_version_detail_criteria_cpm.sql" />
+    <Build Include="dbo\Tables\proposal_version_audiences.sql" />
+    <Build Include="dbo\Tables\proposal_buy_files.sql" />
+    <Build Include="dbo\Tables\proposal_buy_file_details.sql" />
+    <Build Include="dbo\Tables\proposal_buy_file_detail_weeks.sql" />
+    <Build Include="dbo\Tables\proposal_buy_file_detail_audiences.sql" />
+    <Build Include="dbo\Tables\program_sources.sql" />
+    <Build Include="dbo\Tables\program_names.sql" />
+    <Build Include="dbo\Tables\program_name_mappings.sql" />
+    <Build Include="dbo\Tables\program_name_mapping_keywords.sql" />
+    <Build Include="dbo\Tables\program_name_exceptions.sql" />
+    <Build Include="dbo\Tables\pricing_guide_distributions.sql" />
+    <Build Include="dbo\Tables\pricing_guide_distribution_proprietary_inventory.sql" />
+    <Build Include="dbo\Tables\pricing_guide_distribution_open_market_inventory.sql" />
+    <Build Include="dbo\Tables\postlog_outbound_files.sql" />
+    <Build Include="dbo\Tables\postlog_outbound_file_problems.sql" />
+    <Build Include="dbo\Tables\postlog_files.sql" />
+    <Build Include="dbo\Tables\postlog_file_problems.sql" />
+    <Build Include="dbo\Tables\postlog_file_details.sql" />
+    <Build Include="dbo\Tables\postlog_file_detail_problems.sql" />
+    <Build Include="dbo\Tables\postlog_file_detail_demographics.sql" />
+    <Build Include="dbo\Tables\postlog_client_scrubs.sql" />
+    <Build Include="dbo\Tables\postlog_client_scrub_audiences.sql" />
+    <Build Include="dbo\Tables\post_files.sql" />
+    <Build Include="dbo\Tables\post_file_details.sql" />
+    <Build Include="dbo\Tables\post_file_detail_impressions.sql" />
+    <Build Include="dbo\Tables\post_file_demos.sql" />
+    <Build Include="dbo\Tables\plans.sql" />
+    <Build Include="dbo\Tables\plan_versions.sql" />
+    <Build Include="dbo\Tables\plan_version_weekly_breakdown.sql" />
+    <Build Include="dbo\Tables\plan_version_summary_quarters.sql" />
+    <Build Include="dbo\Tables\plan_version_summaries.sql" />
+    <Build Include="dbo\Tables\plan_version_secondary_audiences.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_stations.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_station_details.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_results.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_result_spots.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_parameters.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_parameter_inventory_proprietary_summaries.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_markets.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_market_details.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_job.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_bands.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_band_details.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_api_results.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_api_result_spots.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_api_result_spot_frequencies.sql" />
+    <Build Include="dbo\Tables\plan_version_flight_hiatus_days.sql" />
+    <Build Include="dbo\Tables\plan_version_flight_days.sql" />
+    <Build Include="dbo\Tables\plan_version_dayparts.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_show_type_restrictions.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_program_restrictions.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_genre_restrictions.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_affiliate_restrictions.sql" />
+    <Build Include="dbo\Tables\plan_version_creative_lengths.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_station_details.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_results.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_result_spots.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_rep_firm_details.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_parameters.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_parameter_inventory_proprietary_summaries.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_ownership_group_details.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_market_details.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_job.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_band_details.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_api_results.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_api_result_spots.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_api_result_spot_frequencies.sql" />
+    <Build Include="dbo\Tables\plan_version_blackout_markets.sql" />
+    <Build Include="dbo\Tables\plan_version_available_markets.sql" />
+    <Build Include="dbo\Tables\plan_version_audience_daypart_vpvh.sql" />
+    <Build Include="dbo\Tables\nti_universes.sql" />
+    <Build Include="dbo\Tables\nti_universe_headers.sql" />
+    <Build Include="dbo\Tables\nti_universe_details.sql" />
+    <Build Include="dbo\Tables\nti_universe_audience_mappings.sql" />
+    <Build Include="dbo\Tables\nti_transmittals_files.sql" />
+    <Build Include="dbo\Tables\nti_transmittals_file_reports.sql" />
+    <Build Include="dbo\Tables\nti_transmittals_file_report_ratings.sql" />
+    <Build Include="dbo\Tables\nti_transmittals_file_problems.sql" />
+    <Build Include="dbo\Tables\nti_transmittals_audiences.sql" />
+    <Build Include="dbo\Tables\nti_to_nsi_conversion_rates.sql" />
+    <Build Include="dbo\Tables\nsi_component_audiences.sql" />
+    <Build Include="dbo\Tables\media_weeks.sql" />
+    <Build Include="dbo\Tables\media_months.sql" />
+    <Build Include="dbo\Tables\markets.sql" />
+    <Build Include="dbo\Tables\market_dma_map.sql" />
+    <Build Include="dbo\Tables\market_coverages.sql" />
+    <Build Include="dbo\Tables\market_coverage_files.sql" />
+    <Build Include="dbo\Tables\isci_mapping.sql" />
+    <Build Include="dbo\Tables\isci_blacklist.sql" />
+    <Build Include="dbo\Tables\inventory_summary_quarters.sql" />
+    <Build Include="dbo\Tables\inventory_summary_quarter_details.sql" />
+    <Build Include="dbo\Tables\inventory_summary_gaps.sql" />
+    <Build Include="dbo\Tables\inventory_summary_gap_ranges.sql" />
+    <Build Include="dbo\Tables\inventory_summary.sql" />
+    <Build Include="dbo\Tables\inventory_sources.sql" />
+    <Build Include="dbo\Tables\inventory_source_logos.sql" />
+    <Build Include="dbo\Tables\inventory_proprietary_summary_station_audiences.sql" />
+    <Build Include="dbo\Tables\inventory_proprietary_summary.sql" />
+    <Build Include="dbo\Tables\inventory_proprietary_daypart_programs.sql" />
+    <Build Include="dbo\Tables\inventory_proprietary_daypart_program_mappings.sql" />
+    <Build Include="dbo\Tables\inventory_programs_by_source_jobs.sql" />
+    <Build Include="dbo\Tables\inventory_programs_by_source_job_notes.sql" />
+    <Build Include="dbo\Tables\inventory_programs_by_file_jobs.sql" />
+    <Build Include="dbo\Tables\inventory_programs_by_file_job_notes.sql" />
+    <Build Include="dbo\Tables\inventory_files.sql" />
+    <Build Include="dbo\Tables\inventory_file_ratings_jobs.sql" />
+    <Build Include="dbo\Tables\inventory_file_ratings_job_notes.sql" />
+    <Build Include="dbo\Tables\inventory_file_proprietary_header.sql" />
+    <Build Include="dbo\Tables\inventory_file_problems.sql" />
+    <Build Include="dbo\Tables\inventory_export_jobs.sql" />
+    <Build Include="dbo\Tables\genres.sql" />
+    <Build Include="dbo\Tables\genre_mappings.sql" />
+    <Build Include="dbo\Tables\detection_post_details.sql" />
+    <Build Include="dbo\Tables\detection_maps.sql" />
+    <Build Include="dbo\Tables\detection_map_types.sql" />
+    <Build Include="dbo\Tables\detection_files.sql" />
+    <Build Include="dbo\Tables\detection_file_details.sql" />
+    <Build Include="dbo\Tables\days.sql" />
+    <Build Include="dbo\Tables\dayparts.sql" />
+    <Build Include="dbo\Tables\daypart_days.sql" />
+    <Build Include="dbo\Tables\campaigns.sql" />
+    <Build Include="dbo\Tables\campaign_summaries.sql" />
+    <Build Include="dbo\Tables\audiences.sql" />
+    <Build Include="dbo\Tables\audience_maps.sql" />
+    <Build Include="dbo\Tables\audience_audiences.sql" />
+    <Build Include="dbo\Tables\affiliates.sql" />
+    <Build Include="dbo\Tables\affidavit_outbound_files.sql" />
+    <Build Include="dbo\Tables\affidavit_outbound_file_problems.sql" />
+    <Build Include="dbo\Tables\affidavit_files.sql" />
+    <Build Include="dbo\Tables\affidavit_file_problems.sql" />
+    <Build Include="dbo\Tables\affidavit_file_details.sql" />
+    <Build Include="dbo\Tables\affidavit_file_detail_problems.sql" />
+    <Build Include="dbo\Tables\affidavit_file_detail_demographics.sql" />
+    <Build Include="dbo\Tables\affidavit_client_scrubs.sql" />
+    <Build Include="dbo\Tables\affidavit_client_scrub_audiences.sql" />
+    <Build Include="dbo\Functions\SplitIntegers.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UpdateProgramNameMappings.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PCS_LookupTimespan.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PCS_LookupDaypart.sql" />
+    <Build Include="dbo\Stored Procedures\usp_GetPostedProposals.sql" />
+    <Build Include="dbo\Stored Procedures\spIndex_rebuild_daily.sql" />
+    <Build Include="dbo\User Defined Types\ProgramMappingUpdateRequests.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment\Script.PostDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.txt" />
+  </ItemGroup>
+</Project>
