@@ -213,6 +213,13 @@ namespace Services.Broadcast.Converters.RateImport
         /// <inheritdoc />
         public void HandleManifestDuplicates(ProprietaryInventoryFile proprietaryFile, Dictionary<int, int> spotLengthDurationsById)
         {
+            if (proprietaryFile.InventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
+            {
+                // unable to determine duplication on syndicated inventory
+                // so don't bother.
+                return;
+            }
+
             var cleanInventoryGroups = InventoryImportManifestDuplicateHandler.ScrubInventoryManifestGroups(proprietaryFile.InventoryGroups, spotLengthDurationsById);
             proprietaryFile.InventoryGroups = cleanInventoryGroups;
 
