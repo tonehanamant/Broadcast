@@ -1,7 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -19,12 +18,12 @@ namespace Services.Broadcast.Clients
         private const int ASYNC_API_TIMEOUT_SECONDS = 900;
 
         private readonly string _OpenMarketSpotsAllocationUrl;
-        private readonly string _OpenMarketSpotsAllocationUrl_v3;
+        private readonly string _PlanPricingAllocationsEfficiencyModelUrl;
 
         public PricingApiClient()
         {
             _OpenMarketSpotsAllocationUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
-            _OpenMarketSpotsAllocationUrl_v3 = BroadcastServiceSystemParameter.PlanPricingAllocationsUrlV3;
+            _PlanPricingAllocationsEfficiencyModelUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsEfficiencyModelUrl;
         }          
 
         public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
@@ -35,7 +34,7 @@ namespace Services.Broadcast.Clients
 
         public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
         {
-            var url = $"{_OpenMarketSpotsAllocationUrl_v3}";
+            var url = $"{_PlanPricingAllocationsEfficiencyModelUrl}";
             return _Post<PlanPricingApiSpotsResponseDto_v3>(url, request);
         }
 

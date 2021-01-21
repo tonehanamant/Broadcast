@@ -23,11 +23,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "ImpressionStartOfDayForAdjustment"; }
         }
-	 
-		public static string UseDayByDayImpressions  
-		{
-            get { return "UseDayByDayImpressions"; }
-        }
 	}
 	 
 	public static class BroadcastServiceSystemParameterNames
@@ -107,6 +102,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "DefaultNtiConversionFactor"; }
         }
 	 
+		public static string EfficiencyModelCpmGoal  
+		{
+            get { return "EfficiencyModelCpmGoal"; }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return "EmailFrom"; }
@@ -160,6 +160,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string EnableProprietaryOAndOInventoryForPricingModel  
 		{
             get { return "EnableProprietaryOAndOInventoryForPricingModel"; }
+        }
+	 
+		public static string FloorModelCpmGoal  
+		{
+            get { return "FloorModelCpmGoal"; }
         }
 	 
 		public static string InventoryProcessingGroupMonitorPauseSeconds  
@@ -232,19 +237,14 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "NumberOfFallbackQuartersForPricing"; }
         }
 	 
+		public static string PlanPricingAllocationsEfficiencyModelUrl  
+		{
+            get { return "PlanPricingAllocationsEfficiencyModelUrl"; }
+        }
+	 
 		public static string PlanPricingAllocationsUrl  
 		{
             get { return "PlanPricingAllocationsUrl"; }
-        }
-	 
-		public static string PlanPricingAllocationsUrlV3  
-		{
-            get { return "PlanPricingAllocationsUrlV3"; }
-        }
-	 
-		public static string PlanPricingEndpointVersion  
-		{
-            get { return "PlanPricingEndpointVersion"; }
         }
 	 
 		public static string PlanPricingFloorPricingUrl  
@@ -503,6 +503,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "Releases2Service" ; }
         }
 	  
+		public static string AdjustOrderToggle  
+		{
+            get { return "AdjustOrderToggle"; }
+        }
+	 
 		public static string BillingSystemId  
 		{
             get { return "BillingSystemId"; }
@@ -541,6 +546,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string TrafficAlertsPath  
 		{
             get { return "TrafficAlertsPath"; }
+        }
+	 
+		public static string URLAdjustOrder  
+		{
+            get { return "URLAdjustOrder"; }
+        }
+	 
+		public static string URLNewCopyManagement  
+		{
+            get { return "URLNewCopyManagement"; }
         }
 	 
 		public static string URLTrafficCopyManagement  
@@ -694,9 +709,24 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "SpotcapsToggle"; }
         }
 	 
+		public static string TrafficCreationDictionaryOptimizationToggle  
+		{
+            get { return "TrafficCreationDictionaryOptimizationToggle"; }
+        }
+	 
 		public static string TrafficPreBuyAllocationBaseUri  
 		{
             get { return "TrafficPreBuyAllocationBaseUri"; }
+        }
+	 
+		public static string TrafficSaveBulkInsertToggle  
+		{
+            get { return "TrafficSaveBulkInsertToggle"; }
+        }
+	 
+		public static string ViewAllocatedTrafficOrdersInUIFeature  
+		{
+            get { return "ViewAllocatedTrafficOrdersInUIFeature"; }
         }
 	}
 	 

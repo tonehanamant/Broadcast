@@ -153,7 +153,7 @@
       }
     ],
     "BuyingCpm": 0.115210571611004691707615000,
-    "BuyingVersion": "3",
+    "BuyingVersion": "4",
     "JobId": 1,
     "PlanVersionId": 0,
     "RequestId": "djj4j4399fmmf1m212",

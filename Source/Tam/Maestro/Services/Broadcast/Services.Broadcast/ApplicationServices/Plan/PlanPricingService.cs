@@ -175,6 +175,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -194,7 +195,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService,
                                   ICreativeLengthEngine creativeLengthEngine,
-                                  IAsyncTaskHelper asyncTaskHelper)
+                                  IAsyncTaskHelper asyncTaskHelper,
+                                  IFeatureToggleHelper featureToggleHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -223,6 +225,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
@@ -1065,7 +1068,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     Spots = new List<PlanPricingAllocatedSpot>(),
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
-                    PricingVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion
+                    PricingVersion = _GetPricingModelVersion().ToString()
                 };
 
                 //Send it to the DS Model based on the plan posting type, as selected in the plan detail.
@@ -1404,19 +1407,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
-            {
-                _SendPricingRequest_v2(
-                    allocationResult,
-                    plan,
-                    jobId,
-                    inventory,
-                    token,
-                    diagnostic,
-                    parameters,
-                    proprietaryInventoryData);
-            }
-            else if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "3")
+            var isMultiCreativeLengthEnabled = IsMultiCreativeLengthEnabled();
+
+            if (isMultiCreativeLengthEnabled)
             {
                 _SendPricingRequest_v3(
                     allocationResult,
@@ -1430,7 +1423,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                throw new Exception("Unknown pricing API version was discovered");
+                _SendPricingRequest_v2(
+                    allocationResult,
+                    plan,
+                    jobId,
+                    inventory,
+                    token,
+                    diagnostic,
+                    parameters,
+                    proprietaryInventoryData);
             }
         }
 
@@ -1444,7 +1445,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            var apiVersion = "2";
+            var apiVersion = _GetPricingModelVersion().ToString();
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var pricingModelWeeks = _GetPricingModelWeeks(
@@ -1528,7 +1529,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            var apiVersion = "3";
+            var apiVersion = _GetPricingModelVersion().ToString();
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var pricingModelWeeks = _GetPricingModelWeeks_v3(
@@ -2746,9 +2747,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        internal int _GetPricingModelVersion()
+        {
+            var multipleCreativeLengthsEnabled = IsMultiCreativeLengthEnabled();
+            if (!multipleCreativeLengthsEnabled)
+            {
+                return 2;
+            }
+            return 4;
+        }
 
-
-
+        internal bool IsMultiCreativeLengthEnabled()
+        {
+            var multipleCreativeLengthsEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS);
+            return multipleCreativeLengthsEnabled;
+        }
+        
         internal class ProgramWithManifestDaypart
         {
             public PlanPricingInventoryProgram Program { get; set; }

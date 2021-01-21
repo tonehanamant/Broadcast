@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -17,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Unity;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
 using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
@@ -26,17 +28,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class PlanPricingInventoryEngineTests
     {
-        private readonly IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
-        private readonly IPlanRepository _PlanRepository;
-        private readonly IStationRepository _StationRepository;
-        private readonly InventoryFileTestHelper _InventoryFileTestHelper;
+        private IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
+        private IPlanRepository _PlanRepository;
+        private IStationRepository _StationRepository;
+        private InventoryFileTestHelper _InventoryFileTestHelper;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
-        public PlanPricingInventoryEngineTests()
+        [SetUp]
+        public void SetUp()
         {
             _PlanPricingInventoryEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _InventoryFileTestHelper = new InventoryFileTestHelper();
+
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, false);
+            // register our stub instance so it is used to instantiate the service
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
+        }
+
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -64,54 +81,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void GetsInventoryForPricing()
         {
-            try
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            using (new TransactionScopeWrapper())
             {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+                var diagnostic = new PlanPricingJobDiagnostic();
+                var plan = _PlanRepository.GetPlan(1198);
 
-                using (new TransactionScopeWrapper())
+                plan.CreativeLengths = new List<CreativeLength>
                 {
-                    var diagnostic = new PlanPricingJobDiagnostic();
-                    var plan = _PlanRepository.GetPlan(1198);
-
-                    plan.CreativeLengths = new List<CreativeLength>
+                    new CreativeLength
                     {
-                        new CreativeLength
-                        {
-                            SpotLengthId = 1,
-                            Weight = 50
-                        },
-                        new CreativeLength
-                        {
-                            SpotLengthId = 2,
-                            Weight = 50
-                        }
-                    };
-
-                    var engine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
-                    var result = engine.GetInventoryForPlan(
-                        plan,
-                        new ProgramInventoryOptionalParametersDto(),
-                        _GetAvailableInventorySources(),
-                        diagnostic, Guid.NewGuid());
-
-                    var jsonResolver = new IgnorableSerializerContractResolver();
-                    jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
-                    jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
-                    jsonResolver.Ignore(typeof(ManifestWeek), "Id");
-                    var jsonSettings = new JsonSerializerSettings()
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
                     {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                        ContractResolver = jsonResolver
-                    };
-                    var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                        SpotLengthId = 2,
+                        Weight = 50
+                    }
+                };
 
-                    Approvals.Verify(json);
-                }
+                var engine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
+                var result = engine.GetInventoryForPlan(
+                    plan,
+                    new ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources(),
+                    diagnostic, Guid.NewGuid());
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
+                jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(ManifestWeek), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                Approvals.Verify(json);
             }
-            finally
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
-            }
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, false);
         }
 
         [Test]

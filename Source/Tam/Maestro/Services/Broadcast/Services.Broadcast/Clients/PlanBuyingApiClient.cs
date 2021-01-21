@@ -16,12 +16,12 @@ namespace Services.Broadcast.Clients
     public class PlanBuyingApiClient : IPlanBuyingApiClient
     {
         private readonly string _OpenMarketSpotsAllocationUrl;
-        private readonly string _OpenMarketSpotsAllocationUrl_v3;
+        private readonly string _PlanPricingAllocationsEfficiencyModelUrl;
 
         public PlanBuyingApiClient()
         {
             _OpenMarketSpotsAllocationUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
-            _OpenMarketSpotsAllocationUrl_v3 = BroadcastServiceSystemParameter.PlanPricingAllocationsUrlV3;
+            _PlanPricingAllocationsEfficiencyModelUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsEfficiencyModelUrl;
         }          
 
         public PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request)
@@ -32,7 +32,7 @@ namespace Services.Broadcast.Clients
 
         public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)
         {
-            var url = $"{_OpenMarketSpotsAllocationUrl_v3}";
+            var url = $"{_PlanPricingAllocationsEfficiencyModelUrl}";
             return _Post<PlanBuyingApiSpotsResponseDto_v3>(url, request);
         }
 

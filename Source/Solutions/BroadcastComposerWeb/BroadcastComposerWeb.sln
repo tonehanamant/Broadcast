@@ -27,12 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScripts", "Database
 	ProjectSection(SolutionItems) = preProject
 		..\..\Database\Broadcast.sql = ..\..\Database\Broadcast.sql
 		..\..\Database\Broadcast_Forecast.sql = ..\..\Database\Broadcast_Forecast.sql
-		..\..\Database\DEV.System_Settings.sql = ..\..\Database\DEV.System_Settings.sql
-		..\..\Database\PROD.System_Settings.sql = ..\..\Database\PROD.System_Settings.sql
-		..\..\Database\QA.System_Settings.sql = ..\..\Database\QA.System_Settings.sql
-		..\..\Database\STG.System_Settings.sql = ..\..\Database\STG.System_Settings.sql
-		..\..\Database\System_Settings.sql = ..\..\Database\System_Settings.sql
-		..\..\Database\UAT.System_Settings.sql = ..\..\Database\UAT.System_Settings.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{ACCFBE65-F3F0-4CE3-A59F-31F94A8527D6}"

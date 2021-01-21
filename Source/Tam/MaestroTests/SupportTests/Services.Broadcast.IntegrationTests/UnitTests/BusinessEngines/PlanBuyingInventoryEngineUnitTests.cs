@@ -28,7 +28,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
     [UseReporter(typeof(DiffReporter))]
     public class PlanBuyingInventoryEngineUnitTests
     {
-        private PlanBuyingInventoryEngineTestClass _PlanBuyingInventoryEngine;
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCache;
 
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
@@ -103,20 +102,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _MediaMonthAndWeekAggregateCache
                 .Setup(s => s.GetMediaWeeksIntersecting(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns<DateTime, DateTime>((start, end) => MediaMonthAndWeekTestData.GetMediaWeeksIntersecting(start, end));
+        }
 
+        private PlanBuyingInventoryEngineTestClass _GetTestClass(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
+        {
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, false);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
-            _PlanBuyingInventoryEngine = new PlanBuyingInventoryEngineTestClass(
+            var testClass = new PlanBuyingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
                 _PlanBuyingInventoryQuarterCalculatorEngineMock.Object,
                 _MediaMonthAndWeekAggregateCache.Object,
                 _DaypartCacheMock.Object,
                 _QuarterCalculationEngineMock.Object,
-                _SpotLengthEngineMock.Object, featureToggleHelper);
+                _SpotLengthEngineMock.Object,
+                featureToggleHelper);
+
+            return testClass;
         }
 
         private Mock<IStandardDaypartRepository> _GetMockDaypartDefaultRepository()
@@ -178,7 +184,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var testEngine = _GetTestClass();
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -218,7 +225,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var testEngine = _GetTestClass();
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -257,7 +265,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var testEngine = _GetTestClass();
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -336,7 +345,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var testEngine = _GetTestClass();
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -413,7 +423,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var testEngine = _GetTestClass();
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -503,17 +514,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanBuyingInventoryEngine = new PlanBuyingInventoryEngineTestClass(
-                _DataRepositoryFactoryMock.Object,
-                _ImpressionsCalculationEngineMock.Object,
-                _PlanBuyingInventoryQuarterCalculatorEngineMock.Object,
-                _MediaMonthAndWeekAggregateCache.Object,
-                _DaypartCacheMock.Object,
-                _QuarterCalculationEngineMock.Object,
-                _SpotLengthEngineMock.Object, featureToggleHelper);
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine
-                ._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -589,8 +592,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>()
                 }
             };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -665,8 +669,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>()
                 }
             };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -737,8 +742,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 StartTimeSeconds = 36000, // 10am
                 EndTimeSeconds = 39599 // 11am
             });
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -846,7 +852,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+            var testEngine = _GetTestClass();
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -953,8 +960,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>()
                 }
             };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -1061,8 +1069,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>()
                 }
             };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -1231,8 +1240,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>()
                 }
             };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = testEngine._FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1295,7 +1305,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 23400.0
                 }
             };
-            var result = _PlanBuyingInventoryEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            var testEngine = _GetTestClass();
+
+            var result = testEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1318,8 +1330,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 10000
                 }
             };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, null, null);
+            var result = testEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1348,9 +1361,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 10000
                 }
             };
-            _PlanBuyingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-            var result = _PlanBuyingInventoryEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, null, null);
+            var allowMultipleCreativeLengths = true;
+            var testEngine = _GetTestClass(false, allowMultipleCreativeLengths);
+            var result = testEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1377,7 +1391,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanBuyingInventoryEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            var testEngine = _GetTestClass(false, true);
+            testEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
         }
@@ -1403,8 +1418,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     }
                 }
             };
+            var testEngine = _GetTestClass();
 
-            _PlanBuyingInventoryEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            testEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
         }
@@ -1442,8 +1458,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     }
                 }
             };
+            var testEngine = _GetTestClass();
 
-            _PlanBuyingInventoryEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            testEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.FirstOrDefault().ManifestRates.Single().Cost);
             Assert.AreEqual(defaultSpotCost, programs.LastOrDefault().ManifestRates.Single().Cost);
@@ -1504,9 +1521,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 23400.0
                 }
             };
+            var testEngine = _GetTestClass();
 
-            _PlanBuyingInventoryEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
-            var result = _PlanBuyingInventoryEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            testEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            var result = testEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1522,8 +1540,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var planFlightDateRanges = _GetPlanFlightDateRanges();
             var flightDays = new List<int> { 1, 3, 5, 7 };
             var planDaypartDayIds = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._GetDaypartDaysFromFlight(flightDays, planFlightDateRanges, planDaypartDayIds);
+            var result = testEngine._GetDaypartDaysFromFlight(flightDays, planFlightDateRanges, planDaypartDayIds);
 
             Assert.AreEqual(expectedDaypart, result);
         }
@@ -1542,8 +1561,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new DateRange(new DateTime(2019, 12, 21), new DateTime(2019, 12, 22)) // Sat - Sun
             };
             var planDaypartDayIds = new List<int> { 6, 7 };
+            var testEngine = _GetTestClass();
 
-            var result = _PlanBuyingInventoryEngine._GetDaypartDaysFromFlight(planFlightDays, planFlightDateRanges, planDaypartDayIds);
+            var result = testEngine._GetDaypartDaysFromFlight(planFlightDays, planFlightDateRanges, planDaypartDayIds);
 
             Assert.AreEqual(expectedDaypart, result);
         }
@@ -1561,8 +1581,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 2000
                 }
             };
+            var testEngine = _GetTestClass();
 
-            _PlanBuyingInventoryEngine._ApplyNTIConversionToNSI(plan, programs);
+            testEngine._ApplyNTIConversionToNSI(plan, programs);
 
             Assert.AreEqual(1000, programs.Single().ProjectedImpressions);
             Assert.AreEqual(2000, programs.Single().ProvidedImpressions);
@@ -1601,8 +1622,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>()
                 }
             };
+            var testEngine = _GetTestClass();
 
-            _PlanBuyingInventoryEngine._ApplyNTIConversionToNSI(plan, programs);
+            testEngine._ApplyNTIConversionToNSI(plan, programs);
 
             Assert.AreEqual(850, programs.Single().ProjectedImpressions);
             Assert.AreEqual(1700, programs.Single().ProvidedImpressions);
@@ -1668,9 +1690,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventory);
+            var testEngine = _GetTestClass();
 
             /*** Act ***/
-            var result = _PlanBuyingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+            var result = testEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -1811,9 +1834,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
                 .Returns(inventoryTwo);
+            var testEngine = _GetTestClass();
 
             /*** Act ***/
-            var result = _PlanBuyingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+            var result = testEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -1960,9 +1984,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventoryTwo)
                 .Returns(inventoryOne)
                 .Returns(inventoryTwo);
+            var testEngine = _GetTestClass();
 
             /*** Act ***/
-            var result = _PlanBuyingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+            var result = testEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -2059,8 +2084,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventoryOne)
                 .Returns(inventoryTwo);
 
+            var testEngine = _GetTestClass();
+
             /*** Act ***/
-            var result = _PlanBuyingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+            var result = testEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -2277,9 +2304,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
+            var testEngine = _GetTestClass();
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2420,9 +2448,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
+            var testEngine = _GetTestClass();
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2453,7 +2482,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void ProjectsImpressions_WhenGatheringInventory_ForBuying_v3()
         {
-            _PlanBuyingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
+            var allowMultiLength = true;
 
             // Arrange
             var parameters = new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto();
@@ -2578,9 +2607,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
+            var testEngine = _GetTestClass(false, allowMultiLength);
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2595,7 +2625,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void AppliesProvidedImpressions_WhenGatheringInventory_ForBuying_v3()
         {
-            _PlanBuyingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
+            var allowMultiLength = true;
 
             // Arrange
             var parameters = new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto();
@@ -2725,9 +2755,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProvidedImpressions = 1500;
                     }
                 });
+            var testEngine = _GetTestClass(false, allowMultiLength);
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3054,10 +3085,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
-
+            var testEngine = _GetTestClass();
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3387,10 +3418,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
-
+            var testEngine = _GetTestClass();
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3747,10 +3778,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
-
+            var testEngine = _GetTestClass();
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new

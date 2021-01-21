@@ -334,12 +334,16 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "LaunchDarklySdkKey":
                     result = "SecretKeyForLaunchDarklySdkKey";
                     break;
-                case "PlanPricingEndpointVersion":
-                    result = "2";
+                case "EfficiencyModelCpmGoal":
+                    result = "1";
                     break;
-                case "PlanPricingAllocationsUrlV3":
-                    result = "https://datascience-dev.cadent.tv/broadcast-openmarket-allocations/v3/allocation";
+                case "FloorModelCpmGoal":
+                    result = "1";
                     break;
+                case "PlanPricingAllocationsEfficiencyModelUrl":
+                    result = "TestUrl";
+                    break;
+
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

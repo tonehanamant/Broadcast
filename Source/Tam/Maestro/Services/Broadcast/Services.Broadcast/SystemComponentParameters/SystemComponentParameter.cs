@@ -23,12 +23,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
 					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.ImpressionStartOfDayForAdjustment); }
         }
-	 
-		public static bool UseDayByDayImpressions  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.UseDayByDayImpressions); }
-        }
 	}
 	 
 	public static class BroadcastServiceSystemParameter 
@@ -117,6 +111,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
         }
 	 
+		public static int EfficiencyModelCpmGoal  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EfficiencyModelCpmGoal); }
+        }
+	 
 		public static string EmailFrom  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
@@ -181,6 +181,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableProprietaryOAndOInventoryForPricingModel); }
+        }
+	 
+		public static int FloorModelCpmGoal  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.FloorModelCpmGoal); }
         }
 	 
 		public static int InventoryProcessingGroupMonitorPauseSeconds  
@@ -267,22 +273,16 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.NumberOfFallbackQuartersForPricing); }
         }
 	 
+		public static string PlanPricingAllocationsEfficiencyModelUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingAllocationsEfficiencyModelUrl); }
+        }
+	 
 		public static string PlanPricingAllocationsUrl  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrl); }
-        }
-	 
-		public static string PlanPricingAllocationsUrlV3  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrlV3); }
-        }
-	 
-		public static string PlanPricingEndpointVersion  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingEndpointVersion); }
         }
 	 
 		public static string PlanPricingFloorPricingUrl  
@@ -579,6 +579,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class Releases2ServiceSystemParameter 
 	{ 
+		public static bool AdjustOrderToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.AdjustOrderToggle); }
+        }
+	 
 		public static int BillingSystemId  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
@@ -625,6 +631,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.TrafficAlertsPath); }
+        }
+	 
+		public static string URLAdjustOrder  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.URLAdjustOrder); }
+        }
+	 
+		public static string URLNewCopyManagement  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(Releases2ServiceSystemParameterNames.ComponentID , Releases2ServiceSystemParameterNames.URLNewCopyManagement); }
         }
 	 
 		public static string URLTrafficCopyManagement  
@@ -795,10 +813,28 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.SpotcapsToggle); }
         }
 	 
+		public static bool TrafficCreationDictionaryOptimizationToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.TrafficCreationDictionaryOptimizationToggle); }
+        }
+	 
 		public static string TrafficPreBuyAllocationBaseUri  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.TrafficPreBuyAllocationBaseUri); }
+        }
+	 
+		public static bool TrafficSaveBulkInsertToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.TrafficSaveBulkInsertToggle); }
+        }
+	 
+		public static bool ViewAllocatedTrafficOrdersInUIFeature  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.ViewAllocatedTrafficOrdersInUIFeature); }
         }
 	}
 	 

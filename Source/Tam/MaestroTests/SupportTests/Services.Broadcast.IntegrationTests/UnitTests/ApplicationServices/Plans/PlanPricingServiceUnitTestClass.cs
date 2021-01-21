@@ -32,7 +32,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService, 
                                   ICreativeLengthEngine creativeLengthEngine,
-                                  IAsyncTaskHelper asyncTaskHelper)
+                                  IAsyncTaskHelper asyncTaskHelper,
+                                  IFeatureToggleHelper featureToggleHelper)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -52,7 +53,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             sharedFolderService,
             audienceService,
             creativeLengthEngine,
-            asyncTaskHelper)
+            asyncTaskHelper,
+            featureToggleHelper)
         {
         }
 

@@ -189,6 +189,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IPlanBuyingScxDataPrep _PlanBuyingScxDataPrep;
         private readonly IPlanBuyingScxDataConverter _PlanBuyingScxDataConverter;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -209,7 +210,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IAsyncTaskHelper asyncTaskHelper,
                                   ISharedFolderService sharedFolderService,
                                   IPlanBuyingScxDataPrep planBuyingScxDataPrep,
-                                  IPlanBuyingScxDataConverter planBuyingScxDataConverter)
+                                  IPlanBuyingScxDataConverter planBuyingScxDataConverter,
+                                  IFeatureToggleHelper featureToggleHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -240,6 +242,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SharedFolderService = sharedFolderService;
             _PlanBuyingScxDataPrep = planBuyingScxDataPrep;
             _PlanBuyingScxDataConverter = planBuyingScxDataConverter;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -888,7 +891,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
-                    BuyingVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion
+                    BuyingVersion = _GetPricingModelVersion().ToString()
                 };
 
                 /*** Make the Request ***/
@@ -1182,19 +1185,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanBuyingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
-            {
-                _SendBuyingRequest_v2(
-                    allocationResult,
-                    plan,
-                    jobId,
-                    inventory,
-                    token,
-                    diagnostic,
-                    parameters,
-                    proprietaryInventoryData);
-            }
-            else if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "3")
+            var isMultiCreativeLengthEnabled = IsMultiCreativeLengthEnabled();
+
+            if (isMultiCreativeLengthEnabled)
             {
                 _SendBuyingRequest_v3(
                     allocationResult,
@@ -1208,7 +1201,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                throw new Exception("Unknown buying API version was discovered");
+                _SendBuyingRequest_v2(
+                    allocationResult,
+                    plan,
+                    jobId,
+                    inventory,
+                    token,
+                    diagnostic,
+                    parameters,
+                    proprietaryInventoryData);
             }
         }
 
@@ -2076,6 +2077,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(results);
 
             return results;
+        }
+
+        internal int _GetPricingModelVersion()
+        {
+            var multipleCreativeLengthsEnabled = IsMultiCreativeLengthEnabled();
+            if (!multipleCreativeLengthsEnabled)
+            {
+                return 2;
+            }
+            return 4;
+        }
+
+        internal bool IsMultiCreativeLengthEnabled()
+        {
+            var multipleCreativeLengthsEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS);
+            return multipleCreativeLengthsEnabled;
         }
 
         internal class ProgramWithManifestDaypart

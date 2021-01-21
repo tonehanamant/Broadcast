@@ -3,7 +3,7 @@
     "<>4__this": {
       "UT_CurrentDateTime": null
     },
-    "apiVersion": "3",
+    "apiVersion": "4",
     "jobId": 1,
     "plan": {
       "AudienceId": 0,

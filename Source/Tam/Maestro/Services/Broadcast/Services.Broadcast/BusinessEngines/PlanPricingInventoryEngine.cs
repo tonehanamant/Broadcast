@@ -52,9 +52,9 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
-        protected Lazy<string> _PlanPricingEndpointVersion;
         protected Lazy<int> _NumberOfFallbackQuartersForPricing;
         protected Lazy<bool> _UseTrueIndependentStations;
+        protected Lazy<bool> _IsMultiSpotLengthEnabled;
 
         protected Lazy<List<Day>> _CadentDayDefinitions;
         /// <summary>
@@ -90,9 +90,9 @@ namespace Services.Broadcast.BusinessEngines
 
             // register lazy delegates - settings
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
-            _PlanPricingEndpointVersion = new Lazy<string>(() => BroadcastServiceSystemParameter.PlanPricingEndpointVersion);
             _NumberOfFallbackQuartersForPricing = new Lazy<int>(() => BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
             _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
+            _IsMultiSpotLengthEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS));
 
             // register lazy delegates - domain data
             _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
@@ -562,9 +562,9 @@ namespace Services.Broadcast.BusinessEngines
             PlanPricingJobDiagnostic diagnostic,
             Guid processingId)
         {
-            var spotLengthIds = _PlanPricingEndpointVersion.Value == "2" ?
-                plan.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList() :
-                plan.CreativeLengths.Select(x => x.SpotLengthId).ToList();
+            var spotLengthIds = _IsMultiSpotLengthEnabled.Value
+                ? plan.CreativeLengths.Select(x => x.SpotLengthId).ToList()
+                : plan.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList();
 
             var marketCodes = plan.AvailableMarkets.Select(m => m.MarketCode).ToList();
             var planQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetPlanQuarter(plan);
@@ -836,15 +836,10 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 decimal cost;
-
-                // for pricing v2, there is always 1 spot length for inventory
-                if (_PlanPricingEndpointVersion.Value == "2")
+                
+                if (_IsMultiSpotLengthEnabled.Value)
                 {
-                    cost = program.ManifestRates.Single().Cost;
-                }
-                // for pricing v3, we use impressions for :30 and that`s why the cost must be for :30 as well
-                else
-                {
+                    // for multi-length pricing, we use impressions for :30 and that`s why the cost must be for :30 as well
                     var rate = program.ManifestRates.SingleOrDefault(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30);
 
                     if (rate != null)
@@ -861,6 +856,11 @@ namespace Services.Broadcast.BusinessEngines
                         rate = program.ManifestRates.First();
                         cost = rate.Cost / (decimal)_SpotLengthEngine.GetSpotCostMultiplierBySpotLengthId(rate.SpotLengthId);
                     }
+                }
+                else
+                {
+                    // for pricing v2, there is always 1 spot length for inventory
+                    cost = program.ManifestRates.Single().Cost;
                 }
 
                 program.Cpm = ProposalMath.CalculateCpm(cost, program.PostingTypeImpressions);
@@ -1145,8 +1145,8 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan)
         {
             // we don`t want to equivalize impressions
-            // when PricingVersion == 3, because this is done by the pricing endpoint
-            var equivalized = _PlanPricingEndpointVersion.Value == "3" ? false : plan.Equivalized;
+            // when PricingVersion allows MultiLength, because this is done by the pricing endpoint
+            var equivalized = _IsMultiSpotLengthEnabled.Value ? false : plan.Equivalized;
 
             // SpotLengthId does not matter for the pricing v3, so this code is for the v2
             var spotLengthId = plan.CreativeLengths.First().SpotLengthId;
@@ -1169,8 +1169,9 @@ namespace Services.Broadcast.BusinessEngines
         {
             var impressionsRequest = new ImpressionsRequestDto
             {
-                // we don`t want to equivalize impressions when PricingVersion == 3, because this is done by the pricing endpoint
-                Equivalized = _PlanPricingEndpointVersion.Value == "2" ? plan.Equivalized : false,
+                // we don`t want to equivalize impressions
+                // when PricingVersion allows MultiLength, because this is done by the pricing endpoint
+                Equivalized = _IsMultiSpotLengthEnabled.Value ? false : plan.Equivalized,
                 HutProjectionBookId = plan.HUTBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,

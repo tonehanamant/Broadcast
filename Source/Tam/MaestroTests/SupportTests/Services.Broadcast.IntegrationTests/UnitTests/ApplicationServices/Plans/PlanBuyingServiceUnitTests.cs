@@ -71,8 +71,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanBuyingScxDataPrep> _PlanBuyingScxDataPrep;
         private Mock<IPlanBuyingScxDataConverter> _PlanBuyingScxDataConverter;
 
-        protected PlanBuyingService _GetService()
+        protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
         {
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
+
             return new PlanBuyingService(
                 _DataRepositoryFactoryMock.Object,
                 _SpotLengthEngineMock.Object,
@@ -93,7 +98,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _AsyncTaskHelper,
                 _SharedFolderService.Object,
                 _PlanBuyingScxDataPrep.Object,
-                _PlanBuyingScxDataConverter.Object
+                _PlanBuyingScxDataConverter.Object,
+                featureToggleHelper
             );
         }
 
@@ -1107,37 +1113,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void SavesBuyingApiResults_v3()
         {
-            try
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+            // Arrange
+            var allowMultipleCreativeLengths = true;
+            const int jobId = 1;
 
-                // Arrange
-                const int jobId = 1;
+            _InventoryProprietarySummaryRepositoryMock
+                .Setup(x => x.GetInventoryProprietarySummariesByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetInventoryProprietaryQuarterSummary(false));
 
-                _InventoryProprietarySummaryRepositoryMock
-                    .Setup(x => x.GetInventoryProprietarySummariesByIds(It.IsAny<IEnumerable<int>>()))
-                    .Returns(_GetInventoryProprietaryQuarterSummary(false));
-
-                _BroadcastAudienceRepositoryMock
-                    .Setup(x => x.GetRatingsAudiencesByMaestroAudience(It.IsAny<List<int>>()))
-                    .Returns(new List<audience_audiences>
-                    {
+            _BroadcastAudienceRepositoryMock
+                .Setup(x => x.GetRatingsAudiencesByMaestroAudience(It.IsAny<List<int>>()))
+                .Returns(new List<audience_audiences>
+                {
                     new audience_audiences { rating_audience_id = 1 },
                     new audience_audiences { rating_audience_id = 2 }
-                    });
+                });
 
-                var parameters = _GetPlanBuyingParametersDto();
-                parameters.MarketGroup = MarketGroupEnum.None;
-                parameters.Margin = 20;
-                parameters.JobId = jobId;
+            var parameters = _GetPlanBuyingParametersDto();
+            parameters.MarketGroup = MarketGroupEnum.None;
+            parameters.Margin = 20;
+            parameters.JobId = jobId;
 
-                _PlanBuyingRepositoryMock
-                    .Setup(x => x.GetPlanBuyingJob(It.IsAny<int>()))
-                    .Returns(new PlanBuyingJob());
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetPlanBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob());
 
-                var plan = _GetPlan();
-                plan.Equivalized = true;
-                plan.CreativeLengths = new List<CreativeLength>
+            var plan = _GetPlan();
+            plan.Equivalized = true;
+            plan.CreativeLengths = new List<CreativeLength>
                 {
                     new CreativeLength
                     {
@@ -1150,9 +1153,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Weight = 50
                     }
                 };
-                plan.BuyingParameters.UnitCapsType = UnitCapEnum.Per30Min;
-                plan.BuyingParameters.UnitCaps = 3;
-                plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+            plan.BuyingParameters.UnitCapsType = UnitCapEnum.Per30Min;
+            plan.BuyingParameters.UnitCaps = 3;
+            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     // SpotLengthId = 1, DaypartCodeId = 1
                     new WeeklyBreakdownWeek
@@ -1291,80 +1294,75 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 };
 
-                _PlanRepositoryMock
-                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                    .Returns(plan);
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
 
-                _PlanBuyingInventoryEngineMock
-                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
-                    .Returns(_GetMultipleInventoryPrograms_v3());
+            _PlanBuyingInventoryEngineMock
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
+                .Returns(_GetMultipleInventoryPrograms_v3());
 
-                _WeeklyBreakdownEngineMock
-                    .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
-                        , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
-                    .Returns(_GetWeeklyBreakDownGroup());
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(_GetWeeklyBreakDownGroup());
 
-                _WeeklyBreakdownEngineMock
-                    .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
-                    .Returns(_GetWeeklyBreakDownWeeks());
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
 
-                _WeeklyBreakdownEngineMock
-                    .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
-                    .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
 
-                var requests = new List<PlanBuyingApiRequestDto_v3>();
-                _BuyingApiClientMock
-                    .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
-                    .Returns<PlanBuyingApiRequestDto_v3>((request) =>
+            var requests = new List<PlanBuyingApiRequestDto_v3>();
+            _BuyingApiClientMock
+                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+                .Returns<PlanBuyingApiRequestDto_v3>((request) =>
+                {
+                    var results = new List<PlanBuyingApiSpotsResultDto_v3>();
+
+                    foreach (var spot in request.Spots)
                     {
-                        var results = new List<PlanBuyingApiSpotsResultDto_v3>();
-
-                        foreach (var spot in request.Spots)
+                        var result = new PlanBuyingApiSpotsResultDto_v3
                         {
-                            var result = new PlanBuyingApiSpotsResultDto_v3
-                            {
-                                ManifestId = spot.Id,
-                                MediaWeekId = spot.MediaWeekId,
-                                Frequencies = spot.SpotCost
-                                    .Select(x => new SpotFrequencyResponse
-                                    {
-                                        SpotLengthId = x.SpotLengthId,
-                                        Frequency = 1
-                                    })
-                                    .ToList()
-                            };
-
-                            results.Add(result);
-                        }
-
-                        return new PlanBuyingApiSpotsResponseDto_v3
-                        {
-                            RequestId = "djj4j4399fmmf1m212",
-                            Results = results
+                            ManifestId = spot.Id,
+                            MediaWeekId = spot.MediaWeekId,
+                            Frequencies = spot.SpotCost
+                                .Select(x => new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = x.SpotLengthId,
+                                    Frequency = 1
+                                })
+                                .ToList()
                         };
-                    });
 
-                _SpotLengthEngineMock
-                    .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
-                    .Returns<int>(id => id == 1 ? 1 : 0.5);
+                        results.Add(result);
+                    }
 
-                var passedParameters = new List<PlanBuyingAllocationResult>();
-                _PlanBuyingRepositoryMock
-                    .Setup(x => x.SaveBuyingApiResults(It.IsAny<PlanBuyingAllocationResult>()))
-                    .Callback<PlanBuyingAllocationResult>(p => passedParameters.Add(p));
+                    return new PlanBuyingApiSpotsResponseDto_v3
+                    {
+                        RequestId = "djj4j4399fmmf1m212",
+                        Results = results
+                    };
+                });
 
-                var service = _GetService();
+            _SpotLengthEngineMock
+                .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
+                .Returns<int>(id => id == 1 ? 1 : 0.5);
 
-                // Act
-                service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            var passedParameters = new List<PlanBuyingAllocationResult>();
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.SaveBuyingApiResults(It.IsAny<PlanBuyingAllocationResult>()))
+                .Callback<PlanBuyingAllocationResult>(p => passedParameters.Add(p));
 
-                // Assert
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
-            }
-            finally
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
-            }
+            var service = _GetService(false, allowMultipleCreativeLengths);
+
+            // Act
+            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
         }
 
         [Test]
