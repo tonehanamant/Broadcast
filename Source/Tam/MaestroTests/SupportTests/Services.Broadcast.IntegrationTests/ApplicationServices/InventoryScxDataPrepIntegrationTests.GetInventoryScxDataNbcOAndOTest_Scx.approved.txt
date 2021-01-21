@@ -550,130 +550,6 @@
                     "name": "WTVD-TV"
                   }
                 ],
-                "program": "Eyewitness News/GMA Weekend",
-                "spot": [
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "1"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "2"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "3"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "4"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "5"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "2",
-                    "weekNumber": "6"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "7"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "8"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "2",
-                    "weekNumber": "9"
-                  }
-                ],
-                "spotCost": {
-                  "currency": "USD",
-                  "Value": 900.0000
-                },
-                "startDay": 0,
-                "totals": {
-                  "cost": {
-                    "currency": "USD",
-                    "Value": 3600.0000
-                  },
-                  "spots": "4"
-                }
-              },
-              {
-                "comment": " ",
-                "dayOfWeek": {
-                  "Friday": "Y",
-                  "Monday": "Y",
-                  "Saturday": "N",
-                  "Sunday": "N",
-                  "Thursday": "Y",
-                  "Tuesday": "Y",
-                  "Wednesday": "Y"
-                },
-                "daypartCode": "MDN",
-                "demoValue": [
-                  {
-                    "demoRank": "1",
-                    "override": false,
-                    "value": [
-                      {
-                        "type": 0,
-                        "typeSpecified": true,
-                        "Value": ""
-                      },
-                      {
-                        "type": 1,
-                        "typeSpecified": true,
-                        "Value": "160000"
-                      }
-                    ]
-                  }
-                ],
-                "detailLineID": 4,
-                "length": "PT30S",
-                "network": [
-                  {
-                    "ID": [
-                      {
-                        "code": {
-                          "codeDescription": "5282",
-                          "codeOwner": "Spotcable",
-                          "Value": "WTVD"
-                        },
-                        "comment": null
-                      },
-                      {
-                        "code": {
-                          "codeDescription": "Station",
-                          "codeOwner": "Strata",
-                          "Value": "WTVD-TV"
-                        },
-                        "comment": null
-                      },
-                      {
-                        "code": {
-                          "codeDescription": "Band",
-                          "codeOwner": "Strata",
-                          "Value": "TV"
-                        },
-                        "comment": null
-                      }
-                    ],
-                    "name": "WTVD-TV"
-                  }
-                ],
                 "program": "Eyewitness News at Noon",
                 "spot": [
                   {
@@ -765,7 +641,7 @@
                     ]
                   }
                 ],
-                "detailLineID": 5,
+                "detailLineID": 4,
                 "length": "PT30S",
                 "network": [
                   {
@@ -889,7 +765,7 @@
                     ]
                   }
                 ],
-                "detailLineID": 6,
+                "detailLineID": 5,
                 "length": "PT30S",
                 "network": [
                   {
@@ -1013,7 +889,7 @@
                     ]
                   }
                 ],
-                "detailLineID": 7,
+                "detailLineID": 6,
                 "length": "PT30S",
                 "network": [
                   {
@@ -1131,9 +1007,9 @@
             "totals": {
               "cost": {
                 "currency": "USD",
-                "Value": 82399.6880
+                "Value": 78799.6880
               },
-              "spots": "56"
+              "spots": "52"
             },
             "weeks": {
               "count": "9",
@@ -1181,9 +1057,9 @@
         "totals": {
           "cost": {
             "currency": "USD",
-            "Value": 82399.6880
+            "Value": 78799.6880
           },
-          "spots": "56"
+          "spots": "52"
         }
       },
       {
@@ -1476,7 +1352,7 @@
                   },
                   {
                     "id": null,
-                    "quantity": "5",
+                    "quantity": "0",
                     "weekNumber": "9"
                   }
                 ],
@@ -1488,9 +1364,9 @@
                 "totals": {
                   "cost": {
                     "currency": "USD",
-                    "Value": 15000.0000
+                    "Value": 10000.0000
                   },
-                  "spots": "15"
+                  "spots": "10"
                 }
               },
               {
@@ -1524,130 +1400,6 @@
                   }
                 ],
                 "detailLineID": 3,
-                "length": "PT30S",
-                "network": [
-                  {
-                    "ID": [
-                      {
-                        "code": {
-                          "codeDescription": "5015",
-                          "codeOwner": "Spotcable",
-                          "Value": "WABC"
-                        },
-                        "comment": null
-                      },
-                      {
-                        "code": {
-                          "codeDescription": "Station",
-                          "codeOwner": "Strata",
-                          "Value": "WABC-TV"
-                        },
-                        "comment": null
-                      },
-                      {
-                        "code": {
-                          "codeDescription": "Band",
-                          "codeOwner": "Strata",
-                          "Value": "TV"
-                        },
-                        "comment": null
-                      }
-                    ],
-                    "name": "WABC-TV"
-                  }
-                ],
-                "program": "Eyewitness News/GMA Weekend",
-                "spot": [
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "1"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "2"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "3"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "4"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "5"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "2",
-                    "weekNumber": "6"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "7"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "0",
-                    "weekNumber": "8"
-                  },
-                  {
-                    "id": null,
-                    "quantity": "2",
-                    "weekNumber": "9"
-                  }
-                ],
-                "spotCost": {
-                  "currency": "USD",
-                  "Value": 900.0000
-                },
-                "startDay": 0,
-                "totals": {
-                  "cost": {
-                    "currency": "USD",
-                    "Value": 3600.0000
-                  },
-                  "spots": "4"
-                }
-              },
-              {
-                "comment": " ",
-                "dayOfWeek": {
-                  "Friday": "N",
-                  "Monday": "N",
-                  "Saturday": "Y",
-                  "Sunday": "Y",
-                  "Thursday": "N",
-                  "Tuesday": "N",
-                  "Wednesday": "N"
-                },
-                "daypartCode": "MDN",
-                "demoValue": [
-                  {
-                    "demoRank": "1",
-                    "override": false,
-                    "value": [
-                      {
-                        "type": 0,
-                        "typeSpecified": true,
-                        "Value": ""
-                      },
-                      {
-                        "type": 1,
-                        "typeSpecified": true,
-                        "Value": "160000"
-                      }
-                    ]
-                  }
-                ],
-                "detailLineID": 4,
                 "length": "PT30S",
                 "network": [
                   {
@@ -1765,9 +1517,9 @@
             "totals": {
               "cost": {
                 "currency": "USD",
-                "Value": 21800.0032
+                "Value": 13200.0032
               },
-              "spots": "23"
+              "spots": "14"
             },
             "weeks": {
               "count": "9",
@@ -1815,9 +1567,9 @@
         "totals": {
           "cost": {
             "currency": "USD",
-            "Value": 21800.0032
+            "Value": 13200.0032
           },
-          "spots": "23"
+          "spots": "14"
         }
       }
     ],

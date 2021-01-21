@@ -188,45 +188,6 @@
                     ]
                   },
                   {
-                    "DaypartId": 7,
-                    "DemoValues": [
-                      {
-                        "DemoRank": 1,
-                        "Impressions": 160000.0
-                      }
-                    ],
-                    "ProgramAssignedDaypartCode": null,
-                    "ProgramName": "Eyewitness News/GMA Weekend",
-                    "SpotCost": 900.0000,
-                    "SpotLength": "30",
-                    "TotalCost": 3600.0000,
-                    "TotalSpots": 4,
-                    "Weeks": [
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2019-02-10T00:00:00",
-                          "_Id": 789,
-                          "_MediaMonthId": 449,
-                          "_StartDate": "2019-02-04T00:00:00",
-                          "_WeekNumber": 2,
-                          "IsDirty": true
-                        },
-                        "Spots": 2
-                      },
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2019-03-03T00:00:00",
-                          "_Id": 792,
-                          "_MediaMonthId": 450,
-                          "_StartDate": "2019-02-25T00:00:00",
-                          "_WeekNumber": 1,
-                          "IsDirty": true
-                        },
-                        "Spots": 2
-                      }
-                    ]
-                  },
-                  {
                     "DaypartId": 4559,
                     "DemoValues": [
                       {
@@ -428,12 +389,12 @@
                   }
                 ],
                 "StationCode": 5282,
-                "TotalCost": 82399.6880,
-                "TotalSpots": 56
+                "TotalCost": 78799.6880,
+                "TotalSpots": 52
               }
             ],
-            "TotalCost": 82399.6880,
-            "TotalSpots": 56
+            "TotalCost": 78799.6880,
+            "TotalSpots": 52
           },
           {
             "DmaMarketName": "New York",
@@ -482,8 +443,8 @@
                     "ProgramName": "Eyewitness News/GMA Weekend",
                     "SpotCost": 1000.0000,
                     "SpotLength": "30",
-                    "TotalCost": 15000.0000,
-                    "TotalSpots": 15,
+                    "TotalCost": 10000.0000,
+                    "TotalSpots": 10,
                     "Weeks": [
                       {
                         "MediaWeek": {
@@ -506,56 +467,6 @@
                           "IsDirty": true
                         },
                         "Spots": 5
-                      },
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2019-03-03T00:00:00",
-                          "_Id": 792,
-                          "_MediaMonthId": 450,
-                          "_StartDate": "2019-02-25T00:00:00",
-                          "_WeekNumber": 1,
-                          "IsDirty": true
-                        },
-                        "Spots": 5
-                      }
-                    ]
-                  },
-                  {
-                    "DaypartId": 51352,
-                    "DemoValues": [
-                      {
-                        "DemoRank": 1,
-                        "Impressions": 160000.0
-                      }
-                    ],
-                    "ProgramAssignedDaypartCode": null,
-                    "ProgramName": "Eyewitness News/GMA Weekend",
-                    "SpotCost": 900.0000,
-                    "SpotLength": "30",
-                    "TotalCost": 3600.0000,
-                    "TotalSpots": 4,
-                    "Weeks": [
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2019-02-10T00:00:00",
-                          "_Id": 789,
-                          "_MediaMonthId": 449,
-                          "_StartDate": "2019-02-04T00:00:00",
-                          "_WeekNumber": 2,
-                          "IsDirty": true
-                        },
-                        "Spots": 2
-                      },
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2019-03-03T00:00:00",
-                          "_Id": 792,
-                          "_MediaMonthId": 450,
-                          "_StartDate": "2019-02-25T00:00:00",
-                          "_WeekNumber": 1,
-                          "IsDirty": true
-                        },
-                        "Spots": 2
                       }
                     ]
                   },
@@ -589,17 +500,17 @@
                   }
                 ],
                 "StationCode": 5015,
-                "TotalCost": 21800.0032,
-                "TotalSpots": 23
+                "TotalCost": 13200.0032,
+                "TotalSpots": 14
               }
             ],
-            "TotalCost": 21800.0032,
-            "TotalSpots": 23
+            "TotalCost": 13200.0032,
+            "TotalSpots": 14
           }
         ],
         "SurveyString": "Sept18 DMA Nielsen Live+1",
-        "TotalCost": 104199.6912,
-        "TotalSpots": 79
+        "TotalCost": 91999.6912,
+        "TotalSpots": 66
       }
     ],
     "StartDate": "2018-12-31T00:00:00",

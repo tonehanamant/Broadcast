@@ -342,16 +342,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile2.xlsx";
             _VerifyFileInventoryManifests(fileName);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void SavesOAndOInventoryFileManifests_NoHut()
-        {
-            const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile3_NoHut.xlsx";
-            _VerifyFileInventoryManifests(fileName);
-        }
+        }        
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -473,25 +464,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.True(fileService.Exists(filePath));
             }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
-        {
-            const string fileName = @"ProprietaryDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
-            _VerifyFileInventoryGroups(fileName);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()
-        {
-            const string fileName = @"ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
-            _VerifyFileInventoryGroups(fileName);
-        }
+        }        
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -695,16 +668,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile5.xlsx";
             _VerifyFileInventoryManifests(fileName);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void SavesManifests_ButSkipsEmptyDemoAudiences()
-        {
-            const string fileName = @"ProprietaryDataFiles\Diginet_PRI8905_ValidFile.xlsx";
-            _VerifyFileInventoryManifests(fileName);
-        }
+        }       
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
