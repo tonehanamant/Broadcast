@@ -3,6 +3,7 @@
   "PricingCpm": 14.7893,
   "PricingVersion": null,
   "RequestId": null,
+  "SpotAllocationModelMode": 1,
   "Spots": [
     {
       "ContractMediaWeek": {

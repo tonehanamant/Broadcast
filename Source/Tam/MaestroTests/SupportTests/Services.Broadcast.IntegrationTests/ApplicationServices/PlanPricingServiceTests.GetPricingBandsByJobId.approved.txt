@@ -93,6 +93,7 @@
   ],
   "PlanVersionId": 0,
   "PostingType": 1,
+  "SpotAllocationModelMode": 1,
   "Totals": {
     "Budget": 13969.5000,
     "Cpm": 15.7137,

@@ -66,7 +66,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// For troubleshooting
         /// </summary>
         PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters);
-        PricingProgramsResultDto_v2 GetPrograms_v2(int planId);
+        PricingProgramsResultDto_v2 GetPrograms_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// For troubleshooting
@@ -76,7 +77,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// For troubleshooting
         /// </summary>
         List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
-        PricingProgramsResultDto_v2 GetProgramsForVersion_v2(int planId, int planVersionId);
+        PricingProgramsResultDto_v2 GetProgramsForVersion_v2(int planId, int planVersionId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Gets the unit caps.
@@ -94,9 +96,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <summary>
         /// For troubleshooting
         /// </summary>
-        string ForceCompletePlanPricingJob(int jobId, string username);
-        PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId);
-        PlanPricingBandDto_v2 GetPricingBands_v2(int planId);
+        string ForceCompletePlanPricingJob(int jobId, string username);        
 
         /// <summary>
         /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
@@ -104,8 +104,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="jobId">The id of the job to rerun.</param>
         /// <returns>The new JobId</returns>
         int ReRunPricingJob(int jobId);
-        PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId);
-        PlanPricingBandDto_v2 GetPricingBandsForVersion_v2(int planId, int planVersionId);
 
         /// <summary>
         /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
@@ -130,7 +128,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Retrieves the Pricing Results Markets Summary
         /// </summary>
         PlanPricingResultMarketsDto GetMarketsByJobId(int jobId);
-        PlanPricingResultMarketsDto_v2 GetMarketsByJobId_v2(int jobId);
+        PlanPricingResultMarketsDto_v2 GetMarketsByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
         PlanPricingResultMarketsDto GetMarketsForVersion(int planId, int planVersionId);
         PlanPricingBandDto GetPricingBands(int planId);
         PlanPricingBandDto GetPricingBandsByJobId(int jobId);
@@ -142,8 +141,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion);
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
-        PlanPricingStationResultDto_v2 GetStations_v2(int planId);
-        PlanPricingStationResultDto_v2 GetStationsForVersion_v2(int planId, int planVersionId);
+
+        PlanPricingStationResultDto_v2 GetStations_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PlanPricingStationResultDto_v2 GetStationsForVersion_v2(int planId, int planVersionId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        PlanPricingBandDto_v2 GetPricingBandsForVersion_v2(int planId, int planVersionId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+               
+        PlanPricingBandDto_v2 GetPricingBands_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -996,19 +1009,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return newJobId;
         }
 
-        private enum PricingJobTaskNameEnum
-        {
-            AggregateResults,
-            CalculatePricingBands,
-            CalculatePricingStations,
-            AggregateMarketResults
-        }
-
         private void _RunPricingJob(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
             // used to tie the logging messages together.
             var processingId = Guid.NewGuid();
             _LogInfo("Starting...", processingId);
+            var isPricingEfficiencyModelEnabled =
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
 
             var diagnostic = new PlanPricingJobDiagnostic();
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
@@ -1019,8 +1026,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanRepository.UpdatePlanPricingJob(planPricingJob);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
 
-            try
-            {
+            try {
+
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
@@ -1093,7 +1100,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 token.ThrowIfCancellationRequested();
 
-                var aggregationTasks = new List<(PostingTypeEnum PostingType, PricingJobTaskNameEnum TaskName, Task Task)>();
+                var aggregationTasks = new List<AggregationTask>();
 
                 //Always loop the posting type that matches the plan firts so that we convert from nti to nsi only one time
                 foreach (var targetPostingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>()
@@ -1134,9 +1141,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         return aggregatedResults;
                     });
 
-                    aggregationTasks.Add((targetPostingType, PricingJobTaskNameEnum.AggregateResults, aggregateResultsTask));
+                    aggregationTasks.Add(new AggregationTask(targetPostingType, PricingJobTaskNameEnum.AggregateResults, aggregateResultsTask));
                     aggregateResultsTask.Start();
-
 
                     var calculatePricingBandsTask = new Task<PlanPricingBand>(() =>
                     {
@@ -1146,9 +1152,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         return pricingBands;
                     });
 
-                    aggregationTasks.Add((targetPostingType, PricingJobTaskNameEnum.CalculatePricingBands, calculatePricingBandsTask));
+                    aggregationTasks.Add(new AggregationTask(targetPostingType, PricingJobTaskNameEnum.CalculatePricingBands, calculatePricingBandsTask));
                     calculatePricingBandsTask.Start();
-
 
                     var calculatePricingStationsTask = new Task<PlanPricingStationResult>(() =>
                     {
@@ -1158,7 +1163,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         return pricingStations;
                     });
 
-                    aggregationTasks.Add((targetPostingType, PricingJobTaskNameEnum.CalculatePricingStations, calculatePricingStationsTask));
+                    aggregationTasks.Add(new AggregationTask(targetPostingType, PricingJobTaskNameEnum.CalculatePricingStations, calculatePricingStationsTask));
                     calculatePricingStationsTask.Start();
 
                     var aggregateMarketResultsTask = new Task<PlanPricingResultMarkets>(() =>
@@ -1170,7 +1175,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         return pricingMarketResults;
                     });
 
-                    aggregationTasks.Add((targetPostingType, PricingJobTaskNameEnum.AggregateMarketResults, aggregateMarketResultsTask));
+                    aggregationTasks.Add(new AggregationTask(targetPostingType, PricingJobTaskNameEnum.AggregateMarketResults, aggregateMarketResultsTask));
                     aggregateMarketResultsTask.Start();
                 }
 
@@ -1182,45 +1187,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
-                    //We only get one set of allocation results
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
-                    _PlanRepository.SavePricingApiResults(allocationResult);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+                    _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic, SpotAllocationModelMode.Quality);
 
-                    foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
+                    if (isPricingEfficiencyModelEnabled)
                     {
-                        var calculatePricingBandTask = (Task<PlanPricingBand>)aggregationTasks
-                            .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingBands)
-                            .Task;
-
-                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
-                        _PlanRepository.SavePlanPricingBands(calculatePricingBandTask.Result);
-                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
-
-                        var aggregateTask = (Task<PlanPricingResultBaseDto>)aggregationTasks
-                            .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.AggregateResults)
-                            .Task;
-                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-                        _PlanRepository.SavePricingAggregateResults(aggregateTask.Result);
-                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-
-                        var calculatePricingStationTask = (Task<PlanPricingStationResult>)aggregationTasks
-                            .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingStations)
-                            .Task;
-                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
-                        _PlanRepository.SavePlanPricingStations(calculatePricingStationTask.Result);
-                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
-
-
-                        var aggregateMarketResultsTask = (Task<PlanPricingResultMarkets>)aggregationTasks
-                            .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.AggregateMarketResults)
-                            .Task;
-                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
-                        _PlanRepository.SavePlanPricingMarketResults(aggregateMarketResultsTask.Result);
-                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                        // BP-1894 : This is mocking up the results.
+                        _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic, SpotAllocationModelMode.Efficiency);
+                        _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic, SpotAllocationModelMode.Floor);
                     }
 
-                    //Finsh up the job
+                    //Finish up the job
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
                     pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
@@ -1249,6 +1225,57 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var msg = $"Error attempting to run the pricing model.  Diagnostics : {diagnostic}";
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, msg);
+            }
+        }
+
+        internal void _SavePricingArtifacts(PlanPricingAllocationResult allocationResult, 
+            List<AggregationTask> aggregationTasks,
+            PlanPricingJobDiagnostic diagnostic,
+            SpotAllocationModelMode spotAllocationModelMode)
+        {
+            //We only get one set of allocation results
+            allocationResult.SpotAllocationModelMode = spotAllocationModelMode;
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+            _PlanRepository.SavePricingApiResults(allocationResult);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+
+            foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
+            {
+                var calculatePricingBandTask = (Task<PlanPricingBand>)aggregationTasks
+                    .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingBands)
+                    .Task;
+                var pricingBandResult = calculatePricingBandTask.Result;
+                pricingBandResult.SpotAllocationModelMode = spotAllocationModelMode;
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
+                _PlanRepository.SavePlanPricingBands(pricingBandResult);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
+
+                var aggregateTask = (Task<PlanPricingResultBaseDto>)aggregationTasks
+                    .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.AggregateResults)
+                    .Task;
+                var pricingProgramsResult = aggregateTask.Result;
+                pricingProgramsResult.SpotAllocationModelMode = spotAllocationModelMode;
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+                _PlanRepository.SavePricingAggregateResults(pricingProgramsResult);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+
+                var calculatePricingStationTask = (Task<PlanPricingStationResult>)aggregationTasks
+                    .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingStations)
+                    .Task;
+                var pricingStationResult = calculatePricingStationTask.Result;
+                pricingStationResult.SpotAllocationModelMode = spotAllocationModelMode;
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
+                _PlanRepository.SavePlanPricingStations(pricingStationResult);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
+
+                var aggregateMarketResultsTask = (Task<PlanPricingResultMarkets>)aggregationTasks
+                    .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.AggregateMarketResults)
+                    .Task;
+                var pricingMarketResults = aggregateMarketResultsTask.Result;
+                pricingMarketResults.SpotAllocationModelMode = spotAllocationModelMode;
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                _PlanRepository.SavePlanPricingMarketResults(pricingMarketResults);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
             }
         }
 
@@ -2254,12 +2281,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
-        private PricingProgramsResultDto_v2 _GetPrograms_v2(PlanPricingJob job)
+        private PricingProgramsResultDto_v2 _GetPrograms_v2(PlanPricingJob job, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanRepository.GetPricingProgramsResultByJobId_v2(job.Id);
+            var results = _PlanRepository.GetPricingProgramsResultByJobId_v2(job.Id, spotAllocationModelMode);
 
             if (results == null) return null;
 
@@ -2293,18 +2321,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetPrograms(job);
         }
 
-        public PricingProgramsResultDto_v2 GetPrograms_v2(int planId)
+        public PricingProgramsResultDto_v2 GetPrograms_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
-            return _GetPrograms_v2(job);
+            return _GetPrograms_v2(job, spotAllocationModelMode);
         }
 
-        public PricingProgramsResultDto_v2 GetProgramsForVersion_v2(int planId, int planVersionId)
+        public PricingProgramsResultDto_v2 GetProgramsForVersion_v2(int planId, int planVersionId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
-            return _GetPrograms_v2(job);
+            return _GetPrograms_v2(job, spotAllocationModelMode);
         }
 
         private void _ConvertImpressionsToUserFormat(PricingProgramsResultDto planPricingResult)
@@ -2414,26 +2444,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetPricingBands(job);
         }
 
-        public PlanPricingBandDto_v2 GetPricingBands_v2(int planId)
+        public PlanPricingBandDto_v2 GetPricingBands_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
-            return _GetPricingBands_v2(job);
+            return _GetPricingBands_v2(job, spotAllocationModelMode);
         }
 
-        public PlanPricingBandDto_v2 GetPricingBandsForVersion_v2(int planId, int planVersionId)
+        public PlanPricingBandDto_v2 GetPricingBandsForVersion_v2(int planId, int planVersionId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
-            return _GetPricingBands_v2(job);
+            return _GetPricingBands_v2(job, spotAllocationModelMode);
         }
 
-        private PlanPricingBandDto_v2 _GetPricingBands_v2(PlanPricingJob job)
+        private PlanPricingBandDto_v2 _GetPricingBands_v2(PlanPricingJob job,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanRepository.GetPlanPricingBandByJobId_v2(job.Id);
+            var results = _PlanRepository.GetPlanPricingBandByJobId_v2(job.Id, spotAllocationModelMode);
 
             if (results == null) return null;
 
@@ -2476,11 +2509,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanPricingResultMarketsDto_v2 GetMarketsByJobId_v2(int jobId)
+        public PlanPricingResultMarketsDto_v2 GetMarketsByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
 
-            return _GetMarkets_v2(job);
+            return _GetMarkets_v2(job, spotAllocationModelMode);
         }
 
         private PlanPricingResultMarketsDto _GetMarkets(PlanPricingJob job)
@@ -2506,14 +2540,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
-        private PlanPricingResultMarketsDto_v2 _GetMarkets_v2(PlanPricingJob job)
+        private PlanPricingResultMarketsDto_v2 _GetMarkets_v2(PlanPricingJob job,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
             {
                 return null;
             }
 
-            var results = _PlanRepository.GetPlanPricingResultMarketsByJobId_v2(job.Id);
+            var results = _PlanRepository.GetPlanPricingResultMarketsByJobId_v2(job.Id, spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2582,18 +2617,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetMarkets(job);
         }
 
-        public PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId)
+        public PlanPricingResultMarketsDto_v2 GetMarkets_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
-            return _GetMarkets_v2(job);
+            return _GetMarkets_v2(job, spotAllocationModelMode);
         }
 
-        public PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId)
+        public PlanPricingResultMarketsDto_v2 GetMarketsForVersion_v2(int planId, int planVersionId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
-            return _GetMarkets_v2(job);
+            return _GetMarkets_v2(job, spotAllocationModelMode);
         }
 
         public PlanPricingStationResultDto GetStationsByJobId(int jobId)
@@ -2657,26 +2694,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetStations(job);
         }
 
-        public PlanPricingStationResultDto_v2 GetStations_v2(int planId)
+        public PlanPricingStationResultDto_v2 GetStations_v2(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
-            return _GetStations_v2(job);
+            return _GetStations_v2(job, spotAllocationModelMode);
         }
 
-        public PlanPricingStationResultDto_v2 GetStationsForVersion_v2(int planId, int planVersionId)
+        public PlanPricingStationResultDto_v2 GetStationsForVersion_v2(int planId, int planVersionId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
-            return _GetStations_v2(job);
+            return _GetStations_v2(job, spotAllocationModelMode);
         }
 
-        private PlanPricingStationResultDto_v2 _GetStations_v2(PlanPricingJob job)
+        private PlanPricingStationResultDto_v2 _GetStations_v2(PlanPricingJob job,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var result = _PlanRepository.GetPricingStationsResultByJobId_v2(job.Id);
+            var result = _PlanRepository.GetPricingStationsResultByJobId_v2(job.Id, spotAllocationModelMode);
 
             if (result == null) return null;
 
@@ -2786,6 +2826,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
             public int InventoryDaypartId { get; set; }
             public PlanPricingApiRequestSpotsDto_v3 Spot { get; set; }
             public int ProgramMinimumContractMediaWeekId { get; set; }
+        }
+
+        internal enum PricingJobTaskNameEnum
+        {
+            AggregateResults,
+            CalculatePricingBands,
+            CalculatePricingStations,
+            AggregateMarketResults
+        }
+
+        internal class AggregationTask
+        {
+            public PostingTypeEnum PostingType { get; set; }
+            public PricingJobTaskNameEnum TaskName { get; set; }
+            public Task Task { get; set; }
+
+            public AggregationTask(PostingTypeEnum postingType, PricingJobTaskNameEnum taskName, Task task)
+            {
+                PostingType = postingType;
+                TaskName = taskName;
+                Task = task;
+            }
         }
     }
 }

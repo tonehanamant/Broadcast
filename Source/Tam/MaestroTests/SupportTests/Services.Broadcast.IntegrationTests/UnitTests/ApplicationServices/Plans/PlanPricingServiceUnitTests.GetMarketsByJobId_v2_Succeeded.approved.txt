@@ -52,5 +52,6 @@
     }
   },
   "PlanVersionId": 3,
-  "PricingJobId": 6
+  "PricingJobId": 6,
+  "SpotAllocationModelMode": 1
 }

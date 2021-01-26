@@ -50,7 +50,6 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-
 /*************************************** Start BP-1925 *****************************************************/
 
 -- We will do system_settings here since we no longer release with cable.
@@ -119,8 +118,71 @@ DELETE FROM system_settings.dbo.system_component_parameters
 WHERE component_id = @ComponentId
 AND parameter_key = 'PlanBuyingEndpointVersion'
 
+GO
 
 /*************************************** End BP-1925 *****************************************************/
+
+/*************************************** Start BP-1894 *****************************************************/
+
+DECLARE @SpotAllocationCreateSqlTemplate VARCHAR(MAX) = '
+-- Create the columns if they do not exist
+IF NOT EXISTS (SELECT 1 FROM sys.columns 
+          WHERE Name = N''spot_allocation_model_mode''
+          AND Object_ID = Object_ID(N''[TABLE]''))
+BEGIN	
+	ALTER TABLE [TABLE]
+		ADD spot_allocation_model_mode INT NULL
+END'
+
+DECLARE @SpotAllocationPopulationSqlTemplate VARCHAR(MAX) =
+'UPDATE [TABLE] SET spot_allocation_model_mode = 1 WHERE spot_allocation_model_mode IS NULL'
+
+DECLARE @SpotAllocationMakeNotNullSqlTemplate VARCHAR(MAX) = '
+ALTER TABLE [TABLE]
+	ALTER COLUMN spot_allocation_model_mode INT NOT NULL
+'
+
+DECLARE @SpotAllocationCreateSql VARCHAR(MAX)
+DECLARE @SpotAllocationPopulationSql VARCHAR(MAX)
+DECLARE @SpotAllocationMakeNotNullSql VARCHAR(MAX)
+
+SET @SpotAllocationCreateSql = REPLACE(@SpotAllocationCreateSqlTemplate, '[TABLE]', 'plan_version_pricing_api_results')
+SET @SpotAllocationPopulationSql = REPLACE(@SpotAllocationPopulationSqlTemplate, '[TABLE]', 'plan_version_pricing_api_results')
+SET @SpotAllocationMakeNotNullSql = REPLACE(@SpotAllocationMakeNotNullSqlTemplate, '[TABLE]', 'plan_version_pricing_api_results')
+EXEC(@SpotAllocationCreateSql)
+EXEC(@SpotAllocationPopulationSql)
+EXEC(@SpotAllocationMakeNotNullSql)
+
+SET @SpotAllocationCreateSql = REPLACE(@SpotAllocationCreateSqlTemplate, '[TABLE]', 'plan_version_pricing_bands')
+SET @SpotAllocationPopulationSql = REPLACE(@SpotAllocationPopulationSqlTemplate, '[TABLE]', 'plan_version_pricing_bands')
+SET @SpotAllocationMakeNotNullSql = REPLACE(@SpotAllocationMakeNotNullSqlTemplate, '[TABLE]', 'plan_version_pricing_bands')
+EXEC(@SpotAllocationCreateSql)
+EXEC(@SpotAllocationPopulationSql)
+EXEC(@SpotAllocationMakeNotNullSql)
+
+SET @SpotAllocationCreateSql = REPLACE(@SpotAllocationCreateSqlTemplate, '[TABLE]', 'plan_version_pricing_markets')
+SET @SpotAllocationPopulationSql = REPLACE(@SpotAllocationPopulationSqlTemplate, '[TABLE]', 'plan_version_pricing_markets')
+SET @SpotAllocationMakeNotNullSql = REPLACE(@SpotAllocationMakeNotNullSqlTemplate, '[TABLE]', 'plan_version_pricing_markets')
+EXEC(@SpotAllocationCreateSql)
+EXEC(@SpotAllocationPopulationSql)
+EXEC(@SpotAllocationMakeNotNullSql)
+
+SET @SpotAllocationCreateSql = REPLACE(@SpotAllocationCreateSqlTemplate, '[TABLE]', 'plan_version_pricing_stations')
+SET @SpotAllocationPopulationSql = REPLACE(@SpotAllocationPopulationSqlTemplate, '[TABLE]', 'plan_version_pricing_stations')
+SET @SpotAllocationMakeNotNullSql = REPLACE(@SpotAllocationMakeNotNullSqlTemplate, '[TABLE]', 'plan_version_pricing_stations')
+EXEC(@SpotAllocationCreateSql)
+EXEC(@SpotAllocationPopulationSql)
+EXEC(@SpotAllocationMakeNotNullSql)
+
+SET @SpotAllocationCreateSql = REPLACE(@SpotAllocationCreateSqlTemplate, '[TABLE]', 'plan_version_pricing_results')
+SET @SpotAllocationPopulationSql = REPLACE(@SpotAllocationPopulationSqlTemplate, '[TABLE]', 'plan_version_pricing_results')
+SET @SpotAllocationMakeNotNullSql = REPLACE(@SpotAllocationMakeNotNullSqlTemplate, '[TABLE]', 'plan_version_pricing_results')
+EXEC(@SpotAllocationCreateSql)
+EXEC(@SpotAllocationPopulationSql)
+EXEC(@SpotAllocationMakeNotNullSql)
+
+GO
+/*************************************** End BP-1894 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

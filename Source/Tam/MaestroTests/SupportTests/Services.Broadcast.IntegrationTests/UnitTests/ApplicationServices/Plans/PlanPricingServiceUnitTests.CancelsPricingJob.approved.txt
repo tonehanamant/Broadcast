@@ -19,6 +19,7 @@
       "PlanVersionId": 0,
       "PostingType": 0,
       "Programs": [],
+      "SpotAllocationModelMode": 1,
       "Totals": {
         "AvgCpm": 0.0,
         "AvgImpressions": 0.0,

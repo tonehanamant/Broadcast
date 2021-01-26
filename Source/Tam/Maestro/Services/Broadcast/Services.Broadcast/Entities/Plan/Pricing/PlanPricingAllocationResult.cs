@@ -22,5 +22,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public List<PlanPricingAllocatedSpot> Spots { get; set; }
 
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 }

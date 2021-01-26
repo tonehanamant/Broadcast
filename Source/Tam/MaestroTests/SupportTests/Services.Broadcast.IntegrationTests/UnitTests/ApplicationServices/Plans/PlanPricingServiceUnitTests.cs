@@ -18,6 +18,7 @@ using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -2031,6 +2032,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     JobId = 1,
                     OptimalCpm = 0.0006666666666666666666667000m,
                 });
+
+            _PlanPricingBandCalculationEngineMock.Setup(s => s.CalculatePricingBands(
+                    It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
+                    It.IsAny<PlanPricingParametersDto>(), It.IsAny<ProprietaryInventoryData>(),
+                    It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanPricingBand());
+
+            _PlanPricingStationCalculationEngineMock.Setup(s =>
+                    s.Calculate(It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
+                        It.IsAny<PlanPricingParametersDto>(), It.IsAny<ProprietaryInventoryData>(),
+                        It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanPricingStationResult());
+
+            _PlanPricingMarketResultsEngine.Setup(s => s.Calculate(It.IsAny<List<PlanPricingInventoryProgram>>(),
+                    It.IsAny<PlanPricingAllocationResult>(),
+                    It.IsAny<PlanDto>(), It.IsAny<List<MarketCoverage>>(), It.IsAny<ProprietaryInventoryData>(),
+                    It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanPricingResultMarkets());
 
             var service = _GetService();
 
@@ -4853,6 +4872,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _PlanPricingBandCalculationEngineMock.Setup(s => s.CalculatePricingBands(
+                    It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
+                    It.IsAny<PlanPricingParametersDto>(), It.IsAny<ProprietaryInventoryData>(),
+                    It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanPricingBand());
+
+            _PlanPricingStationCalculationEngineMock.Setup(s =>
+                    s.Calculate(It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
+                        It.IsAny<PlanPricingParametersDto>(), It.IsAny<ProprietaryInventoryData>(),
+                        It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanPricingStationResult());
+
+            _PlanPricingMarketResultsEngine.Setup(s => s.Calculate(It.IsAny<List<PlanPricingInventoryProgram>>(),
+                    It.IsAny<PlanPricingAllocationResult>(),
+                    It.IsAny<PlanDto>(), It.IsAny<List<MarketCoverage>>(), It.IsAny<ProprietaryInventoryData>(),
+                    It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanPricingResultMarkets());
+
             var service = _GetService();
 
             // Act
@@ -6023,9 +6060,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingProgramsResultByJobId(It.IsAny<int>()))
-                .Returns(new PricingProgramsResultDto
+                .Setup(x => x.GetPricingProgramsResultByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PricingProgramsResultDto
                 {
+                    SpotAllocationModelMode = mode,
                     Programs = new List<PlanPricingProgramProgramDto>
                     {
                         new PlanPricingProgramProgramDto
@@ -6205,9 +6243,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingProgramsResultByJobId_v2(It.IsAny<int>()))
-                .Returns(new PricingProgramsResultDto_v2
+                .Setup(x => x.GetPricingProgramsResultByJobId_v2(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PricingProgramsResultDto_v2
                 {
+                    SpotAllocationModelMode = mode,
                     NsiResults = new PostingTypePlanPricingResultPrograms
                     {
                         ProgramDetails = new List<PlanPricingProgramProgramDto>
@@ -6422,9 +6461,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingProgramsResultByJobId(jobId))
-                .Returns(new PricingProgramsResultDto
+                .Setup(x => x.GetPricingProgramsResultByJobId(jobId, It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PricingProgramsResultDto
                 {
+                    SpotAllocationModelMode = mode,
                     Programs = new List<PlanPricingProgramProgramDto>
                     {
                         new PlanPricingProgramProgramDto
@@ -6605,9 +6645,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingStationsResultByJobId(jobId))
-                .Returns(new PlanPricingStationResultDto
+                .Setup(x => x.GetPricingStationsResultByJobId(jobId, It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PlanPricingStationResultDto
                 {
+                    SpotAllocationModelMode = mode,
                     JobId = jobId,
                     Stations = new List<PlanPricingStationDto>
                     {
@@ -6733,9 +6774,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingStationsResultByJobId(It.IsAny<int>()))
-                .Returns(new PlanPricingStationResultDto
+                .Setup(x => x.GetPricingStationsResultByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PlanPricingStationResultDto
                 {
+                    SpotAllocationModelMode = mode,
                     JobId = 5,
                     PlanVersionId = 3,
                     Stations = new List<PlanPricingStationDto>
@@ -6851,9 +6893,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingStationsResultByJobId_v2(It.IsAny<int>()))
-                .Returns(new PlanPricingStationResultDto_v2
+                .Setup(x => x.GetPricingStationsResultByJobId_v2(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PlanPricingStationResultDto_v2
                 {
+                    SpotAllocationModelMode = mode,
                     JobId = 5,
                     PlanVersionId = 3,
                     NsiResults = new PostingTypePlanPricingResultStations
@@ -6998,9 +7041,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingResultMarketsByJobId(jobId))
-                .Returns(new PlanPricingResultMarketsDto
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId(jobId, It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PlanPricingResultMarketsDto
                 {
+                    SpotAllocationModelMode = mode,
                     MarketDetails = new List<PlanPricingResultMarketDetailsDto>
                     {
                          new PlanPricingResultMarketDetailsDto
@@ -7028,7 +7072,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Stations = 5,
                         CoveragePercent = 70,
                         Markets = 1
-                    }
+                    },
                 });
 
             // Act
@@ -7119,9 +7163,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingResultMarketsByJobId(It.IsAny<int>()))
-                .Returns(new PlanPricingResultMarketsDto
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PlanPricingResultMarketsDto
                 {
+                    SpotAllocationModelMode = mode,
                     MarketDetails = new List<PlanPricingResultMarketDetailsDto>
                     {
                          new PlanPricingResultMarketDetailsDto
@@ -7191,9 +7236,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingResultMarketsByJobId_v2(jobId))
-                .Returns(new PlanPricingResultMarketsDto_v2
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId_v2(jobId, It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new PlanPricingResultMarketsDto_v2
                 {
+                    SpotAllocationModelMode = mode,
                     PricingJobId = jobId,
                     PlanVersionId = 3,
                     NsiResults = new PostingTypePlanPricingResultMarkets
@@ -7345,7 +7391,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingResultMarketsByJobId_v2(It.IsAny<int>()))
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId_v2(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new PlanPricingResultMarketsDto_v2
                 {
                     PricingJobId = 2,
@@ -7499,7 +7545,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingBandByJobId(jobId))
+                .Setup(x => x.GetPlanPricingBandByJobId(jobId, It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new PlanPricingBandDto
                 {
                     PlanVersionId = 3,
@@ -7648,7 +7694,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingBandByJobId(It.IsAny<int>()))
+                .Setup(x => x.GetPlanPricingBandByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new PlanPricingBandDto
                 {
                     PlanVersionId = 3,
@@ -7764,7 +7810,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingBandByJobId_v2(jobId))
+                .Setup(x => x.GetPlanPricingBandByJobId_v2(jobId, It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new PlanPricingBandDto_v2
                 {
                     PlanVersionId = 3,
@@ -7910,7 +7956,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingBandByJobId_v2(It.IsAny<int>()))
+                .Setup(x => x.GetPlanPricingBandByJobId_v2(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new PlanPricingBandDto_v2
                 {
                     PlanVersionId = 3,

@@ -17,6 +17,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PlanPricingStationTotals Totals { get; set; }
         public List<PlanPricingStation> Stations { get; set; }
         public PostingTypeEnum PostingType { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 
     public class PlanPricingStation

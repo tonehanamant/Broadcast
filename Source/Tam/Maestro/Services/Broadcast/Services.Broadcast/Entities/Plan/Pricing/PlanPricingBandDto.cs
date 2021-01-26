@@ -11,6 +11,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public List<PlanPricingBandDetailDto> Bands { get; set; } = new List<PlanPricingBandDetailDto>();
         public PlanPricingBandTotalsDto Totals { get; set; } = new PlanPricingBandTotalsDto();
         public PostingTypeEnum PostingType { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 
     public class PlanPricingBandDto_v2
@@ -20,6 +21,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int PlanVersionId { get; set; }
         public PostingTypePlanPricingResultBands NsiResults { get; set; }
         public PostingTypePlanPricingResultBands NtiResults { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 
     public class PostingTypePlanPricingResultBands

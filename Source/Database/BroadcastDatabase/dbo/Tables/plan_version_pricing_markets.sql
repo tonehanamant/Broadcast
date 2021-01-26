@@ -9,6 +9,7 @@
     [total_cpm]                   FLOAT (53) NOT NULL,
     [total_budget]                FLOAT (53) NOT NULL,
     [posting_type]                INT        NOT NULL,
+    [spot_allocation_model_mode]  INT        NOT NULL,
     CONSTRAINT [PK_plan_version_pricing_markets] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_version_pricing_markets_pricing_job] FOREIGN KEY ([plan_version_pricing_job_id]) REFERENCES [dbo].[plan_version_pricing_job] ([id])
 );

@@ -30,6 +30,7 @@
   "PlanVersionId": 0,
   "PostingType": 2,
   "PricingJobId": null,
+  "SpotAllocationModelMode": 1,
   "Totals": {
     "Budget": 11175.6,
     "CoveragePercent": 10.328,

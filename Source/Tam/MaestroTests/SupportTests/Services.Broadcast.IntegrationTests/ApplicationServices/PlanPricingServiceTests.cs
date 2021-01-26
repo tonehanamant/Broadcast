@@ -25,31 +25,46 @@ using Unity;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Entities.InventoryProprietary;
+using Services.Broadcast.IntegrationTests.TestData;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class PlanPricingServiceTests
     {
-        private readonly IPlanPricingService _PlanPricingService;
-        private readonly IPlanService _PlanService;
-        private readonly IPlanRepository _PlanRepository;
-        private readonly IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
+        private IPlanService _PlanService;
+        private IPlanRepository _PlanRepository;
+        private IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
         private InventoryFileTestHelper _InventoryFileTestHelper;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
-        public PlanPricingServiceTests()
-        {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
-            _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
-            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
-            _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
-        }
+        private IPlanPricingService _PlanPricingService;
 
         [SetUp]
         public void SetUp()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, false);
+            // register our stub instance so it is used to instantiate the service
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
+            
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
+            
+            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+            _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
+
             _InventoryFileTestHelper = new InventoryFileTestHelper();
+            _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+        }
+
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -501,49 +516,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void SavePricingResultsTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var planPricingRequestDto = new PlanPricingParametersDto
-                {
-                    PlanId = 1197,
-                    PlanVersionId = 47,
-                    MaxCpm = 100m,
-                    MinCpm = 1m,
-                    Budget = 1000,
-                    CompetitionFactor = 0.1,
-                    CPM = 5m,
-                    DeliveryImpressions = 50000,
-                    InflationFactor = 0.5,
-                    ProprietaryBlend = 0.2,
-                    UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None
-                };
-
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
-
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
-
-                var result = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanPricingAllocatedSpot), "Id");
-                jsonResolver.Ignore(typeof(PlanPricingAllocationResult), "JobId");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
@@ -1866,5 +1838,275 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 5
             };
         }
+
+        #region Allocation Model Versions
+
+        private PlanPricingJob _SavePlanAndRunPricingJob(PlanDto plan)
+        {
+            var savedDate = new DateTime(2019, 11, 4);
+            var planId = _PlanService.SavePlan(plan, "testUser", savedDate, true);
+            var savedPlan = _PlanService.GetPlan(planId);
+
+            var planPricingRequestDto = new PlanPricingParametersDto
+            {
+                PlanId = savedPlan.Id,
+                PlanVersionId = savedPlan.VersionId,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.Per30Min,
+                MarketGroup = MarketGroupEnum.None
+            };
+
+            var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, savedDate, "test user");
+
+            _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+            return job;
+        }
+
+        private JsonSerializerSettings _GetJsonSettingsForPricingResults()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingAllocatedSpot), "Id");
+            jsonResolver.Ignore(typeof(PlanPricingAllocationResult), "JobId");
+            jsonResolver.Ignore(typeof(PlanPricingProgramProgramDto), "Id");
+            jsonResolver.Ignore(typeof(PlanPricingStationResultDto_v2), "Id");
+            jsonResolver.Ignore(typeof(PlanPricingStationResultDto_v2), "JobId");
+            jsonResolver.Ignore(typeof(PlanPricingStationResultDto_v2), "PlanVersionId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            return jsonSettings;
+        }
+
+        /// <summary>
+        /// Saves the pricing results test.
+        /// This is V1
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void SavePricingResultsTest()
+        {
+            string resultsToVerify;
+            var jsonSettings = _GetJsonSettingsForPricingResults();            
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRun();
+
+            using (new TransactionScopeWrapper())
+            {
+                var job = _SavePlanAndRunPricingJob(plan);
+
+                var result = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
+
+                resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            }
+
+            Approvals.Verify(resultsToVerify);
+        }        
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void SavePricingResultsTestWithMultiLengthAndEfficiency()
+        {
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
+
+            string resultsToVerify;
+            var jsonSettings = _GetJsonSettingsForPricingResults();
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            using (new TransactionScopeWrapper())
+            {
+                var job = _SavePlanAndRunPricingJob(plan);
+
+                var resultDefault = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
+                var resultQ = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality);
+                var resultE = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Floor);
+
+                var result = new
+                {
+                    Default = resultDefault,
+                    Quality = resultQ,
+                    Efficiency = resultE,
+                    Floor = resultF
+                };
+
+                resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            }
+
+            Approvals.Verify(resultsToVerify);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetProgramsForVersion_v2()
+        {
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
+
+            string resultsToVerify;
+            var jsonSettings = _GetJsonSettingsForPricingResults();
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            using (new TransactionScopeWrapper())
+            {
+                var job = _SavePlanAndRunPricingJob(plan);
+
+                var resultDefault = _PlanPricingService.GetProgramsForVersion_v2(plan.Id, plan.VersionId);
+                var resultQ = _PlanPricingService.GetProgramsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
+                var resultE = _PlanPricingService.GetProgramsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanPricingService.GetProgramsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Floor);
+
+                var executionResult = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
+
+                var result = new
+                {
+                    Default = resultDefault,
+                    Quality = resultQ,
+                    Efficiency = resultE,
+                    Floor = resultF,
+                };
+
+                Assert.AreEqual(executionResult.Result.OptimalCpm, resultDefault.NtiResults.Totals.AvgCpm);
+                resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            }
+
+            Approvals.Verify(resultsToVerify);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetStationsForVersion_V2()
+        {
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
+
+            string resultsToVerify;
+            var jsonSettings = _GetJsonSettingsForPricingResults();
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            using (new TransactionScopeWrapper())
+            {
+                var job = _SavePlanAndRunPricingJob(plan);
+
+                var resultDefault = _PlanPricingService.GetStationsForVersion_v2(plan.Id, plan.VersionId);
+                var resultQ = _PlanPricingService.GetStationsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
+                var resultE = _PlanPricingService.GetStationsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanPricingService.GetStationsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Floor);
+
+                var executionResult = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
+
+                var result = new
+                {
+                    Default = resultDefault,
+                    Quality = resultQ,
+                    Efficiency = resultE,
+                    Floor = resultF,
+                };
+
+                Assert.AreEqual(executionResult.Result.OptimalCpm, resultDefault.NtiResults.Totals.Cpm);
+                resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            }
+
+            Approvals.Verify(resultsToVerify);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetMarketsForVersion_v2()
+        {
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
+
+            string resultsToVerify;
+            var jsonSettings = _GetJsonSettingsForPricingResults();
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            using (new TransactionScopeWrapper())
+            {
+                var job = _SavePlanAndRunPricingJob(plan);
+
+                var resultDefault = _PlanPricingService.GetMarketsForVersion_v2(plan.Id, plan.VersionId);
+                var resultQ = _PlanPricingService.GetMarketsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
+                var resultE = _PlanPricingService.GetMarketsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanPricingService.GetMarketsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Floor);
+
+                var executionResult = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
+
+                var result = new
+                {
+                    Default = resultDefault,
+                    Quality = resultQ,
+                    Efficiency = resultE,
+                    Floor = resultF,
+                };
+
+                var comparibleOptimalCpm = $"{executionResult.Result.OptimalCpm: 0.000}";
+                var comparibleResultCpm = $"{resultDefault.NtiResults.Totals.Cpm: 0.000}";
+
+                Assert.AreEqual(comparibleOptimalCpm,comparibleResultCpm);
+                resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            }
+
+            Approvals.Verify(resultsToVerify);
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingBandsForVersion_v2()
+        {
+            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
+
+            string resultsToVerify;
+            var jsonSettings = _GetJsonSettingsForPricingResults();
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            using (new TransactionScopeWrapper())
+            {
+                var job = _SavePlanAndRunPricingJob(plan);
+
+                var resultDefault = _PlanPricingService.GetPricingBandsForVersion_v2(plan.Id, plan.VersionId);
+                var resultQ = _PlanPricingService.GetPricingBandsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
+                var resultE = _PlanPricingService.GetPricingBandsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanPricingService.GetPricingBandsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Floor);
+
+                var executionResult = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
+
+                var result = new
+                {
+                    Default = resultDefault,
+                    Quality = resultQ,
+                    Efficiency = resultE,
+                    Floor = resultF,
+                };
+
+                var comparibleOptimalCpm = $"{executionResult.Result.OptimalCpm: 0.000}";
+                var comparibleResultCpm = $"{resultDefault.NtiResults.Totals.Cpm: 0.000}";
+
+                Assert.AreEqual(comparibleOptimalCpm, comparibleResultCpm);
+                resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+            }
+
+            Approvals.Verify(resultsToVerify);
+        }
+
+        #endregion // #region Allocation Model Versions
     }
 }

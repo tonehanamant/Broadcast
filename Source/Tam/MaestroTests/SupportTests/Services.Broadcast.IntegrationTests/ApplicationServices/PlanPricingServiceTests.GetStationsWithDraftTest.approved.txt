@@ -1,5 +1,6 @@
 {
   "PostingType": 2,
+  "SpotAllocationModelMode": 1,
   "Stations": [
     {
       "Budget": 5375.0000,

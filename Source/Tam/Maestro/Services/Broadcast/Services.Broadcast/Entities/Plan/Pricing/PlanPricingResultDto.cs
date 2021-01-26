@@ -12,6 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
         public PostingTypeEnum PostingType { get; internal set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 
     public class PlanPricingResultDto : PlanPricingResultBaseDto

@@ -60,6 +60,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             return new PlanPricingApiSpotsResponseDto_v3
             {
                 RequestId = "djj4j4399fmmf1m212",
+                Results = results
             };
         }
     }

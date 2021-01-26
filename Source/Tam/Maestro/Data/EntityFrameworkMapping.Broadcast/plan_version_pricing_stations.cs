@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal total_budget { get; set; }
         public int total_stations { get; set; }
         public int posting_type { get; set; }
+        public int spot_allocation_model_mode { get; set; }
     
         public virtual ICollection<plan_version_pricing_station_details> plan_version_pricing_station_details { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }

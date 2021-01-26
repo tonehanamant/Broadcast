@@ -45,5 +45,6 @@
       "Station": 1
     }
   },
-  "PlanVersionId": 3
+  "PlanVersionId": 3,
+  "SpotAllocationModelMode": 1
 }

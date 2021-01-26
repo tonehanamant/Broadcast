@@ -17,6 +17,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PlanPricingStationTotalsDto Totals { get; set; }
         public List<PlanPricingStationDto> Stations { get; set; }
         public PostingTypeEnum PostingType { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 
     public class PlanPricingStationResultDto_v2
@@ -26,6 +27,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int? PlanVersionId { get; set; }
         public PostingTypePlanPricingResultStations NsiResults { get; set; }
         public PostingTypePlanPricingResultStations NtiResults { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 
     public class PostingTypePlanPricingResultStations

@@ -492,6 +492,7 @@
     <Compile Include="Converters\RateImport\InventoryImportManifestDuplicateHandler.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataConverter.cs" />
+    <Compile Include="Entities\Enums\SpotAllocationModelMode.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />

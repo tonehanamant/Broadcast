@@ -484,6 +484,7 @@
     <Compile Include="TestData\InventoryTestData.cs" />
     <Compile Include="TestData\MarketsTestData.cs" />
     <Compile Include="TestData\MediaMonthAndWeekTestData.cs" />
+    <Compile Include="TestData\PlanTestDataHelper.cs" />
     <Compile Include="TestData\QuartersTestData.cs" />
     <Compile Include="TestData\SpotLengthTestData.cs" />
     <Compile Include="TestData\StationsTestData.cs" />

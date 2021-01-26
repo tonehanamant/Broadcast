@@ -5,6 +5,7 @@
     "PricingCpm": 0.1809823723169363304014189000,
     "PricingVersion": "4",
     "RequestId": "djj4j4399fmmf1m212",
+    "SpotAllocationModelMode": 1,
     "Spots": [
       {
         "ContractMediaWeek": {

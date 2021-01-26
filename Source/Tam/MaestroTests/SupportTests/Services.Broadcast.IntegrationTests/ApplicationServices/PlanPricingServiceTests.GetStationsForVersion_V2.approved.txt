@@ -1,0 +1,270 @@
+{
+  "Default": {
+    "NsiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 12.263053348467650397275822900,
+          "Id": 0,
+          "Impressions": 1321.5,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 46.48125000,
+          "Id": 0,
+          "Impressions": 12.0,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 12.5709,
+        "Impressions": 1333.5,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "NtiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 14.427121586432529879148027000,
+          "Id": 0,
+          "Impressions": 1123.275,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 54.683823529411764705882352900,
+          "Id": 0,
+          "Impressions": 10.2,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "SpotAllocationModelMode": 1
+  },
+  "Efficiency": {
+    "NsiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 12.263053348467650397275822900,
+          "Id": 0,
+          "Impressions": 1321.5,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 46.48125000,
+          "Id": 0,
+          "Impressions": 12.0,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 12.5709,
+        "Impressions": 1333.5,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "NtiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 14.427121586432529879148027000,
+          "Id": 0,
+          "Impressions": 1123.275,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 54.683823529411764705882352900,
+          "Id": 0,
+          "Impressions": 10.2,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "SpotAllocationModelMode": 2
+  },
+  "Floor": {
+    "NsiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 12.263053348467650397275822900,
+          "Id": 0,
+          "Impressions": 1321.5,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 46.48125000,
+          "Id": 0,
+          "Impressions": 12.0,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 12.5709,
+        "Impressions": 1333.5,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "NtiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 14.427121586432529879148027000,
+          "Id": 0,
+          "Impressions": 1123.275,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 54.683823529411764705882352900,
+          "Id": 0,
+          "Impressions": 10.2,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "SpotAllocationModelMode": 3
+  },
+  "Quality": {
+    "NsiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 12.263053348467650397275822900,
+          "Id": 0,
+          "Impressions": 1321.5,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 46.48125000,
+          "Id": 0,
+          "Impressions": 12.0,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 12.5709,
+        "Impressions": 1333.5,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "NtiResults": {
+      "StationDetails": [
+        {
+          "Budget": 16205.6250,
+          "Cpm": 14.427121586432529879148027000,
+          "Id": 0,
+          "Impressions": 1123.275,
+          "ImpressionsPercentage": 99.10011249,
+          "Market": "New York",
+          "Spots": 30,
+          "Station": "WPIX"
+        },
+        {
+          "Budget": 557.7750,
+          "Cpm": 54.683823529411764705882352900,
+          "Id": 0,
+          "Impressions": 10.2,
+          "ImpressionsPercentage": 0.89988751,
+          "Market": "Portland-Auburn",
+          "Spots": 30,
+          "Station": "WPFO"
+        }
+      ],
+      "Totals": {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "Spots": 60,
+        "Station": 2
+      }
+    },
+    "SpotAllocationModelMode": 1
+  }
+}

@@ -10,6 +10,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PlanPricingResultMarketsTotals Totals { get; set; }
         public List<PlanPricingResultMarketDetails> MarketDetails { get; set; } = new List<PlanPricingResultMarketDetails>();
         public PostingTypeEnum PostingType { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 
     public class PlanPricingResultMarketsTotals

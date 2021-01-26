@@ -10,6 +10,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PlanPricingResultMarketsTotalsDto Totals { get; set; }
         public List<PlanPricingResultMarketDetailsDto> MarketDetails { get; set; } = new List<PlanPricingResultMarketDetailsDto>();
         public PostingTypeEnum PostingType { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 
     public class PlanPricingResultMarketsDto_v2
@@ -18,6 +19,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int? PricingJobId { get; set; }
         public PostingTypePlanPricingResultMarkets NsiResults { get; set; }
         public PostingTypePlanPricingResultMarkets NtiResults { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 
     public class PostingTypePlanPricingResultMarkets

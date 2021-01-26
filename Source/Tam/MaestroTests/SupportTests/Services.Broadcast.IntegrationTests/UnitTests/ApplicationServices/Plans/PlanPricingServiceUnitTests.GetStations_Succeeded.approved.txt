@@ -3,6 +3,7 @@
   "JobId": 5,
   "PlanVersionId": 3,
   "PostingType": 0,
+  "SpotAllocationModelMode": 1,
   "Stations": [
     {
       "Budget": 1131.0,

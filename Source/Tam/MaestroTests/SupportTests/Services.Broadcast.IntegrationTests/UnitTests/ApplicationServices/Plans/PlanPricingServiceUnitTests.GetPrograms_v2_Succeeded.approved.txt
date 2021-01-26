@@ -52,5 +52,6 @@
       "Spots": 3,
       "StationCount": 13
     }
-  }
+  },
+  "SpotAllocationModelMode": 1
 }

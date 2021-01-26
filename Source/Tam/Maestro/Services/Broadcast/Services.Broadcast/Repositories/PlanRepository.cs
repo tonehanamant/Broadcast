@@ -109,6 +109,7 @@ namespace Services.Broadcast.Repositories
         int GetLatestVersionNumberForPlan(int planId);
 
         int AddPlanPricingJob(PlanPricingJob planPricingJob);
+
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
 
         void SetPricingPlanVersionId(int jobId, int planVersionId);
@@ -122,9 +123,6 @@ namespace Services.Broadcast.Repositories
         PlanPricingJob GetPricingJobForLatestPlanVersion(int planId);
         PlanPricingJob GetPricingJobForPlanVersion(int planVersionId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
-        void SavePricingApiResults(PlanPricingAllocationResult result);
-        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId);
-        void SavePricingAggregateResults(PlanPricingResultBaseDto result);
         CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
@@ -142,18 +140,6 @@ namespace Services.Broadcast.Repositories
 
         int GetPlanVersionIdByVersionNumber(int planId, int versionNumber);
 
-        PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId);
-
-        PlanPricingBandDto GetPlanPricingBandByJobId(int jobId);
-
-        void SavePlanPricingBands(PlanPricingBand planPricingBand);
-
-        PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId);
-
-        PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId);
-
-        void SavePlanPricingMarketResults(PlanPricingResultMarkets planPricingResultMarkets);
-
         /// <summary>
         /// Get Goal CPM value
         /// </summary>
@@ -168,10 +154,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="jobId">The job identifier</param>
         /// <returns></returns>
         decimal GetGoalCpm(int jobId);
-
-        PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId);
-
-        void SavePlanPricingStations(PlanPricingStationResult planPricingStationResult);
 
         /// <summary>
         /// Updates plan pricing version to point to the previous version of the plan pricing data
@@ -195,9 +177,34 @@ namespace Services.Broadcast.Repositories
         List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForProgramLineup(int jobId);
 
         List<PlanPricingJob> GetSuccessfulPricingJobs(int planVersionId);
-        PricingProgramsResultDto_v2 GetPricingProgramsResultByJobId_v2(int id);
-        PlanPricingBandDto_v2 GetPlanPricingBandByJobId_v2(int id);
-        PlanPricingStationResultDto_v2 GetPricingStationsResultByJobId_v2(int id);
+        
+        void SavePricingApiResults(PlanPricingAllocationResult result);
+        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        void SavePricingAggregateResults(PlanPricingResultBaseDto result);
+        PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PricingProgramsResultDto_v2 GetPricingProgramsResultByJobId_v2(int id,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        void SavePlanPricingBands(PlanPricingBand planPricingBand);
+        PlanPricingBandDto GetPlanPricingBandByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PlanPricingBandDto_v2 GetPlanPricingBandByJobId_v2(int id,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        void SavePlanPricingStations(PlanPricingStationResult planPricingStationResult);
+        PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PlanPricingStationResultDto_v2 GetPricingStationsResultByJobId_v2(int id,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        void SavePlanPricingMarketResults(PlanPricingResultMarkets planPricingResultMarkets);
+        PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1458,7 +1465,8 @@ namespace Services.Broadcast.Repositories
                 {
                     optimal_cpm = result.PricingCpm,
                     plan_version_pricing_job_id = result.JobId,
-                    pricing_version = result.PricingVersion
+                    pricing_version = result.PricingVersion,
+                    spot_allocation_model_mode = (int)(result.SpotAllocationModelMode)
                 };
 
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
@@ -1505,14 +1513,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId)
+        public PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(y => y.plan_version_pricing_api_result_spot_frequencies))
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode) 
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1521,6 +1530,7 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanPricingAllocationResult
                 {
+                    SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode,
                     PricingCpm = apiResult.optimal_cpm,
                     JobId = apiResult.plan_version_pricing_job_id,
                     Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
@@ -1558,7 +1568,8 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingBandDto GetPlanPricingBandByJobId(int jobId)
+        public PlanPricingBandDto GetPlanPricingBandByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1570,7 +1581,9 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_bands
                     .Include(x => x.plan_version_pricing_band_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
+                    .Where(x => x.plan_version_pricing_job_id == jobId 
+                                && x.posting_type == postingType
+                                && x.spot_allocation_model_mode == (int)spotAllocationModelMode) 
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1580,6 +1593,7 @@ namespace Services.Broadcast.Repositories
                 return new PlanPricingBandDto
                 {
                     PostingType = (PostingTypeEnum)result.posting_type,
+                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode,
                     Totals = new PlanPricingBandTotalsDto
                     {
                         Cpm = result.total_cpm,
@@ -1603,13 +1617,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingBandDto_v2 GetPlanPricingBandByJobId_v2(int jobId)
+        public PlanPricingBandDto_v2 GetPlanPricingBandByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var entities = context.plan_version_pricing_bands
                     .Include(x => x.plan_version_pricing_band_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode) 
                     .OrderByDescending(p => p.id);
 
                 if (!entities.Any())
@@ -1618,7 +1634,8 @@ namespace Services.Broadcast.Repositories
                 return new PlanPricingBandDto_v2
                 {
                     NsiResults = _GetPostingTypePlanPricingResultsBands(entities, PostingTypeEnum.NSI),
-                    NtiResults = _GetPostingTypePlanPricingResultsBands(entities, PostingTypeEnum.NTI)
+                    NtiResults = _GetPostingTypePlanPricingResultsBands(entities, PostingTypeEnum.NTI),
+                    SpotAllocationModelMode = spotAllocationModelMode
                 };
             });
         }
@@ -1627,7 +1644,8 @@ namespace Services.Broadcast.Repositories
         {
             var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
 
-            if (entity == null) return null;
+            if (entity == null) 
+                return null;
 
             var result = new PostingTypePlanPricingResultBands
             {
@@ -1667,6 +1685,7 @@ namespace Services.Broadcast.Repositories
                     total_impressions = planPricingBand.Totals.Impressions,
                     total_spots = planPricingBand.Totals.Spots,
                     posting_type = (int)planPricingBand.PostingType,
+                    spot_allocation_model_mode = (int)planPricingBand.SpotAllocationModelMode,
                     plan_version_pricing_band_details = planPricingBand.Bands.Select(x =>
                         new plan_version_pricing_band_details
                         {
@@ -1690,7 +1709,6 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-
                 context.plan_version_pricing_stations.Add(new plan_version_pricing_stations
                 {
                     plan_version_pricing_job_id = planPricingStationResult.JobId,
@@ -1700,6 +1718,7 @@ namespace Services.Broadcast.Repositories
                     total_spots = planPricingStationResult.Totals.Spots,
                     total_stations = planPricingStationResult.Totals.Station,
                     posting_type = (int)planPricingStationResult.PostingType,
+                    spot_allocation_model_mode = (int)planPricingStationResult.SpotAllocationModelMode,
                     plan_version_pricing_station_details = planPricingStationResult.Stations
                             .Select(stationDto => new plan_version_pricing_station_details
                             {
@@ -1718,7 +1737,8 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId)
+        public PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1730,7 +1750,8 @@ namespace Services.Broadcast.Repositories
 
                 var entity = context.plan_version_pricing_markets
                     .Include(x => x.plan_version_pricing_market_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType
+                    && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1740,6 +1761,7 @@ namespace Services.Broadcast.Repositories
                 var dto = new PlanPricingResultMarketsDto
                 {
                     PostingType = (PostingTypeEnum)entity.posting_type,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanPricingResultMarketsTotalsDto
                     {
                         Markets = entity.total_markets,
@@ -1767,13 +1789,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId)
+        public PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var entities = context.plan_version_pricing_markets
                      .Include(x => x.plan_version_pricing_market_details)
-                     .Where(x => x.plan_version_pricing_job_id == jobId)
+                     .Where(x => x.plan_version_pricing_job_id == jobId &&
+                                 x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                      .OrderByDescending(p => p.id);
 
                 if (!entities.Any())
@@ -1782,7 +1806,8 @@ namespace Services.Broadcast.Repositories
                 var dto = new PlanPricingResultMarketsDto_v2
                 {
                     NsiResults = _GetPostingTypePlanPricingResultMarkets(entities, PostingTypeEnum.NSI),
-                    NtiResults = _GetPostingTypePlanPricingResultMarkets(entities, PostingTypeEnum.NTI)
+                    NtiResults = _GetPostingTypePlanPricingResultMarkets(entities, PostingTypeEnum.NTI),
+                    SpotAllocationModelMode = spotAllocationModelMode
                 };
                 return dto;
             });
@@ -1838,6 +1863,7 @@ namespace Services.Broadcast.Repositories
                     total_cpm = Convert.ToDouble(planPricingResultMarkets.Totals.Cpm),
                     total_budget = Convert.ToDouble(planPricingResultMarkets.Totals.Budget),
                     posting_type = (int)planPricingResultMarkets.PostingType,
+                    spot_allocation_model_mode = (int)planPricingResultMarkets.SpotAllocationModelMode,
                     plan_version_pricing_market_details = planPricingResultMarkets.MarketDetails.Select(d => new plan_version_pricing_market_details
                     {
                         market_name = d.MarketName,
@@ -1889,7 +1915,8 @@ namespace Services.Broadcast.Repositories
                     plan_version_pricing_job_id = pricingResult.JobId,
                     goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
                     total_spots = pricingResult.Totals.Spots,
-                    posting_type = (int)pricingResult.PostingType
+                    posting_type = (int)pricingResult.PostingType,
+                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode
                 };
 
                 context.plan_version_pricing_results.Add(planPricingResult);
@@ -1926,7 +1953,8 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId)
+        public PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1938,7 +1966,8 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType
+                    && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1948,6 +1977,7 @@ namespace Services.Broadcast.Repositories
                 return new PricingProgramsResultDto
                 {
                     PostingType = (PostingTypeEnum)result.posting_type,
+                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode,
                     Totals = new PricingProgramsResultTotalsDto
                     {
                         MarketCount = result.total_market_count,
@@ -1978,13 +2008,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PricingProgramsResultDto_v2 GetPricingProgramsResultByJobId_v2(int jobId)
+        public PricingProgramsResultDto_v2 GetPricingProgramsResultByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var entities = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId 
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id);
 
                 if (!entities.Any()) return null;
@@ -1992,14 +2024,16 @@ namespace Services.Broadcast.Repositories
                 var dto = new PricingProgramsResultDto_v2
                 {
                     NsiResults = _GetPostingTypePlanPricingResultPrograms(entities, PostingTypeEnum.NSI),
-                    NtiResults = _GetPostingTypePlanPricingResultPrograms(entities, PostingTypeEnum.NTI)
+                    NtiResults = _GetPostingTypePlanPricingResultPrograms(entities, PostingTypeEnum.NTI),
+                    SpotAllocationModelMode = spotAllocationModelMode
                 };
 
                 return dto;
             });
         }
 
-        private PostingTypePlanPricingResultPrograms _GetPostingTypePlanPricingResultPrograms(IOrderedQueryable<plan_version_pricing_results> entities, PostingTypeEnum postingType)
+        private PostingTypePlanPricingResultPrograms _GetPostingTypePlanPricingResultPrograms(IOrderedQueryable<plan_version_pricing_results> entities, 
+            PostingTypeEnum postingType)
         {
             var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
 
@@ -2069,7 +2103,8 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId)
+        public PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -2081,7 +2116,9 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_stations
                     .Include(p => p.plan_version_pricing_station_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
+                    .Where(x => x.plan_version_pricing_job_id == jobId 
+                        && x.posting_type == postingType
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -2094,6 +2131,7 @@ namespace Services.Broadcast.Repositories
                     JobId = result.plan_version_pricing_job_id,
                     PlanVersionId = result.plan_version_pricing_job.plan_version_id,
                     PostingType = (PostingTypeEnum)result.posting_type,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanPricingStationTotalsDto
                     {
                         Budget = result.total_budget,
@@ -2118,13 +2156,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingStationResultDto_v2 GetPricingStationsResultByJobId_v2(int jobId)
+        public PlanPricingStationResultDto_v2 GetPricingStationsResultByJobId_v2(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var entities = context.plan_version_pricing_stations
                     .Include(p => p.plan_version_pricing_station_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .Where(x => x.plan_version_pricing_job_id == jobId
+                    && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id);
 
                 if (!entities.Any()) return null;
@@ -2136,6 +2176,7 @@ namespace Services.Broadcast.Repositories
                     PlanVersionId = entities.First().plan_version_pricing_job.plan_version_id,
                     NsiResults = _GetPostingTypePlanPricingResultStations(entities, PostingTypeEnum.NSI),
                     NtiResults = _GetPostingTypePlanPricingResultStations(entities, PostingTypeEnum.NTI),
+                    SpotAllocationModelMode = spotAllocationModelMode
                 };
 
                 return result;
