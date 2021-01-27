@@ -221,6 +221,7 @@
   "JobId": 1,
   "PlanVersionId": 1,
   "PostingType": 1,
+  "SpotAllocationModelMode": 1,
   "Totals": {
     "Budget": 800.0,
     "Cpm": 15.094339622641509433962264200,
