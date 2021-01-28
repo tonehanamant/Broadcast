@@ -123,7 +123,8 @@ namespace Services.Broadcast.Repositories
         PlanPricingJob GetPricingJobForLatestPlanVersion(int planId);
         PlanPricingJob GetPricingJobForPlanVersion(int planVersionId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
-        CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId);
+        CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
 
@@ -2072,7 +2073,8 @@ namespace Services.Broadcast.Repositories
             return programResult;
         }
 
-        public CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId)
+        public CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -2084,7 +2086,8 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType)
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType 
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -2098,7 +2101,8 @@ namespace Services.Broadcast.Repositories
                     JobId = result.plan_version_pricing_job_id,
                     PlanVersionId = result.plan_version_pricing_job.plan_version_id,
                     GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
-                    HasResults = result.plan_version_pricing_result_spots.Any()
+                    HasResults = result.plan_version_pricing_result_spots.Any(),
+                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode
                 };
             });
         }

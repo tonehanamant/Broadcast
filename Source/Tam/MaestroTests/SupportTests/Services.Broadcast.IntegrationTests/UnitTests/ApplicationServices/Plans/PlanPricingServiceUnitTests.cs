@@ -6003,22 +6003,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>()))
-                .Returns(new CurrentPricingExecutionResultDto
+                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new CurrentPricingExecutionResultDto
                 {
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
                     JobId = 12,
-                    CpmPercentage = 204
-
+                    CpmPercentage = 204,
+                    SpotAllocationModelMode = mode
                 });
 
 
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
-
-
 
             var service = _GetService();
 
@@ -8102,13 +8100,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>()))
-                .Returns(new CurrentPricingExecutionResultDto
+                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<int, SpotAllocationModelMode>((id, mode) => new CurrentPricingExecutionResultDto
                 {
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
-                    JobId = 12
+                    JobId = 12,
+                    SpotAllocationModelMode = mode
                 });
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))

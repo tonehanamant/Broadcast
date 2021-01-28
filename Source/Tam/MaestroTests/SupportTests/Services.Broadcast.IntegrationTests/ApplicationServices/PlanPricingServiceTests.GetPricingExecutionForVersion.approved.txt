@@ -11,6 +11,7 @@
     "HasResults": true,
     "Notes": "",
     "OptimalCpm": 14.7158,
-    "PostingType": 2
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1
   }
 }

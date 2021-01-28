@@ -589,7 +589,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return new CurrentPricingExecution
             {
                 Job = job,
-                Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto(),
+                Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto
+                {
+                    SpotAllocationModelMode = SpotAllocationModelMode.Quality
+                },
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
         }
@@ -1026,7 +1029,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanRepository.UpdatePlanPricingJob(planPricingJob);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
 
-            try {
+            try 
+            {
 
                 token.ThrowIfCancellationRequested();
 
@@ -1075,7 +1079,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     Spots = new List<PlanPricingAllocatedSpot>(),
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
-                    PricingVersion = _GetPricingModelVersion().ToString()
+                    PricingVersion = _GetPricingModelVersion().ToString(),
+                    SpotAllocationModelMode = SpotAllocationModelMode.Quality
                 };
 
                 //Send it to the DS Model based on the plan posting type, as selected in the plan detail.
@@ -1187,13 +1192,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
-                    _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic, SpotAllocationModelMode.Quality);
+                    _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic);
 
                     if (isPricingEfficiencyModelEnabled)
                     {
                         // BP-1894 : This is mocking up the results.
-                        _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic, SpotAllocationModelMode.Efficiency);
-                        _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic, SpotAllocationModelMode.Floor);
+                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+                        _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic);
+                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Floor;
+                        _SavePricingArtifacts(allocationResult, aggregationTasks, diagnostic);
+                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
                     }
 
                     //Finish up the job
@@ -1230,11 +1238,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal void _SavePricingArtifacts(PlanPricingAllocationResult allocationResult, 
             List<AggregationTask> aggregationTasks,
-            PlanPricingJobDiagnostic diagnostic,
-            SpotAllocationModelMode spotAllocationModelMode)
+            PlanPricingJobDiagnostic diagnostic)
         {
             //We only get one set of allocation results
-            allocationResult.SpotAllocationModelMode = spotAllocationModelMode;
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
             _PlanRepository.SavePricingApiResults(allocationResult);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
@@ -1245,7 +1251,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingBands)
                     .Task;
                 var pricingBandResult = calculatePricingBandTask.Result;
-                pricingBandResult.SpotAllocationModelMode = spotAllocationModelMode;
+                pricingBandResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
                 _PlanRepository.SavePlanPricingBands(pricingBandResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
@@ -1254,7 +1260,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.AggregateResults)
                     .Task;
                 var pricingProgramsResult = aggregateTask.Result;
-                pricingProgramsResult.SpotAllocationModelMode = spotAllocationModelMode;
+                pricingProgramsResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
                 _PlanRepository.SavePricingAggregateResults(pricingProgramsResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
@@ -1263,7 +1269,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.CalculatePricingStations)
                     .Task;
                 var pricingStationResult = calculatePricingStationTask.Result;
-                pricingStationResult.SpotAllocationModelMode = spotAllocationModelMode;
+                pricingStationResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
                 _PlanRepository.SavePlanPricingStations(pricingStationResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
@@ -1272,7 +1278,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .First(x => x.PostingType == postingType && x.TaskName == PricingJobTaskNameEnum.AggregateMarketResults)
                     .Task;
                 var pricingMarketResults = aggregateMarketResultsTask.Result;
-                pricingMarketResults.SpotAllocationModelMode = spotAllocationModelMode;
+                pricingMarketResults.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
                 _PlanRepository.SavePlanPricingMarketResults(pricingMarketResults);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
