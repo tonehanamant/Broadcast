@@ -74,15 +74,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Gets the buying ownership groups.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
-        /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
-        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Gets the buying rep firms.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
-        /// <returns>PlanBuyingResultRepFirmDto object</returns>
-        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// For troubleshooting
@@ -133,16 +137,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         void ValidateAndApplyMargin(PlanBuyingParametersDto parameters);
 
-        PlanBuyingResultProgramsDto GetPrograms(int planId);
+        /// <summary>
+        /// Gets the programs.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultProgramsDto GetPrograms(int planId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
-        PlanBuyingStationResultDto GetStations(int planId);
+        /// <summary>
+        /// Gets the stations.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingStationResultDto GetStations(int planId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
         /// </summary>
-        PlanBuyingResultMarketsDto GetMarkets(int planId);
+        PlanBuyingResultMarketsDto GetMarkets(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
-        PlanBuyingBandsDto GetBuyingBands(int planId);
+        PlanBuyingBandsDto GetBuyingBands(int planId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -442,7 +462,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetCurrentBuyingExecution(job, null);
         }
 
-        private CurrentBuyingExecution _GetCurrentBuyingExecution(PlanBuyingJob job, int? planId)
+        private CurrentBuyingExecution _GetCurrentBuyingExecution(PlanBuyingJob job, int? planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             CurrentBuyingExecutionResultDto buyingExecutionResult = null;
 
@@ -458,7 +479,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                buyingExecutionResult = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id);
+                buyingExecutionResult = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id, spotAllocationModelMode);
 
                 if (buyingExecutionResult != null)
                 {
@@ -484,7 +505,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return new CurrentBuyingExecution
             {
                 Job = job,
-                Result = buyingExecutionResult ?? new CurrentBuyingExecutionResultDto(),
+                Result = buyingExecutionResult ?? new CurrentBuyingExecutionResultDto
+                {
+                    SpotAllocationModelMode = spotAllocationModelMode
+                },
                 IsBuyingModelRunning = IsBuyingModelRunning(job)
             };
         }
@@ -839,6 +863,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var diagnostic = new PlanBuyingJobDiagnostic();
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 
+            var isPricingEfficiencyModelEnabled =
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
+
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
             var planBuyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
             planBuyingJob.Status = BackgroundJobProcessingStatus.Processing;
@@ -891,7 +918,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
-                    BuyingVersion = _GetPricingModelVersion().ToString()
+                    BuyingVersion = _GetPricingModelVersion().ToString(),
+                    SpotAllocationModelMode = SpotAllocationModelMode.Quality
                 };
 
                 /*** Make the Request ***/
@@ -926,6 +954,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 token.ThrowIfCancellationRequested();
 
                 /*** Start Aggregations ***/
+                var aggregationTasks = new List<AggregationTask>();
+
                 var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
                 {
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
@@ -933,6 +963,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
                     return programResults;
                 });
+                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculatePrograms, calculateBuyingProgramsTask));
+                calculateBuyingProgramsTask.Start();
 
                 var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
                 {
@@ -941,6 +973,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
                     return buyingBands;
                 });
+                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateBands, calculateBuyingBandsTask));
+                calculateBuyingBandsTask.Start();
 
                 var calculateBuyingStationsTask = new Task<PlanBuyingStationResultDto>(() =>
                 {
@@ -949,6 +983,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
                     return buyingStations;
                 });
+                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateStations, calculateBuyingStationsTask));
+                calculateBuyingStationsTask.Start();
 
                 var aggregateMarketResultsTask = new Task<PlanBuyingResultMarketsDto>(() =>
                 {
@@ -959,6 +995,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                     return buyingMarketResults;
                 });
+                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateMarkets, aggregateMarketResultsTask));
+                aggregateMarketResultsTask.Start();
 
                 var aggregateOwnershipGroupResultsTask = new Task<PlanBuyingResultOwnershipGroupDto>(() =>
                 {
@@ -968,63 +1006,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
                     return buyingOwnershipGroupResults;
                 });
+                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateOwnershipGroups, aggregateOwnershipGroupResultsTask));
+                aggregateOwnershipGroupResultsTask.Start();
 
                 var aggregateRepFirmResultsTask = new Task<PlanBuyingResultRepFirmDto>(() =>
                 {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
                     var buyingOwnershipGroupResults = _PlanBuyingRepFirmEngine.Calculate(inventory, allocationResult
                         , planBuyingParametersDto);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
                     return buyingOwnershipGroupResults;
                 });
-
-                calculateBuyingProgramsTask.Start();
-                calculateBuyingBandsTask.Start();
-                calculateBuyingStationsTask.Start();
-                aggregateMarketResultsTask.Start();
-                aggregateOwnershipGroupResultsTask.Start();
+                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateRepFirms, aggregateRepFirmResultsTask));
                 aggregateRepFirmResultsTask.Start();
 
                 token.ThrowIfCancellationRequested();
-                
-                /*** Finalize Result Tasks ***/
-                var aggregateTaskResult = calculateBuyingProgramsTask.GetAwaiter().GetResult();
-                var calculateBuyingBandTaskResult = calculateBuyingBandsTask.GetAwaiter().GetResult();
-                var calculateBuyingStationTaskResult = calculateBuyingStationsTask.GetAwaiter().GetResult();
-                var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.GetAwaiter().GetResult();
-                var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.GetAwaiter().GetResult();
-                var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.GetAwaiter().GetResult();
 
                 /*** Persist the results ***/
                 using (var transaction = new TransactionScopeWrapper())
                 {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
-                    _PlanBuyingRepository.SaveBuyingApiResults(allocationResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+                    _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
 
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-                    _PlanBuyingRepository.SaveBuyingAggregateResults(aggregateTaskResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
-                    _PlanBuyingRepository.SavePlanBuyingBands(calculateBuyingBandTaskResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
-                    _PlanBuyingRepository.SavePlanBuyingStations(calculateBuyingStationTaskResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
-                    _PlanBuyingRepository.SavePlanBuyingMarketResults(aggregateMarketResultsTaskResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
-                    _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
-                    _PlanBuyingRepository.SavePlanBuyingRepFirmResults(aggregateRepFirmResultsTaskResult);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
+                    if (isPricingEfficiencyModelEnabled)
+                    {
+                        // BP-1894 : This is mocking up the results.
+                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+                        _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
+                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Floor;
+                        _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
+                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+                    }
 
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
@@ -1052,6 +1063,90 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _HandleBuyingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the buying model");
             }
+        }
+
+        internal enum BuyingJobTaskNameEnum
+        {
+            CalculatePrograms,
+            CalculateBands,
+            CalculateStations,
+            CalculateMarkets,
+            CalculateOwnershipGroups,
+            CalculateRepFirms
+        }
+
+        internal class AggregationTask
+        {
+            public BuyingJobTaskNameEnum TaskName { get; set; }
+            public Task Task { get; set; }
+
+            public AggregationTask(BuyingJobTaskNameEnum taskName, Task task)
+            {
+                TaskName = taskName;
+                Task = task;
+            }
+        }
+
+        internal void _SaveBuyingArtifacts(PlanBuyingAllocationResult allocationResult, List<AggregationTask> aggregationTasks, 
+            PlanBuyingJobDiagnostic diagnostic)
+        {
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+            _PlanBuyingRepository.SaveBuyingApiResults(allocationResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+            var calculateBuyingProgramsTask = (Task<PlanBuyingResultBaseDto>) aggregationTasks
+                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculatePrograms)
+                .Task;
+            var calculateBuyingProgramsTaskResult = calculateBuyingProgramsTask.Result;
+            calculateBuyingProgramsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
+            var calculateBuyingBandTask = (Task<PlanBuyingBandsDto>)aggregationTasks
+                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateBands)
+                .Task;
+            var calculateBuyingBandTaskResult = calculateBuyingBandTask.Result;
+            calculateBuyingBandTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            _PlanBuyingRepository.SavePlanBuyingBands(calculateBuyingBandTaskResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
+            var calculateBuyingStationTask = (Task<PlanBuyingStationResultDto>)aggregationTasks
+                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateStations)
+                .Task;
+            var calculateBuyingStationTaskResult = calculateBuyingStationTask.Result;
+            calculateBuyingStationTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            _PlanBuyingRepository.SavePlanBuyingStations(calculateBuyingStationTaskResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+            var aggregateMarketResultsTask = (Task<PlanBuyingResultMarketsDto>)aggregationTasks
+                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateMarkets)
+                .Task;
+            var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
+            aggregateMarketResultsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            _PlanBuyingRepository.SavePlanBuyingMarketResults(aggregateMarketResultsTaskResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
+            var aggregateOwnershipGroupResultsTask = (Task<PlanBuyingResultOwnershipGroupDto>)aggregationTasks
+                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateOwnershipGroups)
+                .Task;
+            var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.Result;
+            aggregateOwnershipGroupResultsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
+            var aggregateRepFirmResultsTask = (Task<PlanBuyingResultRepFirmDto>)aggregationTasks
+                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateRepFirms)
+                .Task;
+            var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.Result;
+            aggregateRepFirmResultsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            _PlanBuyingRepository.SavePlanBuyingRepFirmResults(aggregateRepFirmResultsTaskResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
         }
 
         private ProprietaryInventoryData _CalculateProprietaryInventoryData(
@@ -1962,14 +2057,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return $"Job Id '{jobId}' has been forced to complete.";
         }
 
-        public PlanBuyingResultProgramsDto GetPrograms(int planId)
+        public PlanBuyingResultProgramsDto GetPrograms(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id);
+            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, spotAllocationModelMode);
 
             if (results == null)
                 return null;
@@ -1980,14 +2076,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingBandsDto GetBuyingBands(int planId)
+        public PlanBuyingBandsDto GetBuyingBands(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id);
+            var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, spotAllocationModelMode);
 
             if (results == null)
                 return null;
@@ -1998,7 +2095,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultMarketsDto GetMarkets(int planId)
+        public PlanBuyingResultMarketsDto GetMarkets(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
@@ -2007,7 +2105,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id);
+            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2020,13 +2118,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingStationResultDto GetStations(int planId)
+        public PlanBuyingStationResultDto GetStations(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id);
+            var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id, spotAllocationModelMode);
             if (result == null)
                 return null;
 
@@ -2036,7 +2135,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId)
+        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
@@ -2045,7 +2145,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id);
+            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2058,7 +2158,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId)
+        public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
@@ -2067,7 +2168,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id);
+            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, spotAllocationModelMode);
 
             if (results == null)
             {

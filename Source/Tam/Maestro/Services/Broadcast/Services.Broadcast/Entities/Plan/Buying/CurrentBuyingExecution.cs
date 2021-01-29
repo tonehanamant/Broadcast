@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities.Plan.Buying
+﻿using Services.Broadcast.Entities.Enums;
+
+namespace Services.Broadcast.Entities.Plan.Buying
 {
     public class CurrentBuyingExecution
     {
@@ -20,5 +22,6 @@
         public string Notes { get; set; }
         public bool HasResults { get; set; }
         public int CpmPercentage { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 }

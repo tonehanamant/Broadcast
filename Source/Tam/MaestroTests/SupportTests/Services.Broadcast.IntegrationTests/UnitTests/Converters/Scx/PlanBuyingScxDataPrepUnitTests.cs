@@ -16,6 +16,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
@@ -365,6 +366,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             var jobParams = new PlanBuyingParametersDto {Margin = 20};
             var jobResult = new PlanBuyingAllocationResult
             {
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
                 AllocatedSpots = new List<PlanBuyingAllocatedSpot>
                 {
                     new PlanBuyingAllocatedSpot
@@ -438,7 +440,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 .Returns(job);
             _PlanBuyingRepository.Setup(s => s.GetLatestParametersForPlanBuyingJob(It.IsAny<int>()))
                 .Returns(jobParams);
-            _PlanBuyingRepository.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>()))
+            _PlanBuyingRepository.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns(jobResult);
 
             _PlanRepository.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
@@ -10,6 +11,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public int? JobId { get; set; }
         public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 
     public class PlanBuyingResultDto : PlanBuyingResultBaseDto

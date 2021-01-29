@@ -1,38 +1,32 @@
 {
   "Details": [
     {
-      "AvgCpm": 18.0339,
-      "AvgImpressions": 49.92333333,
       "Budget": 13504.6875,
-      "Genre": "Children",
+      "Cpm": 18.0339,
       "Impressions": 748.85,
       "ImpressionsPercentage": 99.10011249,
-      "MarketCount": 1,
-      "ProgramName": "Early news",
+      "Market": "New York",
       "Spots": 15,
-      "StationCount": 1
+      "Station": "WPIX"
     },
     {
-      "AvgCpm": 68.3548,
-      "AvgImpressions": 0.45333333,
       "Budget": 464.8125,
-      "Genre": "Comedy",
+      "Cpm": 68.3547,
       "Impressions": 6.8,
       "ImpressionsPercentage": 0.89988751,
-      "MarketCount": 1,
-      "ProgramName": "Late news",
+      "Market": "Portland-Auburn",
       "Spots": 15,
-      "StationCount": 1
+      "Station": "WPFO"
     }
   ],
   "SpotAllocationModelMode": 1,
   "Totals": {
     "AvgCpm": 18.4867,
-    "AvgImpressions": 25.18833333,
+    "AvgImpressions": 0.0,
     "Budget": 13969.5000,
     "Impressions": 755.65,
     "ImpressionsPercentage": 100.0,
-    "MarketCount": 2,
+    "MarketCount": 0,
     "MarketCoveragePercent": 0.0,
     "SpotCount": 30,
     "StationCount": 2

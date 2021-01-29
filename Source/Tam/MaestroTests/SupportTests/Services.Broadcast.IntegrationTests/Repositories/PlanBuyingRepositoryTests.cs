@@ -85,7 +85,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 JobId = null,
                 PlanVersionId = planVersionId,
                 AllocatedSpots = allocated,
-                UnallocatedSpots = unallocated
+                UnallocatedSpots = unallocated,
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality
             };
             PlanBuyingAllocationResult savedResults;
 

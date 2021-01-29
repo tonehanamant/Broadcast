@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal optimal_cpm { get; set; }
         public Nullable<int> plan_version_buying_job_id { get; set; }
         public string buying_version { get; set; }
+        public int spot_allocation_model_mode { get; set; }
     
         public virtual ICollection<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual plan_version_buying_job plan_version_buying_job { get; set; }

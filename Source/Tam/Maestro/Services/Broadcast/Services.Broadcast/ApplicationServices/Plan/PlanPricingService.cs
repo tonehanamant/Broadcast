@@ -1031,7 +1031,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             try 
             {
-
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
@@ -1240,7 +1239,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             List<AggregationTask> aggregationTasks,
             PlanPricingJobDiagnostic diagnostic)
         {
-            //We only get one set of allocation results
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
             _PlanRepository.SavePricingApiResults(allocationResult);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);

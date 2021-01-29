@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
@@ -9,6 +10,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public int PlanVersionId { get; set; }
         public List<PlanBuyingBandDetailDto> Details { get; set; } = new List<PlanBuyingBandDetailDto>();
         public PlanBuyingProgramTotalsDto Totals { get; set; } = new PlanBuyingProgramTotalsDto();
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
     }
 
     public class PlanBuyingBandDetailDto

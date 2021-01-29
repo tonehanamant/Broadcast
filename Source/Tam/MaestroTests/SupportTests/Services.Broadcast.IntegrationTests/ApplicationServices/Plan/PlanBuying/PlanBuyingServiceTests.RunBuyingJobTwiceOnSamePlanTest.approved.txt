@@ -12,6 +12,7 @@
     "HasResults": true,
     "Notes": "",
     "OptimalCpm": 14.7893,
-    "PlanVersionId": 47
+    "PlanVersionId": 47,
+    "SpotAllocationModelMode": 1
   }
 }

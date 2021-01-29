@@ -1,0 +1,106 @@
+{
+  "Default": {
+    "Details": [
+      {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MarketCount": 2,
+        "RepFirmName": "Sales group 4",
+        "SpotCount": 60,
+        "StationCount": 2
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 10.328,
+      "SpotCount": 60,
+      "StationCount": 2
+    }
+  },
+  "Efficiency": {
+    "Details": [
+      {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MarketCount": 2,
+        "RepFirmName": "Sales group 4",
+        "SpotCount": 60,
+        "StationCount": 2
+      }
+    ],
+    "SpotAllocationModelMode": 2,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 10.328,
+      "SpotCount": 60,
+      "StationCount": 2
+    }
+  },
+  "Floor": {
+    "Details": [
+      {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MarketCount": 2,
+        "RepFirmName": "Sales group 4",
+        "SpotCount": 60,
+        "StationCount": 2
+      }
+    ],
+    "SpotAllocationModelMode": 3,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 10.328,
+      "SpotCount": 60,
+      "StationCount": 2
+    }
+  },
+  "Quality": {
+    "Details": [
+      {
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MarketCount": 2,
+        "RepFirmName": "Sales group 4",
+        "SpotCount": 60,
+        "StationCount": 2
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 10.328,
+      "SpotCount": 60,
+      "StationCount": 2
+    }
+  }
+}

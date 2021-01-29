@@ -92,6 +92,7 @@
   "BuyingVersion": "3",
   "PlanVersionId": 9166,
   "RequestId": null,
+  "SpotAllocationModelMode": 1,
   "UnallocatedSpots": [
     {
       "ContractMediaWeek": {

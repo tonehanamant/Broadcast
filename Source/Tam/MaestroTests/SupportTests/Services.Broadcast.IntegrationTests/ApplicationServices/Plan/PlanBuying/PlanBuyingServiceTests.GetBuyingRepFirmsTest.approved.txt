@@ -6,7 +6,7 @@
       "Impressions": 755.65,
       "ImpressionsPercentage": 100.0,
       "MarketCount": 2,
-      "OwnershipGroupName": "Ownership group 3",
+      "RepFirmName": "Sales group 4",
       "SpotCount": 30,
       "StationCount": 2
     }

@@ -25,6 +25,7 @@
       "StationCount": 1
     }
   ],
+  "SpotAllocationModelMode": 1,
   "Totals": {
     "AvgCpm": 14.7893,
     "AvgImpressions": 0.0,

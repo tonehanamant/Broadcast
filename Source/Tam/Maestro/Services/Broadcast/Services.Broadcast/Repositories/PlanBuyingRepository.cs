@@ -84,15 +84,17 @@ namespace Services.Broadcast.Repositories
         /// Gets the buying API results by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>PlanBuyingAllocationResult object</returns>
-        PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Gets the plan buying band by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>PlanBuyingBandsDto object</returns>
-        PlanBuyingBandsDto GetPlanBuyingBandByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingBandsDto GetPlanBuyingBandByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Saves the plan buying bands.
@@ -110,8 +112,9 @@ namespace Services.Broadcast.Repositories
         /// Gets the plan buying result markets by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>PlanBuyingResultMarketsDto object</returns>
-        PlanBuyingResultMarketsDto GetPlanBuyingResultMarketsByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultMarketsDto GetPlanBuyingResultMarketsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Saves the plan buying market results.
@@ -129,22 +132,25 @@ namespace Services.Broadcast.Repositories
         /// Gets the buying programs result by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>BuyingProgramsResultDto object</returns>
-        PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Gets the buying results by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>CurrentBuyingExecutionResultDto object</returns>
-        CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Gets the buying stations result by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>PlanBuyingStationResultDto object</returns>
-        PlanBuyingStationResultDto GetBuyingStationsResultByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingStationResultDto GetBuyingStationsResultByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Gets the goal CPM.
@@ -178,8 +184,9 @@ namespace Services.Broadcast.Repositories
         /// Gets the buying ownership groups by job identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
-        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int id);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int id, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Saves the plan buying rep firm results.
@@ -191,8 +198,9 @@ namespace Services.Broadcast.Repositories
         /// Gets the buying rep firms by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <returns>PlanBuyingResultRepFirmDto object</returns>
-        PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
     }
 
     public class PlanBuyingRepository : BroadcastRepositoryBase, IPlanBuyingRepository
@@ -471,7 +479,8 @@ namespace Services.Broadcast.Repositories
                 {
                     optimal_cpm = result.BuyingCpm,
                     plan_version_buying_job_id = result.JobId,
-                    buying_version = result.BuyingVersion
+                    buying_version = result.BuyingVersion,
+                    spot_allocation_model_mode = (int)result.SpotAllocationModelMode
                 };
 
                 context.plan_version_buying_api_results.Add(planBuyingApiResult);
@@ -519,14 +528,15 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId)
+        public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var apiResult = context.plan_version_buying_api_results
                     .Include(x => x.plan_version_buying_api_result_spots)
                     .Include(x => x.plan_version_buying_api_result_spots.Select(y => y.plan_version_buying_api_result_spot_frequencies))
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -546,7 +556,8 @@ namespace Services.Broadcast.Repositories
                     BuyingVersion = apiResult.buying_version,
                     PlanVersionId = planVersionId,
                     AllocatedSpots = resultSpotLists.Allocated,
-                    UnallocatedSpots = resultSpotLists.Unallocated
+                    UnallocatedSpots = resultSpotLists.Unallocated,
+                    SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode
                 };
 
                 return allocationResult;
@@ -554,13 +565,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingBandsDto GetPlanBuyingBandByJobId(int jobId)
+        public PlanBuyingBandsDto GetPlanBuyingBandByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_band_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -569,6 +581,8 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanBuyingBandsDto
                 {
+                    BuyingJobId= result.plan_version_buying_job_id,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
                         AvgCpm = result.total_avg_cpm,
@@ -597,8 +611,8 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
-                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
-                    .Single();
+                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
 
                 buyingResults.plan_version_buying_band_details = dto.Details.Select(x =>
                         new plan_version_buying_band_details
@@ -623,8 +637,8 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
-                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
-                    .Single();
+                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
 
                 buyingResults.plan_version_buying_station_details = dto.Details
                             .Select(stationDto => new plan_version_buying_station_details
@@ -635,7 +649,7 @@ namespace Services.Broadcast.Repositories
                                 impressions = stationDto.Impressions,
                                 impressions_percentage = stationDto.ImpressionsPercentage,
                                 market = stationDto.Market,
-                                station = stationDto.Station,
+                                station = stationDto.Station
                             }).ToList();
 
                 context.SaveChanges();
@@ -643,13 +657,15 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingResultMarketsDto GetPlanBuyingResultMarketsByJobId(int jobId)
+        public PlanBuyingResultMarketsDto GetPlanBuyingResultMarketsByJobId(int jobId,
+            SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var entity = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_market_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                        x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -660,6 +676,7 @@ namespace Services.Broadcast.Repositories
                 {
                     BuyingJobId = entity.plan_version_buying_job_id,
                     PlanVersionId = entity.plan_version_buying_job.plan_version_id.Value,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
                         MarketCount = entity.total_market_count,
@@ -694,8 +711,8 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
-                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
-                    .Single();
+                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
 
                 //we only need to populate the coverage. the other totals are saved on the programs call
                 buyingResults.total_market_coverage_percent = dto.Totals.MarketCoveragePercent;
@@ -750,7 +767,8 @@ namespace Services.Broadcast.Repositories
                     plan_version_buying_job_id = buyingResult.JobId,
                     goal_fulfilled_by_proprietary = buyingResult.GoalFulfilledByProprietary,
                     total_spots = buyingResult.Totals.SpotCount,
-                    total_market_coverage_percent = buyingResult.Totals.MarketCoveragePercent
+                    total_market_coverage_percent = buyingResult.Totals.MarketCoveragePercent,
+                    spot_allocation_model_mode = (int)buyingResult.SpotAllocationModelMode
                 };
 
                 context.plan_version_buying_results.Add(planBuyingResult);
@@ -787,13 +805,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId(int jobId)
+        public PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_result_spots)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId &&
+                        x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -802,6 +821,7 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanBuyingResultProgramsDto
                 {
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
                         MarketCount = result.total_market_count,
@@ -832,13 +852,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId)
+        public CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, 
+            SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_result_spots)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -851,19 +872,21 @@ namespace Services.Broadcast.Repositories
                     JobId = result.plan_version_buying_job_id,
                     PlanVersionId = result.plan_version_buying_job.plan_version_id,
                     GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
-                    HasResults = result.plan_version_buying_result_spots.Any()
+                    HasResults = result.plan_version_buying_result_spots.Any(),
+                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode
                 };
             });
         }
 
         /// <inheritdoc/>
-        public PlanBuyingStationResultDto GetBuyingStationsResultByJobId(int jobId)
+        public PlanBuyingStationResultDto GetBuyingStationsResultByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(p => p.plan_version_buying_station_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -875,6 +898,7 @@ namespace Services.Broadcast.Repositories
                     Id = result.id,
                     BuyingJobId = result.plan_version_buying_job_id,
                     PlanVersionId = result.plan_version_buying_job.plan_version_id,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
                         Budget = result.total_budget,
@@ -955,8 +979,8 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
-                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
-                    .Single();
+                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
                 buyingResults.plan_version_buying_ownership_group_details = dto.Details.Select(d => new plan_version_buying_ownership_group_details
                 {
                     stations = d.StationCount,
@@ -974,13 +998,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int jobId)
+        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(p => p.plan_version_buying_ownership_group_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId &&
+                        x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -991,6 +1016,7 @@ namespace Services.Broadcast.Repositories
                 {
                     BuyingJobId = result.plan_version_buying_job_id,
                     PlanVersionId = result.plan_version_buying_job.plan_version_id.Value,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
                         Budget = result.total_budget,
@@ -1022,8 +1048,9 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
-                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
-                    .Single();
+                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId && 
+                        x.spot_allocation_model_mode == (int) dto.SpotAllocationModelMode);
+
                 buyingResults.plan_version_buying_rep_firm_details = dto.Details.Select(d => new plan_version_buying_rep_firm_details
                 {
                     stations = d.StationCount,
@@ -1041,13 +1068,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId)
+        public PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(p => p.plan_version_buying_rep_firm_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1058,6 +1086,7 @@ namespace Services.Broadcast.Repositories
                 {
                     BuyingJobId = result.plan_version_buying_job_id,
                     PlanVersionId = result.plan_version_buying_job.plan_version_id.Value,
+                    SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
                         Budget = result.total_budget,

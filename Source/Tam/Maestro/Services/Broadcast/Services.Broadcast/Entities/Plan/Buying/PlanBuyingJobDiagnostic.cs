@@ -44,6 +44,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public static string SW_KEY_CALCULATING_BUYING_STATIONS = "Calculating buying stations";
         public static string SW_KEY_AGGREGATING_MARKET_RESULTS = "Aggregating market results";
         public static string SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS = "Aggregating ownership group results";
+        public static string SW_KEY_AGGREGATING_REP_FIRM_RESULTS = "Aggregating rep firm results";
 
         public static string SW_KEY_SAVING_ALLOCATION_RESULTS = "Saving allocation results";
         public static string SW_KEY_SAVING_AGGREGATION_RESULTS = "Saving aggregation results";

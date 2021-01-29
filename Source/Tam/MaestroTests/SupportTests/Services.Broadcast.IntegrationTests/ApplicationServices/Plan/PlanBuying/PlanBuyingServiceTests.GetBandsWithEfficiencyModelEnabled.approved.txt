@@ -1,0 +1,434 @@
+{
+  "Default": {
+    "Details": [
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 0.5000,
+        "MinBand": null,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 1.8571,
+        "MinBand": 0.5000,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 3.2142,
+        "MinBand": 1.8571,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 4.5714,
+        "MinBand": 3.2142,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 5.9285,
+        "MinBand": 4.5714,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 7.2857,
+        "MinBand": 5.9285,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 8.6428,
+        "MinBand": 7.2857,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 10.0000,
+        "MinBand": 8.6428,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 7.6637931,
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MaxBand": null,
+        "MinBand": 10.0000,
+        "Spots": 60
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 0,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 60,
+      "StationCount": 0
+    }
+  },
+  "Efficiency": {
+    "Details": [
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 0.5000,
+        "MinBand": null,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 1.8571,
+        "MinBand": 0.5000,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 3.2142,
+        "MinBand": 1.8571,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 4.5714,
+        "MinBand": 3.2142,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 5.9285,
+        "MinBand": 4.5714,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 7.2857,
+        "MinBand": 5.9285,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 8.6428,
+        "MinBand": 7.2857,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 10.0000,
+        "MinBand": 8.6428,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 7.6637931,
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MaxBand": null,
+        "MinBand": 10.0000,
+        "Spots": 60
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 0,
+    "SpotAllocationModelMode": 2,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 60,
+      "StationCount": 0
+    }
+  },
+  "Floor": {
+    "Details": [
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 0.5000,
+        "MinBand": null,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 1.8571,
+        "MinBand": 0.5000,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 3.2142,
+        "MinBand": 1.8571,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 4.5714,
+        "MinBand": 3.2142,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 5.9285,
+        "MinBand": 4.5714,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 7.2857,
+        "MinBand": 5.9285,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 8.6428,
+        "MinBand": 7.2857,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 10.0000,
+        "MinBand": 8.6428,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 7.6637931,
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MaxBand": null,
+        "MinBand": 10.0000,
+        "Spots": 60
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 0,
+    "SpotAllocationModelMode": 3,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 60,
+      "StationCount": 0
+    }
+  },
+  "Quality": {
+    "Details": [
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 0.5000,
+        "MinBand": null,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 1.8571,
+        "MinBand": 0.5000,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 3.2142,
+        "MinBand": 1.8571,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 4.5714,
+        "MinBand": 3.2142,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 5.9285,
+        "MinBand": 4.5714,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 7.2857,
+        "MinBand": 5.9285,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 8.6428,
+        "MinBand": 7.2857,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 0.0,
+        "Budget": 0.0000,
+        "Cpm": 0.0000,
+        "Impressions": 0.0,
+        "ImpressionsPercentage": 0.0,
+        "MaxBand": 10.0000,
+        "MinBand": 8.6428,
+        "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 7.6637931,
+        "Budget": 16763.4000,
+        "Cpm": 14.7893,
+        "Impressions": 1133.475,
+        "ImpressionsPercentage": 100.0,
+        "MaxBand": null,
+        "MinBand": 10.0000,
+        "Spots": 60
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 0,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 14.7893,
+      "AvgImpressions": 0.0,
+      "Budget": 16763.4000,
+      "Impressions": 1133.475,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 60,
+      "StationCount": 0
+    }
+  }
+}

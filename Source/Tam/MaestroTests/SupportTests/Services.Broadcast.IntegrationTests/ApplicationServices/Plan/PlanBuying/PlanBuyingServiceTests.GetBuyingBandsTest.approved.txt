@@ -91,6 +91,7 @@
       "Spots": 30
     }
   ],
+  "SpotAllocationModelMode": 1,
   "Totals": {
     "AvgCpm": 18.4867,
     "AvgImpressions": 0.0,
