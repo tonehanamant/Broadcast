@@ -1453,20 +1453,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1476,10 +1462,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 2261.2500,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 175950.0,
-        "TotalSpots": 4
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1514,20 +1500,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1537,10 +1509,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 2261.2500,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 175950.0,
-        "TotalSpots": 4
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1575,20 +1547,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1598,10 +1556,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 2261.2500,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 175950.0,
-        "TotalSpots": 4
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1636,20 +1594,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1659,10 +1603,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 2261.2500,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 175950.0,
-        "TotalSpots": 4
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1697,20 +1641,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1720,10 +1650,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 2261.2500,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 175950.0,
-        "TotalSpots": 4
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1758,20 +1688,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1781,10 +1697,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 2412.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 154020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1819,20 +1735,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1842,10 +1744,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 2412.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 154020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1880,20 +1782,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1903,10 +1791,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 2412.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 154020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -1941,20 +1829,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -1964,10 +1838,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 2412.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 154020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2002,20 +1876,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2025,10 +1885,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 2412.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 154020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2063,20 +1923,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2086,10 +1932,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 1809.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 119340.0,
-        "TotalSpots": 4
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2124,20 +1970,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2147,10 +1979,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 1809.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 119340.0,
-        "TotalSpots": 4
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2185,20 +2017,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2208,10 +2026,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 1809.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 119340.0,
-        "TotalSpots": 4
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2246,20 +2064,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2269,10 +2073,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 1809.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 119340.0,
-        "TotalSpots": 4
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2307,20 +2111,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2330,10 +2120,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 1809.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 119340.0,
-        "TotalSpots": 4
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2368,20 +2158,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2391,10 +2167,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 150.7500,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2429,20 +2205,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2452,10 +2214,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 150.7500,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2490,20 +2252,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2513,10 +2261,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 150.7500,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2551,20 +2299,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2574,10 +2308,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 150.7500,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2612,20 +2346,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2635,10 +2355,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 150.7500,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2673,20 +2393,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2696,10 +2402,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2734,20 +2440,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2757,10 +2449,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2795,20 +2487,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2818,10 +2496,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2856,20 +2534,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2879,10 +2543,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2917,20 +2581,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -2940,10 +2590,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1530.0,
-        "TotalSpots": 4
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -2978,20 +2628,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3001,10 +2637,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3039,20 +2675,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3062,10 +2684,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3100,20 +2722,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3123,10 +2731,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3161,20 +2769,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3184,10 +2778,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3222,20 +2816,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3245,10 +2825,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 36.1800,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 1020.0,
-        "TotalSpots": 4
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       }
     ],
     "BuyingCpm": 14.7893,
@@ -3292,48 +2872,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3343,10 +2881,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 4522.5000,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 351900.0,
-        "TotalSpots": 8
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3381,48 +2919,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3432,10 +2928,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 4522.5000,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 351900.0,
-        "TotalSpots": 8
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3470,48 +2966,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3521,10 +2975,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 4522.5000,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 351900.0,
-        "TotalSpots": 8
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3559,48 +3013,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3610,10 +3022,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 4522.5000,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 351900.0,
-        "TotalSpots": 8
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3648,48 +3060,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 29325.0,
-            "SpotCost": 376.8750,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 58650.0,
-            "SpotCost": 753.7500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3699,10 +3069,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287146,
-        "TotalCost": 4522.5000,
+        "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 351900.0,
-        "TotalSpots": 8
+        "TotalImpressions": 87975.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3737,48 +3107,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3788,10 +3116,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 4824.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 308040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3826,48 +3154,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3877,10 +3163,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 4824.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 308040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -3915,48 +3201,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -3966,10 +3210,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 4824.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 308040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4004,48 +3248,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4055,10 +3257,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 4824.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 308040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4093,48 +3295,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 25670.0,
-            "SpotCost": 402.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 51340.0,
-            "SpotCost": 804.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4144,10 +3304,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287150,
-        "TotalCost": 4824.0000,
+        "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 308040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 77010.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4182,48 +3342,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4233,10 +3351,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 3618.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 238680.0,
-        "TotalSpots": 8
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4271,48 +3389,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4322,10 +3398,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 3618.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 238680.0,
-        "TotalSpots": 8
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4360,48 +3436,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4411,10 +3445,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 3618.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 238680.0,
-        "TotalSpots": 8
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4449,48 +3483,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4500,10 +3492,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 3618.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 238680.0,
-        "TotalSpots": 8
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4538,48 +3530,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 19890.0,
-            "SpotCost": 301.5000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 39780.0,
-            "SpotCost": 603.0000,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4589,10 +3539,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 287154,
-        "TotalCost": 3618.0000,
+        "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 238680.0,
-        "TotalSpots": 8
+        "TotalImpressions": 59670.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4627,48 +3577,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4678,10 +3586,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 301.5000,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4716,48 +3624,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4767,10 +3633,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 301.5000,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4805,48 +3671,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4856,10 +3680,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 301.5000,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4894,48 +3718,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -4945,10 +3727,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 301.5000,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -4983,48 +3765,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 25.1250,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 50.2500,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5034,10 +3774,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288692,
-        "TotalCost": 301.5000,
+        "TotalCost": 75.3750,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5072,48 +3812,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5123,10 +3821,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5161,48 +3859,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5212,10 +3868,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5250,48 +3906,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5301,10 +3915,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5339,48 +3953,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5390,10 +3962,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5428,48 +4000,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 255.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 510.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5479,10 +4009,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288693,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 3060.0,
-        "TotalSpots": 8
+        "TotalImpressions": 765.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5517,48 +4047,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5568,10 +4056,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 2040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5606,48 +4094,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5657,10 +4103,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 2040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5695,48 +4141,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5746,10 +4150,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 2040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5784,48 +4188,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5835,10 +4197,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 2040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -5873,48 +4235,6 @@
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
             "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
-          },
-          {
-            "Impressions": 170.0,
-            "SpotCost": 6.0300,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 1,
-            "Spots": 1
-          },
-          {
-            "Impressions": 340.0,
-            "SpotCost": 12.0600,
-            "SpotCostWithMargin": 0.0,
-            "SpotLengthId": 2,
-            "Spots": 1
           }
         ],
         "StandardDaypart": {
@@ -5924,10 +4244,10 @@
           "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 288694,
-        "TotalCost": 72.3600,
+        "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 2040.0,
-        "TotalSpots": 8
+        "TotalImpressions": 510.0,
+        "TotalSpots": 2
       }
     ],
     "BuyingCpm": 14.7893,

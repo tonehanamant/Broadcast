@@ -858,6 +858,70 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return newJobId;
         }
 
+        private List<PlanBuyingAllocationResult> _SendBuyingRequests(int jobId, PlanDto plan, List<PlanBuyingInventoryProgram> inventory,
+            PlanBuyingParametersDto planBuyingParametersDto, ProprietaryInventoryData proprietaryInventoryData,
+            CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
+            PlanBuyingJobDiagnostic diagnostic)
+        {
+            // *** THIS IS A MOCK
+            // This is makeing the Quality call and duplicating those results for Efficiency and Floor
+            var results = new List<PlanBuyingAllocationResult>();
+            results.Add(new PlanBuyingAllocationResult
+            {
+                JobId = jobId,
+                PlanVersionId = plan.VersionId,
+                BuyingVersion = _GetPricingModelVersion().ToString(),
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality
+            });
+
+            if (isPricingEfficiencyModelEnabled)
+            {
+                results.Add(new PlanBuyingAllocationResult
+                {
+                    JobId = jobId,
+                    PlanVersionId = plan.VersionId,
+                    BuyingVersion = _GetPricingModelVersion().ToString(),
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
+                });
+
+                results.Add(new PlanBuyingAllocationResult
+                {
+                    JobId = jobId,
+                    PlanVersionId = plan.VersionId,
+                    BuyingVersion = _GetPricingModelVersion().ToString(),
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor
+                });
+            }
+
+            if (!goalsFulfilledByProprietaryInventory)
+            {                
+                var qualityAllocationResult = results.Single(s => s.SpotAllocationModelMode == SpotAllocationModelMode.Quality);
+
+                _SendBuyingRequest(
+                    qualityAllocationResult,
+                    plan,
+                    jobId,
+                    inventory,
+                    token,
+                    diagnostic,
+                    planBuyingParametersDto,
+                    proprietaryInventoryData);
+
+                if (isPricingEfficiencyModelEnabled)
+                {
+                    var efficiencyAllocationResult = results.Single(s => s.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency);
+                    efficiencyAllocationResult.AllocatedSpots = qualityAllocationResult.AllocatedSpots.DeepCloneUsingSerialization();
+                    efficiencyAllocationResult.UnallocatedSpots = qualityAllocationResult.UnallocatedSpots.DeepCloneUsingSerialization();
+
+                    var floorAllocationResult = results.Single(s => s.SpotAllocationModelMode == SpotAllocationModelMode.Floor);
+                    floorAllocationResult.AllocatedSpots = qualityAllocationResult.AllocatedSpots.DeepCloneUsingSerialization();
+                    floorAllocationResult.UnallocatedSpots = qualityAllocationResult.UnallocatedSpots.DeepCloneUsingSerialization();
+                }
+            }
+
+            return results;
+        }
+
         private void _RunBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
             var diagnostic = new PlanBuyingJobDiagnostic();
@@ -914,141 +978,131 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 token.ThrowIfCancellationRequested();
 
-                var allocationResult = new PlanBuyingAllocationResult
-                {
-                    JobId = jobId,
-                    PlanVersionId = plan.VersionId,
-                    BuyingVersion = _GetPricingModelVersion().ToString(),
-                    SpotAllocationModelMode = SpotAllocationModelMode.Quality
-                };
-
-                /*** Make the Request ***/
-
-                if (!goalsFulfilledByProprietaryInventory)
-                {
-                    _SendBuyingRequest(
-                        allocationResult,
-                        plan,
-                        jobId,
-                        inventory,
-                        token,
-                        diagnostic,
-                        planBuyingParametersDto,
-                        proprietaryInventoryData);
-                }
+                var modelAllocationResults = _SendBuyingRequests(jobId, plan, inventory, planBuyingParametersDto, proprietaryInventoryData,
+                    token, goalsFulfilledByProprietaryInventory, isPricingEfficiencyModelEnabled, diagnostic);
 
                 token.ThrowIfCancellationRequested();
 
                 /*** Validate the Results ***/
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
-                _ValidateAllocationResult(allocationResult);
+                foreach (var allocationResult in modelAllocationResults)
+                {
+                    _ValidateAllocationResult(allocationResult);
+                }
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
 
                 token.ThrowIfCancellationRequested();
 
-                /*** Use the Results ***/
-                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
-                allocationResult.BuyingCpm = _CalculateBuyingCpm(allocationResult.AllocatedSpots, proprietaryInventoryData);
-                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
-
-                token.ThrowIfCancellationRequested();
-
-                /*** Start Aggregations ***/
-                var aggregationTasks = new List<AggregationTask>();
-
-                var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
+                foreach (var allocationResult in modelAllocationResults)
                 {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    var programResults = _PlanBuyingProgramEngine.Calculate(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    return programResults;
-                });
-                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculatePrograms, calculateBuyingProgramsTask));
-                calculateBuyingProgramsTask.Start();
 
-                var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
-                {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                    var buyingBands = _PlanBuyingBandCalculationEngine.Calculate(inventory, allocationResult, planBuyingParametersDto);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                    return buyingBands;
-                });
-                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateBands, calculateBuyingBandsTask));
-                calculateBuyingBandsTask.Start();
+                    /*** Use the Results ***/
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
+                    allocationResult.BuyingCpm =
+                        _CalculateBuyingCpm(allocationResult.AllocatedSpots, proprietaryInventoryData);
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
 
-                var calculateBuyingStationsTask = new Task<PlanBuyingStationResultDto>(() =>
-                {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
-                    var buyingStations = _PlanBuyingStationCalculationEngine.Calculate(inventory, allocationResult, planBuyingParametersDto);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
-                    return buyingStations;
-                });
-                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateStations, calculateBuyingStationsTask));
-                calculateBuyingStationsTask.Start();
+                    token.ThrowIfCancellationRequested();
 
-                var aggregateMarketResultsTask = new Task<PlanBuyingResultMarketsDto>(() =>
-                {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
-                    var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-                    var buyingMarketResults = _PlanBuyingMarketResultsEngine.Calculate(inventory, allocationResult, planBuyingParametersDto, plan
-                        , marketCoverages);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
-                    return buyingMarketResults;
-                });
-                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateMarkets, aggregateMarketResultsTask));
-                aggregateMarketResultsTask.Start();
+                    /*** Start Aggregations ***/
+                    var aggregationTasks = new List<AggregationTask>();
 
-                var aggregateOwnershipGroupResultsTask = new Task<PlanBuyingResultOwnershipGroupDto>(() =>
-                {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
-                    var buyingOwnershipGroupResults = _PlanBuyingOwnershipGroupEngine.Calculate(inventory, allocationResult
-                        , planBuyingParametersDto);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
-                    return buyingOwnershipGroupResults;
-                });
-                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateOwnershipGroups, aggregateOwnershipGroupResultsTask));
-                aggregateOwnershipGroupResultsTask.Start();
-
-                var aggregateRepFirmResultsTask = new Task<PlanBuyingResultRepFirmDto>(() =>
-                {
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
-                    var buyingOwnershipGroupResults = _PlanBuyingRepFirmEngine.Calculate(inventory, allocationResult
-                        , planBuyingParametersDto);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
-                    return buyingOwnershipGroupResults;
-                });
-                aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateRepFirms, aggregateRepFirmResultsTask));
-                aggregateRepFirmResultsTask.Start();
-
-                token.ThrowIfCancellationRequested();
-
-                /*** Persist the results ***/
-                using (var transaction = new TransactionScopeWrapper())
-                {
-                    _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
-
-                    if (isPricingEfficiencyModelEnabled)
+                    var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
                     {
-                        // BP-1894 : This is mocking up the results.
-                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                        var programResults = _PlanBuyingProgramEngine.Calculate(inventory, allocationResult,
+                            goalsFulfilledByProprietaryInventory);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                        return programResults;
+                    });
+                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculatePrograms,
+                        calculateBuyingProgramsTask));
+                    calculateBuyingProgramsTask.Start();
+
+                    var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
+                    {
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
+                        var buyingBands = _PlanBuyingBandCalculationEngine.Calculate(inventory, allocationResult,
+                            planBuyingParametersDto);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
+                        return buyingBands;
+                    });
+                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateBands,
+                        calculateBuyingBandsTask));
+                    calculateBuyingBandsTask.Start();
+
+                    var calculateBuyingStationsTask = new Task<PlanBuyingStationResultDto>(() =>
+                    {
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
+                        var buyingStations =
+                            _PlanBuyingStationCalculationEngine.Calculate(inventory, allocationResult,
+                                planBuyingParametersDto);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
+                        return buyingStations;
+                    });
+                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateStations,
+                        calculateBuyingStationsTask));
+                    calculateBuyingStationsTask.Start();
+
+                    var aggregateMarketResultsTask = new Task<PlanBuyingResultMarketsDto>(() =>
+                    {
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                        var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+                        var buyingMarketResults = _PlanBuyingMarketResultsEngine.Calculate(inventory, allocationResult,
+                            planBuyingParametersDto, plan
+                            , marketCoverages);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                        return buyingMarketResults;
+                    });
+                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateMarkets,
+                        aggregateMarketResultsTask));
+                    aggregateMarketResultsTask.Start();
+
+                    var aggregateOwnershipGroupResultsTask = new Task<PlanBuyingResultOwnershipGroupDto>(() =>
+                    {
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                        var buyingOwnershipGroupResults = _PlanBuyingOwnershipGroupEngine.Calculate(inventory,
+                            allocationResult
+                            , planBuyingParametersDto);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                        return buyingOwnershipGroupResults;
+                    });
+                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateOwnershipGroups,
+                        aggregateOwnershipGroupResultsTask));
+                    aggregateOwnershipGroupResultsTask.Start();
+
+                    var aggregateRepFirmResultsTask = new Task<PlanBuyingResultRepFirmDto>(() =>
+                    {
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
+                        var buyingOwnershipGroupResults = _PlanBuyingRepFirmEngine.Calculate(inventory, allocationResult
+                            , planBuyingParametersDto);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
+                        return buyingOwnershipGroupResults;
+                    });
+                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateRepFirms,
+                        aggregateRepFirmResultsTask));
+                    aggregateRepFirmResultsTask.Start();
+
+                    token.ThrowIfCancellationRequested();
+
+                    /*** Persist the results ***/
+                    using (var transaction = new TransactionScopeWrapper())
+                    {
                         _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
-                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Floor;
-                        _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
-                        allocationResult.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+                        var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
+                        buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
+                        buyingJob.Completed = _DateTimeEngine.GetCurrentMoment();
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
+                        buyingJob.DiagnosticResult = diagnostic.ToString();
+
+                        _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
+
+                        transaction.Complete();
                     }
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-                    var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-                    buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
-                    buyingJob.Completed = _DateTimeEngine.GetCurrentMoment();
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
-                    buyingJob.DiagnosticResult = diagnostic.ToString();
-
-                    _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
-
-                    transaction.Complete();
                 }
             }
             catch (BuyingModelException exception)
