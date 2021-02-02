@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
+
+    public class PlanPricingAllocationResultDto
+    {
+        public PlanPricingAllocationResult NsiResults { get; set; }
+        public PlanPricingAllocationResult NtiResults { get; set; }
+    }
+
     public class PlanPricingAllocationResult
     {
         public PlanPricingAllocationResult()
@@ -19,6 +26,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int PlanVersionId { get; set; }
 
         public string PricingVersion { get; set; }
+
+        public PostingTypeEnum PostingType { get; set; }
 
         public List<PlanPricingAllocatedSpot> Spots { get; set; }
 

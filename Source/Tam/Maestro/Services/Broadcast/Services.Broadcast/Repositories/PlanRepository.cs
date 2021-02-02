@@ -178,10 +178,15 @@ namespace Services.Broadcast.Repositories
         List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForProgramLineup(int jobId);
 
         List<PlanPricingJob> GetSuccessfulPricingJobs(int planVersionId);
-        
+
         void SavePricingApiResults(PlanPricingAllocationResult result);
-        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, 
+
+        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        PlanPricingAllocationResultDto GetPricingApiResultsByJobId_v2(int jobId, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
 
         void SavePricingAggregateResults(PlanPricingResultBaseDto result);
         PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId,
@@ -206,6 +211,8 @@ namespace Services.Broadcast.Repositories
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
         PlanPricingResultMarketsDto_v2 GetPlanPricingResultMarketsByJobId_v2(int jobId,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        double GetNsiToNtiConversionRate(List<PlanDaypartDto> planDayparts);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -667,7 +674,8 @@ namespace Services.Broadcast.Repositories
                 {
                     NumberOfUnit = p.unit_number,
                     Id = p.inventory_proprietary_summary_id
-                }).ToList()
+                }).ToList(),
+                PostingType = (PostingTypeEnum)arg.posting_type
             };
         }
 
@@ -1448,7 +1456,8 @@ namespace Services.Broadcast.Repositories
                             inventory_proprietary_summary_id = x.Id,
                             unit_number = x.NumberOfUnit.GetValueOrDefault()
                         })
-                        .ToList()
+                        .ToList(),
+                    posting_type = (int)planPricingParametersDto.PostingType
                 };
 
                 context.plan_version_pricing_parameters.Add(planPricingParameters);
@@ -1467,7 +1476,8 @@ namespace Services.Broadcast.Repositories
                     optimal_cpm = result.PricingCpm,
                     plan_version_pricing_job_id = result.JobId,
                     pricing_version = result.PricingVersion,
-                    spot_allocation_model_mode = (int)(result.SpotAllocationModelMode)
+                    spot_allocation_model_mode = (int)(result.SpotAllocationModelMode),
+                    posting_type = (int)result.PostingType
                 };
 
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
@@ -1518,55 +1528,89 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var apiResult = context.plan_version_pricing_api_results
+                var postingType = context.plan_version_pricing_job
+                        .Include(x => x.plan_versions)
+                        .First(x => x.id == jobId)
+                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet default to NSI;
+
+                var entities = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(y => y.plan_version_pricing_api_result_spot_frequencies))
                     .Where(x => x.plan_version_pricing_job_id == jobId
-                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode) 
-                    .OrderByDescending(p => p.id)
-                    .FirstOrDefault();
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode
+                        && x.posting_type == postingType)
+                    .OrderByDescending(p => p.id);
 
-                if (apiResult == null)
+                return _GetPostingTypePlanPricingAllocationResult(entities, (PostingTypeEnum)postingType);
+            });
+        }
+
+        public PlanPricingAllocationResultDto GetPricingApiResultsByJobId_v2(int jobId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entities = context.plan_version_pricing_api_results
+                    .Include(x => x.plan_version_pricing_api_result_spots)
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(y => y.plan_version_pricing_api_result_spot_frequencies))
+                    .Where(x => x.plan_version_pricing_job_id == jobId
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
+                    .OrderByDescending(p => p.id);
+
+                if (entities == null || !entities.Any())
                     return null;
 
-                return new PlanPricingAllocationResult
+                return new PlanPricingAllocationResultDto
                 {
-                    SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode,
-                    PricingCpm = apiResult.optimal_cpm,
-                    JobId = apiResult.plan_version_pricing_job_id,
-                    Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
-                    {
-                        Id = x.id,
-                        StationInventoryManifestId = x.station_inventory_manifest_id,
-                        // impressions are for :30 sec only for pricing v3
-                        Impressions30sec = x.impressions30sec,
-                        SpotFrequencies = x.plan_version_pricing_api_result_spot_frequencies.Select(y => new SpotFrequency
-                        {
-                            SpotLengthId = y.spot_length_id,
-                            SpotCost = y.cost,
-                            Spots = y.spots,
-                            Impressions = y.impressions
-                        }).ToList(),
-                        InventoryMediaWeek = new MediaWeek
-                        {
-                            Id = x.inventory_media_week.id,
-                            MediaMonthId = x.inventory_media_week.media_month_id,
-                            WeekNumber = x.inventory_media_week.week_number,
-                            StartDate = x.inventory_media_week.start_date,
-                            EndDate = x.inventory_media_week.end_date
-                        },
-                        ContractMediaWeek = new MediaWeek
-                        {
-                            Id = x.contract_media_week.id,
-                            MediaMonthId = x.contract_media_week.media_month_id,
-                            WeekNumber = x.contract_media_week.week_number,
-                            StartDate = x.contract_media_week.start_date,
-                            EndDate = x.contract_media_week.end_date
-                        },
-                        StandardDaypart = _MapToStandardDaypartDto(x.standard_dayparts)
-                    }).ToList()
+                    NsiResults = _GetPostingTypePlanPricingAllocationResult(entities, PostingTypeEnum.NSI),
+                    NtiResults = _GetPostingTypePlanPricingAllocationResult(entities, PostingTypeEnum.NTI)
                 };
             });
+        }
+
+        private PlanPricingAllocationResult _GetPostingTypePlanPricingAllocationResult(IQueryable<plan_version_pricing_api_results> entities, PostingTypeEnum postingType)
+        {
+            var apiResult = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
+
+            if (apiResult == null)
+                return null;
+
+            return new PlanPricingAllocationResult
+            {
+                SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode,
+                PricingCpm = apiResult.optimal_cpm,
+                JobId = apiResult.plan_version_pricing_job_id,
+                Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
+                {
+                    Id = x.id,
+                    StationInventoryManifestId = x.station_inventory_manifest_id,
+                    // impressions are for :30 sec only for pricing v3
+                    Impressions30sec = x.impressions30sec,
+                    SpotFrequencies = x.plan_version_pricing_api_result_spot_frequencies.Select(y => new SpotFrequency
+                    {
+                        SpotLengthId = y.spot_length_id,
+                        SpotCost = y.cost,
+                        Spots = y.spots,
+                        Impressions = y.impressions
+                    }).ToList(),
+                    InventoryMediaWeek = new MediaWeek
+                    {
+                        Id = x.inventory_media_week.id,
+                        MediaMonthId = x.inventory_media_week.media_month_id,
+                        WeekNumber = x.inventory_media_week.week_number,
+                        StartDate = x.inventory_media_week.start_date,
+                        EndDate = x.inventory_media_week.end_date
+                    },
+                    ContractMediaWeek = new MediaWeek
+                    {
+                        Id = x.contract_media_week.id,
+                        MediaMonthId = x.contract_media_week.media_month_id,
+                        WeekNumber = x.contract_media_week.week_number,
+                        StartDate = x.contract_media_week.start_date,
+                        EndDate = x.contract_media_week.end_date
+                    },
+                    StandardDaypart = _MapToStandardDaypartDto(x.standard_dayparts)
+                }).ToList()
+            };
         }
 
         public PlanPricingBandDto GetPlanPricingBandByJobId(int jobId,
@@ -1574,7 +1618,6 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                //Temporary
                 var postingType = context.plan_version_pricing_job
                                         .Include(x => x.plan_versions)
                                         .First(x => x.id == jobId)
@@ -1582,9 +1625,9 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_bands
                     .Include(x => x.plan_version_pricing_band_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId 
+                    .Where(x => x.plan_version_pricing_job_id == jobId
                                 && x.posting_type == postingType
-                                && x.spot_allocation_model_mode == (int)spotAllocationModelMode) 
+                                && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1626,7 +1669,7 @@ namespace Services.Broadcast.Repositories
                 var entities = context.plan_version_pricing_bands
                     .Include(x => x.plan_version_pricing_band_details)
                     .Where(x => x.plan_version_pricing_job_id == jobId
-                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode) 
+                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id);
 
                 if (!entities.Any())
@@ -1645,7 +1688,7 @@ namespace Services.Broadcast.Repositories
         {
             var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
 
-            if (entity == null) 
+            if (entity == null)
                 return null;
 
             var result = new PostingTypePlanPricingResultBands
@@ -1811,6 +1854,19 @@ namespace Services.Broadcast.Repositories
                     SpotAllocationModelMode = spotAllocationModelMode
                 };
                 return dto;
+            });
+        }
+
+        public double GetNsiToNtiConversionRate(List<PlanDaypartDto> planDayParts)
+        {
+            var standardDayPartIds = planDayParts.Select(x => x.DaypartCodeId).ToList();
+            return _InReadUncommitedTransaction(context =>
+            {
+                var conversionRate = context.nti_to_nsi_conversion_rates
+                    .Where(x => standardDayPartIds.Contains(x.standard_daypart_id))
+                    .Average(x => x.conversion_rate);
+
+                return conversionRate;
             });
         }
 
@@ -2016,7 +2072,7 @@ namespace Services.Broadcast.Repositories
             {
                 var entities = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId 
+                    .Where(x => x.plan_version_pricing_job_id == jobId
                         && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id);
 
@@ -2033,7 +2089,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private PostingTypePlanPricingResultPrograms _GetPostingTypePlanPricingResultPrograms(IOrderedQueryable<plan_version_pricing_results> entities, 
+        private PostingTypePlanPricingResultPrograms _GetPostingTypePlanPricingResultPrograms(IOrderedQueryable<plan_version_pricing_results> entities,
             PostingTypeEnum postingType)
         {
             var entity = entities.FirstOrDefault(x => x.posting_type == (int)postingType);
@@ -2120,7 +2176,7 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_stations
                     .Include(p => p.plan_version_pricing_station_details)
-                    .Where(x => x.plan_version_pricing_job_id == jobId 
+                    .Where(x => x.plan_version_pricing_job_id == jobId
                         && x.posting_type == postingType
                         && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)

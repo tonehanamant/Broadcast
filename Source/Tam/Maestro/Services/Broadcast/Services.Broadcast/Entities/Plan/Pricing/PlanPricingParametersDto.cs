@@ -26,6 +26,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double DeliveryRatingPoints { get; set; }
         public double? Margin { get; set; }
         public int? JobId { get; set; }
+        public bool IsSelected { get; set; }
+        public PostingTypeEnum PostingType { get; set; }
         public List<InventoryProprietarySummary> ProprietaryInventory { get; set; } = new List<InventoryProprietarySummary>();
     }
 }

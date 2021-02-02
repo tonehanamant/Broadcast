@@ -458,4 +458,12 @@ namespace Services.Broadcast.Entities.Plan
         /// </value>
         public bool IsOutOfSync { get; set; }
     }
+
+    public class PlanDto_v2 : PlanDto
+    {
+        /// <summary>
+        /// The plan pricing parameters NSI and NTI.
+        /// </summary>
+        public new IList<PlanPricingParametersDto> PricingParameters { get; set; }
+    }
 }

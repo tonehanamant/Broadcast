@@ -10,8 +10,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int PlanVersionId { get; set; }
         public List<PlanPricingBandDetail> Bands { get; set; } = new List<PlanPricingBandDetail>();
         public PlanPricingBandTotals Totals { get; set; } = new PlanPricingBandTotals();
-        public PostingTypeEnum PostingType { get; internal set; }
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
+        public PostingTypeEnum PostingType { get; set; }
     }
 
     public class PlanPricingBandDetail

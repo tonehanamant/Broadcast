@@ -4,9 +4,12 @@
     [plan_version_pricing_job_id] INT             NULL,
     [pricing_version]             VARCHAR (10)    NOT NULL,
     [spot_allocation_model_mode]  INT             NOT NULL,
+    [posting_type]                INT             NOT NULL,
     CONSTRAINT [PK_plan_version_pricing_api_results] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_version_pricing_api_results_plan_version_pricing_job] FOREIGN KEY ([plan_version_pricing_job_id]) REFERENCES [dbo].[plan_version_pricing_job] ([id])
 );
+
+
 
 
 GO

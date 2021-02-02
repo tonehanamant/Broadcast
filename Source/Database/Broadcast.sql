@@ -200,6 +200,56 @@ EXEC(@SpotAllocationMakeNotNullSql)
 GO
 /*************************************** End BP-1894 *****************************************************/
 
+/*************************************** START - BP-1974 **************************************************/
+--Allocations
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_api_results') 
+				AND name = 'posting_type')
+BEGIN
+
+	ALTER TABLE [plan_version_pricing_api_results] ADD [posting_type] INT NULL
+
+	EXEC ('
+		UPDATE
+			pvps
+		SET
+			pvps.posting_type = COALESCE(pv.posting_type, 1)
+		FROM 
+			[plan_version_pricing_api_results] pvps
+			  INNER JOIN [plan_version_pricing_job] pvpj
+				ON	pvpj.id = pvps.plan_version_pricing_job_id
+			  LEFT JOIN [plan_versions] pv
+				ON pv.id = pvpj.plan_version_id')
+
+	ALTER TABLE [plan_version_pricing_api_results] ALTER COLUMN [posting_type] INT NOT NULL
+END
+
+GO
+
+--Parameters
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_parameters') 
+				AND name = 'posting_type')
+BEGIN
+
+	ALTER TABLE [plan_version_pricing_parameters] ADD [posting_type] INT NULL
+
+	EXEC ('
+		UPDATE
+			pvps
+		SET
+			pvps.posting_type = COALESCE(pv.posting_type, 1)
+		FROM 
+			[plan_version_pricing_parameters] pvps
+			  INNER JOIN [plan_version_pricing_job] pvpj
+				ON	pvpj.id = pvps.plan_version_pricing_job_id
+			  LEFT JOIN [plan_versions] pv
+				ON pv.id = pvpj.plan_version_id')
+
+	ALTER TABLE [plan_version_pricing_parameters] ALTER COLUMN [posting_type] INT NOT NULL
+END
+
+GO
+/*************************************** END - BP-1974 **************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

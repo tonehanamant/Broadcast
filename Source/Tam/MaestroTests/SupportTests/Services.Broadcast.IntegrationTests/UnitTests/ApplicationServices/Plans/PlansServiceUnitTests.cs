@@ -913,7 +913,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-               
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CanGetPlan_v2()
+        {
+            // Arrange
+            var planToReturn = _GetNewPlan();
+
+            _InventoryProprietarySummaryRepositoryMock
+                .Setup(x => x.GetInventorySummaryDataById(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetInventorySummaryProprietaryData());
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns((int planId, int versionId) =>
+                {
+                    planToReturn.Id = planId;
+                    planToReturn.VersionId = versionId;
+                    planToReturn.PricingParameters.PostingType = PostingTypeEnum.NSI;
+                    return planToReturn;
+                });
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(.85d);
+
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengths())
+                .Returns(new Dictionary<int, int> { { 30, 1 } });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(
+                    It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(),
+                    It.IsAny<double>(),
+                    It.IsAny<List<CreativeLength>>(),
+                    It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            // Act
+            var result = _PlanService.GetPlan_v2(1, 1);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         [Test]
         public void PlanStatusTransitionFailsOnLockedPlans()
         {

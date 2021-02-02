@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -44,6 +45,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="versionId">Optional: version id. If nothing is passed, it will return the latest version</param>
         /// <returns></returns>
         PlanDto GetPlan(int planId, int? versionId = null);
+
+        /// <summary>
+        /// Gets the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="versionId">Optional: version id. If nothing is passed, it will return the latest version</param>
+        /// <returns></returns>
+        PlanDto_v2 GetPlan_v2(int planId, int? versionId = null);
 
         /// <summary>
         /// Checks if a draft exist on the plan and returns the draft id
@@ -142,6 +151,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="request">The request object containing creative lengths and weekly breakdown table weeks.</param>
         /// <returns>List of LengthMakeUpTableRow objects</returns>
         List<LengthMakeUpTableRow> CalculateLengthMakeUpTable(LengthMakeUpRequest request);
+
+
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -168,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
-        
+
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
@@ -324,7 +335,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults, canAutoTriggerPricing);
         }
 
-        internal void _FinalizePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy, 
+        internal void _FinalizePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy,
             bool shouldPromotePricingResults, bool canAutoTriggerPricing)
         {
             if (shouldPromotePricingResults)
@@ -352,7 +363,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan, 
+        internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan,
             bool couldPromotePricingResultsSafely, bool pricingWasRunAfterLastSave)
         {
             var shouldPromotePricingResults = false;
@@ -406,8 +417,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         internal bool _CanPromotePricingResultsSafely(SaveState saveState, PlanDto plan, PlanDto beforePlan, bool canRunPricingDuringEdit, out bool pricingWasRunAfterLastSave)
         {
             pricingWasRunAfterLastSave = false;
-            var hasResults = saveState == SaveState.CreatingNewPlan ? 
-                plan.JobId.HasValue : 
+            var hasResults = saveState == SaveState.CreatingNewPlan ?
+                plan.JobId.HasValue :
                 beforePlan.PricingParameters?.JobId.HasValue ?? false;
 
             // no results then there is nothing to promote
@@ -491,6 +502,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Margin = pricingDefaults.Margin,
                 PlanVersionId = plan.VersionId,
                 MarketGroup = pricingDefaults.MarketGroup,
+                PostingType = plan.PostingType
             };
 
             _PlanPricingService.ValidateAndApplyMargin(plan.PricingParameters);
@@ -570,7 +582,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
             plan.IsBuyingModelRunning = _PlanBuyingService.IsBuyingModelRunning(planId);
 
-            if(plan.PricingParameters != null && plan.PricingParameters.ProprietaryInventory.Any())
+            if (plan.PricingParameters != null && plan.PricingParameters.ProprietaryInventory.Any())
             {
                 _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
             }
@@ -591,6 +603,94 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortCreativeLengths(plan);
 
             return plan;
+        }
+
+        public PlanDto_v2 GetPlan_v2(int planId, int? versionId = null)
+        {
+            var plan = GetPlan(planId, versionId);
+            var conversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
+            var plan_v2 = _MapPlanDtoToPlanDto_v2(plan, conversionRate);
+            return plan_v2;
+        }
+
+        private PlanDto_v2 _MapPlanDtoToPlanDto_v2(PlanDto plan, double ntiToNsiConversionRate)
+        {
+            var dto = new PlanDto_v2
+            {
+                Id = plan.Id,
+                CampaignId = plan.CampaignId,
+                CampaignName = plan.CampaignName,
+                Name = plan.Name,
+                CreativeLengths = plan.CreativeLengths,
+                Equivalized = plan.Equivalized,
+                Status = plan.Status,
+                ProductId = plan.ProductId,
+                FlightDays = plan.FlightDays,
+                FlightStartDate = plan.FlightStartDate,
+                FlightEndDate = plan.FlightEndDate,
+                FlightNotes = plan.FlightNotes,
+                AudienceId = plan.AudienceId,
+                AudienceType = plan.AudienceType,
+                HUTBookId = plan.HUTBookId,
+                ShareBookId = plan.ShareBookId,
+                PostingType = plan.PostingType,
+                FlightHiatusDays = plan.FlightHiatusDays,
+                Budget = plan.Budget,
+                TargetImpressions = plan.TargetImpressions,
+                TargetCPM = plan.TargetCPM,
+                TargetRatingPoints = plan.TargetRatingPoints,
+                TargetCPP = plan.TargetCPP,
+                Currency = plan.Currency,
+                GoalBreakdownType = plan.GoalBreakdownType,
+                SecondaryAudiences = plan.SecondaryAudiences,
+                Dayparts = plan.Dayparts,
+                CoverageGoalPercent = plan.CoverageGoalPercent,
+                AvailableMarkets = plan.AvailableMarkets,
+                BlackoutMarkets = plan.BlackoutMarkets,
+                WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks,
+                ModifiedBy = plan.ModifiedBy,
+                ModifiedDate = plan.ModifiedDate,
+                Vpvh = plan.Vpvh,
+                TargetUniverse = plan.TargetUniverse,
+                HHCPM = plan.HHCPM,
+                HHCPP = plan.HHCPP,
+                HHImpressions = plan.HHImpressions,
+                HHRatingPoints = plan.HHRatingPoints,
+                HHUniverse = plan.HHUniverse,
+                AvailableMarketsWithSovCount = plan.AvailableMarketsWithSovCount,
+                BlackoutMarketCount = plan.BlackoutMarketCount,
+                BlackoutMarketTotalUsCoveragePercent = plan.BlackoutMarketTotalUsCoveragePercent,
+                IsDraft = plan.IsDraft,
+                VersionNumber = plan.VersionNumber,
+                VersionId = plan.VersionId,
+                IsAduEnabled = plan.IsAduEnabled,
+                ImpressionsPerUnit = plan.ImpressionsPerUnit,
+                BuyingParameters = plan.BuyingParameters,
+                JobId = plan.JobId
+            };
+
+            dto.PricingParameters = new List<PlanPricingParametersDto>();
+            var convertedParameters = plan.PricingParameters.DeepCloneUsingSerialization();
+
+            //Add original parameters
+            plan.PricingParameters.IsSelected = true;
+            dto.PricingParameters.Add(plan.PricingParameters);
+
+            //Convert parameters
+            if (convertedParameters.PostingType == PostingTypeEnum.NSI)
+            {
+                convertedParameters.DeliveryImpressions *= ntiToNsiConversionRate;
+                convertedParameters.PostingType = PostingTypeEnum.NTI;
+            }
+            else if (convertedParameters.PostingType == PostingTypeEnum.NTI)
+            {
+                convertedParameters.DeliveryImpressions /= ntiToNsiConversionRate;
+                convertedParameters.PostingType = PostingTypeEnum.NSI;
+            }
+
+            dto.PricingParameters.Add(convertedParameters);
+
+            return dto;
         }
 
         private void _PopulateProprietaryInventoryData(List<InventoryProprietarySummary> proprietaryInventory)
