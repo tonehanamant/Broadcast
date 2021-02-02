@@ -1140,6 +1140,7 @@
           <Property Name="plan_version_pricing_job_id" Type="int" />
           <Property Name="pricing_version" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="spot_allocation_model_mode" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_band_details">
           <Key>
@@ -1251,6 +1252,7 @@
           <Property Name="budget_adjusted" Type="money" Nullable="false" />
           <Property Name="cpm_adjusted" Type="money" Nullable="false" />
           <Property Name="market_group" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_result_spots">
           <Key>
@@ -14768,6 +14770,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" FromRole="plan_version_pricing_api_results" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_api_results_plan_version_pricing_job" FromRole="plan_version_pricing_api_results" ToRole="plan_version_pricing_job" />
           <Property Name="spot_allocation_model_mode" Type="Int32" Nullable="false" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_bands">
           <Key>
@@ -15051,6 +15054,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_plan_version_pricing_job" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_job" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" FromRole="plan_version_pricing_parameters" ToRole="plan_versions" />
           <NavigationProperty Name="plan_version_pricing_parameter_inventory_proprietary_summaries" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameter_inventory_proprietary_summaries" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_api_results_plan_version_pricing_job">
           <End Type="BroadcastModel.plan_version_pricing_job" Role="plan_version_pricing_job" Multiplicity="0..1" />
@@ -18489,6 +18493,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_api_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_api_results">
               <MappingFragment StoreEntitySet="plan_version_pricing_api_results">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
                 <ScalarProperty Name="pricing_version" ColumnName="pricing_version" />
                 <ScalarProperty Name="plan_version_pricing_job_id" ColumnName="plan_version_pricing_job_id" />
@@ -18604,6 +18609,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_parameters">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_parameters">
               <MappingFragment StoreEntitySet="plan_version_pricing_parameters">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="market_group" ColumnName="market_group" />
                 <ScalarProperty Name="cpm_adjusted" ColumnName="cpm_adjusted" />
                 <ScalarProperty Name="budget_adjusted" ColumnName="budget_adjusted" />

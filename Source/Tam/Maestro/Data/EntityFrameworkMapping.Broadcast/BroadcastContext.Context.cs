@@ -188,6 +188,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual DbSet<plan_version_pricing_market_details> plan_version_pricing_market_details { get; set; }
         public virtual DbSet<plan_version_pricing_station_details> plan_version_pricing_station_details { get; set; }
+        public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual DbSet<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
         public virtual DbSet<plan_version_pricing_markets> plan_version_pricing_markets { get; set; }
         public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
@@ -218,6 +219,5 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
         public virtual DbSet<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
         public virtual DbSet<standard_dayparts> standard_dayparts { get; set; }
-        public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
     }
 }
