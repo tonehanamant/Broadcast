@@ -1268,18 +1268,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             catch (PricingModelException exception)
             {
-                var msg = $"Exception : {exception.Message}; Diagnostics : {diagnostic}";
-                _HandlePricingJobError(jobId, BackgroundJobProcessingStatus.Failed, msg);
+                _HandlePricingJobError(jobId, BackgroundJobProcessingStatus.Failed, exception.Message, diagnostic);
             }
             catch (Exception exception) when (exception is ObjectDisposedException || exception is OperationCanceledException)
             {
-                var msg = $"Running the pricing model was canceled.  Diagnostics : {diagnostic}";
-                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, msg);
+                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, "Running the pricing model was canceled.", diagnostic);
             }
             catch (Exception exception)
             {
-                var msg = $"Error attempting to run the pricing model.  Diagnostics : {diagnostic}";
-                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, msg);
+                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model.", diagnostic);
             }
         }
 
@@ -1961,15 +1958,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             int jobId,
             BackgroundJobProcessingStatus status,
             Exception exception,
-            string logMessage)
+            string logMessage,
+            PlanPricingJobDiagnostic diagnostic)
         {
             _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
             {
                 Id = jobId,
                 Status = status,
-                DiagnosticResult = exception.ToString(),
                 ErrorMessage = logMessage,
-                Completed = _DateTimeEngine.GetCurrentMoment()
+                Completed = _DateTimeEngine.GetCurrentMoment(),
+                DiagnosticResult = $"{exception} : Diagnostic Results : {diagnostic}",
             });
 
             _LogError($"Error attempting to run the pricing model : {exception.Message}", exception);
@@ -1978,14 +1976,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _HandlePricingJobError(
             int jobId,
             BackgroundJobProcessingStatus status,
-            string errorMessages)
+            string errorMessages,
+            PlanPricingJobDiagnostic diagnostic)
         {
             _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
             {
                 Id = jobId,
                 Status = status,
                 ErrorMessage = errorMessages,
-                Completed = _DateTimeEngine.GetCurrentMoment()
+                Completed = _DateTimeEngine.GetCurrentMoment(),
+                DiagnosticResult = diagnostic.ToString()
             });
 
             _LogError($"Pricing model run ended with errors : {errorMessages}");
