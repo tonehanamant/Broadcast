@@ -215,7 +215,7 @@ BEGIN
 			pvps.posting_type = COALESCE(pv.posting_type, 1)
 		FROM 
 			[plan_version_pricing_api_results] pvps
-			  INNER JOIN [plan_version_pricing_job] pvpj
+			  LEFT JOIN [plan_version_pricing_job] pvpj
 				ON	pvpj.id = pvps.plan_version_pricing_job_id
 			  LEFT JOIN [plan_versions] pv
 				ON pv.id = pvpj.plan_version_id')
