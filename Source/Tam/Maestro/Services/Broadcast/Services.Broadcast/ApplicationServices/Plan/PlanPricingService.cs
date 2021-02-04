@@ -1026,6 +1026,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 JobId = jobId,
                 PlanVersionId = plan.VersionId,
                 PricingVersion = _GetPricingModelVersion().ToString(),
+                PostingType = plan.PostingType,
                 SpotAllocationModelMode = SpotAllocationModelMode.Quality
             });
 
@@ -1037,6 +1038,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
                     PricingVersion = _GetPricingModelVersion().ToString(),
+                    PostingType = plan.PostingType,
                     SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
                 });
 
@@ -1046,6 +1048,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     JobId = jobId,
                     PlanVersionId = plan.VersionId,
                     PricingVersion = _GetPricingModelVersion().ToString(),
+                    PostingType = plan.PostingType,
                     SpotAllocationModelMode = SpotAllocationModelMode.Floor
                 });
             }
@@ -1170,7 +1173,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         if (targetPostingType == plan.PostingType)
                         {
                             postingTypeInventory = inventory;
-                            postingAllocationResult = allocationResult;
+                            postingAllocationResult = allocationResult;                            
                         }
                         else
                         {
@@ -1180,6 +1183,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             _PlanPricingInventoryEngine.ConvertPostingType(targetPostingType, postingTypeInventory);
 
                             postingAllocationResult = allocationResult.DeepCloneUsingSerialization();
+                            // override with our instance posting type.
+                            postingAllocationResult.PostingType = targetPostingType;
 
                             _ValidateInventory(postingTypeInventory);
                             _MapAllocationResultsPostingType(postingAllocationResult, postingTypeInventory, targetPostingType,

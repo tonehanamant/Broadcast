@@ -1,5 +1,6 @@
 ﻿{
   "PlanVersionId": 0,
+  "PostingType": 1,
   "PricingCpm": 14.7893,
   "PricingVersion": null,
   "RequestId": null,

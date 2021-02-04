@@ -1577,6 +1577,7 @@ namespace Services.Broadcast.Repositories
             return new PlanPricingAllocationResult
             {
                 SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode,
+                PostingType = (PostingTypeEnum)apiResult.spot_allocation_model_mode,
                 PricingCpm = apiResult.optimal_cpm,
                 JobId = apiResult.plan_version_pricing_job_id,
                 Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot

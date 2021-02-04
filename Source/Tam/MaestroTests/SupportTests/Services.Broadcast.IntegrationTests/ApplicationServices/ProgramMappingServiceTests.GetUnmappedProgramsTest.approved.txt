@@ -459,13 +459,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Drama",
+    "Genre": "Documentary",
     "MatchConfidence": 0.54614,
-    "MatchedName": "An American in Canada",
+    "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "DENNIS THE MENACE/HAZEL",
     "ProgramName": "DENNIS THE MENACE/HAZEL",
-    "ShowType": "Series"
+    "ShowType": "Documentary"
   },
   {
     "Genre": "Sports",
@@ -711,13 +711,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Drama",
+    "Genre": "Documentary",
     "MatchConfidence": 0.6004,
-    "MatchedName": "An American in Canada",
+    "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "EVENING MAGAZINE",
     "ProgramName": "EVENING MAGAZINE",
-    "ShowType": "Series"
+    "ShowType": "Documentary"
   },
   {
     "Genre": "Comedy",

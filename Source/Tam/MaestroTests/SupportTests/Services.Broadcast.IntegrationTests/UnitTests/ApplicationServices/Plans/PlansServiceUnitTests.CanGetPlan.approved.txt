@@ -102,6 +102,7 @@
     "DeliveryImpressions": 100.0,
     "DeliveryRatingPoints": 0.0,
     "InflationFactor": 10.0,
+    "IsSelected": false,
     "JobId": 1,
     "Margin": null,
     "MarketGroup": 0,
@@ -109,6 +110,7 @@
     "MinCpm": null,
     "PlanId": 1,
     "PlanVersionId": 1,
+    "PostingType": 0,
     "ProprietaryBlend": 0.0,
     "ProprietaryInventory": [
       {

@@ -1082,7 +1082,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
             Assert.IsNull(jobUpdates[0].ErrorMessage);
-            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Error attempting to run the pricing model.  Diagnostics :"));
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Error attempting to run the pricing model."));
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
@@ -1139,7 +1139,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
-                MarketGroup = MarketGroupEnum.All
+                MarketGroup = MarketGroupEnum.All,
+                PostingType = PostingTypeEnum.NSI
             };
         }
 
@@ -2993,7 +2994,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
             Assert.IsNull(jobUpdates[0].ErrorMessage);
-            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Exception : Pricing Model returned the following error:"));
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Pricing Model returned the following error:"));
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
@@ -3885,7 +3886,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
             Assert.IsNull(jobUpdates[0].ErrorMessage);
-            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Error attempting to run the pricing model.  Diagnostics :"));
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Error attempting to run the pricing model."));
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");

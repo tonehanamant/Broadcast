@@ -13,6 +13,7 @@
           "DeliveryImpressions": 50000.0,
           "DeliveryRatingPoints": 1.3,
           "InflationFactor": 0.5,
+          "IsSelected": false,
           "JobId": 5,
           "Margin": 14.0,
           "MarketGroup": 1,
@@ -20,6 +21,7 @@
           "MinCpm": 1.0,
           "PlanId": 222,
           "PlanVersionId": 77,
+          "PostingType": 0,
           "ProprietaryBlend": 0.2,
           "ProprietaryInventory": [],
           "UnitCaps": 10,
@@ -38,7 +40,7 @@
         }
       ],
       "Arguments": [
-        "{\"PlanId\":222,\"PlanVersionId\":77,\"MinCpm\":1.0,\"MaxCpm\":100.0,\"DeliveryImpressions\":50000.0,\"Budget\":1000.0,\"AdjustedBudget\":860.00,\"ProprietaryBlend\":0.2,\"CPM\":5.0,\"AdjustedCPM\":0.0172,\"CompetitionFactor\":0.1,\"InflationFactor\":0.5,\"UnitCaps\":10,\"UnitCapsType\":3,\"Currency\":1,\"MarketGroup\":1,\"CPP\":1.1,\"DeliveryRatingPoints\":1.3,\"Margin\":14.0,\"JobId\":5,\"ProprietaryInventory\":[]}",
+        "{\"PlanId\":222,\"PlanVersionId\":77,\"MinCpm\":1.0,\"MaxCpm\":100.0,\"DeliveryImpressions\":50000.0,\"Budget\":1000.0,\"AdjustedBudget\":860.00,\"ProprietaryBlend\":0.2,\"CPM\":5.0,\"AdjustedCPM\":0.0172,\"CompetitionFactor\":0.1,\"InflationFactor\":0.5,\"UnitCaps\":10,\"UnitCapsType\":3,\"Currency\":1,\"MarketGroup\":1,\"CPP\":1.1,\"DeliveryRatingPoints\":1.3,\"Margin\":14.0,\"JobId\":5,\"IsSelected\":false,\"PostingType\":0,\"ProprietaryInventory\":[]}",
         "5",
         null
       ]
