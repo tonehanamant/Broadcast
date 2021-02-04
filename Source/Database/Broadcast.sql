@@ -254,9 +254,10 @@ GO
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-	SET parameter_value = '20.11.1' -- Current release version
+	SET parameter_value = '21.02.1' -- Current release version
 	, last_modified_time = SYSDATETIME()
 WHERE parameter_key = 'SchemaVersion'
+
 GO
 
 print 'Updated schema Version'
@@ -266,8 +267,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '20.10.1' -- Previous release version
-		OR [version] = '20.11.1') -- Current release version
+		WHERE [version] = '20.11.1' -- Previous release version
+		OR [version] = '21.02.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION
