@@ -695,7 +695,7 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
-            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId);
+            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId, request.PostingType);
             var proprietaryInventory = _PlanRepository
                 .GetProprietaryInventoryForProgramLineup(plan.PricingParameters.JobId.Value);
             _SetSpotLengthIdAndCalculateImpressions(plan, proprietaryInventory, spotLengths);
@@ -720,7 +720,8 @@ namespace Services.Broadcast.ApplicationServices
                 manifestsOpenMarket,
                 marketCoverages,
                 primaryProgramsByManifestDaypartIds,
-                proprietaryInventory);
+                proprietaryInventory,
+                request.PostingType);
         }
 
         private void _LoadDaypartData(List<ProgramLineupProprietaryInventory> proprietaryInventory)

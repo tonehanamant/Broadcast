@@ -6,6 +6,7 @@ using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
@@ -56,12 +57,13 @@ namespace Services.Broadcast.Entities.Campaign
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
-            List<ProgramLineupProprietaryInventory> proprietaryInventory)
+            List<ProgramLineupProprietaryInventory> proprietaryInventory,
+            PostingTypeEnum postingType)
         {
             ExportFileName = _GetFileName(plan.Name, currentDate);
             var marketCoverageByMarketCode = marketCoverageByStation.Markets.ToDictionary(x => x.MarketCode, x => x);
 
-            _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
+            _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate, postingType);
 
             List<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowDataForOpenMarket(
                                                         plan,
@@ -142,7 +144,8 @@ namespace Services.Broadcast.Entities.Campaign
             AdvertiserDto advertiser,
             PlanAudienceDisplay guaranteedDemo,
             List<LookupDto> spotLengths,
-            DateTime currentDate)
+            DateTime currentDate, 
+            PostingTypeEnum postingType)
         {
             PlanHeaderName = string.Format(PLAN_HEADER_NAME_FORMAT, plan.Name);
             ReportGeneratedDate = currentDate.ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT);
@@ -153,7 +156,7 @@ namespace Services.Broadcast.Entities.Campaign
             FlightEndDate = plan.FlightEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
             GuaranteedDemo = guaranteedDemo.Code;
             SpotLengths = _GetSpotLengths(plan, spotLengths);
-            PostingType = plan.PostingType.ToString();
+            PostingType = postingType.ToString();
             AccountExecutive = string.Empty;
             ClientContact = string.Empty;
         }

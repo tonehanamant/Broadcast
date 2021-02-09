@@ -135,7 +135,8 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
 
-        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId);
+        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId,
+            PostingTypeEnum? postingType = null);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
 
@@ -2300,7 +2301,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId)
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -2310,6 +2311,7 @@ namespace Services.Broadcast.Repositories
                 var apiResult = (from job in context.plan_version_pricing_job
                                  from apiResults in job.plan_version_pricing_api_results
                                  where job.plan_version_id == planVersionId
+                                    && (postingType == null || apiResults.posting_type == (int)postingType)
                                  select apiResults)
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
@@ -2317,7 +2319,7 @@ namespace Services.Broadcast.Repositories
                     .FirstOrDefault();
 
                 if (apiResult == null)
-                    throw new Exception($"No pricing runs were found for the plan {planId}");
+                    throw new Exception($"No pricing runs were found for the plan {planId} for posting type {postingType}");
 
                 return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
             });
