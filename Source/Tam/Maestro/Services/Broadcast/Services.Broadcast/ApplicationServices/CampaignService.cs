@@ -708,6 +708,7 @@ namespace Services.Broadcast.ApplicationServices
             var manifestDaypartIds = manifestsOpenMarket.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
 
+            var postingType = request.PostingType ?? plan.PostingType;
             return new ProgramLineupReportData(
                 plan,
                 pricingJob,
@@ -721,7 +722,7 @@ namespace Services.Broadcast.ApplicationServices
                 marketCoverages,
                 primaryProgramsByManifestDaypartIds,
                 proprietaryInventory,
-                request.PostingType);
+                postingType);
         }
 
         private void _LoadDaypartData(List<ProgramLineupProprietaryInventory> proprietaryInventory)

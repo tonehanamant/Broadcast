@@ -7,6 +7,6 @@ namespace Services.Broadcast.Entities.Campaign
     {
         public List<int> SelectedPlans { get; set; }
 
-        public PostingTypeEnum PostingType { get; set; }
+        public PostingTypeEnum? PostingType { get; set; }
     }
 }

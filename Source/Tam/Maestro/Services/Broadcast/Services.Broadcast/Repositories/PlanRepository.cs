@@ -2313,7 +2313,7 @@ namespace Services.Broadcast.Repositories
                 var apiResult = (from job in context.plan_version_pricing_job
                                  from apiResults in job.plan_version_pricing_api_results
                                  where job.plan_version_id == planVersionId
-                                    && (postingType == null || apiResults.posting_type == (int)postingType)
+                                    && (!postingType.HasValue || apiResults.posting_type == (int)postingType.Value)
                                  select apiResults)
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
