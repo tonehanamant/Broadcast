@@ -67,6 +67,7 @@ BEGIN
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
 		WHERE [version] = '20.11.1' -- Previous release version
+		OR [version] = '21.02.1' -- version skipped, but deployed to pre-prod
 		OR [version] = '21.02.2') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
