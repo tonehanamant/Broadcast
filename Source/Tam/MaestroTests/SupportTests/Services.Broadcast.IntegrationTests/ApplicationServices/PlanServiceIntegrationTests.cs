@@ -192,11 +192,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { MarketCode = 197, MarketCoverageFileId = 1, PercentageOfUS = 0.051, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Parkersburg"},
-                    new PlanAvailableMarketDto { MarketCode = 261, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "San Angelo"},
-                    new PlanAvailableMarketDto { MarketCode = 359, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "Cheyenne-Scottsbluf"},
-                    new PlanAvailableMarketDto { MarketCode = 367, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "Casper-Riverton"},
-                    new PlanAvailableMarketDto { MarketCode = 340, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 34.5, Market = "North Platte"},
+                    new PlanAvailableMarketDto { MarketCode = 197, MarketCoverageFileId = 1, PercentageOfUS = 0.051, Rank = 1, ShareOfVoicePercent = 8, Market = "Parkersburg", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 261, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 8, Market = "San Angelo", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 359, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 8, Market = "Cheyenne-Scottsbluf", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 367, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 8, Market = "Casper-Riverton", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 340, MarketCoverageFileId = 1, PercentageOfUS = 0.048, Rank = 2, ShareOfVoicePercent = 8, Market = "North Platte", IsUserShareOfVoicePercent = true},
                 };
                 newPlan.CoverageGoalPercent = 0.2;
 
@@ -2895,8 +2895,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
-                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York"}
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true}
                 },
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>
                 {

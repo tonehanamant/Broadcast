@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -48,6 +49,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private Mock<IPlanMarketSovCalculator> _PlanMarketSovCalculator;
 
         [SetUp]
         public void CreatePlanService()
@@ -155,6 +157,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub.FeatureToggles.Add("FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT", true);
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
+            _PlanMarketSovCalculator = new Mock<IPlanMarketSovCalculator>();
+
             _PlanService = new PlanService(
                     _DataRepositoryFactoryMock.Object,
                     _PlanValidatorMock.Object,
@@ -170,7 +174,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _StandardDaypartServiceMock.Object,
                     _WeeklyBreakdownEngineMock.Object,
                     _CreativeLengthEngineMock.Object,
-                    featureToggleHelper
+                    featureToggleHelper,
+                    _PlanMarketSovCalculator.Object
                 );
         }
 
@@ -1497,8 +1502,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CoverageGoalPercent = 80.5,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
-                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York"}
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true}
                 },
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>
                 {
@@ -1677,6 +1682,89 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
+
+        [Test]
+        public void CalculateMarketWeightChange()
+        {
+            // Arrange
+            var plan = _GetNewPlan();
+
+            var standardResult = new PlanAvailableMarketCalculationResult {AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50};
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()))
+                .Returns(standardResult);
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()))
+                .Returns(standardResult);
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()))
+                .Returns(standardResult);
+
+            // Act
+            var results = _PlanService.CalculateMarketWeightChange(plan.AvailableMarkets, plan.AvailableMarkets[0].Id, 12);
+
+            // Assert
+            Assert.IsNotNull(results);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()), Times.Once);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public void CalculateMarketAdded()
+        {
+            // Arrange
+            var plan = _GetNewPlan();
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()))
+                .Returns(standardResult);
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()))
+                .Returns(standardResult);
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()))
+                .Returns(standardResult);
+
+            // Act
+            var results = _PlanService.CalculateMarketAdded(plan.AvailableMarkets, plan.AvailableMarkets[0]);
+
+            // Assert
+            Assert.IsNotNull(results);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()), Times.Once);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public void CalculateMarketRemoved()
+        {
+            // Arrange
+            var plan = _GetNewPlan();
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()))
+                .Returns(standardResult);
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()))
+                .Returns(standardResult);
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()))
+                .Returns(standardResult);
+
+            // Act
+            var results = _PlanService.CalculateMarketRemoved(plan.AvailableMarkets, 1);
+
+            // Assert
+            Assert.IsNotNull(results);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()), Times.Once);
+        }
+
+
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions
             , bool equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)

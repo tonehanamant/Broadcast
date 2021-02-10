@@ -3,6 +3,7 @@
   "AudienceType": 1,
   "AvailableMarkets": [
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Portland-Auburn",
       "MarketCode": 100,
       "MarketCoverageFileId": 225,
@@ -11,6 +12,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "New York",
       "MarketCode": 101,
       "MarketCoverageFileId": 225,
@@ -19,6 +21,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Binghamton",
       "MarketCode": 102,
       "MarketCoverageFileId": 225,
@@ -27,6 +30,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Macon",
       "MarketCode": 103,
       "MarketCoverageFileId": 225,
@@ -35,6 +39,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Philadelphia",
       "MarketCode": 104,
       "MarketCoverageFileId": 225,
@@ -43,6 +48,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Detroit",
       "MarketCode": 105,
       "MarketCoverageFileId": 225,
@@ -51,6 +57,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Boston (Manchester)",
       "MarketCode": 106,
       "MarketCoverageFileId": 225,
@@ -59,6 +66,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Savannah",
       "MarketCode": 107,
       "MarketCoverageFileId": 225,
@@ -67,6 +75,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Pittsburgh",
       "MarketCode": 108,
       "MarketCoverageFileId": 225,
@@ -75,6 +84,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Ft. Wayne",
       "MarketCode": 109,
       "MarketCoverageFileId": 225,
@@ -83,6 +93,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Cleveland-Akron (Canton)",
       "MarketCode": 110,
       "MarketCoverageFileId": 225,
@@ -91,6 +102,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Washington, DC (Hagrstwn)",
       "MarketCode": 111,
       "MarketCoverageFileId": 225,
@@ -99,6 +111,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Baltimore",
       "MarketCode": 112,
       "MarketCoverageFileId": 225,
@@ -107,6 +120,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Flint-Saginaw-Bay City",
       "MarketCode": 113,
       "MarketCoverageFileId": 225,
@@ -115,6 +129,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Buffalo",
       "MarketCode": 114,
       "MarketCoverageFileId": 225,
@@ -123,6 +138,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Cincinnati",
       "MarketCode": 115,
       "MarketCoverageFileId": 225,
@@ -131,6 +147,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Erie",
       "MarketCode": 116,
       "MarketCoverageFileId": 225,
@@ -139,6 +156,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Charlotte",
       "MarketCode": 117,
       "MarketCoverageFileId": 225,
@@ -147,6 +165,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Greensboro-H.Point-W.Salem",
       "MarketCode": 118,
       "MarketCoverageFileId": 225,
@@ -155,6 +174,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Charleston, SC",
       "MarketCode": 119,
       "MarketCoverageFileId": 225,
@@ -163,6 +183,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Augusta-Aiken",
       "MarketCode": 120,
       "MarketCoverageFileId": 225,
@@ -171,6 +192,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Providence-New Bedford",
       "MarketCode": 121,
       "MarketCoverageFileId": 225,
@@ -179,6 +201,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Columbus, GA (Opelika, AL)",
       "MarketCode": 122,
       "MarketCoverageFileId": 225,
@@ -187,6 +210,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Burlington-Plattsburgh",
       "MarketCode": 123,
       "MarketCoverageFileId": 225,
@@ -195,6 +219,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Atlanta",
       "MarketCode": 124,
       "MarketCoverageFileId": 225,
@@ -203,6 +228,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Albany, GA",
       "MarketCode": 125,
       "MarketCoverageFileId": 225,
@@ -211,6 +237,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Utica",
       "MarketCode": 126,
       "MarketCoverageFileId": 225,
@@ -219,6 +246,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Indianapolis",
       "MarketCode": 127,
       "MarketCoverageFileId": 225,
@@ -227,6 +255,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Miami-Ft. Lauderdale",
       "MarketCode": 128,
       "MarketCoverageFileId": 225,
@@ -235,6 +264,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Louisville",
       "MarketCode": 129,
       "MarketCoverageFileId": 225,
@@ -243,6 +273,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Tallahassee-Thomasville",
       "MarketCode": 130,
       "MarketCoverageFileId": 225,
@@ -251,6 +282,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Tri-Cities, TN-VA",
       "MarketCode": 131,
       "MarketCoverageFileId": 225,
@@ -259,6 +291,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Albany-Schenectady-Troy",
       "MarketCode": 132,
       "MarketCoverageFileId": 225,
@@ -267,6 +300,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Hartford & New Haven",
       "MarketCode": 133,
       "MarketCoverageFileId": 225,
@@ -275,6 +309,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Orlando-Daytona Bch-Melbrn",
       "MarketCode": 134,
       "MarketCoverageFileId": 225,
@@ -283,6 +318,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Columbus, OH",
       "MarketCode": 135,
       "MarketCoverageFileId": 225,
@@ -291,6 +327,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Youngstown",
       "MarketCode": 136,
       "MarketCoverageFileId": 225,
@@ -299,6 +336,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Bangor",
       "MarketCode": 137,
       "MarketCoverageFileId": 225,
@@ -307,6 +345,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Rochester, NY",
       "MarketCode": 138,
       "MarketCoverageFileId": 225,
@@ -315,6 +354,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Tampa-St. Pete (Sarasota)",
       "MarketCode": 139,
       "MarketCoverageFileId": 225,
@@ -323,6 +363,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Traverse City-Cadillac",
       "MarketCode": 140,
       "MarketCoverageFileId": 225,
@@ -331,6 +372,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lexington",
       "MarketCode": 141,
       "MarketCoverageFileId": 225,
@@ -339,6 +381,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Dayton",
       "MarketCode": 142,
       "MarketCoverageFileId": 225,
@@ -347,6 +390,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Springfield-Holyoke",
       "MarketCode": 143,
       "MarketCoverageFileId": 225,
@@ -355,6 +399,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Norfolk-Portsmth-Newpt Nws",
       "MarketCode": 144,
       "MarketCoverageFileId": 225,
@@ -363,6 +408,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Greenville-N.Bern-Washngtn",
       "MarketCode": 145,
       "MarketCoverageFileId": 225,
@@ -371,6 +417,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Columbia, SC",
       "MarketCode": 146,
       "MarketCoverageFileId": 225,
@@ -379,6 +426,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Toledo",
       "MarketCode": 147,
       "MarketCoverageFileId": 225,
@@ -387,6 +435,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "West Palm Beach-Ft. Pierce",
       "MarketCode": 148,
       "MarketCoverageFileId": 225,
@@ -395,6 +444,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Watertown",
       "MarketCode": 149,
       "MarketCoverageFileId": 225,
@@ -403,6 +453,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Wilmington",
       "MarketCode": 150,
       "MarketCoverageFileId": 225,
@@ -411,6 +462,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lansing",
       "MarketCode": 151,
       "MarketCoverageFileId": 225,
@@ -419,6 +471,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Presque Isle",
       "MarketCode": 152,
       "MarketCoverageFileId": 225,
@@ -427,6 +480,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Marquette",
       "MarketCode": 153,
       "MarketCoverageFileId": 225,
@@ -435,6 +489,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Wheeling-Steubenville",
       "MarketCode": 154,
       "MarketCoverageFileId": 225,
@@ -443,6 +498,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Syracuse",
       "MarketCode": 155,
       "MarketCoverageFileId": 225,
@@ -451,6 +507,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Richmond-Petersburg",
       "MarketCode": 156,
       "MarketCoverageFileId": 225,
@@ -459,6 +516,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Knoxville",
       "MarketCode": 157,
       "MarketCoverageFileId": 225,
@@ -467,6 +525,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lima",
       "MarketCode": 158,
       "MarketCoverageFileId": 225,
@@ -475,6 +534,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Bluefield-Beckley-Oak Hill",
       "MarketCode": 159,
       "MarketCoverageFileId": 225,
@@ -483,6 +543,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Raleigh-Durham (Fayetvlle)",
       "MarketCode": 160,
       "MarketCoverageFileId": 225,
@@ -491,6 +552,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Jacksonville",
       "MarketCode": 161,
       "MarketCoverageFileId": 225,
@@ -499,6 +561,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Grand Rapids-Kalmzoo-B.Crk",
       "MarketCode": 163,
       "MarketCoverageFileId": 225,
@@ -507,6 +570,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Charleston-Huntington",
       "MarketCode": 164,
       "MarketCoverageFileId": 225,
@@ -515,6 +579,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Elmira (Corning)",
       "MarketCode": 165,
       "MarketCoverageFileId": 225,
@@ -523,6 +588,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Harrisburg-Lncstr-Leb-York",
       "MarketCode": 166,
       "MarketCoverageFileId": 225,
@@ -531,6 +597,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Greenvll-Spart-Ashevll-And",
       "MarketCode": 167,
       "MarketCoverageFileId": 225,
@@ -539,6 +606,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Harrisonburg",
       "MarketCode": 169,
       "MarketCoverageFileId": 225,
@@ -547,6 +615,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Myrtle Beach-Florence",
       "MarketCode": 170,
       "MarketCoverageFileId": 225,
@@ -555,6 +624,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Ft. Myers-Naples",
       "MarketCode": 171,
       "MarketCoverageFileId": 225,
@@ -563,6 +633,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Roanoke-Lynchburg",
       "MarketCode": 173,
       "MarketCoverageFileId": 225,
@@ -571,6 +642,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Johnstown-Altoona-St Colge",
       "MarketCode": 174,
       "MarketCoverageFileId": 225,
@@ -579,6 +651,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Chattanooga",
       "MarketCode": 175,
       "MarketCoverageFileId": 225,
@@ -587,6 +660,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Salisbury",
       "MarketCode": 176,
       "MarketCoverageFileId": 225,
@@ -595,6 +669,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Wilkes Barre-Scranton-Hztn",
       "MarketCode": 177,
       "MarketCoverageFileId": 225,
@@ -603,6 +678,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Terre Haute",
       "MarketCode": 181,
       "MarketCoverageFileId": 225,
@@ -611,6 +687,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lafayette, IN",
       "MarketCode": 182,
       "MarketCoverageFileId": 225,
@@ -619,6 +696,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Alpena",
       "MarketCode": 183,
       "MarketCoverageFileId": 225,
@@ -627,6 +705,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Charlottesville",
       "MarketCode": 184,
       "MarketCoverageFileId": 225,
@@ -635,6 +714,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "South Bend-Elkhart",
       "MarketCode": 188,
       "MarketCoverageFileId": 225,
@@ -643,6 +723,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Gainesville",
       "MarketCode": 192,
       "MarketCoverageFileId": 225,
@@ -651,6 +732,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Zanesville",
       "MarketCode": 196,
       "MarketCoverageFileId": 225,
@@ -659,6 +741,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Parkersburg",
       "MarketCode": 197,
       "MarketCoverageFileId": 225,
@@ -667,6 +750,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Clarksburg-Weston",
       "MarketCode": 198,
       "MarketCoverageFileId": 225,
@@ -675,6 +759,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Corpus Christi",
       "MarketCode": 200,
       "MarketCoverageFileId": 225,
@@ -683,6 +768,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Chicago",
       "MarketCode": 202,
       "MarketCoverageFileId": 225,
@@ -691,6 +777,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Joplin-Pittsburg",
       "MarketCode": 203,
       "MarketCoverageFileId": 225,
@@ -699,6 +786,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Columbia-Jefferson City",
       "MarketCode": 204,
       "MarketCoverageFileId": 225,
@@ -707,6 +795,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Topeka",
       "MarketCode": 205,
       "MarketCoverageFileId": 225,
@@ -715,6 +804,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Dothan",
       "MarketCode": 206,
       "MarketCoverageFileId": 225,
@@ -723,6 +813,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "St. Louis",
       "MarketCode": 209,
       "MarketCoverageFileId": 225,
@@ -731,6 +822,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Rockford",
       "MarketCode": 210,
       "MarketCoverageFileId": 225,
@@ -739,6 +831,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Rochestr-Mason City-Austin",
       "MarketCode": 211,
       "MarketCoverageFileId": 225,
@@ -747,6 +840,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Shreveport",
       "MarketCode": 212,
       "MarketCoverageFileId": 225,
@@ -755,6 +849,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Minneapolis-St. Paul",
       "MarketCode": 213,
       "MarketCoverageFileId": 225,
@@ -763,6 +858,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Kansas City",
       "MarketCode": 216,
       "MarketCoverageFileId": 225,
@@ -771,6 +867,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Milwaukee",
       "MarketCode": 217,
       "MarketCoverageFileId": 225,
@@ -779,6 +876,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Houston",
       "MarketCode": 218,
       "MarketCoverageFileId": 225,
@@ -787,6 +885,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Springfield, MO",
       "MarketCode": 219,
       "MarketCoverageFileId": 225,
@@ -795,6 +894,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "New Orleans",
       "MarketCode": 222,
       "MarketCoverageFileId": 225,
@@ -803,6 +903,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Dallas-Ft. Worth",
       "MarketCode": 223,
       "MarketCoverageFileId": 225,
@@ -811,6 +912,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Sioux City",
       "MarketCode": 224,
       "MarketCoverageFileId": 225,
@@ -819,6 +921,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Waco-Temple-Bryan",
       "MarketCode": 225,
       "MarketCoverageFileId": 225,
@@ -827,6 +930,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Victoria",
       "MarketCode": 226,
       "MarketCoverageFileId": 225,
@@ -835,6 +939,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Wichita Falls & Lawton",
       "MarketCode": 227,
       "MarketCoverageFileId": 225,
@@ -843,6 +948,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Monroe-El Dorado",
       "MarketCode": 228,
       "MarketCoverageFileId": 225,
@@ -851,6 +957,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Birmingham (Ann and Tusc)",
       "MarketCode": 230,
       "MarketCoverageFileId": 225,
@@ -859,6 +966,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Ottumwa-Kirksville",
       "MarketCode": 231,
       "MarketCoverageFileId": 225,
@@ -867,6 +975,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Paducah-Cape Girard-Harsbg",
       "MarketCode": 232,
       "MarketCoverageFileId": 225,
@@ -875,6 +984,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Odessa-Midland",
       "MarketCode": 233,
       "MarketCoverageFileId": 225,
@@ -883,6 +993,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Amarillo",
       "MarketCode": 234,
       "MarketCoverageFileId": 225,
@@ -891,6 +1002,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Austin",
       "MarketCode": 235,
       "MarketCoverageFileId": 225,
@@ -899,6 +1011,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Harlingen-Wslco-Brnsvl-Mca",
       "MarketCode": 236,
       "MarketCoverageFileId": 225,
@@ -907,6 +1020,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Cedar Rapids-Wtrlo-IWC&Dub",
       "MarketCode": 237,
       "MarketCoverageFileId": 225,
@@ -915,6 +1029,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "St. Joseph",
       "MarketCode": 238,
       "MarketCoverageFileId": 225,
@@ -923,6 +1038,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Jackson, TN",
       "MarketCode": 239,
       "MarketCoverageFileId": 225,
@@ -931,6 +1047,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Memphis",
       "MarketCode": 240,
       "MarketCoverageFileId": 225,
@@ -939,6 +1056,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "San Antonio",
       "MarketCode": 241,
       "MarketCoverageFileId": 225,
@@ -947,6 +1065,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lafayette, LA",
       "MarketCode": 242,
       "MarketCoverageFileId": 225,
@@ -955,6 +1074,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lake Charles",
       "MarketCode": 243,
       "MarketCoverageFileId": 225,
@@ -963,6 +1083,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Alexandria, LA",
       "MarketCode": 244,
       "MarketCoverageFileId": 225,
@@ -971,6 +1092,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Greenwood-Greenville",
       "MarketCode": 247,
       "MarketCoverageFileId": 225,
@@ -979,6 +1101,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Champaign&Sprngfld-Decatur",
       "MarketCode": 248,
       "MarketCoverageFileId": 225,
@@ -987,6 +1110,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Evansville",
       "MarketCode": 249,
       "MarketCoverageFileId": 225,
@@ -995,6 +1119,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Oklahoma City",
       "MarketCode": 250,
       "MarketCoverageFileId": 225,
@@ -1003,6 +1128,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lubbock",
       "MarketCode": 251,
       "MarketCoverageFileId": 225,
@@ -1011,6 +1137,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Omaha",
       "MarketCode": 252,
       "MarketCoverageFileId": 225,
@@ -1019,6 +1146,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Panama City",
       "MarketCode": 256,
       "MarketCoverageFileId": 225,
@@ -1027,6 +1155,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Sherman-Ada",
       "MarketCode": 257,
       "MarketCoverageFileId": 225,
@@ -1035,6 +1164,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Green Bay-Appleton",
       "MarketCode": 258,
       "MarketCoverageFileId": 225,
@@ -1043,6 +1173,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Nashville",
       "MarketCode": 259,
       "MarketCoverageFileId": 225,
@@ -1051,6 +1182,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "San Angelo",
       "MarketCode": 261,
       "MarketCoverageFileId": 225,
@@ -1059,6 +1191,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Abilene-Sweetwater",
       "MarketCode": 262,
       "MarketCoverageFileId": 225,
@@ -1067,6 +1200,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Madison",
       "MarketCode": 269,
       "MarketCoverageFileId": 225,
@@ -1075,6 +1209,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Ft. Smith-Fay-Sprngdl-Rgrs",
       "MarketCode": 270,
       "MarketCoverageFileId": 225,
@@ -1083,6 +1218,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Tulsa",
       "MarketCode": 271,
       "MarketCoverageFileId": 225,
@@ -1091,6 +1227,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Columbus-Tupelo-W Pnt-Hstn",
       "MarketCode": 273,
       "MarketCoverageFileId": 225,
@@ -1099,6 +1236,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Peoria-Bloomington",
       "MarketCode": 275,
       "MarketCoverageFileId": 225,
@@ -1107,6 +1245,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Duluth-Superior",
       "MarketCode": 276,
       "MarketCoverageFileId": 225,
@@ -1115,6 +1254,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Wichita-Hutchinson Plus",
       "MarketCode": 278,
       "MarketCoverageFileId": 225,
@@ -1123,6 +1263,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Des Moines-Ames",
       "MarketCode": 279,
       "MarketCoverageFileId": 225,
@@ -1131,6 +1272,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Davenport-R.Island-Moline",
       "MarketCode": 282,
       "MarketCoverageFileId": 225,
@@ -1139,6 +1281,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Mobile-Pensacola (Ft Walt)",
       "MarketCode": 286,
       "MarketCoverageFileId": 225,
@@ -1147,6 +1290,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
       "MarketCode": 287,
       "MarketCoverageFileId": 225,
@@ -1155,6 +1299,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Huntsville-Decatur (Flor)",
       "MarketCode": 291,
       "MarketCoverageFileId": 225,
@@ -1163,6 +1308,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Beaumont-Port Arthur",
       "MarketCode": 292,
       "MarketCoverageFileId": 225,
@@ -1171,6 +1317,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Little Rock-Pine Bluff",
       "MarketCode": 293,
       "MarketCoverageFileId": 225,
@@ -1179,6 +1326,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Montgomery-Selma",
       "MarketCode": 298,
       "MarketCoverageFileId": 225,
@@ -1187,6 +1335,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "La Crosse-Eau Claire",
       "MarketCode": 302,
       "MarketCoverageFileId": 225,
@@ -1195,6 +1344,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Wausau-Rhinelander",
       "MarketCode": 305,
       "MarketCoverageFileId": 225,
@@ -1203,6 +1353,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Tyler-Longview(Lfkn&Ncgd)",
       "MarketCode": 309,
       "MarketCoverageFileId": 225,
@@ -1211,6 +1362,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Hattiesburg-Laurel",
       "MarketCode": 310,
       "MarketCoverageFileId": 225,
@@ -1219,6 +1371,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Meridian",
       "MarketCode": 311,
       "MarketCoverageFileId": 225,
@@ -1227,6 +1380,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Baton Rouge",
       "MarketCode": 316,
       "MarketCoverageFileId": 225,
@@ -1235,6 +1389,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Quincy-Hannibal-Keokuk",
       "MarketCode": 317,
       "MarketCoverageFileId": 225,
@@ -1243,6 +1398,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Jackson, MS",
       "MarketCode": 318,
       "MarketCoverageFileId": 225,
@@ -1251,6 +1407,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Lincoln & Hastings-Krny",
       "MarketCode": 322,
       "MarketCoverageFileId": 225,
@@ -1259,6 +1416,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Sioux Falls(Mitchell)",
       "MarketCode": 325,
       "MarketCoverageFileId": 225,
@@ -1267,6 +1425,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Jonesboro",
       "MarketCode": 334,
       "MarketCoverageFileId": 225,
@@ -1275,6 +1434,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Bowling Green",
       "MarketCode": 336,
       "MarketCoverageFileId": 225,
@@ -1283,6 +1443,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Mankato",
       "MarketCode": 337,
       "MarketCoverageFileId": 225,
@@ -1291,6 +1452,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "North Platte",
       "MarketCode": 340,
       "MarketCoverageFileId": 225,
@@ -1299,6 +1461,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Anchorage",
       "MarketCode": 343,
       "MarketCoverageFileId": 225,
@@ -1307,6 +1470,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Honolulu",
       "MarketCode": 344,
       "MarketCoverageFileId": 225,
@@ -1315,6 +1479,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Fairbanks",
       "MarketCode": 345,
       "MarketCoverageFileId": 225,
@@ -1323,6 +1488,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Biloxi-Gulfport",
       "MarketCode": 346,
       "MarketCoverageFileId": 225,
@@ -1331,6 +1497,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Juneau",
       "MarketCode": 347,
       "MarketCoverageFileId": 225,
@@ -1339,6 +1506,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Laredo",
       "MarketCode": 349,
       "MarketCoverageFileId": 225,
@@ -1347,6 +1515,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Denver",
       "MarketCode": 351,
       "MarketCoverageFileId": 225,
@@ -1355,6 +1524,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Colorado Springs-Pueblo",
       "MarketCode": 352,
       "MarketCoverageFileId": 225,
@@ -1363,6 +1533,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Phoenix (Prescott)",
       "MarketCode": 353,
       "MarketCoverageFileId": 225,
@@ -1371,6 +1542,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Butte-Bozeman",
       "MarketCode": 354,
       "MarketCoverageFileId": 225,
@@ -1379,6 +1551,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Great Falls",
       "MarketCode": 355,
       "MarketCoverageFileId": 225,
@@ -1387,6 +1560,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Billings",
       "MarketCode": 356,
       "MarketCoverageFileId": 225,
@@ -1395,6 +1569,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Boise",
       "MarketCode": 357,
       "MarketCoverageFileId": 225,
@@ -1403,6 +1578,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Idaho Fals-Pocatllo(Jcksn)",
       "MarketCode": 358,
       "MarketCoverageFileId": 225,
@@ -1411,6 +1587,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Twin Falls",
       "MarketCode": 360,
       "MarketCoverageFileId": 225,
@@ -1419,6 +1596,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Missoula",
       "MarketCode": 362,
       "MarketCoverageFileId": 225,
@@ -1427,6 +1605,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Rapid City",
       "MarketCode": 364,
       "MarketCoverageFileId": 225,
@@ -1435,6 +1614,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "El Paso (Las Cruces)",
       "MarketCode": 365,
       "MarketCoverageFileId": 225,
@@ -1443,6 +1623,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Helena",
       "MarketCode": 366,
       "MarketCoverageFileId": 225,
@@ -1451,6 +1632,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Casper-Riverton",
       "MarketCode": 367,
       "MarketCoverageFileId": 225,
@@ -1459,6 +1641,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Salt Lake City",
       "MarketCode": 370,
       "MarketCoverageFileId": 225,
@@ -1467,6 +1650,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Yuma-El Centro",
       "MarketCode": 371,
       "MarketCoverageFileId": 225,
@@ -1475,6 +1659,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Grand Junction-Montrose",
       "MarketCode": 373,
       "MarketCoverageFileId": 225,
@@ -1483,6 +1668,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Tucson (Sierra Vista)",
       "MarketCode": 389,
       "MarketCoverageFileId": 225,
@@ -1491,6 +1677,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Albuquerque-Santa Fe",
       "MarketCode": 390,
       "MarketCoverageFileId": 225,
@@ -1499,6 +1686,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Glendive",
       "MarketCode": 398,
       "MarketCoverageFileId": 225,
@@ -1507,6 +1695,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Bakersfield",
       "MarketCode": 400,
       "MarketCoverageFileId": 225,
@@ -1515,6 +1704,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Eugene",
       "MarketCode": 401,
       "MarketCoverageFileId": 225,
@@ -1523,6 +1713,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Eureka",
       "MarketCode": 402,
       "MarketCoverageFileId": 225,
@@ -1531,6 +1722,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Los Angeles",
       "MarketCode": 403,
       "MarketCoverageFileId": 225,
@@ -1539,6 +1731,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Palm Springs",
       "MarketCode": 404,
       "MarketCoverageFileId": 225,
@@ -1547,6 +1740,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "San Francisco-Oak-San Jose",
       "MarketCode": 407,
       "MarketCoverageFileId": 225,
@@ -1555,6 +1749,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Yakima-Pasco-Rchlnd-Knnwck",
       "MarketCode": 410,
       "MarketCoverageFileId": 225,
@@ -1563,6 +1758,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Reno",
       "MarketCode": 411,
       "MarketCoverageFileId": 225,
@@ -1571,6 +1767,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Medford-Klamath Falls",
       "MarketCode": 413,
       "MarketCoverageFileId": 225,
@@ -1579,6 +1776,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Seattle-Tacoma",
       "MarketCode": 419,
       "MarketCoverageFileId": 225,
@@ -1587,6 +1785,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Portland, OR",
       "MarketCode": 420,
       "MarketCoverageFileId": 225,
@@ -1595,6 +1794,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Bend, OR",
       "MarketCode": 421,
       "MarketCoverageFileId": 225,
@@ -1603,6 +1803,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "San Diego",
       "MarketCode": 425,
       "MarketCoverageFileId": 225,
@@ -1611,6 +1812,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Monterey-Salinas",
       "MarketCode": 428,
       "MarketCoverageFileId": 225,
@@ -1619,6 +1821,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Las Vegas",
       "MarketCode": 439,
       "MarketCoverageFileId": 225,
@@ -1627,6 +1830,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Santabarbra-Sanmar-Sanluob",
       "MarketCode": 455,
       "MarketCoverageFileId": 225,
@@ -1635,6 +1839,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Sacramnto-Stkton-Modesto",
       "MarketCode": 462,
       "MarketCoverageFileId": 225,
@@ -1643,6 +1848,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Fresno-Visalia",
       "MarketCode": 466,
       "MarketCoverageFileId": 225,
@@ -1651,6 +1857,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Chico-Redding",
       "MarketCode": 468,
       "MarketCoverageFileId": 225,
@@ -1659,6 +1866,7 @@
       "ShareOfVoicePercent": null
     },
     {
+      "IsUserShareOfVoicePercent": false,
       "Market": "Spokane",
       "MarketCode": 481,
       "MarketCoverageFileId": 225,

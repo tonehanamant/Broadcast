@@ -11,6 +11,7 @@
       "AvailableMarkets": [
         {
           "Id": 5,
+          "IsUserShareOfVoicePercent": true,
           "Market": null,
           "MarketCode": 101,
           "MarketCoverageFileId": 0,
@@ -20,6 +21,7 @@
         },
         {
           "Id": 6,
+          "IsUserShareOfVoicePercent": true,
           "Market": null,
           "MarketCode": 102,
           "MarketCoverageFileId": 0,

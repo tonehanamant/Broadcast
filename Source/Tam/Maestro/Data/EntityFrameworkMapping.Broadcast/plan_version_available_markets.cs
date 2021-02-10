@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
         public double percentage_of_us { get; set; }
         public Nullable<double> share_of_voice_percent { get; set; }
         public int plan_version_id { get; set; }
+        public bool is_user_share_of_voice_percent { get; set; }
     
         public virtual market_coverage_files market_coverage_files { get; set; }
         public virtual market market { get; set; }

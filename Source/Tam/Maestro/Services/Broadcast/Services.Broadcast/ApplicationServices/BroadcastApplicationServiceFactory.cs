@@ -293,6 +293,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingScxDataPrep, PlanBuyingScxDataPrep>();
             unityContainer.RegisterType<IPlanBuyingScxDataConverter, PlanBuyingScxDataConverter>();
 
+            unityContainer.RegisterType<IPlanMarketSovCalculator, PlanMarketSovCalculator>();
+
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();

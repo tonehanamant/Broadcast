@@ -1109,7 +1109,8 @@ namespace Services.Broadcast.Repositories
                     market_coverage_File_id = m.MarketCoverageFileId,
                     rank = m.Rank,
                     percentage_of_us = m.PercentageOfUS,
-                    share_of_voice_percent = m.ShareOfVoicePercent
+                    share_of_voice_percent = m.ShareOfVoicePercent,
+                    is_user_share_of_voice_percent = m.IsUserShareOfVoicePercent
                 }
                 );
             });
@@ -1140,6 +1141,7 @@ namespace Services.Broadcast.Repositories
                 Rank = entity.rank,
                 PercentageOfUS = entity.percentage_of_us,
                 ShareOfVoicePercent = entity.share_of_voice_percent,
+                IsUserShareOfVoicePercent = entity.is_user_share_of_voice_percent
             };
             return dto;
         }

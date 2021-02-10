@@ -6,6 +6,7 @@
     [percentage_of_us]        FLOAT (53) NOT NULL,
     [share_of_voice_percent]  FLOAT (53) NULL,
     [plan_version_id]         INT        NOT NULL,
+    [is_user_share_of_voice_percent] BIT NOT NULL, 
     CONSTRAINT [PK_plan_version_available_markets] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_available_markets_market_coverage_file] FOREIGN KEY ([market_coverage_File_id]) REFERENCES [dbo].[market_coverage_files] ([id]),
     CONSTRAINT [FK_plan_available_markets_markets] FOREIGN KEY ([market_code]) REFERENCES [dbo].[markets] ([market_code]),

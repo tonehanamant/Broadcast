@@ -76,6 +76,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_COVERAGE_GOAL = "Invalid coverage goal value.";
         const string INVALID_TOTAL_MARKET_COVERAGE = "Invalid total market coverage.";
         const string INVALID_MARKET_SHARE_OF_VOICE = "Invalid share of voice for market.";
+        private const string INVALID_TOTAL_MARKET_SHARE_OF_VOICE = "Invalid total market share of voice.";
         const string INVALID_REQUEST = "Invalid request";
         public const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
         public const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
@@ -453,6 +454,13 @@ namespace Services.Broadcast.Validators
             if (totalMarketCoverage < coverageGoalRounded)
             {
                 throw new Exception(INVALID_TOTAL_MARKET_COVERAGE);
+            }
+
+            const double maxTotalMarketSov = 100.0;
+            var totalMarketSov = Math.Round(plan.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0));
+            if (totalMarketSov > maxTotalMarketSov)
+            {
+                throw new Exception(INVALID_TOTAL_MARKET_SHARE_OF_VOICE);
             }
         }
 

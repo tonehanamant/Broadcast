@@ -826,6 +826,7 @@
           <Property Name="percentage_of_us" Type="float" Nullable="false" />
           <Property Name="share_of_voice_percent" Type="float" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
+          <Property Name="is_user_share_of_voice_percent" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_blackout_markets">
           <Key>
@@ -12763,6 +12764,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="market_coverage_files" Relationship="BroadcastModel.FK_plan_available_markets_market_coverage_file" FromRole="plan_version_available_markets" ToRole="market_coverage_files" />
           <NavigationProperty Name="market" Relationship="BroadcastModel.FK_plan_available_markets_markets" FromRole="plan_version_available_markets" ToRole="market" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_available_markets_plan_versions" FromRole="plan_version_available_markets" ToRole="plan_versions" />
+          <Property Name="is_user_share_of_voice_percent" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_blackout_markets">
           <Key>
@@ -17712,6 +17714,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_available_markets">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_available_markets">
               <MappingFragment StoreEntitySet="plan_version_available_markets">
+                <ScalarProperty Name="is_user_share_of_voice_percent" ColumnName="is_user_share_of_voice_percent" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="share_of_voice_percent" ColumnName="share_of_voice_percent" />
                 <ScalarProperty Name="percentage_of_us" ColumnName="percentage_of_us" />

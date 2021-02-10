@@ -46,8 +46,10 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 markets = requestedMarkets;
             }
 
+            var idIndex = 0;
             var result = markets.Select(m => new PlanAvailableMarketDto
             {
+                Id = ++idIndex,
                 Market = m.Market,
                 MarketCode = (short)m.MarketCode,
                 MarketCoverageFileId = m.MarketCoverageFileId,

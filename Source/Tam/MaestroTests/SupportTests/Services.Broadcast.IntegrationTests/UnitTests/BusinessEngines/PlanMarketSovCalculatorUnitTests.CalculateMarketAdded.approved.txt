@@ -1,0 +1,2680 @@
+[
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": true,
+      "ShareOfVoicePercent": 4.5
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": true,
+      "ShareOfVoicePercent": 4.5
+    },
+    "Id": 2,
+    "PercentageOfUS": 0.06309,
+    "Rank": 1
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 4.767
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 194,
+    "PercentageOfUS": 0.04743,
+    "Rank": 2
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 2.95689
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 86,
+    "PercentageOfUS": 0.02942,
+    "Rank": 3
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 2.37395
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 101,
+    "PercentageOfUS": 0.02362,
+    "Rank": 5
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 2.23324
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 12,
+    "PercentageOfUS": 0.02222,
+    "Rank": 6
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 2.21113
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 98,
+    "PercentageOfUS": 0.022,
+    "Rank": 7
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 2.19706
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 196,
+    "PercentageOfUS": 0.02186,
+    "Rank": 8
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 2.19505
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 25,
+    "PercentageOfUS": 0.02184,
+    "Rank": 9
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.72066
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 172,
+    "PercentageOfUS": 0.01712,
+    "Rank": 11
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.68549
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 200,
+    "PercentageOfUS": 0.01677,
+    "Rank": 12
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.68448
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 40,
+    "PercentageOfUS": 0.01676,
+    "Rank": 13
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.55081
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 95,
+    "PercentageOfUS": 0.01543,
+    "Rank": 15
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.50357
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 29,
+    "PercentageOfUS": 0.01496,
+    "Rank": 16
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.42417
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 170,
+    "PercentageOfUS": 0.01417,
+    "Rank": 17
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.37191
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 35,
+    "PercentageOfUS": 0.01365,
+    "Rank": 18
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.29753
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 11,
+    "PercentageOfUS": 0.01291,
+    "Rank": 19
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.26638
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 207,
+    "PercentageOfUS": 0.0126,
+    "Rank": 20
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.06637
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 91,
+    "PercentageOfUS": 0.01061,
+    "Rank": 21
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.05833
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 201,
+    "PercentageOfUS": 0.01053,
+    "Rank": 22
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.02617
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 18,
+    "PercentageOfUS": 0.01021,
+    "Rank": 23
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.02315
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 9,
+    "PercentageOfUS": 0.01018,
+    "Rank": 24
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 1.01511
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 61,
+    "PercentageOfUS": 0.0101,
+    "Rank": 25
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.993
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 13,
+    "PercentageOfUS": 0.00988,
+    "Rank": 26
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.92365
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 131,
+    "PercentageOfUS": 0.00919,
+    "Rank": 27
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.91963
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 28,
+    "PercentageOfUS": 0.00915,
+    "Rank": 28
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.89852
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 203,
+    "PercentageOfUS": 0.00894,
+    "Rank": 29
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.85028
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 185,
+    "PercentageOfUS": 0.00846,
+    "Rank": 30
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.82817
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 118,
+    "PercentageOfUS": 0.00824,
+    "Rank": 31
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.82616
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 34,
+    "PercentageOfUS": 0.00822,
+    "Rank": 32
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.80706
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 96,
+    "PercentageOfUS": 0.00803,
+    "Rank": 33
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.80405
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 36,
+    "PercentageOfUS": 0.008,
+    "Rank": 34
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.78194
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 16,
+    "PercentageOfUS": 0.00778,
+    "Rank": 35
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.77792
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 97,
+    "PercentageOfUS": 0.00774,
+    "Rank": 36
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.74274
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 49,
+    "PercentageOfUS": 0.00739,
+    "Rank": 37
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.72565
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 67,
+    "PercentageOfUS": 0.00722,
+    "Rank": 38
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.70957
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 112,
+    "PercentageOfUS": 0.00706,
+    "Rank": 39
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.67842
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 205,
+    "PercentageOfUS": 0.00675,
+    "Rank": 40
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.63218
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 125,
+    "PercentageOfUS": 0.00629,
+    "Rank": 41
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.62816
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 62,
+    "PercentageOfUS": 0.00625,
+    "Rank": 42
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.61811
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 63,
+    "PercentageOfUS": 0.00615,
+    "Rank": 43
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.6161
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 107,
+    "PercentageOfUS": 0.00613,
+    "Rank": 44
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.61208
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 66,
+    "PercentageOfUS": 0.00609,
+    "Rank": 45
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.60505
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 189,
+    "PercentageOfUS": 0.00602,
+    "Rank": 46
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.60404
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 45,
+    "PercentageOfUS": 0.00601,
+    "Rank": 47
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.60304
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 19,
+    "PercentageOfUS": 0.006,
+    "Rank": 48
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.58897
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 30,
+    "PercentageOfUS": 0.00586,
+    "Rank": 49
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.58193
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 117,
+    "PercentageOfUS": 0.00579,
+    "Rank": 50
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.57188
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 100,
+    "PercentageOfUS": 0.00569,
+    "Rank": 51
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.5357
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 22,
+    "PercentageOfUS": 0.00533,
+    "Rank": 52
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.53168
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 15,
+    "PercentageOfUS": 0.00529,
+    "Rank": 53
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.51459
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 208,
+    "PercentageOfUS": 0.00512,
+    "Rank": 54
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.50856
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 57,
+    "PercentageOfUS": 0.00506,
+    "Rank": 55
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.49248
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 70,
+    "PercentageOfUS": 0.0049,
+    "Rank": 56
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.46936
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 75,
+    "PercentageOfUS": 0.00467,
+    "Rank": 57
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.46836
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 147,
+    "PercentageOfUS": 0.00466,
+    "Rank": 58
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.46836
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 143,
+    "PercentageOfUS": 0.00466,
+    "Rank": 59
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.46735
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 33,
+    "PercentageOfUS": 0.00465,
+    "Rank": 60
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.46333
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 58,
+    "PercentageOfUS": 0.00461,
+    "Rank": 61
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.46333
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 136,
+    "PercentageOfUS": 0.00461,
+    "Rank": 62
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.41207
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 42,
+    "PercentageOfUS": 0.0041,
+    "Rank": 63
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.40705
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 43,
+    "PercentageOfUS": 0.00405,
+    "Rank": 64
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.38795
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 188,
+    "PercentageOfUS": 0.00386,
+    "Rank": 65
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.37589
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 165,
+    "PercentageOfUS": 0.00374,
+    "Rank": 66
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.37288
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 140,
+    "PercentageOfUS": 0.00371,
+    "Rank": 67
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.37288
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 141,
+    "PercentageOfUS": 0.00371,
+    "Rank": 68
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.37288
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 130,
+    "PercentageOfUS": 0.00371,
+    "Rank": 69
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.37187
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 71,
+    "PercentageOfUS": 0.0037,
+    "Rank": 70
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.36886
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 14,
+    "PercentageOfUS": 0.00367,
+    "Rank": 71
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.36785
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 210,
+    "PercentageOfUS": 0.00366,
+    "Rank": 72
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.36383
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 64,
+    "PercentageOfUS": 0.00362,
+    "Rank": 73
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.3578
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 127,
+    "PercentageOfUS": 0.00356,
+    "Rank": 74
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.34976
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 99,
+    "PercentageOfUS": 0.00348,
+    "Rank": 75
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.34474
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 39,
+    "PercentageOfUS": 0.00343,
+    "Rank": 76
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.34474
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 47,
+    "PercentageOfUS": 0.00343,
+    "Rank": 77
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.33971
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 48,
+    "PercentageOfUS": 0.00338,
+    "Rank": 78
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": true,
+      "ShareOfVoicePercent": 8.3
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": true,
+      "ShareOfVoicePercent": 8.3
+    },
+    "Id": 1,
+    "PercentageOfUS": 0.00328,
+    "Rank": 79
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.32966
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 145,
+    "PercentageOfUS": 0.00328,
+    "Rank": 80
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.32865
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 134,
+    "PercentageOfUS": 0.00327,
+    "Rank": 81
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.3176
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 109,
+    "PercentageOfUS": 0.00316,
+    "Rank": 82
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.31559
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 94,
+    "PercentageOfUS": 0.00314,
+    "Rank": 83
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.31559
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 113,
+    "PercentageOfUS": 0.00314,
+    "Rank": 84
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.31358
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 56,
+    "PercentageOfUS": 0.00312,
+    "Rank": 85
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.31056
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 103,
+    "PercentageOfUS": 0.00309,
+    "Rank": 86
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.30855
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 171,
+    "PercentageOfUS": 0.00307,
+    "Rank": 87
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.30855
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 123,
+    "PercentageOfUS": 0.00307,
+    "Rank": 88
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.30152
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 73,
+    "PercentageOfUS": 0.003,
+    "Rank": 89
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.29147
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 114,
+    "PercentageOfUS": 0.0029,
+    "Rank": 91
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.28745
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 20,
+    "PercentageOfUS": 0.00286,
+    "Rank": 92
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.28544
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 182,
+    "PercentageOfUS": 0.00284,
+    "Rank": 93
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.28242
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 154,
+    "PercentageOfUS": 0.00281,
+    "Rank": 94
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.27438
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 156,
+    "PercentageOfUS": 0.00273,
+    "Rank": 95
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.26634
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 80,
+    "PercentageOfUS": 0.00265,
+    "Rank": 96
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.26333
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 24,
+    "PercentageOfUS": 0.00262,
+    "Rank": 97
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.26232
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 135,
+    "PercentageOfUS": 0.00261,
+    "Rank": 98
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.26031
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 32,
+    "PercentageOfUS": 0.00259,
+    "Rank": 99
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.25629
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 46,
+    "PercentageOfUS": 0.00255,
+    "Rank": 100
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.25227
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 69,
+    "PercentageOfUS": 0.00251,
+    "Rank": 101
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.24925
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 142,
+    "PercentageOfUS": 0.00248,
+    "Rank": 102
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.23719
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 124,
+    "PercentageOfUS": 0.00236,
+    "Rank": 103
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.23719
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 176,
+    "PercentageOfUS": 0.00236,
+    "Rank": 104
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.23619
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 198,
+    "PercentageOfUS": 0.00235,
+    "Rank": 105
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.23619
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 157,
+    "PercentageOfUS": 0.00235,
+    "Rank": 106
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.23518
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 72,
+    "PercentageOfUS": 0.00234,
+    "Rank": 107
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.23116
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 31,
+    "PercentageOfUS": 0.0023,
+    "Rank": 108
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.22714
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 151,
+    "PercentageOfUS": 0.00226,
+    "Rank": 109
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.22614
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 159,
+    "PercentageOfUS": 0.00225,
+    "Rank": 110
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.22312
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 10,
+    "PercentageOfUS": 0.00222,
+    "Rank": 111
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.22312
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 21,
+    "PercentageOfUS": 0.00222,
+    "Rank": 112
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.21508
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 158,
+    "PercentageOfUS": 0.00214,
+    "Rank": 113
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.21508
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 197,
+    "PercentageOfUS": 0.00214,
+    "Rank": 114
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.21408
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 52,
+    "PercentageOfUS": 0.00213,
+    "Rank": 115
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.21307
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 44,
+    "PercentageOfUS": 0.00212,
+    "Rank": 116
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.21006
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 37,
+    "PercentageOfUS": 0.00209,
+    "Rank": 117
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.20905
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 41,
+    "PercentageOfUS": 0.00208,
+    "Rank": 118
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.20704
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 192,
+    "PercentageOfUS": 0.00206,
+    "Rank": 119
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.20001
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": null,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 4,
+    "PercentageOfUS": 0.00199,
+    "Rank": 120
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.199
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 119,
+    "PercentageOfUS": 0.00198,
+    "Rank": 121
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.199
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 138,
+    "PercentageOfUS": 0.00198,
+    "Rank": 122
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.199
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 206,
+    "PercentageOfUS": 0.00198,
+    "Rank": 123
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.19599
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 148,
+    "PercentageOfUS": 0.00195,
+    "Rank": 124
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.19498
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 204,
+    "PercentageOfUS": 0.00194,
+    "Rank": 125
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.18996
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 191,
+    "PercentageOfUS": 0.00189,
+    "Rank": 126
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.18493
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 23,
+    "PercentageOfUS": 0.00184,
+    "Rank": 127
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.1779
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 85,
+    "PercentageOfUS": 0.00177,
+    "Rank": 128
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.17589
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 149,
+    "PercentageOfUS": 0.00175,
+    "Rank": 129
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.17187
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 51,
+    "PercentageOfUS": 0.00171,
+    "Rank": 130
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.16081
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 111,
+    "PercentageOfUS": 0.0016,
+    "Rank": 131
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.16081
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 209,
+    "PercentageOfUS": 0.0016,
+    "Rank": 132
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.15478
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 137,
+    "PercentageOfUS": 0.00154,
+    "Rank": 133
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14875
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 150,
+    "PercentageOfUS": 0.00148,
+    "Rank": 134
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14674
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 88,
+    "PercentageOfUS": 0.00146,
+    "Rank": 135
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14674
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 199,
+    "PercentageOfUS": 0.00146,
+    "Rank": 136
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14473
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 106,
+    "PercentageOfUS": 0.00144,
+    "Rank": 137
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14473
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 92,
+    "PercentageOfUS": 0.00144,
+    "Rank": 138
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14473
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 89,
+    "PercentageOfUS": 0.00144,
+    "Rank": 139
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.14071
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 139,
+    "PercentageOfUS": 0.0014,
+    "Rank": 140
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.1397
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 144,
+    "PercentageOfUS": 0.00139,
+    "Rank": 141
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.1397
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 146,
+    "PercentageOfUS": 0.00139,
+    "Rank": 142
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.1387
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 74,
+    "PercentageOfUS": 0.00138,
+    "Rank": 143
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.13769
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 110,
+    "PercentageOfUS": 0.00137,
+    "Rank": 144
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.13769
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 126,
+    "PercentageOfUS": 0.00137,
+    "Rank": 145
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.13669
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 195,
+    "PercentageOfUS": 0.00136,
+    "Rank": 146
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.13367
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 164,
+    "PercentageOfUS": 0.00133,
+    "Rank": 147
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12965
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 102,
+    "PercentageOfUS": 0.00129,
+    "Rank": 148
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12764
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 105,
+    "PercentageOfUS": 0.00127,
+    "Rank": 149
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12664
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 17,
+    "PercentageOfUS": 0.00126,
+    "Rank": 150
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12362
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 128,
+    "PercentageOfUS": 0.00123,
+    "Rank": 151
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12262
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 87,
+    "PercentageOfUS": 0.00122,
+    "Rank": 152
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12061
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 93,
+    "PercentageOfUS": 0.0012,
+    "Rank": 153
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.12061
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 26,
+    "PercentageOfUS": 0.0012,
+    "Rank": 154
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.11458
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 76,
+    "PercentageOfUS": 0.00114,
+    "Rank": 155
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.11257
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 38,
+    "PercentageOfUS": 0.00112,
+    "Rank": 156
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.11156
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 167,
+    "PercentageOfUS": 0.00111,
+    "Rank": 157
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10855
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 55,
+    "PercentageOfUS": 0.00108,
+    "Rank": 158
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10855
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 81,
+    "PercentageOfUS": 0.00108,
+    "Rank": 159
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10754
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 129,
+    "PercentageOfUS": 0.00107,
+    "Rank": 160
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10754
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 3,
+    "PercentageOfUS": 0.00107,
+    "Rank": 161
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10754
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 177,
+    "PercentageOfUS": 0.00107,
+    "Rank": 162
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10654
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 60,
+    "PercentageOfUS": 0.00106,
+    "Rank": 163
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.10151
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 180,
+    "PercentageOfUS": 0.00101,
+    "Rank": 164
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.09649
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 133,
+    "PercentageOfUS": 0.00096,
+    "Rank": 165
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.09448
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 186,
+    "PercentageOfUS": 0.00094,
+    "Rank": 166
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.09448
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 175,
+    "PercentageOfUS": 0.00094,
+    "Rank": 167
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.09247
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 152,
+    "PercentageOfUS": 0.00092,
+    "Rank": 168
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.08744
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 84,
+    "PercentageOfUS": 0.00087,
+    "Rank": 169
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.08543
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 181,
+    "PercentageOfUS": 0.00085,
+    "Rank": 170
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.08443
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 27,
+    "PercentageOfUS": 0.00084,
+    "Rank": 171
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.08443
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 155,
+    "PercentageOfUS": 0.00084,
+    "Rank": 172
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.08241
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 90,
+    "PercentageOfUS": 0.00082,
+    "Rank": 173
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.08241
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 120,
+    "PercentageOfUS": 0.00082,
+    "Rank": 174
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.07739
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 68,
+    "PercentageOfUS": 0.00077,
+    "Rank": 175
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.07739
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 65,
+    "PercentageOfUS": 0.00077,
+    "Rank": 176
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.07638
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 116,
+    "PercentageOfUS": 0.00076,
+    "Rank": 177
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.07337
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 121,
+    "PercentageOfUS": 0.00073,
+    "Rank": 178
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.07337
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 50,
+    "PercentageOfUS": 0.00073,
+    "Rank": 179
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.07035
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 54,
+    "PercentageOfUS": 0.0007,
+    "Rank": 180
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.06935
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 161,
+    "PercentageOfUS": 0.00069,
+    "Rank": 181
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.06935
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 160,
+    "PercentageOfUS": 0.00069,
+    "Rank": 182
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.06432
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 79,
+    "PercentageOfUS": 0.00064,
+    "Rank": 183
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.06332
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 169,
+    "PercentageOfUS": 0.00063,
+    "Rank": 184
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.06231
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 173,
+    "PercentageOfUS": 0.00062,
+    "Rank": 185
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.0603
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 202,
+    "PercentageOfUS": 0.0006,
+    "Rank": 186
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.0603
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 187,
+    "PercentageOfUS": 0.0006,
+    "Rank": 187
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.0593
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 77,
+    "PercentageOfUS": 0.00059,
+    "Rank": 188
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05628
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 59,
+    "PercentageOfUS": 0.00056,
+    "Rank": 189
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05628
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 179,
+    "PercentageOfUS": 0.00056,
+    "Rank": 190
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05528
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 153,
+    "PercentageOfUS": 0.00055,
+    "Rank": 191
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05427
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 174,
+    "PercentageOfUS": 0.00054,
+    "Rank": 192
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05226
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 122,
+    "PercentageOfUS": 0.00052,
+    "Rank": 193
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05126
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 83,
+    "PercentageOfUS": 0.00051,
+    "Rank": 194
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.05126
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 193,
+    "PercentageOfUS": 0.00051,
+    "Rank": 195
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.04824
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 132,
+    "PercentageOfUS": 0.00048,
+    "Rank": 196
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.04824
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 178,
+    "PercentageOfUS": 0.00048,
+    "Rank": 197
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.04724
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 184,
+    "PercentageOfUS": 0.00047,
+    "Rank": 198
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.04422
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 162,
+    "PercentageOfUS": 0.00044,
+    "Rank": 199
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.03819
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 108,
+    "PercentageOfUS": 0.00038,
+    "Rank": 200
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.03819
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 115,
+    "PercentageOfUS": 0.00038,
+    "Rank": 201
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.03116
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 166,
+    "PercentageOfUS": 0.00031,
+    "Rank": 202
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.02814
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 104,
+    "PercentageOfUS": 0.00028,
+    "Rank": 203
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.02714
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 82,
+    "PercentageOfUS": 0.00027,
+    "Rank": 204
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.02412
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 183,
+    "PercentageOfUS": 0.00024,
+    "Rank": 205
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.02312
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 53,
+    "PercentageOfUS": 0.00023,
+    "Rank": 206
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.02211
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 168,
+    "PercentageOfUS": 0.00022,
+    "Rank": 207
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.01407
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 78,
+    "PercentageOfUS": 0.00014,
+    "Rank": 208
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.01206
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 163,
+    "PercentageOfUS": 0.00012,
+    "Rank": 209
+  },
+  {
+    "After": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": 0.00402
+    },
+    "Before": {
+      "IsUserShareOfVoicePercent": false,
+      "ShareOfVoicePercent": null
+    },
+    "Id": 190,
+    "PercentageOfUS": 4E-05,
+    "Rank": 210
+  }
+]

@@ -523,6 +523,7 @@
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingTestHelper.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryWeekEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanBudgetDeliveryCalculatorUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanMarketSovCalculatorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingBandCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanBuyingInventoryEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />

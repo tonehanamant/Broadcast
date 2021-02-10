@@ -11397,13 +11397,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Id = 5,
                             MarketCode = 101,
-                            ShareOfVoicePercent = 12
+                            ShareOfVoicePercent = 12,
+                            IsUserShareOfVoicePercent = true
                         },
                         new PlanAvailableMarketDto
                         {
                             Id = 6,
                             MarketCode = 102,
-                            ShareOfVoicePercent = 13
+                            ShareOfVoicePercent = 13,
+                            IsUserShareOfVoicePercent = true
                         }
                     },
                 Dayparts = new List<PlanDaypartDto>

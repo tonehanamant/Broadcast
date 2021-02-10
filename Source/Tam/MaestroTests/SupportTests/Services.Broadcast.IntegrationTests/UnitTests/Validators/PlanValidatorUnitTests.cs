@@ -950,6 +950,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_TotalShareOfVoicePercentBiggerThanOneHundredPercent()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {ShareOfVoicePercent = 75, PercentageOfUS = 80 },
+                new PlanAvailableMarketDto {ShareOfVoicePercent = 75, PercentageOfUS = 5 },
+            };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid total market share of voice."));
+        }
+
+        [Test]
         public void ValidatePlan_SumOfWeeklyBreakdownWeeksDifferentFromDeliveryImpressions()
         {
             _ConfigureMocksToReturnTrue();

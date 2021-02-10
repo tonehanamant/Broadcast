@@ -152,7 +152,33 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns>List of LengthMakeUpTableRow objects</returns>
         List<LengthMakeUpTableRow> CalculateLengthMakeUpTable(LengthMakeUpRequest request);
 
+        /// <summary>
+        /// Calculates and distributes the market weights.
+        /// </summary>
+        /// <param name="availableMarkets">The available markets.</param>
+        /// <param name="modifiedMarketId">The modified market identifier.</param>
+        /// <param name="userEnteredValue">The user entered value.</param>
+        /// <returns></returns>
+        PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
+            int modifiedMarketId, double? userEnteredValue);
 
+        /// <summary>
+        /// Adds the market and calculates and distributes the market weights.
+        /// </summary>
+        /// <param name="beforeMarkets">The before markets.</param>
+        /// <param name="addedMarket">The added market.</param>
+        /// <returns></returns>
+        PlanAvailableMarketCalculationResult CalculateMarketAdded(List<PlanAvailableMarketDto> beforeMarkets,
+            PlanAvailableMarketDto addedMarket);
+
+        /// <summary>
+        /// Removes the market and calculates and distributes the market weights.
+        /// </summary>
+        /// <param name="beforeMarkets">The before markets.</param>
+        /// <param name="removedMarketId">The removed market identifier.</param>
+        /// <returns></returns>
+        PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
+            int removedMarketId);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -177,6 +203,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDayRepository _DayRepository;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
 
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
 
@@ -193,7 +220,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IQuarterCalculationEngine quarterCalculationEngine
             , IStandardDaypartService standardDaypartService
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
-            , ICreativeLengthEngine creativeLengthEngine, IFeatureToggleHelper featureToggleHelper)
+            , ICreativeLengthEngine creativeLengthEngine
+            , IFeatureToggleHelper featureToggleHelper
+            , IPlanMarketSovCalculator planMarketSovCalculator)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -216,6 +245,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _CreativeLengthEngine = creativeLengthEngine;
             _FeatureToggleHelper = featureToggleHelper;
+            _PlanMarketSovCalculator = planMarketSovCalculator;
         }
 
         ///<inheritdoc/>
@@ -1281,6 +1311,30 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             var spotLengths = _SpotLengthEngine.GetSpotLengths();
             return result.OrderBy(x => spotLengths.Where(y => y.Value == x.SpotLengthId).Single().Key).ToList();
+        }
+
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
+            int modifiedMarketId, double? userEnteredValue)
+        {
+            var result = _PlanMarketSovCalculator.CalculateMarketWeightChange(availableMarkets, modifiedMarketId, userEnteredValue);
+            return result;
+        }
+
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateMarketAdded(List<PlanAvailableMarketDto> beforeMarkets,
+            PlanAvailableMarketDto addedMarket)
+        {
+            var result = _PlanMarketSovCalculator.CalculateMarketAdded(beforeMarkets, addedMarket);
+            return result;
+        }
+
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
+            int removedMarketId)
+        {
+            var result = _PlanMarketSovCalculator.CalculateMarketRemoved(beforeMarkets, removedMarketId);
+            return result;
         }
     }
 }

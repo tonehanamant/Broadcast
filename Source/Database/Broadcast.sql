@@ -250,6 +250,33 @@ END
 GO
 /*************************************** END - BP-1974 **************************************************/
 
+/*************************************** Start BP-2005 *****************************************************/
+
+DECLARE @populationSql VARCHAR(MAX) = '
+UPDATE plan_version_available_markets SET
+	is_user_share_of_voice_percent = CASE WHEN share_of_voice_percent IS NULL THEN 0 ELSE 1 END
+WHERE is_user_share_of_voice_percent IS NULL
+'
+
+DECLARE @alterSql VARCHAR(MAX) = '
+ALTER TABLE plan_version_available_markets 
+	ALTER COLUMN is_user_share_of_voice_percent BIT NOT NULL
+'
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns 
+          WHERE Name = N'is_user_share_of_voice_percent'
+          AND Object_ID = Object_ID(N'plan_version_available_markets'))
+BEGIN	
+	ALTER TABLE plan_version_available_markets
+		ADD is_user_share_of_voice_percent BIT NULL
+END
+
+EXEC (@populationSql)
+EXEC (@alterSql)
+
+GO
+/*************************************** End BP-2005 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

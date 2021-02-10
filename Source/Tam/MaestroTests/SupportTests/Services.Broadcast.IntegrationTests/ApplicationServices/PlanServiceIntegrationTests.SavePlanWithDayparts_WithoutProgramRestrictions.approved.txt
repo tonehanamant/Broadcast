@@ -3,6 +3,7 @@
   "AudienceType": 1,
   "AvailableMarkets": [
     {
+      "IsUserShareOfVoicePercent": true,
       "Market": "Portland-Auburn",
       "MarketCode": 100,
       "MarketCoverageFileId": 1,
@@ -11,6 +12,7 @@
       "ShareOfVoicePercent": 22.2
     },
     {
+      "IsUserShareOfVoicePercent": true,
       "Market": "New York",
       "MarketCode": 101,
       "MarketCoverageFileId": 1,
