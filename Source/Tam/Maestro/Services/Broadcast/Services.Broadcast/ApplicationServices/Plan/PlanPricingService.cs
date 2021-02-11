@@ -1572,6 +1572,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             token.ThrowIfCancellationRequested();
 
+            if (apiAllocationResult == null)
+            {
+                throw new PricingModelException("Pricing Model returned null.");
+            }
+
             if (apiAllocationResult.Error != null)
             {
                 var errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 

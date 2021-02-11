@@ -52,15 +52,20 @@ namespace Services.Broadcast.Clients
                 var serviceResponse = rawServiceResponse.Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
+                    if (serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        throw new InvalidOperationException($"The end point responded with code 404 NotFound.  Url '{url}'");
+                    }
+
                     try
                     {
-                        output = serviceResponse.Content.ReadAsAsync<T>().Result;
-                        return output;
+                        output = serviceResponse.Content.ReadAsAsync<T>().Result;                                                
                     }
                     catch
                     {
                         throw new Exception($"Error connecting to Pricing API for post data. : {serviceResponse}");
                     }
+                    return output;
                 }
 
                 try
