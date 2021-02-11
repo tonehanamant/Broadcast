@@ -1635,7 +1635,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum>()))
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>()))
                 .Returns(_GetPlanPricingAllocatedSpotsForRollup());
 
             _InventoryRepositoryMock
@@ -1742,7 +1742,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum>()))
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>()))
                 .Returns(_GetPlanPricingAllocatedSpots());
 
             _InventoryRepositoryMock
