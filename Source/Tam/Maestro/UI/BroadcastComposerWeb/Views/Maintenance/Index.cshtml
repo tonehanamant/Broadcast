@@ -524,6 +524,7 @@
                 {
                     <div class="form">
                         <h1 class="heading">Import program mappings</h1>
+                        Import program mappings into the program mappings table and reprocess inventory to update with new mappings.
                         <div class="input-container">
                             <label class="label" for="file">Filename:</label>
                             <input class="input" type="file" name="file" id="file" />
@@ -536,6 +537,7 @@
                 {
                     <div class="form">
                         <h1 class="heading">Export program mappings</h1>
+                        Export the program mappings from the program mappings table.
                         <input class="button" type="submit" value="Submit" id="txt Export Program Mappings" />
                         <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
                     </div>
@@ -544,7 +546,7 @@
                 {
                     <div class="form">
                         <h1 class="heading">Export unmapped program names</h1>
-
+                        Export all the unmapped program names in the system's inventory.
                         <input class="button" type="submit" value="Submit" id="txt Export-Unmapped-Program-names" />
                         <textarea class="input" rows="1" id="divJSON">@ViewBag.Message</textarea>
                     </div>
@@ -554,6 +556,7 @@
                 {
                     <div class="form">
                         <h1 class="heading">Import Master List</h1>
+                        Upload a new master list of standard program names.
                         <div class="input-container">
                             <label class="label" for="file">Filename:</label>
                             <input class="input" type="file" name="file" id="file" />
@@ -567,7 +570,7 @@
                 {
                     <div class="form">
                         <h1 class="heading">Export unmapped programs</h1>
-
+                        Generate reports for unmapped programs with categorized mapping suggestions.
                         <input class="button" type="submit" value="Submit" id="txt-Export-Unmapped-Programs" />
                         <textarea class="input" rows="1" id="divJSON">@ViewBag.Message</textarea>
                     </div>

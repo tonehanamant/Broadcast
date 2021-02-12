@@ -491,20 +491,34 @@ namespace Services.Broadcast.ApplicationServices
             durationSw.Stop();
             _LogInfo($"Obtained unmapped programs with count {programNames.Count} in {durationSw.ElapsedMilliseconds} ms.");
 
+            _LogInfo("Cleaning the programs...");
             var cleanPrograms = GetCleanPrograms(programNames);
 
+            _LogInfo("Start compiling mapping suggestions.");
+
+            _LogInfo("Looking for exact match suggestions...");
             var programsMatchedWithMapping = _MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
 
             if (programsMatchedWithMapping.All(p => p.MatchConfidence == MATCH_EXACT))
+            {
+                _LogInfo("Returning with all exact matches.");
                 return programsMatchedWithMapping;
+            }
 
+            _LogInfo("Importing the master program list.");
             var masterProgramList = _MasterProgramListImporter.ImportMasterProgramList();
+            _LogInfo($"Imported the master program list : {masterProgramList.Count} programs");
 
+            _LogInfo("Attempting matching suggestions programs against the master program list.");
             var result = _MatchAgainstMasterList(programsMatchedWithMapping, masterProgramList);
 
+            _LogInfo("Attempting matching suggestions programs by keyword.");
             _MatchProgramByKeyword(result);
 
+            _LogInfo("Attempting matching suggestions programs by similarity.");
             _MatchBySimilarity(result, masterProgramList);
+
+            _LogInfo("Finished compiling mapping suggestions.");
 
             return result;
         }
@@ -512,6 +526,9 @@ namespace Services.Broadcast.ApplicationServices
         private void _MatchBySimilarity(List<UnmappedProgram> programs, List<ProgramMappingsDto> masterProgramList)
         {
             var unmatchedPrograms = programs.Where(p => p.MatchConfidence != MATCH_EXACT);
+
+            _LogInfo($"Attempting similarity suggestions.  Checking {programs.Count} programs against a master list of {masterProgramList.Count} programs.; ");
+
             if (!unmatchedPrograms.Any())
                 return;
 
@@ -615,8 +632,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public ReportOutput ExportUnmappedPrograms()
         {
+            _LogInfo("Start get unmapped programs.");
             var programs = GetUnmappedPrograms();
 
+            _LogInfo("Got data. Start excel generation.");
             var exactMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.ByMasterList || p.MatchType == ProgramMappingMatchTypeEnum.ByExistingMapping).ToList();
             var exactReport = _GenerateExcelFile(exactMatches, $"Unmapped_Exact_{_GetCurrentDateOnReportFormat()}.xlsx");
 
@@ -634,6 +653,7 @@ namespace Services.Broadcast.ApplicationServices
             var otherMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.BySimilarity && !p.Genre.Contains(SPORTS, StringComparison.OrdinalIgnoreCase) && !p.Genre.Contains(NEWS, StringComparison.OrdinalIgnoreCase)).ToList();
             var otherReport = _GenerateExcelFile(otherMatches, $"Unmapped_Other_{_GetCurrentDateOnReportFormat()}.xlsx");
 
+            _LogInfo("Generate and return zips");
             return _ZipReports(exactReport, keywordReport, sportsReport, newsReport, otherReport);
         }
 
