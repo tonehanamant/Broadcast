@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using log4net;
 using BroadcastLogging;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Services.Broadcast.Cache
 {
@@ -25,7 +26,7 @@ namespace Services.Broadcast.Cache
         ProductDto GetProduct(int productId);
     }
 
-    public class TrafficApiCache : ITrafficApiCache
+    public class TrafficApiCache : BroadcastBaseClass, ITrafficApiCache
     {
         private readonly int CACHE_ITEM_TTL_SECONDS;
         private readonly ITrafficApiClient _TrafficApiClient;
@@ -33,7 +34,7 @@ namespace Services.Broadcast.Cache
         private const string CACHE_NAME_AGENCIES = "Agencies";
         private const string CACHE_KEY_AGENCIES = "Agencies";
         private readonly MemoryCache _AgencyCache = new MemoryCache(CACHE_NAME_AGENCIES);
-        private List<AgencyDto> _Agencies { get; set; }
+        private List<AgencyDto> _Agencies { get; set; } = new List<AgencyDto>();
 
         private const string CACHE_NAME_AGENCY_ADVERTISERS = "AgencyAdvertiserCache";
         private readonly BaseMemoryCache<List<AdvertiserDto>> _AgencyAdvertisersCache = new BaseMemoryCache<List<AdvertiserDto>>(CACHE_NAME_AGENCY_ADVERTISERS);
@@ -63,17 +64,20 @@ namespace Services.Broadcast.Cache
             }
 
             _TrafficApiClient = trafficApiClient;
-            BuildAgencyCache(null);
         }
 
         public List<AgencyDto> GetAgencies()
         {
+            if (_Agencies?.Any() != true)
+            {
+                BuildAgencyCache(null);
+            }
             return _Agencies;
         }
 
         public AgencyDto GetAgency(int agencyId)
         {
-            return _Agencies.Single(a => a.Id == agencyId, $"Agency with id '{agencyId}' not found.");
+            return GetAgencies().Single(a => a.Id == agencyId, $"Agency with id '{agencyId}' not found.");
         }
 
         public List<AdvertiserDto> GetAdvertisers()
@@ -102,15 +106,22 @@ namespace Services.Broadcast.Cache
 
         private void BuildAgencyCache(CacheEntryRemovedArguments args)
         {
-            var agencies = _TrafficApiClient.GetAgencies();
-            var policy = new CacheItemPolicy
+            try
             {
-                AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS),
-                RemovedCallback = BuildAgencyCache
-            };
+                var agencies = _TrafficApiClient.GetAgencies();
+                var policy = new CacheItemPolicy
+                {
+                    AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS),
+                    RemovedCallback = BuildAgencyCache
+                };
 
-            _AgencyCache.Add(CACHE_KEY_AGENCIES, agencies, policy);
-            _Agencies = agencies;
+                _AgencyCache.Add(CACHE_KEY_AGENCIES, agencies, policy);
+                _Agencies = agencies;
+            }
+            catch (Exception e)
+            {
+                _LogError("Error attempting to refresh the Agency cache from the AAB Traffic Api.", e);
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Services.Broadcast.Clients
 
         public TrafficApiClient()
         {
-            _AABApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl}";
+            _AABApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandTrafficApiUrl}";
             _HttpClient = new HttpClient();
         }
 

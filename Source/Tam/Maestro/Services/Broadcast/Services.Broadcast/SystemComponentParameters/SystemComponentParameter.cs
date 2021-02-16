@@ -45,6 +45,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AgencyAdvertiserBrandApiUrl); }
         }
 	 
+		public static string AgencyAdvertiserBrandTrafficApiUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AgencyAdvertiserBrandTrafficApiUrl); }
+        }
+	 
 		public static string BroadcastAppFolder  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>

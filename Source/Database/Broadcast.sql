@@ -77,6 +77,65 @@ EXEC (@alterSql)
 GO
 /*************************************** End BP-2005 *****************************************************/
 
+/*************************************** Start BP-1551 *****************************************************/
+
+DECLARE @envName VARCHAR(50)
+DECLARE @trafficUrlBase VARCHAR(500) = 'http://[MachineName]/traffic/api/company'
+DECLARE @urlBase VARCHAR(500) = 'https://[MachineName]/aabapi/api/v1'
+DECLARE @envTrafficUrl VARCHAR(500)
+DECLARE @envUrl VARCHAR(500)
+DECLARE @IsStg BIT
+
+SELECT @IsStg = CASE WHEN @@SERVERNAME = 'CADSQL-STG' THEN 1 ELSE 0 END 
+
+SELECT @envName = parameter_value
+FROM system_settings.dbo.system_component_parameters
+WHERE component_id = 'MaestroEnvironment'
+AND parameter_key = 'Environment'
+
+SELECT @envUrl = CASE 
+		WHEN @envName = 'PROD' AND @IsStg = 1 THEN REPLACE(@urlBase, '[MachineName]', 'stg.cadent.tv')
+		WHEN @envName = 'PROD' THEN REPLACE(@urlBase, '[MachineName]', 'platform.cadent.tv')
+		WHEN @envName = 'UAT' THEN REPLACE(@urlBase, '[MachineName]', 'cadapps-uat1.dev.crossmw.com')
+		WHEN @envName = 'QA' THEN REPLACE(@urlBase, '[MachineName]', 'test.cadent.tv')
+		ELSE REPLACE(@urlBase, '[MachineName]', 'cd.cadent.tv')
+	END
+
+SELECT @envTrafficUrl = CASE 
+		WHEN @envName = 'PROD' AND @IsStg = 1 THEN REPLACE(@trafficUrlBase, '[MachineName]', 'cadapps-stg5')
+		WHEN @envName = 'PROD' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'cadapps-prod5')
+		WHEN @envName = 'UAT' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'cadapps-uat1.crossmw.com')
+		WHEN @envName = 'QA' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'devvmqa1.dev.crossmw.com')
+		ELSE REPLACE(@trafficUrlBase, '[MachineName]', 'devvmqa2.dev.crossmw.com')
+	END	
+
+IF NOT EXISTS (SELECT 1 FROM system_settings.dbo.system_component_parameters
+	WHERE component_id = 'BroadcastService'
+	AND parameter_key = 'AgencyAdvertiserBrandTrafficApiUrl')
+BEGIN
+	INSERT INTO system_settings.dbo.system_component_parameters  (component_id, parameter_key, parameter_value, parameter_type, [description], last_modified_time)
+		VALUES('BroadcastService', 'AgencyAdvertiserBrandTrafficApiUrl', 'http://devvmqa2.dev.crossmw.com/traffic/api/company', 'string', 'The endpoint for the AAB traffic api.', SYSDATETIME())
+END
+
+UPDATE s SET
+	parameter_value = @envTrafficUrl,
+	last_modified_time = SYSDATETIME()
+FROM system_settings.dbo.system_component_parameters s
+WHERE component_id = 'BroadcastService'
+AND parameter_key = 'AgencyAdvertiserBrandTrafficApiUrl'
+AND parameter_value <> @envTrafficUrl
+
+UPDATE s SET
+	parameter_value = @envUrl,
+	last_modified_time = SYSDATETIME()
+FROM system_settings.dbo.system_component_parameters s
+WHERE component_id = 'BroadcastService'
+AND parameter_key = 'AgencyAdvertiserBrandApiUrl'
+AND parameter_value <> @envUrl
+
+GO
+/*************************************** End BP-1551 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
