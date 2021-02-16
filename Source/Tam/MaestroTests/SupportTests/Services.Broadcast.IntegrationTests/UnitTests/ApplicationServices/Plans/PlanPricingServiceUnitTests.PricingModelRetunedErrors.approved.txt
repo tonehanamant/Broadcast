@@ -1,7 +1,6 @@
 ﻿[
   {
     "Completed": null,
-    "DiagnosticResult": null,
     "HangfireJobId": null,
     "Id": 0,
     "PlanVersionId": null,
@@ -10,7 +9,6 @@
   },
   {
     "Completed": "2020-02-04T15:31:27",
-    "DiagnosticResult": "Setting job status to Processing = 0h 0m 0s 0ms\r\nFetching pl",
     "HangfireJobId": null,
     "Id": 1,
     "PlanVersionId": null,

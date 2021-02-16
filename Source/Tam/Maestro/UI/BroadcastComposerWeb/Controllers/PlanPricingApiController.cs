@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
@@ -69,19 +70,20 @@ namespace BroadcastComposerWeb.Controllers
         /// Get programs data from the lastest pricing execution
         /// </summary>
         /// <param name="planId">Plan ID</param>
+        /// <param name="spotAllocationModelMode">Quality = 1, Efficiency = 2, Floor = 3</param>
         /// <returns>Programs from the lastest pricing execution</returns>
         [HttpGet]
         [Route("~/api/v2/PricingService/Programs/{planId}")]
-        public BaseResponse<PricingProgramsResultDto_v2> GetPrograms_v2(int planId)
+        public BaseResponse<PricingProgramsResultDto_v2> GetPrograms_v2(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPrograms_v2(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPrograms_v2(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Programs/{planId}/{planVersionId}")]
-        public BaseResponse<PricingProgramsResultDto_v2> GetPrograms_v2(int planId, int planVersionId)
+        public BaseResponse<PricingProgramsResultDto_v2> GetPrograms_v2(int planId, int planVersionId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetProgramsForVersion_v2(planId, planVersionId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetProgramsForVersion_v2(planId, planVersionId, spotAllocationModelMode));
         }
 
         [HttpGet]
@@ -100,16 +102,16 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Bands/{planId}")]
-        public BaseResponse<PlanPricingBandDto_v2> GetPricingBands_v2(int planId)
+        public BaseResponse<PlanPricingBandDto_v2> GetPricingBands_v2(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBands_v2(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBands_v2(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Bands/{planId}/{planVersionId}")]
-        public BaseResponse<PlanPricingBandDto_v2> GetPricingBands_v2(int planId, int planVersionId)
+        public BaseResponse<PlanPricingBandDto_v2> GetPricingBands_v2(int planId, int planVersionId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBandsForVersion_v2(planId, planVersionId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBandsForVersion_v2(planId, planVersionId, spotAllocationModelMode));
         }
 
         [HttpGet]
@@ -121,23 +123,23 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Markets/{planId}/{planVersionId}")]
-        public BaseResponse<PlanPricingResultMarketsDto> GetPricingMarkets(int planId, int planVersionId)
+        public BaseResponse<PlanPricingResultMarketsDto> GetPricingMarkets(int planId, int planVersionId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarketsForVersion(planId, planVersionId));
         }
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Markets/{planId}")]
-        public BaseResponse<PlanPricingResultMarketsDto_v2> GetPricingMarkets_v2(int planId)
+        public BaseResponse<PlanPricingResultMarketsDto_v2> GetPricingMarkets_v2(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarkets_v2(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarkets_v2(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Markets/{planId}/{planVersionId}")]
-        public BaseResponse<PlanPricingResultMarketsDto_v2> GetPricingMarkets_v2(int planId, int planVersionId)
+        public BaseResponse<PlanPricingResultMarketsDto_v2> GetPricingMarkets_v2(int planId, int planVersionId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarketsForVersion_v2(planId, planVersionId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarketsForVersion_v2(planId, planVersionId, spotAllocationModelMode));
         }
 
         [HttpPost]
@@ -227,16 +229,16 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Stations/{planId}")]
-        public BaseResponse<PlanPricingStationResultDto_v2> GetStations_v2(int planId)
+        public BaseResponse<PlanPricingStationResultDto_v2> GetStations_v2(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStations_v2(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStations_v2(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("~/api/v2/PricingService/Stations/{planId}/{planVersionId}")]
-        public BaseResponse<PlanPricingStationResultDto_v2> GetStationsForVersion_v2(int planId, int planVersionId)
+        public BaseResponse<PlanPricingStationResultDto_v2> GetStationsForVersion_v2(int planId, int planVersionId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStationsForVersion_v2(planId, planVersionId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStationsForVersion_v2(planId, planVersionId, spotAllocationModelMode));
         }
 
         /// <summary>

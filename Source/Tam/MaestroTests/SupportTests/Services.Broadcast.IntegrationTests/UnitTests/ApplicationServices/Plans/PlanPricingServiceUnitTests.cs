@@ -2998,6 +2998,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
+            jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
             var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

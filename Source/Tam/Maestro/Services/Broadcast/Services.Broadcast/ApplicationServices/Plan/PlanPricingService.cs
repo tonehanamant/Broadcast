@@ -2447,7 +2447,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
             }
 
-            if (planPricingResult.NsiResults != null)
+            if (planPricingResult.NtiResults != null)
             {
                 planPricingResult.NtiResults.Totals.Impressions /= 1000;
 
