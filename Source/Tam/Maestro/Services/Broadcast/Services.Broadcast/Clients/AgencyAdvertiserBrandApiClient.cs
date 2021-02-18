@@ -106,7 +106,7 @@ namespace Services.Broadcast.Clients
                 var products = advertiserFullInfo.products.Select(i => new ProductDto
                 {
                     Id = i.id,
-                    MasterId = i.company_id,
+                    MasterId = i.product_id,
                     AdvertiserId = advertiserFullInfo.id,
                     AdvertiserMasterId = advertiserFullInfo.company_id
                 }).ToList();

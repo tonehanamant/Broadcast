@@ -38,7 +38,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Gets the advertiser.
         /// </summary>
-        /// <param name="advertiserId">The identifier used by the Aab Traffic Api.</param>
+        /// <param name="advertiserId">The advertiser Id.</param>
         AdvertiserDto GetAdvertiser(int advertiserId);
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Gets the advertiser products.
         /// </summary>
-        /// <param name="advertiserId">The identifier used by the Aab Traffic Api.</param>
+        /// <param name="advertiserId">The advertiser id.</param>
         List<ProductDto> GetAdvertiserProducts(int advertiserId);
 
         /// <summary>
@@ -111,13 +111,24 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AgencyDto GetAgency(int agencyId)
         {
-            var item = _TrafficApiCache.GetAgency(agencyId);
-            return item;
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            AgencyDto result;
+            if (isAabEnabled)
+            {
+                var items = _AabApiCache.GetAgencies();
+                result = items.Single(i => i.Id == agencyId, $"Agency with id {agencyId} not found.");
+            }
+            else
+            {
+                result = _TrafficApiCache.GetAgency(agencyId);
+            }
+            return result;
         }
 
         /// <inheritdoc />
         public AgencyDto GetAgency(Guid agencyMasterId)
         {
+            // No need to check the toggle as when disabled you won't have a Guid master id.
             var items = _AabApiCache.GetAgencies();
             var item = items.Single(i => i.MasterId == agencyMasterId, $"Agency with master id {agencyMasterId} not found.");
             return item;
@@ -136,13 +147,26 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            var item = _TrafficApiCache.GetAdvertiser(advertiserId);
-            return item;
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            AdvertiserDto result;
+
+            if (isAabEnabled)
+            {
+                var items = _AabApiCache.GetAdvertisers();
+                result = items.Single(i => i.Id == advertiserId, $"Advertiser with id {advertiserId} not found.");
+            }
+            else
+            {
+                result = _TrafficApiCache.GetAdvertiser(advertiserId);
+            }
+            
+            return result;
         }
 
         /// <inheritdoc />
         public AdvertiserDto GetAdvertiser(Guid advertiserMasterId)
         {
+            // No need to check the toggle as when disabled you won't have a Guid master id.
             var items = _AabApiCache.GetAdvertisers();
             var item = items.Single(i => i.MasterId == advertiserMasterId, $"Advertiser with master id {advertiserMasterId} not found.");
             return item;
@@ -151,13 +175,26 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(int advertiserId)
         {
-            var products = _TrafficApiCache.GetProductsByAdvertiserId(advertiserId);
-            return products;
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            List<ProductDto> results;
+
+            if (isAabEnabled)
+            {
+                var advertiser = GetAdvertiser(advertiserId);
+                results = _AabApiCache.GetAdvertiserProducts(advertiser.MasterId.Value);
+            }
+            else
+            {
+                results = _TrafficApiCache.GetProductsByAdvertiserId(advertiserId);
+            }
+            
+            return results;
         }
 
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
+            // No need to check the toggle as when disabled you won't have a Guid master id.
             var products = _AabApiCache.GetAdvertiserProducts(advertiserMasterId);
             return products;
         }
@@ -165,6 +202,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public ProductDto GetAdvertiserProduct(Guid advertiserMasterId, Guid productMasterId)
         {
+            // No need to check the toggle as when disabled you won't have a Guid master id.
             var products = _AabApiCache.GetAdvertiserProducts(advertiserMasterId);
             var product = products.Single(i => i.MasterId == productMasterId, $"Product '{productMasterId}' not found for advertiser '{advertiserMasterId}'.");
             return product;
@@ -173,6 +211,12 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public ProductDto GetProduct(int productId)
         {
+            // must check the toggle and fail since products have integer ids from both sources.
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            if (isAabEnabled)
+            {
+                throw new InvalidOperationException("Disable the AAb Navigation Feature to retrieve a product by an integer id.  Otherwise use method GetAdvertiserProduct.");
+            }
             var product = _TrafficApiCache.GetProduct(productId);
             return product;
         }

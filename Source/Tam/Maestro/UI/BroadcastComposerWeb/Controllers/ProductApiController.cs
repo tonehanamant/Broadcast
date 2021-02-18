@@ -33,7 +33,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="advertiserMasterId">The advertiser master identifier.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("AdvertiserProduct")]
+        [Route("AdvertiserProducts")]
         public BaseResponse<List<ProductDto>> GetAdvertiserProducts(Guid advertiserMasterId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProductService>().GetAdvertiserProducts(advertiserMasterId));

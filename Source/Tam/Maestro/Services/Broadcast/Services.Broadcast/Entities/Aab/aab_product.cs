@@ -24,11 +24,11 @@ namespace Services.Broadcast.Entities.Aab
         public string name { get; set; }
 
         /// <summary>
-        /// Gets or sets the company identifier.
+        /// Gets or sets the product identifier.
         /// </summary>
         /// <value>
-        /// The company identifier.
+        /// The product identifier.
         /// </value>
-        public Guid company_id { get; set; }
+        public Guid product_id { get; set; }
     }
 }
