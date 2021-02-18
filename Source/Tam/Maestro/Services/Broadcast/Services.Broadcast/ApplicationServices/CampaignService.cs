@@ -22,7 +22,6 @@ using System.IO;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -142,7 +141,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignAggregator _CampaignAggregator;
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
-        private readonly ITrafficApiCache _TrafficApiCache;
         private readonly IAudienceService _AudienceService;
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISharedFolderService _SharedFolderService;
@@ -152,6 +150,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IAabEngine _AabEngine;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -161,13 +161,14 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
             ICampaignAggregator campaignAggregator,
             ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
-            ITrafficApiCache trafficApiCache,
             IAudienceService audienceService,
             IStandardDaypartService standardDaypartService,
             ISharedFolderService sharedFolderService,
             IDateTimeEngine _dateTimeEngine,
             IWeeklyBreakdownEngine weeklyBreakdownEngine,
-            IDaypartCache daypartCache)
+            IDaypartCache daypartCache,
+            IFeatureToggleHelper featureToggleHelper,
+            IAabEngine aabEngine)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -177,7 +178,6 @@ namespace Services.Broadcast.ApplicationServices
             _CampaignAggregator = campaignAggregator;
             _CampaignSummaryRepository = dataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
-            _TrafficApiCache = trafficApiCache;
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _AudienceService = audienceService;
             _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -189,6 +189,8 @@ namespace Services.Broadcast.ApplicationServices
             _DateTimeEngine = _dateTimeEngine;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _DaypartCache = daypartCache;
+            _FeatureToggleHelper = featureToggleHelper;
+            _AabEngine = aabEngine;
         }
 
         /// <inheritdoc />
@@ -209,8 +211,8 @@ namespace Services.Broadcast.ApplicationServices
                     campaign.CampaignStatus = PlanStatusEnum.Working;
                 }
 
-                campaign.Agency = _TrafficApiCache.GetAgency(campaign.Agency.Id);
-                campaign.Advertiser = _TrafficApiCache.GetAdvertiser(campaign.Advertiser.Id);
+                campaign.Agency = _GetAgency(campaign);
+                campaign.Advertiser = _GetAdvertiser(campaign);
             }
 
             return campaigns;
@@ -261,8 +263,16 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Id = campaignAndCampaignSummary.Campaign.Id,
                 Name = campaignAndCampaignSummary.Campaign.Name,
-                Advertiser = new AdvertiserDto { Id = campaignAndCampaignSummary.Campaign.AdvertiserId },
-                Agency = new AgencyDto { Id = campaignAndCampaignSummary.Campaign.AgencyId },
+                Advertiser = new AdvertiserDto
+                {
+                    Id = campaignAndCampaignSummary.Campaign.AdvertiserId, 
+                    MasterId = campaignAndCampaignSummary.Campaign.AdvertiserMasterId
+                },
+                Agency = new AgencyDto
+                {
+                    Id = campaignAndCampaignSummary.Campaign.AgencyId,
+                    MasterId = campaignAndCampaignSummary.Campaign.AgencyMasterId
+                },
                 Notes = campaignAndCampaignSummary.Campaign.Notes,
                 ModifiedDate = campaignAndCampaignSummary.Campaign.ModifiedDate,
                 ModifiedBy = campaignAndCampaignSummary.Campaign.ModifiedBy,
@@ -500,8 +510,8 @@ namespace Services.Broadcast.ApplicationServices
             _ValidateCampaignLocking(campaign.Id);
             _ValidateSelectedPlans(request.ExportType, campaign.Plans);
 
-            AgencyDto agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
-            AdvertiserDto advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
+            AgencyDto agency = _GetAgency(campaign);
+            AdvertiserDto advertiser = _GetAdvertiser(campaign);
             var plans = campaign.Plans
                 .Select(x =>
                 {
@@ -691,8 +701,8 @@ namespace Services.Broadcast.ApplicationServices
             var plan = _PlanRepository.GetPlan(planId);
             _ValidateCampaignLocking(plan.CampaignId);
             var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
-            var agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
-            var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
+            var agency = _GetAgency(campaign);
+            var advertiser = _GetAdvertiser(campaign);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
             var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId, request.PostingType);
@@ -775,6 +785,52 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException("There is a pricing run in progress right now. Please wait until it is completed");
 
             return job;
+        }
+
+        private bool _IsAabEnabled()
+        {
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            return isAabEnabled;
+        }
+
+        private AgencyDto _GetAgency(CampaignDto campaign)
+        {
+            var isAabEnabled = _IsAabEnabled();
+            var result = isAabEnabled
+                ? _AabEngine.GetAgency(campaign.AgencyMasterId.Value)
+                : _AabEngine.GetAgency(campaign.AgencyId.Value);
+
+            return result;
+        }
+
+        private AdvertiserDto _GetAdvertiser(CampaignDto campaign)
+        {
+            var isAabEnabled = _IsAabEnabled();
+            var result = isAabEnabled
+                ? _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value)
+                : _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
+
+            return result;
+        }
+
+        private AgencyDto _GetAgency(CampaignListItemDto campaign)
+        {
+            var isAabEnabled = _IsAabEnabled();
+            var result = isAabEnabled
+                ? _AabEngine.GetAgency(campaign.Agency.MasterId.Value)
+                : _AabEngine.GetAgency(campaign.Agency.Id.Value);
+
+            return result;
+        }
+
+        private AdvertiserDto _GetAdvertiser(CampaignListItemDto campaign)
+        {
+            var isAabEnabled = _IsAabEnabled();
+            var result = isAabEnabled
+                ? _AabEngine.GetAdvertiser(campaign.Advertiser.MasterId.Value)
+                : _AabEngine.GetAdvertiser(campaign.Advertiser.Id.Value);
+
+            return result;
         }
     }
 }

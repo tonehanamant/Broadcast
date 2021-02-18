@@ -655,6 +655,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Equivalized = plan.Equivalized,
                 Status = plan.Status,
                 ProductId = plan.ProductId,
+                ProductMasterId = plan.ProductMasterId,
                 FlightDays = plan.FlightDays,
                 FlightStartDate = plan.FlightStartDate,
                 FlightEndDate = plan.FlightEndDate,

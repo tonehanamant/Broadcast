@@ -1,41 +1,32 @@
-﻿using ApprovalTests;
-using ApprovalTests.Reporters;
+﻿using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Cache;
-using Services.Broadcast.Helpers;
-using Services.Broadcast.IntegrationTests.Stubs;
-using System;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     [Category("short_running")]
     public class AdvertiserServiceUnitTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
-        }
-
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetsAdvertisersByAgencyId()
+        public void GetAdvertisers()
         {
             // Arrange
-            const int expectedCallCount = 1;
-            var trafficApiClient = new TrafficApiClientStub();
-            var trafficApiCache = new TrafficApiCache(trafficApiClient);
-
-            var tc = new AdvertiserService(trafficApiCache);
+            var advertisers = new List<AdvertiserDto> {new AdvertiserDto {Id = 1}, new AdvertiserDto {Id = 2}};
+            var expectedReturnedItemCount = advertisers.Count;
+            var aabEngine = new Mock<IAabEngine>();
+            aabEngine.Setup(s => s.GetAdvertisers())
+                .Returns(advertisers);
+            var tc = new AdvertiserService(aabEngine.Object);
 
             // Act
             var result = tc.GetAdvertisers();
 
             // Assert
-            Assert.AreEqual(expectedCallCount, trafficApiClient.GetAdvertisersCalledCount);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            aabEngine.Verify(s => s.GetAdvertisers(), Times.Once);
+            Assert.AreEqual(expectedReturnedItemCount, result.Count);
         }
     }
 }

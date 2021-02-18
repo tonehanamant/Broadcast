@@ -1,5 +1,6 @@
-﻿using Services.Broadcast.Cache;
+﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 
 namespace Services.Broadcast.Validators
@@ -27,23 +28,28 @@ namespace Services.Broadcast.Validators
         public const string InvalidCampaignNameLengthErrorMessage = "Campaign name cannot be longer than 255 characters.";
         public const string InvalidCampaignNotesErrorMessage = "Campaign notes cannot be longer than 1024 characters";
 
-        private readonly ITrafficApiCache _TrafficApiCache;
+        private readonly IAabEngine _AabEngine;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CampaignValidator"/> class.
         /// </summary>
-        /// <param name="trafficApiCache">The traffic API data cache.</param>
-        public CampaignValidator(ITrafficApiCache trafficApiCache)
+        /// <param name="aabEngine">The aab engine.</param>
+        /// <param name="featureToggleHelper">The feature toggle helper.</param>
+        public CampaignValidator(IAabEngine aabEngine, 
+            IFeatureToggleHelper featureToggleHelper)
         {
-            _TrafficApiCache = trafficApiCache;
+            _AabEngine = aabEngine;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc />
         public void Validate(SaveCampaignDto campaign)
         {
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
             _ValidateCampaignName(campaign);
-            _ValidateAgency(campaign);
-            _ValidateAdvertiser(campaign);
+            _ValidateAgency(campaign, isAabEnabled);
+            _ValidateAdvertiser(campaign, isAabEnabled);
             _ValidateNotes(campaign);
         }
 
@@ -61,11 +67,18 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateAdvertiser(SaveCampaignDto campaign)
+        private void _ValidateAdvertiser(SaveCampaignDto campaign, bool isAabEnabled)
         {
             try
             {
-                _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
+                if (isAabEnabled)
+                {
+                    _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value);
+                }
+                else
+                {
+                    _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
+                }
             }
             catch (Exception ex)
             {
@@ -73,11 +86,18 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateAgency(SaveCampaignDto campaign)
+        private void _ValidateAgency(SaveCampaignDto campaign, bool isAabEnabled)
         {
             try
             {
-                _TrafficApiCache.GetAgency(campaign.AgencyId);
+                if (isAabEnabled)
+                {
+                    _AabEngine.GetAgency(campaign.AgencyMasterId.Value);
+                }
+                else
+                {
+                    _AabEngine.GetAgency(campaign.AgencyId.Value);
+                }
             }
             catch (Exception ex)
             {

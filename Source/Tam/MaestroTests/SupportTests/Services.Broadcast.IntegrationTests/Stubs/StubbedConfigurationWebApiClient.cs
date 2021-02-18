@@ -343,7 +343,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "PlanPricingAllocationsEfficiencyModelUrl":
                     result = "TestUrl";
                     break;
-
+                case "AgencyAdvertiserBrandApiUrl":
+                    result = "TestAgencyAdvertiserBrandApiUrl";
+                    break;
+                case "AgencyAdvertiserBrandTrafficApiUrl":
+                    result = "TestAgencyAdvertiserBrandTrafficApiUrl";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

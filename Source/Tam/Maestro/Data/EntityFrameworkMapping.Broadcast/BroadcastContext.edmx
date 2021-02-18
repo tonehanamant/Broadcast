@@ -210,13 +210,15 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="advertiser_id" Type="int" Nullable="false" />
-          <Property Name="agency_id" Type="int" Nullable="false" />
+          <Property Name="advertiser_id" Type="int" />
+          <Property Name="agency_id" Type="int" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="notes" Type="varchar" MaxLength="1024" />
+          <Property Name="agency_master_id" Type="uniqueidentifier" />
+          <Property Name="advertiser_master_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="daypart_days">
           <Key>
@@ -1426,8 +1428,9 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="campaign_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="265" Nullable="false" />
-          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" />
           <Property Name="latest_version_id" Type="int" Nullable="false" />
+          <Property Name="product_master_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -12645,8 +12648,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="advertiser_id" Type="Int32" Nullable="false" />
-          <Property Name="agency_id" Type="Int32" Nullable="false" />
+          <Property Name="advertiser_id" Type="Int32" />
+          <Property Name="agency_id" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -12655,6 +12658,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposals" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="campaign" ToRole="proposal" />
           <NavigationProperty Name="campaign_summaries" Relationship="BroadcastModel.FK_campaign_summaries_campaign" FromRole="campaign" ToRole="campaign_summaries" />
           <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
+          <Property Name="agency_master_id" Type="Guid" />
+          <Property Name="advertiser_master_id" Type="Guid" />
         </EntityType>
         <Association Name="FK_proposals_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
@@ -12831,10 +12836,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="campaign_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="265" FixedLength="false" Unicode="true" />
-          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" />
           <Property Name="latest_version_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan" ToRole="plan_versions" />
+          <Property Name="product_master_id" Type="Guid" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -17645,6 +17651,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaigns">
             <EntityTypeMapping TypeName="BroadcastModel.campaign">
               <MappingFragment StoreEntitySet="campaigns">
+                <ScalarProperty Name="advertiser_master_id" ColumnName="advertiser_master_id" />
+                <ScalarProperty Name="agency_master_id" ColumnName="agency_master_id" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
@@ -17782,6 +17790,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="product_master_id" ColumnName="product_master_id" />
                 <ScalarProperty Name="latest_version_id" ColumnName="latest_version_id" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="name" ColumnName="name" />

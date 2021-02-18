@@ -69,11 +69,21 @@ namespace Services.Broadcast.Entities.Plan
 
         /// <summary>
         /// Gets or sets the product identifier.
+        /// The integer id used by the Aab Traffic Api.
         /// </summary>
         /// <value>
         /// The product identifier.
         /// </value>
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the product master identifier.
+        /// The guid id used by the Aab Api.
+        /// </summary>
+        /// <value>
+        /// The product master identifier.
+        /// </value>
+        public Guid? ProductMasterId { get; set; }
 
         /// <summary>
         /// Gets or sets the flight days.

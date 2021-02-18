@@ -454,6 +454,7 @@
     <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Repositories\StationMappingRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />
+    <Compile Include="Stubs\AgencyAdvertiserBrandApiClientStub.cs" />
     <Compile Include="Stubs\AsyncTaskHelperStub.cs" />
     <Compile Include="Stubs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubs\DateTimeEngineStub.cs" />
@@ -508,6 +509,7 @@
     <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\VpvhServiceUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\AabEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\CreativeLengthEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\GeneralMathUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\ImpressionsCalculationEngineUnitTests.cs" />
@@ -540,6 +542,7 @@
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\VpvhExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineUnitTests.cs" />
+    <Compile Include="UnitTests\Cache\AabCacheUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\BarterFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\InventoryImportManifestDuplicateHandlerUnitTests.cs" />
@@ -571,7 +574,7 @@
     <Compile Include="UnitTests\ReportGenerator\ProgramLineupReportDataTests.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTest.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTestClass.cs" />
-    <Compile Include="UnitTests\TrafficApiCacheTests.cs" />
+    <Compile Include="UnitTests\Cache\TrafficApiCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AgencyServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProductServiceUnitTests.cs" />
@@ -588,7 +591,6 @@
     <Compile Include="UnitTests\Helpers\DaypartTimeHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\EnumHelperUnitTests.cs" />
     <Compile Include="UnitTests\FtpServiceTester.cs" />
-    <Compile Include="UnitTests\PlanAggregation\PlanAggregatorUnitTestClass.cs" />
     <Compile Include="UnitTests\PlanAggregation\PlanAggregatorUnitTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileParserTests.cs" />
     <Compile Include="UnitTests\Post\BvsPostFileRow.cs" />
@@ -619,7 +621,6 @@
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTests.cs" />
     <Compile Include="UnitTests\Validators\InventoryFileValidatorUnitTests.cs" />
-    <Compile Include="UnitTests\Validators\PlanValidatorUnitTestClass.cs" />
     <Compile Include="UnitTests\Validators\PlanValidatorUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -23,13 +23,15 @@ namespace EntityFrameworkMapping.Broadcast
     
         public int id { get; set; }
         public string name { get; set; }
-        public int advertiser_id { get; set; }
-        public int agency_id { get; set; }
+        public Nullable<int> advertiser_id { get; set; }
+        public Nullable<int> agency_id { get; set; }
         public System.DateTime created_date { get; set; }
         public string created_by { get; set; }
         public System.DateTime modified_date { get; set; }
         public string modified_by { get; set; }
         public string notes { get; set; }
+        public Nullable<System.Guid> agency_master_id { get; set; }
+        public Nullable<System.Guid> advertiser_master_id { get; set; }
     
         public virtual ICollection<proposal> proposals { get; set; }
         public virtual ICollection<campaign_summaries> campaign_summaries { get; set; }

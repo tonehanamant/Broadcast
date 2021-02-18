@@ -150,6 +150,7 @@
   "PostingType": 2,
   "PricingParameters": null,
   "ProductId": 1,
+  "ProductMasterId": null,
   "SecondaryAudiences": [],
   "ShareBookId": 430,
   "Status": 1,

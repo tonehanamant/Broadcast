@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
 using Unity;
@@ -44,14 +45,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private ICampaignSummaryRepository _CampaignSummaryRepository;
         private IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private static readonly bool WRITE_FILE_TO_DISK = false;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
         [SetUp]
         public void SetUpCampaignServiceIntegrationTests()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_AAB_NAVIGATION, false);
+
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
+        }
+
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -174,13 +187,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     lockingManagerApplicationServiceMock.Object,
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ITrafficApiCache>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandardDaypartService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
                     _WeeklyBreakdownEngine,
-                    DaypartCache.Instance);
+                    DaypartCache.Instance,
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IAabEngine>()
+                );
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
@@ -591,17 +606,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignValidator>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IQuarterCalculationEngine>(),
-
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IBroadcastLockingManagerApplicationService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
-                new TrafficApiCacheStub(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandardDaypartService>(),
                 sharedFolderService,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
                 _WeeklyBreakdownEngine,
-                DaypartCache.Instance);
+                DaypartCache.Instance,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IAabEngine>()
+                );
 
             return campaignService;
         }

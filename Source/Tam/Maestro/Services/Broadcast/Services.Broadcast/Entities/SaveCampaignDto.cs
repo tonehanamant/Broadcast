@@ -32,7 +32,9 @@ namespace Services.Broadcast.Entities
         /// <value>
         /// The advertiser identifier.
         /// </value>
-        public int AdvertiserId { get; set; }
+        public int? AdvertiserId { get; set; }
+
+        public Guid? AdvertiserMasterId { get; set; }
 
         /// <summary>
         /// Gets or sets the campaigns agency identifier.
@@ -40,7 +42,10 @@ namespace Services.Broadcast.Entities
         /// <value>
         /// The agency identifier.
         /// </value>
-        public int AgencyId { get; set; }
+        public int? AgencyId { get; set; }
+
+
+        public Guid? AgencyMasterId { get; set; }
 
         /// <summary>
         /// Gets or sets the notes.

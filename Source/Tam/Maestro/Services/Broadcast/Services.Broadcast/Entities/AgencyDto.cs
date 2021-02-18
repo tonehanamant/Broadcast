@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities
+﻿using System;
+
+namespace Services.Broadcast.Entities
 {
     /// <summary>
     /// Dto for an Agency.
@@ -11,7 +13,15 @@
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public int? Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master identifier.
+        /// </summary>
+        /// <value>
+        /// The master identifier.
+        /// </value>
+        public Guid? MasterId { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -24,9 +26,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
     /// </summary>
     public class PlanAggregator : IPlanAggregator
     {
-        private readonly IAudienceRepository _AudienceRepository;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly ITrafficApiCache _TrafficApiCache;
+        private readonly ICampaignRepository _CampaignRepository;
+        private readonly IAabEngine _AabEngine;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanAggregator"/> class.
@@ -36,11 +39,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="trafficApiCache">The api to the traffic app</param>
         public PlanAggregator(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IQuarterCalculationEngine quarterCalculationEngine
-            , ITrafficApiCache trafficApiCache)
+            , IAabEngine aabEngine
+            , IFeatureToggleHelper featureToggleHelper)
         {
-            _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _QuarterCalculationEngine = quarterCalculationEngine;
-            _TrafficApiCache = trafficApiCache;
+
+            _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
+
+            _AabEngine = aabEngine;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc/>
@@ -57,7 +64,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="plan">The plan.</param>
         /// <param name="summary">The summary.</param>
         /// <param name="runParallelAggregations">if set to <c>true</c> [run parallel aggregations].</param>
-        protected void PerformAggregations(PlanDto plan, PlanSummaryDto summary, bool runParallelAggregations = true)
+        internal void PerformAggregations(PlanDto plan, PlanSummaryDto summary, bool runParallelAggregations = true)
         {
             var aggFunctions = GetAggregationFunctionList();
 
@@ -95,7 +102,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return aggFunctions;
         }
 
-        protected void AggregateFlightDays(PlanDto plan, PlanSummaryDto summary)
+        internal void AggregateFlightDays(PlanDto plan, PlanSummaryDto summary)
         {
             if (plan.FlightEndDate.HasValue == false)
             {
@@ -110,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             summary.TotalHiatusDays = totalHiatusDays;
         }
 
-        protected void AggregateAvailableMarkets(PlanDto plan, PlanSummaryDto summary)
+        internal void AggregateAvailableMarkets(PlanDto plan, PlanSummaryDto summary)
         {
             if (plan.AvailableMarkets.Any() == false)
             {
@@ -125,7 +132,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             summary.AvailableMarketsWithSovCount = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue).Count();
         }
 
-        protected void AggregateBlackoutMarkets(PlanDto plan, PlanSummaryDto summary)
+        internal void AggregateBlackoutMarkets(PlanDto plan, PlanSummaryDto summary)
         {
             if (plan.BlackoutMarkets.Any() == false)
             {
@@ -139,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             summary.BlackoutMarketTotalUsCoveragePercent = blackoutMarketCoverage;
         }
 
-        protected void AggregateQuarters(PlanDto plan, PlanSummaryDto summary)
+        internal void AggregateQuarters(PlanDto plan, PlanSummaryDto summary)
         {
             if (plan.FlightStartDate.HasValue == false ||
                 plan.FlightEndDate.HasValue == false)
@@ -156,14 +163,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             summary.PlanSummaryQuarters = coveredQuarters;
         }
 
-        protected void AggregateProduct(PlanDto plan, PlanSummaryDto summary)
+        internal void AggregateProduct(PlanDto plan, PlanSummaryDto summary)
         {
-            if (plan.ProductId < 1)
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            ProductDto product = null;
+            if (isAabEnabled)
             {
-                return;
+                if (!plan.ProductMasterId.HasValue)
+                {
+                    return;
+                }
+                var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
+                product = _AabEngine.GetAdvertiserProduct(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
+            }
+            else
+            {
+                if (!plan.ProductId.HasValue)
+                {
+                    return;
+                }
+                product = _AabEngine.GetProduct(plan.ProductId.Value);
             }
 
-            summary.ProductName = _TrafficApiCache.GetProduct(plan.ProductId).Name;
+            summary.ProductName = product.Name;
         }
     }
 }

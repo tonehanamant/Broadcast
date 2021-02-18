@@ -47,7 +47,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<ICampaignAggregator> _CampaignAggregatorMock;
-        private Mock<ITrafficApiCache> _TrafficApiCacheMock;
         private Mock<IAudienceService> _AudienceServiceMock;
         private Mock<IStandardDaypartService> _StandardDaypartServiceMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
@@ -61,6 +60,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private readonly Mock<IDaypartCache> _DaypartCacheMock = new Mock<IDaypartCache>();
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
+        private Mock<IAabEngine> _AabEngine;
+        private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
+
 
         [SetUp]
         public void SetUp()
@@ -72,8 +74,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _CampaignAggregatorMock = new Mock<ICampaignAggregator>();
-            _TrafficApiCacheMock = new Mock<ITrafficApiCache>();
-            _TrafficApiCacheMock = new Mock<ITrafficApiCache>();
             _AudienceServiceMock = new Mock<IAudienceService>();
             _StandardDaypartServiceMock = new Mock<IStandardDaypartService>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
@@ -86,6 +86,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
+            _AabEngine = new Mock<IAabEngine>();
+            _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
@@ -123,20 +125,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void ReturnsFilteredCampaigns()
         {
             // Arrange
-            var agency = new AgencyDto { Id = 1, Name = "Name1" };
-            var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
 
             _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
                 , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
             _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
                 , new DateTime(2009, 3, 29)));
 
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(agency);
 
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(advertiser);
 
             var tc = _BuildCampaignService();
@@ -162,18 +162,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void ReturnsCampaignsFilteredUsingDefaultFilter()
         {
             // Arrange
-            var agency = new AgencyDto { Id = 1, Name = "Name1" };
-            var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
 
             _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
                 .Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
 
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(agency);
 
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(advertiser);
 
             var tc = _BuildCampaignService();
@@ -943,8 +941,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
@@ -1033,8 +1031,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
@@ -1200,8 +1198,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
@@ -1287,8 +1285,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
@@ -1400,8 +1398,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
-            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
@@ -1449,8 +1447,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { planOne, planTwo });
             var campaignLocksWell = true;
-            var agency = new AgencyDto { Id = 1, Name = "Agent1" };
-            var advertiser = new AdvertiserDto { Id = 1, Name = "Advertiser1", AgencyId = agency.Id };
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Agent1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Advertiser1", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
@@ -1460,9 +1458,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _LockingManagerApplicationServiceMock
                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse { Success = campaignLocksWell });
-            _TrafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(agency);
-            _TrafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(advertiser);
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -1510,8 +1508,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { plan });
             var campaignLocksWell = true;
-            var agency = new AgencyDto { Id = 1, Name = "Agent1" };
-            var advertiser = new AdvertiserDto { Id = 1, Name = "Advertiser1", AgencyId = agency.Id };
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Agent1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Advertiser1", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
@@ -1521,9 +1519,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _LockingManagerApplicationServiceMock
                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse { Success = campaignLocksWell });
-            _TrafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(agency);
-            _TrafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(advertiser);
 
             var tc = _BuildCampaignService();
@@ -1548,8 +1546,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { plan });
             var campaignLocksWell = true;
-            var agency = new AgencyDto {Id = 1, Name = "Agent1"};
-            var advertiser = new AdvertiserDto {Id = 1, Name = "Advertiser1", AgencyId = agency.Id};
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Agent1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Advertiser1", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
@@ -1559,9 +1557,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _LockingManagerApplicationServiceMock
                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse { Success = campaignLocksWell});
-            _TrafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(agency);
-            _TrafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(advertiser);
 
             var tc = _BuildCampaignService();
@@ -1642,14 +1640,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetStationInventoryManifestsForRollup());
 
-            _TrafficApiCacheMock
+            _AabEngine
                 .Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(new AgencyDto
                 {
                     Name = "1st Image Marketing"
                 });
 
-            _TrafficApiCacheMock
+            _AabEngine
                 .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(new AdvertiserDto
                 {
@@ -1749,14 +1747,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetStationInventoryManifests());
 
-            _TrafficApiCacheMock
+            _AabEngine
                 .Setup(x => x.GetAgency(It.IsAny<int>()))
                 .Returns(new AgencyDto
                 {
                     Name = "1st Image Marketing"
                 });
 
-            _TrafficApiCacheMock
+            _AabEngine
                 .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
                 .Returns(new AdvertiserDto
                 {
@@ -2477,7 +2475,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 };
         }
 
-        private CampaignService _BuildCampaignService()
+        private CampaignService _BuildCampaignService(bool isAabEnabled = false)
         {
             // Tie in base data.
             _AudienceServiceMock.Setup(s => s.GetAudienceById(It.IsAny<int>()))
@@ -2509,6 +2507,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeeksByMediaMonth(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeeksByMediaMonth);
 
+            _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
+                .Returns(isAabEnabled);
+
             return new CampaignService(
                 _DataRepositoryFactoryMock.Object,
                 _CampaignValidatorMock.Object,
@@ -2517,13 +2518,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _LockingManagerApplicationServiceMock.Object,
                 _CampaignAggregatorMock.Object,
                 _CampaignAggregationJobTriggerMock.Object,
-                _TrafficApiCacheMock.Object,
                 _AudienceServiceMock.Object,
                 _StandardDaypartServiceMock.Object,
                 _SharedFolderServiceMock.Object,
                 _DateTimeEngineMock.Object,
                 _WeeklyBreakdownEngineMock.Object,
-                _DaypartCacheMock.Object);
+                _DaypartCacheMock.Object,
+                _FeatureToggleHelper.Object,
+                _AabEngine.Object
+                );
         }
 
         private CampaignDto _GetCampaignForExport(int campaignId, List<PlanDto> selectedPlans)
@@ -2531,7 +2534,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var campaign = new CampaignDto
             {
                 Id = campaignId,
-                Plans = new List<PlanSummaryDto>()
+                Plans = new List<PlanSummaryDto>(),
+                AdvertiserMasterId = new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7"),
+                AdvertiserId = 1,
+                AgencyMasterId = new Guid("C70B7C77-94EC-4373-9C09-C038E505C9CA"),
+                AgencyId = 2
             };
             selectedPlans.ForEach(p => campaign.Plans.Add(
                 new PlanSummaryDto
@@ -2541,25 +2548,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Status = p.Status,
                     PostingType = p.PostingType,
                     AudienceId = p.AudienceId
-                }));
-            return campaign;
-        }
-
-        private CampaignDto _GetCampaignForExport(int campaignId, List<int> selectedPlanIds)
-        {
-            var campaign = new CampaignDto
-            {
-                Id = campaignId,
-                Plans = new List<PlanSummaryDto>()
-            };
-            selectedPlanIds.ForEach(id => campaign.Plans.Add(
-                new PlanSummaryDto
-                {
-                    PlanId = id,
-                    ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle,
-                    Status = PlanStatusEnum.Working,
-                    PostingType = PostingTypeEnum.NTI,
-                    AudienceId = 33
                 }));
             return campaign;
         }

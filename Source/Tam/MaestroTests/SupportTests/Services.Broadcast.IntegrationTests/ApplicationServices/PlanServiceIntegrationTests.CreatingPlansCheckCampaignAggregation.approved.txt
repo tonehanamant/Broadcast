@@ -1,6 +1,8 @@
 ﻿{
   "AdvertiserId": 1,
+  "AdvertiserMasterId": null,
   "AgencyId": 5,
+  "AgencyMasterId": null,
   "Budget": 6500.0,
   "CampaignStatus": 1,
   "FlightActiveDays": 35,

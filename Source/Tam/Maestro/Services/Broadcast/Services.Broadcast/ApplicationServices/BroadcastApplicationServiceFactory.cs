@@ -38,6 +38,7 @@ using Unity.Interception;
 using Unity.Interception.InterceptionBehaviors;
 using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
 using Unity.Lifetime;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -250,7 +251,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProgramNameMappingsExportEngine, ProgramNameMappingsExportEngine>();
             unityContainer.RegisterType<IMasterProgramListImporter, MasterProgramListImporter>();
 
-            unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
             unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();
             unityContainer.RegisterType<ICampaignAggregationJobTrigger, CampaignAggregationJobTrigger>();
 
@@ -295,6 +295,12 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IPlanMarketSovCalculator, PlanMarketSovCalculator>();
 
+            // Aab Related
+            unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
+            unityContainer.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClient>();
+            unityContainer.RegisterType<IAabEngine, AabEngine>();
+            unityContainer.RegisterType<IAabCache, AabCache>();
+
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
@@ -313,7 +319,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
-
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

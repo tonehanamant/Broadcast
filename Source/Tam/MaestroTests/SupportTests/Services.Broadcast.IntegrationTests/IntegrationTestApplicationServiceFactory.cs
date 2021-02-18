@@ -69,6 +69,8 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterType<ITrafficApiClient, TrafficApiClientStub>();
                     _instance.RegisterType<ITrafficApiCache, TrafficApiCache>();
 
+                    _instance.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClientStub>();
+
                     _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelperStub>();
                 }
             }

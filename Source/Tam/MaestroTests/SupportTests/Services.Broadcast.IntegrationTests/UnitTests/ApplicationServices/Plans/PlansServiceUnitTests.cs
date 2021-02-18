@@ -1480,6 +1480,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
+                ProductMasterId = new Guid("C8C76C3B-8C39-42CF-9657-B7AD2B8BA320"),
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                 Status = Entities.Enums.PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),

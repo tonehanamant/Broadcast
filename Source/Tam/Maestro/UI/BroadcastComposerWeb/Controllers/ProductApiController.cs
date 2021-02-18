@@ -1,6 +1,6 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.DTO;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
@@ -25,6 +25,18 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<ProductDto>> GetProductsByAdvertiserId(int advertiserId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProductService>().GetProductsByAdvertiserId(advertiserId));
+        }
+
+        /// <summary>
+        /// Gets the advertiser products.
+        /// </summary>
+        /// <param name="advertiserMasterId">The advertiser master identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("AdvertiserProduct")]
+        public BaseResponse<List<ProductDto>> GetAdvertiserProducts(Guid advertiserMasterId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProductService>().GetAdvertiserProducts(advertiserMasterId));
         }
     }
 }

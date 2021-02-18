@@ -162,7 +162,8 @@
         "UnitCaps": 3,
         "UnitCapsType": 1
       },
-      "ProductId": 0,
+      "ProductId": 1,
+      "ProductMasterId": "ad71646f-2736-45da-bf65-71120da01221",
       "SecondaryAudiences": [],
       "ShareBookId": 0,
       "Status": 0,

@@ -22,8 +22,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int campaign_id { get; set; }
         public string name { get; set; }
-        public int product_id { get; set; }
+        public Nullable<int> product_id { get; set; }
         public int latest_version_id { get; set; }
+        public Nullable<System.Guid> product_master_id { get; set; }
     
         public virtual campaign campaign { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }

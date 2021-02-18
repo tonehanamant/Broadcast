@@ -26,9 +26,29 @@ namespace Services.Broadcast.Entities
         /// </value>
         public string Name { get; set; }
 
-        public int AdvertiserId { get; set; }
+        /// <summary>
+        /// Gets or sets the advertiser identifier.
+        /// The integer id used by the Aab Traffic Api.
+        /// </summary>
+        public int? AdvertiserId { get; set; }
 
-        public int AgencyId { get;set; }
+        /// <summary>
+        /// Gets or sets the advertiser master identifier.
+        /// The guid id used by the Aab Api.
+        /// </summary>
+        public Guid? AdvertiserMasterId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the agency identifier.
+        /// The integer id used by the Aab Traffic Api.
+        /// </summary>
+        public int? AgencyId { get;set; }
+
+        /// <summary>
+        /// Gets or sets the agency master identifier.
+        /// The guid id used by the Aab Api.
+        /// </summary>
+        public Guid? AgencyMasterId { get; set; }
 
         /// <summary>
         /// Gets or sets the notes.

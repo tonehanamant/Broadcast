@@ -240,6 +240,7 @@
     "UnitCapsType": 1
   },
   "ProductId": 1,
+  "ProductMasterId": null,
   "SecondaryAudiences": [],
   "ShareBookId": 437,
   "Status": 1,

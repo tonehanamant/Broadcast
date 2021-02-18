@@ -6,7 +6,7 @@ using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using Services.Broadcast.Helpers;
 
-namespace Services.Broadcast.IntegrationTests.UnitTests
+namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
 {
     [TestFixture]
     [Category("short_running")]

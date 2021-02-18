@@ -1,0 +1,23 @@
+﻿[
+  {
+    "AdvertiserId": 3,
+    "AdvertiserMasterId": "1c299d09-fae5-4433-94bf-7c294d168a48",
+    "Id": 1,
+    "MasterId": "4c61ca64-db36-4c49-9b85-8fbad1db79ba",
+    "Name": "Product1"
+  },
+  {
+    "AdvertiserId": 3,
+    "AdvertiserMasterId": "1c299d09-fae5-4433-94bf-7c294d168a48",
+    "Id": 2,
+    "MasterId": "34dcd457-a069-427a-a9b7-9b637e49758e",
+    "Name": "Product2"
+  },
+  {
+    "AdvertiserId": 3,
+    "AdvertiserMasterId": "1c299d09-fae5-4433-94bf-7c294d168a48",
+    "Id": 3,
+    "MasterId": "b282e6dd-2d34-4bbf-903b-3ebd2501dc37",
+    "Name": "Product3"
+  }
+]

@@ -2,11 +2,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
       "Id": 2,
+      "MasterId": "1806450a-e0a3-416d-b38d-913fb5cf3879",
       "Name": "Name2"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
       "Name": "Name1"
     },
     "Budget": null,
@@ -31,11 +34,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
       "Id": 2,
+      "MasterId": "1806450a-e0a3-416d-b38d-913fb5cf3879",
       "Name": "Name2"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
       "Name": "Name1"
     },
     "Budget": null,
@@ -60,11 +66,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
       "Id": 2,
+      "MasterId": "1806450a-e0a3-416d-b38d-913fb5cf3879",
       "Name": "Name2"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
       "Name": "Name1"
     },
     "Budget": null,

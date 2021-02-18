@@ -553,6 +553,7 @@ namespace Services.Broadcast.Repositories
                 Equivalized = planVersion.equivalized,
                 Status = EnumHelper.GetEnum<PlanStatusEnum>(planVersion.status),
                 ProductId = entity.product_id,
+                ProductMasterId = entity.product_master_id,
                 FlightDays = planVersion.plan_version_flight_days.Select(flightDay => flightDay.day.id).ToList(),
                 FlightStartDate = planVersion.flight_start_date,
                 FlightEndDate = planVersion.flight_end_date,
@@ -720,6 +721,7 @@ namespace Services.Broadcast.Repositories
         {
             plan.name = planDto.Name;
             plan.product_id = planDto.ProductId;
+            plan.product_master_id = planDto.ProductMasterId;
             plan.campaign_id = planDto.CampaignId;
 
             version.equivalized = planDto.Equivalized;

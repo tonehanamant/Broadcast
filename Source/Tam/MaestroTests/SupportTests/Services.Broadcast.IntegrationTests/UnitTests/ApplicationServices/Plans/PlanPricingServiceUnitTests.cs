@@ -11453,7 +11453,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                ProductId = 1,
+                ProductMasterId = new Guid("AD71646F-2736-45DA-BF65-71120DA01221")
             };
         }
 

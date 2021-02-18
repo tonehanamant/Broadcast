@@ -483,6 +483,7 @@
     <Compile Include="ApplicationServices\InventoryProprietarySummaryService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
+    <Compile Include="BusinessEngines\AabEngine.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingMarketEngine.cs" />
@@ -490,9 +491,14 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingRepFirmEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
     <Compile Include="BusinessEngines\PlanMarketSovCalculator.cs" />
+    <Compile Include="Cache\AabCache.cs" />
+    <Compile Include="Clients\AgencyAdvertiserBrandApiClient.cs" />
     <Compile Include="Converters\RateImport\InventoryImportManifestDuplicateHandler.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataConverter.cs" />
+    <Compile Include="Entities\Aab\aab_advertiser.cs" />
+    <Compile Include="Entities\Aab\aab_agency.cs" />
+    <Compile Include="Entities\Aab\aab_product.cs" />
     <Compile Include="Entities\Enums\SpotAllocationModelMode.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />

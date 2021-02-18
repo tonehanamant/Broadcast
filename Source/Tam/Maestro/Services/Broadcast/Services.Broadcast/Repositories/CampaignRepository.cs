@@ -102,7 +102,9 @@ namespace Services.Broadcast.Repositories
             {
                 name = campaignDto.Name,
                 advertiser_id = campaignDto.AdvertiserId,
+                advertiser_master_id = campaignDto.AdvertiserMasterId,
                 agency_id = campaignDto.AgencyId,
+                agency_master_id = campaignDto.AgencyMasterId,
                 notes = campaignDto.Notes,
                 created_by = createdBy,
                 created_date = createdDate,
@@ -129,7 +131,9 @@ namespace Services.Broadcast.Repositories
 
                    existingCampaign.name = campaignDto.Name;
                    existingCampaign.advertiser_id = campaignDto.AdvertiserId;
+                   existingCampaign.advertiser_master_id = campaignDto.AdvertiserMasterId;
                    existingCampaign.agency_id = campaignDto.AgencyId;
+                   existingCampaign.agency_master_id = campaignDto.AgencyMasterId;
                    existingCampaign.notes = campaignDto.Notes;
                    existingCampaign.modified_by = campaignDto.ModifiedBy;
                    existingCampaign.modified_date = campaignDto.ModifiedDate;
@@ -287,7 +291,9 @@ namespace Services.Broadcast.Repositories
                 ModifiedDate = campaign.modified_date,
                 ModifiedBy = campaign.modified_by,
                 AdvertiserId = campaign.advertiser_id,
+                AdvertiserMasterId = campaign.advertiser_master_id,
                 AgencyId = campaign.agency_id,
+                AgencyMasterId = campaign.agency_master_id,
                 Plans = campaign.plans.SelectMany(x => x.plan_versions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
                                     .Where(x => x.id == x.plan.latest_version_id)
                     .Select(version =>

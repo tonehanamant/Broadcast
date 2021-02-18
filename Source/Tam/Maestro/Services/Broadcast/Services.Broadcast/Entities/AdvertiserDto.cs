@@ -1,4 +1,7 @@
-﻿namespace Services.Broadcast.Entities
+﻿using System;
+using System.Web.Compilation;
+
+namespace Services.Broadcast.Entities
 {
     /// <summary>
     /// Dto for an Advertiser.
@@ -11,7 +14,15 @@
         /// <value>
         /// The identifier.
         /// </value>
-        public int Id { get; set; }
+        public int? Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master identifier.
+        /// </summary>
+        /// <value>
+        /// The master identifier.
+        /// </value>
+        public Guid? MasterId { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -27,6 +38,11 @@
         /// <value>
         /// The agency id.
         /// </value>
-        public int AgencyId { get; set; }
+        public int? AgencyId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the agency master identifier.
+        /// </summary>
+        public Guid? AgencyMasterId { get; set; }
     }
 }

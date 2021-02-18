@@ -1,5 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
-using Services.Broadcast.Cache;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
 
@@ -7,21 +7,25 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IAgencyService : IApplicationService
     {
+        /// <summary>
+        /// Gets the agencies.
+        /// </summary>
         List<AgencyDto> GetAgencies();
     }
 
     public class AgencyService : IAgencyService
     {
-        private readonly ITrafficApiCache _TrafficApiCache;
+        private readonly IAabEngine _AabEngine;
 
-        public AgencyService(ITrafficApiCache trafficApiCache)
+        public AgencyService(IAabEngine aabEngine)
         {
-            _TrafficApiCache = trafficApiCache;
+            _AabEngine = aabEngine;
         }
 
+        /// <inheritdoc />
         public List<AgencyDto> GetAgencies()
         {
-            return _TrafficApiCache.GetAgencies();
+            return _AabEngine.GetAgencies();
         }
     }
 }

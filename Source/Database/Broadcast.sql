@@ -77,7 +77,7 @@ EXEC (@alterSql)
 GO
 /*************************************** End BP-2005 *****************************************************/
 
-/*************************************** Start BP-1551 *****************************************************/
+/*************************************** Start BP-1551 - settings *****************************************************/
 
 DECLARE @envName VARCHAR(50)
 DECLARE @trafficUrlBase VARCHAR(500) = 'http://[MachineName]/traffic/api/company'
@@ -114,7 +114,7 @@ IF NOT EXISTS (SELECT 1 FROM system_settings.dbo.system_component_parameters
 	AND parameter_key = 'AgencyAdvertiserBrandTrafficApiUrl')
 BEGIN
 	INSERT INTO system_settings.dbo.system_component_parameters  (component_id, parameter_key, parameter_value, parameter_type, [description], last_modified_time)
-		VALUES('BroadcastService', 'AgencyAdvertiserBrandTrafficApiUrl', 'http://devvmqa2.dev.crossmw.com/traffic/api/company', 'string', 'The endpoint for the AAB traffic api.', SYSDATETIME())
+		VALUES('BroadcastService', 'AgencyAdvertiserBrandTrafficApiUrl', @envTrafficUrl, 'string', 'The endpoint for the AAB traffic api.', SYSDATETIME())
 END
 
 UPDATE s SET
@@ -134,7 +134,47 @@ AND parameter_key = 'AgencyAdvertiserBrandApiUrl'
 AND parameter_value <> @envUrl
 
 GO
-/*************************************** End BP-1551 *****************************************************/
+/*************************************** End BP-1551 - settings *****************************************************/
+
+/*************************************** Start BP-1551 - schema *****************************************************/
+
+-- These columns will exist.
+ALTER TABLE campaigns
+	ALTER COLUMN agency_id INT NULL
+
+ALTER TABLE campaigns
+	ALTER COLUMN advertiser_id INT NULL
+
+ALTER TABLE plans
+	ALTER COLUMN product_id INT NULL
+
+-- these columns may not exist
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'agency_master_id'
+          AND Object_ID = Object_ID(N'campaigns'))
+BEGIN
+    ALTER TABLE campaigns
+		ADD agency_master_id UNIQUEIDENTIFIER NULL	
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'advertiser_master_id'
+          AND Object_ID = Object_ID(N'campaigns'))
+BEGIN
+    ALTER TABLE campaigns
+		ADD advertiser_master_id UNIQUEIDENTIFIER NULL	
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'product_master_id'
+          AND Object_ID = Object_ID(N'plans'))
+BEGIN
+    ALTER TABLE plans
+		ADD product_master_id UNIQUEIDENTIFIER NULL	
+END
+
+GO
+/*************************************** End BP-1551 - schema *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

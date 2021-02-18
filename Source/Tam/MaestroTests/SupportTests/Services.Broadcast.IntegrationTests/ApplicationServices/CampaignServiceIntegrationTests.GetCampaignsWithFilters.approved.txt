@@ -2,11 +2,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": null,
       "Id": 1,
+      "MasterId": null,
       "Name": "Stub Advertiser"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": null,
       "Name": "Stub Agency"
     },
     "Budget": 1500.0,
@@ -620,11 +623,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": null,
       "Id": 4,
+      "MasterId": null,
       "Name": "Stub Advertiser"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": null,
       "Name": "Stub Agency"
     },
     "Budget": 1500.0,
@@ -665,11 +671,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": null,
       "Id": 2,
+      "MasterId": null,
       "Name": "Stub Advertiser"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": null,
       "Name": "Stub Agency"
     },
     "Budget": 1500.0,
@@ -762,11 +771,14 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "AgencyMasterId": null,
       "Id": 3,
+      "MasterId": null,
       "Name": "Stub Advertiser"
     },
     "Agency": {
       "Id": 1,
+      "MasterId": null,
       "Name": "Stub Agency"
     },
     "Budget": 1500.0,

@@ -10,6 +10,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Validators
@@ -52,9 +53,11 @@ namespace Services.Broadcast.Validators
     {
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly List<MediaMonth> _PostingBooks;
-        private readonly ITrafficApiCache _TrafficApiCache;
-        private readonly IPlanRepository _PlanRepository;
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
+
+        private readonly ICampaignRepository _CampaignRepository;
+        private readonly IAabEngine _AabEngine;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_PRODUCT = "Invalid product";
@@ -99,19 +102,23 @@ namespace Services.Broadcast.Validators
 
         public PlanValidator(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
-            , ITrafficApiCache trafficApiCache
             , IDataRepositoryFactory broadcastDataRepositoryFactory
-            , ICreativeLengthEngine creativeLengthEngine)
+            , ICreativeLengthEngine creativeLengthEngine
+            , IAabEngine aabEngine
+            , IFeatureToggleHelper featureToggleHelper
+            )
         {
             _AudienceCache = broadcastAudiencesCache;
-            _TrafficApiCache = trafficApiCache;
-            _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _CreativeLengthEngine = creativeLengthEngine;
-
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
                 .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
                 .Select(m => m.MediaMonth)
                 .ToList();
+            
+            _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
+
+            _AabEngine = aabEngine;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc/>
@@ -127,8 +134,10 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_DRAFT_ON_NEW_PLAN);
             }
 
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+
             _CreativeLengthEngine.ValidateCreativeLengthsForPlanSave(plan.CreativeLengths);
-            _ValidateProduct(plan);
+            _ValidateProduct(plan, isAabEnabled);
             _ValidateFlightAndHiatus(plan);
             _ValidateDayparts(plan);
             _ValidatePrimaryAudience(plan);
@@ -473,7 +482,7 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        protected void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
+        internal void _ValidateWeeklyBreakdownWeeks(PlanDto plan)
         {
             if (!plan.WeeklyBreakdownWeeks.Any())
             {
@@ -527,11 +536,19 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateProduct(PlanDto plan)
+        private void _ValidateProduct(PlanDto plan, bool isAabEnabled)
         {
             try
             {
-                _TrafficApiCache.GetProduct(plan.ProductId);
+                if (isAabEnabled)
+                {
+                    var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
+                    _AabEngine.GetAdvertiserProduct(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
+                }
+                else
+                {
+                    _AabEngine.GetProduct(plan.ProductId.Value);
+                }
             }
             catch (Exception ex)
             {

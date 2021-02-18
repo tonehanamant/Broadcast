@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Helpers;
@@ -41,11 +43,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         [Test]
         public void PerformAggregations()
         {
-            var tc = GetTestClassFullySetup();
+            var tc = GetTestClassFullySetup(out var quarterCalculationEngine);
             var plan = GetFullTestPlanDto();
             var summary = new PlanSummaryDto();
 
-            tc.UT_PerformAggregations(plan, summary);
+            tc.PerformAggregations(plan, summary);
 
             AssertFullSummaryResult(summary);
         }
@@ -53,20 +55,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         [Test]
         public void PerformAggregations_Timed()
         {
-            var tc = GetTestClassFullySetup();
+            var tc = GetTestClassFullySetup(out var quarterCalculationEngine);
             var plan = GetFullTestPlanDto();
             var summary1 = new PlanSummaryDto();
 
             var sw = new Stopwatch();
             sw.Start();
-            tc.UT_PerformAggregations(plan, summary1, false);
+            tc.PerformAggregations(plan, summary1, false);
             sw.Stop();
             Debug.WriteLine($"Sequential Time is : {sw.ElapsedMilliseconds}");
 
             var summary2 = new PlanSummaryDto();
             var sw2 = new Stopwatch();
             sw2.Start();
-            tc.UT_PerformAggregations(plan, summary2, true);
+            tc.PerformAggregations(plan, summary2, true);
             sw2.Stop();
             Debug.WriteLine($"Parallel Time is : {sw2.ElapsedMilliseconds}");
 
@@ -91,7 +93,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 13));
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateFlightDays(plan, summary);
+            tc.AggregateFlightDays(plan, summary);
 
             Assert.AreEqual(3, summary.TotalHiatusDays, "Invalid summary.TotalHiatusDays");
             Assert.AreEqual(17, summary.TotalActiveDays, "Invalid summary.TotalActiveDays");
@@ -104,7 +106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var plan = new PlanDto();
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateFlightDays(plan, summary);
+            tc.AggregateFlightDays(plan, summary);
 
             Assert.IsFalse(summary.TotalHiatusDays.HasValue, "Invalid summary.TotalHiatusDays");
             Assert.IsFalse(summary.TotalActiveDays.HasValue, "Invalid summary.TotalActiveDays");
@@ -120,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateAvailableMarkets(plan, summary);
+            tc.AggregateAvailableMarkets(plan, summary);
 
             Assert.AreEqual(TEST_SELECTED_AVAILABLE_MARKET_COUNT, summary.AvailableMarketCount, "Invalid summary.AvailableMarketCount");
             Assert.AreEqual(TEST_SELECTED_AVAILABLE_MARKET_WITH_SOV_COUNT, summary.AvailableMarketsWithSovCount, "Invalid summary.AvailableMarketsWithSovCount");
@@ -134,7 +136,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var plan = new PlanDto();
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateAvailableMarkets(plan, summary);
+            tc.AggregateAvailableMarkets(plan, summary);
 
             Assert.IsFalse(summary.AvailableMarketCount.HasValue);
             Assert.IsFalse(summary.AvailableMarketTotalUsCoveragePercent.HasValue);
@@ -149,7 +151,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             plan.BlackoutMarkets.AddRange(selectedBlackoutMarkets);
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateBlackoutMarkets(plan, summary);
+            tc.AggregateBlackoutMarkets(plan, summary);
 
             Assert.AreEqual(TEST_SELECTED_BLACKOUT_MARKET_COUNT, summary.BlackoutMarketCount, "Invalid summary.BlackoutMarketCount");
             Assert.AreEqual(TEST_SELECTED_BLACKOUT_MARKET_TOTAL_US_COVERAGE_PERCENT, summary.BlackoutMarketTotalUsCoveragePercent, "Invalid summary.BlackoutMarketTotalUsCoveragePercent");
@@ -162,7 +164,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var plan = new PlanDto();
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateBlackoutMarkets(plan, summary);
+            tc.AggregateBlackoutMarkets(plan, summary);
 
             Assert.IsFalse(summary.BlackoutMarketCount.HasValue, "Invalid summary.BlackoutMarketCount");
             Assert.IsFalse(summary.BlackoutMarketTotalUsCoveragePercent.HasValue, "Invalid summary.BlackoutMarketTotalUsCoveragePercent");
@@ -175,7 +177,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             {
                 new QuarterDetailDto { Quarter = 1, Year = 2019 }
             };
-            var tc = GetTestClassSetupForQuarters(testQuarters);
+
+            var tc = GetTestClassSetupForQuarters(testQuarters, out var quarterCalculationEngine);
             var plan = new PlanDto
             {
                 FlightStartDate = new DateTime(),
@@ -183,9 +186,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             };
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateQuarters(plan, summary);
+            tc.AggregateQuarters(plan, summary);
 
-            Assert.AreEqual(1, tc.GetAllQuartersBetweenDatesCalledCount, "Invalid GetAllQuartersBetweenDatesCalledCount");
+            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()),Times.Once, "Invalid GetAllQuartersBetweenDatesCalledCount");
             Assert.AreEqual(1, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
             Assert.AreEqual(1, summary.PlanSummaryQuarters[0].Quarter, "Invalid quarter.");
             Assert.AreEqual(2019, summary.PlanSummaryQuarters[0].Year, "Invalid quarter year.");
@@ -199,7 +202,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 new QuarterDetailDto { Quarter = 1, Year = 2019 },
                 new QuarterDetailDto { Quarter = 2, Year = 2019 }
             };
-            var tc = GetTestClassSetupForQuarters(testQuarters);
+            var tc = GetTestClassSetupForQuarters(testQuarters, out var quarterCalculationEngine);
             var plan = new PlanDto
             {
                 FlightStartDate = new DateTime(),
@@ -207,9 +210,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             };
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateQuarters(plan, summary);
+            tc.AggregateQuarters(plan, summary);
 
-            Assert.AreEqual(1, tc.GetAllQuartersBetweenDatesCalledCount, "Invalid GetAllQuartersBetweenDatesCalledCount");
+            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once, "Invalid GetAllQuartersBetweenDatesCalledCount");
             Assert.AreEqual(2, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
             Assert.AreEqual(1, summary.PlanSummaryQuarters[0].Quarter, "Invalid quarter.");
             Assert.AreEqual(2019, summary.PlanSummaryQuarters[0].Year, "Invalid quarter year.");
@@ -226,7 +229,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 new QuarterDetailDto { Quarter = 2, Year = 2019 },
                 new QuarterDetailDto { Quarter = 4, Year = 2018 },
             };
-            var tc = GetTestClassSetupForQuarters(testQuarters);
+            var tc = GetTestClassSetupForQuarters(testQuarters, out var quarterCalculationEngine);
             var plan = new PlanDto
             {
                 FlightStartDate = new DateTime(),
@@ -234,9 +237,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             };
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateQuarters(plan, summary);
+            tc.AggregateQuarters(plan, summary);
 
-            Assert.AreEqual(1, tc.GetAllQuartersBetweenDatesCalledCount, "Invalid GetAllQuartersBetweenDatesCalledCount");
+            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once, "Invalid GetAllQuartersBetweenDatesCalledCount");
             Assert.AreEqual(3, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
             Assert.AreEqual(4, summary.PlanSummaryQuarters[0].Quarter, "Invalid quarter.");
             Assert.AreEqual(2018, summary.PlanSummaryQuarters[0].Year, "Invalid quarter year.");
@@ -250,13 +253,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         public void AggregateQuarters_WithoutFlightStartDate()
         {
             var testQuarters = new List<QuarterDetailDto>();
-            var tc = GetTestClassSetupForQuarters(testQuarters);
+            var tc = GetTestClassSetupForQuarters(testQuarters, out var quarterCalculationEngine);
             var plan = new PlanDto();
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateQuarters(plan, summary);
+            tc.AggregateQuarters(plan, summary);
 
-            Assert.AreEqual(0, tc.GetAllQuartersBetweenDatesCalledCount, "Invalid GetAllQuartersBetweenDatesCalledCount");
+            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never, "Invalid GetAllQuartersBetweenDatesCalledCount");
             Assert.AreEqual(0, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
         }
 
@@ -264,36 +267,59 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         public void AggregateQuartersText_WithoutFlightEndDate()
         {
             var testQuarters = new List<QuarterDetailDto>();
-            var tc = GetTestClassSetupForQuarters(testQuarters);
+            var tc = GetTestClassSetupForQuarters(testQuarters, out var quarterCalculationEngine);
             var plan = new PlanDto {FlightStartDate = new DateTime()};
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateQuarters(plan, summary);
+            tc.AggregateQuarters(plan, summary);
 
-            Assert.AreEqual(0, tc.GetAllQuartersBetweenDatesCalledCount, "Invalid GetAllQuartersBetweenDatesCalledCount");
+            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never, "Invalid GetAllQuartersBetweenDatesCalledCount");
             Assert.AreEqual(0, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
         }
 
         [Test]
-        public void AggregateProductName()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void AggregateProductName(bool isAabEnabled)
         {
-            var tc = GetTestClassSetupForProducts();
-            var plan = new PlanDto { ProductId = 2};
+            // Arrange
+            const string productName = "Product2";
+            var tc = GetTestClassSetupForProducts(isAabEnabled, out var aabEngine);
+            var plan = new PlanDto { ProductId = 2, ProductMasterId = Guid.NewGuid()};
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateProduct(plan, summary);
+            aabEngine.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(new ProductDto { Name = productName });
+            aabEngine.Setup(s => s.GetProduct(It.IsAny<int>()))
+                .Returns(new ProductDto { Name = productName });
 
-            Assert.AreEqual("Product2", summary.ProductName, "Invalid ProductName");
+            // Act
+            tc.AggregateProduct(plan, summary);
+
+            // Assert
+            Assert.AreEqual(productName, summary.ProductName, "Invalid ProductName");
+            if (isAabEnabled)
+            {
+                aabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
+                aabEngine.Verify(s => s.GetProduct(It.IsAny<int>()), Times.Never);
+            }
+            else
+            {
+                aabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
+                aabEngine.Verify(s => s.GetProduct(It.IsAny<int>()), Times.Once);
+            }
         }
 
         [Test]
-        public void AggregateProductName_WithoutValue()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void AggregateProductName_WithoutValue(bool isAabEnabled)
         {
-            var tc = GetTestClassSetupForProducts();
+            var tc = GetTestClassSetupForProducts(isAabEnabled, out var aabEngine);
             var plan = new PlanDto();
             var summary = new PlanSummaryDto();
 
-            tc.UT_AggregateProduct(plan, summary);
+            tc.AggregateProduct(plan, summary);
 
             Assert.IsNull(summary.ProductName, "Invalid ProductName");
         }
@@ -302,41 +328,57 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
         #region Helpers
 
-        private PlanAggregatorUnitTestClass GetEmptyTestClass()
+        private PlanAggregator GetEmptyTestClass()
         {
-            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
-            var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
-                .Returns(daypartCodeRepository.Object);
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
-                .Returns(audienceRepository.Object);
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            var tc = new PlanAggregatorUnitTestClass(
+
+            var campaignRepository = new Mock<ICampaignRepository>();
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepository.Object);
+
+            var aabEngine = new Mock<IAabEngine>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+
+            var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiCache
+                , aabEngine.Object
+                , featureToggleHelper.Object
             );
 
             return tc;
         }
 
-        private PlanAggregatorUnitTestClass GetTestClassFullySetup()
+        private PlanAggregator GetTestClassFullySetup(out Mock<IQuarterCalculationEngine> quarterCalculationEngine)
         {
-            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
-            var audienceRepository = new Mock<IAudienceRepository>();
+            quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
-                .Returns(daypartCodeRepository.Object);
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
-                .Returns(audienceRepository.Object);
-            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            var tc = new PlanAggregatorUnitTestClass(
+
+            var campaignRepository = new Mock<ICampaignRepository>();
+            campaignRepository.Setup(s => s.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto { AdvertiserMasterId = Guid.NewGuid() });
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepository.Object);
+
+            var isAabEnabled = true;
+            const string productName = "Product2";
+            var aabEngine = new Mock<IAabEngine>();
+            aabEngine.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(new ProductDto { Name = productName });
+            aabEngine.Setup(s => s.GetProduct(It.IsAny<int>()))
+                .Returns(new ProductDto { Name = productName });
+
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
+                .Returns(isAabEnabled);
+
+            var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiCache
+                , aabEngine.Object
+                , featureToggleHelper.Object
             );
             var getQuartersReturn = new List<QuarterDetailDto>
             {
@@ -346,72 +388,60 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             };
             quarterCalculationEngine
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Callback(() => tc.GetAllQuartersBetweenDatesCalledCount++)
                 .Returns(getQuartersReturn);
 
             return tc;
         }
 
-        private PlanAggregatorUnitTestClass GetTestClassSetupForAudiences()
+        private PlanAggregator GetTestClassSetupForQuarters(List<QuarterDetailDto> getQuartersReturn, out Mock<IQuarterCalculationEngine> quarterCalculationEngine)
         {
-            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
-            var audienceRepository = new Mock<IAudienceRepository>();
+            quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
-                .Returns(daypartCodeRepository.Object);
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
-                .Returns(audienceRepository.Object);
-            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            var tc = new PlanAggregatorUnitTestClass(
+
+            var campaignRepository = new Mock<ICampaignRepository>();
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepository.Object);
+
+            var aabEngine = new Mock<IAabEngine>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+
+            var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiCache
-            );
-
-            return tc;
-        }
-
-        private PlanAggregatorUnitTestClass GetTestClassSetupForQuarters(List<QuarterDetailDto> getQuartersReturn)
-        {
-            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
-            var audienceRepository = new Mock<IAudienceRepository>();
-            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
-                .Returns(daypartCodeRepository.Object);
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
-                .Returns(audienceRepository.Object);
-            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            var tc = new PlanAggregatorUnitTestClass(
-                broadcastDataRepositoryFactory.Object
-                , quarterCalculationEngine.Object
-                , trafficApiCache
+                , aabEngine.Object
+                , featureToggleHelper.Object
             );
 
             quarterCalculationEngine
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Callback(() => tc.GetAllQuartersBetweenDatesCalledCount++)
                 .Returns(getQuartersReturn);
 
             return tc;
         }
 
-        private PlanAggregatorUnitTestClass GetTestClassSetupForProducts()
+        private PlanAggregator GetTestClassSetupForProducts(bool isAabEnabled, out Mock<IAabEngine> aabEngine)
         {
-            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
-            var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
-                .Returns(daypartCodeRepository.Object);
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
-                .Returns(audienceRepository.Object);
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            var tc = new PlanAggregatorUnitTestClass(
+
+            var campaignRepository = new Mock<ICampaignRepository>();
+            campaignRepository.Setup(s => s.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto{ AdvertiserMasterId = Guid.NewGuid()});
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<ICampaignRepository>())
+                .Returns(campaignRepository.Object);
+
+            aabEngine = new Mock<IAabEngine>();
+
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
+                .Returns(isAabEnabled);
+
+            var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
-                , trafficApiCache
+                , aabEngine.Object
+                , featureToggleHelper.Object
             );
 
             return tc;
@@ -439,6 +469,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             plan.BlackoutMarkets.AddRange(selectedBlackoutMarkets);
             plan.AudienceId = 1;
             plan.ProductId = 2;
+            plan.ProductMasterId = Guid.NewGuid();
 
             return plan;
         }

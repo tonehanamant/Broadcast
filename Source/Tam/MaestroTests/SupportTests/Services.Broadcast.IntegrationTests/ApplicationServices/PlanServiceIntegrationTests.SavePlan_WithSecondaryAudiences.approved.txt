@@ -332,6 +332,7 @@
     "UnitCapsType": 1
   },
   "ProductId": 1,
+  "ProductMasterId": null,
   "SecondaryAudiences": [
     {
       "AudienceId": 7,
