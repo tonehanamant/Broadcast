@@ -28,9 +28,9 @@ namespace BroadcastComposerWeb.Controllers
         /// Will be removed after.
         /// </summary>
         /// <returns>List of campaigns</returns>
+        [Obsolete("This route is obsolete. Please use POST campaigns/Filter instead.")]
         [HttpGet]
-        [Route("")]
-        public BaseResponse<List<CampaignListItemDto>> GetCampaigns(CampaignFilterDto campaignFilter)
+        public BaseResponse<List<CampaignListItemDto>> GetCampaigns([FromUri]CampaignFilterDto campaignFilter)
         {
             return
                 _ConvertToBaseResponse(
