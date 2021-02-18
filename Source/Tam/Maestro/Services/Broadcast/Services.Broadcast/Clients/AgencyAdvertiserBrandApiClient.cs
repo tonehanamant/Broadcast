@@ -107,6 +107,7 @@ namespace Services.Broadcast.Clients
                 {
                     Id = i.id,
                     MasterId = i.product_id,
+                    Name = i.name,
                     AdvertiserId = advertiserFullInfo.id,
                     AdvertiserMasterId = advertiserFullInfo.company_id
                 }).ToList();
