@@ -176,6 +176,21 @@ END
 GO
 /*************************************** End BP-1551 - schema *****************************************************/
 
+/*************************************** API results posting type update *****************************************************/
+UPDATE
+    pvps
+SET
+    pvps.posting_type = COALESCE(pv.posting_type, 1)
+FROM 
+    [plan_version_pricing_api_results] pvps
+        LEFT JOIN [plan_version_pricing_job] pvpj
+        ON    pvpj.id = pvps.plan_version_pricing_job_id
+        LEFT JOIN [plan_versions] pv
+        ON pv.id = pvpj.plan_version_id
+WHERE  pvps.posting_type = 0
+GO
+/*************************************** End API results posting type update *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
