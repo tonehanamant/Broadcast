@@ -46,5 +46,20 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 new ProductDto { AdvertiserId = 1, Id = 1, Name = "Product" }
             };
         }
+
+        public void ClearAgenciesCache()
+        {
+            // simulate success by doing nothing...
+        }
+
+        public void ClearAdvertisersCache()
+        {
+            // simulate success by doing nothing...
+        }
+
+        public void ClearProductsCache()
+        {
+            // simulate success by doing nothing...
+        }
     }
 }

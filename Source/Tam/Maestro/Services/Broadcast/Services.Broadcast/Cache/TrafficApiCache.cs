@@ -22,7 +22,18 @@ namespace Services.Broadcast.Cache
         AdvertiserDto GetAdvertiser(int advertiserId);
 
         List<ProductDto> GetProductsByAdvertiserId(int advertiserId);
+
         ProductDto GetProduct(int productId);
+
+        /// <summary>
+        /// Clears the agencies cache.
+        /// </summary>
+        void ClearAgenciesCache();
+
+        /// <summary>
+        /// Clears the advertisers cache.
+        /// </summary>
+        void ClearAdvertisersCache();
     }
 
     public class TrafficApiCache : BroadcastBaseClass, ITrafficApiCache
@@ -87,7 +98,7 @@ namespace Services.Broadcast.Cache
         public List<AdvertiserDto> GetAdvertisers()
         {
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
-            return _AgencyAdvertisersCache.GetOrCreate("advertisers", () => _TrafficApiClient.GetAdvertisers(), policy);
+            return _AgencyAdvertisersCache.GetOrCreate(CACHE_NAME_ADVERTISERS, () => _TrafficApiClient.GetAdvertisers(), policy);
         }
 
         public AdvertiserDto GetAdvertiser(int advertiserId)
@@ -106,6 +117,22 @@ namespace Services.Broadcast.Cache
         {
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
             return _ProductsCache.GetOrCreate(productId.ToString(), () => _TrafficApiClient.GetProduct(productId), policy);
+        }
+
+        /// <inheritdoc />
+        public void ClearAgenciesCache()
+        {
+            _Agencies = null;
+            _AgencyCache.Remove(CACHE_NAME_AGENCIES);
+        }
+
+        /// <inheritdoc />
+        public void ClearAdvertisersCache()
+        {
+            _AgencyAdvertisersCache.GetItemCount(true);
+            _AdvertisersCache.GetItemCount(true);
+            _AdvertiserProductsCache.GetItemCount(true);
+            _ProductsCache.GetItemCount(true);
         }
 
         private void BuildAgencyCache(CacheEntryRemovedArguments args)

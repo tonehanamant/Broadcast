@@ -64,6 +64,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         }
 
         [Test]
+        public void ClearAgenciesCache()
+        {
+            // Arrange
+            const int expectedClientCalledCount = 2;
+            var agencies = _GetAgencies();
+            var expectedResultCount = agencies.Count;
+            var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            aabApiClient.Setup(s => s.GetAgencies())
+                .Returns(agencies);
+
+            var tc = new AabCache(aabApiClient.Object);
+
+            // Act
+            tc.GetAgencies();
+            tc.ClearAgenciesCache();
+            var result = tc.GetAgencies();
+
+            // Assert
+            Assert.AreEqual(expectedResultCount, result.Count);
+            aabApiClient.Verify(s => s.GetAgencies(), Times.Exactly(expectedClientCalledCount));
+        }
+
+        [Test]
         public void GetAdvertisers()
         {
             // Arrange
@@ -103,6 +126,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             // Assert
             Assert.AreEqual(expectedResultCount, result.Count);
             aabApiClient.Verify(s => s.GetAdvertisers(), Times.Once);
+        }
+
+        [Test]
+        public void ClearAdvertisersCache()
+        {
+            // Arrange
+            const int expectedClientCallCount = 2;
+            var advertisers = _GetAdvertisers();
+            var expectedResultCount = advertisers.Count;
+            var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            aabApiClient.Setup(s => s.GetAdvertisers())
+                .Returns(advertisers);
+
+            var tc = new AabCache(aabApiClient.Object);
+
+            // Act
+            tc.GetAdvertisers();
+            tc.ClearAdvertisersCache();
+            var result = tc.GetAdvertisers();
+
+            // Assert
+            Assert.AreEqual(expectedResultCount, result.Count);
+            aabApiClient.Verify(s => s.GetAdvertisers(), Times.Exactly(expectedClientCallCount));
         }
 
         [Test]

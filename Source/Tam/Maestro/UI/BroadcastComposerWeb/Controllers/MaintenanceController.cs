@@ -866,8 +866,95 @@ namespace BroadcastComposerWeb.Controllers
             TempData["Message"] = "Upload sucessful!";
 
             return RedirectToAction("Index");
-        }      
+        }
 
-        
+        #region Aab Utilities
+
+        [HttpPost]
+        public ActionResult ClearAgenciesCache()
+        {
+            TempData["TabId"] = "aab_maintenance";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IAgencyService>();
+                service.ClearAgenciesCache();
+                TempData["Message"] = $"Agencies cache cleared successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ClearAdvertisersCache()
+        {
+            TempData["TabId"] = "aab_maintenance";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IAdvertiserService>();
+                service.ClearAdvertisersCache();
+                TempData["Message"] = $"Advertisers cache cleared successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ValidateAndReportCanMigrateToAabApi()
+        {
+            TempData["TabId"] = "aab_maintenance";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IAabMigrationService>();
+                var result = service.ValidateAndReportCanMigrateToAabApi();
+                TempData["TextareaMessage"] = result.Data;
+            }
+            catch (Exception ex)
+            {
+                TempData["TextareaMessage"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult MigrateAabToAabApi()
+        {
+            TempData["TabId"] = "aab_maintenance";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IAabMigrationService>();
+                var result = service.MigrateAabToAabApi();
+                TempData["TextareaMessage"] = result.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["TextareaMessage"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult MigrateAabToTrafficApi()
+        {
+            TempData["TabId"] = "aab_maintenance";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IAabMigrationService>();
+                var result = service.MigrateAabToTrafficApi();
+                TempData["TextareaMessage"] = $"{result.Message}";
+            }
+            catch (Exception ex)
+            {
+                TempData["TextareaMessage"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
+        #endregion // #region Aab Utilities
     }
 }

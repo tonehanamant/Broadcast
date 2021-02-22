@@ -108,6 +108,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IPlanBuyingRepository, PlanBuyingRepository>();
             instance.RegisterType<IProgramNameMappingKeywordRepository, ProgramNameMappingKeywordRepository>();
             instance.RegisterType<IInventoryProprietaryDaypartRepository, InventoryProprietaryDaypartRepository>();
+            instance.RegisterType<IAabDataMigrationRepository, AabDataMigrationRepository>();
 
             WasRegistered = true;
         }

@@ -28,6 +28,16 @@ namespace Services.Broadcast.Cache
         /// </summary>
         /// <param name="advertiserMasterId">The advertiser master identifier.</param>
         List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId);
+
+        /// <summary>
+        /// Clears the agencies cache.
+        /// </summary>
+        void ClearAgenciesCache();
+
+        /// <summary>
+        /// Clears the advertisers cache.
+        /// </summary>
+        void ClearAdvertisersCache();
     }
 
     /// <summary>
@@ -76,6 +86,18 @@ namespace Services.Broadcast.Cache
         {
             var result = _AabApiClient.GetAdvertiserProducts(advertiserMasterId);
             return result;
+        }
+
+        /// <inheritdoc />
+        public void ClearAgenciesCache()
+        {
+            _AgenciesCache.Remove(CACHE_NAME_AGENCIES);
+        }
+
+        /// <inheritdoc />
+        public void ClearAdvertisersCache()
+        {
+            _AdvertisersCache.Remove(CACHE_NAME_ADVERTISERS);
         }
 
         private int _GetCacheItemTtlSeconds()

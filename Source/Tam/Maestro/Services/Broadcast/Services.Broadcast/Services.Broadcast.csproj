@@ -471,6 +471,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\AabMigrationService.cs" />
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AffiliateService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
@@ -496,6 +497,7 @@
     <Compile Include="Converters\RateImport\InventoryImportManifestDuplicateHandler.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataConverter.cs" />
+    <Compile Include="Entities\AabMigrationValidationReport.cs" />
     <Compile Include="Entities\Aab\aab_advertiser.cs" />
     <Compile Include="Entities\Aab\aab_agency.cs" />
     <Compile Include="Entities\Aab\aab_product.cs" />
@@ -598,6 +600,8 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
     <Compile Include="Entities\Scx\PlanBuyingScxFile.cs" />
     <Compile Include="Entities\Scx\PlanScxData.cs" />
+    <Compile Include="Entities\ServiceExecutionResult.cs" />
+    <Compile Include="Entities\ServiceExecutionResultWithData.cs" />
     <Compile Include="Entities\StandardDaypartWeightingGoal.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\ProgramMappingMatchTypeEnum.cs" />
@@ -885,6 +889,7 @@
     <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />
     <Compile Include="Repositories\Inventory\InventoryExportRepository.cs" />
+    <Compile Include="Repositories\AabDataMigrationRepository.cs" />
     <Compile Include="Repositories\NsiStationRepository.cs" />
     <Compile Include="Repositories\NtiToNsiConversionRepository.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />

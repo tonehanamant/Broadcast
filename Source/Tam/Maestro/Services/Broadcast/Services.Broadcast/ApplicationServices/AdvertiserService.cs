@@ -11,6 +11,11 @@ namespace Services.Broadcast.ApplicationServices
         /// Returns all advertisers
         /// </summary>
         List<AdvertiserDto> GetAdvertisers();
+
+        /// <summary>
+        /// Clears the advertisers cache.
+        /// </summary>
+        void ClearAdvertisersCache();
     }
 
     public class AdvertiserService : IAdvertiserService
@@ -26,6 +31,12 @@ namespace Services.Broadcast.ApplicationServices
         public List<AdvertiserDto> GetAdvertisers()
         {
             return _AabEngine.GetAdvertisers();
+        }
+
+        /// <inheritdoc />
+        public void ClearAdvertisersCache()
+        {
+            _AabEngine.ClearAdvertisersCache();
         }
     }
 }

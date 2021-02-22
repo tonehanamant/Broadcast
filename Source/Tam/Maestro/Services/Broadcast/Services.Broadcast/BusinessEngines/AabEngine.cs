@@ -71,6 +71,17 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         /// <param name="productId">The identifier used by the Aab Traffic Api.</param>
         ProductDto GetProduct(int productId);
+
+        /// <summary>
+        /// Clears the agencies cache.
+        /// </summary>
+        void ClearAgenciesCache();
+
+        /// <summary>
+        /// Clears the advertisers cache.
+        /// </summary>
+        /// <returns></returns>
+        void ClearAdvertisersCache();
     }
 
     /// <summary>
@@ -219,6 +230,32 @@ namespace Services.Broadcast.BusinessEngines
             }
             var product = _TrafficApiCache.GetProduct(productId);
             return product;
+        }
+
+        public void ClearAgenciesCache()
+        {
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            if (isAabEnabled)
+            {
+                _AabApiCache.ClearAgenciesCache();
+            }
+            else
+            {
+                _TrafficApiCache.ClearAgenciesCache();
+            }
+        }
+
+        public void ClearAdvertisersCache()
+        {
+            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            if (isAabEnabled)
+            {
+                _AabApiCache.ClearAdvertisersCache();
+            }
+            else
+            {
+                _TrafficApiCache.ClearAdvertisersCache();
+            }
         }
     }
 }

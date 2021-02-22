@@ -191,5 +191,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
                 Throws.TypeOf<Exception>().With.Message.EqualTo($"Cannot fetch data of the product {productId}"));
             Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetProductCallCount);
         }
+
+        [Test]
+        public void ClearAgenciesCache()
+        {
+            const int expectedClientCallCount = 2;
+            var trafficApiClient = new TrafficApiClientStub();
+            var cache = new TrafficApiCache(trafficApiClient);
+
+            cache.GetAgencies();
+            cache.ClearAgenciesCache();
+            cache.GetAgencies();
+
+            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAgenciesCalledCount);
+        }
+
+        [Test]
+        public void ClearAdvertisersCache()
+        {
+            const int expectedClientCallCount = 2;
+            var trafficApiClient = new TrafficApiClientStub();
+            var cache = new TrafficApiCache(trafficApiClient);
+
+            cache.GetAdvertisers();
+            cache.GetAdvertiser(1);
+            cache.GetProductsByAdvertiserId(1);
+            cache.GetProduct(1);
+            cache.ClearAdvertisersCache();
+            cache.GetAdvertisers();
+            cache.GetAdvertiser(1);
+            cache.GetProductsByAdvertiserId(1);
+            cache.GetProduct(1);
+
+            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAdvertisersCalledCount);
+            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAdvertiserCallCount);
+            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetProductsByAdvertiserIdCallCount);
+            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetProductCallCount);
+        }
     }
 }

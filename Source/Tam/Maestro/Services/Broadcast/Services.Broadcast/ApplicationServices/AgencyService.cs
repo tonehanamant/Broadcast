@@ -11,9 +11,14 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets the agencies.
         /// </summary>
         List<AgencyDto> GetAgencies();
+
+        /// <summary>
+        /// Clears the agencies cache.
+        /// </summary>
+        void ClearAgenciesCache();
     }
 
-    public class AgencyService : IAgencyService
+    public class AgencyService : BroadcastBaseClass, IAgencyService
     {
         private readonly IAabEngine _AabEngine;
 
@@ -26,6 +31,12 @@ namespace Services.Broadcast.ApplicationServices
         public List<AgencyDto> GetAgencies()
         {
             return _AabEngine.GetAgencies();
+        }
+
+        /// <inheritdoc />
+        public void ClearAgenciesCache()
+        {
+            _AabEngine.ClearAgenciesCache();
         }
     }
 }

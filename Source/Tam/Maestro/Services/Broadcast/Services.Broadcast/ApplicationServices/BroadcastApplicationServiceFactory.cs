@@ -300,6 +300,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClient>();
             unityContainer.RegisterType<IAabEngine, AabEngine>();
             unityContainer.RegisterType<IAabCache, AabCache>();
+            unityContainer.RegisterType<IAabMigrationService, AabMigrationService>();
 
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();

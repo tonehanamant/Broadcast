@@ -103,8 +103,10 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             return agencies;
         }
 
+        public int GetAgenciesCalledCount { get; set; } = 0;
         public List<AgencyDto> GetAgencies()
         {
+            GetAgenciesCalledCount++;
             return new List<AgencyDto>
             {
                 new AgencyDto { Id = ++_agenciesListId, MasterId = new Guid("A5408700-1699-494D-9D84-01D12D4FAA2C"), Name = $"Name_{_agenciesListId}"},
