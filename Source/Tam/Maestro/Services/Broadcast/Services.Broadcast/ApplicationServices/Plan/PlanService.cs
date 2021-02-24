@@ -156,11 +156,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Calculates and distributes the market weights.
         /// </summary>
         /// <param name="availableMarkets">The available markets.</param>
-        /// <param name="modifiedMarketId">The modified market identifier.</param>
+        /// <param name="modifiedMarketCode">The modified market code.</param>
         /// <param name="userEnteredValue">The user entered value.</param>
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
-            int modifiedMarketId, double? userEnteredValue);
+            short modifiedMarketCode, double? userEnteredValue);
 
         /// <summary>
         /// Adds the market and calculates and distributes the market weights.
@@ -175,10 +175,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Removes the market and calculates and distributes the market weights.
         /// </summary>
         /// <param name="beforeMarkets">The before markets.</param>
-        /// <param name="removedMarketId">The removed market identifier.</param>
+        /// <param name="removedMarketCode">The removed market code.</param>
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            int removedMarketId);
+            short removedMarketCode);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -1316,9 +1316,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
-            int modifiedMarketId, double? userEnteredValue)
+            short modifiedMarketCode, double? userEnteredValue)
         {
-            var result = _PlanMarketSovCalculator.CalculateMarketWeightChange(availableMarkets, modifiedMarketId, userEnteredValue);
+            var result = _PlanMarketSovCalculator.CalculateMarketWeightChange(availableMarkets, modifiedMarketCode, userEnteredValue);
             return result;
         }
 
@@ -1332,9 +1332,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            int removedMarketId)
+            short removedMarketCode)
         {
-            var result = _PlanMarketSovCalculator.CalculateMarketRemoved(beforeMarkets, removedMarketId);
+            var result = _PlanMarketSovCalculator.CalculateMarketRemoved(beforeMarkets, removedMarketCode);
             return result;
         }
     }

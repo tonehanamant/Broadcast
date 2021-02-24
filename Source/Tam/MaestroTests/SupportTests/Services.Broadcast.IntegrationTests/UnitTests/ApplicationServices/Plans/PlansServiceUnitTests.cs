@@ -1692,23 +1692,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var standardResult = new PlanAvailableMarketCalculationResult {AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50};
             _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()))
+                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()))
                 .Returns(standardResult);
             _PlanMarketSovCalculator.Setup(s =>
                     s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()))
                 .Returns(standardResult);
             _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()))
+                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>()))
                 .Returns(standardResult);
 
             // Act
-            var results = _PlanService.CalculateMarketWeightChange(plan.AvailableMarkets, plan.AvailableMarkets[0].Id, 12);
+            var results = _PlanService.CalculateMarketWeightChange(plan.AvailableMarkets, plan.AvailableMarkets[0].MarketCode, 12);
 
             // Assert
             Assert.IsNotNull(results);
-            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()), Times.Once);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()), Times.Once);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()), Times.Never);
-            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>()), Times.Never);
         }
 
         [Test]
@@ -1719,13 +1719,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
             _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()))
+                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()))
                 .Returns(standardResult);
             _PlanMarketSovCalculator.Setup(s =>
                     s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()))
                 .Returns(standardResult);
             _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()))
+                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>()))
                 .Returns(standardResult);
 
             // Act
@@ -1733,39 +1733,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.IsNotNull(results);
-            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()), Times.Never);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()), Times.Once);
-            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>()), Times.Never);
         }
 
         [Test]
         public void CalculateMarketRemoved()
         {
             // Arrange
+            const short removedMarketCode = 101;
             var plan = _GetNewPlan();
 
             var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
             _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()))
+                    s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()))
                 .Returns(standardResult);
             _PlanMarketSovCalculator.Setup(s =>
                     s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()))
                 .Returns(standardResult);
             _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()))
+                    s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>()))
                 .Returns(standardResult);
 
             // Act
-            var results = _PlanService.CalculateMarketRemoved(plan.AvailableMarkets, 1);
+            var results = _PlanService.CalculateMarketRemoved(plan.AvailableMarkets, removedMarketCode);
 
             // Assert
             Assert.IsNotNull(results);
-            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>(), It.IsAny<double?>()), Times.Never);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()), Times.Never);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<PlanAvailableMarketDto>()), Times.Never);
-            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<int>()), Times.Once);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>()), Times.Once);
         }
-
-
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions
             , bool equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)

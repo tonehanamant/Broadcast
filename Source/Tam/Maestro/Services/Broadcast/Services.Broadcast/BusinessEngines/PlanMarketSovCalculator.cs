@@ -15,11 +15,11 @@ namespace Services.Broadcast.BusinessEngines
         /// Calculates the market weight change.
         /// </summary>
         /// <param name="availableMarkets">The available markets.</param>
-        /// <param name="modifiedMarketId">The modified market identifier.</param>
+        /// <param name="modifiedMarketCode">The modified market code.</param>
         /// <param name="userEnteredValue">The user entered value.</param>
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
-            int modifiedMarketId, double? userEnteredValue);
+            short modifiedMarketCode, double? userEnteredValue);
 
         /// <summary>
         /// Calculates the market added.
@@ -34,10 +34,10 @@ namespace Services.Broadcast.BusinessEngines
         /// Calculates the market removed.
         /// </summary>
         /// <param name="beforeMarkets">The before markets.</param>
-        /// <param name="removedMarketId">The removed market identifier.</param>
+        /// <param name="removedMarketCode">The removed market code.</param>
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            int removedMarketId);
+            short removedMarketCode);
     }
 
     /// <summary>
@@ -50,11 +50,11 @@ namespace Services.Broadcast.BusinessEngines
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
-            int modifiedMarketId, double? userEnteredValue)
+            short modifiedMarketCode, double? userEnteredValue)
         {
             var markets = _GetCopy(availableMarkets);
             // find the modified
-            var modifiedMarket = markets.Single(m => m.Id == modifiedMarketId);
+            var modifiedMarket = markets.Single(m => m.MarketCode == modifiedMarketCode);
             // modify it
             modifiedMarket.ShareOfVoicePercent = userEnteredValue;
             modifiedMarket.IsUserShareOfVoicePercent = userEnteredValue.HasValue;
@@ -79,9 +79,9 @@ namespace Services.Broadcast.BusinessEngines
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            int removedMarketId)
+            short removedMarketCode)
         {
-            var markets = _GetCopyAndRemoveMarket(beforeMarkets, removedMarketId);
+            var markets = _GetCopyAndRemoveMarket(beforeMarkets, removedMarketCode);
             _BalanceMarketWeights(markets);
             var results = _GetResults(markets);
             return results;
@@ -137,12 +137,12 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        internal List<PlanAvailableMarketDto> _GetCopyAndRemoveMarket(List<PlanAvailableMarketDto> toCopy, int marketIdToRemove)
+        internal List<PlanAvailableMarketDto> _GetCopyAndRemoveMarket(List<PlanAvailableMarketDto> toCopy, short removedMarketCode)
         {
             var result = new List<PlanAvailableMarketDto>();
             toCopy.ForEach(c =>
             {
-                if (c.Id != marketIdToRemove)
+                if (c.MarketCode != removedMarketCode)
                 {
                     result.Add(_GetCopy(c));
                 }

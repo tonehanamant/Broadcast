@@ -1,13 +1,12 @@
-﻿using System;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.IntegrationTests.TestData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApprovalTests;
-using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
@@ -20,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             // Arrange
             var availableMarkets = _GetPreparedAvailableMarkets();
-            const int modifiedMarketId = 5;
+            var modifiedMarketCode = availableMarkets[4].MarketCode;
             const double userEnteredValue = 12.3;
 
             var expectedMarketCount = availableMarkets.Count;
@@ -31,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var testClass = _GetTestClass();
 
             // Act
-            var result = testClass.CalculateMarketWeightChange(availableMarkets, modifiedMarketId, userEnteredValue);
+            var result = testClass.CalculateMarketWeightChange(availableMarkets, modifiedMarketCode, userEnteredValue);
 
             // Assert
             Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
@@ -69,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var modifiedMarket = availableMarkets[2];
             modifiedMarket.ShareOfVoicePercent = 7.8;
             modifiedMarket.IsUserShareOfVoicePercent = true;
-            var modifiedMarketId = modifiedMarket.Id;
+            var modifiedMarketCode = modifiedMarket.MarketCode;
             double? userEnteredValue = null;
 
             var expectedMarketCount = availableMarkets.Count;
@@ -80,7 +79,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var testClass = _GetTestClass();
 
             // Act
-            var result = testClass.CalculateMarketWeightChange(availableMarkets, modifiedMarketId, userEnteredValue);
+            var result = testClass.CalculateMarketWeightChange(availableMarkets, modifiedMarketCode, userEnteredValue);
 
             // Assert
             Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
@@ -88,7 +87,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(m => m.IsUserShareOfVoicePercent));
             Assert.AreEqual(expectedUserEnteredSum, result.AvailableMarkets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
             Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
-            Assert.IsFalse(result.AvailableMarkets.Single(s => s.Id == modifiedMarketId).IsUserShareOfVoicePercent);
+            Assert.IsFalse(result.AvailableMarkets.Single(s => s.MarketCode == modifiedMarketCode).IsUserShareOfVoicePercent);
 
             var toValidate = result.AvailableMarkets.Select(a =>
                 new
@@ -166,7 +165,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             // Arrange
             var beforeMarkets = _GetPreparedAvailableMarkets();
-            var removedMarketId = beforeMarkets[0].Id;
+            var removedMarketCode = beforeMarkets[0].MarketCode;
 
             var expectedMarketCount = beforeMarkets.Count - 1;
             const int expectedUserEnteredValueCount = 1;
@@ -176,7 +175,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var testClass = _GetTestClass();
 
             // Act
-            var result = testClass.CalculateMarketRemoved(beforeMarkets, removedMarketId);
+            var result = testClass.CalculateMarketRemoved(beforeMarkets, removedMarketCode);
 
             // Assert
             Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
@@ -184,7 +183,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(m => m.IsUserShareOfVoicePercent));
             Assert.AreEqual(expectedUserEnteredSum, result.AvailableMarkets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
             Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
-            Assert.IsFalse(result.AvailableMarkets.Any(a => a.Id == removedMarketId));
+            Assert.IsFalse(result.AvailableMarkets.Any(a => a.MarketCode == removedMarketCode));
 
             var toValidate = result.AvailableMarkets.Select(a =>
                 new

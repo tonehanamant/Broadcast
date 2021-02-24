@@ -240,41 +240,36 @@ namespace BroadcastComposerWeb.Controllers
         /// Calculates and distributes the market weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
         [HttpPost]
         [Route("CalculateMarketWeightChange")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightChange(PlanCalculateMarketWeightChangeRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                .CalculateMarketWeightChange(request.AvailableMarkets, request.ModifiedMarketId, request.UserEnteredValue));
+                .CalculateMarketWeightChange(request.AvailableMarkets, request.ModifiedMarketCode, request.UserEnteredValue));
         }
 
         /// <summary>
         /// Adds the market and calculates and distributes the market weights.
         /// </summary>
-        /// <param name="beforeMarkets">The before markets.</param>
-        /// <param name="addedMarket">The added market.</param>
-        /// <returns></returns>
+        /// <param name="request">The request.</param>
         [HttpPost]
         [Route("CalculateMarketAdded")]
-        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketAdded(List<PlanAvailableMarketDto> beforeMarkets,
-            PlanAvailableMarketDto addedMarket)
+        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketAdded(PlanCalculateMarketAddedRequest request)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculateMarketAdded(beforeMarkets, addedMarket));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CalculateMarketAdded(request.BeforeMarkets, request.AddedMarket));
         }
 
         /// <summary>
         /// Removes the market and calculates and distributes the market weights.
         /// </summary>
-        /// <param name="beforeMarkets">The before markets.</param>
-        /// <param name="removedMarketId">The removed market identifier.</param>
-        /// <returns></returns>
+        /// <param name="request">The request.</param>
         [HttpPost]
         [Route("CalculateMarketRemoved")]
-        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            int removedMarketId)
+        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketRemoved(PlanCalculateMarketRemovedRequest request)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculateMarketRemoved(beforeMarkets, removedMarketId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CalculateMarketRemoved(request.BeforeMarkets, request.RemovedMarketCode));
         }
     }
 }

@@ -595,6 +595,8 @@
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Plan\PlanAvailableMarketCalculationResult.cs" />
+    <Compile Include="Entities\Plan\PlanCalculateMarketAddedRequest.cs" />
+    <Compile Include="Entities\Plan\PlanCalculateMarketRemovedRequest.cs" />
     <Compile Include="Entities\Plan\PlanCalculateMarketWeightChangeRequest.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingBand.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarkets.cs" />

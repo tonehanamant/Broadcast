@@ -3,7 +3,7 @@
 namespace Services.Broadcast.Entities.Plan
 {
     /// <summary>
-    /// 
+    /// Request object for the calculation.
     /// </summary>
     public class PlanCalculateMarketWeightChangeRequest
     {
@@ -16,12 +16,12 @@ namespace Services.Broadcast.Entities.Plan
         public List<PlanAvailableMarketDto> AvailableMarkets { get; set; } = new List<PlanAvailableMarketDto>();
 
         /// <summary>
-        /// Gets or sets the modified market identifier.
+        /// Gets or sets the modified market code.
         /// </summary>
         /// <value>
-        /// The modified market identifier.
+        /// The modified market code.
         /// </value>
-        public int ModifiedMarketId { get; set; }
+        public short ModifiedMarketCode { get; set; }
 
         /// <summary>
         /// Gets or sets the user entered value.
