@@ -239,16 +239,14 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Calculates and distributes the market weights.
         /// </summary>
-        /// <param name="availableMarkets">The available markets.</param>
-        /// <param name="modifiedMarketId">The modified market identifier.</param>
-        /// <param name="userEnteredValue">The user entered value.</param>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("CalculateMarketWeightChange")]
-        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
-            int modifiedMarketId, double? userEnteredValue)
+        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightChange(PlanCalculateMarketWeightChangeRequest request)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculateMarketWeightChange(availableMarkets, modifiedMarketId, userEnteredValue));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CalculateMarketWeightChange(request.AvailableMarkets, request.ModifiedMarketId, request.UserEnteredValue));
         }
 
         /// <summary>
