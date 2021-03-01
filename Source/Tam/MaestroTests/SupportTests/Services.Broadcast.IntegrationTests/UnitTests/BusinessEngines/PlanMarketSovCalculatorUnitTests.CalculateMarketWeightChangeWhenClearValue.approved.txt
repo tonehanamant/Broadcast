@@ -9,6 +9,7 @@
       "ShareOfVoicePercent": 4.5
     },
     "Id": 2,
+    "MarketCode": 101,
     "PercentageOfUS": 0.06309,
     "Rank": 1
   },
@@ -22,6 +23,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 194,
+    "MarketCode": 403,
     "PercentageOfUS": 0.04743,
     "Rank": 2
   },
@@ -35,6 +37,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 86,
+    "MarketCode": 202,
     "PercentageOfUS": 0.02942,
     "Rank": 3
   },
@@ -48,6 +51,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 5,
+    "MarketCode": 104,
     "PercentageOfUS": 0.02559,
     "Rank": 4
   },
@@ -61,6 +65,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 101,
+    "MarketCode": 223,
     "PercentageOfUS": 0.02362,
     "Rank": 5
   },
@@ -74,6 +79,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 12,
+    "MarketCode": 111,
     "PercentageOfUS": 0.02222,
     "Rank": 6
   },
@@ -87,6 +93,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 98,
+    "MarketCode": 218,
     "PercentageOfUS": 0.022,
     "Rank": 7
   },
@@ -100,6 +107,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 196,
+    "MarketCode": 407,
     "PercentageOfUS": 0.02186,
     "Rank": 8
   },
@@ -113,6 +121,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 25,
+    "MarketCode": 124,
     "PercentageOfUS": 0.02184,
     "Rank": 9
   },
@@ -126,6 +135,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 7,
+    "MarketCode": 106,
     "PercentageOfUS": 0.02163,
     "Rank": 10
   },
@@ -139,6 +149,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 172,
+    "MarketCode": 353,
     "PercentageOfUS": 0.01712,
     "Rank": 11
   },
@@ -152,6 +163,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 200,
+    "MarketCode": 419,
     "PercentageOfUS": 0.01677,
     "Rank": 12
   },
@@ -165,6 +177,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 40,
+    "MarketCode": 139,
     "PercentageOfUS": 0.01676,
     "Rank": 13
   },
@@ -178,6 +191,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 6,
+    "MarketCode": 105,
     "PercentageOfUS": 0.01587,
     "Rank": 14
   },
@@ -191,6 +205,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 95,
+    "MarketCode": 213,
     "PercentageOfUS": 0.01543,
     "Rank": 15
   },
@@ -204,6 +219,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 29,
+    "MarketCode": 128,
     "PercentageOfUS": 0.01496,
     "Rank": 16
   },
@@ -217,6 +233,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 170,
+    "MarketCode": 351,
     "PercentageOfUS": 0.01417,
     "Rank": 17
   },
@@ -230,6 +247,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 35,
+    "MarketCode": 134,
     "PercentageOfUS": 0.01365,
     "Rank": 18
   },
@@ -243,6 +261,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 11,
+    "MarketCode": 110,
     "PercentageOfUS": 0.01291,
     "Rank": 19
   },
@@ -256,6 +275,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 207,
+    "MarketCode": 462,
     "PercentageOfUS": 0.0126,
     "Rank": 20
   },
@@ -269,6 +289,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 91,
+    "MarketCode": 209,
     "PercentageOfUS": 0.01061,
     "Rank": 21
   },
@@ -282,6 +303,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 201,
+    "MarketCode": 420,
     "PercentageOfUS": 0.01053,
     "Rank": 22
   },
@@ -295,6 +317,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 18,
+    "MarketCode": 117,
     "PercentageOfUS": 0.01021,
     "Rank": 23
   },
@@ -308,6 +331,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 9,
+    "MarketCode": 108,
     "PercentageOfUS": 0.01018,
     "Rank": 24
   },
@@ -321,6 +345,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 61,
+    "MarketCode": 160,
     "PercentageOfUS": 0.0101,
     "Rank": 25
   },
@@ -334,6 +359,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 13,
+    "MarketCode": 112,
     "PercentageOfUS": 0.00988,
     "Rank": 26
   },
@@ -347,6 +373,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 131,
+    "MarketCode": 259,
     "PercentageOfUS": 0.00919,
     "Rank": 27
   },
@@ -360,6 +387,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 28,
+    "MarketCode": 127,
     "PercentageOfUS": 0.00915,
     "Rank": 28
   },
@@ -373,6 +401,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 203,
+    "MarketCode": 425,
     "PercentageOfUS": 0.00894,
     "Rank": 29
   },
@@ -386,6 +415,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 185,
+    "MarketCode": 370,
     "PercentageOfUS": 0.00846,
     "Rank": 30
   },
@@ -399,6 +429,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 118,
+    "MarketCode": 241,
     "PercentageOfUS": 0.00824,
     "Rank": 31
   },
@@ -412,6 +443,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 34,
+    "MarketCode": 133,
     "PercentageOfUS": 0.00822,
     "Rank": 32
   },
@@ -425,6 +457,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 96,
+    "MarketCode": 216,
     "PercentageOfUS": 0.00803,
     "Rank": 33
   },
@@ -438,6 +471,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 36,
+    "MarketCode": 135,
     "PercentageOfUS": 0.008,
     "Rank": 34
   },
@@ -451,6 +485,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 16,
+    "MarketCode": 115,
     "PercentageOfUS": 0.00778,
     "Rank": 35
   },
@@ -464,6 +499,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 97,
+    "MarketCode": 217,
     "PercentageOfUS": 0.00774,
     "Rank": 36
   },
@@ -477,6 +513,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 49,
+    "MarketCode": 148,
     "PercentageOfUS": 0.00739,
     "Rank": 37
   },
@@ -490,6 +527,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 67,
+    "MarketCode": 167,
     "PercentageOfUS": 0.00722,
     "Rank": 38
   },
@@ -503,6 +541,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 112,
+    "MarketCode": 235,
     "PercentageOfUS": 0.00706,
     "Rank": 39
   },
@@ -516,6 +555,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 205,
+    "MarketCode": 439,
     "PercentageOfUS": 0.00675,
     "Rank": 40
   },
@@ -529,6 +569,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 125,
+    "MarketCode": 250,
     "PercentageOfUS": 0.00629,
     "Rank": 41
   },
@@ -542,6 +583,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 62,
+    "MarketCode": 161,
     "PercentageOfUS": 0.00625,
     "Rank": 42
   },
@@ -555,6 +597,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 63,
+    "MarketCode": 163,
     "PercentageOfUS": 0.00615,
     "Rank": 43
   },
@@ -568,6 +611,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 107,
+    "MarketCode": 230,
     "PercentageOfUS": 0.00613,
     "Rank": 44
   },
@@ -581,6 +625,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 66,
+    "MarketCode": 166,
     "PercentageOfUS": 0.00609,
     "Rank": 45
   },
@@ -594,6 +639,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 189,
+    "MarketCode": 390,
     "PercentageOfUS": 0.00602,
     "Rank": 46
   },
@@ -607,6 +653,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 45,
+    "MarketCode": 144,
     "PercentageOfUS": 0.00601,
     "Rank": 47
   },
@@ -620,6 +667,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 19,
+    "MarketCode": 118,
     "PercentageOfUS": 0.006,
     "Rank": 48
   },
@@ -633,6 +681,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 30,
+    "MarketCode": 129,
     "PercentageOfUS": 0.00586,
     "Rank": 49
   },
@@ -646,6 +695,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 117,
+    "MarketCode": 240,
     "PercentageOfUS": 0.00579,
     "Rank": 50
   },
@@ -659,6 +709,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 100,
+    "MarketCode": 222,
     "PercentageOfUS": 0.00569,
     "Rank": 51
   },
@@ -672,6 +723,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 22,
+    "MarketCode": 121,
     "PercentageOfUS": 0.00533,
     "Rank": 52
   },
@@ -685,6 +737,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 15,
+    "MarketCode": 114,
     "PercentageOfUS": 0.00529,
     "Rank": 53
   },
@@ -698,6 +751,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 208,
+    "MarketCode": 466,
     "PercentageOfUS": 0.00512,
     "Rank": 54
   },
@@ -711,6 +765,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 57,
+    "MarketCode": 156,
     "PercentageOfUS": 0.00506,
     "Rank": 55
   },
@@ -724,6 +779,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 70,
+    "MarketCode": 171,
     "PercentageOfUS": 0.0049,
     "Rank": 56
   },
@@ -737,6 +793,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 75,
+    "MarketCode": 177,
     "PercentageOfUS": 0.00467,
     "Rank": 57
   },
@@ -750,6 +807,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 147,
+    "MarketCode": 293,
     "PercentageOfUS": 0.00466,
     "Rank": 58
   },
@@ -763,6 +821,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 143,
+    "MarketCode": 286,
     "PercentageOfUS": 0.00466,
     "Rank": 59
   },
@@ -776,6 +835,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 33,
+    "MarketCode": 132,
     "PercentageOfUS": 0.00465,
     "Rank": 60
   },
@@ -789,6 +849,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 58,
+    "MarketCode": 157,
     "PercentageOfUS": 0.00461,
     "Rank": 61
   },
@@ -802,6 +863,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 136,
+    "MarketCode": 271,
     "PercentageOfUS": 0.00461,
     "Rank": 62
   },
@@ -815,6 +877,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 42,
+    "MarketCode": 141,
     "PercentageOfUS": 0.0041,
     "Rank": 63
   },
@@ -828,6 +891,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 43,
+    "MarketCode": 142,
     "PercentageOfUS": 0.00405,
     "Rank": 64
   },
@@ -841,6 +905,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 188,
+    "MarketCode": 389,
     "PercentageOfUS": 0.00386,
     "Rank": 65
   },
@@ -854,6 +919,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 165,
+    "MarketCode": 344,
     "PercentageOfUS": 0.00374,
     "Rank": 66
   },
@@ -867,6 +933,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 140,
+    "MarketCode": 278,
     "PercentageOfUS": 0.00371,
     "Rank": 67
   },
@@ -880,6 +947,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 141,
+    "MarketCode": 279,
     "PercentageOfUS": 0.00371,
     "Rank": 68
   },
@@ -893,6 +961,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 130,
+    "MarketCode": 258,
     "PercentageOfUS": 0.00371,
     "Rank": 69
   },
@@ -906,6 +975,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 71,
+    "MarketCode": 173,
     "PercentageOfUS": 0.0037,
     "Rank": 70
   },
@@ -919,6 +989,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 14,
+    "MarketCode": 113,
     "PercentageOfUS": 0.00367,
     "Rank": 71
   },
@@ -932,6 +1003,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 210,
+    "MarketCode": 481,
     "PercentageOfUS": 0.00366,
     "Rank": 72
   },
@@ -945,6 +1017,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 64,
+    "MarketCode": 164,
     "PercentageOfUS": 0.00362,
     "Rank": 73
   },
@@ -958,6 +1031,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 127,
+    "MarketCode": 252,
     "PercentageOfUS": 0.00356,
     "Rank": 74
   },
@@ -971,6 +1045,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 99,
+    "MarketCode": 219,
     "PercentageOfUS": 0.00348,
     "Rank": 75
   },
@@ -984,6 +1059,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 39,
+    "MarketCode": 138,
     "PercentageOfUS": 0.00343,
     "Rank": 76
   },
@@ -997,6 +1073,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 47,
+    "MarketCode": 146,
     "PercentageOfUS": 0.00343,
     "Rank": 77
   },
@@ -1010,6 +1087,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 48,
+    "MarketCode": 147,
     "PercentageOfUS": 0.00338,
     "Rank": 78
   },
@@ -1023,6 +1101,7 @@
       "ShareOfVoicePercent": 8.3
     },
     "Id": 1,
+    "MarketCode": 100,
     "PercentageOfUS": 0.00328,
     "Rank": 79
   },
@@ -1036,6 +1115,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 145,
+    "MarketCode": 291,
     "PercentageOfUS": 0.00328,
     "Rank": 80
   },
@@ -1049,6 +1129,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 134,
+    "MarketCode": 269,
     "PercentageOfUS": 0.00327,
     "Rank": 81
   },
@@ -1062,6 +1143,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 109,
+    "MarketCode": 232,
     "PercentageOfUS": 0.00316,
     "Rank": 82
   },
@@ -1075,6 +1157,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 94,
+    "MarketCode": 212,
     "PercentageOfUS": 0.00314,
     "Rank": 83
   },
@@ -1088,6 +1171,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 113,
+    "MarketCode": 236,
     "PercentageOfUS": 0.00314,
     "Rank": 84
   },
@@ -1101,6 +1185,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 56,
+    "MarketCode": 155,
     "PercentageOfUS": 0.00312,
     "Rank": 85
   },
@@ -1114,6 +1199,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 103,
+    "MarketCode": 225,
     "PercentageOfUS": 0.00309,
     "Rank": 86
   },
@@ -1127,6 +1213,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 171,
+    "MarketCode": 352,
     "PercentageOfUS": 0.00307,
     "Rank": 87
   },
@@ -1140,6 +1227,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 123,
+    "MarketCode": 248,
     "PercentageOfUS": 0.00307,
     "Rank": 88
   },
@@ -1153,6 +1241,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 73,
+    "MarketCode": 175,
     "PercentageOfUS": 0.003,
     "Rank": 89
   },
@@ -1166,6 +1255,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 8,
+    "MarketCode": 107,
     "PercentageOfUS": 0.00293,
     "Rank": 90
   },
@@ -1179,6 +1269,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 114,
+    "MarketCode": 237,
     "PercentageOfUS": 0.0029,
     "Rank": 91
   },
@@ -1192,6 +1283,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 20,
+    "MarketCode": 119,
     "PercentageOfUS": 0.00286,
     "Rank": 92
   },
@@ -1205,6 +1297,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 182,
+    "MarketCode": 365,
     "PercentageOfUS": 0.00284,
     "Rank": 93
   },
@@ -1218,6 +1311,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 154,
+    "MarketCode": 316,
     "PercentageOfUS": 0.00281,
     "Rank": 94
   },
@@ -1231,6 +1325,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 156,
+    "MarketCode": 318,
     "PercentageOfUS": 0.00273,
     "Rank": 95
   },
@@ -1244,6 +1339,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 80,
+    "MarketCode": 188,
     "PercentageOfUS": 0.00265,
     "Rank": 96
   },
@@ -1257,6 +1353,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 24,
+    "MarketCode": 123,
     "PercentageOfUS": 0.00262,
     "Rank": 97
   },
@@ -1270,6 +1367,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 135,
+    "MarketCode": 270,
     "PercentageOfUS": 0.00261,
     "Rank": 98
   },
@@ -1283,6 +1381,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 32,
+    "MarketCode": 131,
     "PercentageOfUS": 0.00259,
     "Rank": 99
   },
@@ -1296,6 +1395,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 46,
+    "MarketCode": 145,
     "PercentageOfUS": 0.00255,
     "Rank": 100
   },
@@ -1309,6 +1409,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 69,
+    "MarketCode": 170,
     "PercentageOfUS": 0.00251,
     "Rank": 101
   },
@@ -1322,6 +1423,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 142,
+    "MarketCode": 282,
     "PercentageOfUS": 0.00248,
     "Rank": 102
   },
@@ -1335,6 +1437,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 124,
+    "MarketCode": 249,
     "PercentageOfUS": 0.00236,
     "Rank": 103
   },
@@ -1348,6 +1451,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 176,
+    "MarketCode": 357,
     "PercentageOfUS": 0.00236,
     "Rank": 104
   },
@@ -1361,6 +1465,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 198,
+    "MarketCode": 411,
     "PercentageOfUS": 0.00235,
     "Rank": 105
   },
@@ -1374,6 +1479,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 157,
+    "MarketCode": 322,
     "PercentageOfUS": 0.00235,
     "Rank": 106
   },
@@ -1387,6 +1493,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 72,
+    "MarketCode": 174,
     "PercentageOfUS": 0.00234,
     "Rank": 107
   },
@@ -1400,6 +1507,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 31,
+    "MarketCode": 130,
     "PercentageOfUS": 0.0023,
     "Rank": 108
   },
@@ -1413,6 +1521,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 151,
+    "MarketCode": 309,
     "PercentageOfUS": 0.00226,
     "Rank": 109
   },
@@ -1426,6 +1535,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 159,
+    "MarketCode": 325,
     "PercentageOfUS": 0.00225,
     "Rank": 110
   },
@@ -1439,6 +1549,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 10,
+    "MarketCode": 109,
     "PercentageOfUS": 0.00222,
     "Rank": 111
   },
@@ -1452,6 +1563,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 21,
+    "MarketCode": 120,
     "PercentageOfUS": 0.00222,
     "Rank": 112
   },
@@ -1465,6 +1577,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 158,
+    "MarketCode": 324,
     "PercentageOfUS": 0.00214,
     "Rank": 113
   },
@@ -1478,6 +1591,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 197,
+    "MarketCode": 410,
     "PercentageOfUS": 0.00214,
     "Rank": 114
   },
@@ -1491,6 +1605,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 52,
+    "MarketCode": 151,
     "PercentageOfUS": 0.00213,
     "Rank": 115
   },
@@ -1504,6 +1619,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 44,
+    "MarketCode": 143,
     "PercentageOfUS": 0.00212,
     "Rank": 116
   },
@@ -1517,6 +1633,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 37,
+    "MarketCode": 136,
     "PercentageOfUS": 0.00209,
     "Rank": 117
   },
@@ -1530,6 +1647,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 41,
+    "MarketCode": 140,
     "PercentageOfUS": 0.00208,
     "Rank": 118
   },
@@ -1543,6 +1661,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 192,
+    "MarketCode": 401,
     "PercentageOfUS": 0.00206,
     "Rank": 119
   },
@@ -1556,6 +1675,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 4,
+    "MarketCode": 103,
     "PercentageOfUS": 0.00199,
     "Rank": 120
   },
@@ -1569,6 +1689,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 119,
+    "MarketCode": 242,
     "PercentageOfUS": 0.00198,
     "Rank": 121
   },
@@ -1582,6 +1703,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 138,
+    "MarketCode": 275,
     "PercentageOfUS": 0.00198,
     "Rank": 122
   },
@@ -1595,6 +1717,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 206,
+    "MarketCode": 455,
     "PercentageOfUS": 0.00198,
     "Rank": 123
   },
@@ -1608,6 +1731,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 148,
+    "MarketCode": 298,
     "PercentageOfUS": 0.00195,
     "Rank": 124
   },
@@ -1621,6 +1745,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 204,
+    "MarketCode": 428,
     "PercentageOfUS": 0.00194,
     "Rank": 125
   },
@@ -1634,6 +1759,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 191,
+    "MarketCode": 400,
     "PercentageOfUS": 0.00189,
     "Rank": 126
   },
@@ -1647,6 +1773,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 23,
+    "MarketCode": 122,
     "PercentageOfUS": 0.00184,
     "Rank": 127
   },
@@ -1660,6 +1787,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 85,
+    "MarketCode": 200,
     "PercentageOfUS": 0.00177,
     "Rank": 128
   },
@@ -1673,6 +1801,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 149,
+    "MarketCode": 302,
     "PercentageOfUS": 0.00175,
     "Rank": 129
   },
@@ -1686,6 +1815,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 51,
+    "MarketCode": 150,
     "PercentageOfUS": 0.00171,
     "Rank": 130
   },
@@ -1699,6 +1829,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 111,
+    "MarketCode": 234,
     "PercentageOfUS": 0.0016,
     "Rank": 131
   },
@@ -1712,6 +1843,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 209,
+    "MarketCode": 468,
     "PercentageOfUS": 0.0016,
     "Rank": 132
   },
@@ -1725,6 +1857,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 137,
+    "MarketCode": 273,
     "PercentageOfUS": 0.00154,
     "Rank": 133
   },
@@ -1738,6 +1871,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 150,
+    "MarketCode": 305,
     "PercentageOfUS": 0.00148,
     "Rank": 134
   },
@@ -1751,6 +1885,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 88,
+    "MarketCode": 204,
     "PercentageOfUS": 0.00146,
     "Rank": 135
   },
@@ -1764,6 +1899,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 199,
+    "MarketCode": 413,
     "PercentageOfUS": 0.00146,
     "Rank": 136
   },
@@ -1777,6 +1913,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 106,
+    "MarketCode": 228,
     "PercentageOfUS": 0.00144,
     "Rank": 137
   },
@@ -1790,6 +1927,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 92,
+    "MarketCode": 210,
     "PercentageOfUS": 0.00144,
     "Rank": 138
   },
@@ -1803,6 +1941,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 89,
+    "MarketCode": 205,
     "PercentageOfUS": 0.00144,
     "Rank": 139
   },
@@ -1816,6 +1955,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 139,
+    "MarketCode": 276,
     "PercentageOfUS": 0.0014,
     "Rank": 140
   },
@@ -1829,6 +1969,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 144,
+    "MarketCode": 287,
     "PercentageOfUS": 0.00139,
     "Rank": 141
   },
@@ -1842,6 +1983,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 146,
+    "MarketCode": 292,
     "PercentageOfUS": 0.00139,
     "Rank": 142
   },
@@ -1855,6 +1997,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 74,
+    "MarketCode": 176,
     "PercentageOfUS": 0.00138,
     "Rank": 143
   },
@@ -1868,6 +2011,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 110,
+    "MarketCode": 233,
     "PercentageOfUS": 0.00137,
     "Rank": 144
   },
@@ -1881,6 +2025,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 126,
+    "MarketCode": 251,
     "PercentageOfUS": 0.00137,
     "Rank": 145
   },
@@ -1894,6 +2039,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 195,
+    "MarketCode": 404,
     "PercentageOfUS": 0.00136,
     "Rank": 146
   },
@@ -1907,6 +2053,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 164,
+    "MarketCode": 343,
     "PercentageOfUS": 0.00133,
     "Rank": 147
   },
@@ -1920,6 +2067,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 102,
+    "MarketCode": 224,
     "PercentageOfUS": 0.00129,
     "Rank": 148
   },
@@ -1933,6 +2081,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 105,
+    "MarketCode": 227,
     "PercentageOfUS": 0.00127,
     "Rank": 149
   },
@@ -1946,6 +2095,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 17,
+    "MarketCode": 116,
     "PercentageOfUS": 0.00126,
     "Rank": 150
   },
@@ -1959,6 +2109,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 128,
+    "MarketCode": 256,
     "PercentageOfUS": 0.00123,
     "Rank": 151
   },
@@ -1972,6 +2123,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 87,
+    "MarketCode": 203,
     "PercentageOfUS": 0.00122,
     "Rank": 152
   },
@@ -1985,6 +2137,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 93,
+    "MarketCode": 211,
     "PercentageOfUS": 0.0012,
     "Rank": 153
   },
@@ -1998,6 +2151,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 26,
+    "MarketCode": 125,
     "PercentageOfUS": 0.0012,
     "Rank": 154
   },
@@ -2011,6 +2165,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 76,
+    "MarketCode": 181,
     "PercentageOfUS": 0.00114,
     "Rank": 155
   },
@@ -2024,6 +2179,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 38,
+    "MarketCode": 137,
     "PercentageOfUS": 0.00112,
     "Rank": 156
   },
@@ -2037,6 +2193,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 167,
+    "MarketCode": 346,
     "PercentageOfUS": 0.00111,
     "Rank": 157
   },
@@ -2050,6 +2207,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 55,
+    "MarketCode": 154,
     "PercentageOfUS": 0.00108,
     "Rank": 158
   },
@@ -2063,6 +2221,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 81,
+    "MarketCode": 192,
     "PercentageOfUS": 0.00108,
     "Rank": 159
   },
@@ -2076,6 +2235,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 129,
+    "MarketCode": 257,
     "PercentageOfUS": 0.00107,
     "Rank": 160
   },
@@ -2089,6 +2249,7 @@
       "ShareOfVoicePercent": 7.8
     },
     "Id": 3,
+    "MarketCode": 102,
     "PercentageOfUS": 0.00107,
     "Rank": 161
   },
@@ -2102,6 +2263,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 177,
+    "MarketCode": 358,
     "PercentageOfUS": 0.00107,
     "Rank": 162
   },
@@ -2115,6 +2277,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 60,
+    "MarketCode": 159,
     "PercentageOfUS": 0.00106,
     "Rank": 163
   },
@@ -2128,6 +2291,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 180,
+    "MarketCode": 362,
     "PercentageOfUS": 0.00101,
     "Rank": 164
   },
@@ -2141,6 +2305,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 133,
+    "MarketCode": 262,
     "PercentageOfUS": 0.00096,
     "Rank": 165
   },
@@ -2154,6 +2319,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 186,
+    "MarketCode": 371,
     "PercentageOfUS": 0.00094,
     "Rank": 166
   },
@@ -2167,6 +2333,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 175,
+    "MarketCode": 356,
     "PercentageOfUS": 0.00094,
     "Rank": 167
   },
@@ -2180,6 +2347,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 152,
+    "MarketCode": 310,
     "PercentageOfUS": 0.00092,
     "Rank": 168
   },
@@ -2193,6 +2361,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 84,
+    "MarketCode": 198,
     "PercentageOfUS": 0.00087,
     "Rank": 169
   },
@@ -2206,6 +2375,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 181,
+    "MarketCode": 364,
     "PercentageOfUS": 0.00085,
     "Rank": 170
   },
@@ -2219,6 +2389,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 27,
+    "MarketCode": 126,
     "PercentageOfUS": 0.00084,
     "Rank": 171
   },
@@ -2232,6 +2403,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 155,
+    "MarketCode": 317,
     "PercentageOfUS": 0.00084,
     "Rank": 172
   },
@@ -2245,6 +2417,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 90,
+    "MarketCode": 206,
     "PercentageOfUS": 0.00082,
     "Rank": 173
   },
@@ -2258,6 +2431,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 120,
+    "MarketCode": 243,
     "PercentageOfUS": 0.00082,
     "Rank": 174
   },
@@ -2271,6 +2445,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 68,
+    "MarketCode": 169,
     "PercentageOfUS": 0.00077,
     "Rank": 175
   },
@@ -2284,6 +2459,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 65,
+    "MarketCode": 165,
     "PercentageOfUS": 0.00077,
     "Rank": 176
   },
@@ -2297,6 +2473,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 116,
+    "MarketCode": 239,
     "PercentageOfUS": 0.00076,
     "Rank": 177
   },
@@ -2310,6 +2487,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 121,
+    "MarketCode": 244,
     "PercentageOfUS": 0.00073,
     "Rank": 178
   },
@@ -2323,6 +2501,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 50,
+    "MarketCode": 149,
     "PercentageOfUS": 0.00073,
     "Rank": 179
   },
@@ -2336,6 +2515,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 54,
+    "MarketCode": 153,
     "PercentageOfUS": 0.0007,
     "Rank": 180
   },
@@ -2349,6 +2529,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 161,
+    "MarketCode": 336,
     "PercentageOfUS": 0.00069,
     "Rank": 181
   },
@@ -2362,6 +2543,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 160,
+    "MarketCode": 334,
     "PercentageOfUS": 0.00069,
     "Rank": 182
   },
@@ -2375,6 +2557,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 79,
+    "MarketCode": 184,
     "PercentageOfUS": 0.00064,
     "Rank": 183
   },
@@ -2388,6 +2571,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 169,
+    "MarketCode": 349,
     "PercentageOfUS": 0.00063,
     "Rank": 184
   },
@@ -2401,6 +2585,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 173,
+    "MarketCode": 354,
     "PercentageOfUS": 0.00062,
     "Rank": 185
   },
@@ -2414,6 +2599,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 202,
+    "MarketCode": 421,
     "PercentageOfUS": 0.0006,
     "Rank": 186
   },
@@ -2427,6 +2613,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 187,
+    "MarketCode": 373,
     "PercentageOfUS": 0.0006,
     "Rank": 187
   },
@@ -2440,6 +2627,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 77,
+    "MarketCode": 182,
     "PercentageOfUS": 0.00059,
     "Rank": 188
   },
@@ -2453,6 +2641,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 59,
+    "MarketCode": 158,
     "PercentageOfUS": 0.00056,
     "Rank": 189
   },
@@ -2466,6 +2655,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 179,
+    "MarketCode": 360,
     "PercentageOfUS": 0.00056,
     "Rank": 190
   },
@@ -2479,6 +2669,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 153,
+    "MarketCode": 311,
     "PercentageOfUS": 0.00055,
     "Rank": 191
   },
@@ -2492,6 +2683,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 174,
+    "MarketCode": 355,
     "PercentageOfUS": 0.00054,
     "Rank": 192
   },
@@ -2505,6 +2697,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 122,
+    "MarketCode": 247,
     "PercentageOfUS": 0.00052,
     "Rank": 193
   },
@@ -2518,6 +2711,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 83,
+    "MarketCode": 197,
     "PercentageOfUS": 0.00051,
     "Rank": 194
   },
@@ -2531,6 +2725,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 193,
+    "MarketCode": 402,
     "PercentageOfUS": 0.00051,
     "Rank": 195
   },
@@ -2544,6 +2739,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 132,
+    "MarketCode": 261,
     "PercentageOfUS": 0.00048,
     "Rank": 196
   },
@@ -2557,6 +2753,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 178,
+    "MarketCode": 359,
     "PercentageOfUS": 0.00048,
     "Rank": 197
   },
@@ -2570,6 +2767,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 184,
+    "MarketCode": 367,
     "PercentageOfUS": 0.00047,
     "Rank": 198
   },
@@ -2583,6 +2781,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 162,
+    "MarketCode": 337,
     "PercentageOfUS": 0.00044,
     "Rank": 199
   },
@@ -2596,6 +2795,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 108,
+    "MarketCode": 231,
     "PercentageOfUS": 0.00038,
     "Rank": 200
   },
@@ -2609,6 +2809,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 115,
+    "MarketCode": 238,
     "PercentageOfUS": 0.00038,
     "Rank": 201
   },
@@ -2622,6 +2823,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 166,
+    "MarketCode": 345,
     "PercentageOfUS": 0.00031,
     "Rank": 202
   },
@@ -2635,6 +2837,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 104,
+    "MarketCode": 226,
     "PercentageOfUS": 0.00028,
     "Rank": 203
   },
@@ -2648,6 +2851,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 82,
+    "MarketCode": 196,
     "PercentageOfUS": 0.00027,
     "Rank": 204
   },
@@ -2661,6 +2865,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 183,
+    "MarketCode": 366,
     "PercentageOfUS": 0.00024,
     "Rank": 205
   },
@@ -2674,6 +2879,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 53,
+    "MarketCode": 152,
     "PercentageOfUS": 0.00023,
     "Rank": 206
   },
@@ -2687,6 +2893,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 168,
+    "MarketCode": 347,
     "PercentageOfUS": 0.00022,
     "Rank": 207
   },
@@ -2700,6 +2907,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 78,
+    "MarketCode": 183,
     "PercentageOfUS": 0.00014,
     "Rank": 208
   },
@@ -2713,6 +2921,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 163,
+    "MarketCode": 340,
     "PercentageOfUS": 0.00012,
     "Rank": 209
   },
@@ -2726,6 +2935,7 @@
       "ShareOfVoicePercent": null
     },
     "Id": 190,
+    "MarketCode": 398,
     "PercentageOfUS": 4E-05,
     "Rank": 210
   }

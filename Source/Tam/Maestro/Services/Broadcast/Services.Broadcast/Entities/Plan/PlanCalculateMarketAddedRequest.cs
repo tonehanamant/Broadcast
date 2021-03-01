@@ -13,8 +13,8 @@ namespace Services.Broadcast.Entities.Plan
         public List<PlanAvailableMarketDto> BeforeMarkets { get; set; } = new List<PlanAvailableMarketDto>();
 
         /// <summary>
-        /// The market being added.
+        /// The markets being added.
         /// </summary>
-        public PlanAvailableMarketDto AddedMarket { get; set; }
+        public List<PlanAvailableMarketDto> AddedMarkets { get; set; }
     }
 }

@@ -249,27 +249,27 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Adds the market and calculates and distributes the market weights.
+        /// Adds the markets and calculates and distributes the weights.
         /// </summary>
         /// <param name="request">The request.</param>
         [HttpPost]
-        [Route("CalculateMarketAdded")]
-        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketAdded(PlanCalculateMarketAddedRequest request)
+        [Route("CalculateMarketsAdded")]
+        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketsAdded(PlanCalculateMarketAddedRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                .CalculateMarketAdded(request.BeforeMarkets, request.AddedMarket));
+                .CalculateMarketsAdded(request.BeforeMarkets, request.AddedMarkets));
         }
 
         /// <summary>
-        /// Removes the market and calculates and distributes the market weights.
+        /// Removes the markets and calculates and distributes the weights.
         /// </summary>
         /// <param name="request">The request.</param>
         [HttpPost]
-        [Route("CalculateMarketRemoved")]
-        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketRemoved(PlanCalculateMarketRemovedRequest request)
+        [Route("CalculateMarketsRemoved")]
+        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketsRemoved(PlanCalculateMarketRemovedRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                .CalculateMarketRemoved(request.BeforeMarkets, request.RemovedMarketCode));
+                .CalculateMarketsRemoved(request.BeforeMarkets, request.RemovedMarketCodes));
         }
     }
 }

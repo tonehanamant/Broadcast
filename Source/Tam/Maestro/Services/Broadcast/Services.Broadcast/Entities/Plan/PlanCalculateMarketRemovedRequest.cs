@@ -16,8 +16,8 @@ namespace Services.Broadcast.Entities.Plan
         public List<PlanAvailableMarketDto> BeforeMarkets { get; set; } = new List<PlanAvailableMarketDto>();
 
         /// <summary>
-        /// The removed market code.
+        /// The removed market codes.
         /// </summary>
-        public short RemovedMarketCode { get; set; }
+        public List<short> RemovedMarketCodes { get; set; }
     }
 }

@@ -163,22 +163,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
             short modifiedMarketCode, double? userEnteredValue);
 
         /// <summary>
-        /// Adds the market and calculates and distributes the market weights.
+        /// Adds the markets and calculates and distributes the market weights.
         /// </summary>
         /// <param name="beforeMarkets">The before markets.</param>
-        /// <param name="addedMarket">The added market.</param>
+        /// <param name="addedMarkets">The added markets.</param>
         /// <returns></returns>
-        PlanAvailableMarketCalculationResult CalculateMarketAdded(List<PlanAvailableMarketDto> beforeMarkets,
-            PlanAvailableMarketDto addedMarket);
+        PlanAvailableMarketCalculationResult CalculateMarketsAdded(List<PlanAvailableMarketDto> beforeMarkets,
+            List<PlanAvailableMarketDto> addedMarkets);
 
         /// <summary>
-        /// Removes the market and calculates and distributes the market weights.
+        /// Removes the markets and calculates and distributes the market weights.
         /// </summary>
         /// <param name="beforeMarkets">The before markets.</param>
-        /// <param name="removedMarketCode">The removed market code.</param>
+        /// <param name="removedMarketCodes">The removed market codes.</param>
         /// <returns></returns>
-        PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            short removedMarketCode);
+        PlanAvailableMarketCalculationResult CalculateMarketsRemoved(List<PlanAvailableMarketDto> beforeMarkets,
+            List<short> removedMarketCodes);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -1323,18 +1323,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanAvailableMarketCalculationResult CalculateMarketAdded(List<PlanAvailableMarketDto> beforeMarkets,
-            PlanAvailableMarketDto addedMarket)
+        public PlanAvailableMarketCalculationResult CalculateMarketsAdded(List<PlanAvailableMarketDto> beforeMarkets,
+            List<PlanAvailableMarketDto> addedMarkets)
         {
-            var result = _PlanMarketSovCalculator.CalculateMarketAdded(beforeMarkets, addedMarket);
+            var result = _PlanMarketSovCalculator.CalculateMarketsAdded(beforeMarkets, addedMarkets);
             return result;
         }
 
         /// <inheritdoc />
-        public PlanAvailableMarketCalculationResult CalculateMarketRemoved(List<PlanAvailableMarketDto> beforeMarkets,
-            short removedMarketCode)
+        public PlanAvailableMarketCalculationResult CalculateMarketsRemoved(List<PlanAvailableMarketDto> beforeMarkets,
+            List<short> removedMarketCodes)
         {
-            var result = _PlanMarketSovCalculator.CalculateMarketRemoved(beforeMarkets, removedMarketCode);
+            var result = _PlanMarketSovCalculator.CalculateMarketsRemoved(beforeMarkets, removedMarketCodes);
             return result;
         }
     }
