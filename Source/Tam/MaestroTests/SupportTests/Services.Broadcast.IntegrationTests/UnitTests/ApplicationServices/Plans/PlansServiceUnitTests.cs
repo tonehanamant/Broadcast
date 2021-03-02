@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Services.ContractInterfaces;
 
@@ -50,6 +51,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IPlanMarketSovCalculator> _PlanMarketSovCalculator;
+        private Mock<IMarketCoverageRepository> _MarketCoverageRepository;
 
         [SetUp]
         public void CreatePlanService()
@@ -73,6 +75,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _InventoryProprietarySummaryRepositoryMock = new Mock<IInventoryProprietarySummaryRepository>();
+            _MarketCoverageRepository = new Mock<IMarketCoverageRepository>();
+
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -118,6 +122,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(_PlanSummaryRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(s => s.GetDataRepository<IMarketCoverageRepository>())
+                .Returns(_MarketCoverageRepository.Object);
 
             _PlanPricingServiceMock
                 .Setup(s => s.GetPlanPricingDefaults())
@@ -1769,6 +1777,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()), Times.Never);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketsAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<List<PlanAvailableMarketDto>>()), Times.Never);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketsRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<List<short>>()), Times.Once);
+        }
+
+        [Test]
+        public void CalculateDefaultPlanAvailableMarkets()
+        {
+            // Arrange
+            var markets = MarketsTestData.GetMarketsWithLatestCoverage();
+            _MarketCoverageRepository.Setup(s => s.GetMarketsWithLatestCoverage())
+                .Returns(markets);
+            var availablePlanMarkets = MarketsTestData.GetPlanAvailableMarkets();
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = availablePlanMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
+            // Act
+            var results = _PlanService.CalculateDefaultPlanAvailableMarkets();
+
+            // Assert
+            Assert.IsNotNull(results);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()), Times.Once());
         }
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions

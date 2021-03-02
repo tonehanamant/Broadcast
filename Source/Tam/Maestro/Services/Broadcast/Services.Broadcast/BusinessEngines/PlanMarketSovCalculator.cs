@@ -38,6 +38,13 @@ namespace Services.Broadcast.BusinessEngines
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketsRemoved(List<PlanAvailableMarketDto> beforeMarkets,
             List<short> removedMarketCodes);
+
+        /// <summary>
+        /// Calculates the market weights.
+        /// </summary>
+        /// <param name="markets">The markets.</param>
+        /// <returns></returns>
+        PlanAvailableMarketCalculationResult CalculateMarketWeights(List<PlanAvailableMarketDto> markets);
     }
 
     /// <summary>
@@ -46,7 +53,6 @@ namespace Services.Broadcast.BusinessEngines
     public class PlanMarketSovCalculator : IPlanMarketSovCalculator
     {
         const int ShareOfVoiceDecimalPlaces = 5;
-        const int TotalWeightDecimalPlaces = 3;
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
@@ -59,8 +65,7 @@ namespace Services.Broadcast.BusinessEngines
             modifiedMarket.ShareOfVoicePercent = userEnteredValue;
             modifiedMarket.IsUserShareOfVoicePercent = userEnteredValue.HasValue;
             // balance
-            _BalanceMarketWeights(markets);
-            var results = _GetResults(markets);
+            var results = CalculateMarketWeights(markets);
             return results;
         }
 
@@ -69,11 +74,8 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanAvailableMarketDto> addedMarkets)
         {
             var markets = _GetCopy(beforeMarkets);
-            // add the new market
             markets.AddRange(addedMarkets);
-            // balance
-            _BalanceMarketWeights(markets);
-            var results = _GetResults(markets);
+            var results = CalculateMarketWeights(markets);
             return results;
         }
 
@@ -81,9 +83,17 @@ namespace Services.Broadcast.BusinessEngines
         public PlanAvailableMarketCalculationResult CalculateMarketsRemoved(List<PlanAvailableMarketDto> beforeMarkets,
             List<short> removedMarketCodes)
         {
-            var markets = _GetCopyAndRemoveMarket(beforeMarkets, removedMarketCodes);
-            _BalanceMarketWeights(markets);
-            var results = _GetResults(markets);
+            var markets = _GetCopyAndRemoveMarkets(beforeMarkets, removedMarketCodes);
+            var results = CalculateMarketWeights(markets);
+            return results;
+        }
+
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateMarketWeights(List<PlanAvailableMarketDto> markets)
+        {
+            var copiedMarkets = _GetCopy(markets);
+            _BalanceMarketWeights(copiedMarkets);
+            var results = _GetResults(copiedMarkets);
             return results;
         }
 
@@ -137,7 +147,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        internal List<PlanAvailableMarketDto> _GetCopyAndRemoveMarket(List<PlanAvailableMarketDto> toCopy, List<short> removedMarketCodes)
+        internal List<PlanAvailableMarketDto> _GetCopyAndRemoveMarkets(List<PlanAvailableMarketDto> toCopy, List<short> removedMarketCodes)
         {
             var result = new List<PlanAvailableMarketDto>();
             toCopy.ForEach(c =>

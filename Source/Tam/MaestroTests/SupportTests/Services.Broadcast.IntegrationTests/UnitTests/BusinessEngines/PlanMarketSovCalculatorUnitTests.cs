@@ -323,6 +323,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
+        public void CalculateMarketWeights()
+        {
+            // Arrange
+            var markets = MarketsTestData.GetPlanAvailableMarkets();
+
+            var expectedMarketCount = markets.Count;
+            const double expectedTotalWeight = 100.0;
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass.CalculateMarketWeights(markets);
+
+            // Assert
+            Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
+            Assert.IsFalse(result.AvailableMarkets.Any(m => !m.ShareOfVoicePercent.HasValue));
+            Assert.IsFalse(result.AvailableMarkets.Any(m => m.IsUserShareOfVoicePercent));
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
+        }
+
+        [Test]
         public void BalanceMarketWeights()
         {
             // Arrange
@@ -345,7 +366,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedUserEnteredSum, markets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
             var totalWeight = _GetTotalWeight(markets);
             Assert.AreEqual(expectedTotalWeight, totalWeight);
-            
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets));
         }
 

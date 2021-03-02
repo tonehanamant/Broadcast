@@ -153,6 +153,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         List<LengthMakeUpTableRow> CalculateLengthMakeUpTable(LengthMakeUpRequest request);
 
         /// <summary>
+        /// Calculates the default plan available markets.
+        /// </summary>
+        /// <returns></returns>
+        PlanAvailableMarketCalculationResult CalculateDefaultPlanAvailableMarkets();
+
+        /// <summary>
         /// Calculates and distributes the market weights.
         /// </summary>
         /// <param name="availableMarkets">The available markets.</param>
@@ -204,6 +210,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
+        private readonly IMarketCoverageRepository _MarketCoverageRepository;
 
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
 
@@ -234,6 +241,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
+            _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
             _SpotLengthEngine = spotLengthEngine;
@@ -1312,6 +1320,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             var spotLengths = _SpotLengthEngine.GetSpotLengths();
             return result.OrderBy(x => spotLengths.Where(y => y.Value == x.SpotLengthId).Single().Key).ToList();
+        }
+
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateDefaultPlanAvailableMarkets()
+        {
+            var latestMarketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+            var markets = latestMarketCoverages.Select(m => new PlanAvailableMarketDto
+            {
+                MarketCode = Convert.ToInt16(m.MarketCode),
+                MarketCoverageFileId = m.MarketCoverageFileId,
+                Rank = m.Rank.Value,
+                PercentageOfUS = m.PercentageOfUS,
+                Market = m.Market,
+                ShareOfVoicePercent = m.PercentageOfUS,
+                IsUserShareOfVoicePercent = false
+            }).ToList();
+
+            var result = _PlanMarketSovCalculator.CalculateMarketWeights(markets);
+            return result;
         }
 
         /// <inheritdoc />
