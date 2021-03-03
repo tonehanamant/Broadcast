@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -254,6 +253,39 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CreativeLengthEngine = creativeLengthEngine;
             _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
+        }        
+
+        internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
+        {
+            bool isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
+
+            // When the flag is disabled we want to fill in the missing values
+            if (!isEnabled)
+            {
+                plan.AvailableMarkets.Where(s => s.ShareOfVoicePercent.HasValue).ToList()
+                    .ForEach(s =>s.IsUserShareOfVoicePercent = true);
+
+                var result = _PlanMarketSovCalculator.CalculateMarketWeights(plan.AvailableMarkets);
+                plan.AvailableMarkets = result.AvailableMarkets;
+                plan.AvailableMarketsSovTotal = result.TotalWeight;
+            }
+        }
+
+        internal void _OnGetHandlePlanAvailableMarketSovFeature(PlanDto plan)
+        {
+            bool isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
+
+            // when the flag is disabled then we want to hide the feature values
+            if (!isEnabled)
+            {
+                plan.AvailableMarkets.ForEach(s =>
+                {
+                    if (!s.IsUserShareOfVoicePercent)
+                    {
+                        s.ShareOfVoicePercent = null;
+                    }
+                });
+            }
         }
 
         ///<inheritdoc/>
@@ -279,6 +311,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
+            _OnSaveHandlePlanAvailableMarketSovFeature(plan);
+
             _PlanValidator.ValidatePlan(plan);
 
             _ConvertImpressionsToRawFormat(plan);
@@ -292,7 +326,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
             }
 
-            _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
+            _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);            
 
             if (saveState == SaveState.CreatingNewPlan)
             {
@@ -640,7 +674,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortProgramRestrictions(plan);
             _SortCreativeLengths(plan);
 
+            _OnGetHandlePlanAvailableMarketSovFeature(plan);
+            _HandleAvailableMarketSovs(plan);
+
             return plan;
+        }
+
+        private void _HandleAvailableMarketSovs(PlanDto plan)
+        {
+            plan.AvailableMarketsSovTotal = _PlanMarketSovCalculator.CalculateTotalWeight(plan.AvailableMarkets);
         }
 
         public PlanDto_v2 GetPlan_v2(int planId, int? versionId = null)
@@ -686,6 +728,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 CoverageGoalPercent = plan.CoverageGoalPercent,
                 AvailableMarkets = plan.AvailableMarkets,
                 BlackoutMarkets = plan.BlackoutMarkets,
+                AvailableMarketsSovTotal = plan.AvailableMarketsSovTotal,
                 WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks,
                 ModifiedBy = plan.ModifiedBy,
                 ModifiedDate = plan.ModifiedDate,

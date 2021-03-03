@@ -191,6 +191,34 @@ WHERE  pvps.posting_type = 0
 GO
 /*************************************** End API results posting type update *****************************************************/
 
+/*************************************** Start BP-1892 *****************************************************/
+
+IF OBJECT_ID('tempdb..#update_for_available_markets') IS NOT NULL
+BEGIN
+	DROP TABLE #update_for_available_markets
+END
+
+SELECT distinct plan_version_id
+	INTO #update_for_available_markets
+FROM plan_version_available_markets WHERE share_of_voice_percent IS NULL
+
+UPDATE m SET 
+	is_user_share_of_voice_percent = CASE WHEN share_of_voice_percent IS NULL THEN 0 ELSE 1 END
+FROM plan_version_available_markets m 
+JOIN #update_for_available_markets u
+	ON u.plan_version_id = m.plan_version_id
+
+UPDATE m SET 
+	share_of_voice_percent = m.percentage_of_us
+FROM plan_version_available_markets m
+JOIN #update_for_available_markets u
+	ON u.plan_version_id = m.plan_version_id
+WHERE m.share_of_voice_percent IS NULL
+
+GO
+
+/*************************************** End BP-1892 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

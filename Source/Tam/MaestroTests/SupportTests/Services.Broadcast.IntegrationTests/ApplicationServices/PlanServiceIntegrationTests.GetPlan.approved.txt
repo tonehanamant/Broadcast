@@ -9,7 +9,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.328,
       "Rank": 79,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.328
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -18,7 +18,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 10.0,
       "Rank": 1,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 10.0
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -27,7 +27,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.107,
       "Rank": 161,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.107
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -36,7 +36,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.199,
       "Rank": 120,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.199
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -45,7 +45,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.559,
       "Rank": 4,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.559
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -54,7 +54,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.587,
       "Rank": 14,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.587
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -63,7 +63,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.163,
       "Rank": 10,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.163
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -72,7 +72,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.293,
       "Rank": 90,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.293
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -81,7 +81,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.018,
       "Rank": 24,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.018
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -90,7 +90,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.222,
       "Rank": 111,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.222
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -99,7 +99,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.291,
       "Rank": 19,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.291
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -108,7 +108,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.222,
       "Rank": 6,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.222
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -117,7 +117,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.988,
       "Rank": 26,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.988
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -126,7 +126,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.367,
       "Rank": 71,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.367
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -135,7 +135,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.529,
       "Rank": 53,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.529
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -144,7 +144,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.778,
       "Rank": 35,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.778
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -153,7 +153,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.126,
       "Rank": 150,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.126
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -162,7 +162,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.021,
       "Rank": 23,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.021
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -171,7 +171,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.6,
       "Rank": 48,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.6
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -180,7 +180,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.286,
       "Rank": 92,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.286
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -189,7 +189,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.222,
       "Rank": 112,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.222
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -198,7 +198,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.533,
       "Rank": 52,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.533
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -207,7 +207,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.184,
       "Rank": 127,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.184
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -216,7 +216,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.262,
       "Rank": 97,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.262
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -225,7 +225,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.184,
       "Rank": 9,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.184
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -234,7 +234,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.12,
       "Rank": 154,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.12
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -243,7 +243,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.084,
       "Rank": 171,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.084
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -252,7 +252,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.915,
       "Rank": 28,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.915
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -261,7 +261,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.496,
       "Rank": 16,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.496
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -270,7 +270,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.586,
       "Rank": 49,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.586
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -279,7 +279,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.23,
       "Rank": 108,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.23
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -288,7 +288,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.259,
       "Rank": 99,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.259
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -297,7 +297,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.465,
       "Rank": 60,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.465
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -306,7 +306,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.822,
       "Rank": 32,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.822
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -315,7 +315,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.365,
       "Rank": 18,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.365
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -324,7 +324,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.8,
       "Rank": 34,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.8
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -333,7 +333,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.209,
       "Rank": 117,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.209
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -342,7 +342,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.112,
       "Rank": 156,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.112
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -351,7 +351,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.343,
       "Rank": 76,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.343
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -360,7 +360,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.676,
       "Rank": 13,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.676
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -369,7 +369,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.208,
       "Rank": 118,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.208
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -378,7 +378,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.41,
       "Rank": 63,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.41
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -387,7 +387,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.405,
       "Rank": 64,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.405
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -396,7 +396,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.212,
       "Rank": 116,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.212
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -405,7 +405,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.601,
       "Rank": 47,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.601
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -414,7 +414,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.255,
       "Rank": 100,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.255
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -423,7 +423,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.343,
       "Rank": 77,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.343
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -432,7 +432,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.338,
       "Rank": 78,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.338
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -441,7 +441,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.739,
       "Rank": 37,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.739
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -450,7 +450,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.073,
       "Rank": 179,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.073
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -459,7 +459,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.171,
       "Rank": 130,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.171
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -468,7 +468,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.213,
       "Rank": 115,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.213
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -477,7 +477,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.023,
       "Rank": 206,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.023
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -486,7 +486,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.07,
       "Rank": 180,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.07
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -495,7 +495,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.108,
       "Rank": 158,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.108
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -504,7 +504,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.312,
       "Rank": 85,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.312
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -513,7 +513,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.506,
       "Rank": 55,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.506
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -522,7 +522,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.461,
       "Rank": 61,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.461
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -531,7 +531,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.056,
       "Rank": 189,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.056
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -540,7 +540,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.106,
       "Rank": 163,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.106
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -549,7 +549,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.01,
       "Rank": 25,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.01
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -558,7 +558,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.625,
       "Rank": 42,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.625
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -567,7 +567,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.615,
       "Rank": 43,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.615
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -576,7 +576,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.362,
       "Rank": 73,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.362
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -585,7 +585,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.077,
       "Rank": 176,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.077
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -594,7 +594,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.609,
       "Rank": 45,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.609
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -603,7 +603,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.722,
       "Rank": 38,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.722
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -612,7 +612,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.077,
       "Rank": 175,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.077
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -621,7 +621,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.251,
       "Rank": 101,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.251
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -630,7 +630,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.49,
       "Rank": 56,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.49
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -639,7 +639,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.37,
       "Rank": 70,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.37
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -648,7 +648,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.234,
       "Rank": 107,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.234
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -657,7 +657,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.3,
       "Rank": 89,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.3
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -666,7 +666,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.138,
       "Rank": 143,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.138
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -675,7 +675,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.467,
       "Rank": 57,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.467
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -684,7 +684,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.114,
       "Rank": 155,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.114
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -693,7 +693,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.059,
       "Rank": 188,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.059
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -702,7 +702,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.014,
       "Rank": 208,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.014
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -711,7 +711,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.064,
       "Rank": 183,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.064
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -720,7 +720,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.265,
       "Rank": 96,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.265
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -729,7 +729,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.108,
       "Rank": 159,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.108
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -738,7 +738,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.027,
       "Rank": 204,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.027
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -747,7 +747,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.051,
       "Rank": 194,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.051
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -756,7 +756,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.087,
       "Rank": 169,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.087
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -765,7 +765,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.177,
       "Rank": 128,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.177
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -774,7 +774,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.942,
       "Rank": 3,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.942
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -783,7 +783,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.122,
       "Rank": 152,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.122
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -792,7 +792,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.146,
       "Rank": 135,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.146
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -801,7 +801,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.144,
       "Rank": 139,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.144
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -810,7 +810,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.082,
       "Rank": 173,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.082
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -819,7 +819,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.061,
       "Rank": 21,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.061
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -828,7 +828,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.144,
       "Rank": 138,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.144
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -837,7 +837,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.12,
       "Rank": 153,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.12
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -846,7 +846,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.314,
       "Rank": 83,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.314
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -855,7 +855,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.543,
       "Rank": 15,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.543
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -864,7 +864,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.803,
       "Rank": 33,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.803
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -873,7 +873,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.774,
       "Rank": 36,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.774
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -882,7 +882,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.2,
       "Rank": 7,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.2
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -891,7 +891,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.348,
       "Rank": 75,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.348
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -900,7 +900,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.569,
       "Rank": 51,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.569
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -909,7 +909,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.362,
       "Rank": 5,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.362
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -918,7 +918,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.129,
       "Rank": 148,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.129
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -927,7 +927,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.309,
       "Rank": 86,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.309
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -936,7 +936,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.028,
       "Rank": 203,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.028
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -945,7 +945,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.127,
       "Rank": 149,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.127
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -954,7 +954,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.144,
       "Rank": 137,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.144
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -963,7 +963,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.613,
       "Rank": 44,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.613
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -972,7 +972,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.038,
       "Rank": 200,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.038
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -981,7 +981,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.316,
       "Rank": 82,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.316
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -990,7 +990,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.137,
       "Rank": 144,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.137
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -999,7 +999,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.16,
       "Rank": 131,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.16
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1008,7 +1008,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.706,
       "Rank": 39,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.706
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1017,7 +1017,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.314,
       "Rank": 84,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.314
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1026,7 +1026,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.29,
       "Rank": 91,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.29
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1035,7 +1035,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.038,
       "Rank": 201,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.038
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1044,7 +1044,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.076,
       "Rank": 177,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.076
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1053,7 +1053,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.579,
       "Rank": 50,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.579
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1062,7 +1062,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.824,
       "Rank": 31,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.824
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1071,7 +1071,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.198,
       "Rank": 121,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.198
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1080,7 +1080,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.082,
       "Rank": 174,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.082
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1089,7 +1089,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.073,
       "Rank": 178,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.073
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1098,7 +1098,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.052,
       "Rank": 193,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.052
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1107,7 +1107,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.307,
       "Rank": 88,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.307
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1116,7 +1116,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.236,
       "Rank": 103,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.236
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1125,7 +1125,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.629,
       "Rank": 41,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.629
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1134,7 +1134,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.137,
       "Rank": 145,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.137
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1143,7 +1143,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.356,
       "Rank": 74,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.356
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1152,7 +1152,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.123,
       "Rank": 151,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.123
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1161,7 +1161,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.107,
       "Rank": 160,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.107
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1170,7 +1170,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.371,
       "Rank": 69,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.371
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1179,7 +1179,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.919,
       "Rank": 27,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.919
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1188,7 +1188,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.048,
       "Rank": 196,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.048
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1197,7 +1197,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.096,
       "Rank": 165,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.096
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1206,7 +1206,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.327,
       "Rank": 81,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.327
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1215,7 +1215,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.261,
       "Rank": 98,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.261
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1224,7 +1224,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.461,
       "Rank": 62,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.461
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1233,7 +1233,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.154,
       "Rank": 133,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.154
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1242,7 +1242,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.198,
       "Rank": 122,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.198
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1251,7 +1251,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.14,
       "Rank": 140,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.14
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1260,7 +1260,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.371,
       "Rank": 67,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.371
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1269,7 +1269,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.371,
       "Rank": 68,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.371
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1278,7 +1278,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.248,
       "Rank": 102,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.248
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1287,7 +1287,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.466,
       "Rank": 59,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.466
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1296,7 +1296,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.139,
       "Rank": 141,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.139
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1305,7 +1305,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.328,
       "Rank": 80,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.328
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1314,7 +1314,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.139,
       "Rank": 142,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.139
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1323,7 +1323,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.466,
       "Rank": 58,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.466
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1332,7 +1332,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.195,
       "Rank": 124,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.195
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1341,7 +1341,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.175,
       "Rank": 129,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.175
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1350,7 +1350,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.148,
       "Rank": 134,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.148
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1359,7 +1359,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.226,
       "Rank": 109,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.226
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1368,7 +1368,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.092,
       "Rank": 168,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.092
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1377,7 +1377,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.055,
       "Rank": 191,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.055
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1386,7 +1386,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.281,
       "Rank": 94,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.281
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1395,7 +1395,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.084,
       "Rank": 172,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.084
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1404,7 +1404,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.273,
       "Rank": 95,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.273
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1413,7 +1413,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.235,
       "Rank": 106,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.235
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1422,7 +1422,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.225,
       "Rank": 110,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.225
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1431,7 +1431,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.069,
       "Rank": 182,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.069
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1440,7 +1440,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.069,
       "Rank": 181,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.069
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1449,7 +1449,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.044,
       "Rank": 199,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.044
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1458,7 +1458,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.012,
       "Rank": 209,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.012
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1467,7 +1467,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.133,
       "Rank": 147,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.133
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1476,7 +1476,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.374,
       "Rank": 66,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.374
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1485,7 +1485,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.031,
       "Rank": 202,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.031
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1494,7 +1494,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.111,
       "Rank": 157,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.111
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1503,7 +1503,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.022,
       "Rank": 207,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.022
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1512,7 +1512,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.063,
       "Rank": 184,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.063
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1521,7 +1521,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.417,
       "Rank": 17,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.417
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1530,7 +1530,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.307,
       "Rank": 87,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.307
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1539,7 +1539,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.712,
       "Rank": 11,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.712
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1548,7 +1548,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.062,
       "Rank": 185,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.062
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1557,7 +1557,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.054,
       "Rank": 192,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.054
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1566,7 +1566,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.094,
       "Rank": 167,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.094
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1575,7 +1575,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.236,
       "Rank": 104,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.236
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1584,7 +1584,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.107,
       "Rank": 162,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.107
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1593,7 +1593,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.056,
       "Rank": 190,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.056
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1602,7 +1602,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.101,
       "Rank": 164,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.101
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1611,7 +1611,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.085,
       "Rank": 170,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.085
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1620,7 +1620,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.284,
       "Rank": 93,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.284
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1629,7 +1629,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.024,
       "Rank": 205,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.024
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1638,7 +1638,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.047,
       "Rank": 198,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.047
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1647,7 +1647,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.846,
       "Rank": 30,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.846
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1656,7 +1656,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.094,
       "Rank": 166,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.094
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1665,7 +1665,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.06,
       "Rank": 187,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.06
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1674,7 +1674,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.386,
       "Rank": 65,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.386
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1683,7 +1683,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.602,
       "Rank": 46,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.602
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1692,7 +1692,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.004,
       "Rank": 210,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.004
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1701,7 +1701,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.189,
       "Rank": 126,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.189
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1710,7 +1710,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.206,
       "Rank": 119,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.206
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1719,7 +1719,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.051,
       "Rank": 195,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.051
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1728,7 +1728,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 4.743,
       "Rank": 2,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 4.743
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1737,7 +1737,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.136,
       "Rank": 146,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.136
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1746,7 +1746,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 2.186,
       "Rank": 8,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 2.186
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1755,7 +1755,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.214,
       "Rank": 114,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.214
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1764,7 +1764,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.235,
       "Rank": 105,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.235
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1773,7 +1773,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.146,
       "Rank": 136,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.146
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1782,7 +1782,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.677,
       "Rank": 12,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.677
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1791,7 +1791,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.053,
       "Rank": 22,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.053
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1800,7 +1800,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.06,
       "Rank": 186,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.06
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1809,7 +1809,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.894,
       "Rank": 29,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.894
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1818,7 +1818,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.194,
       "Rank": 125,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.194
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1827,7 +1827,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.675,
       "Rank": 40,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.675
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1836,7 +1836,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.198,
       "Rank": 123,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.198
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1845,7 +1845,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 1.26,
       "Rank": 20,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 1.26
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1854,7 +1854,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.512,
       "Rank": 54,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.512
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1863,7 +1863,7 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.16,
       "Rank": 132,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.16
     },
     {
       "IsUserShareOfVoicePercent": false,
@@ -1872,9 +1872,10 @@
       "MarketCoverageFileId": 225,
       "PercentageOfUS": 0.366,
       "Rank": 72,
-      "ShareOfVoicePercent": null
+      "ShareOfVoicePercent": 0.366
     }
   ],
+  "AvailableMarketsSovTotal": 103.429,
   "AvailableMarketsWithSovCount": 0,
   "BlackoutMarketCount": null,
   "BlackoutMarkets": [],

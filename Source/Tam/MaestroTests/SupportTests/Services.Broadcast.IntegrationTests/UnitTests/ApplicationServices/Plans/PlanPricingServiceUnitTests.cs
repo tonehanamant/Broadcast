@@ -11409,6 +11409,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             IsUserShareOfVoicePercent = true
                         }
                     },
+                AvailableMarketsSovTotal = 25,
                 Dayparts = new List<PlanDaypartDto>
                     {
                         new PlanDaypartDto

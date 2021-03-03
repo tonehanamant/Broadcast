@@ -45,6 +45,13 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="markets">The markets.</param>
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketWeights(List<PlanAvailableMarketDto> markets);
+
+        /// <summary>
+        /// Calculates the total weight.
+        /// </summary>
+        /// <param name="markets">The markets.</param>
+        /// <returns></returns>
+        double CalculateTotalWeight(List<PlanAvailableMarketDto> markets);
     }
 
     /// <summary>
@@ -97,6 +104,14 @@ namespace Services.Broadcast.BusinessEngines
             return results;
         }
 
+        /// <inheritdoc />
+        public double CalculateTotalWeight(List<PlanAvailableMarketDto> markets)
+        {
+            var totalWeightDecimalPlaces = 3;
+            var totalWeight = Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), totalWeightDecimalPlaces);
+            return totalWeight;
+        }
+
         internal void _BalanceMarketWeights(List<PlanAvailableMarketDto> markets)
         {
             var totalUserEnteredCoverage = markets.Where(m => m.IsUserShareOfVoicePercent)
@@ -124,20 +139,13 @@ namespace Services.Broadcast.BusinessEngines
         internal PlanAvailableMarketCalculationResult _GetResults(List<PlanAvailableMarketDto> markets)
         {
             var orderedMarkets = markets.OrderBy(m => m.Rank).ToList();
-            var totalWeight = _GetTotalWeight(markets);
+            var totalWeight = CalculateTotalWeight(markets);
             var result = new PlanAvailableMarketCalculationResult
             {
                 AvailableMarkets = orderedMarkets,
                 TotalWeight = totalWeight
             };
             return result;
-        }
-
-        internal double _GetTotalWeight(List<PlanAvailableMarketDto> markets)
-        {
-            var totalWeightDecimalPlaces = 3;
-            var totalWeight = Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), totalWeightDecimalPlaces);
-            return totalWeight;
         }
 
         internal List<PlanAvailableMarketDto> _GetCopy(List<PlanAvailableMarketDto> toCopy)

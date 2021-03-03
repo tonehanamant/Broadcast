@@ -2083,6 +2083,7 @@
       "ShareOfVoicePercent": null
     }
   ],
+  "AvailableMarketsSovTotal": 0.0,
   "AvailableMarketsWithSovCount": 0,
   "BlackoutMarketCount": null,
   "BlackoutMarkets": [],

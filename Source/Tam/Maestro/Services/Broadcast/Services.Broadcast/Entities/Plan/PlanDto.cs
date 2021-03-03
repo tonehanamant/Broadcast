@@ -270,6 +270,14 @@ namespace Services.Broadcast.Entities.Plan
         public List<PlanAvailableMarketDto> AvailableMarkets { get; set; } = new List<PlanAvailableMarketDto>();
 
         /// <summary>
+        /// Gets or sets the available markets sov total.
+        /// </summary>
+        /// <value>
+        /// The available markets sov total.
+        /// </value>
+        public double AvailableMarketsSovTotal { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of the goal breakdown.
         /// </summary>
         /// <value>

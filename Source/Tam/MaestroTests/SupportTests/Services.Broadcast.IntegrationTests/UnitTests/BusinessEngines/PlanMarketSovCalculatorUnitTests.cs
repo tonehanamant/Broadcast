@@ -445,6 +445,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets));
         }
 
+        [Test]
+        public void CalculateTotalWeight()
+        {
+            // Arrange
+            var markets = _GetPreparedAvailableMarkets();
+            var expectedResult = _GetTotalWeight(markets);
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass.CalculateTotalWeight(markets);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
         private double _GetTotalWeight(List<PlanAvailableMarketDto> markets)
         {
             return Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), 3);

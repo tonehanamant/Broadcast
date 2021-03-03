@@ -186,7 +186,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             MarketCoverageData = new MarketCoverageData
             {
-                PreferentialMarketsName = plans.SelectMany(x => x.AvailableMarkets.Where(y => y.ShareOfVoicePercent != null))
+                PreferentialMarketsName = plans.SelectMany(x => x.AvailableMarkets.Where(y => y.IsUserShareOfVoicePercent))
                             .OrderByDescending(x => x.ShareOfVoicePercent.Value)
                             .Select(x => x.Market)
                             .ToList(),

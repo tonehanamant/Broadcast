@@ -23,6 +23,7 @@
       "ShareOfVoicePercent": 34.5
     }
   ],
+  "AvailableMarketsSovTotal": 12.123,
   "AvailableMarketsWithSovCount": null,
   "BlackoutMarketCount": null,
   "BlackoutMarkets": [

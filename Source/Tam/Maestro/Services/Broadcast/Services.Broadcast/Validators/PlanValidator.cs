@@ -466,10 +466,14 @@ namespace Services.Broadcast.Validators
             }
 
             const double maxTotalMarketSov = 100.0;
-            var totalMarketSov = Math.Round(plan.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0));
-            if (totalMarketSov > maxTotalMarketSov)
+            var isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
+            if (isEnabled)
             {
-                throw new Exception(INVALID_TOTAL_MARKET_SHARE_OF_VOICE);
+                var totalMarketSov = Math.Round(plan.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0));
+                if (totalMarketSov > maxTotalMarketSov)
+                {
+                    throw new Exception(INVALID_TOTAL_MARKET_SHARE_OF_VOICE);
+                }
             }
         }
 

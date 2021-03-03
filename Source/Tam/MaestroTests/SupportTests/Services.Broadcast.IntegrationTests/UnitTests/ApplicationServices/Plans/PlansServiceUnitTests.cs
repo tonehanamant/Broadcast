@@ -162,10 +162,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add("FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT", true);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_IN_EDIT, true);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.RUN_PRICING_AUTOMATICALLY, true);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, false);
+
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
             _PlanMarketSovCalculator = new Mock<IPlanMarketSovCalculator>();
+            _PlanMarketSovCalculator.Setup(s => s.CalculateTotalWeight(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(12.123);
 
             _PlanService = new PlanService(
                     _DataRepositoryFactoryMock.Object,
@@ -225,6 +230,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var campaignId = plan.CampaignId;
             var modifiedWho = "ModificationUser";
             var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
 
             var queuePricingJobCallCount = 0;
             _PlanPricingServiceMock.Setup(s =>
@@ -318,6 +328,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new List<PlanPricingJob> {
                 new PlanPricingJob { Completed = modifiedWhen } });
 
+
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
             var aggregateReturn = new PlanSummaryDto();
@@ -357,6 +368,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var getPlanReturns = new Queue<PlanDto>();
             getPlanReturns.Enqueue(beforePlan);
             getPlanReturns.Enqueue(afterPlan);
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(() => getPlanReturns.Dequeue());
@@ -485,6 +501,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var getPlanReturns = new Queue<PlanDto>();
             getPlanReturns.Enqueue(beforePlan);
             getPlanReturns.Enqueue(afterPlan);
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(() => getPlanReturns.Dequeue());
@@ -803,7 +824,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
             _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
-                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));            
 
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
@@ -817,7 +838,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var modifiedWho = "ModificationUser";
             var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
             var currentThreadId = Thread.CurrentThread.ManagedThreadId;
-            
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto { VersionId = 66 });
 
@@ -1039,6 +1065,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
             var currentThreadId = Thread.CurrentThread.ManagedThreadId;
 
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto { VersionId = 66 });
 
@@ -1117,6 +1148,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                 .Returns(new List<WeeklyBreakdownWeek>());
 
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
             var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously:true));
 
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -1151,6 +1187,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto{VersionId = 66});
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
 
             // Act
             _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously:true);
@@ -1514,6 +1555,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true},
                     new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true}
                 },
+                AvailableMarketsSovTotal = 56.7,
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>
                 {
                     new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
@@ -1798,6 +1840,117 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.IsNotNull(results);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()), Times.Once());
+        }
+
+        [Test]
+        public void OnSaveHandlePlanAvailableMarketSovFeature_ToggleOff()
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = false;
+
+            var plan = _GetNewPlan();
+
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2},
+                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York"}
+            };
+
+            _PlanMarketSovCalculator.Setup(s => s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns<List<PlanAvailableMarketDto>>((l) =>
+                {
+                    l.ForEach(a =>
+                    {
+                        if (!a.IsUserShareOfVoicePercent)
+                        {
+                            a.ShareOfVoicePercent = a.PercentageOfUS;
+                        }
+                    });
+                    return new PlanAvailableMarketCalculationResult
+                    {
+                        AvailableMarkets = l,
+                        TotalWeight = 54.5
+                    };
+                });
+
+            // Act
+            _PlanService._OnSaveHandlePlanAvailableMarketSovFeature(plan);
+
+            // Assert
+            Assert.IsTrue(plan.AvailableMarkets[0].IsUserShareOfVoicePercent);
+            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
+
+            Assert.IsFalse(plan.AvailableMarkets[1].IsUserShareOfVoicePercent);
+            Assert.AreEqual(32.5, plan.AvailableMarkets[1].ShareOfVoicePercent);
+        }
+
+        [Test]
+        public void OnSaveHandlePlanAvailableMarketSovFeature_ToggleOn()
+        {
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = true;
+
+            var plan = _GetNewPlan();
+
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2, IsUserShareOfVoicePercent = true},
+                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York", ShareOfVoicePercent = 32.5, IsUserShareOfVoicePercent = false}
+            };
+
+            // Act
+            _PlanService._OnSaveHandlePlanAvailableMarketSovFeature(plan);
+
+            // Assert
+            Assert.IsTrue(plan.AvailableMarkets[0].IsUserShareOfVoicePercent);
+            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
+
+            Assert.IsFalse(plan.AvailableMarkets[1].IsUserShareOfVoicePercent);
+            Assert.AreEqual(32.5, plan.AvailableMarkets[1].ShareOfVoicePercent);
+        }
+
+        [Test]
+        public void OnGetHandlePlanAvailableMarketSovFeature_ToggleOff()
+        {
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = false;
+
+            var plan = _GetNewPlan();
+
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2, IsUserShareOfVoicePercent = true},
+                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York", ShareOfVoicePercent = 32.5, IsUserShareOfVoicePercent = false}
+            };
+
+            // Act
+            _PlanService._OnGetHandlePlanAvailableMarketSovFeature(plan);
+
+            // Assert
+            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
+            Assert.IsFalse(plan.AvailableMarkets[1].ShareOfVoicePercent.HasValue);
+        }
+
+        [Test]
+        public void OnGetHandlePlanAvailableMarketSovFeature_ToggleOn()
+        {
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = true;
+
+            var plan = _GetNewPlan();
+
+            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
+            {
+                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2, IsUserShareOfVoicePercent = true},
+                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York", ShareOfVoicePercent = 32.5, IsUserShareOfVoicePercent = false}
+            };
+
+            // Act
+            _PlanService._OnGetHandlePlanAvailableMarketSovFeature(plan);
+
+            // Assert
+            Assert.IsTrue(plan.AvailableMarkets[0].IsUserShareOfVoicePercent);
+            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
+
+            Assert.IsFalse(plan.AvailableMarkets[1].IsUserShareOfVoicePercent);
+            Assert.AreEqual(32.5, plan.AvailableMarkets[1].ShareOfVoicePercent);
         }
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions
