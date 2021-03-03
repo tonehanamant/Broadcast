@@ -239,7 +239,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Calculates and distributes the market weights.
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("CalculateDefaultAvailableMarkets")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateDefaultPlanAvailableMarkets()
         {
