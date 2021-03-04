@@ -251,7 +251,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Calculates and distributes the market weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        [HttpGet]
+        [HttpPost]
         [Route("available-markets/modified")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightChange(PlanCalculateMarketWeightChangeRequest request)
         {
@@ -263,7 +263,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Adds the markets and calculates and distributes the weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        [HttpGet]
+        [HttpPost]
         [Route("available-markets/added")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketsAdded(PlanCalculateMarketAddedRequest request)
         {
@@ -275,7 +275,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Removes the markets and calculates and distributes the weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        [HttpGet]
+        [HttpPost]
         [Route("available-markets/removed")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketsRemoved(PlanCalculateMarketRemovedRequest request)
         {
@@ -286,7 +286,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Clears the user entered values and recalculates the weights.
         /// </summary>
-        [HttpGet]
+        [HttpPost]
         [Route("available-markets/cleared")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets)
         {
