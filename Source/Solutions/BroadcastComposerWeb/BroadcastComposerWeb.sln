@@ -62,6 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceCommonAppSettings", 
 		..\..\..\Configurations\ServiceCommonAppSettings\CD16.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\CD16.ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\PROD.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\PROD.ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\QA.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\QA.ServiceCommonAppSettings.config
+		..\..\..\Configurations\ServiceCommonAppSettings\ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\STG.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\STG.ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\UAT.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\UAT.ServiceCommonAppSettings.config
 	EndProjectSection
