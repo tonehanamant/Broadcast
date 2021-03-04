@@ -52,6 +52,13 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="markets">The markets.</param>
         /// <returns></returns>
         double CalculateTotalWeight(List<PlanAvailableMarketDto> markets);
+
+        /// <summary>
+        /// Clears the user entered values and recalculates the weights.
+        /// </summary>
+        /// <param name="availableMarkets">The available markets.</param>
+        /// <returns></returns>
+        PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets);
     }
 
     /// <summary>
@@ -112,6 +119,15 @@ namespace Services.Broadcast.BusinessEngines
             return totalWeight;
         }
 
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets)
+        {
+            var markets = _GetCopy(availableMarkets, clearUserValue:true);
+            _BalanceMarketWeights(markets);
+            var results = _GetResults(markets);
+            return results;
+        }
+
         internal void _BalanceMarketWeights(List<PlanAvailableMarketDto> markets)
         {
             var totalUserEnteredCoverage = markets.Where(m => m.IsUserShareOfVoicePercent)
@@ -148,10 +164,10 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        internal List<PlanAvailableMarketDto> _GetCopy(List<PlanAvailableMarketDto> toCopy)
+        internal List<PlanAvailableMarketDto> _GetCopy(List<PlanAvailableMarketDto> toCopy, bool clearUserValue = false)
         {
             var result = new List<PlanAvailableMarketDto>();
-            toCopy.ForEach(c => result.Add(_GetCopy(c)));
+            toCopy.ForEach(c => result.Add(_GetCopy(c, clearUserValue)));
             return result;
         }
 
@@ -168,7 +184,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private PlanAvailableMarketDto _GetCopy(PlanAvailableMarketDto toCopy)
+        private PlanAvailableMarketDto _GetCopy(PlanAvailableMarketDto toCopy, bool clearUserValue = false)
         {
             var copy = new PlanAvailableMarketDto
             {
@@ -178,8 +194,8 @@ namespace Services.Broadcast.BusinessEngines
                 Rank = toCopy.Rank,
                 PercentageOfUS = toCopy.PercentageOfUS,
                 Market = toCopy.Market,
-                ShareOfVoicePercent = toCopy.ShareOfVoicePercent,
-                IsUserShareOfVoicePercent = toCopy.IsUserShareOfVoicePercent
+                ShareOfVoicePercent = clearUserValue ? null : toCopy.ShareOfVoicePercent,
+                IsUserShareOfVoicePercent = !clearUserValue && toCopy.IsUserShareOfVoicePercent
             };
             return copy;
         }

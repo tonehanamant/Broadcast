@@ -6,7 +6,6 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.IntegrationTests.TestData;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -459,6 +458,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             // Assert
             Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void CalculateMarketWeightsClearAll()
+        {
+            // Arrange
+            var markets = _GetPreparedAvailableMarkets().Take(8).ToList();
+            var expectedCount = markets.Count;
+            const double expectedTotalWeight = 100.0;
+            const int expectedUserEnteredValueCount = 0;
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass.CalculateMarketWeightsClearAll(markets);
+
+            // Assert
+            Assert.AreEqual(expectedCount, result.AvailableMarkets.Count);
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
+            Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(s => s.IsUserShareOfVoicePercent));
         }
 
         private double _GetTotalWeight(List<PlanAvailableMarketDto> markets)

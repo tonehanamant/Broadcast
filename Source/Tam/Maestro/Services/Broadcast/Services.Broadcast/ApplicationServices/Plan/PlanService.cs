@@ -184,6 +184,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketsRemoved(List<PlanAvailableMarketDto> beforeMarkets,
             List<short> removedMarketCodes);
+
+        /// <summary>
+        /// Clears the user entered values and recalculates the weights.
+        /// </summary>
+        /// <param name="availableMarkets">The available markets.</param>
+        PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -1405,6 +1411,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             List<short> removedMarketCodes)
         {
             var result = _PlanMarketSovCalculator.CalculateMarketsRemoved(beforeMarkets, removedMarketCodes);
+            return result;
+        }
+
+        /// <inheritdoc />
+        public PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets)
+        {
+            var result = _PlanMarketSovCalculator.CalculateMarketWeightsClearAll(availableMarkets);
             return result;
         }
     }

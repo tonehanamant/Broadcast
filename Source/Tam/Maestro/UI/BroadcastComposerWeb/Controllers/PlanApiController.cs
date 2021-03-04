@@ -240,7 +240,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Calculates and distributes the market weights.
         /// </summary>
         [HttpGet]
-        [Route("CalculateDefaultAvailableMarkets")]
+        [Route("available-markets/defaults")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateDefaultPlanAvailableMarkets()
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
@@ -251,8 +251,8 @@ namespace BroadcastComposerWeb.Controllers
         /// Calculates and distributes the market weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        [HttpPost]
-        [Route("CalculateMarketWeightChange")]
+        [HttpGet]
+        [Route("available-markets/modified")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightChange(PlanCalculateMarketWeightChangeRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
@@ -263,8 +263,8 @@ namespace BroadcastComposerWeb.Controllers
         /// Adds the markets and calculates and distributes the weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        [HttpPost]
-        [Route("CalculateMarketsAdded")]
+        [HttpGet]
+        [Route("available-markets/added")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketsAdded(PlanCalculateMarketAddedRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
@@ -275,12 +275,23 @@ namespace BroadcastComposerWeb.Controllers
         /// Removes the markets and calculates and distributes the weights.
         /// </summary>
         /// <param name="request">The request.</param>
-        [HttpPost]
-        [Route("CalculateMarketsRemoved")]
+        [HttpGet]
+        [Route("available-markets/removed")]
         public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketsRemoved(PlanCalculateMarketRemovedRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
                 .CalculateMarketsRemoved(request.BeforeMarkets, request.RemovedMarketCodes));
+        }
+
+        /// <summary>
+        /// Clears the user entered values and recalculates the weights.
+        /// </summary>
+        [HttpGet]
+        [Route("available-markets/cleared")]
+        public BaseResponse<PlanAvailableMarketCalculationResult> CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CalculateMarketWeightsClearAll(availableMarkets));
         }
     }
 }

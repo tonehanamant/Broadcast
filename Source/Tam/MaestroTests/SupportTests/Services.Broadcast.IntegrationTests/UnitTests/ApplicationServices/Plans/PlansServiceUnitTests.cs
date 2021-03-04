@@ -1843,6 +1843,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        public void CalculateMarketWeightsClearAll()
+        {
+            // Arrange
+            var markets = MarketsTestData.GetPlanAvailableMarkets().Take(8).ToList();
+            var expectedCount = markets.Count;
+            const double expectedTotalWeight = 100.0;
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = markets, TotalWeight = expectedTotalWeight };
+            _PlanMarketSovCalculator.Setup(s => s.CalculateMarketWeightsClearAll(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
+            // Act
+            var result = _PlanService.CalculateMarketWeightsClearAll(markets);
+
+            // Assert
+            Assert.AreEqual(expectedCount, result.AvailableMarkets.Count);
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
+            _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightsClearAll(It.IsAny<List<PlanAvailableMarketDto>>()), Times.Once());
+        }
+
+        [Test]
         public void OnSaveHandlePlanAvailableMarketSovFeature_ToggleOff()
         {
             // Arrange
