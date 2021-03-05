@@ -138,7 +138,7 @@
       "AdjustedCPM": 10.0,
       "Budget": 100.0,
       "CompetitionFactor": null,
-      "CPM": 12.0,
+      "CPM": 1.17647058823529,
       "CPP": 0.0,
       "Currency": 1,
       "DeliveryImpressions": 85.0,

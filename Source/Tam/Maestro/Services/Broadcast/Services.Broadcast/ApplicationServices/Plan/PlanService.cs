@@ -772,8 +772,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else if (convertedParameters.PostingType == PostingTypeEnum.NTI)
             {
-                convertedParameters.DeliveryImpressions /= ntiToNsiConversionRate;
+                convertedParameters.DeliveryImpressions /= ntiToNsiConversionRate;               
                 convertedParameters.PostingType = PostingTypeEnum.NSI;
+            }
+
+            if (convertedParameters.DeliveryImpressions != 0)
+            {
+                convertedParameters.CPM = (decimal)((double)convertedParameters.Budget / convertedParameters.DeliveryImpressions);
+            }
+            else
+            {
+                convertedParameters.CPM = 0;
+                _LogWarning($"Delivery impressions are 0 for the plan with id {plan.Id} version {plan.VersionNumber} for {convertedParameters.PostingType} posting type. " +
+                    $"The cpm for the parameters could not be calculated properly and is set to 0.");
             }
 
             dto.PricingParameters.Add(convertedParameters);
