@@ -42,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, true);
             // register our stub instance so it is used to instantiate the service
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
 
