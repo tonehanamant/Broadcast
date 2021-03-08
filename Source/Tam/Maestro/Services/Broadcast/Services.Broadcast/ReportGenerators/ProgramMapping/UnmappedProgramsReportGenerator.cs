@@ -13,7 +13,7 @@ namespace Services.Broadcast.ReportGenerators.ProgramMapping
         private const string CELL_A1_HEADER = "Rate Card Program Name";
         private const string CELL_B1_HEADER = "Matched Program Name";
         private const string CELL_C1_HEADER = "Matched Program Genre";
-        private const string CELL_D1_HEADER = "Confidence %";
+        private const string CELL_E1_HEADER = "Confidence %";
         private const string TAB_NAME = "Unmapped Programs";
         private const int DATA_START_COLUMN = 1;
         private const int DATA_START_ROW = 2;
@@ -58,9 +58,9 @@ namespace Services.Broadcast.ReportGenerators.ProgramMapping
             worksheet.Column(3).Width = 50;
             worksheet.Cells["C1"].Style.Font.Bold = true;
 
-            worksheet.Cells["D1"].Value = CELL_D1_HEADER;
+            worksheet.Cells["E1"].Value = CELL_E1_HEADER;
             worksheet.Column(3).Width = 50;
-            worksheet.Cells["D1"].Style.Font.Bold = true;
+            worksheet.Cells["E1"].Style.Font.Bold = true;
         }
 
         private void _PopulateData(ExcelWorksheet worksheet, List<UnmappedProgram> programs)
@@ -71,7 +71,10 @@ namespace Services.Broadcast.ReportGenerators.ProgramMapping
 
         private string _GetMatchConfidenceString(float confidence)
         {
-            var val = Math.Round((confidence * 100.0), 3);
+            const double toPercent = 100.0;
+            const int decimalPoints = 2;
+
+            var val = Math.Round((confidence * toPercent), decimalPoints);
             var stringVal = $"{val}%";
             return stringVal;
         }
