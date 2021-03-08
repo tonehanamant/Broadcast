@@ -137,6 +137,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(exportedFile.Filename.StartsWith(expectedFileName));
             Assert.IsTrue(exportedFile.Filename.EndsWith(fileExtension));
 
+            // Uncomment this to write to file for a visual...
+            //var filePath = $@"c:\temp\{exportedFile.Filename}";
+            //using (var fileStream = File.Create(filePath))
+            //{
+            //    exportedFile.Stream.Seek(0, SeekOrigin.Begin);
+            //    exportedFile.Stream.CopyTo(fileStream);
+            //    exportedFile.Stream.Seek(0, SeekOrigin.Begin);
+            //}
+
             // verify the stream has contents
             string fileContent;
             using (var reader = new StreamReader(exportedFile.Stream))

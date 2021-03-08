@@ -65,7 +65,7 @@ namespace Services.Broadcast.ReportGenerators.ProgramMapping
 
         private void _PopulateData(ExcelWorksheet worksheet, List<UnmappedProgram> programs)
         {
-            var tableData = programs.OrderByDescending(p => p.MatchConfidence).Select(p => new object[] { p.OriginalName, p.MatchedName, p.Genre, _GetMatchConfidenceString(p.MatchConfidence)});
+            var tableData = programs.OrderByDescending(p => p.MatchConfidence).Select(p => new object[] { p.OriginalName, p.MatchedName, p.Genre, string.Empty, _GetMatchConfidenceString(p.MatchConfidence)});
             worksheet.Cells[DATA_START_ROW, DATA_START_COLUMN].LoadFromArrays(tableData);
         }
 
