@@ -448,7 +448,7 @@ namespace Services.Broadcast.Validators
         private void _ValidateMarkets(PlanDto plan)
         {
             if (!plan.CoverageGoalPercent.HasValue
-                || plan.CoverageGoalPercent.Value < 0.1
+                || plan.CoverageGoalPercent.Value <= 0
                 || plan.CoverageGoalPercent.Value > 100.0)
             {
                 throw new Exception(INVALID_COVERAGE_GOAL);
@@ -480,7 +480,7 @@ namespace Services.Broadcast.Validators
         private void _ValidateOptionalPercentage(double? candidate, string errorMessage)
         {
             if (candidate.HasValue &&
-                (candidate < 0.1 || candidate > 100.0))
+                (candidate <= 0 || candidate > 100.0))
             {
                 throw new Exception(errorMessage);
             }
