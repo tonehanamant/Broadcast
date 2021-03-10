@@ -93,6 +93,7 @@ namespace Services.Broadcast.BusinessEngines
         private IAabCache _AabApiCache;
         private ITrafficApiCache _TrafficApiCache;
         private IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsAabEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AabEngine"/> class.
@@ -100,21 +101,22 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="aabApiCache">The aab API cache.</param>
         /// <param name="trafficApiCache">The traffic API cache.</param>
         /// <param name="featureToggleHelper">The feature toggle helper.</param>
-        public AabEngine(IAabCache aabApiCache, 
+        public AabEngine(IAabCache aabApiCache,
             ITrafficApiCache trafficApiCache,
             IFeatureToggleHelper featureToggleHelper)
         {
             _AabApiCache = aabApiCache;
             _TrafficApiCache = trafficApiCache;
             _FeatureToggleHelper = featureToggleHelper;
+            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
         }
 
         /// <inheritdoc />
         public List<AgencyDto> GetAgencies()
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
-            var result = isAabEnabled 
-                ? _AabApiCache.GetAgencies() 
+            
+            var result = _IsAabEnabled.Value
+                ? _AabApiCache.GetAgencies()
                 : _TrafficApiCache.GetAgencies();
             return result;
         }
@@ -122,9 +124,9 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AgencyDto GetAgency(int agencyId)
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            
             AgencyDto result;
-            if (isAabEnabled)
+            if (_IsAabEnabled.Value)
             {
                 var items = _AabApiCache.GetAgencies();
                 result = items.Single(i => i.Id == agencyId, $"Agency with id {agencyId} not found.");
@@ -148,8 +150,8 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<AdvertiserDto> GetAdvertisers()
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
-            var result = isAabEnabled
+            
+            var result = _IsAabEnabled.Value
                 ? _AabApiCache.GetAdvertisers()
                 : _TrafficApiCache.GetAdvertisers();
             return result;
@@ -158,10 +160,10 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            
             AdvertiserDto result;
 
-            if (isAabEnabled)
+            if (_IsAabEnabled.Value)
             {
                 var items = _AabApiCache.GetAdvertisers();
                 result = items.Single(i => i.Id == advertiserId, $"Advertiser with id {advertiserId} not found.");
@@ -170,7 +172,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 result = _TrafficApiCache.GetAdvertiser(advertiserId);
             }
-            
+
             return result;
         }
 
@@ -186,10 +188,10 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(int advertiserId)
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
+            
             List<ProductDto> results;
 
-            if (isAabEnabled)
+            if (_IsAabEnabled.Value)
             {
                 var advertiser = GetAdvertiser(advertiserId);
                 results = _AabApiCache.GetAdvertiserProducts(advertiser.MasterId.Value);
@@ -198,7 +200,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 results = _TrafficApiCache.GetProductsByAdvertiserId(advertiserId);
             }
-            
+
             return results;
         }
 
@@ -223,8 +225,8 @@ namespace Services.Broadcast.BusinessEngines
         public ProductDto GetProduct(int productId)
         {
             // must check the toggle and fail since products have integer ids from both sources.
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
-            if (isAabEnabled)
+            
+            if (_IsAabEnabled.Value)
             {
                 throw new InvalidOperationException("Disable the AAb Navigation Feature to retrieve a product by an integer id.  Otherwise use method GetAdvertiserProduct.");
             }
@@ -234,8 +236,8 @@ namespace Services.Broadcast.BusinessEngines
 
         public void ClearAgenciesCache()
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
-            if (isAabEnabled)
+            
+            if (_IsAabEnabled.Value)
             {
                 _AabApiCache.ClearAgenciesCache();
             }
@@ -247,8 +249,8 @@ namespace Services.Broadcast.BusinessEngines
 
         public void ClearAdvertisersCache()
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
-            if (isAabEnabled)
+            
+            if (_IsAabEnabled.Value)
             {
                 _AabApiCache.ClearAdvertisersCache();
             }

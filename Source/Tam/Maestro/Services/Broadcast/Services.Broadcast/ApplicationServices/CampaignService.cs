@@ -192,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCache = daypartCache;
             _FeatureToggleHelper = featureToggleHelper;
             _AabEngine = aabEngine;
-            _IsAabEnabled = new Lazy<bool>(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION)); 
+            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION)); 
         }
 
         /// <inheritdoc />

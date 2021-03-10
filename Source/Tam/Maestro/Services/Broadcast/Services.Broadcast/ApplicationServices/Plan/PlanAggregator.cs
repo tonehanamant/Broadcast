@@ -30,6 +30,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsAabEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanAggregator"/> class.
@@ -48,6 +49,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
+            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
+
         }
 
         /// <inheritdoc/>
@@ -165,9 +168,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal void AggregateProduct(PlanDto plan, PlanSummaryDto summary)
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
             ProductDto product = null;
-            if (isAabEnabled)
+            if (_IsAabEnabled.Value)
             {
                 if (!plan.ProductMasterId.HasValue)
                 {
