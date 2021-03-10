@@ -440,6 +440,7 @@
     <Compile Include="IntegrationTestHelper.cs" />
     <Compile Include="JsonTextWriterOptimized.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Repositories\CampaignRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryProprietarySummaryRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryExportRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryFileRepositoryTests.cs" />

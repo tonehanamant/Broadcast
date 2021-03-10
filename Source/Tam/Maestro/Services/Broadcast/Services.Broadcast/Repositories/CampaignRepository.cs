@@ -355,8 +355,8 @@ namespace Services.Broadcast.Repositories
                 {
                     var campaigns = _GetFilteredCampaignsWithoutValidPlans(null, null, planStatus, context);
                     var plans = _GetFilteredPlansWithDates(null, null, planStatus, context);
-
-                    var plansDateRanges = plans.SelectMany(x => x.plan_versions).Select(version => new
+                    
+                    var plansDateRanges = plans.SelectMany(x => x.plan_versions).Where(y => y.id == y.plan.latest_version_id).Select(version => new
                     {
                         version.flight_start_date,
                         version.flight_end_date
