@@ -61,6 +61,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
+        public void CalculateMarketWeightChangeDecimalPlaceCheck()
+        {
+            // Arrange
+            var availableMarkets = _GetPreparedAvailableMarkets();
+            var modifiedMarketCode = availableMarkets[4].MarketCode;
+            const double userEnteredValue = 12.333333333;
+
+            var expectedMarketCount = availableMarkets.Count;
+            const int expectedUserEnteredValueCount = 3;
+            const double expectedUserEnteredSum = 25.133;
+            const double expectedTotalWeight = 100.0;
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass.CalculateMarketWeightChange(availableMarkets, modifiedMarketCode, userEnteredValue);
+
+            // Assert
+            Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
+            Assert.IsFalse(result.AvailableMarkets.Any(m => !m.ShareOfVoicePercent.HasValue));
+            Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(m => m.IsUserShareOfVoicePercent));
+
+            var userMarkets = result.AvailableMarkets.Where(m => m.IsUserShareOfVoicePercent).ToList();
+            var totalUserEntered = userMarkets
+                .Sum(m => m.ShareOfVoicePercent);
+            Assert.AreEqual(expectedUserEnteredSum, totalUserEntered);
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
+
+            var toValidate = result.AvailableMarkets.Select(a =>
+                new
+                {
+                    a.Id,
+                    a.MarketCode,
+                    a.Rank,
+                    a.PercentageOfUS,
+                    Before = new
+                    {
+                        availableMarkets.Single(s => s.Id == a.Id).IsUserShareOfVoicePercent,
+                        availableMarkets.Single(s => s.Id == a.Id).ShareOfVoicePercent
+                    },
+                    After = new
+                    {
+                        a.IsUserShareOfVoicePercent,
+                        a.ShareOfVoicePercent
+                    }
+                }).ToList();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toValidate));
+        }
+
+        [Test]
         public void CalculateMarketWeightChangeWhenClearValue()
         {
             // Arrange

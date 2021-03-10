@@ -67,6 +67,7 @@ namespace Services.Broadcast.BusinessEngines
     public class PlanMarketSovCalculator : IPlanMarketSovCalculator
     {
         const int ShareOfVoiceDecimalPlaces = 5;
+        const int ShareOfVoiceDecimalPlacesDisplay = 3;
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
@@ -76,7 +77,9 @@ namespace Services.Broadcast.BusinessEngines
             // find the modified
             var modifiedMarket = markets.Single(m => m.MarketCode == modifiedMarketCode);
             // modify it
-            modifiedMarket.ShareOfVoicePercent = userEnteredValue;
+            modifiedMarket.ShareOfVoicePercent = userEnteredValue.HasValue ?
+                    Math.Round(userEnteredValue.Value, ShareOfVoiceDecimalPlaces)
+                : userEnteredValue;
             modifiedMarket.IsUserShareOfVoicePercent = userEnteredValue.HasValue;
             // balance
             var results = CalculateMarketWeights(markets);
@@ -114,8 +117,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public double CalculateTotalWeight(List<PlanAvailableMarketDto> markets)
         {
-            var totalWeightDecimalPlaces = 3;
-            var totalWeight = Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), totalWeightDecimalPlaces);
+            var totalWeight = Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), ShareOfVoiceDecimalPlacesDisplay);
             return totalWeight;
         }
 
@@ -161,7 +163,14 @@ namespace Services.Broadcast.BusinessEngines
                 AvailableMarkets = orderedMarkets,
                 TotalWeight = totalWeight
             };
+            _FormatResultForDisplay(result);
             return result;
+        }
+
+        internal void _FormatResultForDisplay(PlanAvailableMarketCalculationResult result)
+        {
+            result.AvailableMarkets.ForEach(s => s.ShareOfVoicePercent = Math.Round(s.ShareOfVoicePercent.Value, ShareOfVoiceDecimalPlacesDisplay));   
+            result.TotalWeight = Math.Round(result.TotalWeight, ShareOfVoiceDecimalPlacesDisplay);
         }
 
         internal List<PlanAvailableMarketDto> _GetCopy(List<PlanAvailableMarketDto> toCopy, bool clearUserValue = false)

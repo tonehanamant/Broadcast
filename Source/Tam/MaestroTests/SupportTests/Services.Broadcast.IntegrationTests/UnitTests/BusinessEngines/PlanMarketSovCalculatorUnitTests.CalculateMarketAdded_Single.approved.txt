@@ -16,7 +16,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 4.8236
+      "ShareOfVoicePercent": 4.824
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -30,7 +30,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 2.99199
+      "ShareOfVoicePercent": 2.992
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -44,7 +44,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 2.40214
+      "ShareOfVoicePercent": 2.402
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -58,7 +58,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 2.25976
+      "ShareOfVoicePercent": 2.26
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -72,7 +72,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 2.23738
+      "ShareOfVoicePercent": 2.237
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -86,7 +86,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 2.22315
+      "ShareOfVoicePercent": 2.223
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -100,7 +100,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 2.22111
+      "ShareOfVoicePercent": 2.221
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -114,7 +114,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.74109
+      "ShareOfVoicePercent": 1.741
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -128,7 +128,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.7055
+      "ShareOfVoicePercent": 1.706
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -142,7 +142,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.70448
+      "ShareOfVoicePercent": 1.704
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -156,7 +156,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.56922
+      "ShareOfVoicePercent": 1.569
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -170,7 +170,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.52142
+      "ShareOfVoicePercent": 1.521
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -184,7 +184,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.44108
+      "ShareOfVoicePercent": 1.441
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -198,7 +198,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.38819
+      "ShareOfVoicePercent": 1.388
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -212,7 +212,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.31294
+      "ShareOfVoicePercent": 1.313
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -226,7 +226,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.28141
+      "ShareOfVoicePercent": 1.281
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -240,7 +240,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.07903
+      "ShareOfVoicePercent": 1.079
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -254,7 +254,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.07089
+      "ShareOfVoicePercent": 1.071
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -268,7 +268,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.03835
+      "ShareOfVoicePercent": 1.038
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -282,7 +282,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.02716
+      "ShareOfVoicePercent": 1.027
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -296,7 +296,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 1.00479
+      "ShareOfVoicePercent": 1.005
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -310,7 +310,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.93462
+      "ShareOfVoicePercent": 0.935
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -324,7 +324,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.93055
+      "ShareOfVoicePercent": 0.931
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -338,7 +338,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.90919
+      "ShareOfVoicePercent": 0.909
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -352,7 +352,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.86038
+      "ShareOfVoicePercent": 0.86
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -380,7 +380,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.83597
+      "ShareOfVoicePercent": 0.836
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -394,7 +394,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.81665
+      "ShareOfVoicePercent": 0.817
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -408,7 +408,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.81359
+      "ShareOfVoicePercent": 0.814
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -422,7 +422,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.79122
+      "ShareOfVoicePercent": 0.791
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -436,7 +436,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.78715
+      "ShareOfVoicePercent": 0.787
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -450,7 +450,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.75156
+      "ShareOfVoicePercent": 0.752
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -464,7 +464,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.73427
+      "ShareOfVoicePercent": 0.734
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -492,7 +492,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.68647
+      "ShareOfVoicePercent": 0.686
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -506,7 +506,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.63969
+      "ShareOfVoicePercent": 0.64
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -520,7 +520,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.63562
+      "ShareOfVoicePercent": 0.636
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -534,7 +534,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.62545
+      "ShareOfVoicePercent": 0.625
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -548,7 +548,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.62342
+      "ShareOfVoicePercent": 0.623
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -562,7 +562,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.61935
+      "ShareOfVoicePercent": 0.619
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -576,7 +576,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.61223
+      "ShareOfVoicePercent": 0.612
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -590,7 +590,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.61121
+      "ShareOfVoicePercent": 0.611
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -604,7 +604,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.6102
+      "ShareOfVoicePercent": 0.61
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -618,7 +618,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.59596
+      "ShareOfVoicePercent": 0.596
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -632,7 +632,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.58884
+      "ShareOfVoicePercent": 0.589
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -646,7 +646,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.57867
+      "ShareOfVoicePercent": 0.579
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -660,7 +660,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.54206
+      "ShareOfVoicePercent": 0.542
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -674,7 +674,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.53799
+      "ShareOfVoicePercent": 0.538
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -688,7 +688,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.5207
+      "ShareOfVoicePercent": 0.521
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -702,7 +702,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.5146
+      "ShareOfVoicePercent": 0.515
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -716,7 +716,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.49833
+      "ShareOfVoicePercent": 0.498
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -730,7 +730,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.47494
+      "ShareOfVoicePercent": 0.475
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -744,7 +744,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.47392
+      "ShareOfVoicePercent": 0.474
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -758,7 +758,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.47392
+      "ShareOfVoicePercent": 0.474
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -772,7 +772,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.4729
+      "ShareOfVoicePercent": 0.473
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -786,7 +786,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.46883
+      "ShareOfVoicePercent": 0.469
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -800,7 +800,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.46883
+      "ShareOfVoicePercent": 0.469
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -814,7 +814,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.41697
+      "ShareOfVoicePercent": 0.417
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -828,7 +828,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.41188
+      "ShareOfVoicePercent": 0.412
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -842,7 +842,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.39256
+      "ShareOfVoicePercent": 0.393
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -856,7 +856,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.38036
+      "ShareOfVoicePercent": 0.38
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -870,7 +870,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.3773
+      "ShareOfVoicePercent": 0.377
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -884,7 +884,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.3773
+      "ShareOfVoicePercent": 0.377
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -898,7 +898,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.3773
+      "ShareOfVoicePercent": 0.377
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -912,7 +912,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.37629
+      "ShareOfVoicePercent": 0.376
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -926,7 +926,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.37324
+      "ShareOfVoicePercent": 0.373
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -940,7 +940,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.37222
+      "ShareOfVoicePercent": 0.372
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -954,7 +954,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.36815
+      "ShareOfVoicePercent": 0.368
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -968,7 +968,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.36205
+      "ShareOfVoicePercent": 0.362
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -982,7 +982,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.35391
+      "ShareOfVoicePercent": 0.354
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -996,7 +996,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.34883
+      "ShareOfVoicePercent": 0.349
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1010,7 +1010,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.34883
+      "ShareOfVoicePercent": 0.349
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1024,7 +1024,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.34374
+      "ShareOfVoicePercent": 0.344
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1052,7 +1052,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.33357
+      "ShareOfVoicePercent": 0.334
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1066,7 +1066,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.33256
+      "ShareOfVoicePercent": 0.333
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1080,7 +1080,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.32137
+      "ShareOfVoicePercent": 0.321
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1094,7 +1094,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.31934
+      "ShareOfVoicePercent": 0.319
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1108,7 +1108,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.31934
+      "ShareOfVoicePercent": 0.319
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1122,7 +1122,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.3173
+      "ShareOfVoicePercent": 0.317
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1136,7 +1136,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.31425
+      "ShareOfVoicePercent": 0.314
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1150,7 +1150,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.31222
+      "ShareOfVoicePercent": 0.312
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1164,7 +1164,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.31222
+      "ShareOfVoicePercent": 0.312
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1178,7 +1178,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.3051
+      "ShareOfVoicePercent": 0.305
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1192,7 +1192,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.29493
+      "ShareOfVoicePercent": 0.295
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1206,7 +1206,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.29086
+      "ShareOfVoicePercent": 0.291
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1220,7 +1220,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.28883
+      "ShareOfVoicePercent": 0.289
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1234,7 +1234,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.28577
+      "ShareOfVoicePercent": 0.286
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1248,7 +1248,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.27764
+      "ShareOfVoicePercent": 0.278
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1262,7 +1262,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.2695
+      "ShareOfVoicePercent": 0.27
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1276,7 +1276,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.26645
+      "ShareOfVoicePercent": 0.266
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1290,7 +1290,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.26544
+      "ShareOfVoicePercent": 0.265
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1304,7 +1304,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.2634
+      "ShareOfVoicePercent": 0.263
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1318,7 +1318,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.25933
+      "ShareOfVoicePercent": 0.259
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1332,7 +1332,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.25527
+      "ShareOfVoicePercent": 0.255
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1346,7 +1346,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.25221
+      "ShareOfVoicePercent": 0.252
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1360,7 +1360,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.24001
+      "ShareOfVoicePercent": 0.24
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1374,7 +1374,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.24001
+      "ShareOfVoicePercent": 0.24
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1388,7 +1388,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.23899
+      "ShareOfVoicePercent": 0.239
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1402,7 +1402,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.23899
+      "ShareOfVoicePercent": 0.239
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1416,7 +1416,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.23798
+      "ShareOfVoicePercent": 0.238
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1430,7 +1430,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.23391
+      "ShareOfVoicePercent": 0.234
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1444,7 +1444,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.22984
+      "ShareOfVoicePercent": 0.23
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1458,7 +1458,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.22882
+      "ShareOfVoicePercent": 0.229
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1472,7 +1472,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.22577
+      "ShareOfVoicePercent": 0.226
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1486,7 +1486,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.22577
+      "ShareOfVoicePercent": 0.226
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1500,7 +1500,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.21764
+      "ShareOfVoicePercent": 0.218
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1514,7 +1514,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.21764
+      "ShareOfVoicePercent": 0.218
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1528,7 +1528,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.21662
+      "ShareOfVoicePercent": 0.217
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1542,7 +1542,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.2156
+      "ShareOfVoicePercent": 0.216
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1556,7 +1556,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.21255
+      "ShareOfVoicePercent": 0.213
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1570,7 +1570,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.21153
+      "ShareOfVoicePercent": 0.212
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1584,7 +1584,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.2095
+      "ShareOfVoicePercent": 0.21
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1598,7 +1598,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.20238
+      "ShareOfVoicePercent": 0.202
     },
     "Before": {
       "IsUserShareOfVoicePercent": null,
@@ -1612,7 +1612,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.20136
+      "ShareOfVoicePercent": 0.201
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1626,7 +1626,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.20136
+      "ShareOfVoicePercent": 0.201
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1640,7 +1640,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.20136
+      "ShareOfVoicePercent": 0.201
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1654,7 +1654,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.19831
+      "ShareOfVoicePercent": 0.198
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1668,7 +1668,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.1973
+      "ShareOfVoicePercent": 0.197
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1682,7 +1682,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.19221
+      "ShareOfVoicePercent": 0.192
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1696,7 +1696,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.18713
+      "ShareOfVoicePercent": 0.187
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1710,7 +1710,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.18001
+      "ShareOfVoicePercent": 0.18
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1724,7 +1724,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.17797
+      "ShareOfVoicePercent": 0.178
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1738,7 +1738,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.17391
+      "ShareOfVoicePercent": 0.174
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1752,7 +1752,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.16272
+      "ShareOfVoicePercent": 0.163
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1766,7 +1766,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.16272
+      "ShareOfVoicePercent": 0.163
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1780,7 +1780,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.15662
+      "ShareOfVoicePercent": 0.157
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1794,7 +1794,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.15051
+      "ShareOfVoicePercent": 0.151
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1808,7 +1808,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14848
+      "ShareOfVoicePercent": 0.148
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1822,7 +1822,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14848
+      "ShareOfVoicePercent": 0.148
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1836,7 +1836,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14645
+      "ShareOfVoicePercent": 0.146
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1850,7 +1850,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14645
+      "ShareOfVoicePercent": 0.146
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1864,7 +1864,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14645
+      "ShareOfVoicePercent": 0.146
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1878,7 +1878,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14238
+      "ShareOfVoicePercent": 0.142
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1892,7 +1892,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14136
+      "ShareOfVoicePercent": 0.141
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1906,7 +1906,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14136
+      "ShareOfVoicePercent": 0.141
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1920,7 +1920,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.14034
+      "ShareOfVoicePercent": 0.14
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1934,7 +1934,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.13933
+      "ShareOfVoicePercent": 0.139
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1948,7 +1948,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.13933
+      "ShareOfVoicePercent": 0.139
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1962,7 +1962,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.13831
+      "ShareOfVoicePercent": 0.138
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1976,7 +1976,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.13526
+      "ShareOfVoicePercent": 0.135
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -1990,7 +1990,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.13119
+      "ShareOfVoicePercent": 0.131
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2004,7 +2004,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.12916
+      "ShareOfVoicePercent": 0.129
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2018,7 +2018,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.12814
+      "ShareOfVoicePercent": 0.128
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2032,7 +2032,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.12509
+      "ShareOfVoicePercent": 0.125
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2046,7 +2046,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.12407
+      "ShareOfVoicePercent": 0.124
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2060,7 +2060,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.12204
+      "ShareOfVoicePercent": 0.122
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2074,7 +2074,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.12204
+      "ShareOfVoicePercent": 0.122
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2088,7 +2088,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.11594
+      "ShareOfVoicePercent": 0.116
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2102,7 +2102,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.1139
+      "ShareOfVoicePercent": 0.114
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2116,7 +2116,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.11289
+      "ShareOfVoicePercent": 0.113
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2130,7 +2130,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.10984
+      "ShareOfVoicePercent": 0.11
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2144,7 +2144,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.10984
+      "ShareOfVoicePercent": 0.11
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2158,7 +2158,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.10882
+      "ShareOfVoicePercent": 0.109
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2172,7 +2172,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.10882
+      "ShareOfVoicePercent": 0.109
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2186,7 +2186,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.10882
+      "ShareOfVoicePercent": 0.109
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2200,7 +2200,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.1078
+      "ShareOfVoicePercent": 0.108
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2214,7 +2214,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.10272
+      "ShareOfVoicePercent": 0.103
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2228,7 +2228,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.09763
+      "ShareOfVoicePercent": 0.098
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2242,7 +2242,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.0956
+      "ShareOfVoicePercent": 0.096
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2256,7 +2256,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.0956
+      "ShareOfVoicePercent": 0.096
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2270,7 +2270,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.09356
+      "ShareOfVoicePercent": 0.094
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2284,7 +2284,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.08848
+      "ShareOfVoicePercent": 0.088
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2298,7 +2298,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.08644
+      "ShareOfVoicePercent": 0.086
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2312,7 +2312,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.08543
+      "ShareOfVoicePercent": 0.085
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2326,7 +2326,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.08543
+      "ShareOfVoicePercent": 0.085
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2340,7 +2340,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.08339
+      "ShareOfVoicePercent": 0.083
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2354,7 +2354,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.08339
+      "ShareOfVoicePercent": 0.083
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2368,7 +2368,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07831
+      "ShareOfVoicePercent": 0.078
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2382,7 +2382,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07831
+      "ShareOfVoicePercent": 0.078
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2396,7 +2396,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07729
+      "ShareOfVoicePercent": 0.077
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2410,7 +2410,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07424
+      "ShareOfVoicePercent": 0.074
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2424,7 +2424,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07424
+      "ShareOfVoicePercent": 0.074
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2438,7 +2438,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07119
+      "ShareOfVoicePercent": 0.071
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2452,7 +2452,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07017
+      "ShareOfVoicePercent": 0.07
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2466,7 +2466,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.07017
+      "ShareOfVoicePercent": 0.07
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2480,7 +2480,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.06509
+      "ShareOfVoicePercent": 0.065
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2494,7 +2494,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.06407
+      "ShareOfVoicePercent": 0.064
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2508,7 +2508,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.06305
+      "ShareOfVoicePercent": 0.063
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2522,7 +2522,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.06102
+      "ShareOfVoicePercent": 0.061
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2536,7 +2536,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.06102
+      "ShareOfVoicePercent": 0.061
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2564,7 +2564,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05695
+      "ShareOfVoicePercent": 0.057
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2578,7 +2578,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05695
+      "ShareOfVoicePercent": 0.057
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2592,7 +2592,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05593
+      "ShareOfVoicePercent": 0.056
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2606,7 +2606,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05492
+      "ShareOfVoicePercent": 0.055
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2620,7 +2620,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05288
+      "ShareOfVoicePercent": 0.053
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2634,7 +2634,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05187
+      "ShareOfVoicePercent": 0.052
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2648,7 +2648,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.05187
+      "ShareOfVoicePercent": 0.052
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2662,7 +2662,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.04882
+      "ShareOfVoicePercent": 0.049
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2676,7 +2676,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.04882
+      "ShareOfVoicePercent": 0.049
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2690,7 +2690,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.0478
+      "ShareOfVoicePercent": 0.048
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2704,7 +2704,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.04475
+      "ShareOfVoicePercent": 0.045
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2718,7 +2718,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.03865
+      "ShareOfVoicePercent": 0.039
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2732,7 +2732,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.03865
+      "ShareOfVoicePercent": 0.039
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2746,7 +2746,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.03153
+      "ShareOfVoicePercent": 0.032
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2760,7 +2760,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.02848
+      "ShareOfVoicePercent": 0.028
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2774,7 +2774,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.02746
+      "ShareOfVoicePercent": 0.027
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2788,7 +2788,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.02441
+      "ShareOfVoicePercent": 0.024
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2802,7 +2802,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.02339
+      "ShareOfVoicePercent": 0.023
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2816,7 +2816,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.02237
+      "ShareOfVoicePercent": 0.022
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2830,7 +2830,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.01424
+      "ShareOfVoicePercent": 0.014
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2844,7 +2844,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.0122
+      "ShareOfVoicePercent": 0.012
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
@@ -2858,7 +2858,7 @@
   {
     "After": {
       "IsUserShareOfVoicePercent": false,
-      "ShareOfVoicePercent": 0.00407
+      "ShareOfVoicePercent": 0.004
     },
     "Before": {
       "IsUserShareOfVoicePercent": false,
