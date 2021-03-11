@@ -736,6 +736,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 BlackoutMarkets = plan.BlackoutMarkets,
                 AvailableMarketsSovTotal = plan.AvailableMarketsSovTotal,
                 WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks,
+                WeeklyBreakdownTotals = plan.WeeklyBreakdownTotals,
                 ModifiedBy = plan.ModifiedBy,
                 ModifiedDate = plan.ModifiedDate,
                 Vpvh = plan.Vpvh,

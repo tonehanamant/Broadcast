@@ -193,7 +193,7 @@
     "TotalBudget": 0.0,
     "TotalImpressions": 0.0,
     "TotalImpressionsPercentage": 0.0,
-    "TotalRatingPoints": 0.0,
+    "TotalRatingPoints": 50.0,
     "TotalUnits": 0.0
   },
   "WeeklyBreakdownWeeks": []
