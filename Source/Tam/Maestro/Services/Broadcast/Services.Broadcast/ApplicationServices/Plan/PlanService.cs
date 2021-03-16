@@ -219,6 +219,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
 
+        private Lazy<bool> _IsMarketSovCalculationEnabled;
+
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
@@ -259,14 +261,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CreativeLengthEngine = creativeLengthEngine;
             _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
+
+            _IsMarketSovCalculationEnabled = new Lazy<bool>(() => 
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
         }        
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
         {
-            bool isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
-
             // When the flag is disabled we want to fill in the missing values
-            if (!isEnabled)
+            if (!_IsMarketSovCalculationEnabled.Value)
             {
                 plan.AvailableMarkets.Where(s => s.ShareOfVoicePercent.HasValue).ToList()
                     .ForEach(s =>s.IsUserShareOfVoicePercent = true);
@@ -279,10 +282,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal void _OnGetHandlePlanAvailableMarketSovFeature(PlanDto plan)
         {
-            bool isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
-
             // when the flag is disabled then we want to hide the feature values
-            if (!isEnabled)
+            if (!_IsMarketSovCalculationEnabled.Value)
             {
                 plan.AvailableMarkets.ForEach(s =>
                 {
@@ -688,7 +689,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _HandleAvailableMarketSovs(PlanDto plan)
         {
-            plan.AvailableMarketsSovTotal = _PlanMarketSovCalculator.CalculateTotalWeight(plan.AvailableMarkets);
+            var calculationResults = _PlanMarketSovCalculator.CalculateMarketWeights(plan.AvailableMarkets);
+            plan.AvailableMarkets = calculationResults.AvailableMarkets;
+            plan.AvailableMarketsSovTotal = calculationResults.TotalWeight;
         }
 
         public PlanDto_v2 GetPlan_v2(int planId, int? versionId = null)

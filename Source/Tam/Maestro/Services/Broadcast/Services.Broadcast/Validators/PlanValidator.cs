@@ -469,7 +469,7 @@ namespace Services.Broadcast.Validators
             var isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
             if (isEnabled)
             {
-                var totalMarketSov = Math.Round(plan.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0));
+                var totalMarketSov = Math.Round(plan.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0), PlanMarketSovCalculator.MarketTotalSovDecimals);
                 if (totalMarketSov > maxTotalMarketSov)
                 {
                     throw new Exception(INVALID_TOTAL_MARKET_SHARE_OF_VOICE);

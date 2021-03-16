@@ -4,7 +4,7 @@
     "id": 1,
     "impressions": 1000.0,
     "market_code": 101,
-    "percentage_of_us": 0.06309,
+    "percentage_of_us": 6.309,
     "spot_cost": [
       {
         "spot_length_cost": 50.0,
@@ -25,7 +25,7 @@
     "id": 1,
     "impressions": 1000.0,
     "market_code": 101,
-    "percentage_of_us": 0.06309,
+    "percentage_of_us": 6.309,
     "spot_cost": [
       {
         "spot_length_cost": 50.0,
@@ -46,7 +46,7 @@
     "id": 1,
     "impressions": 1000.0,
     "market_code": 101,
-    "percentage_of_us": 0.06309,
+    "percentage_of_us": 6.309,
     "spot_cost": [
       {
         "spot_length_cost": 50.0,
@@ -67,7 +67,7 @@
     "id": 2,
     "impressions": 1000.0,
     "market_code": 106,
-    "percentage_of_us": 0.02163,
+    "percentage_of_us": 2.163,
     "spot_cost": [
       {
         "spot_length_cost": 25.0,
@@ -84,7 +84,7 @@
     "id": 2,
     "impressions": 1000.0,
     "market_code": 106,
-    "percentage_of_us": 0.02163,
+    "percentage_of_us": 2.163,
     "spot_cost": [
       {
         "spot_length_cost": 25.0,
@@ -101,7 +101,7 @@
     "id": 2,
     "impressions": 1000.0,
     "market_code": 106,
-    "percentage_of_us": 0.02163,
+    "percentage_of_us": 2.163,
     "spot_cost": [
       {
         "spot_length_cost": 25.0,
@@ -118,7 +118,7 @@
     "id": 3,
     "impressions": 1000.0,
     "market_code": 107,
-    "percentage_of_us": 0.00293,
+    "percentage_of_us": 0.293,
     "spot_cost": [
       {
         "spot_length_cost": 50.0,
@@ -135,7 +135,7 @@
     "id": 3,
     "impressions": 1000.0,
     "market_code": 107,
-    "percentage_of_us": 0.00293,
+    "percentage_of_us": 0.293,
     "spot_cost": [
       {
         "spot_length_cost": 50.0,
@@ -152,7 +152,7 @@
     "id": 3,
     "impressions": 1000.0,
     "market_code": 107,
-    "percentage_of_us": 0.00293,
+    "percentage_of_us": 0.293,
     "spot_cost": [
       {
         "spot_length_cost": 50.0,

@@ -393,34 +393,53 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
-        public void BalanceMarketWeights()
+        public void CalculateMarketWeights_Bug2115()
         {
             // Arrange
-            var markets = _GetPreparedAvailableMarkets();
+            var marketCodes =new List<short> { 101,403,182,158,360,311} ;
+            var markets = MarketsTestData.GetPlanAvailableMarkets()
+                .Where(m => marketCodes.Contains(m.MarketCode))
+                .ToList();
+            markets.ForEach(m =>
+            {
+                switch (m.MarketCode)
+                {
+                    case 101:
+                        m.ShareOfVoicePercent = 84.769;
+                        m.IsUserShareOfVoicePercent = true;
+                        break;
+                    case 403:
+                        m.ShareOfVoicePercent = 14.538;
+                        break;
+                    case 182:
+                        m.ShareOfVoicePercent = 0.181;
+                        break;
+                    case 158:
+                        m.ShareOfVoicePercent = 0.172;
+                        break;
+                    case 360:
+                        m.ShareOfVoicePercent = 0.172;
+                        break;
+                    case 311:
+                        m.ShareOfVoicePercent = 0.169;
+                        break;
+                }
+            });
 
             var expectedMarketCount = markets.Count;
-            const int expectedUserEnteredValueCount = 2;
-            const double expectedUserEnteredSum = 12.8;
             const double expectedTotalWeight = 100.0;
 
             var testClass = _GetTestClass();
 
             // Act
-            testClass._BalanceMarketWeights(markets);
+            var result = testClass.CalculateMarketWeights(markets);
 
             // Assert
-            Assert.AreEqual(expectedMarketCount, markets.Count);
-            Assert.IsFalse(markets.Any(m => !m.ShareOfVoicePercent.HasValue));
-            Assert.AreEqual(expectedUserEnteredValueCount, markets.Count(m => m.IsUserShareOfVoicePercent));
-            Assert.AreEqual(expectedUserEnteredSum, markets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
-            var totalWeight = _GetTotalWeight(markets);
-            Assert.AreEqual(expectedTotalWeight, totalWeight);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets));
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
         }
 
         [Test]
-        public void BalanceMarketWeightsWhenExceedOneHundred()
+        public void CalculateMarketWeightsWhenExceedOneHundred()
         {
             // Arrange
             var markets = _GetPreparedAvailableMarkets();
@@ -436,17 +455,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var testClass = _GetTestClass();
 
             // Act
-            testClass._BalanceMarketWeights(markets);
+            var results = testClass.CalculateMarketWeights(markets);
 
             // Assert
-            Assert.AreEqual(expectedMarketCount, markets.Count);
-            Assert.IsFalse(markets.Any(m => !m.ShareOfVoicePercent.HasValue));
-            Assert.AreEqual(expectedUserEnteredValueCount, markets.Count(m => m.IsUserShareOfVoicePercent));
-            Assert.AreEqual(expectedUserEnteredSum, markets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
-            Assert.AreEqual(expectedTotalWeight, markets.Sum(m => m.ShareOfVoicePercent ?? 0));
-            Assert.AreEqual(expectedNonUserEnteredSum, markets.Where(m => !m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent ?? 0));
+            Assert.AreEqual(expectedMarketCount, results.AvailableMarkets.Count);
+            Assert.IsFalse(results.AvailableMarkets.Any(m => !m.ShareOfVoicePercent.HasValue));
+            Assert.AreEqual(expectedUserEnteredValueCount, results.AvailableMarkets.Count(m => m.IsUserShareOfVoicePercent));
+            Assert.AreEqual(expectedUserEnteredSum, results.AvailableMarkets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
+            Assert.AreEqual(expectedTotalWeight, results.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0));
+            Assert.AreEqual(expectedNonUserEnteredSum, results.AvailableMarkets.Where(m => !m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent ?? 0));
             
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
         /// <summary>
@@ -454,7 +473,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         ///     attached to Jira ticket BP-1892
         /// </summary>
         [Test]
-        public void BalanceMarketWeightsPerStoryAttachmentExample()
+        public void CalculateMarketWeightsPerStoryAttachmentExample()
         {
             // Arrange
             var markets = _GetPreparedAvailableMarkets().Take(8).ToList();
@@ -481,33 +500,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var testClass = _GetTestClass();
 
             // Act
-            testClass._BalanceMarketWeights(markets);
+            var result = testClass.CalculateMarketWeights(markets);
 
             // Assert
-            Assert.AreEqual(expectedMarketCount, markets.Count);
-            Assert.IsFalse(markets.Any(m => !m.ShareOfVoicePercent.HasValue));
-            Assert.AreEqual(expectedUserEnteredValueCount, markets.Count(m => m.IsUserShareOfVoicePercent));
-            Assert.AreEqual(expectedUserEnteredSum, markets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
-            var totalWeight = _GetTotalWeight(markets);
-            Assert.AreEqual(expectedTotalWeight, totalWeight);
+            Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
+            Assert.IsFalse(result.AvailableMarkets.Any(m => !m.ShareOfVoicePercent.HasValue));
+            Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(m => m.IsUserShareOfVoicePercent));
+            Assert.AreEqual(expectedUserEnteredSum, result.AvailableMarkets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
             
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets));
-        }
-
-        [Test]
-        public void CalculateTotalWeight()
-        {
-            // Arrange
-            var markets = _GetPreparedAvailableMarkets();
-            var expectedResult = _GetTotalWeight(markets);
-
-            var testClass = _GetTestClass();
-
-            // Act
-            var result = testClass.CalculateTotalWeight(markets);
-
-            // Assert
-            Assert.AreEqual(expectedResult, result);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -528,11 +530,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedCount, result.AvailableMarkets.Count);
             Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
             Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(s => s.IsUserShareOfVoicePercent));
-        }
-
-        private double _GetTotalWeight(List<PlanAvailableMarketDto> markets)
-        {
-            return Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), 3);
         }
 
         private PlanMarketSovCalculator _GetTestClass()

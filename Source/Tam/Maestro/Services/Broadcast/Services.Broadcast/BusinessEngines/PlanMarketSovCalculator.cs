@@ -47,13 +47,6 @@ namespace Services.Broadcast.BusinessEngines
         PlanAvailableMarketCalculationResult CalculateMarketWeights(List<PlanAvailableMarketDto> markets);
 
         /// <summary>
-        /// Calculates the total weight.
-        /// </summary>
-        /// <param name="markets">The markets.</param>
-        /// <returns></returns>
-        double CalculateTotalWeight(List<PlanAvailableMarketDto> markets);
-
-        /// <summary>
         /// Clears the user entered values and recalculates the weights.
         /// </summary>
         /// <param name="availableMarkets">The available markets.</param>
@@ -66,8 +59,9 @@ namespace Services.Broadcast.BusinessEngines
     /// </summary>
     public class PlanMarketSovCalculator : IPlanMarketSovCalculator
     {
-        const int ShareOfVoiceDecimalPlaces = 5;
-        const int ShareOfVoiceDecimalPlacesDisplay = 3;
+        public const int MarketTotalSovDecimals = 2;
+
+        private const int MarketSovDecimals = 3;
 
         /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketWeightChange(List<PlanAvailableMarketDto> availableMarkets,
@@ -78,7 +72,7 @@ namespace Services.Broadcast.BusinessEngines
             var modifiedMarket = markets.Single(m => m.MarketCode == modifiedMarketCode);
             // modify it
             modifiedMarket.ShareOfVoicePercent = userEnteredValue.HasValue ?
-                    Math.Round(userEnteredValue.Value, ShareOfVoiceDecimalPlaces)
+                    Math.Round(userEnteredValue.Value, MarketSovDecimals)
                 : userEnteredValue;
             modifiedMarket.IsUserShareOfVoicePercent = userEnteredValue.HasValue;
             // balance
@@ -115,13 +109,6 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc />
-        public double CalculateTotalWeight(List<PlanAvailableMarketDto> markets)
-        {
-            var totalWeight = Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), ShareOfVoiceDecimalPlacesDisplay);
-            return totalWeight;
-        }
-
-        /// <inheritdoc />
         public PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets)
         {
             var markets = _GetCopy(availableMarkets, clearUserValue:true);
@@ -130,57 +117,52 @@ namespace Services.Broadcast.BusinessEngines
             return results;
         }
 
-        internal void _BalanceMarketWeights(List<PlanAvailableMarketDto> markets)
+        private void _BalanceMarketWeights(List<PlanAvailableMarketDto> markets)
         {
-            var totalUserEnteredCoverage = markets.Where(m => m.IsUserShareOfVoicePercent)
-                .Sum(m => m.ShareOfVoicePercent ?? 0);
+            var totalUserEnteredSov = markets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent ?? 0);
 
-            if (totalUserEnteredCoverage >= 100)
+            if (totalUserEnteredSov >= 100)
             {
                 markets.Where(m => !m.IsUserShareOfVoicePercent).ForEach(m => m.ShareOfVoicePercent = 0);
                 return;
             }
 
             var totalRepresentedCoverage = markets.Sum(m => m.PercentageOfUS);
-            var totalRepresentedCoverageNonUser = markets.Where(m => !m.IsUserShareOfVoicePercent).Sum(m => m.PercentageOfUS);
-            var representedMarkets = markets.Select(m => new RepresentedMarket
-            {
-                Market = m,
-                PercentOfRepresentedCoverage = (m.PercentageOfUS / totalRepresentedCoverage) * 100.0
-            }).ToList();
-
-            var remainderToDistribute = 100.0 - totalUserEnteredCoverage;
-            representedMarkets.Where(m => !m.Market.IsUserShareOfVoicePercent).ForEach(m => 
-                m.Market.ShareOfVoicePercent = Math.Round(remainderToDistribute * (m.Market.PercentageOfUS / totalRepresentedCoverageNonUser), ShareOfVoiceDecimalPlaces));
+            var totalRepresentedCoverageNonUser = 
+                markets.Where(m => !m.IsUserShareOfVoicePercent).Sum(m => m.PercentageOfUS);
+            
+            var remainderToDistribute = 100.0 - totalUserEnteredSov;
+            markets.Where(m => !m.IsUserShareOfVoicePercent).ForEach(m => 
+                m.ShareOfVoicePercent = remainderToDistribute * (m.PercentageOfUS / totalRepresentedCoverageNonUser));
         }
 
-        internal PlanAvailableMarketCalculationResult _GetResults(List<PlanAvailableMarketDto> markets)
+        private PlanAvailableMarketCalculationResult _GetResults(List<PlanAvailableMarketDto> markets)
         {
             var orderedMarkets = markets.OrderBy(m => m.Rank).ToList();
-            var totalWeight = CalculateTotalWeight(markets);
+            var totalWeight = orderedMarkets.Sum(m => m.ShareOfVoicePercent ?? 0);
             var result = new PlanAvailableMarketCalculationResult
             {
                 AvailableMarkets = orderedMarkets,
                 TotalWeight = totalWeight
             };
-            _FormatResultForDisplay(result);
+            _RoundResults(result);
             return result;
         }
 
-        internal void _FormatResultForDisplay(PlanAvailableMarketCalculationResult result)
+        private void _RoundResults(PlanAvailableMarketCalculationResult result)
         {
-            result.AvailableMarkets.ForEach(s => s.ShareOfVoicePercent = Math.Round(s.ShareOfVoicePercent.Value, ShareOfVoiceDecimalPlacesDisplay));   
-            result.TotalWeight = Math.Round(result.TotalWeight, ShareOfVoiceDecimalPlacesDisplay);
+            result.AvailableMarkets.ForEach(s => s.ShareOfVoicePercent = Math.Round(s.ShareOfVoicePercent.Value, MarketSovDecimals));
+            result.TotalWeight = Math.Round(result.TotalWeight, MarketTotalSovDecimals);
         }
 
-        internal List<PlanAvailableMarketDto> _GetCopy(List<PlanAvailableMarketDto> toCopy, bool clearUserValue = false)
+        private List<PlanAvailableMarketDto> _GetCopy(List<PlanAvailableMarketDto> toCopy, bool clearUserValue = false)
         {
             var result = new List<PlanAvailableMarketDto>();
             toCopy.ForEach(c => result.Add(_GetCopy(c, clearUserValue)));
             return result;
         }
 
-        internal List<PlanAvailableMarketDto> _GetCopyAndRemoveMarkets(List<PlanAvailableMarketDto> toCopy, List<short> removedMarketCodes)
+        private List<PlanAvailableMarketDto> _GetCopyAndRemoveMarkets(List<PlanAvailableMarketDto> toCopy, List<short> removedMarketCodes)
         {
             var result = new List<PlanAvailableMarketDto>();
             toCopy.ForEach(c =>

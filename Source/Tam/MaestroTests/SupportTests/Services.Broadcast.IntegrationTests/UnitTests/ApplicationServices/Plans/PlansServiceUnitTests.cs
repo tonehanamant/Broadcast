@@ -169,8 +169,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
             _PlanMarketSovCalculator = new Mock<IPlanMarketSovCalculator>();
-            _PlanMarketSovCalculator.Setup(s => s.CalculateTotalWeight(It.IsAny<List<PlanAvailableMarketDto>>()))
-                .Returns(12.123);
+            _PlanMarketSovCalculator.Setup(s => s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns<List<PlanAvailableMarketDto>>((m) => new PlanAvailableMarketCalculationResult
+                {
+                    AvailableMarkets = m,
+                    TotalWeight = 12.123
+                });
 
             _PlanService = new PlanService(
                     _DataRepositoryFactoryMock.Object,
