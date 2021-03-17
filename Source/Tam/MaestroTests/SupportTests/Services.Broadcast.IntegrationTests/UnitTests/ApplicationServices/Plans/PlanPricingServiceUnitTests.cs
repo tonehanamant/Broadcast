@@ -1099,6 +1099,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
+
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             return new PlanPricingServiceUnitTestClass(
@@ -1778,7 +1779,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");            
+            jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");
             var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -10383,6 +10384,207 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(SpotAllocationModelMode.Efficiency)]
+        [TestCase(SpotAllocationModelMode.Floor)]
+        public void _GetPricingModelWeeks_v3Test_WithEfficencyAndFloor_Returns1Cpm(SpotAllocationModelMode allocationMode)
+        {
+            //arrange
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            var pricingParameters = new PlanPricingParametersDto
+            {
+                PlanId = 1197,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.Per30Min,
+                MarketGroup = MarketGroupEnum.All,
+                PostingType = PostingTypeEnum.NSI
+            }; 
+
+            plan.PricingParameters = pricingParameters;
+            var proprietaryData = new ProprietaryInventoryData();
+            var skippedWeekIds = new List<int>();
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    }
+                });
+
+            var service = _GetService();
+
+            //act
+            var result = service._GetPricingModelWeeks_v3(plan, pricingParameters, proprietaryData,
+                out skippedWeekIds, allocationMode);
+
+            //assert
+            Assert.IsTrue(result.All(x => x.CpmGoal == 1));
+        }
+
+        [Test]
+        public void _GetPricingModelWeeks_v3Test_WithFloor_ReturnsEmptyShareOfVoice()
+        {
+            //arrange
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            var pricingParameters = new PlanPricingParametersDto
+            {
+                PlanId = 1197,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.Per30Min,
+                MarketGroup = MarketGroupEnum.All,
+                PostingType = PostingTypeEnum.NSI
+            };
+
+            plan.PricingParameters = pricingParameters;
+            var proprietaryData = new ProprietaryInventoryData();
+            var skippedWeekIds = new List<int>();
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    }
+                });
+
+            var service = _GetService();
+
+            //act
+            var result = service._GetPricingModelWeeks_v3(plan, pricingParameters, proprietaryData,
+                out skippedWeekIds, SpotAllocationModelMode.Floor);
+
+            //assert
+            Assert.IsTrue(result.All(x => !x.ShareOfVoice.Any()));
+        }
+
+        [Test]
+        public void _GetPricingModelWeeks_v3Test_WithQuality_ReturnsCalculatedCpmAndShareOfVoice()
+        {
+            //arrange
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            var pricingParameters = new PlanPricingParametersDto
+            {
+                PlanId = 1197,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.Per30Min,
+                MarketGroup = MarketGroupEnum.All,
+                PostingType = PostingTypeEnum.NSI
+            };
+
+            plan.PricingParameters = pricingParameters;
+            var proprietaryData = new ProprietaryInventoryData();
+            var skippedWeekIds = new List<int>();
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    }
+                });
+
+            var service = _GetService();
+
+            //act
+            var result = service._GetPricingModelWeeks_v3(plan, pricingParameters, proprietaryData,
+                out skippedWeekIds, SpotAllocationModelMode.Quality);
+
+            //assert
+            Assert.IsTrue(result.All(x => x.ShareOfVoice.Any()));
+            Assert.IsTrue(result.All(x => x.CpmGoal != 1));
         }
 
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()

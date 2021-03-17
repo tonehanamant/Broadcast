@@ -812,7 +812,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDto plan,
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData,
-            out List<int> SkippedWeeksIds)
+            out List<int> SkippedWeeksIds,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             SkippedWeeksIds = new List<int>();
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
@@ -822,7 +823,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0.001;
             var topMarkets = _GetTopMarkets(parameters.MarketGroup);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
-            var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal);
+
+            var shareOfVoice = spotAllocationModelMode == SpotAllocationModelMode.Floor ?
+                new List<ShareOfVoice>() : _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal, spotAllocationModelMode);
+
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
             var planPricingParameters = plan.PricingParameters;
             var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
@@ -850,7 +854,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     weeklyBudget *= (decimal)(1.0 - (parameters.Margin / 100.0));
                 }
 
-                var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
+                var cpmGoal = spotAllocationModelMode == SpotAllocationModelMode.Quality ?
+                        ProposalMath.CalculateCpm(weeklyBudget, impressionGoal) : 1;
+
                 (double capTime, string capType) = FrequencyCapHelper.GetFrequencyCapTimeAndCapTypeString(planPricingParameters.UnitCapsType);
 
                 var pricingWeek = new PlanPricingApiRequestWeekDto
@@ -924,8 +930,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             MarketCoverageDto topMarkets,
             IEnumerable<PlanAvailableMarketDto> marketsWithSov,
             ProprietaryInventoryData proprietaryInventoryData,
-            double planImpressionsGoal)
+            double planImpressionsGoal,
+            SpotAllocationModelMode spotAllocationModelMode)
         {
+            if (spotAllocationModelMode == SpotAllocationModelMode.Floor)
+            {
+                return new List<ShareOfVoice>();
+            }
+
             var topMarketsShareOfVoice = topMarkets.MarketCoveragesByMarketCode.Select(x => new ShareOfVoice
             {
                 MarketCode = x.Key,
@@ -1017,9 +1029,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
             PlanPricingJobDiagnostic diagnostic)
         {
-            // *** THIS IS A MOCK
-            // This is makeing the Quality call and duplicating those results for Efficiency and Floor
             var results = new List<PlanPricingAllocationResult>();
+
             results.Add(new PlanPricingAllocationResult
             {
                 Spots = new List<PlanPricingAllocatedSpot>(),
@@ -1055,26 +1066,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (!goalsFulfilledByProprietaryInventory)
             {
-                var qualityAllocationResult =
-                    results.Single(s => s.SpotAllocationModelMode == SpotAllocationModelMode.Quality);
-
-                _SendPricingRequest(
-                    qualityAllocationResult,
-                    plan,
-                    jobId,
-                    inventory,
-                    token,
-                    diagnostic,
-                    planPricingParametersDto,
-                    proprietaryInventoryData);
-
-                if (isPricingEfficiencyModelEnabled)
+                try
                 {
-                    var efficiencyAllocationResult = results.Single(s => s.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency);
-                    efficiencyAllocationResult.Spots = qualityAllocationResult.Spots.DeepCloneUsingSerialization();
-
-                    var floorAllocationResult = results.Single(s => s.SpotAllocationModelMode == SpotAllocationModelMode.Floor);
-                    floorAllocationResult.Spots = qualityAllocationResult.Spots.DeepCloneUsingSerialization();
+                    Parallel.ForEach(results, (allocationResult) =>
+                    {
+                        _SendPricingRequest(
+                            allocationResult,
+                            plan,
+                            jobId,
+                            inventory,
+                            token,
+                            diagnostic,
+                            planPricingParametersDto,
+                            proprietaryInventoryData);
+                    });
+                }
+                catch (AggregateException ex)
+                {
+                    throw ex.Flatten().InnerExceptions.First();
                 }
             }
 
@@ -1173,7 +1182,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         if (targetPostingType == plan.PostingType)
                         {
                             postingTypeInventory = inventory;
-                            postingAllocationResult = allocationResult;                            
+                            postingAllocationResult = allocationResult;
                         }
                         else
                         {
@@ -1550,7 +1559,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan,
                 parameters,
                 proprietaryInventoryData,
-                out List<int> skippedWeeksIds);
+                out List<int> skippedWeeksIds,
+                allocationResult.SpotAllocationModelMode);
 
             var groupedInventory = _GroupInventory(inventory);
             var spots = _GetPricingModelSpots(groupedInventory, skippedWeeksIds);
@@ -1639,7 +1649,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan,
                 parameters,
                 proprietaryInventoryData,
-                out List<int> skippedWeeksIds);
+                out List<int> skippedWeeksIds,
+                allocationResult.SpotAllocationModelMode);
 
             var groupedInventory = _GroupInventory(inventory);
             var spots = _GetPricingModelSpots_v3(groupedInventory, skippedWeeksIds);
@@ -1787,11 +1798,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _RunPricingJob(planPricingParametersDto, plan, jobId, token);
         }
 
-        private List<PlanPricingApiRequestWeekDto_v3> _GetPricingModelWeeks_v3(
+        internal List<PlanPricingApiRequestWeekDto_v3> _GetPricingModelWeeks_v3(
             PlanDto plan,
             PlanPricingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData,
-            out List<int> SkippedWeeksIds)
+            out List<int> SkippedWeeksIds,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             SkippedWeeksIds = new List<int>();
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto_v3>();
@@ -1801,7 +1813,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0.001;
             var topMarkets = _GetTopMarkets(parameters.MarketGroup);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
-            var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal);
+
+            var shareOfVoice = spotAllocationModelMode == SpotAllocationModelMode.Floor ?
+                new List<ShareOfVoice>() : _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal, spotAllocationModelMode);
+
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
             var planPricingParameters = plan.PricingParameters;
 
@@ -1835,7 +1850,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     MediaWeekId = mediaWeekId,
                     ImpressionGoal = impressionGoal,
-                    CpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal),
+                    CpmGoal = spotAllocationModelMode == SpotAllocationModelMode.Quality ?
+                        ProposalMath.CalculateCpm(weeklyBudget, impressionGoal) : 1,
                     MarketCoverageGoal = marketCoverageGoal,
                     FrequencyCap = FrequencyCapHelper.GetFrequencyCap(planPricingParameters.UnitCapsType, planPricingParameters.UnitCaps),
                     ShareOfVoice = shareOfVoice,
