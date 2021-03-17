@@ -19,10 +19,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     {
         private StandardDaypartService _GetService(bool enableDaypartWKD = true)
         {
-            // setup feature flags
-            var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_DAYPART_WKD, enableDaypartWKD);
-            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             // setup data repos
             var standardDaypartRepository = new Mock<IStandardDaypartRepository>();
@@ -36,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(standardDaypartRepository.Object);
             
             // create the service for return
-            var service = new StandardDaypartService(repoFactory.Object, featureToggleHelper);
+            var service = new StandardDaypartService(repoFactory.Object);
             return service;
         }
 
@@ -71,22 +67,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllStandardDaypartsEnableWKDOff()
-        {
-            // Arrange
-            const bool enableDaypartWKD = false;
-            var service = _GetService(enableDaypartWKD);
-
-            // Act
-            var results = service.GetAllStandardDaypartsWithAllData();
-
-            // Assert
-            // daypart with code 'WKD' should be filtered out.
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetAllStandardDaypartsWithAllData()
         {
             // Arrange
@@ -96,22 +76,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var results = service.GetAllStandardDaypartsWithAllData();
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetAllStandardDaypartsWithAllDataEnableWKDOff()
-        {
-            // Arrange
-            const bool enableDaypartWKD = false;
-            var service = _GetService(enableDaypartWKD);
-
-            // Act
-            var results = service.GetAllStandardDaypartsWithAllData();
-
-            // Assert
-            // daypart with code 'WKD' should be filtered out.
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
     }

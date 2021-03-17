@@ -25,19 +25,19 @@ namespace Services.Broadcast.ApplicationServices
         internal const string STANDARD_DAYPART_CODE_WEEKEND = "WKD";
 
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+      
 
-        public StandardDaypartService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IFeatureToggleHelper featureToggleHelper)
+        public StandardDaypartService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+          
         {
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
-            _FeatureToggleHelper = featureToggleHelper;
+            
         }
 
         public List<StandardDaypartDto> GetAllStandardDayparts()
         {
             var dayparts = _StandardDaypartRepository.GetAllStandardDayparts();
-            AssertToggle_EnableDaypartWKD(dayparts);
+          
             return dayparts;
         }
 
@@ -46,20 +46,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             var standardDaypartDtos = _StandardDaypartRepository.GetAllStandardDaypartsWithAllData();
             DaypartTimeHelper.AddOneSecondToEndTime(standardDaypartDtos);
-            AssertToggle_EnableDaypartWKD(standardDaypartDtos);
+          
             return standardDaypartDtos;
         }
 
-        private void AssertToggle_EnableDaypartWKD<T>(List<T> dayparts) where T : StandardDaypartDto
-        {
-            if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_DAYPART_WKD))
-            {
-                var toRemove = dayparts.SingleOrDefault(d => d.Code.Equals(STANDARD_DAYPART_CODE_WEEKEND, StringComparison.OrdinalIgnoreCase));
-                if (toRemove != null)
-                {
-                    dayparts.Remove(toRemove);
-                }
-            }
-        }
+       
     }
 }

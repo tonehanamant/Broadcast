@@ -34,6 +34,7 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
             var fullName = _GetCurrentUserFullName();
+         
             var service = _ApplicationServiceFactory.GetApplicationService<IPlanService>();
 
 
