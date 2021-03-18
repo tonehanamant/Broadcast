@@ -119,6 +119,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().Calculate(planBudget));
         }
 
+        [HttpPost]
+        [Route("CalculatePostingTypeBudgets")]
+        public BaseResponse<List<PlanDeliveryPostingTypeBudget>> CalculatePostingTypeBudgets(PlanDeliveryPostingTypeBudget budgetRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePostingTypeBudgets(budgetRequest));
+        }
+
         /// <summary>
         /// Gets the delivery types.
         /// </summary>

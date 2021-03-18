@@ -76,8 +76,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Calculates the specified plan budget.
         /// </summary>
         /// <param name="planBudget">The plan budget.</param>
-        /// <returns>PlanBudgetDeliveryCalculator object</returns>
+        /// <returns>PlanDeliveryBudget object</returns>
         PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget);
+
+        /// <summary>
+        /// Calculates the posting type budgets.
+        /// </summary>
+        /// <param name="budgetRequest">The budget request.</param>
+        /// <returns></returns>
+        List<PlanDeliveryPostingTypeBudget> CalculatePostingTypeBudgets(PlanDeliveryPostingTypeBudget budgetRequest);
 
         /// <summary>
         /// Gets the delivery spread for the weekly breakdown.
@@ -216,6 +223,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
+        private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
 
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
 
@@ -261,6 +269,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CreativeLengthEngine = creativeLengthEngine;
             _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
+            _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
 
             _IsMarketSovCalculationEnabled = new Lazy<bool>(() => 
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
@@ -1057,10 +1066,128 @@ namespace Services.Broadcast.ApplicationServices.Plan
             planBudget = _BudgetCalculator.CalculateBudget(planBudget);
 
             planBudget.Impressions = Math.Floor(planBudget.Impressions.Value / 1000);
-
-
             return planBudget;
         }
+
+        ///<inheritdoc/>
+        public List<PlanDeliveryPostingTypeBudget> CalculatePostingTypeBudgets(PlanDeliveryPostingTypeBudget budgetRequest)
+        {
+            // calculate for the given posting type
+            var originalBudgetInput = _MapRequestToBudget(budgetRequest);
+            var originalBudgetCalculationResult = Calculate(originalBudgetInput);
+            var originalPostingTypeResults = _MapBudgetToResult(budgetRequest.PostingType, budgetRequest.StandardDaypartId, originalBudgetCalculationResult);
+
+            // convert and calculate for the other posting type
+            var otherPostingType = budgetRequest.PostingType == PostingTypeEnum.NSI
+                ? PostingTypeEnum.NTI
+                : PostingTypeEnum.NSI;
+
+            var conversionRates = _NtiToNsiConversionRepository.GetLatestNtiToNsiConversionRates();
+            var conversionRate = conversionRates.Single(r => r.StandardDaypartId == budgetRequest.StandardDaypartId);
+            
+            var convertedImpressions = budgetRequest.Impressions;
+            var convertedRatingPoints = budgetRequest.RatingPoints;
+
+            var otherBudgetInput = _CopyBudget(budgetRequest);
+
+            // calculating rate or budget; the other is static;
+            if (budgetRequest.Impressions.HasValue)
+            {
+                convertedImpressions =
+                    // NTI should be lower than NSI
+                    otherPostingType == PostingTypeEnum.NTI
+                        ? budgetRequest.Impressions.Value * conversionRate.ConversionRate
+                        : budgetRequest.Impressions.Value / conversionRate.ConversionRate;
+            }
+            else if (budgetRequest.RatingPoints.HasValue)
+            {
+                convertedRatingPoints =
+                    // NTI should be lower than NSI
+                    otherPostingType == PostingTypeEnum.NTI
+                        ? budgetRequest.RatingPoints.Value * conversionRate.ConversionRate
+                        : budgetRequest.RatingPoints.Value / conversionRate.ConversionRate;
+            }
+            // calculating delivery; budget is static;
+            else
+            {
+                // copy the budget to keep it static
+                // force calculation of the rate by clearing out the other fields.
+                otherBudgetInput.Budget = budgetRequest.Budget;
+                otherBudgetInput.RatingPoints = null;
+                otherBudgetInput.CPM = null;
+                otherBudgetInput.CPP = null;
+
+                // calculate the impressions from the first
+                // result
+                convertedImpressions =
+                    // NTI should be lower than NSI
+                    otherPostingType == PostingTypeEnum.NTI
+                        ? originalBudgetCalculationResult.Impressions.Value * conversionRate.ConversionRate
+                        : originalBudgetCalculationResult.Impressions.Value / conversionRate.ConversionRate;
+            }
+            
+            otherBudgetInput.Impressions = convertedImpressions;
+            otherBudgetInput.RatingPoints = convertedRatingPoints;
+
+            var otherBudgetCalculationResult = Calculate(otherBudgetInput);
+            var otherPostingTypeResults = _MapBudgetToResult(otherPostingType, budgetRequest.StandardDaypartId, otherBudgetCalculationResult);
+
+            var results = new List<PlanDeliveryPostingTypeBudget>
+            {
+                originalPostingTypeResults,
+                otherPostingTypeResults
+            };
+            return results;
+        }
+
+        private PlanDeliveryBudget _CopyBudget(PlanDeliveryBudget original)
+        {
+            var result = new PlanDeliveryBudget
+            {
+                Budget = original.Budget,
+                Impressions = original.Impressions,
+                RatingPoints = original.RatingPoints,
+                CPM = original.CPM,
+                CPP = original.CPP,
+                Universe = original.Universe,
+                AudienceId = original.AudienceId
+            };
+            return result;
+        }
+
+
+        private PlanDeliveryBudget _MapRequestToBudget(PlanDeliveryPostingTypeBudget budgetRequest)
+        {
+            var result = new PlanDeliveryBudget
+            {
+                Budget = budgetRequest.Budget,
+                Impressions = budgetRequest.Impressions,
+                RatingPoints = budgetRequest.RatingPoints,
+                CPM = budgetRequest.CPM,
+                CPP= budgetRequest.CPP,
+                Universe = budgetRequest.Universe,
+                AudienceId = budgetRequest.AudienceId
+            };
+            return result;
+        }
+
+        private PlanDeliveryPostingTypeBudget _MapBudgetToResult(PostingTypeEnum postingType, int standardDaypartId, PlanDeliveryBudget calculationResult)
+        {
+            var result = new PlanDeliveryPostingTypeBudget
+            {
+                PostingType = postingType,
+                StandardDaypartId = standardDaypartId,
+                Budget = calculationResult.Budget,
+                Impressions = calculationResult.Impressions,
+                RatingPoints = calculationResult.RatingPoints,
+                CPM = calculationResult.CPM,
+                CPP = calculationResult.CPP,
+                Universe = calculationResult.Universe,
+                AudienceId = calculationResult.AudienceId
+            };
+            return result;
+        }
+
 
         ///<inheritdoc/>
         public List<LookupDto> PlanGoalBreakdownTypes()

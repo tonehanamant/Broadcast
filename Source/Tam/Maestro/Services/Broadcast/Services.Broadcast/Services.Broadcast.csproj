@@ -598,6 +598,7 @@
     <Compile Include="Entities\Plan\PlanCalculateMarketAddedRequest.cs" />
     <Compile Include="Entities\Plan\PlanCalculateMarketRemovedRequest.cs" />
     <Compile Include="Entities\Plan\PlanCalculateMarketWeightChangeRequest.cs" />
+    <Compile Include="Entities\Plan\PlanDeliveryPostingTypeBudget.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingBand.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarkets.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
@@ -803,7 +804,7 @@
     <Compile Include="Entities\StandardDaypartFullDto.cs" />
     <Compile Include="Entities\Plan\PlanAvailableMarketDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartDto.cs" />
-    <Compile Include="Entities\Plan\PlanBudgetDeliveryCalculator.cs" />
+    <Compile Include="Entities\Plan\PlanDeliveryBudget.cs" />
     <Compile Include="Entities\Plan\PlanDto.cs" />
     <Compile Include="Entities\Plan\PlanBlackoutMarketDto.cs" />
     <Compile Include="Entities\Plan\PlanMarketDto.cs" />
