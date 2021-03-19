@@ -120,7 +120,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("CalculatePostingTypeBudgets")]
+        [Route("posting-type-budget-goals")]
         public BaseResponse<List<PlanDeliveryPostingTypeBudget>> CalculatePostingTypeBudgets(PlanDeliveryPostingTypeBudget budgetRequest)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePostingTypeBudgets(budgetRequest));

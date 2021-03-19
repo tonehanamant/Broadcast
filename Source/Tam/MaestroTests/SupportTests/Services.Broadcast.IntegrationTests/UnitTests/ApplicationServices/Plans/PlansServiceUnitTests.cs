@@ -1987,7 +1987,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         [TestCase(PostingTypeEnum.NSI)]
         [TestCase(PostingTypeEnum.NTI)]
-        public void CalculatePostingTypeBudgets_ImpressionsCalculateCpm(PostingTypeEnum givenPostingType)
+        public void CalculatePostingTypeBudgets_ImpressionsCalculateRate(PostingTypeEnum givenPostingType)
         {
             // Budget is static for this use case.
 
@@ -2019,11 +2019,116 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanBudgetDeliveryCalculatorMock
                 .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns<PlanDeliveryBudget>((i) => i);
+
+            // Act
+            var results = _PlanService.CalculatePostingTypeBudgets(budgetRequest);
+
+            // Assert
+            Assert.AreEqual(2, results.Count);
+            var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
+            var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
+            Assert.AreEqual(expectedNsiImpressions, nsiResult.Impressions);
+            Assert.AreEqual(expectedNtiImpressions, ntiResult.Impressions);
+            Assert.AreEqual(testBudget, nsiResult.Budget);
+            Assert.AreEqual(testBudget, ntiResult.Budget);
+            _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
+            _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
+        }
+
+        [Test]
+        [TestCase(PostingTypeEnum.NSI)]
+        [TestCase(PostingTypeEnum.NTI)]
+        public void CalculatePostingTypeBudgets_ImpressionsCalculateBudget(PostingTypeEnum givenPostingType)
+        {
+            // Rate is static for this use case.
+
+            // Arrange
+            const int testStandardDaypartId = 2;
+            const double testConversionRate = 0.5;
+            const double testOriginalImpressions = 10000.0;
+            const decimal testRate = 50;
+
+            var expectedNsiImpressions = givenPostingType == PostingTypeEnum.NSI
+                ? testOriginalImpressions
+                : testOriginalImpressions / testConversionRate;
+
+            var expectedNtiImpressions = givenPostingType == PostingTypeEnum.NSI
+                ? testOriginalImpressions * testConversionRate
+                : testOriginalImpressions;
+
+            var budgetRequest = new PlanDeliveryPostingTypeBudget
+            {
+                PostingType = givenPostingType,
+                StandardDaypartId = testStandardDaypartId,
+                AudienceId = 31,
+                CPM = testRate,
+                Impressions = testOriginalImpressions
+            };
+
+            _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
+                .Returns(new List<NtiToNsiConversionRate> { new NtiToNsiConversionRate { StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
+
+            _PlanBudgetDeliveryCalculatorMock
+                .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns<PlanDeliveryBudget>((i) => i);
+
+            // Act
+            var results = _PlanService.CalculatePostingTypeBudgets(budgetRequest);
+
+            // Assert
+            Assert.AreEqual(2, results.Count);
+            var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
+            var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
+            Assert.AreEqual(expectedNsiImpressions, nsiResult.Impressions);
+            Assert.AreEqual(expectedNtiImpressions, ntiResult.Impressions);
+            Assert.AreEqual(testRate, nsiResult.CPM);
+            Assert.AreEqual(testRate, ntiResult.CPM);
+            _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
+            _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
+        }
+
+        [Test]
+        [TestCase(PostingTypeEnum.NSI)]
+        [TestCase(PostingTypeEnum.NTI)]
+        public void CalculatePostingTypeBudgets_ImpressionsCalculateDelivery(PostingTypeEnum givenPostingType)
+        {
+            // Budget is static for this use case.
+
+            // Arrange
+            const int testStandardDaypartId = 2;
+            const double testConversionRate = 0.5;
+            const decimal testRate = 50;
+            const decimal testBudget = 5000;
+
+            const double testCalculatedResultImpressions = 10000.0;
+
+            var expectedNsiImpressions = givenPostingType == PostingTypeEnum.NSI
+                ? testCalculatedResultImpressions
+                : testCalculatedResultImpressions / testConversionRate;
+
+            var expectedNtiImpressions = givenPostingType == PostingTypeEnum.NSI
+                ? testCalculatedResultImpressions * testConversionRate
+                : testCalculatedResultImpressions;
+
+            var budgetRequest = new PlanDeliveryPostingTypeBudget
+            {
+                PostingType = givenPostingType,
+                StandardDaypartId = testStandardDaypartId,
+                AudienceId = 31,
+                CPM = testRate,
+                Budget = testBudget
+            };
+
+            _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
+                .Returns(new List<NtiToNsiConversionRate> { new NtiToNsiConversionRate { StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
+
+            _PlanBudgetDeliveryCalculatorMock
+                .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Returns<PlanDeliveryBudget>((i) =>
                 {
-                    var testResult = _GetPlanDeliveryBudget();
-                    testResult.Impressions = i.Impressions;
-                    return testResult;
+                    i.Impressions = i.Impressions ?? testCalculatedResultImpressions * 1000;
+                    return i;
                 });
 
             // Act
@@ -2035,70 +2140,183 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
             Assert.AreEqual(expectedNsiImpressions, nsiResult.Impressions);
             Assert.AreEqual(expectedNtiImpressions, ntiResult.Impressions);
-            Assert.AreNotEqual(testBudget, nsiResult.Budget);
-            Assert.AreNotEqual(testBudget, ntiResult.Budget);
+            Assert.AreEqual(testBudget, nsiResult.Budget);
+            Assert.AreEqual(testBudget, ntiResult.Budget);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
             _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
         }
 
-        // TODO SDE : Implement this test
-        [Ignore]
         [Test]
         [TestCase(PostingTypeEnum.NSI)]
         [TestCase(PostingTypeEnum.NTI)]
-        public void CalculatePostingTypeBudgets_ImpressionsCalculateBudget(PostingTypeEnum givenPostingType)
-        {
-            // Cpm is static for this use case.
-
-            Assert.IsTrue(false);
-        }
-
-        // TODO SDE : Implement this test
-        [Ignore]
-        [Test]
-        [TestCase(PostingTypeEnum.NSI)]
-        [TestCase(PostingTypeEnum.NTI)]
-        public void CalculatePostingTypeBudgets_ImpressionsCalculateImpressions(PostingTypeEnum givenPostingType)
+        public void CalculatePostingTypeBudgets_RatingPointsCalculateRate(PostingTypeEnum givenPostingType)
         {
             // Budget is static for this use case.
 
-            Assert.IsTrue(false);
+            // Arrange
+            const int testStandardDaypartId = 2;
+            const double testConversionRate = 0.5;
+            const double testOriginalRatingPoints = 50.0;
+            const decimal testBudget = 5000;
+
+            var expectedNsiRatingPoints = givenPostingType == PostingTypeEnum.NSI
+                ? testOriginalRatingPoints
+                : testOriginalRatingPoints / testConversionRate;
+
+            var expectedNtiRatingPoints = givenPostingType == PostingTypeEnum.NSI
+                ? testOriginalRatingPoints * testConversionRate
+                : testOriginalRatingPoints;
+
+            var budgetRequest = new PlanDeliveryPostingTypeBudget
+            {
+                PostingType = givenPostingType,
+                StandardDaypartId = testStandardDaypartId,
+                AudienceId = 31,
+                Budget = testBudget,
+                RatingPoints = testOriginalRatingPoints
+            };
+
+            _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
+                .Returns(new List<NtiToNsiConversionRate> { new NtiToNsiConversionRate { StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
+
+            _PlanBudgetDeliveryCalculatorMock
+                .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns<PlanDeliveryBudget>((i) =>
+                    {
+                        i.Impressions = i.Impressions ?? 666666;
+                        return i;
+                    }
+                );
+
+            // Act
+            var results = _PlanService.CalculatePostingTypeBudgets(budgetRequest);
+
+            // Assert
+            Assert.AreEqual(2, results.Count);
+            var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
+            var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
+            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.RatingPoints);
+            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.RatingPoints);
+            Assert.AreEqual(testBudget, nsiResult.Budget);
+            Assert.AreEqual(testBudget, ntiResult.Budget);
+            _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
+            _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
         }
 
-        // TODO SDE : Implement this test
-        [Ignore]
-        [Test]
-        [TestCase(PostingTypeEnum.NSI)]
-        [TestCase(PostingTypeEnum.NTI)]
-        public void CalculatePostingTypeBudgets_RatingPointsCalculateCpp(PostingTypeEnum givenPostingType)
-        {
-            // Cpm is static for this use case.
-
-            Assert.IsTrue(false);
-        }
-
-        // TODO SDE : Implement this test
-        [Ignore]
         [Test]
         [TestCase(PostingTypeEnum.NSI)]
         [TestCase(PostingTypeEnum.NTI)]
         public void CalculatePostingTypeBudgets_RatingPointsCalculateBudget(PostingTypeEnum givenPostingType)
         {
-            // Cpm is static for this use case.
+            // Rate is static for this use case.
 
-            Assert.IsTrue(false);
+            // Arrange
+            const int testStandardDaypartId = 2;
+            const double testConversionRate = 0.5;
+            const double testOriginalRatingPoints = 50.0;
+            const decimal testRate = 50;
+
+            var expectedNsiRatingPoints = givenPostingType == PostingTypeEnum.NSI
+                ? testOriginalRatingPoints
+                : testOriginalRatingPoints / testConversionRate;
+
+            var expectedNtiRatingPoints = givenPostingType == PostingTypeEnum.NSI
+                ? testOriginalRatingPoints * testConversionRate
+                : testOriginalRatingPoints;
+
+            var budgetRequest = new PlanDeliveryPostingTypeBudget
+            {
+                PostingType = givenPostingType,
+                StandardDaypartId = testStandardDaypartId,
+                AudienceId = 31,
+                CPP = testRate,
+                RatingPoints = testOriginalRatingPoints
+            };
+
+            _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
+                .Returns(new List<NtiToNsiConversionRate> { new NtiToNsiConversionRate { StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
+
+            _PlanBudgetDeliveryCalculatorMock
+                .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns<PlanDeliveryBudget>((i) =>
+                {
+                    i.Impressions = i.Impressions ?? 666666;
+                    return i;
+                }
+                );
+
+            // Act
+            var results = _PlanService.CalculatePostingTypeBudgets(budgetRequest);
+
+            // Assert
+            Assert.AreEqual(2, results.Count);
+            var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
+            var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
+            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.RatingPoints);
+            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.RatingPoints);
+            Assert.AreEqual(testRate, nsiResult.CPP);
+            Assert.AreEqual(testRate, ntiResult.CPP);
+            _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
+            _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
         }
 
-        // TODO SDE : Implement this test
-        [Ignore]
         [Test]
         [TestCase(PostingTypeEnum.NSI)]
         [TestCase(PostingTypeEnum.NTI)]
-        public void CalculatePostingTypeBudgets_RatingPointsCalculateGrp(PostingTypeEnum givenPostingType)
+        public void CalculatePostingTypeBudgets_RatingPointsCalculateDelivery(PostingTypeEnum givenPostingType)
         {
             // Budget is static for this use case.
 
-            Assert.IsTrue(false);
+            // Arrange
+            const int testStandardDaypartId = 2;
+            const double testConversionRate = 0.5;
+            const decimal testRate = 50;
+            const decimal testBudget = 5000;
+
+            const double testCalculatedResultRatingPoints = 50.0;
+
+            var expectedNsiRatingPoints = givenPostingType == PostingTypeEnum.NSI
+                ? testCalculatedResultRatingPoints
+                : testCalculatedResultRatingPoints / testConversionRate;
+
+            var expectedNtiRatingPoints = givenPostingType == PostingTypeEnum.NSI
+                ? testCalculatedResultRatingPoints * testConversionRate
+                : testCalculatedResultRatingPoints;
+
+            var budgetRequest = new PlanDeliveryPostingTypeBudget
+            {
+                PostingType = givenPostingType,
+                StandardDaypartId = testStandardDaypartId,
+                AudienceId = 31,
+                Budget = testBudget,
+                CPP = testRate
+            };
+
+            _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
+                .Returns(new List<NtiToNsiConversionRate> { new NtiToNsiConversionRate { StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
+
+            _PlanBudgetDeliveryCalculatorMock
+                .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Returns<PlanDeliveryBudget>((i) =>
+                {
+                    i.Impressions = 666000;
+                    i.RatingPoints = i.RatingPoints ?? testCalculatedResultRatingPoints;
+                    return i;
+                });
+
+            // Act
+            var results = _PlanService.CalculatePostingTypeBudgets(budgetRequest);
+
+            // Assert
+            Assert.AreEqual(2, results.Count);
+            var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
+            var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
+            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.RatingPoints);
+            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.RatingPoints);
+            Assert.AreEqual(testBudget, nsiResult.Budget);
+            Assert.AreEqual(testBudget, ntiResult.Budget);
+            _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
+            _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
         }
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions

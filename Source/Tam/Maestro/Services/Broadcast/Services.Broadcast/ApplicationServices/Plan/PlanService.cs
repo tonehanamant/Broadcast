@@ -1090,11 +1090,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var otherBudgetInput = _CopyBudget(budgetRequest);
 
+            // NTI should be lower than NSI
             // calculating rate or budget; the other is static;
             if (budgetRequest.Impressions.HasValue)
             {
                 convertedImpressions =
-                    // NTI should be lower than NSI
                     otherPostingType == PostingTypeEnum.NTI
                         ? budgetRequest.Impressions.Value * conversionRate.ConversionRate
                         : budgetRequest.Impressions.Value / conversionRate.ConversionRate;
@@ -1102,7 +1102,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             else if (budgetRequest.RatingPoints.HasValue)
             {
                 convertedRatingPoints =
-                    // NTI should be lower than NSI
                     otherPostingType == PostingTypeEnum.NTI
                         ? budgetRequest.RatingPoints.Value * conversionRate.ConversionRate
                         : budgetRequest.RatingPoints.Value / conversionRate.ConversionRate;
@@ -1113,17 +1112,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 // copy the budget to keep it static
                 // force calculation of the rate by clearing out the other fields.
                 otherBudgetInput.Budget = budgetRequest.Budget;
-                otherBudgetInput.RatingPoints = null;
                 otherBudgetInput.CPM = null;
                 otherBudgetInput.CPP = null;
-
-                // calculate the impressions from the first
-                // result
-                convertedImpressions =
-                    // NTI should be lower than NSI
-                    otherPostingType == PostingTypeEnum.NTI
-                        ? originalBudgetCalculationResult.Impressions.Value * conversionRate.ConversionRate
-                        : originalBudgetCalculationResult.Impressions.Value / conversionRate.ConversionRate;
+                // convert from the previous results per the correct delivery type
+                convertedRatingPoints = null;
+                convertedImpressions = null;
+                if (budgetRequest.CPM.HasValue)
+                {
+                    convertedImpressions =
+                        otherPostingType == PostingTypeEnum.NTI
+                            ? originalBudgetCalculationResult.Impressions.Value * conversionRate.ConversionRate
+                            : originalBudgetCalculationResult.Impressions.Value / conversionRate.ConversionRate;
+                }
+                else
+                {
+                    convertedRatingPoints =
+                        otherPostingType == PostingTypeEnum.NTI
+                            ? originalBudgetCalculationResult.RatingPoints.Value * conversionRate.ConversionRate
+                            : originalBudgetCalculationResult.RatingPoints.Value / conversionRate.ConversionRate;
+                }
             }
             
             otherBudgetInput.Impressions = convertedImpressions;
@@ -1187,7 +1194,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
             return result;
         }
-
 
         ///<inheritdoc/>
         public List<LookupDto> PlanGoalBreakdownTypes()
