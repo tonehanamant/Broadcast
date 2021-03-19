@@ -871,40 +871,6 @@ namespace BroadcastComposerWeb.Controllers
         #region Aab Utilities
 
         [HttpPost]
-        public ActionResult ClearAgenciesCache()
-        {
-            TempData["TabId"] = "aab_maintenance";
-            try
-            {
-                var service = _ApplicationServiceFactory.GetApplicationService<IAgencyService>();
-                service.ClearAgenciesCache();
-                TempData["Message"] = $"Agencies cache cleared successfully!";
-            }
-            catch (Exception ex)
-            {
-                TempData["Message"] = ex.Message;
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult ClearAdvertisersCache()
-        {
-            TempData["TabId"] = "aab_maintenance";
-            try
-            {
-                var service = _ApplicationServiceFactory.GetApplicationService<IAdvertiserService>();
-                service.ClearAdvertisersCache();
-                TempData["Message"] = $"Advertisers cache cleared successfully!";
-            }
-            catch (Exception ex)
-            {
-                TempData["Message"] = ex.Message;
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
         public ActionResult ValidateAndReportCanMigrateToAabApi()
         {
             TempData["TabId"] = "aab_maintenance";

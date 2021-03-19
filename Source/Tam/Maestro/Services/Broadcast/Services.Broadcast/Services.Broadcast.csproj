@@ -492,7 +492,6 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingRepFirmEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
     <Compile Include="BusinessEngines\PlanMarketSovCalculator.cs" />
-    <Compile Include="Cache\AabCache.cs" />
     <Compile Include="Clients\AgencyAdvertiserBrandApiClient.cs" />
     <Compile Include="Converters\RateImport\InventoryImportManifestDuplicateHandler.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
