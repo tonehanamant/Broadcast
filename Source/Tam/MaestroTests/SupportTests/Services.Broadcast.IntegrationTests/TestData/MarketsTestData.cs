@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return new MarketCoverageDto
             {
                 MarketCoverageFileId = 1,
-                MarketCoveragesByMarketCode = GetMarketsWithLatestCoverage().ToDictionary(x => x.MarketCode, x => x.PercentageOfUS * 100)
+                MarketCoveragesByMarketCode = GetMarketsWithLatestCoverage().ToDictionary(x => x.MarketCode, x => x.PercentageOfUS)                
             };
         }
 
