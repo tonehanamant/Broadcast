@@ -192,8 +192,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
         {
             // Arrange
             var cpmThresholdPercent = 10;
-            var goalCpm = 10;
-            var margin = 20;
+            var goalCpm = 10;         
             var beforeSpots = new List<PlanBuyingAllocatedSpot>
             {
                 new PlanBuyingAllocatedSpot
@@ -201,7 +200,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     Id = 1, StationInventoryManifestId = 10,
                     SpotFrequencies = new List<SpotFrequency>
                     {
-                        new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400}, // stays
+                        new SpotFrequency {SpotLengthId = 1, SpotCost = 22, Impressions = 2400}, // stays
                         new SpotFrequency {SpotLengthId = 2, SpotCost = 40, Impressions = 3500}, // filtered - too big
                     }
                 },
@@ -210,7 +209,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     Id = 2, StationInventoryManifestId = 20,
                     SpotFrequencies = new List<SpotFrequency>
                     {
-                        new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500}, // stays
+                        new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000}, // stays
                     }
                 },
                 new PlanBuyingAllocatedSpot
@@ -219,7 +218,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     SpotFrequencies = new List<SpotFrequency>
                     {
                         new SpotFrequency {SpotLengthId = 1, SpotCost = 40, Impressions = 6000}, // filtered - too small
-                        new SpotFrequency {SpotLengthId = 5, SpotCost = 30, Impressions = 3500}, // stays
+                        new SpotFrequency {SpotLengthId = 5, SpotCost = 30, Impressions = 3300}, // stays
                     }
                 },
                 new PlanBuyingAllocatedSpot
@@ -227,7 +226,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     Id = 4, StationInventoryManifestId = 40,
                     SpotFrequencies = new List<SpotFrequency>
                     {
-                        new SpotFrequency {SpotLengthId = 3, SpotCost = 30, Impressions = 3500}, // filtered -- too big
+                        new SpotFrequency {SpotLengthId = 3, SpotCost = 40, Impressions = 3500}, // filtered -- too big
                     }
                 }
                 ,
@@ -236,7 +235,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     Id = 5, StationInventoryManifestId = 50,
                     SpotFrequencies = new List<SpotFrequency>
                     {
-                        new SpotFrequency {SpotLengthId = 6, SpotCost = 60, Impressions = 8000}, // stays
+                        new SpotFrequency {SpotLengthId = 6, SpotCost = 60, Impressions = 6600}, // stays
                     }
                 }
             };
@@ -251,7 +250,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             var testClass = _GetTestClass();
 
             // Act
-            var afterSpots = testClass._ApplyCpmThreshold(cpmThresholdPercent, goalCpm, margin, beforeSpots);
+            var afterSpots = testClass._ApplyCpmThreshold(cpmThresholdPercent, goalCpm, beforeSpots);
 
             // Assert
             var resultIds = afterSpots.SelectMany(s =>
@@ -265,86 +264,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 Assert.AreEqual(expectedResult[i].SpotLengthId, resultIds[i].SpotLengthId);
             }
         }
-
-        [Test]
-        public void ApplyCpmThresholdWithNullMargin()
-        {
-            // Arrange
-            var cpmThresholdPercent = 20;
-            var goalCpm = 10;
-            double? margin = null;
-            var beforeSpots = new List<PlanBuyingAllocatedSpot>
-            {
-                new PlanBuyingAllocatedSpot
-                {
-                    Id = 1, StationInventoryManifestId = 10,
-                    SpotFrequencies = new List<SpotFrequency>
-                    {
-                        new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400}, // stays
-                        new SpotFrequency {SpotLengthId = 2, SpotCost = 40, Impressions = 3500}, // stays
-                    }
-                },
-                new PlanBuyingAllocatedSpot
-                {
-                    Id = 2, StationInventoryManifestId = 20,
-                    SpotFrequencies = new List<SpotFrequency>
-                    {
-                        new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500}, // stays
-                    }
-                },
-                new PlanBuyingAllocatedSpot
-                {
-                    Id = 3, StationInventoryManifestId = 30,
-                    SpotFrequencies = new List<SpotFrequency>
-                    {
-                        new SpotFrequency {SpotLengthId = 1, SpotCost = 40, Impressions = 6000}, // filtered - too small
-                        new SpotFrequency {SpotLengthId = 5, SpotCost = 30, Impressions = 3500}, // stays
-                    }
-                },
-                new PlanBuyingAllocatedSpot
-                {
-                    Id = 4, StationInventoryManifestId = 40,
-                    SpotFrequencies = new List<SpotFrequency>
-                    {
-                        new SpotFrequency {SpotLengthId = 3, SpotCost = 30, Impressions = 3500}, // stays
-                    }
-                }
-                ,
-                new PlanBuyingAllocatedSpot
-                {
-                    Id = 5, StationInventoryManifestId = 50,
-                    SpotFrequencies = new List<SpotFrequency>
-                    {
-                        new SpotFrequency {SpotLengthId = 6, SpotCost = 60, Impressions = 3000}, // filtered - to big
-                    }
-                }
-            };
-            var expectedResult = new[]
-            {
-                new {Id = 1, SpotLengthId = 1},
-                new {Id = 1, SpotLengthId = 2},
-                new {Id = 2, SpotLengthId = 2},
-                new {Id = 3, SpotLengthId = 5},
-                new {Id = 4, SpotLengthId = 3},
-            };
-
-            var testClass = _GetTestClass();
-
-            // Act
-            var afterSpots = testClass._ApplyCpmThreshold(cpmThresholdPercent, goalCpm, margin, beforeSpots);
-
-            // Assert
-            var resultIds = afterSpots.SelectMany(s =>
-                    s.SpotFrequencies.Select(f => new { s.Id, f.SpotLengthId }))
-                .ToArray();
-            Assert.AreEqual(expectedResult.Length, resultIds.Length);
-            for (var i = 0; i < expectedResult.Length; i++)
-            {
-                Assert.AreEqual(expectedResult[i].Id, resultIds[i].Id);
-                Assert.AreEqual(expectedResult[i].SpotLengthId, resultIds[i].SpotLengthId);
-            }
-        }
-
+   
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetScxData()
@@ -395,7 +316,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                         StandardDaypart = new StandardDaypartDto{ Id = 1},
                         SpotFrequencies = new List<SpotFrequency>
                         {
-                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500, Spots = 0}, // stay
+                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
                             new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
                         } 
                     },
@@ -406,7 +327,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                         StandardDaypart = new StandardDaypartDto{ Id = 1},
                         SpotFrequencies = new List<SpotFrequency>
                         {
-                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3500, Spots = 0}, // stay
+                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
                             new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
                         }
                     }

@@ -60,16 +60,12 @@ namespace Services.Broadcast.Converters.Scx
             _GetValidatedPlanAndJob(request, out var plan, out var job);
 
             var spots = _GetSpots(request.UnallocatedCpmThreshold, plan.TargetCPM.Value, job.Id);
-            var inventory = _InventoryRepository.GetPlanBuyingScxInventory(job.Id);
-            
+            var inventory = _InventoryRepository.GetPlanBuyingScxInventory(job.Id);            
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
-
             var audienceIds = _GetAudienceIds(plan);
             var demos = _GetDemos(audienceIds);
             var demoRanksDictionary = demos.ToDictionary(x => x.Demo.Id, x => x.DemoRank);
-
             var dmaMarketNames = GetDmaMarketNames(inventory);
-
             var standardDaypartDaypartIds = _StandardDaypartRepository.GetStandardDaypartIdDaypartIds();
             var standardDaypartCodes = _StandardDaypartRepository.GetAllStandardDayparts()
                     .ToDictionary(d => d.Id, d => d.Code);
@@ -77,12 +73,9 @@ namespace Services.Broadcast.Converters.Scx
             var stationIds = inventory.Select(s => s.Station.Id).Distinct().ToList();
             var stations = _StationRepository.GetBroadcastStationsByIds(stationIds);
 
-            var surveyString = GetSurveyString(plan.ShareBookId, PLAYBACK_TYPE);
-
-            var margin = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(job.Id).Margin;
-
+            var surveyString = GetSurveyString(plan.ShareBookId, PLAYBACK_TYPE);            
             var orders = _GetOrders(plan, inventory, spots, demoRanksDictionary, dmaMarketNames, standardDaypartDaypartIds, standardDaypartCodes,
-                stations, sortedMediaWeeks, surveyString, margin);
+                stations, sortedMediaWeeks, surveyString);
             
             var scxData = new PlanScxData
             {
@@ -103,7 +96,7 @@ namespace Services.Broadcast.Converters.Scx
             Dictionary<int,int> demoRanksDictionary, Dictionary<int, string> dmaMarketNames, 
             Dictionary<int,int> standardDaypartDaypartIds, Dictionary<int, string> standardDaypartCodes,
             List<DisplayBroadcastStation> stations, IOrderedEnumerable<MediaWeek> sortedMediaWeeks,
-            string surveyString, double? margin)
+            string surveyString)
         {
             var expandedSpots = spots.Select(s =>
             {
@@ -114,7 +107,6 @@ namespace Services.Broadcast.Converters.Scx
 
             var orders = new List<OrderData>();
             var orderMarkets = new List<ScxMarketDto>();
-
             var demoRank = demoRanksDictionary[plan.AudienceId];
 
             var marketGroups = expandedSpots.GroupBy(g => g.MarketCode).ToList();
@@ -159,7 +151,7 @@ namespace Services.Broadcast.Converters.Scx
                             }
 
                             var spotLength = GetSpotLengthString(spotLengthId);
-                            var spotCostWithMargin = GeneralMath.CalculateCostWithMargin(firstFreq.SpotCost, margin);
+                            var spotCost = firstFreq.SpotCost;                                               
                             var spotImpressions = firstFreq.Impressions;
 
                             var programWeeks = new List<ScxMarketDto.ScxStation.ScxProgram.ScxWeek>();
@@ -194,7 +186,7 @@ namespace Services.Broadcast.Converters.Scx
                                 DaypartId = daypartId,
                                 ProgramAssignedDaypartCode = programAssignedDaypartCode,
                                 SpotLength = spotLength,
-                                SpotCost = spotCostWithMargin,
+                                SpotCost = spotCost,
                                 Weeks = programWeeks,
                                 DemoValues = demoValues
                             };
@@ -264,14 +256,11 @@ namespace Services.Broadcast.Converters.Scx
         internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId)
         {
             var jobParams = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(jobId);
-            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId);
-
-            var appliedMargin = jobParams.Margin;
-
+            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId);            
             var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
 
             var unallocated = unallocatedCpmThreshold.HasValue
-                ? _ApplyCpmThreshold(unallocatedCpmThreshold.Value, planTargetCpm, appliedMargin, jobSpotsResults.UnallocatedSpots)
+                ? _ApplyCpmThreshold(unallocatedCpmThreshold.Value, planTargetCpm, jobSpotsResults.UnallocatedSpots)
                 : jobSpotsResults.UnallocatedSpots;
 
             var filteredUnallocatedCount = unallocated.Count;
@@ -282,14 +271,12 @@ namespace Services.Broadcast.Converters.Scx
             return allSpots;
         }
 
-        internal List<PlanBuyingAllocatedSpot> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm, double? margin, List<PlanBuyingAllocatedSpot> spots)
+        internal List<PlanBuyingAllocatedSpot> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm,  List<PlanBuyingAllocatedSpot> spots)
         {
             var results = new List<PlanBuyingAllocatedSpot>();
-
             var tolerance = goalCpm * (cpmThresholdPercent / 100.0m);
             var maxCpm = goalCpm + tolerance;
             var minCpm = goalCpm - tolerance;
-
             var deliveryMultipliers = _SpotLengthEngine.GetDeliveryMultipliers();
             var costMultipliers = _SpotLengthEngine.GetCostMultipliers();
 
@@ -302,8 +289,8 @@ namespace Services.Broadcast.Converters.Scx
                 s.SpotFrequencies.ForEach(f =>
                 {
                     var totalImpressionsPerSpot30Sec = f.Impressions * deliveryMultipliers[f.SpotLengthId];
-                    var totalCostWithMargin = _CalculateSpotCostPer30sWithMargin(f.SpotCost, costMultipliers[f.SpotLengthId], margin);
-                    var spotCpm = ProposalMath.CalculateCpm(totalCostWithMargin, totalImpressionsPerSpot30Sec);
+                    var totalCost = _CalculateSpotCostPer30s(f.SpotCost, costMultipliers[f.SpotLengthId]);
+                    var spotCpm = ProposalMath.CalculateCpm(totalCost, totalImpressionsPerSpot30Sec);
                     if (spotCpm >= minCpm && spotCpm <= maxCpm)
                     {
                         keptFrequencies.Add(f);
@@ -329,12 +316,10 @@ namespace Services.Broadcast.Converters.Scx
             return results;
         }
 
-        private decimal _CalculateSpotCostPer30sWithMargin(decimal spotCost, double spotCostMultiplier, double? margin)
+        private decimal _CalculateSpotCostPer30s(decimal spotCost, double spotCostMultiplier)
         {
-            var costPer30s = spotCost * Convert.ToDecimal(spotCostMultiplier);
-            var marginAmount = costPer30s * Convert.ToDecimal(margin.HasValue ? margin.Value / 100.0 : 0);
-            var spotCostWithMargin = costPer30s + marginAmount;
-            return spotCostWithMargin;
+            var costPer30s = spotCost * Convert.ToDecimal(spotCostMultiplier);                                  
+            return costPer30s;
         }
 
         public class ExpandedSpot
