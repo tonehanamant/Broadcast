@@ -2,9 +2,9 @@
   "Details": [
     {
       "Budget": 13504.6875,
-      "Cpm": 18.0339019830407,
-      "Impressions": 748.85,
-      "ImpressionsPercentage": 99.10011249,
+      "Cpm": 19.1610208569807,
+      "Impressions": 704.8,
+      "ImpressionsPercentage": 99.43566591,
       "MarketCoveragePercent": 10.0,
       "MarketName": "New York",
       "Rank": 1,
@@ -13,28 +13,28 @@
       "StationCount": 1
     },
     {
-      "Budget": 464.8125,
-      "Cpm": 68.3547794117647,
-      "Impressions": 6.8,
-      "ImpressionsPercentage": 0.89988751,
+      "Budget": 150.75,
+      "Cpm": 37.6875,
+      "Impressions": 4.0,
+      "ImpressionsPercentage": 0.56433409,
       "MarketCoveragePercent": 0.328,
       "MarketName": "Portland-Auburn",
       "Rank": 79,
       "ShareOfVoiceGoalPercentage": 22.2,
-      "SpotCount": 15,
+      "SpotCount": 10,
       "StationCount": 1
     }
   ],
   "SpotAllocationModelMode": 1,
   "Totals": {
-    "AvgCpm": 18.4867,
+    "AvgCpm": 19.2655,
     "AvgImpressions": 0.0,
-    "Budget": 13969.5000,
-    "Impressions": 755.65,
+    "Budget": 13655.4375,
+    "Impressions": 708.8,
     "ImpressionsPercentage": 100.0,
     "MarketCount": 2,
     "MarketCoveragePercent": 10.328,
-    "SpotCount": 30,
+    "SpotCount": 25,
     "StationCount": 2
   }
 }

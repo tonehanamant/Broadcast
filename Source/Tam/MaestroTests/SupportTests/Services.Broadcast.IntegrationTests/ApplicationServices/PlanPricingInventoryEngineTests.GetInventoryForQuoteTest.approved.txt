@@ -3,24 +3,24 @@
     "DeliveryPerAudience": [
       {
         "AudienceId": 37,
-        "CPM": 21.048495734171531207903008500,
-        "Impressions": 44540.0,
-        "ProjectedImpressions": 60740.68125,
-        "ProvidedImpressions": 44540.0
+        "CPM": 22.364026717557251908396946600,
+        "Impressions": 41920.0,
+        "ProjectedImpressions": 57167.7,
+        "ProvidedImpressions": 41920.0
       },
       {
         "AudienceId": 33,
-        "CPM": 24.293858512568022803835190500,
-        "Impressions": 38590.0,
-        "ProjectedImpressions": 37990.1125,
-        "ProvidedImpressions": 38590.0
+        "CPM": 25.812224669603524229074889900,
+        "Impressions": 36320.0,
+        "ProjectedImpressions": 35755.4,
+        "ProvidedImpressions": 36320.0
       },
       {
         "AudienceId": 31,
-        "CPM": 15.984654731457800511508951400,
-        "Impressions": 58650.0,
-        "ProjectedImpressions": 70841.65625,
-        "ProvidedImpressions": 58650.0
+        "CPM": 16.983695652173913043478260900,
+        "Impressions": 55200.0,
+        "ProjectedImpressions": 66674.5,
+        "ProvidedImpressions": 55200.0
       }
     ],
     "ManifestAudiences": [

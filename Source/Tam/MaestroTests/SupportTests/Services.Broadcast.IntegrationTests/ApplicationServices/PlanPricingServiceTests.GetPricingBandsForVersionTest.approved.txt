@@ -83,8 +83,8 @@
     {
       "AvailableInventoryPercent": 2.5545977,
       "Budget": 5560.0000,
-      "Cpm": 14.715807582875669953020578300,
-      "Impressions": 377.825,
+      "Cpm": 15.635545556805399325084364500,
+      "Impressions": 355.6,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
       "MinBand": 2.0000,
@@ -96,8 +96,8 @@
   "SpotAllocationModelMode": 1,
   "Totals": {
     "Budget": 5560.0000,
-    "Cpm": 14.7158,
-    "Impressions": 377.825,
+    "Cpm": 15.6355,
+    "Impressions": 355.6,
     "Spots": 30
   }
 }

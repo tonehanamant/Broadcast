@@ -98,5 +98,10 @@
     "Code": "TDNS",
     "FullName": "Total Day News and Syndication",
     "VpvhCalculationSourceType": 5
+  },
+  {
+    "Code": "WKD",
+    "FullName": "Weekend",
+    "VpvhCalculationSourceType": 3
   }
 ]

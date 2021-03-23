@@ -1,6 +1,6 @@
 ﻿[
   {
-    "Cpm": 12.787723785166240409207161100,
+    "Cpm": 13.586956521739130434782608700,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -87,9 +87,9 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 0.85,
+    "NsiToNtiImpressionConversionRate": 0.8,
     "PostingType": 2,
-    "PostingTypeImpressions": 29325.0,
+    "PostingTypeImpressions": 27600.0,
     "ProjectedImpressions": 39331.375,
     "ProvidedImpressions": 34500.0,
     "SpotLengthId": 1,
@@ -112,7 +112,7 @@
     "Unit": null
   },
   {
-    "Cpm": 98.03921568627450980392156860,
+    "Cpm": 104.16666666666666666666666670,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -199,9 +199,9 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 0.85,
+    "NsiToNtiImpressionConversionRate": 0.8,
     "PostingType": 2,
-    "PostingTypeImpressions": 255.0,
+    "PostingTypeImpressions": 240.0,
     "ProjectedImpressions": 87.7,
     "ProvidedImpressions": 300.0,
     "SpotLengthId": 1,

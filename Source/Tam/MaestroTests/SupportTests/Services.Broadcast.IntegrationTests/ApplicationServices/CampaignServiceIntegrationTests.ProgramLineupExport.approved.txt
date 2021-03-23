@@ -10,21 +10,21 @@
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.99100112
+      "Weight": 0.99435666
     },
     {
       "FilterLabel": "PORTLAND-AUBURN",
-      "Weight": 0.00899888
+      "Weight": 0.00564334
     }
   ],
   "AllocationByGenreViewRows": [
     {
       "FilterLabel": "CHILDREN",
-      "Weight": 0.99100112
+      "Weight": 0.99435666
     },
     {
       "FilterLabel": "COMEDY",
-      "Weight": 0.00899888
+      "Weight": 0.00564334
     }
   ],
   "AllocationBySpotLengthViewRows": [
@@ -41,14 +41,14 @@
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "EARLY NEWS",
-      "Weight": 0.99100112
+      "Weight": 0.99435666
     },
     {
       "Genre": "COMEDY",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "LATE NEWS",
-      "Weight": 0.00899888
+      "Weight": 0.00564334
     }
   ],
   "DetailedViewRows": [
@@ -65,14 +65,14 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "M-F",
+      "Days": "Sa-Su",
       "DMA": "PORTLAND-AUBURN",
       "Genre": "COMEDY",
       "NetworkAffiliation": "FOX",
       "Program": "LATE NEWS",
       "Rank": 79,
       "Station": "WPFO",
-      "TimePeriods": "12AM-12:30AM"
+      "TimePeriods": "12AM-12:33AM"
     }
   ],
   "ExportFileName": "Program_Lineup_Report_Plan Pricing 2_04042020.xlsx",

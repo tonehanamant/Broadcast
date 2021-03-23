@@ -81,26 +81,26 @@
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 5.1091954,
-      "Budget": 13969.5000,
-      "Cpm": 18.4867,
-      "Impressions": 755.65,
+      "AvailableInventoryPercent": 5.12731481,
+      "Budget": 13655.4375,
+      "Cpm": 19.2655,
+      "Impressions": 708.8,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
       "MinBand": 0.0320,
-      "Spots": 30
+      "Spots": 25
     }
   ],
   "SpotAllocationModelMode": 1,
   "Totals": {
-    "AvgCpm": 18.4867,
+    "AvgCpm": 19.2655,
     "AvgImpressions": 0.0,
-    "Budget": 13969.5000,
-    "Impressions": 755.65,
+    "Budget": 13655.4375,
+    "Impressions": 708.8,
     "ImpressionsPercentage": 100.0,
     "MarketCount": 0,
     "MarketCoveragePercent": 0.0,
-    "SpotCount": 30,
+    "SpotCount": 25,
     "StationCount": 0
   }
 }

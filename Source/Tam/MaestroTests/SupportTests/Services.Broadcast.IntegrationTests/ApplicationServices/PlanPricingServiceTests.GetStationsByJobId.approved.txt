@@ -7,27 +7,27 @@
       "Budget": 13504.6875,
       "Cpm": 15.328816685584562996594778700,
       "Impressions": 881.0,
-      "ImpressionsPercentage": 99.10011249,
+      "ImpressionsPercentage": 99.43566591,
       "Market": "New York",
       "Spots": 15,
       "Station": "WPIX"
     },
     {
-      "Budget": 464.8125,
-      "Cpm": 58.1015625000,
-      "Impressions": 8.0,
-      "ImpressionsPercentage": 0.89988751,
+      "Budget": 150.7500,
+      "Cpm": 30.15000,
+      "Impressions": 5.0,
+      "ImpressionsPercentage": 0.56433409,
       "Market": "Portland-Auburn",
-      "Spots": 15,
+      "Spots": 10,
       "Station": "WPFO"
     }
   ],
   "Totals": {
-    "Budget": 13969.5000,
-    "Cpm": 15.7137,
-    "Impressions": 889.0,
+    "Budget": 13655.4375,
+    "Cpm": 15.4124,
+    "Impressions": 886.0,
     "ImpressionsPercentage": 100.0,
-    "Spots": 30,
+    "Spots": 25,
     "Station": 2
   }
 }

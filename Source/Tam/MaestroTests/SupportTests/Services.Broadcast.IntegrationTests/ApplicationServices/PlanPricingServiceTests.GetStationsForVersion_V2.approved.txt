@@ -7,28 +7,28 @@
           "Cpm": 12.263053348467650397275822900,
           "Id": 0,
           "Impressions": 1321.5,
-          "ImpressionsPercentage": 99.10011249,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 46.48125000,
+          "Budget": 180.9000,
+          "Cpm": 24.12000,
           "Id": 0,
-          "Impressions": 12.0,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 7.5,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 12.5709,
-        "Impressions": 1333.5,
+        "Budget": 16386.5250,
+        "Cpm": 12.3299,
+        "Impressions": 1329.0,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -36,31 +36,31 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 14.427121586432529879148027000,
+          "Cpm": 15.328816685584562996594778700,
           "Id": 0,
-          "Impressions": 1123.275,
-          "ImpressionsPercentage": 99.10011249,
+          "Impressions": 1057.2,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 54.683823529411764705882352900,
+          "Budget": 180.9000,
+          "Cpm": 30.15000,
           "Id": 0,
-          "Impressions": 10.2,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 6.0,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 14.7893,
-        "Impressions": 1133.475,
+        "Budget": 16386.5250,
+        "Cpm": 15.4124,
+        "Impressions": 1063.2,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -74,28 +74,28 @@
           "Cpm": 12.263053348467650397275822900,
           "Id": 0,
           "Impressions": 1321.5,
-          "ImpressionsPercentage": 99.10011249,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 46.48125000,
+          "Budget": 180.9000,
+          "Cpm": 24.12000,
           "Id": 0,
-          "Impressions": 12.0,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 7.5,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 12.5709,
-        "Impressions": 1333.5,
+        "Budget": 16386.5250,
+        "Cpm": 12.3299,
+        "Impressions": 1329.0,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -103,31 +103,31 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 14.427121586432529879148027000,
+          "Cpm": 15.328816685584562996594778700,
           "Id": 0,
-          "Impressions": 1123.275,
-          "ImpressionsPercentage": 99.10011249,
+          "Impressions": 1057.2,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 54.683823529411764705882352900,
+          "Budget": 180.9000,
+          "Cpm": 30.15000,
           "Id": 0,
-          "Impressions": 10.2,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 6.0,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 14.7893,
-        "Impressions": 1133.475,
+        "Budget": 16386.5250,
+        "Cpm": 15.4124,
+        "Impressions": 1063.2,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -141,28 +141,28 @@
           "Cpm": 12.263053348467650397275822900,
           "Id": 0,
           "Impressions": 1321.5,
-          "ImpressionsPercentage": 99.10011249,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 46.48125000,
+          "Budget": 180.9000,
+          "Cpm": 24.12000,
           "Id": 0,
-          "Impressions": 12.0,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 7.5,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 12.5709,
-        "Impressions": 1333.5,
+        "Budget": 16386.5250,
+        "Cpm": 12.3299,
+        "Impressions": 1329.0,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -170,31 +170,31 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 14.427121586432529879148027000,
+          "Cpm": 15.328816685584562996594778700,
           "Id": 0,
-          "Impressions": 1123.275,
-          "ImpressionsPercentage": 99.10011249,
+          "Impressions": 1057.2,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 54.683823529411764705882352900,
+          "Budget": 180.9000,
+          "Cpm": 30.15000,
           "Id": 0,
-          "Impressions": 10.2,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 6.0,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 14.7893,
-        "Impressions": 1133.475,
+        "Budget": 16386.5250,
+        "Cpm": 15.4124,
+        "Impressions": 1063.2,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -208,28 +208,28 @@
           "Cpm": 12.263053348467650397275822900,
           "Id": 0,
           "Impressions": 1321.5,
-          "ImpressionsPercentage": 99.10011249,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 46.48125000,
+          "Budget": 180.9000,
+          "Cpm": 24.12000,
           "Id": 0,
-          "Impressions": 12.0,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 7.5,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 12.5709,
-        "Impressions": 1333.5,
+        "Budget": 16386.5250,
+        "Cpm": 12.3299,
+        "Impressions": 1329.0,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
@@ -237,31 +237,31 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 14.427121586432529879148027000,
+          "Cpm": 15.328816685584562996594778700,
           "Id": 0,
-          "Impressions": 1123.275,
-          "ImpressionsPercentage": 99.10011249,
+          "Impressions": 1057.2,
+          "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
           "Station": "WPIX"
         },
         {
-          "Budget": 557.7750,
-          "Cpm": 54.683823529411764705882352900,
+          "Budget": 180.9000,
+          "Cpm": 30.15000,
           "Id": 0,
-          "Impressions": 10.2,
-          "ImpressionsPercentage": 0.89988751,
+          "Impressions": 6.0,
+          "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
-          "Spots": 30,
+          "Spots": 20,
           "Station": "WPFO"
         }
       ],
       "Totals": {
-        "Budget": 16763.4000,
-        "Cpm": 14.7893,
-        "Impressions": 1133.475,
+        "Budget": 16386.5250,
+        "Cpm": 15.4124,
+        "Impressions": 1063.2,
         "ImpressionsPercentage": 100.0,
-        "Spots": 60,
+        "Spots": 50,
         "Station": 2
       }
     },
