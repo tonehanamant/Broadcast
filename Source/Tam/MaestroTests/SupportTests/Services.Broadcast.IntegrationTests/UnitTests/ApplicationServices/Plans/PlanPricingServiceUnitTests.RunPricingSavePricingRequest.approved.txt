@@ -3,6 +3,16 @@
     "<>4__this": {
       "UT_CurrentDateTime": null
     },
+    "allocationResult": {
+      "JobId": 1,
+      "PlanVersionId": 0,
+      "PostingType": 1,
+      "PricingCpm": 0.0,
+      "PricingVersion": "2",
+      "RequestId": "Request1",
+      "SpotAllocationModelMode": 1,
+      "Spots": []
+    },
     "apiVersion": "2",
     "jobId": 1,
     "plan": {

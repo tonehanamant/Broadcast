@@ -17,7 +17,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             const int planId = 122;
             const int jobId = 425;
             var currentDateTime = new DateTime(2020, 10, 20, 14, 59, 20);
-            var expectedResult = $"{expectedEnv}_{expectedApiV}-request-122_425-20201020_145920.log";
+            var expectedResult = $"{expectedEnv}_{expectedApiV}-request-122_425_Q-20201020_145920.log";
 
             var result = PlanPricingBuyingFileHelper.GetRequestFileName(environment, planId, jobId, apiVersion, currentDateTime);
 

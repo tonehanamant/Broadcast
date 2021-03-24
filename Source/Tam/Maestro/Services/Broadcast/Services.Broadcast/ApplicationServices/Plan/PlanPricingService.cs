@@ -136,10 +136,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanPricingBandDto GetPricingBandsForVersion(int planId, int planVersionId);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest, string apiVersion);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion);
+        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
 
         PlanPricingStationResultDto_v2 GetStations_v2(int planId,
@@ -1574,7 +1574,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1667,7 +1667,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();
             _HandleMissingSpotCosts(planSpotLengthIds, pricingApiRequest);
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1954,12 +1954,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return grouped.ToList();
         }
 
-        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest, string apiVersion)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto pricingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {
@@ -1967,12 +1967,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion)
+        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {
