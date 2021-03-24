@@ -14,14 +14,13 @@ using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -1778,7 +1777,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var plan = _GetNewPlan();
             var addedMarkets = new List<PlanAvailableMarketDto>
             {
-                new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 71, Market = "Flint-Saginaw-Bay City", PercentageOfUS = 0.00367, MarketCode = 113 },
+                new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 71, Market = "Flint-Saginaw-Bay City", PercentageOfUS = 0.00367, MarketCode = 113, IsUserShareOfVoicePercent = true},
                 new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 92, Market = "Charleston, SC", PercentageOfUS = 0.00286, MarketCode = 119 }
             };
             
@@ -1798,6 +1797,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.IsNotNull(results);
+            var addedMarketCodes = addedMarkets.Select(m => m.MarketCode).ToList();
+            var didNotResetIsUserShareOfVoicePercent = results.AvailableMarkets.Where(m => addedMarketCodes.Contains(m.MarketCode))
+                .Any(m => m.IsUserShareOfVoicePercent);
+            Assert.IsFalse(didNotResetIsUserShareOfVoicePercent);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()), Times.Never);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketsAdded(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<List<PlanAvailableMarketDto>>()), Times.Once);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketsRemoved(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<List<short>>()), Times.Never);

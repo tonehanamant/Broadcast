@@ -85,6 +85,7 @@ namespace Services.Broadcast.BusinessEngines
             List<PlanAvailableMarketDto> addedMarkets)
         {
             var markets = _GetCopy(beforeMarkets);
+            addedMarkets.ForEach(s => s.IsUserShareOfVoicePercent = false);
             markets.AddRange(addedMarkets);
             var results = CalculateMarketWeights(markets);
             return results;
