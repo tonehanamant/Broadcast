@@ -272,6 +272,47 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
+        public void CalculateMarketAdded_KeepUserEnteredValues()
+        {
+            // Arrange
+            var beforeMarkets = _GetPreparedAvailableMarkets();
+            var addedMarkets = new List<PlanAvailableMarketDto> { beforeMarkets[3], beforeMarkets[4], beforeMarkets[5] };
+            beforeMarkets.RemoveRange(3, 6);
+
+            // test the "if they cleared it out" use case
+            addedMarkets[0].IsUserShareOfVoicePercent = true;
+            addedMarkets[0].ShareOfVoicePercent = null;
+
+            // test the "if they set a value" use case
+            addedMarkets[1].IsUserShareOfVoicePercent = true;
+            addedMarkets[1].ShareOfVoicePercent = 5;
+
+            // test the "if they did not set a value" use case
+            addedMarkets[2].IsUserShareOfVoicePercent = false;
+            addedMarkets[2].ShareOfVoicePercent = 25;
+
+            var addedMarketCodes = addedMarkets.Select(m => m.MarketCode);
+
+            var expectedMarketCount = beforeMarkets.Count + addedMarkets.Count;
+            const int expectedUserEnteredValueCount = 3;
+            const double expectedUserEnteredSum = 17.8;
+            const double expectedTotalWeight = 100.0;
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass.CalculateMarketsAdded(beforeMarkets, addedMarkets);
+
+            // Assert
+            Assert.AreEqual(expectedMarketCount, result.AvailableMarkets.Count);
+            Assert.IsFalse(result.AvailableMarkets.Any(m => !m.ShareOfVoicePercent.HasValue));
+            Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(m => m.IsUserShareOfVoicePercent));
+            Assert.AreEqual(expectedUserEnteredSum, result.AvailableMarkets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent));
+            Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
+            Assert.AreEqual(addedMarkets.Count, result.AvailableMarkets.Count(s => addedMarketCodes.Contains(s.MarketCode)));
+        }
+
+        [Test]
         public void CalculateMarketRemoved_Single()
         {
             // Arrange

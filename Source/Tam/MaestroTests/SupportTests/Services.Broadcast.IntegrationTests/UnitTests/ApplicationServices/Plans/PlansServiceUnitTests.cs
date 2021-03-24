@@ -1777,7 +1777,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var plan = _GetNewPlan();
             var addedMarkets = new List<PlanAvailableMarketDto>
             {
-                new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 71, Market = "Flint-Saginaw-Bay City", PercentageOfUS = 0.00367, MarketCode = 113, IsUserShareOfVoicePercent = true},
+                new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 71, Market = "Flint-Saginaw-Bay City", PercentageOfUS = 0.00367, MarketCode = 113},
                 new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 92, Market = "Charleston, SC", PercentageOfUS = 0.00286, MarketCode = 119 }
             };
             
