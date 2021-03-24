@@ -308,8 +308,29 @@ namespace BroadcastComposerWeb.Controllers
         {
             try
             {
+                const bool waitToComplete = false;
+
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
-                service.RequeueInventoryFileRatingsJob(jobId);
+                service.RequeueInventoryFileRatingsJob(jobId, waitToComplete);
+                TempData["Message"] = $"Job '{jobId}' queued.";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "Error Processing Job: " + e.Message;
+            }
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult RequeueInventoryRatingsJobAndWait(int jobId)
+        {
+            try
+            {
+                const bool waitToComplete = true;
+
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+                service.RequeueInventoryFileRatingsJob(jobId, waitToComplete);
                 TempData["Message"] = $"Job '{jobId}' queued.";
             }
             catch (Exception e)

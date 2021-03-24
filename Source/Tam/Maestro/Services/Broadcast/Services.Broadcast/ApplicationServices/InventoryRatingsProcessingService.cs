@@ -46,7 +46,7 @@ namespace Services.Broadcast.ApplicationServices
 
         void ResetJobStatusToQueued(int jobId);
         
-        void RequeueInventoryFileRatingsJob(int jobId);
+        void RequeueInventoryFileRatingsJob(int jobId, bool waitToComplete = false);
     }
 
     public class InventoryRatingsProcessingService : IInventoryRatingsProcessingService
@@ -91,11 +91,19 @@ namespace Services.Broadcast.ApplicationServices
             return _InventoryFileRatingsJobsRepository.GetJobsBatch(limit);
         }
 
-        public void RequeueInventoryFileRatingsJob(int jobId)
+        public void RequeueInventoryFileRatingsJob(int jobId, bool waitToComplete = false)
         {
             const bool ignoreStatus = true;
-            _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
-                x.ProcessInventoryRatingsJob(jobId, ignoreStatus));
+
+            if (waitToComplete)
+            {
+                ProcessInventoryRatingsJob(jobId, ignoreStatus);
+            }
+            else
+            {
+                _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
+                    x.ProcessInventoryRatingsJob(jobId, ignoreStatus));
+            }
         }
 
         public void QueueInventoryFileRatingsJob(int inventoryFileId)

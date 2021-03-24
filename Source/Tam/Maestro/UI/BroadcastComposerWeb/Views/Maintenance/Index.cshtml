@@ -229,6 +229,15 @@
                         <input class="button" type="submit" value="Requeue Ratings Job" id="submit" />
                     </div>
                 }
+                
+                @using (Html.BeginForm("RequeueInventoryRatingsJobAndWait", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Re-run Ratings Job and wait" id="submit" />
+                    </div>
+                }
+
                 @using (Html.BeginForm("ResetRatingsJobStatus", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="input-container-row">

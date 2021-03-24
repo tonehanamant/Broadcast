@@ -399,7 +399,6 @@
     <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\ProprietarySpotCostCalculationEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ScxGenerationServiceTests.cs" />
     <Compile Include="ApplicationServices\SigmaConverterTests.cs" />
     <Compile Include="ApplicationServices\BvsRepositoryIntegrationTests.cs" />
@@ -493,6 +492,7 @@
     <Compile Include="UnitTests\ApplicationServices\DaypartDefaultServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTestClass.cs" />
+    <Compile Include="UnitTests\ApplicationServices\ImpressionsServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceTestClass.cs" />

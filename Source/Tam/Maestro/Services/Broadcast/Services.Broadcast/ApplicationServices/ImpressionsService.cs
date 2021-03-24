@@ -38,27 +38,28 @@ namespace Services.Broadcast.ApplicationServices
 
     public class ImpressionsService : IImpressionsService
     {
-        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly INsiComponentAudienceRepository _NsiComponentAudienceRepository;
-        private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IRatingForecastRepository _RatingsRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IStationRepository _StationRepository;
+        private readonly IAffidavitRepository _AffidavitRepository;
+
+        private readonly IStationProcessingEngine _StationProcessingEngine;
 
         public ImpressionsService(IDataRepositoryFactory broadcastDataRepositoryFactory, IStationProcessingEngine stationProcessingEngine)
         {
-            _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _NsiComponentAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
-            _StationProcessingEngine = stationProcessingEngine;
             _RatingsRepository = broadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            _AffidavitRepository = broadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+
+            _StationProcessingEngine = stationProcessingEngine;
         }
 
         public void RecalculateImpressionsForProposalDetail(int proposalDetailId)
         {
-            var affidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
-            var details = affidavitRepository.GetAffidavitDetails(proposalDetailId);
+            var details = _AffidavitRepository.GetAffidavitDetails(proposalDetailId);
             var audiencesIds =
                 _NsiComponentAudienceRepository.GetAllNsiComponentAudiences().
                 Select(a => a.Id).
@@ -66,11 +67,11 @@ namespace Services.Broadcast.ApplicationServices
 
             using (var transaction = new TransactionScopeWrapper())
             {
-                affidavitRepository.RemoveAffidavitAudiences(details);
+                _AffidavitRepository.RemoveAffidavitAudiences(details);
 
                 _CalculateImpressionsForAffidavitDetails(details, audiencesIds);
 
-                affidavitRepository.SaveAffidavitAudiences(details);
+                _AffidavitRepository.SaveAffidavitAudiences(details);
 
                 transaction.Complete();
             }
@@ -109,8 +110,7 @@ namespace Services.Broadcast.ApplicationServices
                     );
                 }
 
-                var ratingForecastRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
-                var impressionsPointInTime = ratingForecastRepository.GetImpressionsPointInTime(postingData.PostingBookId.Value, audiencesIds,
+                var impressionsPointInTime = _RatingsRepository.GetImpressionsPointInTime(postingData.PostingBookId.Value, audiencesIds,
                     stationDetails,
                     postingData.PostingPlaybackType.Value);
 
@@ -175,19 +175,21 @@ namespace Services.Broadcast.ApplicationServices
                         );
                 }
 
-                List<StationImpressionsWithAudience> stationImpressions = null;
-
-                if (hutBook.HasValue)
+                var stationImpressions = new List<StationImpressionsWithAudience>();
+                foreach (var stationDetail in stationDetails)
                 {
-                    stationImpressions = _RatingsRepository
-                        .GetImpressionsDaypart((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetails, playbackType)
-                        .Impressions;
-                }
-                else
-                {
-                    stationImpressions = _RatingsRepository
-                        .GetImpressionsDaypart(shareBook, ratingAudiences, stationDetails, playbackType)
-                        .Impressions;
+                    List<StationImpressionsWithAudience> daypartStationImpressionResult;
+                    if (hutBook.HasValue)
+                    {
+                        var result = _LoadComponentImpressionsForTwoBooks((short)hutBook.Value, (short)shareBook, ratingAudiences, stationDetail, playbackType);
+                        daypartStationImpressionResult = result.Impressions;
+                    }
+                    else
+                    {
+                        var result = _LoadComponentImpressionsForSingleBook((short)shareBook, ratingAudiences, stationDetail, playbackType);
+                        daypartStationImpressionResult = result.Impressions;
+                    }
+                    stationImpressions.AddRange(daypartStationImpressionResult);
                 }
 
                 counter = 1;
@@ -347,8 +349,9 @@ namespace Services.Broadcast.ApplicationServices
                             new List<ManifestDetailDaypart> { splitDaypart.Item2 },
                             playbackType);
 
-                return impressionsBeforeMidnight.MergeImpressions(impressionsAfterMidnight, splitDaypart.Item1, splitDaypart.Item2);
-
+                var result = impressionsBeforeMidnight.MergeImpressions(impressionsAfterMidnight, splitDaypart.Item1, splitDaypart.Item2);
+                result.Impressions.ForEach(i => i.Id = stationDaypart.Id);
+                return result;
             }
             else
             {
@@ -380,7 +383,10 @@ namespace Services.Broadcast.ApplicationServices
                         new List<ManifestDetailDaypart> { splitDaypart.Item2 },
                         playbackType);
 
-                return impressionsBeforeMidnight.MergeImpressions(impressionsAfterMidnight, splitDaypart.Item1, splitDaypart.Item2);
+                var result = impressionsBeforeMidnight.MergeImpressions(impressionsAfterMidnight, splitDaypart.Item1,
+                    splitDaypart.Item2);
+                result.Impressions.ForEach(i => i.Id = stationDaypart.Id);
+                return result;
             }
             else
             {
