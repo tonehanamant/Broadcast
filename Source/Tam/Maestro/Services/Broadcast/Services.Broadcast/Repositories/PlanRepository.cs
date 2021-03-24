@@ -1868,8 +1868,13 @@ namespace Services.Broadcast.Repositories
             var standardDayPartIds = planDayParts.Select(x => x.DaypartCodeId).ToList();
             return _InReadUncommitedTransaction(context =>
             {
+                var latestMediaMonth = context.nti_to_nsi_conversion_rates
+                         .Select(x => x.media_month_id)
+                         .ToList()
+                         .Max();
+
                 var conversionRate = context.nti_to_nsi_conversion_rates
-                    .Where(x => standardDayPartIds.Contains(x.standard_daypart_id))
+                    .Where(x => standardDayPartIds.Contains(x.standard_daypart_id) && x.media_month_id== latestMediaMonth)
                     .Average(x => x.conversion_rate);
 
                 return conversionRate;
