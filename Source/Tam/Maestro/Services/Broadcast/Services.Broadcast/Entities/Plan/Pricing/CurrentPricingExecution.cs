@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -11,7 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         /// True - when there is a pricing model execution with status 'Queued' or 'Processing' in the DB
         /// </summary>
         public bool IsPricingModelRunning { get; set; }
-    }
+    }    
 
     public class CurrentPricingExecutionResultDto
     {

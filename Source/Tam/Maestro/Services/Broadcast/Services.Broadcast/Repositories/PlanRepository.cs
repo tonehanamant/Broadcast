@@ -122,9 +122,15 @@ namespace Services.Broadcast.Repositories
         void UpdateJobHangfireId(int jobId, string hangfireJobId);
         PlanPricingJob GetPricingJobForLatestPlanVersion(int planId);
         PlanPricingJob GetPricingJobForPlanVersion(int planVersionId);
+
+        //PlanPricingJob GetPricingJobForLatestPlanVersions(int planId);
+        //PlanPricingJob GetPricingJobForPlanVersions(int planVersionId);
+
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
         CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        List<CurrentPricingExecutionResultDto> GetAllPricingResultsByJobIds(int jobId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
 
@@ -1330,7 +1336,7 @@ namespace Services.Broadcast.Repositories
                 };
             });
         }
-
+        
         /// <inheritdoc/>
         public PlanPricingJob GetPlanPricingJob(int jobId)
         {
@@ -2171,6 +2177,33 @@ namespace Services.Broadcast.Repositories
                     HasResults = result.plan_version_pricing_result_spots.Any(),
                     SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode
                 };
+            });
+        }
+
+        public List<CurrentPricingExecutionResultDto> GetAllPricingResultsByJobIds(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                     var result = context.plan_version_pricing_results
+                    .Include(x => x.plan_version_pricing_result_spots)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .ToList();
+
+                if (result == null)
+                    return null;
+
+                var results = result.Select(j => new CurrentPricingExecutionResultDto
+                {
+                    PostingType = (PostingTypeEnum)j.posting_type,
+                    OptimalCpm = j.optimal_cpm,
+                    JobId = j.plan_version_pricing_job_id,
+                    PlanVersionId = j.plan_version_pricing_job.plan_version_id,
+                    GoalFulfilledByProprietary = j.goal_fulfilled_by_proprietary,
+                    HasResults = j.plan_version_pricing_result_spots.Any(),
+                    SpotAllocationModelMode = (SpotAllocationModelMode)j.spot_allocation_model_mode
+                }).ToList();
+                return results;
             });
         }
 

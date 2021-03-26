@@ -39,6 +39,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
         CurrentPricingExecution GetCurrentPricingExecution(int planId, int? planVersionId);
+        CurrentPricingExecutions GetAllCurrentPricingExecutions(int planId, int? planVersionId);
         CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId);
         /// <summary>
         /// Cancels the current pricing execution.
@@ -550,16 +551,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private CurrentPricingExecution _GetCurrentPricingExecution(PlanPricingJob job)
         {
             CurrentPricingExecutionResultDto pricingExecutionResult = null;
-
-            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
-            {
-                //in case the error is comming from the Pricing Run model, the error message field will have better
-                //message then the generic we construct here
-                if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
-                    throw new Exception(job.ErrorMessage);
-                throw new Exception(
-                    "Error encountered while running Pricing Model, please contact a system administrator for help");
-            }
+            _PricingRunmodelJobValidation(job);
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
@@ -567,21 +559,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 if (pricingExecutionResult != null)
                 {
-                    pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary
-                        ? "Proprietary goals meet plan goals"
-                        : string.Empty;
-                    if (pricingExecutionResult.JobId.HasValue)
-                    {
-                        decimal goalCpm;
-                        if (pricingExecutionResult.PlanVersionId.HasValue)
-                            goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId.Value,
-                                pricingExecutionResult.JobId.Value);
-                        else
-                            goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value);
-
-                        pricingExecutionResult.CpmPercentage =
-                            CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
-                    }
+                    _GetPricingExecutionResult(pricingExecutionResult);
                 }
             }
 
@@ -597,12 +575,82 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
-        public CurrentPricingExecution GetCurrentPricingExecution(int planId)
+        private void _GetPricingExecutionResult(CurrentPricingExecutionResultDto pricingExecutionResult)
         {
+            pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary
+                                    ? "Proprietary goals meet plan goals"
+                                    : string.Empty;
+            if (pricingExecutionResult.JobId.HasValue)
+            {
+                decimal goalCpm;
+                if (pricingExecutionResult.PlanVersionId.HasValue)
+                {
+                    goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId.Value,
+                        pricingExecutionResult.JobId.Value);
+                }                    
+                else
+                { 
+                    goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value);                
+                }
+                pricingExecutionResult.CpmPercentage = CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
+            }
+        }
+
+        private CurrentPricingExecutions _GetAllCurrentPricingExecutions(PlanPricingJob job)
+        {
+            List<CurrentPricingExecutionResultDto> pricingExecutionResults = null;
+            _PricingRunmodelJobValidation(job);
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
+            {
+                pricingExecutionResults = _PlanRepository.GetAllPricingResultsByJobIds(job.Id);
+
+                if (pricingExecutionResults != null)
+                {
+                    foreach (var pricingExecutionResult in pricingExecutionResults)
+                    {
+                        _GetPricingExecutionResult(pricingExecutionResult);
+                    }
+                }
+            }
+            //pricingExecutionResult might be null when there is no pricing run for the latest version 
+            var result = new CurrentPricingExecutions
+            {
+                Job = job,
+                Results = pricingExecutionResults ?? new List<CurrentPricingExecutionResultDto>()
+                {
+                 new CurrentPricingExecutionResultDto()
+                 { SpotAllocationModelMode=SpotAllocationModelMode.Quality},
+                },
+            };
+            return result;
+        }        
+
+        private static void _PricingRunmodelJobValidation(PlanPricingJob job)
+        {
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
+            {
+                //in case the error is comming from the Pricing Run model, the error message field will have better
+                //message then the generic we construct here
+                if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
+                    throw new Exception(job.ErrorMessage);
+                throw new Exception(
+                    "Error encountered while running Pricing Model, please contact a system administrator for help");
+            }
+        }
+
+        public CurrentPricingExecution GetCurrentPricingExecution(int planId)
+        { 
             return GetCurrentPricingExecution(planId, null);
         }
 
         public CurrentPricingExecution GetCurrentPricingExecution(int planId, int? planVersionId)
+        {
+            PlanPricingJob job = _GetPricingJobForPlanAndLatestPlanVersion(planId, planVersionId);
+
+            return _GetCurrentPricingExecution(job);
+        }
+
+        private PlanPricingJob _GetPricingJobForPlanAndLatestPlanVersion(int planId, int? planVersionId)
         {
             PlanPricingJob job;
 
@@ -610,8 +658,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId.Value);
             else
                 job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
+            return job;
+        }
 
-            return _GetCurrentPricingExecution(job);
+        public CurrentPricingExecutions GetAllCurrentPricingExecutions(int planId, int? planVersionId)
+        {
+            PlanPricingJob job = _GetPricingJobForPlanAndLatestPlanVersion(planId, planVersionId);
+
+            return _GetAllCurrentPricingExecutions(job);
         }
 
         /// <summary>

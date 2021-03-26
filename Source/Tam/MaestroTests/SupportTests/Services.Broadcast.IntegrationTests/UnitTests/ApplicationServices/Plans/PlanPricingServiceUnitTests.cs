@@ -6029,6 +6029,79 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetAllCurrentPricingExecutions_ForPlanId()
+        {
+            // Arrange
+            const int planId = 128;
+            const int JobID = 506;
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Id = JobID,
+                    HangfireJobId = "9895",
+                    PlanVersionId = 659,
+                    Queued = new DateTime(2021, 3, 24, 11, 12, 13),
+                    Completed = new DateTime(2021, 3, 24, 11, 13, 13),
+                    DiagnosticResult = "DiagnosticResult"
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetAllPricingResultsByJobIds(JobID))
+                .Returns(_GetCurrentPricingExecutionsResults());
+           
+            _PlanRepositoryMock
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetAllCurrentPricingExecutions(planId,null);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetAllCurrentPricingExecutions_ForPlanAndPlanVersionId()
+        {
+            // Arrange
+            const int planId = 128;
+            const int JobID = 506;
+            const int PlanVersionId = 659;
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForPlanVersion(PlanVersionId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Id = JobID,
+                    HangfireJobId = "9895",
+                    PlanVersionId = 659,
+                    Queued = new DateTime(2021, 3, 24, 11, 12, 13),
+                    Completed = new DateTime(2021, 3, 24, 11, 13, 13),
+                    DiagnosticResult = "DiagnosticResult"
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetAllPricingResultsByJobIds(JobID))
+                .Returns(_GetCurrentPricingExecutionsResults());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetAllCurrentPricingExecutions(planId, PlanVersionId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
 
         [Test]
         public void CalculateCpmPercentageTest()
@@ -9030,6 +9103,90 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations));
+        }
+
+        private List<CurrentPricingExecutionResultDto> _GetCurrentPricingExecutionsResults()
+        {
+            return new List<CurrentPricingExecutionResultDto>
+                    {
+                        new CurrentPricingExecutionResultDto()
+                        {
+                            OptimalCpm = 11,
+                            JobId = 12,
+                            PlanVersionId = 659,
+                            GoalFulfilledByProprietary = false,
+                            Notes = "",
+                            HasResults = true,
+                            CpmPercentage = 63,
+                            PostingType = PostingTypeEnum.NTI,
+                            SpotAllocationModelMode = SpotAllocationModelMode.Floor
+
+                        },
+                        new CurrentPricingExecutionResultDto()
+                        {
+                            OptimalCpm = 7,
+                            JobId = 506,
+                            PlanVersionId = 659,
+                            GoalFulfilledByProprietary = false,
+                            Notes = "",
+                            HasResults = true,
+                            CpmPercentage = 44,
+                            PostingType = PostingTypeEnum.NSI,
+                            SpotAllocationModelMode = SpotAllocationModelMode.Floor
+
+                        },
+                        new CurrentPricingExecutionResultDto()
+                        {
+                            OptimalCpm = 12,
+                            JobId = 506,
+                            PlanVersionId = 659,
+                            GoalFulfilledByProprietary = false,
+                            Notes = "",
+                            HasResults = true,
+                            CpmPercentage = 67,
+                            PostingType = PostingTypeEnum.NSI,
+                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
+
+                        },
+                        new CurrentPricingExecutionResultDto()
+                        {
+                            OptimalCpm = 8,
+                            JobId = 506,
+                            PlanVersionId = 659,
+                            GoalFulfilledByProprietary = false,
+                            Notes = "",
+                            HasResults = true,
+                            CpmPercentage = 47,
+                            PostingType = PostingTypeEnum.NTI,
+                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
+
+                        },
+                        new CurrentPricingExecutionResultDto()
+                        {
+                            OptimalCpm = 28,
+                            JobId = 506,
+                            PlanVersionId = 659,
+                            GoalFulfilledByProprietary = false,
+                            Notes = "",
+                            HasResults = true,
+                            CpmPercentage = 160,
+                            PostingType = PostingTypeEnum.NSI,
+                            SpotAllocationModelMode = SpotAllocationModelMode.Quality
+
+                        },
+                        new CurrentPricingExecutionResultDto()
+                        {
+                            OptimalCpm = 20,
+                            JobId = 506,
+                            PlanVersionId = 659,
+                            GoalFulfilledByProprietary = false,
+                            Notes = "",
+                            HasResults = true,
+                            CpmPercentage = 112,
+                            PostingType = PostingTypeEnum.NTI,
+                            SpotAllocationModelMode = SpotAllocationModelMode.Quality
+                        }
+                };
         }
 
         private PlanPricingApiSpotsResponseDto _GetTieredAllocations()

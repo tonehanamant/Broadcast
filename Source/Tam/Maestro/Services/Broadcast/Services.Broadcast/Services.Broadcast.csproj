@@ -598,6 +598,7 @@
     <Compile Include="Entities\Plan\PlanCalculateMarketRemovedRequest.cs" />
     <Compile Include="Entities\Plan\PlanCalculateMarketWeightChangeRequest.cs" />
     <Compile Include="Entities\Plan\PlanDeliveryPostingTypeBudget.cs" />
+    <Compile Include="Entities\Plan\Pricing\CurrentPricingExecutions.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingBand.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarkets.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
