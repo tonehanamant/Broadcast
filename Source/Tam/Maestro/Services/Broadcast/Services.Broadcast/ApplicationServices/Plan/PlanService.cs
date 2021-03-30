@@ -769,38 +769,42 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 BuyingParameters = plan.BuyingParameters,
                 JobId = plan.JobId
             };
-
+            
             dto.PricingParameters = new List<PlanPricingParametersDto>();
-            var convertedParameters = plan.PricingParameters.DeepCloneUsingSerialization();
 
-            //Add original parameters
-            plan.PricingParameters.IsSelected = true;
-            dto.PricingParameters.Add(plan.PricingParameters);
+            if (plan.PricingParameters != null)
+            {
+                var convertedParameters = plan.PricingParameters.DeepCloneUsingSerialization();
 
-            //Convert parameters
-            if (convertedParameters.PostingType == PostingTypeEnum.NSI)
-            {
-                convertedParameters.DeliveryImpressions *= ntiToNsiConversionRate;
-                convertedParameters.PostingType = PostingTypeEnum.NTI;
-            }
-            else if (convertedParameters.PostingType == PostingTypeEnum.NTI)
-            {
-                convertedParameters.DeliveryImpressions /= ntiToNsiConversionRate;               
-                convertedParameters.PostingType = PostingTypeEnum.NSI;
-            }
+                //Add original parameters
+                plan.PricingParameters.IsSelected = true;
+                dto.PricingParameters.Add(plan.PricingParameters);
 
-            if (convertedParameters.DeliveryImpressions != 0)
-            {
-                convertedParameters.CPM = (decimal)((double)convertedParameters.Budget / convertedParameters.DeliveryImpressions);
-            }
-            else
-            {
-                convertedParameters.CPM = 0;
-                _LogWarning($"Delivery impressions are 0 for the plan with id {plan.Id} version {plan.VersionNumber} for {convertedParameters.PostingType} posting type. " +
-                    $"The cpm for the parameters could not be calculated properly and is set to 0.");
-            }
+                //Convert parameters
+                if (convertedParameters.PostingType == PostingTypeEnum.NSI)
+                {
+                    convertedParameters.DeliveryImpressions *= ntiToNsiConversionRate;
+                    convertedParameters.PostingType = PostingTypeEnum.NTI;
+                }
+                else if (convertedParameters.PostingType == PostingTypeEnum.NTI)
+                {
+                    convertedParameters.DeliveryImpressions /= ntiToNsiConversionRate;
+                    convertedParameters.PostingType = PostingTypeEnum.NSI;
+                }
 
-            dto.PricingParameters.Add(convertedParameters);
+                if (convertedParameters.DeliveryImpressions != 0)
+                {
+                    convertedParameters.CPM = (decimal)((double)convertedParameters.Budget / convertedParameters.DeliveryImpressions);
+                }
+                else
+                {
+                    convertedParameters.CPM = 0;
+                    _LogWarning($"Delivery impressions are 0 for the plan with id {plan.Id} version {plan.VersionNumber} for {convertedParameters.PostingType} posting type. " +
+                                $"The cpm for the parameters could not be calculated properly and is set to 0.");
+                }
+
+                dto.PricingParameters.Add(convertedParameters);
+            }
 
             return dto;
         }
