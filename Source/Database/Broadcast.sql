@@ -220,31 +220,178 @@ GO
 /*************************************** End BP-1892 *****************************************************/
 
 /*************************************** start BP-2074 *****************************************************/
-IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474) 
-     BEGIN
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.80, 1, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.80, 2, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.70, 3, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.70, 4, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 5, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 6, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 7, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 8, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 9, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.70, 10, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 11, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 12, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.85, 14, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.85, 15, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 16, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.8,  17, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 19, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 20, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 21, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 22, 474)
-		INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.075,23, 474)
-    End
-	Go
+
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=1 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.8, 1, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.8 WHERE [media_month_id]=474 and [standard_daypart_id]=1
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=2 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 2, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=2
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=3 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 3, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=3
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=4 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 4, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=4
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=5 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 5, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=5
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=6 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 6, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=6
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=7 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 7, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=7
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=8 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 8, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=8
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=9 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 9, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=9
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=10 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 10, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=10
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=11 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 11, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=11
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=12 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 12, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=12
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=14 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 14, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=14
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=15 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.8, 15, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.8 WHERE [media_month_id]=474 and [standard_daypart_id]=15
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=16 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 16, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=16
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=17 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.75, 17, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.75 WHERE [media_month_id]=474 and [standard_daypart_id]=17
+	  END
+
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=19 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 19, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=19
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=20 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 20, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=20
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=21 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 21, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=21
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=22 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 22, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=22
+	  END
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=23 ) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 23, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=23
+	  END
+Go
+	
 /*************************************** End BP-2074 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
