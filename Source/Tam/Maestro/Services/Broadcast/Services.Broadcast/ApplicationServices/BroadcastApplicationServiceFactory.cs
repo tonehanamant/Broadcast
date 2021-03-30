@@ -316,6 +316,7 @@ namespace Services.Broadcast.ApplicationServices
 
             // singletons
             unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IAabCache, AabCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());

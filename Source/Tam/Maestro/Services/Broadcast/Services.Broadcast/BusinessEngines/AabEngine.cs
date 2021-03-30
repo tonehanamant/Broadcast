@@ -1,6 +1,5 @@
 ﻿using Common.Services.Extensions;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Helpers;
@@ -72,6 +71,17 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         /// <param name="productId">The identifier used by the Aab Traffic Api.</param>
         ProductDto GetProduct(int productId);
+
+        /// <summary>
+        /// Clears the agencies cache.
+        /// </summary>
+        void ClearAgenciesCache();
+
+        /// <summary>
+        /// Clears the advertisers cache.
+        /// </summary>
+        /// <returns></returns>
+        void ClearAdvertisersCache();
     }
 
     /// <summary>
@@ -80,9 +90,7 @@ namespace Services.Broadcast.BusinessEngines
     /// <seealso cref="Services.Broadcast.BusinessEngines.IAabEngine" />
     public class AabEngine : IAabEngine
     {
-        //bp-2101. Remove the AabCache code.
-        //private IAabCache _AabApiCache;
-        private IAgencyAdvertiserBrandApiClient _AgencyAdvertiserBrandApiClient;
+        private IAabCache _AabApiCache;
         private ITrafficApiCache _TrafficApiCache;
         private IFeatureToggleHelper _FeatureToggleHelper;
         private Lazy<bool> _IsAabEnabled;
@@ -90,15 +98,14 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Initializes a new instance of the <see cref="AabEngine"/> class.
         /// </summary>
-        /// <param name="AgencyAdvertiserBrandApiClient">The aab API cache.</param>
+        /// <param name="aabApiCache">The aab API cache.</param>
         /// <param name="trafficApiCache">The traffic API cache.</param>
         /// <param name="featureToggleHelper">The feature toggle helper.</param>
-        public AabEngine(IAgencyAdvertiserBrandApiClient AgencyAdvertiserBrandApiClient,
+        public AabEngine(IAabCache aabApiCache,
             ITrafficApiCache trafficApiCache,
             IFeatureToggleHelper featureToggleHelper)
         {
-            //_AabApiCache = aabApiCache;
-            _AgencyAdvertiserBrandApiClient = AgencyAdvertiserBrandApiClient;
+            _AabApiCache = aabApiCache;
             _TrafficApiCache = trafficApiCache;
             _FeatureToggleHelper = featureToggleHelper;
             _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
@@ -107,9 +114,9 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<AgencyDto> GetAgencies()
         {
-            
+
             var result = _IsAabEnabled.Value
-                ? _AgencyAdvertiserBrandApiClient.GetAgencies()
+                ? _AabApiCache.GetAgencies()
                 : _TrafficApiCache.GetAgencies();
             return result;
         }
@@ -117,11 +124,11 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AgencyDto GetAgency(int agencyId)
         {
-            
+
             AgencyDto result;
             if (_IsAabEnabled.Value)
             {
-                var items = _AgencyAdvertiserBrandApiClient.GetAgencies();
+                var items = _AabApiCache.GetAgencies();
                 result = items.Single(i => i.Id == agencyId, $"Agency with id {agencyId} not found.");
             }
             else
@@ -135,7 +142,7 @@ namespace Services.Broadcast.BusinessEngines
         public AgencyDto GetAgency(Guid agencyMasterId)
         {
             // No need to check the toggle as when disabled you won't have a Guid master id.
-            var items = _AgencyAdvertiserBrandApiClient.GetAgencies();
+            var items = _AabApiCache.GetAgencies();
             var item = items.Single(i => i.MasterId == agencyMasterId, $"Agency with master id {agencyMasterId} not found.");
             return item;
         }
@@ -143,9 +150,9 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<AdvertiserDto> GetAdvertisers()
         {
-            
+
             var result = _IsAabEnabled.Value
-                ? _AgencyAdvertiserBrandApiClient.GetAdvertisers()
+                ? _AabApiCache.GetAdvertisers()
                 : _TrafficApiCache.GetAdvertisers();
             return result;
         }
@@ -153,12 +160,12 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            
+
             AdvertiserDto result;
 
             if (_IsAabEnabled.Value)
             {
-                var items = _AgencyAdvertiserBrandApiClient.GetAdvertisers();
+                var items = _AabApiCache.GetAdvertisers();
                 result = items.Single(i => i.Id == advertiserId, $"Advertiser with id {advertiserId} not found.");
             }
             else
@@ -173,7 +180,7 @@ namespace Services.Broadcast.BusinessEngines
         public AdvertiserDto GetAdvertiser(Guid advertiserMasterId)
         {
             // No need to check the toggle as when disabled you won't have a Guid master id.
-            var items = _AgencyAdvertiserBrandApiClient.GetAdvertisers();
+            var items = _AabApiCache.GetAdvertisers();
             var item = items.Single(i => i.MasterId == advertiserMasterId, $"Advertiser with master id {advertiserMasterId} not found.");
             return item;
         }
@@ -181,13 +188,13 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(int advertiserId)
         {
-            
+
             List<ProductDto> results;
 
             if (_IsAabEnabled.Value)
             {
                 var advertiser = GetAdvertiser(advertiserId);
-                results = _AgencyAdvertiserBrandApiClient.GetAdvertiserProducts(advertiser.MasterId.Value);
+                results = _AabApiCache.GetAdvertiserProducts(advertiser.MasterId.Value);
             }
             else
             {
@@ -201,7 +208,7 @@ namespace Services.Broadcast.BusinessEngines
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
             // No need to check the toggle as when disabled you won't have a Guid master id.
-            var products = _AgencyAdvertiserBrandApiClient.GetAdvertiserProducts(advertiserMasterId);
+            var products = _AabApiCache.GetAdvertiserProducts(advertiserMasterId);
             return products;
         }
 
@@ -209,7 +216,7 @@ namespace Services.Broadcast.BusinessEngines
         public ProductDto GetAdvertiserProduct(Guid advertiserMasterId, Guid productMasterId)
         {
             // No need to check the toggle as when disabled you won't have a Guid master id.
-            var products = _AgencyAdvertiserBrandApiClient.GetAdvertiserProducts(advertiserMasterId);
+            var products = _AabApiCache.GetAdvertiserProducts(advertiserMasterId);
             var product = products.Single(i => i.MasterId == productMasterId, $"Product '{productMasterId}' not found for advertiser '{advertiserMasterId}'.");
             return product;
         }
@@ -218,13 +225,39 @@ namespace Services.Broadcast.BusinessEngines
         public ProductDto GetProduct(int productId)
         {
             // must check the toggle and fail since products have integer ids from both sources.
-            
+
             if (_IsAabEnabled.Value)
             {
                 throw new InvalidOperationException("Disable the AAb Navigation Feature to retrieve a product by an integer id.  Otherwise use method GetAdvertiserProduct.");
             }
             var product = _TrafficApiCache.GetProduct(productId);
             return product;
+        }
+
+        public void ClearAgenciesCache()
+        {
+
+            if (_IsAabEnabled.Value)
+            {
+                _AabApiCache.ClearAgenciesCache();
+            }
+            else
+            {
+                _TrafficApiCache.ClearAgenciesCache();
+            }
+        }
+
+        public void ClearAdvertisersCache()
+        {
+
+            if (_IsAabEnabled.Value)
+            {
+                _AabApiCache.ClearAdvertisersCache();
+            }
+            else
+            {
+                _TrafficApiCache.ClearAdvertisersCache();
+            }
         }
     }
 }

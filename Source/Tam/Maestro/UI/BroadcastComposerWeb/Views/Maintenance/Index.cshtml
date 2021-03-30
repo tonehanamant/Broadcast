@@ -698,6 +698,22 @@
         }
     </div>
     <div id="aab_maintenance" class="tabcontent">
+        <h1 class="heading">Aab Cache Management</h1>
+        <div class="form">
+            <label>Clear the individual caches.</label>
+            @using (Html.BeginForm("ClearAgenciesCache", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="input-container">
+                    <input class="button" type="submit" value="Clear Agencies Cache" id="txtClearAgenciesCache" />
+                </div>
+            }
+            @using (Html.BeginForm("ClearAdvertisersCache", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="input-container">
+                    <input class="button" type="submit" value="Clear Advertisers Cache" id="txtClearAdvertisersCache" />
+                </div>
+            }
+        </div>
         <h1 class="heading">Aab Source Migration</h1>
         <div class="form">
             <h2 class="heading">Step 1) Validate</h2>

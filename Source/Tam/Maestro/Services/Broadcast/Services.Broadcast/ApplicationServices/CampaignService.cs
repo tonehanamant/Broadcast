@@ -204,8 +204,6 @@ namespace Services.Broadcast.ApplicationServices
             var quarterDateRange = _GetQuarterDateRange(filter.Quarter);
             var campaigns = _CampaignRepository.GetCampaignsWithSummary(quarterDateRange.Start, quarterDateRange.End, filter.PlanStatus)
                 .Select(x => _MapToCampaignListItemDto(x)).ToList();
-            var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
-
 
             foreach (var campaign in campaigns)
             {
