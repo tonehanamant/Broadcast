@@ -1089,26 +1089,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var conversionRates = _NtiToNsiConversionRepository.GetLatestNtiToNsiConversionRates();
             var conversionRate = conversionRates.Single(r => r.StandardDaypartId == budgetRequest.StandardDaypartId);
             
-            var convertedImpressions = budgetRequest.Impressions;
-            var convertedRatingPoints = budgetRequest.RatingPoints;
+            var convertedImpressions = budgetRequest.DeliveryImpressions;
+            var convertedRatingPoints = budgetRequest.DeliveryRatingPoints;
 
-            var otherBudgetInput = _CopyBudget(budgetRequest);
+            var otherBudgetInput = _MapRequestToBudget(budgetRequest);
 
             // NTI should be lower than NSI
             // calculating rate or budget; the other is static;
-            if (budgetRequest.Impressions.HasValue)
+            if (budgetRequest.DeliveryImpressions.HasValue)
             {
                 convertedImpressions =
                     otherPostingType == PostingTypeEnum.NTI
-                        ? budgetRequest.Impressions.Value * conversionRate.ConversionRate
-                        : budgetRequest.Impressions.Value / conversionRate.ConversionRate;
+                        ? budgetRequest.DeliveryImpressions.Value * conversionRate.ConversionRate
+                        : budgetRequest.DeliveryImpressions.Value / conversionRate.ConversionRate;
             }
-            else if (budgetRequest.RatingPoints.HasValue)
+            else if (budgetRequest.DeliveryRatingPoints.HasValue)
             {
                 convertedRatingPoints =
                     otherPostingType == PostingTypeEnum.NTI
-                        ? budgetRequest.RatingPoints.Value * conversionRate.ConversionRate
-                        : budgetRequest.RatingPoints.Value / conversionRate.ConversionRate;
+                        ? budgetRequest.DeliveryRatingPoints.Value * conversionRate.ConversionRate
+                        : budgetRequest.DeliveryRatingPoints.Value / conversionRate.ConversionRate;
             }
             // calculating delivery; budget is static;
             else
@@ -1151,29 +1151,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
-        private PlanDeliveryBudget _CopyBudget(PlanDeliveryBudget original)
-        {
-            var result = new PlanDeliveryBudget
-            {
-                Budget = original.Budget,
-                Impressions = original.Impressions,
-                RatingPoints = original.RatingPoints,
-                CPM = original.CPM,
-                CPP = original.CPP,
-                Universe = original.Universe,
-                AudienceId = original.AudienceId
-            };
-            return result;
-        }
-
-
         private PlanDeliveryBudget _MapRequestToBudget(PlanDeliveryPostingTypeBudget budgetRequest)
         {
             var result = new PlanDeliveryBudget
             {
                 Budget = budgetRequest.Budget,
-                Impressions = budgetRequest.Impressions,
-                RatingPoints = budgetRequest.RatingPoints,
+                Impressions = budgetRequest.DeliveryImpressions,
+                RatingPoints = budgetRequest.DeliveryRatingPoints,
                 CPM = budgetRequest.CPM,
                 CPP= budgetRequest.CPP,
                 Universe = budgetRequest.Universe,
@@ -1189,8 +1173,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PostingType = postingType,
                 StandardDaypartId = standardDaypartId,
                 Budget = calculationResult.Budget,
-                Impressions = calculationResult.Impressions,
-                RatingPoints = calculationResult.RatingPoints,
+                DeliveryImpressions = calculationResult.Impressions,
+                DeliveryRatingPoints = calculationResult.RatingPoints,
                 CPM = calculationResult.CPM,
                 CPP = calculationResult.CPP,
                 Universe = calculationResult.Universe,

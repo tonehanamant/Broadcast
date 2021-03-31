@@ -2014,7 +2014,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 StandardDaypartId = testStandardDaypartId,
                 AudienceId = 31,
                 Budget = testBudget,
-                Impressions = testOriginalImpressions
+                DeliveryImpressions = testOriginalImpressions
             };
 
             _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
@@ -2031,8 +2031,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(2, results.Count);
             var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
-            Assert.AreEqual(expectedNsiImpressions, nsiResult.Impressions);
-            Assert.AreEqual(expectedNtiImpressions, ntiResult.Impressions);
+            Assert.AreEqual(expectedNsiImpressions, nsiResult.DeliveryImpressions);
+            Assert.AreEqual(expectedNtiImpressions, ntiResult.DeliveryImpressions);
             Assert.AreEqual(testBudget, nsiResult.Budget);
             Assert.AreEqual(testBudget, ntiResult.Budget);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
@@ -2066,7 +2066,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 StandardDaypartId = testStandardDaypartId,
                 AudienceId = 31,
                 CPM = testRate,
-                Impressions = testOriginalImpressions
+                DeliveryImpressions = testOriginalImpressions
             };
 
             _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
@@ -2083,8 +2083,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(2, results.Count);
             var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
-            Assert.AreEqual(expectedNsiImpressions, nsiResult.Impressions);
-            Assert.AreEqual(expectedNtiImpressions, ntiResult.Impressions);
+            Assert.AreEqual(expectedNsiImpressions, nsiResult.DeliveryImpressions);
+            Assert.AreEqual(expectedNtiImpressions, ntiResult.DeliveryImpressions);
             Assert.AreEqual(testRate, nsiResult.CPM);
             Assert.AreEqual(testRate, ntiResult.CPM);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
@@ -2141,8 +2141,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(2, results.Count);
             var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
-            Assert.AreEqual(expectedNsiImpressions, nsiResult.Impressions);
-            Assert.AreEqual(expectedNtiImpressions, ntiResult.Impressions);
+            Assert.AreEqual(expectedNsiImpressions, nsiResult.DeliveryImpressions);
+            Assert.AreEqual(expectedNtiImpressions, ntiResult.DeliveryImpressions);
             Assert.AreEqual(testBudget, nsiResult.Budget);
             Assert.AreEqual(testBudget, ntiResult.Budget);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
@@ -2176,7 +2176,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 StandardDaypartId = testStandardDaypartId,
                 AudienceId = 31,
                 Budget = testBudget,
-                RatingPoints = testOriginalRatingPoints
+                DeliveryRatingPoints = testOriginalRatingPoints
             };
 
             _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
@@ -2198,8 +2198,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(2, results.Count);
             var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
-            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.RatingPoints);
-            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.RatingPoints);
+            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.DeliveryRatingPoints);
+            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.DeliveryRatingPoints);
             Assert.AreEqual(testBudget, nsiResult.Budget);
             Assert.AreEqual(testBudget, ntiResult.Budget);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
@@ -2233,7 +2233,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 StandardDaypartId = testStandardDaypartId,
                 AudienceId = 31,
                 CPP = testRate,
-                RatingPoints = testOriginalRatingPoints
+                DeliveryRatingPoints = testOriginalRatingPoints
             };
 
             _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
@@ -2255,8 +2255,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(2, results.Count);
             var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
-            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.RatingPoints);
-            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.RatingPoints);
+            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.DeliveryRatingPoints);
+            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.DeliveryRatingPoints);
             Assert.AreEqual(testRate, nsiResult.CPP);
             Assert.AreEqual(testRate, ntiResult.CPP);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
@@ -2314,8 +2314,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(2, results.Count);
             var nsiResult = results.Single(s => s.PostingType == PostingTypeEnum.NSI);
             var ntiResult = results.Single(s => s.PostingType == PostingTypeEnum.NTI);
-            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.RatingPoints);
-            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.RatingPoints);
+            Assert.AreEqual(expectedNsiRatingPoints, nsiResult.DeliveryRatingPoints);
+            Assert.AreEqual(expectedNtiRatingPoints, ntiResult.DeliveryRatingPoints);
             Assert.AreEqual(testBudget, nsiResult.Budget);
             Assert.AreEqual(testBudget, ntiResult.Budget);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
