@@ -6,11 +6,11 @@
     "Status": 3
   },
   "Result": {
-    "CpmPercentage": 1564,
+    "CpmPercentage": 1787,
     "GoalFulfilledByProprietary": false,
     "HasResults": true,
     "Notes": "",
-    "OptimalCpm": 15.6355,
+    "OptimalCpm": 17.8691,
     "PostingType": 2,
     "SpotAllocationModelMode": 1
   }

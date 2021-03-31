@@ -2,8 +2,8 @@
   "Details": [
     {
       "Budget": 13504.6875,
-      "Cpm": 19.1610208569807,
-      "Impressions": 704.8,
+      "Cpm": 21.8983095508351,
+      "Impressions": 616.7,
       "ImpressionsPercentage": 99.43566591,
       "MarketCoveragePercent": 10.0,
       "MarketName": "New York",
@@ -14,8 +14,8 @@
     },
     {
       "Budget": 150.75,
-      "Cpm": 37.6875,
-      "Impressions": 4.0,
+      "Cpm": 43.0714285714286,
+      "Impressions": 3.5,
       "ImpressionsPercentage": 0.56433409,
       "MarketCoveragePercent": 0.328,
       "MarketName": "Portland-Auburn",
@@ -27,10 +27,10 @@
   ],
   "SpotAllocationModelMode": 1,
   "Totals": {
-    "AvgCpm": 19.2655,
+    "AvgCpm": 22.0177,
     "AvgImpressions": 0.0,
     "Budget": 13655.4375,
-    "Impressions": 708.8,
+    "Impressions": 620.2,
     "ImpressionsPercentage": 100.0,
     "MarketCount": 2,
     "MarketCoveragePercent": 10.328,

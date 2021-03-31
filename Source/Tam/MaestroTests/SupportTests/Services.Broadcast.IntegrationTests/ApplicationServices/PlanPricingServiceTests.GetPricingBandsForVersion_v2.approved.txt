@@ -204,9 +204,9 @@
         {
           "AvailableInventoryPercent": 7.69097222,
           "Budget": 16386.5250,
-          "Cpm": 15.412457674943566591422121900,
+          "Cpm": 17.614237342792647533053853600,
           "Id": 0,
-          "Impressions": 1063.2,
+          "Impressions": 930.3,
           "ImpressionsPercentage": 100.0,
           "MaxBand": null,
           "MinBand": 10.0000,
@@ -215,8 +215,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "Spots": 50
       }
     },
@@ -428,9 +428,9 @@
         {
           "AvailableInventoryPercent": 7.69097222,
           "Budget": 16386.5250,
-          "Cpm": 15.412457674943566591422121900,
+          "Cpm": 17.614237342792647533053853600,
           "Id": 0,
-          "Impressions": 1063.2,
+          "Impressions": 930.3,
           "ImpressionsPercentage": 100.0,
           "MaxBand": null,
           "MinBand": 10.0000,
@@ -439,8 +439,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "Spots": 50
       }
     },
@@ -652,9 +652,9 @@
         {
           "AvailableInventoryPercent": 7.69097222,
           "Budget": 16386.5250,
-          "Cpm": 15.412457674943566591422121900,
+          "Cpm": 17.614237342792647533053853600,
           "Id": 0,
-          "Impressions": 1063.2,
+          "Impressions": 930.3,
           "ImpressionsPercentage": 100.0,
           "MaxBand": null,
           "MinBand": 10.0000,
@@ -663,8 +663,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "Spots": 50
       }
     },
@@ -876,9 +876,9 @@
         {
           "AvailableInventoryPercent": 7.69097222,
           "Budget": 16386.5250,
-          "Cpm": 15.412457674943566591422121900,
+          "Cpm": 17.614237342792647533053853600,
           "Id": 0,
-          "Impressions": 1063.2,
+          "Impressions": 930.3,
           "ImpressionsPercentage": 100.0,
           "MaxBand": null,
           "MinBand": 10.0000,
@@ -887,8 +887,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "Spots": 50
       }
     },

@@ -36,9 +36,9 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 15.328816685584562996594778700,
+          "Cpm": 17.518647640668071996108318500,
           "Id": 0,
-          "Impressions": 1057.2,
+          "Impressions": 925.05,
           "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
@@ -46,9 +46,9 @@
         },
         {
           "Budget": 180.9000,
-          "Cpm": 30.15000,
+          "Cpm": 34.457142857142857142857142900,
           "Id": 0,
-          "Impressions": 6.0,
+          "Impressions": 5.25,
           "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
           "Spots": 20,
@@ -57,8 +57,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "ImpressionsPercentage": 100.0,
         "Spots": 50,
         "Station": 2
@@ -103,9 +103,9 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 15.328816685584562996594778700,
+          "Cpm": 17.518647640668071996108318500,
           "Id": 0,
-          "Impressions": 1057.2,
+          "Impressions": 925.05,
           "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
@@ -113,9 +113,9 @@
         },
         {
           "Budget": 180.9000,
-          "Cpm": 30.15000,
+          "Cpm": 34.457142857142857142857142900,
           "Id": 0,
-          "Impressions": 6.0,
+          "Impressions": 5.25,
           "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
           "Spots": 20,
@@ -124,8 +124,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "ImpressionsPercentage": 100.0,
         "Spots": 50,
         "Station": 2
@@ -170,9 +170,9 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 15.328816685584562996594778700,
+          "Cpm": 17.518647640668071996108318500,
           "Id": 0,
-          "Impressions": 1057.2,
+          "Impressions": 925.05,
           "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
@@ -180,9 +180,9 @@
         },
         {
           "Budget": 180.9000,
-          "Cpm": 30.15000,
+          "Cpm": 34.457142857142857142857142900,
           "Id": 0,
-          "Impressions": 6.0,
+          "Impressions": 5.25,
           "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
           "Spots": 20,
@@ -191,8 +191,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "ImpressionsPercentage": 100.0,
         "Spots": 50,
         "Station": 2
@@ -237,9 +237,9 @@
       "StationDetails": [
         {
           "Budget": 16205.6250,
-          "Cpm": 15.328816685584562996594778700,
+          "Cpm": 17.518647640668071996108318500,
           "Id": 0,
-          "Impressions": 1057.2,
+          "Impressions": 925.05,
           "ImpressionsPercentage": 99.43566591,
           "Market": "New York",
           "Spots": 30,
@@ -247,9 +247,9 @@
         },
         {
           "Budget": 180.9000,
-          "Cpm": 30.15000,
+          "Cpm": 34.457142857142857142857142900,
           "Id": 0,
-          "Impressions": 6.0,
+          "Impressions": 5.25,
           "ImpressionsPercentage": 0.56433409,
           "Market": "Portland-Auburn",
           "Spots": 20,
@@ -258,8 +258,8 @@
       ],
       "Totals": {
         "Budget": 16386.5250,
-        "Cpm": 15.4124,
-        "Impressions": 1063.2,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
         "ImpressionsPercentage": 100.0,
         "Spots": 50,
         "Station": 2

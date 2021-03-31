@@ -7,11 +7,11 @@
     "Status": 3
   },
   "Result": {
-    "CpmPercentage": 308,
+    "CpmPercentage": 352,
     "GoalFulfilledByProprietary": false,
     "HasResults": true,
     "Notes": "",
-    "OptimalCpm": 15.4124,
+    "OptimalCpm": 17.6142,
     "PlanVersionId": 47,
     "SpotAllocationModelMode": 1
   }

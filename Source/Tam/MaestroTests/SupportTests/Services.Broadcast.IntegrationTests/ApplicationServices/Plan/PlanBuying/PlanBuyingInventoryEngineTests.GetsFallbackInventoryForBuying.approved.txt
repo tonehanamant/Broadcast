@@ -1,7 +1,7 @@
 [
   {
-    "Cpm": 13.586956521739130434782608700,
-    "Impressions": 55200.0,
+    "Cpm": 15.527950310559006211180124200,
+    "Impressions": 48300.0,
     "InventoryBuyingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -112,8 +112,8 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 62930.2,
-    "ProvidedImpressions": 55200.0,
+    "ProjectedImpressions": 55063.925,
+    "ProvidedImpressions": 48300.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
@@ -134,8 +134,8 @@
     "Unit": null
   },
   {
-    "Cpm": 16.556291390728476821192053000,
-    "Impressions": 48320.0,
+    "Cpm": 18.921475875118259224219489100,
+    "Impressions": 42280.0,
     "InventoryBuyingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -246,8 +246,8 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 71997.2,
-    "ProvidedImpressions": 48320.0,
+    "ProjectedImpressions": 62997.55,
+    "ProvidedImpressions": 42280.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
@@ -268,8 +268,8 @@
     "Unit": null
   },
   {
-    "Cpm": 16.025641025641025641025641000,
-    "Impressions": 37440.0,
+    "Cpm": 18.315018315018315018315018300,
+    "Impressions": 32760.0,
     "InventoryBuyingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -380,8 +380,8 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 64055.5,
-    "ProvidedImpressions": 37440.0,
+    "ProjectedImpressions": 56048.5625,
+    "ProvidedImpressions": 32759.999999999996,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
@@ -402,8 +402,8 @@
     "Unit": null
   },
   {
-    "Cpm": 104.16666666666666666666666670,
-    "Impressions": 480.0,
+    "Cpm": 119.04761904761904761904761900,
+    "Impressions": 420.0,
     "InventoryBuyingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -514,8 +514,8 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 140.32,
-    "ProvidedImpressions": 480.0,
+    "ProjectedImpressions": 122.78,
+    "ProvidedImpressions": 420.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
@@ -536,8 +536,8 @@
     "Unit": null
   },
   {
-    "Cpm": 25.0000,
-    "Impressions": 480.0,
+    "Cpm": 28.571428571428571428571428600,
+    "Impressions": 420.0,
     "InventoryBuyingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -648,8 +648,8 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 347.7,
-    "ProvidedImpressions": 480.0,
+    "ProjectedImpressions": 304.2375,
+    "ProvidedImpressions": 420.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
@@ -670,8 +670,8 @@
     "Unit": null
   },
   {
-    "Cpm": 37.5000,
-    "Impressions": 320.0,
+    "Cpm": 42.857142857142857142857142900,
+    "Impressions": 280.0,
     "InventoryBuyingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -782,8 +782,8 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 464.0,
-    "ProvidedImpressions": 320.0,
+    "ProjectedImpressions": 406.0,
+    "ProvidedImpressions": 280.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
