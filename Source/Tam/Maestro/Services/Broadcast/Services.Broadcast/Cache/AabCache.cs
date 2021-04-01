@@ -3,6 +3,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -69,7 +70,8 @@ namespace Services.Broadcast.Cache
         public List<AgencyDto> GetAgencies()
         {
             var policy = _GetCacheItemPolicy();
-            var result = _AgenciesCache.GetOrCreate(CACHE_NAME_AGENCIES, () => _AabApiClient.GetAgencies(), policy);
+            var result = _AgenciesCache.GetOrCreate(CACHE_NAME_AGENCIES, () =>
+                _AabApiClient.GetAgencies().OrderBy(a => a.Name).ToList(), policy);
             return result;
         }
 
@@ -77,14 +79,15 @@ namespace Services.Broadcast.Cache
         public List<AdvertiserDto> GetAdvertisers()
         {
             var policy = _GetCacheItemPolicy();
-            var result = _AdvertisersCache.GetOrCreate(CACHE_NAME_ADVERTISERS, () => _AabApiClient.GetAdvertisers(), policy);
+            var result = _AdvertisersCache.GetOrCreate(CACHE_NAME_ADVERTISERS, () => 
+                _AabApiClient.GetAdvertisers().OrderBy(a => a.Name).ToList(), policy);
             return result;
         }
 
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
-            var result = _AabApiClient.GetAdvertiserProducts(advertiserMasterId);
+            var result = _AabApiClient.GetAdvertiserProducts(advertiserMasterId).OrderBy(a => a.Name).ToList();
             return result;
         }
 

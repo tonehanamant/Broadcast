@@ -38,6 +38,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
 
             // Assert
             Assert.AreEqual(expectedResultCount, result.Count);
+            Assert.AreEqual("AAA", result[0].Name);
+            Assert.AreEqual("BBB", result[1].Name);
+            Assert.AreEqual("ZZZ", result[2].Name);
             aabApiClient.Verify(s => s.GetAgencies(), Times.Once);
         }
 
@@ -103,6 +106,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
 
             // Assert
             Assert.AreEqual(expectedResultCount, result.Count);
+            Assert.AreEqual("AAA", result[0].Name);
+            Assert.AreEqual("BBB", result[1].Name);
+            Assert.AreEqual("ZZZ", result[2].Name);
             aabApiClient.Verify(s => s.GetAdvertisers(), Times.Once);
         }
 
@@ -169,6 +175,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
 
             // Assert
             Assert.AreEqual(expectedResultCount, result.Count);
+            Assert.AreEqual("AAA", result[0].Name);
+            Assert.AreEqual("BBB", result[1].Name);
+            Assert.AreEqual("ZZZ", result[2].Name);
             aabApiClient.Verify(s => s.GetAdvertiserProducts(testAdvertiserMasterId), Times.Once);
         }
 
@@ -200,9 +209,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             var result = new List<AgencyDto>
             {
-                new AgencyDto { Id = 1 },
-                new AgencyDto { Id = 2 },
-                new AgencyDto { Id = 3 }
+                new AgencyDto { Id = 1, Name = "ZZZ" },
+                new AgencyDto { Id = 2, Name = "AAA" },
+                new AgencyDto { Id = 3, Name = "BBB" }
             };
             return result;
         }
@@ -211,9 +220,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             var result = new List<AdvertiserDto>
             {
-                new AdvertiserDto { Id = 1 },
-                new AdvertiserDto { Id = 2 },
-                new AdvertiserDto { Id = 3 }
+                new AdvertiserDto { Id = 1, Name = "ZZZ"  },
+                new AdvertiserDto { Id = 2, Name = "AAA"  },
+                new AdvertiserDto { Id = 3, Name = "BBB"  }
             };
             return result;
         }
@@ -222,9 +231,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             var result = new List<ProductDto>
             {
-                new ProductDto { Id = 1 },
-                new ProductDto { Id = 2 },
-                new ProductDto { Id = 3 }
+                new ProductDto { Id = 1, Name = "ZZZ" },
+                new ProductDto { Id = 2, Name = "AAA" },
+                new ProductDto { Id = 3, Name = "BBB" }
             };
             return result;
         }
