@@ -10,7 +10,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <summary>
         /// The Posting Type the impressions are provided in.
         /// </summary>
-        public PostingTypeEnum PostingType { get; set; }
+        public PostingTypeEnum PostingType { get; set; } = PostingTypeEnum.NSI;
 
         /// <summary>
         /// The Standard Daypart Id for the Plan's Primary Daypart
