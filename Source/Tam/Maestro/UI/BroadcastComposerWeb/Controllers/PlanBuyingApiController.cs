@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using System;
 using System.Collections.Generic;
@@ -48,23 +49,23 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>Programs from the lastest pricing execution</returns>
         [HttpGet]
         [Route("programs/{planId}")]
-        public BaseResponse<PlanBuyingResultProgramsDto> GetPrograms(int planId)
+        public BaseResponse<PlanBuyingResultProgramsDto> GetPrograms(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("bands/{planId}")]
-        public BaseResponse<PlanBuyingBandsDto> GetBuyingBands(int planId)
+        public BaseResponse<PlanBuyingBandsDto> GetBuyingBands(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingBands(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingBands(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("markets/{planId}")]
-        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId)
+        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId, spotAllocationModelMode));
         }
 
         [HttpGet]
@@ -150,9 +151,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("stations/{planId}")]
-        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId)
+        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId, spotAllocationModelMode));
         }
 
         [HttpPost]
