@@ -25,7 +25,8 @@ namespace Services.Broadcast.Entities.Campaign
         public string FlightEndDate { get; set; }
         public string GuaranteedDemo { get; set; }
         public string SpotLengths { get; set; }
-        public string PostingType { get; set; }
+        public string PostingType { get; set; }     
+        public string SpotAllocationModelMode { get; set; }
         public string AccountExecutive { get; set; }
         public string ClientContact { get; set; }
         public List<DetailedViewRowDisplay> DetailedViewRows { get; set; }
@@ -35,11 +36,12 @@ namespace Services.Broadcast.Entities.Campaign
         public List<AllocationViewRowDisplay> AllocationByDMAViewRows { get; set; }
         public List<AllocationViewRowDisplay> AllocationBySpotLengthViewRows { get; set; }
 
-        private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xlsx";
+        private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}_{2}_{3}.xlsx";
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
         private const string DATE_FORMAT_FILENAME = "MMddyyyy";
         private const string DATE_FORMAT_SHORT_YEAR_SLASHES = "MM/dd/yy";
         private const string DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT = "M/d/yy";
+        
 
         internal ProgramLineupReportData()
         {
@@ -58,12 +60,14 @@ namespace Services.Broadcast.Entities.Campaign
             MarketCoverageByStation marketCoverageByStation,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
             List<ProgramLineupProprietaryInventory> proprietaryInventory,
-            PostingTypeEnum postingType)
+            PostingTypeEnum postingType,
+            SpotAllocationModelMode spotAllocationModelMode)
+            
         {
-            ExportFileName = _GetFileName(plan.Name, currentDate);
+            ExportFileName = _GetFileName(plan.Name,postingType,spotAllocationModelMode,currentDate);
             var marketCoverageByMarketCode = marketCoverageByStation.Markets.ToDictionary(x => x.MarketCode, x => x);
 
-            _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate, postingType);
+            _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate, postingType,spotAllocationModelMode);
 
             List<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowDataForOpenMarket(
                                                         plan,
@@ -88,9 +92,10 @@ namespace Services.Broadcast.Entities.Campaign
             AllocationBySpotLengthViewRows = _MapSpotLengthToAllocationViewRows(allocatedSpots, proprietaryInventory, totalAllocatedImpressions, spotLengths, plan.Equivalized);
         }
 
-        internal string _GetFileName(string planName, DateTime currentDate)
+        internal string _GetFileName(string planName,PostingTypeEnum postingType ,SpotAllocationModelMode spotAllocationModelMode,DateTime currentDate)
         {
-            var rawFileName = string.Format(FILENAME_FORMAT, planName, currentDate.ToString(DATE_FORMAT_FILENAME));
+
+            var rawFileName = string.Format(FILENAME_FORMAT, planName,postingType,spotAllocationModelMode.ToString().Substring(0, 1), currentDate.ToString(DATE_FORMAT_FILENAME));
             var fileName = rawFileName.PrepareForUsingInFileName();
             return fileName;
         }
@@ -145,7 +150,7 @@ namespace Services.Broadcast.Entities.Campaign
             PlanAudienceDisplay guaranteedDemo,
             List<LookupDto> spotLengths,
             DateTime currentDate, 
-            PostingTypeEnum postingType)
+            PostingTypeEnum postingType,SpotAllocationModelMode spotAllocationModelMode)
         {
             PlanHeaderName = string.Format(PLAN_HEADER_NAME_FORMAT, plan.Name);
             ReportGeneratedDate = currentDate.ToString(DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT);
@@ -157,6 +162,7 @@ namespace Services.Broadcast.Entities.Campaign
             GuaranteedDemo = guaranteedDemo.Code;
             SpotLengths = _GetSpotLengths(plan, spotLengths);
             PostingType = postingType.ToString();
+            SpotAllocationModelMode = spotAllocationModelMode.ToString();
             AccountExecutive = string.Empty;
             ClientContact = string.Empty;
         }

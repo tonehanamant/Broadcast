@@ -86,6 +86,7 @@ namespace Services.Broadcast
         {
 #if DEBUG
             return Path.GetTempPath();
+            
 #else
             return BroadcastServiceSystemParameter.BroadcastAppFolder;
 #endif

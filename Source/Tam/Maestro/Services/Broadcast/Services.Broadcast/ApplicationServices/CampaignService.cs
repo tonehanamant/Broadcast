@@ -706,7 +706,7 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _GetAdvertiser(campaign);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
-            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId, request.PostingType);
+            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId, request.PostingType,request.SpotAllocationModelMode);
             var proprietaryInventory = _PlanRepository
                 .GetProprietaryInventoryForProgramLineup(plan.PricingParameters.JobId.Value);
             _SetSpotLengthIdAndCalculateImpressions(plan, proprietaryInventory, spotLengths);
@@ -720,7 +720,8 @@ namespace Services.Broadcast.ApplicationServices
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
 
             var postingType = request.PostingType ?? plan.PostingType;
-            return new ProgramLineupReportData(
+            var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Quality;
+            var result= new ProgramLineupReportData(
                 plan,
                 pricingJob,
                 agency,
@@ -733,7 +734,10 @@ namespace Services.Broadcast.ApplicationServices
                 marketCoverages,
                 primaryProgramsByManifestDaypartIds,
                 proprietaryInventory,
-                postingType);
+                postingType,
+                spotAllocationModelMode
+                );
+            return result;
         }
 
         private void _LoadDaypartData(List<ProgramLineupProprietaryInventory> proprietaryInventory)

@@ -142,7 +142,7 @@ namespace Services.Broadcast.Repositories
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId,
-            PostingTypeEnum? postingType = null);
+            PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
 
@@ -2343,7 +2343,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null)
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -2354,7 +2354,9 @@ namespace Services.Broadcast.Repositories
                                  from apiResults in job.plan_version_pricing_api_results
                                  where job.plan_version_id == planVersionId
                                     && (!postingType.HasValue || apiResults.posting_type == (int)postingType.Value)
+                                    && (!spotAllocationModelMode.HasValue || apiResults.spot_allocation_model_mode == (int)spotAllocationModelMode.Value)
                                  select apiResults)
+                                    
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
                     .OrderByDescending(p => p.id)

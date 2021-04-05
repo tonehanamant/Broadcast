@@ -75,11 +75,12 @@
       "TimePeriods": "12AM-12:33AM"
     }
   ],
-  "ExportFileName": "Program_Lineup_Report_Plan Pricing 2_04042020.xlsx",
+  "ExportFileName": "Program_Lineup_Report_Plan Pricing 2_NTI_Q_04042020.xlsx",
   "FlightEndDate": "10/31/18",
   "FlightStartDate": "10/01/18",
   "GuaranteedDemo": "HH",
   "PlanHeaderName": "Plan Pricing 2 | Program Lineup*",
   "PostingType": "NTI",
+  "SpotAllocationModelMode": "Quality",
   "SpotLengths": ":60 eq."
 }

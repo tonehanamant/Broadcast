@@ -945,7 +945,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()),Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
             var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
@@ -974,7 +974,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var request = new ProgramLineupReportRequest
             {
-                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId },
+                
             };
 
             _PlanRepositoryMock
@@ -1035,7 +1036,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
             var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
@@ -1202,7 +1203,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
             var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
@@ -1289,7 +1290,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
             var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
@@ -1402,7 +1403,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>()), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
             var passedManifestIds = new List<int> { 10, 20, 30, 40 };
@@ -1633,7 +1634,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>()))
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()))
                 .Returns(_GetPlanPricingAllocatedSpotsForRollup());
 
             _InventoryRepositoryMock
@@ -1740,7 +1741,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>()))
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()))
                 .Returns(_GetPlanPricingAllocatedSpots());
 
             _InventoryRepositoryMock

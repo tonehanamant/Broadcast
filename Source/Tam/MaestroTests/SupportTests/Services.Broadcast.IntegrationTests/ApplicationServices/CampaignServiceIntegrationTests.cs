@@ -947,7 +947,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {
                     SelectedPlans = new List<int> { planId },
-                    PostingType = PostingTypeEnum.NTI
+                    PostingType = PostingTypeEnum.NTI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Quality
                 }, now);
 
                 _WriteFileToLocalFileSystem(reportData, "ProgramLineupExport.xlsx");
