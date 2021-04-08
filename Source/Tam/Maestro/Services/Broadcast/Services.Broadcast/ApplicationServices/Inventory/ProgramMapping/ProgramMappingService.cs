@@ -274,17 +274,20 @@ namespace Services.Broadcast.ApplicationServices
                             ErrorMessage = "Program not found in master list or exception list"
                         });
                     }
+                    continue;
                 }
-
+                string foundGenreName = null;
                 try
                 {
-                    var maestroGenre = _GenreCache.GetMaestroGenreByName(programMapping.OfficialGenre);
+                    var foundGenre = _GenreCache.GetMaestroGenreByName(programMapping.OfficialGenre);
+                    foundGenreName = foundGenre.Name;
                 }
                 catch
                 {
                     try
                     {
-                        var masterGenre = _GenreCache.GetSourceGenreLookupDtoByName(programMapping.OfficialGenre, ProgramSourceEnum.Master);
+                        var foundGenre = _GenreCache.GetSourceGenreLookupDtoByName(programMapping.OfficialGenre, ProgramSourceEnum.Master);
+                        foundGenreName = foundGenre.Display;
                     }
                     catch
                     {
@@ -292,6 +295,17 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             OfficialProgramName = programMapping.OfficialProgramName,
                             ErrorMessage = $"Genre not found: {programMapping.OfficialGenre}"
+                        });
+                    }
+                }
+                if (foundGenreName != null)
+                {
+                    if (masterListProgram.OfficialGenre.Name != foundGenreName)
+                    {
+                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
+                        {
+                            OfficialProgramName = programMapping.OfficialProgramName,
+                            ErrorMessage = $"Program name '{programMapping.OfficialProgramName}' validated, but not with the Genre '{masterListProgram.OfficialGenre.Name}'."
                         });
                     }
                 }

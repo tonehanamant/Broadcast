@@ -6,11 +6,7 @@
         "CreatedBy": null,
         "ModifiedAt": null,
         "ModifiedBy": null,
-        "OfficialGenre": {
-          "Id": 1,
-          "Name": "News",
-          "ProgramSourceId": 1
-        },
+        "OfficialGenre": null,
         "OfficialProgramName": "10 NEWS",
         "OfficialShowType": {
           "Id": 1,
@@ -24,11 +20,7 @@
         "CreatedBy": null,
         "ModifiedAt": null,
         "ModifiedBy": null,
-        "OfficialGenre": {
-          "Id": 1,
-          "Name": "News",
-          "ProgramSourceId": 1
-        },
+        "OfficialGenre": null,
         "OfficialProgramName": "NBC4 NEWS",
         "OfficialShowType": {
           "Id": 1,
@@ -42,11 +34,7 @@
         "CreatedBy": null,
         "ModifiedAt": null,
         "ModifiedBy": null,
-        "OfficialGenre": {
-          "Id": 1,
-          "Name": "News",
-          "ProgramSourceId": 1
-        },
+        "OfficialGenre": null,
         "OfficialProgramName": "WVLT NEWS",
         "OfficialShowType": {
           "Id": 1,

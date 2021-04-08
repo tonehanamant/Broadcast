@@ -44,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IMasterProgramListImporter> _MasterListImporterMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
 
-        private IGenreCache _GenreCacheStub;
+        private Mock<IGenreCache> _GenreCache;
         private IShowTypeCache _ShowTypeCacheStub;
 
         private static bool WRITE_FILE_TO_DISK = false;
@@ -59,7 +59,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _ShowTypeRepositoryMock = new Mock<IShowTypeRepository>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
-            _GenreCacheStub = new GenreCacheStub();
+            _GenreCache = new Mock<IGenreCache>();
             _ShowTypeCacheStub = new ShowTypeCacheStub();
             _ProgramNameExceptionRepositoryMock = new Mock<IProgramNameExceptionsRepository>();
             _ProgramsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
@@ -126,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _DataRepositoryFactoryMock.Object,
                 _SharedFolderServiceMock.Object,
                 null,
-                _GenreCacheStub,
+                _GenreCache.Object,
                 _ShowTypeCacheStub,
                 _ProgramsSearchApiClientMock.Object,
                 _ProgramMappingCleanupEngine.Object,
@@ -555,6 +555,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             // Get mapping programs result
             var programsMapped = new List<ProgramMappingsDto>();
+            var Genre = new Genre { Id = 1, Name = "Drama", ProgramSourceId = 1 };
             _ProgramMappingRepositoryMock.Setup(p => p.UpdateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
 
@@ -574,7 +575,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 FileContent = fileStream
             };
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
-
+          
             _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
 
             // Master list
@@ -582,7 +583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 new ProgramMappingsDto
                 {
-                     OfficialGenre = new Genre{ Name = "Sports" },
+                     OfficialGenre = new Genre{ Name = "Drama" },
                      OfficialShowType = new ShowTypeDto{ Name = "Sports"},
                      OfficialProgramName = "Good Morning NFL"
                 },
@@ -600,7 +601,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 },
                 new ProgramMappingsDto
                 {
-                    OfficialGenre = new Genre{Name = "Documentary"},
+                    OfficialGenre = new Genre{Name = "Drama"},
                     OfficialShowType = new ShowTypeDto{Name = "Event"},
                     OfficialProgramName = "America Undercover"
                 }
@@ -628,11 +629,191 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 }
             });
 
+            _GenreCache.Setup(s => s.GetMaestroGenreByName(It.IsAny<string>())).Returns(Genre);
             _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
 
             _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(programsMapped, _GetJsonSettings()));
+            fileStream.Close();
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMaestroGenreWithProgramMismatch()
+        {
+            // Get mapping programs result
+            var programsMapped = new List<ProgramMappingsDto>();
+            var Genre = new Genre { Id = 1, Name = "Drama", ProgramSourceId = 1 };
+
+            _ProgramMappingRepositoryMock.Setup(p => p.UpdateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
+
+            _ProgramMappingRepositoryMock.Setup(p => p.CreateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
+
+            // Import file
+            var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsShowType.xlsx", FileMode.Open);
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = Path.GetTempPath(),
+                FileNameWithExtension = "ProgramMappings.xlsx",
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.ProgramLineup,
+                CreatedDate = new DateTime(2020, 8, 28),
+                CreatedBy = "IntegrationTestUser",
+                FileContent = fileStream
+            };
+            _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
+           
+            _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
+
+            // Master list
+            _MasterListImporterMock.Setup(m => m.ImportMasterProgramList()).Returns(new List<ProgramMappingsDto>
+            {
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Sports" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Sports"},
+                     OfficialProgramName = "Good Morning NFL"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                     OfficialProgramName = "Breaking Bad"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Special"},
+                     OfficialProgramName = "Breaking Bad"
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialGenre = new Genre{Name = "Drama"},
+                    OfficialShowType = new ShowTypeDto{Name = "Event"},
+                    OfficialProgramName = "America Undercover"
+                }
+            });
+
+            _ProgramNameExceptionRepositoryMock.Setup(e => e.GetProgramExceptions()).Returns(new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "The Boys",
+                     GenreName = "Action",
+                     ShowTypeName = "Series"
+                },
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "Community",
+                     GenreName = "Comedy",
+                     ShowTypeName = "Mini-Movie"
+                },
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "Community",
+                     GenreName = "Comedy",
+                     ShowTypeName = "Special"
+                }
+            });
+            
+            _GenreCache.Setup(s => s.GetMaestroGenreByName(It.IsAny<string>())).Returns(Genre);
+            _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
+            
+            var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now));
+            Assert.That(exception.Message, Is.EqualTo("Error parsing program Good Morning NFL: Program name 'Good Morning NFL' validated, but not with the Genre 'Sports'.\r\n"));
+            fileStream.Close();
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetSourceGenreWithProgramMismatch()
+        {
+            var programsMapped = new List<ProgramMappingsDto>();
+            var LookupDto = new LookupDto { Id = 1, Display = "Drama" };
+
+            _ProgramMappingRepositoryMock.Setup(p => p.UpdateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
+
+            _ProgramMappingRepositoryMock.Setup(p => p.CreateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
+
+            // Import file
+            var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsShowType.xlsx", FileMode.Open);
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = Path.GetTempPath(),
+                FileNameWithExtension = "ProgramMappings.xlsx",
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.ProgramLineup,
+                CreatedDate = new DateTime(2020, 8, 28),
+                CreatedBy = "IntegrationTestUser",
+                FileContent = fileStream
+            };
+            _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
+            
+            _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
+
+            // Master list
+            _MasterListImporterMock.Setup(m => m.ImportMasterProgramList()).Returns(new List<ProgramMappingsDto>
+            {
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Sports" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Sports"},
+                     OfficialProgramName = "Good Morning NFL"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                     OfficialProgramName = "Breaking Bad"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Special"},
+                     OfficialProgramName = "Breaking Bad"
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialGenre = new Genre{Name = "Drama"},
+                    OfficialShowType = new ShowTypeDto{Name = "Event"},
+                    OfficialProgramName = "America Undercover"
+                }
+            });
+
+            _ProgramNameExceptionRepositoryMock.Setup(e => e.GetProgramExceptions()).Returns(new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "The Boys",
+                     GenreName = "Action",
+                     ShowTypeName = "Series"
+                },
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "Community",
+                     GenreName = "Comedy",
+                     ShowTypeName = "Mini-Movie"
+                },
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "Community",
+                     GenreName = "Comedy",
+                     ShowTypeName = "Special"
+                }
+            });
+            
+            _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
+            _GenreCache.Setup(s => s.GetMaestroGenreByName(It.IsAny<string>())).Throws<Exception>();
+            _GenreCache.Setup(s => s.GetSourceGenreLookupDtoByName(It.IsAny<string>(),It.IsAny<ProgramSourceEnum>())).Returns(LookupDto);
+            
+            var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now));
+            Assert.That(exception.Message, Is.EqualTo("Error parsing program Good Morning NFL: Program name 'Good Morning NFL' validated, but not with the Genre 'Sports'.\r\n"));
+            fileStream.Close();
         }
 
         private List<SearchProgramDativaResponseDto> _Programs = new List<SearchProgramDativaResponseDto>

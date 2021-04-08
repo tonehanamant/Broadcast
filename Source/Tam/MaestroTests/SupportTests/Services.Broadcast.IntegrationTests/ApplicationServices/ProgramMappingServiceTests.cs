@@ -78,8 +78,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 new ProgramMappingsDto
                 {
                     OfficialProgramName = "America Undercover",
-                    OfficialGenre = new Genre{ Name = "Documentary"},
-                    OfficialShowType = new ShowTypeDto{ Name = "Documentary"},
+                    OfficialGenre = new Genre{ Name = "Drama"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Series"},
                 },
                 new ProgramMappingsDto
                 {

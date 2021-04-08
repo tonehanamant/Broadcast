@@ -1,21 +1,21 @@
 [
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.61667,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Prime Access Rotator",
     "ProgramName": "Prime Access Rotator",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.70803,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Saturday 2P Movie",
     "ProgramName": "Saturday Movie",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "Drama",
@@ -54,13 +54,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.81717,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "America's Heartland",
     "ProgramName": "America's Heartland",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "Movie",
@@ -117,13 +117,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.55556,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Program C",
     "ProgramName": "Program C",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "Movie",
@@ -441,13 +441,13 @@
     "ShowType": "Series"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.55344,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "GMA SUNDAY",
     "ProgramName": "GMA SUNDAY",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",
@@ -855,13 +855,13 @@
     "ShowType": "Series"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.51389,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Star-FOX",
     "ProgramName": "Star-FOX",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",
@@ -873,22 +873,22 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.58262,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "WE ARE AUSTIN",
     "ProgramName": "WE ARE AUSTIN",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
-    "Genre": "Documentary",
+    "Genre": "Drama",
     "MatchConfidence": 0.61953,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "MIL MAKEOVR/XTREME",
     "ProgramName": "MIL MAKEOVR/XTREME",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "Comedy",

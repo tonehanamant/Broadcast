@@ -75,30 +75,38 @@ namespace Services.Broadcast.Converters
 
             using (csvFileReader.Initialize(stream))
             {
+                int LineIndex = 1;
                 while (csvFileReader.IsEOF() == false)
                 {
                     csvFileReader.NextRow();
-
                     try
                     {
                         var genre = csvFileReader.GetCellValue(Genre);
-                        var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(genre, ProgramSourceEnum.Master);
-                        var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
-                        var officialGenre = _GenreCache.GetMaestroGenreByName(maestroGenre.Display);
-
-                        var sourceShowType = _ShowTypeCache.GetMasterShowTypeByName(csvFileReader.GetCellValue(ShowType));
-                        var maestroShowType = _ShowTypeCache.GetMaestroShowTypeByMasterShowType(sourceShowType);
-
-                        var programMapping = new ProgramMappingsDto
+                        if (genre == "NULL")
+                        { 
+                            _LogWarning($"Line {LineIndex} has an invalid Genre of 'NULL'");
+                        }
+                        else
                         {
-                            Id = Convert.ToInt32(csvFileReader.GetCellValue(ProgramId)),
-                            OfficialProgramName = csvFileReader.GetCellValue(Title),
-                            OfficialGenre = officialGenre,
-                            OfficialShowType = maestroShowType
-                        };
+                            var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(genre, ProgramSourceEnum.Master);
+                            var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
+                            var officialGenre = _GenreCache.GetMaestroGenreByName(maestroGenre.Display);
 
-                        if (!string.IsNullOrWhiteSpace(programMapping.OfficialProgramName))
-                            masterList.Add(programMapping);
+                            var sourceShowType = _ShowTypeCache.GetMasterShowTypeByName(csvFileReader.GetCellValue(ShowType));
+                            var maestroShowType = _ShowTypeCache.GetMaestroShowTypeByMasterShowType(sourceShowType);
+
+                            var programMapping = new ProgramMappingsDto
+                            {
+                                Id = Convert.ToInt32(csvFileReader.GetCellValue(ProgramId)),
+                                OfficialProgramName = csvFileReader.GetCellValue(Title),
+                                OfficialGenre = officialGenre,
+                                OfficialShowType = maestroShowType
+                            };
+
+                            if (!string.IsNullOrWhiteSpace(programMapping.OfficialProgramName))
+                                masterList.Add(programMapping);
+                        }
+                        LineIndex++;
                     }
                     catch (Exception exception)
                     {
@@ -115,7 +123,6 @@ namespace Services.Broadcast.Converters
             var appFolder = _GetBroadcastAppFolder();
             const string masterListFolder = "ProgramMappingMasterList";
             const string masterListFile = "MasterListWithWwtvTitles.txt";
-
             var masterListPath = Path.Combine(
                 appFolder,
                 masterListFolder,

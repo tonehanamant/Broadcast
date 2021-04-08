@@ -12,7 +12,7 @@
     "OfficialProgramName": "America Undercover",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Miscellaneous",
+      "Name": "Event",
       "ShowTypeSource": 1
     },
     "OriginalProgramName": "America Undercover"
@@ -24,13 +24,13 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Sports",
+      "Name": "Drama",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Good Morning NFL",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Sports",
+      "Name": "Miscellaneous",
       "ShowTypeSource": 1
     },
     "OriginalProgramName": "Good Morning NFL"
@@ -60,7 +60,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Action",
+      "Name": "Drama",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "The Boys",
@@ -78,7 +78,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Comedy",
+      "Name": "Drama",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Community",
