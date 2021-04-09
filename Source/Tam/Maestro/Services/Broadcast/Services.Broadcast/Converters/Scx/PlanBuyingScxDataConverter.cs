@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
 using System.IO;
 using System.Xml;
@@ -10,7 +11,7 @@ namespace Services.Broadcast.Converters.Scx
 {
     public interface IPlanBuyingScxDataConverter : IApplicationService
     {
-        PlanBuyingScxFile ConvertData(PlanScxData data);
+        PlanBuyingScxFile ConvertData(PlanScxData data, SpotAllocationModelMode spotAllocationModelMode);
     }
 
     public class PlanBuyingScxDataConverter : ScxBaseConverter, IPlanBuyingScxDataConverter
@@ -20,11 +21,11 @@ namespace Services.Broadcast.Converters.Scx
         {
         }
 
-        public PlanBuyingScxFile ConvertData(PlanScxData data)
+        public PlanBuyingScxFile ConvertData(PlanScxData data, SpotAllocationModelMode spotAllocationModelMode)
         {
             // keep the unallocated markets.
             var adxObject = CreateAdxObject(data, filterUnallocated: false);
-
+            string initialOfSpotAllocationModelMode = spotAllocationModelMode.ToString().Substring(0, 1);
             var settings = new XmlWriterSettings() { Indent = true };
             var serializer = new XmlSerializer(adxObject.GetType());
 
@@ -36,9 +37,11 @@ namespace Services.Broadcast.Converters.Scx
 
             var file = new PlanBuyingScxFile
             {
+               spotAllocationModelMode= initialOfSpotAllocationModelMode,
                 PlanName = data.PlanName,
                 GeneratedTimeStamp = data.Generated,
                 ScxStream = stream
+               
             };
 
             return file;

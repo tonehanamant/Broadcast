@@ -172,7 +172,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
 
-        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username);
+        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
     }
 
     /// <summary>
@@ -306,20 +306,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return data;
         }
 
-        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username)
+        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, SpotAllocationModelMode spotAllocationModelMode )
         {
             const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var generated = _DateTimeEngine.GetCurrentMoment();
 
             _ValidatePlanBuyingScxExportRequest(request);
             
-            var scxData = _PlanBuyingScxDataPrep.GetScxData(request, generated);
-            var scxFile = _PlanBuyingScxDataConverter.ConvertData(scxData);
-            
+            var scxData = _PlanBuyingScxDataPrep.GetScxData(request, generated, spotAllocationModelMode);
+            var scxFile = _PlanBuyingScxDataConverter.ConvertData(scxData, spotAllocationModelMode);
+            scxFile.spotAllocationModelMode = spotAllocationModelMode.ToString().Substring(0, 1);
             var sharedFile = new SharedFolderFile
             {
-                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PLAN_BUYING_SCX),
-                FileNameWithExtension = scxFile.FileName,
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PLAN_BUYING_SCX),              
+                FileNameWithExtension = scxFile.FileName ,
                 FileMediaType = fileMediaType,
                 FileUsage = SharedFolderFileUsage.PlanBuyingScx,
                 CreatedDate = generated,

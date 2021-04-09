@@ -11,14 +11,14 @@ namespace Services.Broadcast.Entities.Scx
         public string PlanName { get; set; }
         public DateTime GeneratedTimeStamp { get; set; }
         public MemoryStream ScxStream { get; set; }
-
+        public string spotAllocationModelMode { get; set; }
         public string FileName
         {
             get
             {
                 var friendlyPlanName = PlanName.PrepareForUsingInFileName();
                 var timestamp = GeneratedTimeStamp.ToString(FILENAME_TIMESTAMP_FORMAT);
-                var fileName = $"PlanBuying_{friendlyPlanName}_{timestamp}.scx";
+                var fileName = $"PlanBuying_{friendlyPlanName}_{timestamp}_{spotAllocationModelMode}.scx";
                 return fileName;
             }
         }

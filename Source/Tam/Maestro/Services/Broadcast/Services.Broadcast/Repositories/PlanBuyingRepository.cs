@@ -529,7 +529,7 @@ namespace Services.Broadcast.Repositories
 
         /// <inheritdoc/>
         public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode )
         {
             return _InReadUncommitedTransaction(context =>
             {

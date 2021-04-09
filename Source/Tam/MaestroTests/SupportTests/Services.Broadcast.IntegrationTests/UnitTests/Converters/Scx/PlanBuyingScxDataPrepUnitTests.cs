@@ -374,7 +374,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             var testClass = _GetTestClass();
 
             // Act
-            var result = testClass.GetScxData(request, generated);
+            var resultQ = testClass.GetScxData(request, generated, SpotAllocationModelMode.Quality);
+            var resultE = testClass.GetScxData(request, generated, SpotAllocationModelMode.Efficiency);
+            var resultF = testClass.GetScxData(request, generated, SpotAllocationModelMode.Floor);
+
+            var result = new            {
+              
+                Quality = resultQ,
+                Efficiency = resultE,
+                Floor = resultF,
+            };
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

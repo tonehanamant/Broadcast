@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Converters.Scx;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.IntegrationTests.TestData;
@@ -56,12 +57,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
         /// It creates a simple data package limited to the needs of this unit.
         /// </summary>
         [Test]
-        public void ConvertData()
+        [TestCase(SpotAllocationModelMode.Quality)]
+        [TestCase(SpotAllocationModelMode.Efficiency)]
+        [TestCase(SpotAllocationModelMode.Floor)]
+        public void ConvertData(SpotAllocationModelMode spotAllocationModelMode)
         {
+            const string FILENAME_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
             const string planName = "MyTestPlan";
             var generated = _CurrentDateTime;
-            const string expectedFileName = "PlanBuying_MyTestPlan_20171017_193012.scx";
-
+            var expectedFileName = "PlanBuying_MyTestPlan";
             var toConvert = new PlanScxData
             {
                 PlanName = planName,
@@ -71,8 +75,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             };
 
             var tc = _GetTestClass();
-
-            var result = tc.ConvertData(toConvert);
+            expectedFileName = expectedFileName + "_" + toConvert.Generated.ToString(FILENAME_TIMESTAMP_FORMAT) + "_" + spotAllocationModelMode.ToString().Substring(0, 1) + ".scx"; ;
+            var result = tc.ConvertData(toConvert, spotAllocationModelMode);
 
             Assert.IsNotNull(result);
             // verify the stream

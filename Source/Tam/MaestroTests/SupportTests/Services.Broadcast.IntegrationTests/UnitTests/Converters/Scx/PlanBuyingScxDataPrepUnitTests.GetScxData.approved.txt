@@ -1,147 +1,443 @@
 {
-  "AllSortedMediaWeeks": [
-    {
-      "_EndDate": "2020-09-06T00:00:00",
-      "_Id": 871,
-      "_MediaMonthId": 468,
-      "_StartDate": "2020-08-31T00:00:00",
-      "_WeekNumber": 1,
-      "IsDirty": false
-    },
-    {
-      "_EndDate": "2020-09-13T00:00:00",
-      "_Id": 872,
-      "_MediaMonthId": 468,
-      "_StartDate": "2020-09-07T00:00:00",
-      "_WeekNumber": 2,
-      "IsDirty": false
-    }
-  ],
-  "DaypartCode": null,
-  "DaypartCodeId": 0,
-  "Demos": [
-    {
-      "Demo": {
-        "_CategoryCode": 0,
-        "_Code": "HH",
-        "_Custom": false,
-        "_Id": 31,
-        "_Name": "Households",
-        "_RangeEnd": null,
-        "_RangeStart": null,
-        "_SubCategoryCode": null,
-        "IsDirty": true
+  "Efficiency": {
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2020-09-06T00:00:00",
+        "_Id": 871,
+        "_MediaMonthId": 468,
+        "_StartDate": "2020-08-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": false
       },
-      "DemoRank": 1
-    }
-  ],
-  "EndDate": "2020-09-13T00:00:00",
-  "Generated": "2020-10-17T12:34:56",
-  "InventorySource": null,
-  "Orders": [
-    {
-      "InventoryMarkets": [
-        {
-          "DmaMarketName": "New York",
-          "MarketId": 101,
-          "Stations": [
-            {
-              "LegacyCallLetters": "KSTP",
-              "Programs": [
-                {
-                  "DaypartId": 59803,
-                  "DemoValues": [
-                    {
-                      "DemoRank": 1,
-                      "Impressions": 2400.0
-                    }
-                  ],
-                  "ProgramAssignedDaypartCode": "EMN",
-                  "ProgramName": "MyTestProgram",
-                  "SpotCost": 20.0,
-                  "SpotLength": "30",
-                  "TotalCost": 120.0,
-                  "TotalSpots": 6,
-                  "Weeks": [
-                    {
-                      "MediaWeek": {
-                        "_EndDate": "2020-09-06T00:00:00",
-                        "_Id": 871,
-                        "_MediaMonthId": 468,
-                        "_StartDate": "2020-08-31T00:00:00",
-                        "_WeekNumber": 1,
-                        "IsDirty": false
+      {
+        "_EndDate": "2020-09-13T00:00:00",
+        "_Id": 872,
+        "_MediaMonthId": 468,
+        "_StartDate": "2020-09-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": false
+      }
+    ],
+    "DaypartCode": null,
+    "DaypartCodeId": 0,
+    "Demos": [
+      {
+        "Demo": {
+          "_CategoryCode": 0,
+          "_Code": "HH",
+          "_Custom": false,
+          "_Id": 31,
+          "_Name": "Households",
+          "_RangeEnd": null,
+          "_RangeStart": null,
+          "_SubCategoryCode": null,
+          "IsDirty": true
+        },
+        "DemoRank": 1
+      }
+    ],
+    "EndDate": "2020-09-13T00:00:00",
+    "Generated": "2020-10-17T12:34:56",
+    "InventorySource": null,
+    "Orders": [
+      {
+        "InventoryMarkets": [
+          {
+            "DmaMarketName": "New York",
+            "MarketId": 101,
+            "Stations": [
+              {
+                "LegacyCallLetters": "KSTP",
+                "Programs": [
+                  {
+                    "DaypartId": 59803,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 2400.0
+                      }
+                    ],
+                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramName": "MyTestProgram",
+                    "SpotCost": 20.0,
+                    "SpotLength": "30",
+                    "TotalCost": 120.0,
+                    "TotalSpots": 6,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-06T00:00:00",
+                          "_Id": 871,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-08-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": false
+                        },
+                        "Spots": 3
                       },
-                      "Spots": 3
-                    },
-                    {
-                      "MediaWeek": {
-                        "_EndDate": "2020-09-13T00:00:00",
-                        "_Id": 872,
-                        "_MediaMonthId": 468,
-                        "_StartDate": "2020-09-07T00:00:00",
-                        "_WeekNumber": 2,
-                        "IsDirty": false
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-13T00:00:00",
+                          "_Id": 872,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-09-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": false
+                        },
+                        "Spots": 3
+                      }
+                    ]
+                  },
+                  {
+                    "DaypartId": 59803,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 3000.0
+                      }
+                    ],
+                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramName": "MyTestProgram",
+                    "SpotCost": 30.0,
+                    "SpotLength": "60",
+                    "TotalCost": 0.0,
+                    "TotalSpots": 0,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-06T00:00:00",
+                          "_Id": 871,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-08-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": false
+                        },
+                        "Spots": 0
                       },
-                      "Spots": 3
-                    }
-                  ]
-                },
-                {
-                  "DaypartId": 59803,
-                  "DemoValues": [
-                    {
-                      "DemoRank": 1,
-                      "Impressions": 3000.0
-                    }
-                  ],
-                  "ProgramAssignedDaypartCode": "EMN",
-                  "ProgramName": "MyTestProgram",
-                  "SpotCost": 30.0,
-                  "SpotLength": "60",
-                  "TotalCost": 0.0,
-                  "TotalSpots": 0,
-                  "Weeks": [
-                    {
-                      "MediaWeek": {
-                        "_EndDate": "2020-09-06T00:00:00",
-                        "_Id": 871,
-                        "_MediaMonthId": 468,
-                        "_StartDate": "2020-08-31T00:00:00",
-                        "_WeekNumber": 1,
-                        "IsDirty": false
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-13T00:00:00",
+                          "_Id": 872,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-09-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": false
+                        },
+                        "Spots": 0
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 102,
+                "TotalCost": 120.0,
+                "TotalSpots": 6
+              }
+            ],
+            "TotalCost": 120.0,
+            "TotalSpots": 6
+          }
+        ],
+        "SurveyString": "Jan20 DMA Nielsen Live+3",
+        "TotalCost": 120.0,
+        "TotalSpots": 6
+      }
+    ],
+    "PlanName": "MyTestPlan",
+    "StartDate": "2020-08-31T00:00:00",
+    "UnitName": null
+  },
+  "Floor": {
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2020-09-06T00:00:00",
+        "_Id": 871,
+        "_MediaMonthId": 468,
+        "_StartDate": "2020-08-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": false
+      },
+      {
+        "_EndDate": "2020-09-13T00:00:00",
+        "_Id": 872,
+        "_MediaMonthId": 468,
+        "_StartDate": "2020-09-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": false
+      }
+    ],
+    "DaypartCode": null,
+    "DaypartCodeId": 0,
+    "Demos": [
+      {
+        "Demo": {
+          "_CategoryCode": 0,
+          "_Code": "HH",
+          "_Custom": false,
+          "_Id": 31,
+          "_Name": "Households",
+          "_RangeEnd": null,
+          "_RangeStart": null,
+          "_SubCategoryCode": null,
+          "IsDirty": true
+        },
+        "DemoRank": 1
+      }
+    ],
+    "EndDate": "2020-09-13T00:00:00",
+    "Generated": "2020-10-17T12:34:56",
+    "InventorySource": null,
+    "Orders": [
+      {
+        "InventoryMarkets": [
+          {
+            "DmaMarketName": "New York",
+            "MarketId": 101,
+            "Stations": [
+              {
+                "LegacyCallLetters": "KSTP",
+                "Programs": [
+                  {
+                    "DaypartId": 59803,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 2400.0
+                      }
+                    ],
+                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramName": "MyTestProgram",
+                    "SpotCost": 20.0,
+                    "SpotLength": "30",
+                    "TotalCost": 120.0,
+                    "TotalSpots": 6,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-06T00:00:00",
+                          "_Id": 871,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-08-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": false
+                        },
+                        "Spots": 3
                       },
-                      "Spots": 0
-                    },
-                    {
-                      "MediaWeek": {
-                        "_EndDate": "2020-09-13T00:00:00",
-                        "_Id": 872,
-                        "_MediaMonthId": 468,
-                        "_StartDate": "2020-09-07T00:00:00",
-                        "_WeekNumber": 2,
-                        "IsDirty": false
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-13T00:00:00",
+                          "_Id": 872,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-09-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": false
+                        },
+                        "Spots": 3
+                      }
+                    ]
+                  },
+                  {
+                    "DaypartId": 59803,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 3000.0
+                      }
+                    ],
+                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramName": "MyTestProgram",
+                    "SpotCost": 30.0,
+                    "SpotLength": "60",
+                    "TotalCost": 0.0,
+                    "TotalSpots": 0,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-06T00:00:00",
+                          "_Id": 871,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-08-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": false
+                        },
+                        "Spots": 0
                       },
-                      "Spots": 0
-                    }
-                  ]
-                }
-              ],
-              "StationCode": 102,
-              "TotalCost": 120.0,
-              "TotalSpots": 6
-            }
-          ],
-          "TotalCost": 120.0,
-          "TotalSpots": 6
-        }
-      ],
-      "SurveyString": "Jan20 DMA Nielsen Live+3",
-      "TotalCost": 120.0,
-      "TotalSpots": 6
-    }
-  ],
-  "PlanName": "MyTestPlan",
-  "StartDate": "2020-08-31T00:00:00",
-  "UnitName": null
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-13T00:00:00",
+                          "_Id": 872,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-09-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": false
+                        },
+                        "Spots": 0
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 102,
+                "TotalCost": 120.0,
+                "TotalSpots": 6
+              }
+            ],
+            "TotalCost": 120.0,
+            "TotalSpots": 6
+          }
+        ],
+        "SurveyString": "Jan20 DMA Nielsen Live+3",
+        "TotalCost": 120.0,
+        "TotalSpots": 6
+      }
+    ],
+    "PlanName": "MyTestPlan",
+    "StartDate": "2020-08-31T00:00:00",
+    "UnitName": null
+  },
+  "Quality": {
+    "AllSortedMediaWeeks": [
+      {
+        "_EndDate": "2020-09-06T00:00:00",
+        "_Id": 871,
+        "_MediaMonthId": 468,
+        "_StartDate": "2020-08-31T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": false
+      },
+      {
+        "_EndDate": "2020-09-13T00:00:00",
+        "_Id": 872,
+        "_MediaMonthId": 468,
+        "_StartDate": "2020-09-07T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": false
+      }
+    ],
+    "DaypartCode": null,
+    "DaypartCodeId": 0,
+    "Demos": [
+      {
+        "Demo": {
+          "_CategoryCode": 0,
+          "_Code": "HH",
+          "_Custom": false,
+          "_Id": 31,
+          "_Name": "Households",
+          "_RangeEnd": null,
+          "_RangeStart": null,
+          "_SubCategoryCode": null,
+          "IsDirty": true
+        },
+        "DemoRank": 1
+      }
+    ],
+    "EndDate": "2020-09-13T00:00:00",
+    "Generated": "2020-10-17T12:34:56",
+    "InventorySource": null,
+    "Orders": [
+      {
+        "InventoryMarkets": [
+          {
+            "DmaMarketName": "New York",
+            "MarketId": 101,
+            "Stations": [
+              {
+                "LegacyCallLetters": "KSTP",
+                "Programs": [
+                  {
+                    "DaypartId": 59803,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 2400.0
+                      }
+                    ],
+                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramName": "MyTestProgram",
+                    "SpotCost": 20.0,
+                    "SpotLength": "30",
+                    "TotalCost": 120.0,
+                    "TotalSpots": 6,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-06T00:00:00",
+                          "_Id": 871,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-08-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": false
+                        },
+                        "Spots": 3
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-13T00:00:00",
+                          "_Id": 872,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-09-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": false
+                        },
+                        "Spots": 3
+                      }
+                    ]
+                  },
+                  {
+                    "DaypartId": 59803,
+                    "DemoValues": [
+                      {
+                        "DemoRank": 1,
+                        "Impressions": 3000.0
+                      }
+                    ],
+                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramName": "MyTestProgram",
+                    "SpotCost": 30.0,
+                    "SpotLength": "60",
+                    "TotalCost": 0.0,
+                    "TotalSpots": 0,
+                    "Weeks": [
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-06T00:00:00",
+                          "_Id": 871,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-08-31T00:00:00",
+                          "_WeekNumber": 1,
+                          "IsDirty": false
+                        },
+                        "Spots": 0
+                      },
+                      {
+                        "MediaWeek": {
+                          "_EndDate": "2020-09-13T00:00:00",
+                          "_Id": 872,
+                          "_MediaMonthId": 468,
+                          "_StartDate": "2020-09-07T00:00:00",
+                          "_WeekNumber": 2,
+                          "IsDirty": false
+                        },
+                        "Spots": 0
+                      }
+                    ]
+                  }
+                ],
+                "StationCode": 102,
+                "TotalCost": 120.0,
+                "TotalSpots": 6
+              }
+            ],
+            "TotalCost": 120.0,
+            "TotalSpots": 6
+          }
+        ],
+        "SurveyString": "Jan20 DMA Nielsen Live+3",
+        "TotalCost": 120.0,
+        "TotalSpots": 6
+      }
+    ],
+    "PlanName": "MyTestPlan",
+    "StartDate": "2020-08-31T00:00:00",
+    "UnitName": null
+  }
 }

@@ -2219,8 +2219,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ExportPlanBuyingScx()
+        [TestCase( SpotAllocationModelMode.Quality, "PlanBuying_Test Plan Name_20201030_121523_Q")]
+        [TestCase( SpotAllocationModelMode.Efficiency, "PlanBuying_Test Plan Name_20201030_121523_E")]
+        [TestCase( SpotAllocationModelMode.Floor, "PlanBuying_Test Plan Name_20201030_121523_F")]
+        public void ExportPlanBuyingScx(SpotAllocationModelMode spotAllocationModelMode, string expectedFileName)
         {
             const string username = "testUser";
             const string planName = "Test Plan Name";
@@ -2231,15 +2233,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
                 .Returns(currentDateTime);
             
-            _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>()))
-                .Returns<PlanBuyingScxExportRequest, DateTime>((a,b) => new PlanScxData {PlanName = planName, Generated = b});
-            _PlanBuyingScxDataConverter.Setup(s => s.ConvertData(It.IsAny<PlanScxData>()))
-                .Returns<PlanScxData>((d) => new PlanBuyingScxFile
+            _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<PlanBuyingScxExportRequest, DateTime, SpotAllocationModelMode>((a,b,c) => new PlanScxData {PlanName = planName, Generated = b});
+            _PlanBuyingScxDataConverter.Setup(s => s.ConvertData(It.IsAny<PlanScxData>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<PlanScxData, SpotAllocationModelMode>((d,e) => new PlanBuyingScxFile
                 {
                     PlanName = d.PlanName,
+                  
                     GeneratedTimeStamp = d.Generated,
                     ScxStream = new MemoryStream(Encoding.UTF8.GetBytes(testStreamContent))
-                });
+                }); 
 
             var savedSharedFiles = new List<SharedFolderFile>();
             var testGuid = Guid.NewGuid();
@@ -2250,36 +2253,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var savedFileGuid = service.ExportPlanBuyingScx(request, username);
-
-            // Assert
-            Assert.AreEqual(testGuid, savedFileGuid);
-            Assert.AreEqual(1, savedSharedFiles.Count);
-
+            var savedFileGuid = service.ExportPlanBuyingScx(request, username, spotAllocationModelMode);
+           
+            //// Assert           
             var savedSharedFile = savedSharedFiles[0];
             Assert.IsTrue(savedSharedFile.FolderPath.EndsWith(@"\PlanBuyingScx"));
 
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(SharedFolderFile), "FileContent");
-            jsonResolver.Ignore(typeof(SharedFolderFile), "FolderPath");
-            var jsonSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-            var savedSharedFileJson = IntegrationTestHelper.ConvertToJson(savedSharedFile, jsonSettings);
-
-            var reader = new StreamReader(savedSharedFile.FileContent);
-            var savedFileContent = reader.ReadToEnd();
-            reader.Dispose();
-
-            var resultToValidate = new
-            {
-                SavedSharedFile = savedSharedFileJson,
-                SavedFileContent = savedFileContent
-            };
-
-            Approvals.Verify(resultToValidate);
+            Assert.AreEqual(1, savedSharedFiles.Count);
+            Assert.AreEqual(expectedFileName, savedSharedFile.FileName);
+          
+           
         }
 
         private List<InventoryProprietaryQuarterSummaryDto> _GetInventoryProprietaryQuarterSummary(bool highProprietaryNumbers)

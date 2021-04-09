@@ -158,10 +158,10 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ExportBuyingScx")]
-        public BaseResponse<Guid> ExportBuyingScx(PlanBuyingScxExportRequest request)
+        public BaseResponse<Guid> ExportBuyingScx(PlanBuyingScxExportRequest request, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            var username = _GetCurrentUserFullName();
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().ExportPlanBuyingScx(request, username));
+            var username = _GetCurrentUserFullName();           
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().ExportPlanBuyingScx(request, username, spotAllocationModelMode));
         }
     }
 }
