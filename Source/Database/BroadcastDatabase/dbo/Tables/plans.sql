@@ -5,6 +5,7 @@
     [product_id]        INT                     NULL,
     [product_master_id] UNIQUEIDENTIFIER        NULL,
     [latest_version_id] INT                     NOT NULL,
+    [spot_allocation_model_mode] INT NULL, 
     CONSTRAINT [PK_plans] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plans_campaigns] FOREIGN KEY ([campaign_id]) REFERENCES [dbo].[campaigns] ([id])
 );

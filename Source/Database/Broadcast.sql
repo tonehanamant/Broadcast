@@ -424,6 +424,23 @@ GO
 
 /*************************************** End BP-2275 *****************************************************/
 
+/*************************************** Start BP-2301 *****************************************************/
+
+DECLARE @AddColumnSql VARCHAR(MAX) =
+	'ALTER TABLE plans
+		ADD spot_allocation_model_mode INT NULL'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'spot_allocation_model_mode'
+          AND Object_ID = Object_ID(N'plans'))
+BEGIN
+	EXEC (@AddColumnSql)	
+END
+
+GO
+
+/*************************************** End BP-2301 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

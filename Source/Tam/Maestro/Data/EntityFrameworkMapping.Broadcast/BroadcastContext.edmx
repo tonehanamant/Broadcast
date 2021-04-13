@@ -1431,6 +1431,7 @@
           <Property Name="product_id" Type="int" />
           <Property Name="latest_version_id" Type="int" Nullable="false" />
           <Property Name="product_master_id" Type="uniqueidentifier" />
+          <Property Name="spot_allocation_model_mode" Type="int" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -12843,6 +12844,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan" ToRole="plan_versions" />
           <Property Name="product_master_id" Type="Guid" />
+          <Property Name="spot_allocation_model_mode" Type="Int32" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -17793,6 +17795,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
                 <ScalarProperty Name="product_master_id" ColumnName="product_master_id" />
                 <ScalarProperty Name="latest_version_id" ColumnName="latest_version_id" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
