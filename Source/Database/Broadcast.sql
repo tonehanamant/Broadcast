@@ -394,6 +394,36 @@ Go
 	
 /*************************************** End BP-2074 *****************************************************/
 
+/*************************************** Start BP-2275 *****************************************************/
+
+DECLARE @AddColumnSql VARCHAR(MAX) =
+	'ALTER TABLE spot_length_cost_multipliers
+		ADD inventory_cost_premium decimal(10,2) NULL'
+
+DECLARE @PopulateSql VARCHAR(MAX) =
+	'UPDATE m SET
+		inventory_cost_premium = CASE WHEN s.length = 15 THEN 0.15 ELSE 0 END
+	FROM spot_length_cost_multipliers m
+	JOIN spot_lengths s
+		ON m.spot_length_id = s.id'
+
+DECLARE @AlterSql VARCHAR(MAX) = 
+	'ALTER TABLE spot_length_cost_multipliers
+		ALTER COLUMN inventory_cost_premium decimal(10,2) NOT NULL'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'inventory_cost_premium'
+          AND Object_ID = Object_ID(N'spot_length_cost_multipliers'))
+BEGIN
+	EXEC (@AddColumnSql)
+	EXEC (@PopulateSql)
+	EXEC (@AlterSql)
+END
+
+GO
+
+/*************************************** End BP-2275 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

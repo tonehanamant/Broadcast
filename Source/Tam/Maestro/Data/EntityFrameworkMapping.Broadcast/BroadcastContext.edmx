@@ -2148,6 +2148,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="spot_length_id" Type="int" Nullable="false" />
           <Property Name="cost_multiplier" Type="float" Nullable="false" />
+          <Property Name="inventory_cost_premium" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_lengths">
           <Key>
@@ -9662,6 +9663,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
           <Property Name="cost_multiplier" Type="Double" Nullable="false" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_length_cost_multipliers_spot_lengths" FromRole="spot_length_cost_multipliers" ToRole="spot_lengths" />
+          <Property Name="inventory_cost_premium" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="station_contacts">
           <Key>
@@ -16535,6 +16537,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_length_cost_multipliers">
             <EntityTypeMapping TypeName="BroadcastModel.spot_length_cost_multipliers">
               <MappingFragment StoreEntitySet="spot_length_cost_multipliers">
+                <ScalarProperty Name="inventory_cost_premium" ColumnName="inventory_cost_premium" />
                 <ScalarProperty Name="cost_multiplier" ColumnName="cost_multiplier" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
