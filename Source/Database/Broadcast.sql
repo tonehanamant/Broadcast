@@ -466,7 +466,7 @@ FROM plan_version_buying_api_results pvbar
 		pvbar.plan_version_buying_job_id = pvbj.id
 	JOIN plan_Versions pv ON 
 		pvbj.plan_version_id = pv.id
-where pvbar.posting_type = 0
+where pvbar.posting_type IS NULL
 
 Go
 
@@ -477,7 +477,7 @@ FROM plan_version_buying_results pvbr
 		pvbr.plan_version_buying_job_id = pvbj.id
 	JOIN plan_Versions pv ON 
 		pvbj.plan_version_id = pv.id
-where pvbr.posting_type = 0
+where pvbr.posting_type IS NULL
 
 Go
 
