@@ -36,7 +36,7 @@ namespace BroadcastComposerWeb.Controllers
             const string SW_KEY_TOTAL_DURATION = "Total duration";
             const string SW_KEY_GET_USER_NAME = "Get Username";
             const string SW_KEY_GET_SERVICE = "Get Service";
-            const string SW_KEY_SAVE_PLAN = "Get Service";
+            const string SW_KEY_SAVE_PLAN = "Save Plan";
 
             var processTimer = new ProcessWorkflowTimers();
             processTimer.Start(SW_KEY_TOTAL_DURATION);
