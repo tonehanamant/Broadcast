@@ -307,6 +307,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
+            const string SW_KEY_TOTAL_DURATION = "Total duration";
+            const string SW_KEY_PRE_PLAN_VALIDATION = "Pre Plan Validation";
+            const string SW_KEY_PLAN_VALIDATION = "Plan Validation";
+            const string SW_KEY_PRE_PLAN_SAVE = "Pre Plan Save";
+            const string SW_KEY_PLAN_SAVE = "Plan Save";
+            const string SW_KEY_POST_PLAN_SAVE = "Post Plan Save";
+
+            _LogInfo($"SavePlan starting for planID '{plan.Id}'", createdBy);
+
+            var processTimers = new ProcessWorkflowTimers();
+            processTimers.Start(SW_KEY_TOTAL_DURATION);
+            processTimers.Start(SW_KEY_PRE_PLAN_VALIDATION);
+
             if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
             {
                 throw new Exception("The pricing model is running for the plan");
@@ -329,7 +342,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateDaypartOverrides(plan.Dayparts);
             _OnSaveHandlePlanAvailableMarketSovFeature(plan);
 
+            processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
+            processTimers.Start(SW_KEY_PLAN_VALIDATION);
+
             _PlanValidator.ValidatePlan(plan);
+
+            processTimers.End(SW_KEY_PLAN_VALIDATION);
+            processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
 
             _ConvertImpressionsToRawFormat(plan);
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
@@ -342,7 +361,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
             }
 
-            _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);            
+            _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
+
+            processTimers.End(SW_KEY_PRE_PLAN_SAVE);
+            processTimers.Start(SW_KEY_PLAN_SAVE);
 
             if (saveState == SaveState.CreatingNewPlan)
             {
@@ -369,6 +391,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
                 }
             }
+
+            processTimers.End(SW_KEY_PLAN_SAVE);
+            processTimers.Start(SW_KEY_POST_PLAN_SAVE);
+
             _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
             // We only aggregate data for versions, not drafts.
@@ -386,6 +412,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy);
             _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan);
+
+            processTimers.End(SW_KEY_POST_PLAN_SAVE);
+            processTimers.End(SW_KEY_TOTAL_DURATION);
+            var timersReport = processTimers.ToString();
+            _LogInfo($"Plan Save Process Timers Report : '{timersReport}'");
 
             return plan.Id;
         }

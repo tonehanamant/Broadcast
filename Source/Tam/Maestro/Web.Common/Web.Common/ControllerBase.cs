@@ -121,6 +121,12 @@ namespace Tam.Maestro.Web.Common
             }
         }
 
+        protected void _LogInfo(string message, string username = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName, username);
+            _Log.Info(logMessage.ToJson());
+        }
+
         protected void _LogError(string message, Exception ex, [CallerMemberName] string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);

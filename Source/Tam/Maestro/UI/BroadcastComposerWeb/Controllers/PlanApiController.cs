@@ -33,12 +33,31 @@ namespace BroadcastComposerWeb.Controllers
         [Authorize]
         public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
+            const string SW_KEY_TOTAL_DURATION = "Total duration";
+            const string SW_KEY_GET_USER_NAME = "Get Username";
+            const string SW_KEY_GET_SERVICE = "Get Service";
+            const string SW_KEY_SAVE_PLAN = "Get Service";
+
+            var processTimer = new ProcessWorkflowTimers();
+            processTimer.Start(SW_KEY_TOTAL_DURATION);
+
+            processTimer.Start(SW_KEY_GET_USER_NAME);
             var fullName = _GetCurrentUserFullName();
-         
+            processTimer.End(SW_KEY_GET_USER_NAME);
+
+            processTimer.Start(SW_KEY_GET_SERVICE);
             var service = _ApplicationServiceFactory.GetApplicationService<IPlanService>();
+            processTimer.End(SW_KEY_GET_SERVICE);
 
+            processTimer.Start(SW_KEY_SAVE_PLAN);
+            var result = _ConvertToBaseResponse(() => service.SavePlan(newPlan, fullName, DateTime.Now));
+            processTimer.End(SW_KEY_SAVE_PLAN);
 
-            return _ConvertToBaseResponse(() => service.SavePlan(newPlan, fullName, DateTime.Now));
+            processTimer.End(SW_KEY_TOTAL_DURATION);
+            var timersReport = processTimer.ToString();
+            _LogInfo($"SavePlan finished for PlanId '{newPlan.Id}' with result '{result.Data}'. Durations : '{timersReport}'");
+
+            return result;
         }
 
         /// <summary>
