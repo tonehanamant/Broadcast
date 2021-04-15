@@ -12,6 +12,7 @@
     [total_spots]                   INT             NOT NULL,
     [total_market_coverage_percent] FLOAT (53)      NOT NULL,
     [spot_allocation_model_mode]    INT             NOT NULL,
+    [posting_type] INT NOT NULL, 
     CONSTRAINT [PK_plan_version_buying_results] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_version_buying_results_plan_version_buying_job] FOREIGN KEY ([plan_version_buying_job_id]) REFERENCES [dbo].[plan_version_buying_job] ([id])
 );

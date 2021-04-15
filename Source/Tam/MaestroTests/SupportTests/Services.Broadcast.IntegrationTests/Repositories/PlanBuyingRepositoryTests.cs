@@ -86,7 +86,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 PlanVersionId = planVersionId,
                 AllocatedSpots = allocated,
                 UnallocatedSpots = unallocated,
-                SpotAllocationModelMode = SpotAllocationModelMode.Quality
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                PostingType = PostingTypeEnum.NSI
             };
             PlanBuyingAllocationResult savedResults;
 

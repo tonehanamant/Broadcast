@@ -15,6 +15,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
 
         public string BuyingVersion { get; set; }
 
+        public PostingTypeEnum PostingType { get; set; }
+
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
 
         public List<PlanBuyingAllocatedSpot> AllocatedSpots { get; set; } = new List<PlanBuyingAllocatedSpot>();

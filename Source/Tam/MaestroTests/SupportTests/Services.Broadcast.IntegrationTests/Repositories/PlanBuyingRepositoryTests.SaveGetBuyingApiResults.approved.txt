@@ -9,7 +9,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 1,
+      "Id": 51,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",
@@ -49,7 +49,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 3,
+      "Id": 53,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",
@@ -91,6 +91,7 @@
   "BuyingCpm": 123.4000,
   "BuyingVersion": "3",
   "PlanVersionId": 9166,
+  "PostingType": 1,
   "RequestId": null,
   "SpotAllocationModelMode": 1,
   "UnallocatedSpots": [
@@ -103,7 +104,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 1,
+      "Id": 51,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",
@@ -143,7 +144,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 2,
+      "Id": 52,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",

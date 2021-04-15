@@ -12,6 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
+        public PostingTypeEnum PostingType { get; set; }
     }
 
     public class PlanBuyingResultDto : PlanBuyingResultBaseDto

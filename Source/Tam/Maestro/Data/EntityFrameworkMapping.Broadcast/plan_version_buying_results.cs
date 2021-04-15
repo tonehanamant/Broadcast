@@ -37,6 +37,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int total_spots { get; set; }
         public double total_market_coverage_percent { get; set; }
         public int spot_allocation_model_mode { get; set; }
+        public int posting_type { get; set; }
     
         public virtual ICollection<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
         public virtual plan_version_buying_job plan_version_buying_job { get; set; }

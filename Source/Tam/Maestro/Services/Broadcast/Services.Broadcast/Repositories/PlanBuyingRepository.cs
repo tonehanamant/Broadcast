@@ -480,7 +480,8 @@ namespace Services.Broadcast.Repositories
                     optimal_cpm = result.BuyingCpm,
                     plan_version_buying_job_id = result.JobId,
                     buying_version = result.BuyingVersion,
-                    spot_allocation_model_mode = (int)result.SpotAllocationModelMode
+                    spot_allocation_model_mode = (int)result.SpotAllocationModelMode,
+                    posting_type = (int)result.PostingType,
                 };
 
                 context.plan_version_buying_api_results.Add(planBuyingApiResult);
@@ -557,7 +558,8 @@ namespace Services.Broadcast.Repositories
                     PlanVersionId = planVersionId,
                     AllocatedSpots = resultSpotLists.Allocated,
                     UnallocatedSpots = resultSpotLists.Unallocated,
-                    SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode
+                    SpotAllocationModelMode = (SpotAllocationModelMode)apiResult.spot_allocation_model_mode,
+                    PostingType = (PostingTypeEnum)apiResult.posting_type,
                 };
 
                 return allocationResult;
@@ -768,7 +770,8 @@ namespace Services.Broadcast.Repositories
                     goal_fulfilled_by_proprietary = buyingResult.GoalFulfilledByProprietary,
                     total_spots = buyingResult.Totals.SpotCount,
                     total_market_coverage_percent = buyingResult.Totals.MarketCoveragePercent,
-                    spot_allocation_model_mode = (int)buyingResult.SpotAllocationModelMode
+                    spot_allocation_model_mode = (int)buyingResult.SpotAllocationModelMode,
+                    posting_type = (int)buyingResult.PostingType,
                 };
 
                 context.plan_version_buying_results.Add(planBuyingResult);

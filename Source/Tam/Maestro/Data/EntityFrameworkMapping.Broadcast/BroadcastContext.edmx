@@ -873,6 +873,7 @@
           <Property Name="plan_version_buying_job_id" Type="int" />
           <Property Name="buying_version" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="spot_allocation_model_mode" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_band_details">
           <Key>
@@ -1017,6 +1018,7 @@
           <Property Name="total_spots" Type="int" Nullable="false" />
           <Property Name="total_market_coverage_percent" Type="float" Nullable="false" />
           <Property Name="spot_allocation_model_mode" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_station_details">
           <Key>
@@ -15206,6 +15208,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" FromRole="plan_version_buying_api_results" ToRole="plan_version_buying_api_result_spots" />
           <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" FromRole="plan_version_buying_api_results" ToRole="plan_version_buying_job" />
           <Property Name="spot_allocation_model_mode" Type="Int32" Nullable="false" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_band_details">
           <Key>
@@ -15571,6 +15574,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_buying_rep_firm_details" Relationship="BroadcastModel.FK_plan_version_buying_rep_firm_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_rep_firm_details" />
           <NavigationProperty Name="plan_version_buying_market_details" Relationship="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_market_details" />
           <Property Name="spot_allocation_model_mode" Type="Int32" Nullable="false" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_buying_band_details_plan_version_buying_results">
           <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
@@ -18680,6 +18684,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_buying_api_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_api_results">
               <MappingFragment StoreEntitySet="plan_version_buying_api_results">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
                 <ScalarProperty Name="buying_version" ColumnName="buying_version" />
                 <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
@@ -18834,6 +18839,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_buying_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_results">
               <MappingFragment StoreEntitySet="plan_version_buying_results">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
                 <ScalarProperty Name="total_market_coverage_percent" ColumnName="total_market_coverage_percent" />
                 <ScalarProperty Name="total_spots" ColumnName="total_spots" />

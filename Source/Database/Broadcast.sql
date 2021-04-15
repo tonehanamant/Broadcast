@@ -441,6 +441,58 @@ GO
 
 /*************************************** End BP-2301 *****************************************************/
 
+/*************************************** Start BP-2245 *****************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_buying_api_results' AND COLUMN_NAME= 'posting_type')
+BEGIN
+	ALTER TABLE plan_version_buying_api_results
+	ADD posting_type INT NULL
+END
+
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_buying_results' AND COLUMN_NAME= 'posting_type')
+BEGIN
+	ALTER TABLE plan_version_buying_results
+	ADD posting_type INT NULL
+END
+
+GO
+
+UPDATE  pvbar 
+SET pvbar.posting_type = pv.posting_type
+FROM plan_version_buying_api_results pvbar
+	JOIN plan_version_buying_job pvbj ON 
+		pvbar.plan_version_buying_job_id = pvbj.id
+	JOIN plan_Versions pv ON 
+		pvbj.plan_version_id = pv.id
+where pvbar.posting_type = 0
+
+Go
+
+UPDATE  pvbr 
+SET pvbr.posting_type = pv.posting_type
+FROM plan_version_buying_results pvbr
+	JOIN plan_version_buying_job pvbj ON 
+		pvbr.plan_version_buying_job_id = pvbj.id
+	JOIN plan_Versions pv ON 
+		pvbj.plan_version_id = pv.id
+where pvbr.posting_type = 0
+
+Go
+
+ALTER TABLE plan_version_buying_results
+ALTER COLUMN posting_type int NOT NULL
+
+GO
+
+ALTER TABLE plan_version_buying_api_results
+ALTER COLUMN posting_type int NOT NULL
+
+GO
+
+/*************************************** End BP-2245 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
@@ -479,3 +531,4 @@ BEGIN
 	RAISERROR('Database Update Failed. Transaction rolled back.', 11, 1)
 END
 GO
+

@@ -871,7 +871,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 JobId = jobId,
                 PlanVersionId = plan.VersionId,
                 BuyingVersion = _GetPricingModelVersion().ToString(),
-                SpotAllocationModelMode = SpotAllocationModelMode.Quality
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                PostingType = PostingTypeEnum.NSI,
             });
 
             if (isPricingEfficiencyModelEnabled)
@@ -1154,6 +1155,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 .Task;
             var calculateBuyingProgramsTaskResult = calculateBuyingProgramsTask.Result;
             calculateBuyingProgramsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
+            calculateBuyingProgramsTaskResult.PostingType = allocationResult.PostingType;
             _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
