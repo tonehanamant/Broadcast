@@ -403,6 +403,16 @@
                     </div>
                 </div>
             }
+            @using (Html.BeginForm("RerunPlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Rerun Plan Buying Job</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Rerun Plan Buying Job" id="submit" />
+                    </div>
+                </div>
+            }
 
             @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {

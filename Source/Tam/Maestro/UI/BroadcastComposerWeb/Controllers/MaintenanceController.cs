@@ -688,6 +688,15 @@ namespace BroadcastComposerWeb.Controllers
             TempData["TabId"] = "planning";
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public ActionResult RerunPlanBuyingJob(int jobId)
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
+            var results = service.ReRunBuyingJob(jobId);
+            TempData["Message"] = $"Reprocessed job {jobId} as job {results}";
+            TempData["TabId"] = "planning";
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public ActionResult GeneratePricingResultsReport(int planId, int? planVersionNumber = null)

@@ -156,7 +156,7 @@
     "BuyingVersion": "4",
     "JobId": 1,
     "PlanVersionId": 0,
-    "PostingType": 1,
+    "PostingType": 0,
     "RequestId": "djj4j4399fmmf1m212",
     "SpotAllocationModelMode": 1,
     "UnallocatedSpots": []
