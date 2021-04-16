@@ -440,41 +440,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy)
         {
-            var canRunPricingDuringEdit = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT);
-            var canAutoTriggerPricing = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY);
-
             // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
             // This sets the default parameters in case we don't promote existing results.
-            _SetPlanPricingParameters(plan);
+            _SetPlanPricingParameters(plan);            
+            var shouldPromotePricingResults = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
 
-            bool pricingWasRunAfterLastSave;
-            var couldPromotePricingResultsSafely = _CanPromotePricingResultsSafely(saveState, plan, beforePlan, canRunPricingDuringEdit, out pricingWasRunAfterLastSave);
-            var shouldPromotePricingResults = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan, couldPromotePricingResultsSafely, pricingWasRunAfterLastSave);
-
-            _FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults, canAutoTriggerPricing);
+            _FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults);
         }
 
         internal void _FinalizePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy,
-            bool shouldPromotePricingResults, bool canAutoTriggerPricing)
+            bool shouldPromotePricingResults)
         {
             if (shouldPromotePricingResults)
-            {
-                if (saveState == SaveState.CreatingNewPlan)
-                {
-                    _LogInfo($"Pricing not triggered while creating a new plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
-                    _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
-                }
-                else
-                {
-                    _LogInfo($"Pricing not triggered while updating an existing plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
-                    _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
-                }
-            }
-            else if (canAutoTriggerPricing)
-            {
-                _LogInfo($"Automatically triggering Pricing. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
-
-                _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+            {                               
+                 _LogInfo($"Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                 _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);      
             }
             else
             {
@@ -482,24 +462,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan,
-            bool couldPromotePricingResultsSafely, bool pricingWasRunAfterLastSave)
+        internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan)
         {
             var shouldPromotePricingResults = false;
-
-            if (couldPromotePricingResultsSafely)
-            {
-                if (saveState == SaveState.CreatingNewPlan)
-                {
-                    shouldPromotePricingResults = true;
-                }
-                else
+                if(saveState != SaveState.CreatingNewPlan)               
                 {
                     var goalsHaveChanged = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
-                    shouldPromotePricingResults = !goalsHaveChanged || goalsHaveChanged && pricingWasRunAfterLastSave;
-                }
-            }
-
+                    shouldPromotePricingResults = !goalsHaveChanged;
+                }             
             return shouldPromotePricingResults;
         }
 
@@ -532,62 +502,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return SaveState.UpdatingExisting;
         }
-
-        internal bool _CanPromotePricingResultsSafely(SaveState saveState, PlanDto plan, PlanDto beforePlan, bool canRunPricingDuringEdit, out bool pricingWasRunAfterLastSave)
-        {
-            pricingWasRunAfterLastSave = false;
-            var hasResults = saveState == SaveState.CreatingNewPlan ?
-                plan.JobId.HasValue :
-                beforePlan.PricingParameters?.JobId.HasValue ?? false;
-
-            // no results then there is nothing to promote
-            if (!hasResults)
-            {
-                return false;
-            }
-
-            // was pricing run during this session?
-            if (saveState == SaveState.CreatingNewPlan)
-            {
-                // special case where we can just promote them.
-                pricingWasRunAfterLastSave = true;
-                return true;
-            }
-
-            // use the queued timestamp to differentiate auto-trigger on last save.
-            var successfulyPreviousJobs = _PlanRepository.GetSuccessfulPricingJobs(beforePlan.VersionId);
-            // if no sucessfull previous jobs exist then nothing to promote.
-            if (!successfulyPreviousJobs.Any())
-            {
-                return false;
-            }
-            var mostRecentJobQueuedDate = successfulyPreviousJobs.OrderByDescending(j => j.Id).First().Queued;
-            pricingWasRunAfterLastSave = mostRecentJobQueuedDate > beforePlan.ModifiedDate;
-
-            if (saveState != SaveState.CreatingNewDraft)
-            {
-                // no problem if we promote them.
-                return true;
-            }
-
-            // creating a new draft,
-            // this action yields two active plan_version records : the draft and the published version.
-            // we do not want to leave the published draft without a pricing result.
-            if (!canRunPricingDuringEdit)
-            {
-                // easy, do not promote.
-                return false;
-            }
-
-            if (pricingWasRunAfterLastSave)
-            {
-                // assume it was run during this session and allow promotion
-                return true;
-            }
-
-            return false;
-        }
-
         private void _UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);

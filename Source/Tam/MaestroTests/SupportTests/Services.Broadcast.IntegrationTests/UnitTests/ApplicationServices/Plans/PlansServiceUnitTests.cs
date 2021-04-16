@@ -166,9 +166,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_IN_EDIT, true);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.RUN_PRICING_AUTOMATICALLY, true);
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();           
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, false);
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
@@ -259,10 +257,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var updatePlanPricingVersionIdCalls = new List<UpdatePlanPricingVersionIdParams>();
             _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
-
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.RUN_PRICING_AUTOMATICALLY] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_IN_EDIT] = true;
+                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));           
 
             _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
                 .Returns(plan.Id);
@@ -400,10 +395,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
 
             _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
-                .Returns(beforePlan.Id);
-
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.RUN_PRICING_AUTOMATICALLY] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_IN_EDIT] = true;
+                .Returns(beforePlan.Id);           
 
             // handle the test parameter
             var expectedQueuePricingJobCallCount = 0;
@@ -411,137 +403,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var expectedSetPricingPlanVersionIdCallCount = 0;
             
             plan.IsOutOfSync = false;
-
-            // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
-
-            // Assert
-            Assert.AreEqual(0, saveNewPlanCalls.Count, "Invalid call count.");
-            Assert.AreEqual(1, savePlanCalls.Count, "Invalid call count.");
-            Assert.AreEqual(1, setStatusCalls.Count, "Invalid call count.");
-            Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2, "Invalid 'in process' processing status.");
-            Assert.AreEqual(1, aggregateCallCount, "Invalid call count.");
-            Assert.AreEqual(1, saveSummaryCalls.Count, "Invalid call count.");
-            Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus, "Invalid final processing status.");
-            Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2);
-            Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus);
-            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
-            Assert.AreEqual(expectedQueuePricingJobCallCount, queuePricingJobCallCount, "Invalid queuePricingJobCallCount Count.");
-            Assert.AreEqual(expectedUpdatePlanPricingVersionIdCalls, updatePlanPricingVersionIdCalls.Count, "Invalid updatePlanPricingVersionIdCalls Count.");
-            Assert.AreEqual(expectedSetPricingPlanVersionIdCallCount, setPricingPlanVersionIdCallCount, "Invalid setPricingPlanVersionIdCallCount Count.");
-        }
-
-        [Test]
-        public void SavePlanAndTriggerPricing()
-        {
-            // Arrange
-            var modifiedWho = "ModificationUser";
-            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
-
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
-                .Returns(new List<WeeklyBreakdownWeek>());
-
-            var saveNewPlanCalls = new List<DateTime>();
-            _PlanRepositoryMock.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
-
-            var savePlanCalls = new List<DateTime>();
-            _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback(() => savePlanCalls.Add(DateTime.Now));
-
-            var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
-            _PlanSummaryRepositoryMock.Setup(s =>
-                    s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
-                .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
-
-            var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
-            _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
-                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
-
-            _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
-                .Returns(new List<PlanPricingJob> {
-                new PlanPricingJob { Completed = modifiedWhen } });
-
-            var planAggregator = new Mock<IPlanAggregator>();
-            var aggregateCallCount = 0;
-            var aggregateReturn = new PlanSummaryDto();
-            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
-                .Callback(() => aggregateCallCount++)
-                .Returns(aggregateReturn);
-
-            var plan = _GetNewPlan();
-            var campaignId = plan.CampaignId;            
-            plan.Id = 1;
-            plan.VersionId = 526;
-            plan.VersionNumber = 1;
-            plan.IsDraft = false;
-            plan.JobId = 42;
-            plan.IsOutOfSync = false;
-            plan.PricingParameters = _GetPricingParameters(plan.Id, plan.VersionId);
-            plan.PricingParameters.JobId = plan.JobId;            
-
-            // mock a before plan
-            var beforePlan = _GetNewPlan();
-            beforePlan.Id = plan.Id;
-            beforePlan.VersionId = plan.VersionId;
-            beforePlan.VersionNumber = plan.VersionNumber;
-            beforePlan.IsDraft = plan.IsDraft;
-            beforePlan.JobId = plan.JobId;
-            beforePlan.PricingParameters = _GetPricingParameters(beforePlan.Id, beforePlan.VersionId);
-            beforePlan.PricingParameters.JobId = plan.JobId;
-            beforePlan.ModifiedDate = modifiedWhen;
-
-            // make a major change to the plan properties
-            plan.Budget += 1000;
-            plan.IsOutOfSync = true;
-
-            // mock an after plan
-            var afterPlan = _GetNewPlan();
-            afterPlan.Id = plan.Id;
-            afterPlan.VersionId = plan.VersionId + 1;
-            afterPlan.VersionNumber = plan.VersionNumber + 1;
-            afterPlan.IsDraft = plan.IsDraft;
-
-            // progress our changes
-            afterPlan.PricingParameters.Budget = plan.PricingParameters.Budget;
-            afterPlan.Budget = plan.Budget;
-
-            var getPlanReturns = new Queue<PlanDto>();
-            getPlanReturns.Enqueue(beforePlan);
-            getPlanReturns.Enqueue(afterPlan);
-
-            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
-            _PlanMarketSovCalculator.Setup(s =>
-                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
-                .Returns(standardResult);
-
-            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(() => getPlanReturns.Dequeue());
-
-            var queuePricingJobCallCount = 0;
-            _PlanPricingServiceMock.Setup(s =>
-                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
-                .Callback(() => queuePricingJobCallCount++);
-
-            var setPricingPlanVersionIdCallCount = 0;
-            _PlanRepositoryMock.Setup(s => s.SetPricingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()))
-                .Callback(() => setPricingPlanVersionIdCallCount++);
-
-            var updatePlanPricingVersionIdCalls = new List<UpdatePlanPricingVersionIdParams>();
-            _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
-
-            _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
-                .Returns(beforePlan.Id);
-
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.RUN_PRICING_AUTOMATICALLY] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_IN_EDIT] = true;
-
-            // handle the test parameter
-            var expectedQueuePricingJobCallCount = 1;
-            var expectedUpdatePlanPricingVersionIdCalls = 0;
-            var expectedSetPricingPlanVersionIdCallCount = 0;
 
             // Act
             _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
@@ -633,74 +494,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue((resultBeforePlan != null) == expectBeforePlanResult);
         }
 
-        [Test]
-        [TestCase(PlanService.SaveState.CreatingNewPlan, false, false, true, false)]
-        [TestCase(PlanService.SaveState.PromotingDraft, false, false, true, false)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, false, false, true, false)]
-        [TestCase(PlanService.SaveState.CreatingNewDraft, false, false, true, false)]
-        [TestCase(PlanService.SaveState.CreatingNewPlan, true, true, true, true)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, true, true, true, true)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, true, false, true, true)]
-        [TestCase(PlanService.SaveState.PromotingDraft, true, true, true, true)]
-        [TestCase(PlanService.SaveState.PromotingDraft, true, false, true, true)]
-        [TestCase(PlanService.SaveState.CreatingNewDraft, true, false, true, false)]
-        [TestCase(PlanService.SaveState.CreatingNewDraft, true, true, true, true)]
-        [TestCase(PlanService.SaveState.CreatingNewDraft, true, false, false, false)]
-        public void CanPromotePricingResultsSafely(PlanService.SaveState saveState,  bool hasPricingResults, bool pricingWasRunAfterLastSave,
-            bool canRunPricingDuringEdit, bool expectedResult)
-        {
-            // Arrange
-            const int planId = 12;
-            const int planVersionId = 14;
-            var modifiedDate = new DateTime(2020, 10, 17, 12, 30, 40);
-            
-            var plan = _GetNewPlan();
-            plan.Id = planId;
-            plan.VersionId = planVersionId;
-            plan.IsDraft = saveState == PlanService.SaveState.CreatingNewDraft;
-            
-            var beforePlan = _GetNewPlan();
-            beforePlan.Id = planId;
-            beforePlan.VersionId = planVersionId;
-            beforePlan.IsDraft = saveState == PlanService.SaveState.PromotingDraft;
-            beforePlan.ModifiedDate = modifiedDate;
-
-            if (hasPricingResults)
-            {
-                plan.JobId = 12;
-                beforePlan.PricingParameters.JobId = 12;
-                var pricingJobs = new List<PlanPricingJob> {new PlanPricingJob { Queued = pricingWasRunAfterLastSave ? modifiedDate.AddHours(2) : modifiedDate}};
-                _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
-                    .Returns(pricingJobs);
-            }
-            else
-            {
-                plan.JobId = null;
-                plan.PricingParameters = null;
-                beforePlan.JobId = null;
-                beforePlan.PricingParameters = null;
-            }
-
-            var expectedResultPricingWasRunAfterLastSave = (saveState == PlanService.SaveState.CreatingNewPlan && hasPricingResults)
-                || pricingWasRunAfterLastSave;
-
-            // Act
-            var result = _PlanService._CanPromotePricingResultsSafely(saveState, plan, beforePlan, canRunPricingDuringEdit, out bool resultPricingWasRunAfterLastSave);
-
-            // Assert
-            Assert.AreEqual(expectedResult, result);
-            Assert.AreEqual(expectedResultPricingWasRunAfterLastSave, resultPricingWasRunAfterLastSave);
-        }
 
         [Test]
-        [TestCase(PlanService.SaveState.CreatingNewPlan, true, true, true, true)]
-        [TestCase(PlanService.SaveState.CreatingNewPlan, false, true, true, false)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, false, true, true, false)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, true, true, true, true)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, true, false, true, false)]
+        [TestCase(PlanService.SaveState.CreatingNewPlan, true, false)]
+        [TestCase(PlanService.SaveState.CreatingNewPlan, false, false)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, true, false)]
+        [TestCase(PlanService.SaveState.UpdatingExisting,true, false)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, false, true)]
         public void ShouldPromotePricingResultsOnPlanSave(PlanService.SaveState saveState, 
-            bool couldPromotePricingResultsSafely, 
-            bool pricingWasRunAfterLastSave, bool goalsChanged, bool expectedResult)
+             bool goalsChanged, bool expectedResult)
         {
             // Arrange
             const int planId = 12;
@@ -725,18 +527,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             }
 
             // Act
-            var result = _PlanService._ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan, couldPromotePricingResultsSafely, pricingWasRunAfterLastSave);
+            var result = _PlanService._ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
 
             // Assert
             Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
-        [TestCase(PlanService.SaveState.CreatingNewPlan, true, true)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, true, true)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, false, true)]
-        [TestCase(PlanService.SaveState.UpdatingExisting, false, false)]
-        public void _FinalizePricingOnPlanSave(PlanService.SaveState saveState, bool shouldPromotePricingResults, bool canAutoTriggerPricing)
+        [TestCase(PlanService.SaveState.CreatingNewPlan, true)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, true)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, false)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, false)]
+        public void _FinalizePricingOnPlanSave(PlanService.SaveState saveState, bool shouldPromotePricingResults)
         {
             // Arrange
             const int planId = 12;
@@ -756,28 +558,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             afterPlan.Id = planId;
             afterPlan.VersionId = planVersionId + 1;
 
-            var expectedSetPricingPlanVersionIdCalled = 0;
-            var expectedUpdatePlanPricingVersionId = 0;
-            var expectedQueuePricingJobCalled = 0;
+            
+            var expectedUpdatePlanPricingVersionId = 0;           
             var expectedSavePlanPricingParametersCalled = 0;
 
             if (shouldPromotePricingResults)
             {
-                plan.JobId = 26;
-
-                if (saveState == PlanService.SaveState.CreatingNewPlan)
-                {
-                    expectedSetPricingPlanVersionIdCalled++;
-                }
-                else
-                {
-                    expectedUpdatePlanPricingVersionId++;
-                }
+                plan.JobId = 26;                                           
+                expectedUpdatePlanPricingVersionId++;      
             }
-            else if(canAutoTriggerPricing)
-            {
-                expectedQueuePricingJobCalled++;
-            }
+           
             else
             {
                 expectedSavePlanPricingParametersCalled++;
@@ -800,12 +590,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => savePlanPricingParametersCallsed++);
 
             // Act
-            _PlanService._FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, modifiedDate, modifiedBy, shouldPromotePricingResults, canAutoTriggerPricing);
+            _PlanService._FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, modifiedDate, modifiedBy, shouldPromotePricingResults);
 
             // Assert
-            Assert.AreEqual(expectedSetPricingPlanVersionIdCalled, setPricingPlanVersionIdCalled);
-            Assert.AreEqual(expectedUpdatePlanPricingVersionId, updatePlanPricingVersionIdCalled);
-            Assert.AreEqual(expectedQueuePricingJobCalled, queuePricingJobCalled);
+           
+            Assert.AreEqual(expectedUpdatePlanPricingVersionId, updatePlanPricingVersionIdCalled);            
             Assert.AreEqual(expectedSavePlanPricingParametersCalled, savePlanPricingParametersCallsed);
         }
 

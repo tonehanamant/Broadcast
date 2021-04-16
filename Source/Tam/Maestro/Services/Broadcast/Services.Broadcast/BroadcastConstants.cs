@@ -45,9 +45,7 @@
     {
         public static string USE_TRUE_INDEPENDENT_STATIONS = "broadcast-use-true-independent-stations";
      
-        public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";
-        public static string ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
-        public static string RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
+        public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";     
         public static string DISPLAY_CAMPAIGN_LINK = "broadcast-display-campaign-link";
         public static string DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
         public static string ALLOW_MULTIPLE_CREATIVE_LENGTHS = "broadcast-allow-multiple-creative-lengths";
