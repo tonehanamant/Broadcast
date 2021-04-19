@@ -6,6 +6,8 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Services.Repositories;
+using Services.Broadcast.IntegrationTests.TestData;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Post
 {
@@ -14,13 +16,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
     public class PostFileParserTests
     {
         private PostFileRow _ValidRow;
-        private readonly IPostFileParser _PostFileParser = new PostFileParser(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
+        private IPostFileParser _PostFileParser;
         private ExcelWorksheet _Worksheet;
         private ExcelPackage _Package;
 
         [SetUp]
         public void Setup()
         {
+            var spotLengthRepo = new Mock<ISpotLengthRepository>();
+            spotLengthRepo.Setup(s => s.GetSpotLengthIdsByDuration())
+                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
+
+            var dataRepoFactory = new Mock<IDataRepositoryFactory>();
+            dataRepoFactory.Setup(s => s.GetDataRepository<ISpotLengthRepository>())
+                .Returns(spotLengthRepo.Object);
+
+            _PostFileParser = new PostFileParser(dataRepoFactory.Object);
+
             _ValidRow = new PostFileRow("93", "BATON ROUGE", "WAFB", "CBS", "2/20/2017", "THU", "2/23/2017", "2/23/2017 4:56:08 AM", "WAFB 9 NEWS THIS MORNING: EARLY EDIT", "15", "", "NNVA0045000", "BEIERSDORF", "ASSEMBLY", "EMN", "", "Testing", "7196", "BVS Cadent", "1");
             _Package = new ExcelPackage();
             _Package.Workbook.Worksheets.Add("Default");
