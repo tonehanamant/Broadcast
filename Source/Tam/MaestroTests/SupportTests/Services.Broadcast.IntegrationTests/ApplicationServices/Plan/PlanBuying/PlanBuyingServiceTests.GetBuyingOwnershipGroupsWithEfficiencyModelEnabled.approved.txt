@@ -1,5 +1,30 @@
 {
-  "Default": null,
+  "Default": {
+    "Details": [
+      {
+        "Budget": 16386.5250,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
+        "ImpressionsPercentage": 100.0,
+        "MarketCount": 2,
+        "OwnershipGroupName": "Ownership group 3",
+        "SpotCount": 50,
+        "StationCount": 2
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 17.6142,
+      "AvgImpressions": 0.0,
+      "Budget": 16386.5250,
+      "Impressions": 930.3,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 10.328,
+      "SpotCount": 50,
+      "StationCount": 2
+    }
+  },
   "Efficiency": {
     "Details": [
       {
@@ -52,5 +77,30 @@
       "StationCount": 2
     }
   },
-  "Quality": null
+  "Quality": {
+    "Details": [
+      {
+        "Budget": 16386.5250,
+        "Cpm": 17.6142,
+        "Impressions": 930.3,
+        "ImpressionsPercentage": 100.0,
+        "MarketCount": 2,
+        "OwnershipGroupName": "Ownership group 3",
+        "SpotCount": 50,
+        "StationCount": 2
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 17.6142,
+      "AvgImpressions": 0.0,
+      "Budget": 16386.5250,
+      "Impressions": 930.3,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 10.328,
+      "SpotCount": 50,
+      "StationCount": 2
+    }
+  }
 }

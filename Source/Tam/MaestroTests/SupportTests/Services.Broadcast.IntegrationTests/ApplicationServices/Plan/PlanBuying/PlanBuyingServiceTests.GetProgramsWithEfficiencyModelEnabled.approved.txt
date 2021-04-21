@@ -1,5 +1,44 @@
 {
-  "Default": null,
+  "Default": {
+    "Details": [
+      {
+        "AvgCpm": 17.5186,
+        "AvgImpressions": 30.835,
+        "Budget": 16205.6250,
+        "Genre": "Children",
+        "Impressions": 925.05,
+        "ImpressionsPercentage": 99.43566591,
+        "MarketCount": 1,
+        "ProgramName": "Early news",
+        "Spots": 30,
+        "StationCount": 1
+      },
+      {
+        "AvgCpm": 34.4571,
+        "AvgImpressions": 0.2625,
+        "Budget": 180.9000,
+        "Genre": "Comedy",
+        "Impressions": 5.25,
+        "ImpressionsPercentage": 0.56433409,
+        "MarketCount": 1,
+        "ProgramName": "Late news",
+        "Spots": 20,
+        "StationCount": 1
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 17.6142,
+      "AvgImpressions": 18.606,
+      "Budget": 16386.5250,
+      "Impressions": 930.3,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 50,
+      "StationCount": 2
+    }
+  },
   "Efficiency": {
     "Details": [
       {
@@ -80,5 +119,44 @@
       "StationCount": 2
     }
   },
-  "Quality": null
+  "Quality": {
+    "Details": [
+      {
+        "AvgCpm": 17.5186,
+        "AvgImpressions": 30.835,
+        "Budget": 16205.6250,
+        "Genre": "Children",
+        "Impressions": 925.05,
+        "ImpressionsPercentage": 99.43566591,
+        "MarketCount": 1,
+        "ProgramName": "Early news",
+        "Spots": 30,
+        "StationCount": 1
+      },
+      {
+        "AvgCpm": 34.4571,
+        "AvgImpressions": 0.2625,
+        "Budget": 180.9000,
+        "Genre": "Comedy",
+        "Impressions": 5.25,
+        "ImpressionsPercentage": 0.56433409,
+        "MarketCount": 1,
+        "ProgramName": "Late news",
+        "Spots": 20,
+        "StationCount": 1
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 17.6142,
+      "AvgImpressions": 18.606,
+      "Budget": 16386.5250,
+      "Impressions": 930.3,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 50,
+      "StationCount": 2
+    }
+  }
 }

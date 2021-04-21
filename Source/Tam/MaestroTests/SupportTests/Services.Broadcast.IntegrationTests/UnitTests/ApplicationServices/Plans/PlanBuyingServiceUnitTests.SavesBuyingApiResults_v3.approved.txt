@@ -158,7 +158,7 @@
     "PlanVersionId": 0,
     "PostingType": 0,
     "RequestId": "djj4j4399fmmf1m212",
-    "SpotAllocationModelMode": 1,
+    "SpotAllocationModelMode": 2,
     "UnallocatedSpots": []
   }
 ]

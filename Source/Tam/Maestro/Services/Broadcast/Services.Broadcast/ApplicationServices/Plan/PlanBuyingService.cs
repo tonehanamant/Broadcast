@@ -872,8 +872,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var results = new List<PlanBuyingAllocationResult>();
             
 
-            if (isPricingEfficiencyModelEnabled)
-            {
+           
                 results.Add(new PlanBuyingAllocationResult
                 {
                     JobId = jobId,
@@ -891,9 +890,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     SpotAllocationModelMode = SpotAllocationModelMode.Floor,
                     PostingType = plan.PostingType
                 });
-            }
-            else
-            {
+          
                 results.Add(new PlanBuyingAllocationResult
                 {
                     JobId = jobId,
@@ -902,7 +899,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     SpotAllocationModelMode = SpotAllocationModelMode.Quality,
                     PostingType = plan.PostingType,
                 });
-            }
+          
 
             if (!goalsFulfilledByProprietaryInventory)
             {
