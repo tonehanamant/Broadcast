@@ -20,6 +20,7 @@
         public static string SW_KEY_APPLYING_INFLATION_FACTOR = "Gathering inventory -> Applying inflation factor";
         public static string SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS = "Gathering inventory -> Setting inventory days based on plan days";
         public static string SW_KEY_APPLYING_PROJECTED_IMPRESSIONS = "Gathering inventory -> Applying projected impressions";
+        public static string SW_KEY_APPLYING_HOUSEHOLD_PROJECTED_IMPRESSIONS = "Gathering inventory -> Applying HouseHold projected impressions";
         public static string SW_KEY_APPLYING_PROVIDED_IMPRESSIONS = "Gathering inventory -> Applying provided impressions";
         public static string SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI = "Gathering inventory -> Applying NTI conversion to NSI";
         public static string SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM = "Gathering inventory -> Filtering out inventory by min and max CPM";

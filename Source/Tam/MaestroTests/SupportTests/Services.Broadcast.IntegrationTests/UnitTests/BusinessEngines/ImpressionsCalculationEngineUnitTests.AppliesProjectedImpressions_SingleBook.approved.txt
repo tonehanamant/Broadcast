@@ -75,6 +75,7 @@
   "programs": [
     {
       "Cpm": 0.0,
+      "HouseholdProjectedImpressions": 0.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -157,6 +158,7 @@
     },
     {
       "Cpm": 0.0,
+      "HouseholdProjectedImpressions": 0.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,

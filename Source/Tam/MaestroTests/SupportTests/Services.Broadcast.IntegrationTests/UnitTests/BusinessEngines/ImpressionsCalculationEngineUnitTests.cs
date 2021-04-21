@@ -241,6 +241,191 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void AppliesHouseholdProjectedImpressions_SingleBook()
+        {
+            // Arrange           
+            int householdAudienceId = BroadcastConstants.HouseholdAudienceId;
+            const int spotLength = 90;
+            const int spotLengthId = 8;
+            const int shareBookId = 215;
+
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "KOB"
+                    },
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 1,
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 2,
+                                Monday = true,
+                                Wednesday = true,
+                                StartTime = 18000, // 5am
+                                EndTime = 21599 // 6am
+                            }
+                        },
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 3,
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 4,
+                                Thursday = true,
+                                Friday = true,
+                                StartTime = 18000, // 5am
+                                EndTime = 21599 // 6am
+                            }
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "KSTP"
+                    },
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 5,
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 6,
+                                Monday = true,
+                                Wednesday = true,
+                                StartTime = 72000, // 8pm
+                                EndTime = 75599 // 9pm
+                            }
+                        }
+                    }
+                }
+            };
+
+            var request = new ImpressionsRequestDto
+            {
+                SpotLengthId = spotLengthId,
+                HutProjectionBookId = null,
+                ShareProjectionBookId = shareBookId,
+                PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus3,
+                Equivalized = true,
+                PostType = PostingTypeEnum.NTI
+            };
+
+            _BroadcastAudienceRepositoryMock
+                .Setup(x => x.GetRatingsAudiencesByMaestroAudience(It.IsAny<List<int>>()))
+                .Returns(new List<audience_audiences>
+                {
+                    new audience_audiences { rating_audience_id = 31 }                   
+                });
+
+            _SpotLengthEngineMock
+                .Setup(x => x.GetSpotLengthValueById(It.IsAny<int>()))
+                .Returns(spotLength);
+
+            object getImpressionsDaypartParameters = null;
+            _RatingForecastRepositoryMock
+                .Setup(x => x.GetImpressionsDaypart(
+                    It.IsAny<int>(),
+                    It.IsAny<List<int>>(),
+                    It.IsAny<List<ManifestDetailDaypart>>(),
+                    It.IsAny<ProposalEnums.ProposalPlaybackType?>()))
+                .Callback<int, List<int>, List<ManifestDetailDaypart>, ProposalEnums.ProposalPlaybackType?>(
+                    (postingBookId, uniqueRatingsAudiences, stationDetails, playbackType) =>
+                    {
+                        // deep copy
+                        getImpressionsDaypartParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                        {
+                            postingBookId,
+                            uniqueRatingsAudiences,
+                            stationDetails,
+                            playbackType
+                        })));
+                    })
+                .Returns(new ImpressionsDaypartResultForSingleBook
+                {
+                    Impressions = new List<StationImpressionsWithAudience>
+                    {
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 1,
+                            Impressions = 1000
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 1,
+                            Impressions = 1100
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 3,
+                            Impressions = 1200
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 3,
+                            Impressions = 1300
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 5,
+                            Impressions = 1400
+                        }
+                    }
+                });
+
+            _ImpressionAdjustmentEngineMock
+                .Setup(x => x.AdjustImpression(
+                    It.IsAny<double>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<int>(),
+                    It.IsAny<PostingTypeEnum>(),
+                    It.IsAny<int>(),
+                    It.IsAny<bool>()))
+                .Returns<double, bool, int, PostingTypeEnum, int, bool>(
+                    (impression, isEquivilized, spotLengthValue, postType, schedulePostingBook, applyAnnualAdjustment) =>
+                    {
+                        return impression * 1.5;
+                    });
+
+            // Act
+            _ImpressionsCalculationEngine.ApplyHouseholdProjectedImpressions(programs, request);
+
+            // Assert
+            _BroadcastAudienceRepositoryMock.Verify(x => x.GetRatingsAudiencesByMaestroAudience(
+                It.Is<List<int>>(list => list.SequenceEqual(new List<int> { householdAudienceId }))), Times.Once);
+
+            _SpotLengthEngineMock.Verify(x => x.GetSpotLengthValueById(spotLengthId), Times.Exactly(1));
+
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1000, true, spotLength, PostingTypeEnum.NTI, shareBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1100, true, spotLength, PostingTypeEnum.NTI, shareBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1200, true, spotLength, PostingTypeEnum.NTI, shareBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1300, true, spotLength, PostingTypeEnum.NTI, shareBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1400, true, spotLength, PostingTypeEnum.NTI, shareBookId, false), Times.Once);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(new
+            {
+                getImpressionsDaypartParameters,
+                programs
+            });
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void AppliesProjectedImpressions_TwoBooks()
         {
             // Arrange
@@ -428,6 +613,193 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(resultJson);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AppliesHouseholdProjectedImpressions_TwoBooks()
+        {
+            // Arrange
+            int householdAudienceId = BroadcastConstants.HouseholdAudienceId;
+            const int spotLength = 60;
+            const int spotLengthId = 7;
+            const int shareBookId = 215;
+            const int hutBookId = 216;
+
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "KOB"
+                    },
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 1,
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 2,
+                                Monday = true,
+                                Wednesday = true,
+                                StartTime = 18000, // 5am
+                                EndTime = 21599 // 6am
+                            }
+                        },
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 3,
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 4,
+                                Thursday = true,
+                                Friday = true,
+                                StartTime = 18000, // 5am
+                                EndTime = 21599 // 6am
+                            }
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "KSTP"
+                    },
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 5,
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 6,
+                                Monday = true,
+                                Wednesday = true,
+                                StartTime = 72000, // 8pm
+                                EndTime = 75599 // 9pm
+                            }
+                        }
+                    }
+                }
+            };
+
+            var request = new ImpressionsRequestDto
+            {
+                SpotLengthId = spotLengthId,
+                HutProjectionBookId = hutBookId,
+                ShareProjectionBookId = shareBookId,
+                PlaybackType = ProposalEnums.ProposalPlaybackType.LivePlus1,
+                Equivalized = false,
+                PostType = PostingTypeEnum.NSI
+            };
+
+            _BroadcastAudienceRepositoryMock
+                .Setup(x => x.GetRatingsAudiencesByMaestroAudience(It.IsAny<List<int>>()))
+                .Returns(new List<audience_audiences>
+                {
+                    new audience_audiences { rating_audience_id = 31 }                   
+                });
+
+            _SpotLengthEngineMock
+                .Setup(x => x.GetSpotLengthValueById(It.IsAny<int>()))
+                .Returns(spotLength);
+
+            object getImpressionsDaypartParameters = null;
+            _RatingForecastRepositoryMock
+                .Setup(x => x.GetImpressionsDaypart(
+                    It.IsAny<short>(),
+                    It.IsAny<short>(),
+                    It.IsAny<IEnumerable<int>>(),
+                    It.IsAny<List<ManifestDetailDaypart>>(),
+                    It.IsAny<ProposalEnums.ProposalPlaybackType?>()))
+                .Callback<short, short, IEnumerable<int>, List<ManifestDetailDaypart>, ProposalEnums.ProposalPlaybackType?>(
+                    (hutBook, shareBook, uniqueRatingsAudiences, stationDetails, playbackType) =>
+                    {
+                        // deep copy
+                        getImpressionsDaypartParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                        {
+                            hutBook,
+                            shareBook,
+                            uniqueRatingsAudiences,
+                            stationDetails,
+                            playbackType
+                        })));
+                    })
+                .Returns(new ImpressionsDaypartResultForTwoBooks
+                {
+                    Impressions = new List<StationImpressionsWithAudience>
+                    {
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 1,
+                            Impressions = 1000
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 1,
+                            Impressions = 1100
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 3,
+                            Impressions = 1200
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 3,
+                            Impressions = 1300
+                        },
+                        new StationImpressionsWithAudience
+                        {
+                            AudienceId = 31,
+                            Id = 5,
+                            Impressions = 1400
+                        }
+                    }
+                });
+
+            _ImpressionAdjustmentEngineMock
+                .Setup(x => x.AdjustImpression(
+                    It.IsAny<double>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<int>(),
+                    It.IsAny<PostingTypeEnum>(),
+                    It.IsAny<int>(),
+                    It.IsAny<bool>()))
+                .Returns<double, bool, int, PostingTypeEnum, int, bool>(
+                    (impression, isEquivilized, spotLengthValue, postType, schedulePostingBook, applyAnnualAdjustment) =>
+                    {
+                        return impression * 1.5;
+                    });
+
+            // Act
+            _ImpressionsCalculationEngine.ApplyHouseholdProjectedImpressions(programs, request);
+
+            // Assert
+            _BroadcastAudienceRepositoryMock.Verify(x => x.GetRatingsAudiencesByMaestroAudience(
+                It.Is<List<int>>(list => list.SequenceEqual(new List<int> { householdAudienceId }))), Times.Once);
+
+            _SpotLengthEngineMock.Verify(x => x.GetSpotLengthValueById(spotLengthId), Times.Exactly(1));
+
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1000, false, spotLength, PostingTypeEnum.NSI, hutBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1100, false, spotLength, PostingTypeEnum.NSI, hutBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1200, false, spotLength, PostingTypeEnum.NSI, hutBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1300, false, spotLength, PostingTypeEnum.NSI, hutBookId, false), Times.Once);
+            _ImpressionAdjustmentEngineMock.Verify(x => x.AdjustImpression(1400, false, spotLength, PostingTypeEnum.NSI, hutBookId, false), Times.Once);
+
+            var resultJson = IntegrationTestHelper.ConvertToJson(new
+            {
+                getImpressionsDaypartParameters,
+                programs
+            });
+
+            Approvals.Verify(resultJson);
+        }
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void AppliesProvidedImpressions()

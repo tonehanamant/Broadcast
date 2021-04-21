@@ -1,6 +1,7 @@
 ﻿[
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -41,6 +42,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -81,6 +83,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -121,6 +124,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -161,6 +165,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -201,6 +206,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -241,6 +247,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -281,6 +288,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -321,6 +329,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -361,6 +370,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -401,6 +411,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -441,6 +452,7 @@
   },
   {
     "Cpm": 0.0,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,

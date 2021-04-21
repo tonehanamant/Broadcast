@@ -4,7 +4,7 @@
     {
         public static readonly string HOUSEHOLD_CODE = "HH";
 
-        public static readonly int HouseholdAudienceId = 31;
+        public static readonly int HouseholdAudienceId = 31;   
 
         public static readonly int PostableMonthMarketThreshold = 200; //retrieved from nsi.usp_NSI_GetPostableMediaMonths
 

@@ -232,6 +232,10 @@ namespace Services.Broadcast.BusinessEngines
             _ApplyProjectedImpressions(filteredPrograms, plan);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
 
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_HOUSEHOLD_PROJECTED_IMPRESSIONS);
+            _ApplyHouseholdProjectedImpressions(filteredPrograms, plan);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_HOUSEHOLD_PROJECTED_IMPRESSIONS);
+
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
             _ApplyProvidedImpressions(filteredPrograms, plan);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
@@ -1182,6 +1186,27 @@ namespace Services.Broadcast.BusinessEngines
             };
 
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId);
+        }
+
+        private void _ApplyHouseholdProjectedImpressions(
+           IEnumerable<PlanPricingInventoryProgram> programs,
+           PlanDto plan)
+        {
+            var impressionsRequest = new ImpressionsRequestDto
+            {
+                // we don`t want to equivalize impressions
+                // when PricingVersion allows MultiLength, because this is done by the pricing endpoint
+                Equivalized = _IsMultiSpotLengthEnabled.Value ? false : plan.Equivalized,
+                HutProjectionBookId = plan.HUTBookId,
+                PlaybackType = ProposalPlaybackType.LivePlus3,
+                PostType = plan.PostingType,
+                ShareProjectionBookId = plan.ShareBookId,
+
+                // SpotLengthId does not matter for the pricing v3, so this code is for the v2
+                SpotLengthId = plan.CreativeLengths.First().SpotLengthId
+            };
+
+            _ImpressionsCalculationEngine.ApplyHouseholdProjectedImpressions(programs, impressionsRequest);
         }
 
         private void _ApplyProjectedImpressions(

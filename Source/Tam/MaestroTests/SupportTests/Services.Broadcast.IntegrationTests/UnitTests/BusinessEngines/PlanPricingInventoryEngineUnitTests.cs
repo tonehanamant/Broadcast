@@ -2359,6 +2359,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
+            
             var testClass = _GetTestClass();
 
             // Act

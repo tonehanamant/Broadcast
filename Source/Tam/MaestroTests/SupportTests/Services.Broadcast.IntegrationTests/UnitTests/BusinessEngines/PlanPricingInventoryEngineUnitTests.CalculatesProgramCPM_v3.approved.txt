@@ -1,6 +1,7 @@
 [
   {
     "Cpm": 2.5000,
+    "HouseholdProjectedImpressions": 0.0,
     "InventoryPricingQuarterType": 0,
     "InventorySource": null,
     "ManifestAudiences": null,

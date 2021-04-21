@@ -10,6 +10,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
     {
         public double ProjectedImpressions { get; set; }
 
+        public double HouseholdProjectedImpressions { get; set; }
+
         public double? ProvidedImpressions { get; set; }
 
         public double PostingTypeImpressions

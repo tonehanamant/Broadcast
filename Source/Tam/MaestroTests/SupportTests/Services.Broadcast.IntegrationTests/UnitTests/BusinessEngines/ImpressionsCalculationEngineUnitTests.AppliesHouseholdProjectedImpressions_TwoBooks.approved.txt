@@ -1,10 +1,9 @@
-﻿{
+{
   "getImpressionsDaypartParameters": {
     "hutBook": 216,
     "shareBook": 215,
     "uniqueRatingsAudiences": [
-      7,
-      9
+      31
     ],
     "stationDetails": [
       {
@@ -76,7 +75,7 @@
   "programs": [
     {
       "Cpm": 0.0,
-      "HouseholdProjectedImpressions": 0.0,
+      "HouseholdProjectedImpressions": 3450.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -135,8 +134,8 @@
       "ManifestWeeks": null,
       "NsiToNtiImpressionConversionRate": 1.0,
       "PostingType": 1,
-      "PostingTypeImpressions": 3450.0,
-      "ProjectedImpressions": 3450.0,
+      "PostingTypeImpressions": 0.0,
+      "ProjectedImpressions": 0.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 0,
       "StandardDaypartId": 0,
@@ -159,7 +158,7 @@
     },
     {
       "Cpm": 0.0,
-      "HouseholdProjectedImpressions": 0.0,
+      "HouseholdProjectedImpressions": 2100.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -194,8 +193,8 @@
       "ManifestWeeks": null,
       "NsiToNtiImpressionConversionRate": 1.0,
       "PostingType": 1,
-      "PostingTypeImpressions": 2100.0,
-      "ProjectedImpressions": 2100.0,
+      "PostingTypeImpressions": 0.0,
+      "ProjectedImpressions": 0.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 0,
       "StandardDaypartId": 0,

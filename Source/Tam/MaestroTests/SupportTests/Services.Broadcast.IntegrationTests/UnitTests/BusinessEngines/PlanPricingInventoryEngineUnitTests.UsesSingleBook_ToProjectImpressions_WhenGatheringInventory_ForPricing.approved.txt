@@ -2,6 +2,7 @@
   "inventory": [
     {
       "Cpm": 8.888888888888888888888888900,
+      "HouseholdProjectedImpressions": 0.0,
       "InventoryPricingQuarterType": "Plan",
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -91,6 +92,7 @@
     "programs": [
       {
         "ProjectedImpressions": 0.0,
+        "HouseholdProjectedImpressions": 0.0,
         "ProvidedImpressions": null,
         "PostingTypeImpressions": 0.0,
         "Cpm": 0.0,

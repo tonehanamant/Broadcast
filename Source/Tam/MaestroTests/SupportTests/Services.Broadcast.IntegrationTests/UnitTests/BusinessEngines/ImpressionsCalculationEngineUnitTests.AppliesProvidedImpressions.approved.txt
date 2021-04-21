@@ -2,6 +2,7 @@
   "programs": [
     {
       "Cpm": 0.0,
+      "HouseholdProjectedImpressions": 0.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": [

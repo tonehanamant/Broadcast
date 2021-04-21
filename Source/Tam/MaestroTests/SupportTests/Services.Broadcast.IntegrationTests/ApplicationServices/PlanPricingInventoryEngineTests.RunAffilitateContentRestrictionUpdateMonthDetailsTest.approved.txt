@@ -1,6 +1,7 @@
 ﻿[
   {
     "Cpm": 15.527950310559006211180124200,
+    "HouseholdProjectedImpressions": 78662.75,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -137,6 +138,7 @@
   },
   {
     "Cpm": 18.921475875118259224219489100,
+    "HouseholdProjectedImpressions": 89996.5,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -273,6 +275,7 @@
   },
   {
     "Cpm": 18.315018315018315018315018300,
+    "HouseholdProjectedImpressions": 80069.375,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,

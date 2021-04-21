@@ -16,6 +16,9 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<PlanPricingInventoryProgram> programs, 
             ImpressionsRequestDto impressionsRequest, 
             int audienceId);
+        void ApplyHouseholdProjectedImpressions(
+           IEnumerable<PlanPricingInventoryProgram> programs,
+           ImpressionsRequestDto impressionsRequest);
 
         void ApplyProjectedImpressions(
             IEnumerable<PlanBuyingInventoryProgram> programs,
@@ -155,6 +158,61 @@ namespace Services.Broadcast.BusinessEngines
                 if (daypartCount > 0)
                 {
                     program.ProjectedImpressions = programDaypartImpressions.Sum(i => i) / daypartCount;
+                }
+            }
+        }
+        public void ApplyHouseholdProjectedImpressions(
+           IEnumerable<PlanPricingInventoryProgram> programs,
+           ImpressionsRequestDto impressionsRequest
+          )
+        {
+            var impressionRequests = new List<ManifestDetailDaypart>();
+            var manifestDaypartImpressions = new Dictionary<int, double>();
+            int householdAudienceId = BroadcastConstants.HouseholdAudienceId;
+
+            foreach (var program in programs)
+            {
+                foreach (var manifestDaypart in program.ManifestDayparts)
+                {
+                    var stationDaypart = new ManifestDetailDaypart
+                    {
+                        LegacyCallLetters = program.Station.LegacyCallLetters,
+                        Id = manifestDaypart.Id,
+                        DisplayDaypart = manifestDaypart.Daypart
+                    };
+
+                    impressionRequests.Add(stationDaypart);
+
+                    manifestDaypartImpressions[manifestDaypart.Id] = 0;
+                }
+            }
+
+            var ratingAudiences = _BroadcastAudienceRepository.GetRatingsAudiencesByMaestroAudience(
+                    new List<int>
+                    {
+                        householdAudienceId
+                    }).Select(r => r.rating_audience_id).Distinct().ToList();
+
+            var programImpressions = _GetImpressions(impressionsRequest, ratingAudiences, impressionRequests);
+            _AdjustImpressions(impressionsRequest, programImpressions);
+
+            foreach (var programImpression in programImpressions)
+            {
+                manifestDaypartImpressions[programImpression.Id] += programImpression.Impressions;
+            }
+
+            foreach (var program in programs)
+            {
+                var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
+                var programDaypartImpressions = programManifestDaypartIds
+                    .Where(d => manifestDaypartImpressions.ContainsKey(d))
+                    .Select(d => manifestDaypartImpressions[d])
+                    .ToList();
+                var daypartCount = programManifestDaypartIds.Count;
+
+                if (daypartCount > 0)
+                {
+                    program.HouseholdProjectedImpressions = programDaypartImpressions.Sum(i => i) / daypartCount;
                 }
             }
         }

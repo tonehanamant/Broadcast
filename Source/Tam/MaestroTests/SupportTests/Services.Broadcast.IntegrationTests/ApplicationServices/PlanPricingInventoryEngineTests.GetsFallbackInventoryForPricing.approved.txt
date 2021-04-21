@@ -1,6 +1,7 @@
 ﻿[
   {
     "Cpm": 15.527950310559006211180124200,
+    "HouseholdProjectedImpressions": 78662.75,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -137,6 +138,7 @@
   },
   {
     "Cpm": 18.921475875118259224219489100,
+    "HouseholdProjectedImpressions": 89996.5,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -273,6 +275,7 @@
   },
   {
     "Cpm": 18.315018315018315018315018300,
+    "HouseholdProjectedImpressions": 80069.375,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -409,6 +412,7 @@
   },
   {
     "Cpm": 119.04761904761904761904761900,
+    "HouseholdProjectedImpressions": 175.4,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -545,6 +549,7 @@
   },
   {
     "Cpm": 28.571428571428571428571428600,
+    "HouseholdProjectedImpressions": 434.625,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
@@ -681,6 +686,7 @@
   },
   {
     "Cpm": 42.857142857142857142857142900,
+    "HouseholdProjectedImpressions": 580.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": {
       "Id": 1,
