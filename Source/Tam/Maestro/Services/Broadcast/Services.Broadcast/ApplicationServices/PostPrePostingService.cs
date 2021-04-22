@@ -2,6 +2,7 @@
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Microsoft.EntityFrameworkCore.Design;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
@@ -56,34 +57,62 @@ namespace Services.Broadcast.ApplicationServices
 
         public int SavePost(PostRequest request)
         {
-            if (!request.FileName.EndsWith(".xlsx"))
-                throw new ApplicationException(FileNotExcelErroMessage);
+            const string TIMER_TOTAL_DURATION = "Total Duration";
+            const string TIMER_STEP_VALIDATE_REQUEST = "Validate Request";
+            const string TIMER_STEP_PARSE_FILE = "Parse File";
+            const string TIMER_STEP_SAVE_POST = "Save Post";
+            const string TIMER_STEP_POST = "Post";
 
-            ValidateRequest(request);
+            _LogInfo($"SavePost beginning for file '{request.FileName}'");
 
-            using (var excelPackage = new ExcelPackage(request.PostStream))
+            var timers = new ProcessWorkflowTimers();
+            timers.Start(TIMER_TOTAL_DURATION);
+            
+            try
             {
-                var postFileParser = _PostFileParserFactory.CreateParser(excelPackage);
+                if (!request.FileName.EndsWith(".xlsx"))
+                    throw new ApplicationException(FileNotExcelErroMessage);
 
-                var postFileDetails = postFileParser.ParseExcel(excelPackage);
+                timers.Start(TIMER_STEP_VALIDATE_REQUEST);
+                ValidateRequest(request);
+                timers.End(TIMER_STEP_VALIDATE_REQUEST);
 
-                var postFile = new post_files
+                using (var excelPackage = new ExcelPackage(request.PostStream))
                 {
-                    equivalized = request.Equivalized,
-                    posting_book_id = request.PostingBookId,
-                    playback_type = (byte)request.PlaybackType,
-                    file_name = request.FileName,
-                    upload_date = DateTime.Now,
-                    modified_date = DateTime.Now,
-                    post_file_details = postFileDetails,
-                    post_file_demos = request.Audiences.Select(a => new post_file_demos { demo = a }).ToList()
-                };
+                    timers.Start(TIMER_STEP_PARSE_FILE);
+                    var postFileParser = _PostFileParserFactory.CreateParser(excelPackage);
 
-                var id = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().SavePost(postFile);
+                    var postFileDetails = postFileParser.ParseExcel(excelPackage);
+                    timers.End(TIMER_STEP_PARSE_FILE);
 
-                _PostEngine.Post(postFile);
+                    var postFile = new post_files
+                    {
+                        equivalized = request.Equivalized,
+                        posting_book_id = request.PostingBookId,
+                        playback_type = (byte)request.PlaybackType,
+                        file_name = request.FileName,
+                        upload_date = DateTime.Now,
+                        modified_date = DateTime.Now,
+                        post_file_details = postFileDetails,
+                        post_file_demos = request.Audiences.Select(a => new post_file_demos { demo = a }).ToList()
+                    };
 
-                return id;
+                    timers.Start(TIMER_STEP_SAVE_POST);
+                    var id = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().SavePost(postFile);
+                    timers.End(TIMER_STEP_SAVE_POST);
+
+                    timers.Start(TIMER_STEP_POST);
+                    _PostEngine.Post(postFile);
+                    timers.End(TIMER_STEP_POST);
+
+                    return id;
+                }
+            }
+            finally
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogInfo($"SavePost commpleted for file '{request.FileName}'.  Timers Report : '{timersReport}'");
             }
         }
 
@@ -150,8 +179,33 @@ namespace Services.Broadcast.ApplicationServices
 
         public ReportOutput GenerateReportWithImpression(int id)
         {
-            var post = GetPost(id);
-            return _PostReportGenerator.Generate(post);
+            const string TIMER_TOTAL_DURATION = "Total Duration";
+            const string TIMER_STEP_GET_POST = "Get Post";
+            const string TIMER_STEP_GENERATE = "Generate";
+
+            _LogInfo($"GenerateReportWithImpression beginning for file id '{id}'");
+
+            var timers = new ProcessWorkflowTimers();
+            timers.Start(TIMER_TOTAL_DURATION);
+
+            try
+            {
+                timers.Start(TIMER_STEP_GET_POST);
+                var post = GetPost(id);                                
+                timers.End(TIMER_STEP_GET_POST);
+
+                timers.Start(TIMER_STEP_GENERATE);
+                var result = _PostReportGenerator.Generate(post);
+                timers.End(TIMER_STEP_GENERATE);
+
+                return result;
+            }
+            finally
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogInfo($"GenerateReportWithImpression commpleted for file id '{id}'.  Timers Report : '{timersReport}'");
+            }
         }
 
         public List<PostPrePostingFile> GetPosts()

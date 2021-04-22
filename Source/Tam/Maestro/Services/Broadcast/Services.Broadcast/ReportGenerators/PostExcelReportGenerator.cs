@@ -14,7 +14,7 @@ using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ReportGenerators
 {
-    public class PostExcelReportGenerator : IReportGenerator<PostPrePostingFile>
+    public class PostExcelReportGenerator : BroadcastBaseClass, IReportGenerator<PostPrePostingFile>
     {
         private static readonly HashSet<string> _ExcelFileHeaders = new HashSet<string>
         {
@@ -91,69 +91,122 @@ namespace Services.Broadcast.ReportGenerators
 
         internal ExcelPackage GenerateExcelPackage(PostPrePostingFile prePostingFile)
         {
-            var package = new ExcelPackage(new MemoryStream());
-            var reportData = prePostingFile.FileDetails;
+            const string TIMER_TOTAL_DURATION = "Total Duration";
+            const string TIMER_STEP_GET_POSTING_BOOK = "Get Posting Book";
+            const string TIMER_STEP_GET_PLAYBACK_TYPE = "Get Playback Type";
+            const string TIMER_STEP_ITERATION_ONE = "Iteration One";
+            const string TIMER_STEP_ITERATION_TWO = "Iteration Two";
+            const string TIMER_STEP_SET_BORDERS = "Set Borders";            
 
-            var ws = package.Workbook.Worksheets.Add("Post Data");
-            ws.View.ShowGridLines = false;
-            ws.Cells.Style.Font.Size = 8;
-            ws.Cells.Style.Font.Name = "Tahoma";
+            var lineCount = prePostingFile.FileDetails.Count;
+            var demoCount = prePostingFile.DemoLookups.Count;
+            var iterations = lineCount * demoCount;
+            var countString = $"FileDetailLineCount : {lineCount}; DemoCount : {demoCount}; Iterations : {iterations};";
 
-            var columnOffset = 1;
-            _BuildCommonHeader(ws, 1, ref columnOffset, prePostingFile);
+            _LogInfo($"GenerateExcelPackage beginning. {countString}");
 
-            // tables
-            var rowOffset = 2;
-            columnOffset = 1;
+            var timers = new ProcessWorkflowTimers();
+            timers.Start(TIMER_TOTAL_DURATION);
 
-            var postingBookMonthAndYear = _GetPostingBookMonthAndYear(prePostingFile.PostingBookId);
-            var playbackTypeDescription = _GetPlaybackTypeDescription(prePostingFile.PlaybackType);
-
-            foreach (var row in reportData)
+            try
             {
-                ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Market;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Station;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Weekstart.ToString(@"M\/d\/yyyy");
-                ws.Cells[rowOffset, columnOffset++].Value = row.Day;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Date.ToString(@"M\/d\/yyyy");
-                ws.Cells[rowOffset, columnOffset++].Value = row.Date.Add(TimeSpan.FromSeconds(row.TimeAired)).ToString(@"h\:mm\:ss tt");
-                ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
-                ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
-                ws.Cells[rowOffset, columnOffset++].Value = row.HouseISCI;
-                ws.Cells[rowOffset, columnOffset++].Value = row.ClientISCI;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Advertiser;
-                ws.Cells[rowOffset, columnOffset++].Value = row.InventorySource;
-                ws.Cells[rowOffset, columnOffset++].Value = row.InventorySourceDaypart;
-                ws.Cells[rowOffset, columnOffset++].Value = row.AdvertiserOutOfSpecReason;
-                ws.Cells[rowOffset, columnOffset++].Value = row.InventoryOutOfSpecReason;
-                ws.Cells[rowOffset, columnOffset++].Value = row.EstimateID;
-                ws.Cells[rowOffset, columnOffset++].Value = row.DetectedVia;
-                ws.Cells[rowOffset, columnOffset++].Value = row.Spot;
-                ws.Cells[rowOffset, columnOffset++].Value = postingBookMonthAndYear;
-                ws.Cells[rowOffset, columnOffset++].Value = playbackTypeDescription;
-                var imp = row.Impressions.ToDictionary(i => i.Demo);
-                foreach (var demo in prePostingFile.Demos)
+                var package = new ExcelPackage(new MemoryStream());
+                var reportData = prePostingFile.FileDetails;
+
+                var ws = package.Workbook.Worksheets.Add("Post Data");
+                ws.View.ShowGridLines = false;
+                ws.Cells.Style.Font.Size = 8;
+                ws.Cells.Style.Font.Name = "Tahoma";
+
+                var columnOffset = 1;
+                _BuildCommonHeader(ws, 1, ref columnOffset, prePostingFile);
+
+                // tables
+                var rowOffset = 2;
+                columnOffset = 1;
+
+                timers.Start(TIMER_STEP_GET_POSTING_BOOK);
+                var postingBookMonthAndYear = _GetPostingBookMonthAndYear(prePostingFile.PostingBookId);
+                timers.End(TIMER_STEP_GET_POSTING_BOOK);
+
+                timers.Start(TIMER_STEP_GET_PLAYBACK_TYPE);
+                var playbackTypeDescription = _GetPlaybackTypeDescription(prePostingFile.PlaybackType);
+                timers.End(TIMER_STEP_GET_PLAYBACK_TYPE);
+
+                var iterationCounter = 1;
+
+                foreach (var row in reportData)
                 {
-                    var value = imp.ContainsKey(demo) ? _ImpressionAdjustmentEngine.AdjustImpression(imp[demo].Impression, prePostingFile.Equivalized, row.SpotLength)
-                                                      : 0;
-                    ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = "#,#";
-                    ws.Cells[rowOffset, columnOffset].Value = value;
-                    columnOffset++;
+                    if (iterationCounter == 1)
+                    {
+                        timers.Start(TIMER_STEP_ITERATION_ONE);
+                    }
+                    else if (iterationCounter == 1)
+                    {
+                        timers.Start(TIMER_STEP_ITERATION_TWO);
+                    }
+
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Rank;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Market;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Station;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Affiliate;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Weekstart.ToString(@"M\/d\/yyyy");
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Day;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Date.ToString(@"M\/d\/yyyy");
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Date.Add(TimeSpan.FromSeconds(row.TimeAired)).ToString(@"h\:mm\:ss tt");
+                    ws.Cells[rowOffset, columnOffset++].Value = row.ProgramName;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.SpotLength;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.HouseISCI;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.ClientISCI;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Advertiser;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.InventorySource;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.InventorySourceDaypart;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.AdvertiserOutOfSpecReason;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.InventoryOutOfSpecReason;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.EstimateID;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.DetectedVia;
+                    ws.Cells[rowOffset, columnOffset++].Value = row.Spot;
+                    ws.Cells[rowOffset, columnOffset++].Value = postingBookMonthAndYear;
+                    ws.Cells[rowOffset, columnOffset++].Value = playbackTypeDescription;
+                    var imp = row.Impressions.ToDictionary(i => i.Demo);
+                    foreach (var demo in prePostingFile.Demos)
+                    {
+                        var value = imp.ContainsKey(demo) ? _ImpressionAdjustmentEngine.AdjustImpression(imp[demo].Impression, prePostingFile.Equivalized, row.SpotLength)
+                                                          : 0;
+                        ws.Cells[rowOffset, columnOffset].Style.Numberformat.Format = "#,#";
+                        ws.Cells[rowOffset, columnOffset].Value = value;
+                        columnOffset++;
+                    }
+
+                    rowOffset++;
+                    columnOffset = 1;
+
+                    if (iterationCounter == 1)
+                    {
+                        timers.End(TIMER_STEP_ITERATION_ONE);
+                    }
+                    else if (iterationCounter == 1)
+                    {
+                        timers.End(TIMER_STEP_ITERATION_TWO);
+                    }
                 }
 
-                rowOffset++;
-                columnOffset = 1;
-            }
+                timers.Start(TIMER_STEP_SET_BORDERS);
+                for (var i = 1; i <= columnOffset; i++)
+                {
+                    ws.Cells[reportData.Count + 2, i].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+                }
+                timers.End(TIMER_STEP_SET_BORDERS);
 
-            for (var i = 1; i <= columnOffset; i++)
+                ws.Cells.AutoFitColumns();
+                return package;
+            }
+            finally
             {
-                ws.Cells[reportData.Count + 2, i].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogInfo($"GenerateExcelPackage completed. {countString} Timers Report : '{timersReport}'");
             }
-
-            ws.Cells.AutoFitColumns();
-            return package;
         }
 
         private void _BuildCommonHeader(ExcelWorksheet ws, int rowOffset, ref int columnOffset, PostPrePostingFile scheduleReportDto)

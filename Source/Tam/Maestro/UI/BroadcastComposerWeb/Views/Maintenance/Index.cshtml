@@ -403,6 +403,19 @@
                     </div>
                 </div>
             }
+
+            @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Force Complete Plan Pricing Job</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Force complete a Plan Pricing Job" id="submit" />
+                    </div>
+                </div>
+            }
+
+
             @using (Html.BeginForm("RerunPlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form">
@@ -414,13 +427,13 @@
                 </div>
             }
 
-            @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("ForceCompletePlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form">
-                    <h4 class="heading">Force Complete Plan Pricing Job</h4>
+                    <h4 class="heading">Force Complete Plan Buying Job</h4>
                     <div class="input-container-row">
                         <input class="input" type="text" name="jobId" />
-                        <input class="button" type="submit" value="Force complete a Plan Pricing Job" id="submit" />
+                        <input class="button" type="submit" value="Force complete a Plan Buying Job" id="submit" />
                     </div>
                 </div>
             }

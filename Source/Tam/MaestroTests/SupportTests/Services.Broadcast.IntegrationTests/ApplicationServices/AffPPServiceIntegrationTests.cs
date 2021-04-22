@@ -198,7 +198,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void PostPrePost_Report_Perf_Test()
@@ -224,16 +223,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     PostingBookId = postingBookId
                 };
 
-                var response = sut.SavePost(request);
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                //jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
-                var jsonSettings = new JsonSerializerSettings
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
-                //Approvals.Verify(json);
+                var savedPostId = sut.SavePost(request);
+
+                Assert.IsTrue(savedPostId > 0);
             }
         }
 

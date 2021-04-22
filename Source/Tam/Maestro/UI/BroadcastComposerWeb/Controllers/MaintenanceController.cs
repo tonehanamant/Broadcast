@@ -699,6 +699,27 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult ForceCompletePlanBuyingJob(int jobId)
+        {
+            try
+            {
+                var userName = _ApplicationServiceFactory.GetApplicationService<IUserService>()
+                    .GetCurrentUserFullName();
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
+                var result = service.ForceCompletePlanBuyingJob(jobId, userName);
+
+                TempData["Message"] = result;
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "Error Processing Job: " + e.Message;
+            }
+
+            TempData["TabId"] = "planning";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public ActionResult GeneratePricingResultsReport(int planId, int? planVersionNumber = null)
         {
             try
