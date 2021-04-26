@@ -191,7 +191,7 @@ namespace Services.Broadcast.ApplicationServices
             try
             {
                 timers.Start(TIMER_STEP_GET_POST);
-                var post = GetPost(id);                                
+                var post = GetPost(id);
                 timers.End(TIMER_STEP_GET_POST);
 
                 timers.Start(TIMER_STEP_GENERATE);
@@ -200,11 +200,18 @@ namespace Services.Broadcast.ApplicationServices
 
                 return result;
             }
+            catch (Exception ex)
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogError($"GenerateReportWithImpression errored for file id '{id}'.  Timers Report : '{timersReport}'", ex);
+                return null;
+            }
             finally
             {
                 timers.End(TIMER_TOTAL_DURATION);
                 var timersReport = timers.ToString();
-                _LogInfo($"GenerateReportWithImpression commpleted for file id '{id}'.  Timers Report : '{timersReport}'");
+                _LogInfo($"GenerateReportWithImpression completed for file id '{id}'.  Timers Report : '{timersReport}'");
             }
         }
 
