@@ -6067,6 +6067,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        public void GetAllCurrentPricingExecutions_WhenJobIsRunning()
+        {
+            // Arrange
+            const int planId = 128;
+            const int JobID = 506;
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    Id = JobID,
+                    HangfireJobId = "9895",
+                    PlanVersionId = 659,
+                    Queued = new DateTime(2021, 3, 24, 11, 12, 13),
+                    Completed = null,
+                    ErrorMessage = null,
+                    DiagnosticResult = null
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetAllPricingResultsByJobIds(JobID))
+                .Returns(_GetCurrentPricingExecutionsResults());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetAllCurrentPricingExecutions(planId, null);
+
+            // Assert
+            Assert.AreEqual(true, result.IsPricingModelRunning);
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllCurrentPricingExecutions_ForPlanAndPlanVersionId()
         {

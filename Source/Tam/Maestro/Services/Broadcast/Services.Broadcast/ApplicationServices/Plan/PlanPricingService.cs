@@ -620,7 +620,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                  new CurrentPricingExecutionResultDto()
                  { SpotAllocationModelMode=SpotAllocationModelMode.Quality},
-                },
+                }, 
+                IsPricingModelRunning = IsPricingModelRunning(job)
             };
             return result;
         }        
