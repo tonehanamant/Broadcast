@@ -39,7 +39,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BroadcastJobScheduler.Service", "BroadcastJobScheduler.Service", "{86FC10ED-2EE9-49DA-9490-DE45AA0DFE20}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\Configurations\BroadcastJobScheduler.Service\CD.App.config = ..\..\..\Configurations\BroadcastJobScheduler.Service\CD.App.config
-		..\..\..\Configurations\BroadcastJobScheduler.Service\CD16.App.config = ..\..\..\Configurations\BroadcastJobScheduler.Service\CD16.App.config
 		..\..\..\Configurations\BroadcastJobScheduler.Service\PROD.App.config = ..\..\..\Configurations\BroadcastJobScheduler.Service\PROD.App.config
 		..\..\..\Configurations\BroadcastJobScheduler.Service\QA.App.config = ..\..\..\Configurations\BroadcastJobScheduler.Service\QA.App.config
 		..\..\..\Configurations\BroadcastJobScheduler.Service\STG.App.config = ..\..\..\Configurations\BroadcastJobScheduler.Service\STG.App.config
@@ -49,7 +48,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Webconfig", "Webconfig", "{7F878E8B-EEC5-4A31-966C-EE92C2B7D9E8}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\Configurations\WebConfig\CD.Web.config = ..\..\..\Configurations\WebConfig\CD.Web.config
-		..\..\..\Configurations\WebConfig\CD16.Web.config = ..\..\..\Configurations\WebConfig\CD16.Web.config
 		..\..\..\Configurations\WebConfig\PROD.Web.config = ..\..\..\Configurations\WebConfig\PROD.Web.config
 		..\..\..\Configurations\WebConfig\QA.Web.config = ..\..\..\Configurations\WebConfig\QA.Web.config
 		..\..\..\Configurations\WebConfig\STG.Web.config = ..\..\..\Configurations\WebConfig\STG.Web.config
@@ -59,7 +57,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceCommonAppSettings", "ServiceCommonAppSettings", "{A5EB9EC9-D705-4D64-B63A-9D61D9ABDC99}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\Configurations\ServiceCommonAppSettings\CD.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\CD.ServiceCommonAppSettings.config
-		..\..\..\Configurations\ServiceCommonAppSettings\CD16.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\CD16.ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\PROD.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\PROD.ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\QA.ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\QA.ServiceCommonAppSettings.config
 		..\..\..\Configurations\ServiceCommonAppSettings\ServiceCommonAppSettings.config = ..\..\..\Configurations\ServiceCommonAppSettings\ServiceCommonAppSettings.config
