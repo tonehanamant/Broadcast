@@ -112,6 +112,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 58340.1875,
     "ProvidedImpressions": 48300.0,
     "SpotLengthId": 1,
@@ -246,6 +248,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 420.0,
     "SpotLengthId": 1,

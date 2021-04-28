@@ -1,0 +1,143 @@
+[
+  {
+    "GoalFulfilledByProprietary": false,
+    "JobId": 1,
+    "OptimalCpm": 0.1682953311617806731813246000,
+    "PlanVersionId": 77,
+    "PostingType": 1,
+    "Programs": [
+      {
+        "AvgCpm": 62.5000,
+        "AvgImpressions": 1000.0,
+        "Budget": 187.5,
+        "Genre": "Sport",
+        "Id": 0,
+        "Impressions": 3000.0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 40.0,
+        "ProgramName": "seinfeld_2",
+        "SpotCount": 3,
+        "StationCount": 1
+      },
+      {
+        "AvgCpm": 50.00,
+        "AvgImpressions": 1500.0,
+        "Budget": 225.0,
+        "Genre": "News",
+        "Id": 0,
+        "Impressions": 4500.0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 60.0,
+        "ProgramName": "seinfeld",
+        "SpotCount": 3,
+        "StationCount": 1
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 55.000,
+      "AvgImpressions": 1250.0,
+      "Budget": 412.5,
+      "Impressions": 7500.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 6,
+      "StationCount": 2
+    }
+  },
+  {
+    "GoalFulfilledByProprietary": false,
+    "JobId": 1,
+    "OptimalCpm": 0.1682953311617806731813246000,
+    "PlanVersionId": 77,
+    "PostingType": 1,
+    "Programs": [
+      {
+        "AvgCpm": 62.5000,
+        "AvgImpressions": 1000.0,
+        "Budget": 187.5,
+        "Genre": "Sport",
+        "Id": 0,
+        "Impressions": 3000.0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 40.0,
+        "ProgramName": "seinfeld_2",
+        "SpotCount": 3,
+        "StationCount": 1
+      },
+      {
+        "AvgCpm": 50.00,
+        "AvgImpressions": 1500.0,
+        "Budget": 225.0,
+        "Genre": "News",
+        "Id": 0,
+        "Impressions": 4500.0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 60.0,
+        "ProgramName": "seinfeld",
+        "SpotCount": 3,
+        "StationCount": 1
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 55.000,
+      "AvgImpressions": 1250.0,
+      "Budget": 412.5,
+      "Impressions": 7500.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 6,
+      "StationCount": 2
+    }
+  },
+  {
+    "GoalFulfilledByProprietary": false,
+    "JobId": 1,
+    "OptimalCpm": 0.1682953311617806731813246000,
+    "PlanVersionId": 77,
+    "PostingType": 1,
+    "Programs": [
+      {
+        "AvgCpm": 62.5000,
+        "AvgImpressions": 1000.0,
+        "Budget": 187.5,
+        "Genre": "Sport",
+        "Id": 0,
+        "Impressions": 3000.0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 40.0,
+        "ProgramName": "seinfeld_2",
+        "SpotCount": 3,
+        "StationCount": 1
+      },
+      {
+        "AvgCpm": 50.00,
+        "AvgImpressions": 1500.0,
+        "Budget": 225.0,
+        "Genre": "News",
+        "Id": 0,
+        "Impressions": 4500.0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 60.0,
+        "ProgramName": "seinfeld",
+        "SpotCount": 3,
+        "StationCount": 1
+      }
+    ],
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 55.000,
+      "AvgImpressions": 1250.0,
+      "Budget": 412.5,
+      "Impressions": 7500.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 2,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 6,
+      "StationCount": 2
+    }
+  }
+]

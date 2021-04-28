@@ -71,6 +71,8 @@
           "Spots": 0
         }
       ],
+      "NsiToNtiImpressionConversionRate": 1.0,
+      "PostingType": 1,
       "ProjectedImpressions": 1125.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 1,
@@ -155,6 +157,8 @@
           "Spots": 0
         }
       ],
+      "NsiToNtiImpressionConversionRate": 1.0,
+      "PostingType": 1,
       "ProjectedImpressions": 975.0,
       "ProvidedImpressions": null,
       "SpotLengthId": 1,
@@ -196,6 +200,8 @@
             "Spots": 0
           }
         ],
+        "PostingType": 1,
+        "NsiToNtiImpressionConversionRate": 1.0,
         "ManifestId": 1,
         "StandardDaypartId": 23,
         "Station": {
@@ -288,6 +294,8 @@
             "Spots": 0
           }
         ],
+        "PostingType": 1,
+        "NsiToNtiImpressionConversionRate": 1.0,
         "ManifestId": 3,
         "StandardDaypartId": 3,
         "Station": {

@@ -133,6 +133,7 @@ namespace Services.Broadcast.Repositories
         List<CurrentPricingExecutionResultDto> GetAllPricingResultsByJobIds(int jobId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
+        PlanBuyingJob GetPlanBuyingJob(int jobId);
 
         /// <summary>
         /// Get the plan id for the pricing job.  Null if there was not plan id for the job.
@@ -1346,6 +1347,29 @@ namespace Services.Broadcast.Repositories
                     .Single(x => x.id == jobId, $"Job id {jobId} not found.");
 
                 return new PlanPricingJob
+                {
+                    Id = job.id,
+                    HangfireJobId = job.hangfire_job_id,
+                    PlanVersionId = job.plan_version_id,
+                    Status = (BackgroundJobProcessingStatus)job.status,
+                    Queued = job.queued_at,
+                    Completed = job.completed_at,
+                    ErrorMessage = job.error_message,
+                    DiagnosticResult = job.diagnostic_result
+                };
+            });
+        }
+
+
+        /// <inheritdoc/>
+        public PlanBuyingJob GetPlanBuyingJob(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_buying_job
+                    .Single(x => x.id == jobId, $"Job id {jobId} not found.");
+
+                return new PlanBuyingJob
                 {
                     Id = job.id,
                     HangfireJobId = job.hangfire_job_id,

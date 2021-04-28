@@ -1003,96 +1003,130 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 foreach (var allocationResult in modelAllocationResults)
                 {
-
-                    /*** Use the Results ***/
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
-                    allocationResult.BuyingCpm =
-                        _CalculateBuyingCpm(allocationResult.AllocatedSpots, proprietaryInventoryData);
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
-
-                    token.ThrowIfCancellationRequested();
-
-                    /*** Start Aggregations ***/
+                    //
                     var aggregationTasks = new List<AggregationTask>();
 
-                    var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
-                    {
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                        var programResults = _PlanBuyingProgramEngine.Calculate(inventory, allocationResult,
-                            goalsFulfilledByProprietaryInventory);
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                        return programResults;
-                    });
-                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculatePrograms,
-                        calculateBuyingProgramsTask));
-                    calculateBuyingProgramsTask.Start();
+                    var allocationResults = new Dictionary<PostingTypeEnum, PlanBuyingAllocationResult>();
 
-                    var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
+                    //Always loop the posting type that matches the plan first so that we convert from nti to nsi only one time
+                    foreach (var targetPostingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>()
+                        .OrderByDescending(x => x == plan.PostingType)) //order by desc to prioritize true values
                     {
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                        var buyingBands = _PlanBuyingBandCalculationEngine.Calculate(inventory, allocationResult,
-                            planBuyingParametersDto);
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                        return buyingBands;
-                    });
-                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateBands,
-                        calculateBuyingBandsTask));
-                    calculateBuyingBandsTask.Start();
+                        List<PlanBuyingInventoryProgram> postingTypeInventory;
+                        PlanBuyingAllocationResult postingAllocationResult;
 
-                    var calculateBuyingStationsTask = new Task<PlanBuyingStationResultDto>(() =>
-                    {
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
-                        var buyingStations =
-                            _PlanBuyingStationCalculationEngine.Calculate(inventory, allocationResult,
+                        if (targetPostingType == plan.PostingType)
+                        {
+                            postingTypeInventory = inventory;
+                            postingAllocationResult = allocationResult;
+                        }
+                        else
+                        {
+                            //We have to make copies of the list and the item for thread-safety and 
+                            //not modifying certain properties on original allocation results
+                            postingTypeInventory = inventory.DeepCloneUsingSerialization();
+                            _PlanBuyingInventoryEngine.ConvertPostingType(targetPostingType, postingTypeInventory);
+
+                            postingAllocationResult = allocationResult.DeepCloneUsingSerialization();
+                            // override with our instance posting type.
+                            postingAllocationResult.PostingType = targetPostingType;
+
+                            _ValidateInventory(postingTypeInventory);
+                            _MapAllocationResultsPostingType(postingAllocationResult, postingTypeInventory, targetPostingType,
+                                plan.PostingType, out var nsiNtiConversionFactor);
+                        }
+
+                        allocationResults.Add(targetPostingType, postingAllocationResult);
+                        /*** Use the Results ***/
+                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
+                        allocationResult.BuyingCpm =
+                            _CalculateBuyingCpm(allocationResult.AllocatedSpots, proprietaryInventoryData);
+                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
+
+                        token.ThrowIfCancellationRequested();
+
+                        /*** Start Aggregations ***/                    
+
+                        var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                            var programResults = _PlanBuyingProgramEngine.Calculate(postingTypeInventory, postingAllocationResult,
+                                goalsFulfilledByProprietaryInventory);
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                            return programResults;
+                        });
+                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculatePrograms,
+                            calculateBuyingProgramsTask));
+                        calculateBuyingProgramsTask.Start();
+
+                        var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
+                            var buyingBands = _PlanBuyingBandCalculationEngine.Calculate(postingTypeInventory, postingAllocationResult,
                                 planBuyingParametersDto);
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
-                        return buyingStations;
-                    });
-                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateStations,
-                        calculateBuyingStationsTask));
-                    calculateBuyingStationsTask.Start();
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
+                            return buyingBands;
+                        });
+                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateBands,
+                            calculateBuyingBandsTask));
+                        calculateBuyingBandsTask.Start();
 
-                    var aggregateMarketResultsTask = new Task<PlanBuyingResultMarketsDto>(() =>
-                    {
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
-                        var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-                        var buyingMarketResults = _PlanBuyingMarketResultsEngine.Calculate(inventory, allocationResult,
-                            planBuyingParametersDto, plan
-                            , marketCoverages);
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
-                        return buyingMarketResults;
-                    });
-                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateMarkets,
-                        aggregateMarketResultsTask));
-                    aggregateMarketResultsTask.Start();
+                        var calculateBuyingStationsTask = new Task<PlanBuyingStationResultDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
+                            var buyingStations =
+                                _PlanBuyingStationCalculationEngine.Calculate(postingTypeInventory, postingAllocationResult,
+                                    planBuyingParametersDto);
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
+                            return buyingStations;
+                        });
+                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateStations,
+                            calculateBuyingStationsTask));
+                        calculateBuyingStationsTask.Start();
 
-                    var aggregateOwnershipGroupResultsTask = new Task<PlanBuyingResultOwnershipGroupDto>(() =>
-                    {
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
-                        var buyingOwnershipGroupResults = _PlanBuyingOwnershipGroupEngine.Calculate(inventory,
-                            allocationResult
-                            , planBuyingParametersDto);
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
-                        return buyingOwnershipGroupResults;
-                    });
-                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateOwnershipGroups,
-                        aggregateOwnershipGroupResultsTask));
-                    aggregateOwnershipGroupResultsTask.Start();
+                        var aggregateMarketResultsTask = new Task<PlanBuyingResultMarketsDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                            var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+                            var buyingMarketResults = _PlanBuyingMarketResultsEngine.Calculate(postingTypeInventory, postingAllocationResult,
+                                planBuyingParametersDto, plan
+                                , marketCoverages);
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                            return buyingMarketResults;
+                        });
+                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateMarkets,
+                            aggregateMarketResultsTask));
+                        aggregateMarketResultsTask.Start();
 
-                    var aggregateRepFirmResultsTask = new Task<PlanBuyingResultRepFirmDto>(() =>
-                    {
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
-                        var buyingOwnershipGroupResults = _PlanBuyingRepFirmEngine.Calculate(inventory, allocationResult
-                            , planBuyingParametersDto);
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
-                        return buyingOwnershipGroupResults;
-                    });
-                    aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateRepFirms,
-                        aggregateRepFirmResultsTask));
-                    aggregateRepFirmResultsTask.Start();
+                        var aggregateOwnershipGroupResultsTask = new Task<PlanBuyingResultOwnershipGroupDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                            var buyingOwnershipGroupResults = _PlanBuyingOwnershipGroupEngine.Calculate(postingTypeInventory, postingAllocationResult,
+                                 planBuyingParametersDto);
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                            return buyingOwnershipGroupResults;
+                        });
+                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateOwnershipGroups,
+                            aggregateOwnershipGroupResultsTask));
+                        aggregateOwnershipGroupResultsTask.Start();
 
-                    token.ThrowIfCancellationRequested();
-
+                        var aggregateRepFirmResultsTask = new Task<PlanBuyingResultRepFirmDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
+                            var buyingOwnershipGroupResults = _PlanBuyingRepFirmEngine.Calculate(postingTypeInventory, postingAllocationResult,
+                                 planBuyingParametersDto);
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
+                            return buyingOwnershipGroupResults;
+                        });
+                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateRepFirms,
+                            aggregateRepFirmResultsTask));
+                        aggregateRepFirmResultsTask.Start();
+                    }
+                        token.ThrowIfCancellationRequested();
+                   
+                    //Wait for all tasks nti and nsi to finish
+                    var allAggregationTasks = Task.WhenAll(aggregationTasks.Select(x => x.Task).ToArray());
+                    allAggregationTasks.Wait();
                     /*** Persist the results ***/
                     using (var transaction = new TransactionScopeWrapper())
                     {
@@ -1127,6 +1161,48 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        private void _MapAllocationResultsPostingType(PlanBuyingAllocationResult allocationResult, List<PlanBuyingInventoryProgram> inventory,
+            PostingTypeEnum targetPostingType, PostingTypeEnum sourcePostingType, out double nsitoNtiConversionFactor)
+        {
+            nsitoNtiConversionFactor = 1; //default
+
+            if (targetPostingType == sourcePostingType)
+            {
+                return;
+            }
+
+            var totalImpressions = allocationResult.AllocatedSpots.SelectMany(x => x.SpotFrequencies)
+                .Sum(x => x.Impressions);
+
+            double weightedConversionFactorSum = 0;
+            int conversionFactorCount = 0;
+
+            foreach (var spot in allocationResult.AllocatedSpots)
+            {
+                var nsiToNtiConverisonRate = inventory.First(y => y.ManifestId == spot.Id).NsiToNtiImpressionConversionRate;
+                foreach (var spotFrequency in spot.SpotFrequencies)
+                {
+                    if (sourcePostingType == PostingTypeEnum.NSI)
+                    {
+                        spotFrequency.Impressions *= nsiToNtiConverisonRate;
+                    }
+                    else if (sourcePostingType == PostingTypeEnum.NTI)
+                    {
+                        spotFrequency.Impressions /= nsiToNtiConverisonRate;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Invalid target posting type.");
+                    }
+
+                    var impressionWeight = spotFrequency.Impressions / totalImpressions;
+                    weightedConversionFactorSum += spotFrequency.Impressions * impressionWeight;
+                    conversionFactorCount++;
+                }
+            }
+
+            nsitoNtiConversionFactor = weightedConversionFactorSum / conversionFactorCount;
+        }
         internal enum BuyingJobTaskNameEnum
         {
             CalculatePrograms,

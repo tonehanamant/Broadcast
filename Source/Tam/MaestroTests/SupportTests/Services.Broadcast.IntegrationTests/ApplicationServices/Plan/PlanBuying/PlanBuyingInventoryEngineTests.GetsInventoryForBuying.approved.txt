@@ -106,6 +106,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 27531.9625,
     "ProvidedImpressions": 24150.0,
     "SpotLengthId": 1,
@@ -234,6 +236,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 31498.775,
     "ProvidedImpressions": 21140.0,
     "SpotLengthId": 1,
@@ -362,6 +366,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 28024.28125,
     "ProvidedImpressions": 16379.999999999998,
     "SpotLengthId": 1,
@@ -490,6 +496,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 61.39,
     "ProvidedImpressions": 210.0,
     "SpotLengthId": 1,
@@ -618,6 +626,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 152.11875,
     "ProvidedImpressions": 210.0,
     "SpotLengthId": 1,
@@ -746,6 +756,8 @@
         "Spots": 0
       }
     ],
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 203.0,
     "ProvidedImpressions": 140.0,
     "SpotLengthId": 1,

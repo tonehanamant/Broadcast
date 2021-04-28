@@ -29,6 +29,7 @@ namespace Services.Broadcast.BusinessEngines
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
             PlanBuyingJobDiagnostic diagnostic);
+        void ConvertPostingType(PostingTypeEnum postingType, List<PlanBuyingInventoryProgram> programs);
     }
 
     public class PlanBuyingInventoryEngine : BroadcastBaseClass, IPlanBuyingInventoryEngine
@@ -141,6 +142,13 @@ namespace Services.Broadcast.BusinessEngines
             return finishedPrograms;
         }
 
+        public void ConvertPostingType(PostingTypeEnum postingType, List<PlanBuyingInventoryProgram> programs)
+        {
+            foreach (var program in programs)
+            {
+                program.PostingType = postingType;
+            }
+        }
         private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
         {
             var daypartIds = programs.SelectMany(p => p.ManifestDayparts)
@@ -1073,7 +1081,7 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return daypartDefaultDayIds;
-        }
+        }       
 
         private class ProgramInventoryDaypart
         {

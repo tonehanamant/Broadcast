@@ -18,6 +18,8 @@
       }
     ],
     "ManifestWeeks": null,
+    "NsiToNtiImpressionConversionRate": 1.0,
+    "PostingType": 1,
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 10000.0,
     "SpotLengthId": 0,
