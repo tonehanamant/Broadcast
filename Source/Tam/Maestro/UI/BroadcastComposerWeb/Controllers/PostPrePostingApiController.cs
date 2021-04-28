@@ -74,6 +74,40 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Route("Report_v2/{id}")]
+        public HttpResponseMessage GeneratePostReportV2(int id)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().GenerateReportWithImpression_V2(id);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
+        }
+
+        [HttpGet]
+        [Route("Report_v3/{id}")]
+        public HttpResponseMessage GeneratePostReportV3(int id)
+        {
+            var report = _ApplicationServiceFactory.GetApplicationService<IPostPrePostingService>().GenerateReportWithImpression_V3(id);
+            var result = Request.CreateResponse(HttpStatusCode.OK);
+
+            result.Content = new StreamContent(report.Stream);
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = report.Filename
+            };
+
+            return result;
+        }
+
+        [HttpGet]
         [Route("")]
         public BaseResponse<List<PostPrePostingFile>> GetPosts()
         {

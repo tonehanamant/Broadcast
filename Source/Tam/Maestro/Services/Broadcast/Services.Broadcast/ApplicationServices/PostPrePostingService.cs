@@ -4,16 +4,20 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Microsoft.EntityFrameworkCore.Design;
 using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.Utilities;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Configuration;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -26,6 +30,10 @@ namespace Services.Broadcast.ApplicationServices
         PostPrePostingFileSettings GetPostSettings(int uploadId);
         bool DeletePost(int id);
         ReportOutput GenerateReportWithImpression(int id);
+
+        ReportOutput GenerateReportWithImpression_V2(int id);
+        ReportOutput GenerateReportWithImpression_V3(int id);
+
         int EditPost(PostRequest request);
         PostPrePostingDto GetInitialData();
     }
@@ -188,11 +196,18 @@ namespace Services.Broadcast.ApplicationServices
             var timers = new ProcessWorkflowTimers();
             timers.Start(TIMER_TOTAL_DURATION);
 
+            long totalBytesOfMemoryUsed = -1;
+
             try
             {
                 timers.Start(TIMER_STEP_GET_POST);
                 var post = GetPost(id);
                 timers.End(TIMER_STEP_GET_POST);
+
+                var currentProcess = Process.GetCurrentProcess();
+                totalBytesOfMemoryUsed = currentProcess.WorkingSet64;
+                
+                _LogInfo($"GenerateReportWithImpression retreived the posting data for '{id}'.  Timers Report : '{timers.ToString()}'; Bytes : {totalBytesOfMemoryUsed};");
 
                 timers.Start(TIMER_STEP_GENERATE);
                 var result = _PostReportGenerator.Generate(post);
@@ -204,14 +219,197 @@ namespace Services.Broadcast.ApplicationServices
             {
                 timers.End(TIMER_TOTAL_DURATION);
                 var timersReport = timers.ToString();
-                _LogError($"GenerateReportWithImpression errored for file id '{id}'.  Timers Report : '{timersReport}'", ex);
+                _LogError($"GenerateReportWithImpression errored for file id '{id}'.  Timers Report : '{timersReport}'; Bytes : {totalBytesOfMemoryUsed};", ex);
                 return null;
             }
             finally
             {
                 timers.End(TIMER_TOTAL_DURATION);
                 var timersReport = timers.ToString();
-                _LogInfo($"GenerateReportWithImpression completed for file id '{id}'.  Timers Report : '{timersReport}'");
+                _LogInfo($"GenerateReportWithImpression completed for file id '{id}'.  Timers Report : '{timersReport}'; Bytes : {totalBytesOfMemoryUsed};");
+            }
+        }
+
+        public ReportOutput GenerateReportWithImpression_V2(int postFileId)
+        {
+            const string TIMER_TOTAL_DURATION = "Total Duration";
+            const string TIMER_STEP_GET_IMPRESSIONS = "Get Impressions";
+            const string TIMER_STEP_SETUP = "Setup";
+            const string TIMER_STEP_GET_POST = "Get Post";
+            const string TIMER_STEP_GENERATE = "Generate";
+            
+            var detailImpressionsChunkSize = 1000;
+
+            _LogInfo($"GenerateReportWithImpression_V2 beginning for file id '{postFileId}'");
+            var timers = new ProcessWorkflowTimers();
+            timers.Start(TIMER_TOTAL_DURATION);
+            timers.Start(TIMER_STEP_SETUP);
+
+
+            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+
+            var settings = repo.GetPostSettings(postFileId);
+            var demos = repo.GetPostDemos(postFileId);
+            var allDemos = _AudiencesCache.GetAllLookups();
+            var demoLookups = allDemos.Where(a => demos.Contains(a.Id)).ToList();
+
+            var postFile = new PostPrePostingFile
+            {
+                Id = postFileId,
+                FileName = settings.FileName,
+                Equivalized = settings.Equivalized,
+                PostingBookId = settings.PostingBookId,
+                PlaybackType = settings.PlaybackType,
+                UploadDate = settings.UploadDate,
+                ModifiedDate = settings.ModifiedDate,
+                DemoLookups = demoLookups,
+                Demos = demos,
+                FileDetails = new List<PostFileDetail>()
+            };
+
+            timers.End(TIMER_STEP_SETUP);
+
+            _LogInfo($"GenerateReportWithImpression_V2 Setup complete for '{postFileId}'; Timers : {timers}");
+            
+            try
+            {
+                timers.Start(TIMER_STEP_GET_POST);
+                var details = repo.GetPostDetailsId(postFileId);
+                timers.End(TIMER_STEP_GET_POST);
+
+                timers.Start(TIMER_STEP_GET_IMPRESSIONS);
+                var chunks = details.GetChunks(detailImpressionsChunkSize);
+                _LogInfo($"GenerateReportWithImpression_V2 Setup complete for '{postFileId}'; Timers : {timers}");
+
+                var chunkIndex = 0;
+                var totalChunks = chunks.Count;
+
+                foreach (var chunk in chunks)
+                {
+                    chunkIndex++;
+                    var detailIds = chunk.Select(s => s).ToList();
+                    var lineImpressions = repo.GetPostFileDetailImpressions(detailIds);
+                    postFile.FileDetails.AddRange(lineImpressions);
+                    _LogInfo($"GenerateReportWithImpression_V2 Calculation chunk {chunkIndex} of {totalChunks} for '{postFileId}'; FileDetails Count : {postFile.FileDetails.Count}");
+                }
+
+                timers.End(TIMER_STEP_GET_IMPRESSIONS);
+                _LogInfo($"GenerateReportWithImpression_V2 Info gathering iteration completeed for '{postFileId}'. Timers : {timers}");
+
+                timers.Start(TIMER_STEP_GENERATE);
+                var result = _PostReportGenerator.Generate(postFile);
+                timers.End(TIMER_STEP_GENERATE);
+
+                _LogInfo($"GenerateReportWithImpression_V2 File generation complete for '{postFileId}'; Timers : {timers}");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogError($"GenerateReportWithImpression errored for file id '{postFileId}'.  Timers Report : '{timersReport}';", ex);
+                return null;
+            }
+            finally
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogInfo($"GenerateReportWithImpression completed for file id '{postFileId}'.  Timers Report : '{timersReport}';");
+            }
+        }
+
+        public ReportOutput GenerateReportWithImpression_V3(int postFileId)
+        {
+            const string TIMER_TOTAL_DURATION = "Total Duration";
+            const string TIMER_STEP_FINALIZE = "Finalize";
+            const string TIMER_STEP_SETUP = "Setup";
+            const string TIMER_STEP_GET_POST = "Get Post";
+            const string TIMER_STEP_GENERATE = "Generate";
+
+            var detailImpressionsChunkSize = 5000;
+
+            _LogInfo($"GenerateReportWithImpression_V3 beginning for file id '{postFileId}'");
+            var timers = new ProcessWorkflowTimers();
+            timers.Start(TIMER_TOTAL_DURATION);
+            timers.Start(TIMER_STEP_SETUP);
+
+            var repo = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>();
+
+            var settings = repo.GetPostSettings(postFileId);
+            var demos = repo.GetPostDemos(postFileId);
+            var allDemos = _AudiencesCache.GetAllLookups();
+            var demoLookups = allDemos.Where(a => demos.Contains(a.Id)).ToList();
+
+            var postFile = new PostPrePostingFile
+            {
+                Id = postFileId,
+                FileName = settings.FileName,
+                Equivalized = settings.Equivalized,
+                PostingBookId = settings.PostingBookId,
+                PlaybackType = settings.PlaybackType,
+                UploadDate = settings.UploadDate,
+                ModifiedDate = settings.ModifiedDate,
+                DemoLookups = demoLookups,
+                Demos = demos,
+                FileDetails = new List<PostFileDetail>()
+            };
+
+            var excelWrapper = ((PostExcelReportGenerator)_PostReportGenerator).GetExcelPackageBase(postFile);
+
+            timers.End(TIMER_STEP_SETUP);
+
+            _LogInfo($"GenerateReportWithImpression_V3 Setup complete for '{postFileId}'; Timers : {timers}");
+
+            try
+            {
+                timers.Start(TIMER_STEP_GET_POST);
+                var details = repo.GetPostDetailsId(postFileId);
+                timers.End(TIMER_STEP_GET_POST);
+
+                timers.Start(TIMER_STEP_GENERATE);
+                var chunks = details.GetChunks(detailImpressionsChunkSize);
+                _LogInfo($"GenerateReportWithImpression_V3 got {details.Count} detail ids for '{postFileId}'; Timers : {timers}");
+
+                var chunkIndex = 0;
+                var totalChunks = chunks.Count;
+
+                foreach (var chunk in chunks)
+                {
+                    chunkIndex++;
+                    var detailIds = chunk.Select(s => s).ToList();
+                    var lineImpressions = repo.GetPostFileDetailImpressions(detailIds);
+
+                    ((PostExcelReportGenerator)_PostReportGenerator).AppendDetailsToReport(excelWrapper, lineImpressions);
+
+                    _LogInfo($"GenerateReportWithImpression_V3 Calculation chunk {chunkIndex} of {totalChunks} for '{postFileId}'; FileDetails Count : {excelWrapper.TotalDetailsCount}");
+                }
+
+                timers.Start(TIMER_STEP_FINALIZE);
+                var result = ((PostExcelReportGenerator)_PostReportGenerator).FinalizeReportOutput(excelWrapper);
+                timers.End(TIMER_STEP_FINALIZE);
+
+                var currentProcess = Process.GetCurrentProcess();
+                var totalBytesOfMemoryUsed = currentProcess.WorkingSet64;
+
+                timers.End(TIMER_STEP_GENERATE);
+
+                _LogInfo($"GenerateReportWithImpression_V3 File generation complete for '{postFileId}'; FileDetails Count : {excelWrapper.TotalDetailsCount}; TotalBytesOfMemoryUsed : {totalBytesOfMemoryUsed}; Timers : {timers}");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogError($"GenerateReportWithImpression_V3 errored for file id '{postFileId}'.  Timers Report : '{timersReport}';", ex);
+                return null;
+            }
+            finally
+            {
+                timers.End(TIMER_TOTAL_DURATION);
+                var timersReport = timers.ToString();
+                _LogInfo($"GenerateReportWithImpression_V3 completed for file id '{postFileId}'.  Timers Report : '{timersReport}';");
             }
         }
 

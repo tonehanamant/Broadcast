@@ -26,12 +26,16 @@ namespace Services.Broadcast.Repositories
         void DeletePostImpressions(int id);
         post_files GetPostEF(int id);
         bool PostExist(string fileName);
+
+        List<int> GetPostDetailsId(int postFileId);
+        List<int> GetPostDemos(int id);
+        List<PostFileDetail> GetPostFileDetailImpressions(List<int> postFileDetailIds);
     }
 
     public class PostPrePostingRepository : BroadcastRepositoryBase, IPostPrePostingRepository
     {
-        public PostPrePostingRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient) 
+        public PostPrePostingRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
         public List<PostPrePostingFile> GetAllPostsList()
@@ -65,6 +69,47 @@ namespace Services.Broadcast.Repositories
                 return c.post_files.Include(f => f.post_file_details)
                                     .Include(f => f.post_file_details.Select(fd => fd.post_file_detail_impressions))
                                     .Single(f => f.id == id).Convert();
+            });
+        }
+
+        public List<int> GetPostDetailsId(int postFileId)
+        {
+            return _InReadUncommitedTransaction(c =>
+            {
+                var details = c.post_file_details
+                .Where(f => f.post_file_id == postFileId)
+                .Select(s => s.id)
+                .ToList();
+
+                return details;
+            });
+        }
+
+        public List<int> GetPostDemos(int id)
+        {
+            return _InReadUncommitedTransaction(c =>
+            {
+                var demos = c.post_file_demos
+                .Where(f => f.post_file_id == id)
+                .Select(s => s.demo)
+                .ToList();
+
+                return demos;
+            });
+        }
+
+        public List<PostFileDetail> GetPostFileDetailImpressions(List<int> postFileDetailIds)
+        {
+            return _InReadUncommitedTransaction(c =>
+            {
+                var details = c.post_file_details
+                .Include(f => f.post_file_detail_impressions)
+                .Where(f => postFileDetailIds.Contains(f.id))
+                .ToList()
+                .Select(s => s.Convert())
+                .ToList();
+
+                return details;
             });
         }
 

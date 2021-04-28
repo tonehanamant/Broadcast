@@ -36,5 +36,10 @@ namespace Services.Broadcast.Entities
         {
             FileDetails = fileDetails;
         }
+
+        public PostPrePostingFile()
+        {
+
+        }
     }
 }
