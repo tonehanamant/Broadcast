@@ -100,13 +100,17 @@ namespace Services.Broadcast.Repositories
         /// Saves the plan buying bands.
         /// </summary>
         /// <param name="planBuyingBandDto">The plan buying band dto.</param>
-        void SavePlanBuyingBands(PlanBuyingBandsDto planBuyingBandDto);
+        /// <param name="postingType">The plan buying band dto.</param>
+        void SavePlanBuyingBands(PlanBuyingBandsDto planBuyingBandDto, PostingTypeEnum postingType);
+
 
         /// <summary>
         /// Saves the plan buying stations.
         /// </summary>
         /// <param name="planBuyingStationResultDto">The plan buying station result dto.</param>
-        void SavePlanBuyingStations(PlanBuyingStationResultDto planBuyingStationResultDto);
+        /// <param name="postingType">The plan buying posting type.</param>
+        void SavePlanBuyingStations(PlanBuyingStationResultDto planBuyingStationResultDto, PostingTypeEnum postingType);
+
 
         /// <summary>
         /// Gets the plan buying result markets by job identifier.
@@ -120,7 +124,8 @@ namespace Services.Broadcast.Repositories
         /// Saves the plan buying market results.
         /// </summary>
         /// <param name="dto">The dto.</param>
-        void SavePlanBuyingMarketResults(PlanBuyingResultMarketsDto dto);
+        /// /// <param name="postingType">The plan buying posting type.</param>
+        void SavePlanBuyingMarketResults(PlanBuyingResultMarketsDto dto, PostingTypeEnum postingType);
 
         /// <summary>
         /// Saves the buying aggregate results.
@@ -174,11 +179,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="oldPlanVersionId">The old plan version identifier.</param>
         void UpdatePlanBuyingVersionId(int versionId, int oldPlanVersionId);
 
+
         /// <summary>
         /// Saves the plan buying ownership group results.
         /// </summary>
         /// <param name="aggregateOwnershipGroupResultsTaskResult">The aggregate ownership group results task result.</param>
-        void SavePlanBuyingOwnershipGroupResults(PlanBuyingResultOwnershipGroupDto aggregateOwnershipGroupResultsTaskResult);
+        /// /// <param name="postingType">The plan buying posting type.</param>
+        void SavePlanBuyingOwnershipGroupResults(PlanBuyingResultOwnershipGroupDto aggregateOwnershipGroupResultsTaskResult, PostingTypeEnum postingType);
 
         /// <summary>
         /// Gets the buying ownership groups by job identifier.
@@ -192,7 +199,9 @@ namespace Services.Broadcast.Repositories
         /// Saves the plan buying rep firm results.
         /// </summary>
         /// <param name="dto">The dto.</param>
-        void SavePlanBuyingRepFirmResults(PlanBuyingResultRepFirmDto dto);
+        /// <param name="postingType">The plan buying posting type.</param>
+        void SavePlanBuyingRepFirmResults(PlanBuyingResultRepFirmDto dto, PostingTypeEnum postingType);
+
 
         /// <summary>
         /// Gets the buying rep firms by job identifier.
@@ -608,13 +617,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingBands(PlanBuyingBandsDto dto)
+        public void SavePlanBuyingBands(PlanBuyingBandsDto dto, PostingTypeEnum postingType)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
                     .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
-                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode &&
+                                 x.posting_type == (int)postingType);
 
                 buyingResults.plan_version_buying_band_details = dto.Details.Select(x =>
                         new plan_version_buying_band_details
@@ -634,13 +644,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingStations(PlanBuyingStationResultDto dto)
+        public void SavePlanBuyingStations(PlanBuyingStationResultDto dto, PostingTypeEnum postingType)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
                     .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
-                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode &&
+                                 x.posting_type == (int)postingType);
 
                 buyingResults.plan_version_buying_station_details = dto.Details
                             .Select(stationDto => new plan_version_buying_station_details
@@ -708,13 +719,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingMarketResults(PlanBuyingResultMarketsDto dto)
+        public void SavePlanBuyingMarketResults(PlanBuyingResultMarketsDto dto, PostingTypeEnum postingType)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
                     .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
-                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode &&
+                                 x.posting_type == (int)postingType);
 
                 //we only need to populate the coverage. the other totals are saved on the programs call
                 buyingResults.total_market_coverage_percent = dto.Totals.MarketCoveragePercent;
@@ -977,13 +989,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingOwnershipGroupResults(PlanBuyingResultOwnershipGroupDto dto)
+        public void SavePlanBuyingOwnershipGroupResults(PlanBuyingResultOwnershipGroupDto dto, PostingTypeEnum postingType)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
                     .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
-                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode);
+                                 x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode &&
+                                 x.posting_type == (int)postingType);
                 buyingResults.plan_version_buying_ownership_group_details = dto.Details.Select(d => new plan_version_buying_ownership_group_details
                 {
                     stations = d.StationCount,
@@ -1046,13 +1059,15 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingRepFirmResults(PlanBuyingResultRepFirmDto dto)
+        public void SavePlanBuyingRepFirmResults(PlanBuyingResultRepFirmDto dto, PostingTypeEnum postingType)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var buyingResults = context.plan_version_buying_results
-                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId && 
-                        x.spot_allocation_model_mode == (int) dto.SpotAllocationModelMode);
+                    .Single(x => x.plan_version_buying_job_id == dto.BuyingJobId &&
+                        x.spot_allocation_model_mode == (int)dto.SpotAllocationModelMode &&
+                        x.posting_type == (int)postingType
+                        );
 
                 buyingResults.plan_version_buying_rep_firm_details = dto.Details.Select(d => new plan_version_buying_rep_firm_details
                 {

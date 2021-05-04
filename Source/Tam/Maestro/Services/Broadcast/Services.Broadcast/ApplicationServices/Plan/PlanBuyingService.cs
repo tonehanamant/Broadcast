@@ -1130,7 +1130,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     /*** Persist the results ***/
                     using (var transaction = new TransactionScopeWrapper())
                     {
-                        _SaveBuyingArtifacts(allocationResult, aggregationTasks, diagnostic);
+                        _SaveBuyingArtifacts(allocationResults, aggregationTasks, diagnostic);
 
                         diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                         var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
@@ -1225,67 +1225,71 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal void _SaveBuyingArtifacts(PlanBuyingAllocationResult allocationResult, List<AggregationTask> aggregationTasks, 
-            PlanBuyingJobDiagnostic diagnostic)
+        internal void _SaveBuyingArtifacts(IDictionary<PostingTypeEnum, PlanBuyingAllocationResult> allocationResults, List<AggregationTask> aggregationTasks,
+             PlanBuyingJobDiagnostic diagnostic)
         {
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
-            _PlanBuyingRepository.SaveBuyingApiResults(allocationResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+            foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
+            {
+                var postingAllocationResult = allocationResults[postingType];
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+                _PlanBuyingRepository.SaveBuyingApiResults(postingAllocationResult);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
 
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-            var calculateBuyingProgramsTask = (Task<PlanBuyingResultBaseDto>) aggregationTasks
-                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculatePrograms)
-                .Task;
-            var calculateBuyingProgramsTaskResult = calculateBuyingProgramsTask.Result;
-            calculateBuyingProgramsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
-            calculateBuyingProgramsTaskResult.PostingType = allocationResult.PostingType;
-            _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+                var calculateBuyingProgramsTask = (Task<PlanBuyingResultBaseDto>)aggregationTasks
+                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculatePrograms)
+                    .Task;
+                var calculateBuyingProgramsTaskResult = calculateBuyingProgramsTask.Result;
+                calculateBuyingProgramsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                calculateBuyingProgramsTaskResult.PostingType = postingAllocationResult.PostingType;
+                _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
-            var calculateBuyingBandTask = (Task<PlanBuyingBandsDto>)aggregationTasks
-                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateBands)
-                .Task;
-            var calculateBuyingBandTaskResult = calculateBuyingBandTask.Result;
-            calculateBuyingBandTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
-            _PlanBuyingRepository.SavePlanBuyingBands(calculateBuyingBandTaskResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
+                var calculateBuyingBandTask = (Task<PlanBuyingBandsDto>)aggregationTasks
+                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateBands)
+                    .Task;
+                var calculateBuyingBandTaskResult = calculateBuyingBandTask.Result;
+                calculateBuyingBandTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _PlanBuyingRepository.SavePlanBuyingBands(calculateBuyingBandTaskResult, postingType);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
 
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
-            var calculateBuyingStationTask = (Task<PlanBuyingStationResultDto>)aggregationTasks
-                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateStations)
-                .Task;
-            var calculateBuyingStationTaskResult = calculateBuyingStationTask.Result;
-            calculateBuyingStationTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
-            _PlanBuyingRepository.SavePlanBuyingStations(calculateBuyingStationTaskResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
+                var calculateBuyingStationTask = (Task<PlanBuyingStationResultDto>)aggregationTasks
+                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateStations)
+                    .Task;
+                var calculateBuyingStationTaskResult = calculateBuyingStationTask.Result;
+                calculateBuyingStationTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _PlanBuyingRepository.SavePlanBuyingStations(calculateBuyingStationTaskResult, postingType);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
 
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
-            var aggregateMarketResultsTask = (Task<PlanBuyingResultMarketsDto>)aggregationTasks
-                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateMarkets)
-                .Task;
-            var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
-            aggregateMarketResultsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
-            _PlanBuyingRepository.SavePlanBuyingMarketResults(aggregateMarketResultsTaskResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                var aggregateMarketResultsTask = (Task<PlanBuyingResultMarketsDto>)aggregationTasks
+                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateMarkets)
+                    .Task;
+                var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
+                aggregateMarketResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _PlanBuyingRepository.SavePlanBuyingMarketResults(aggregateMarketResultsTaskResult, postingType);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
 
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
-            var aggregateOwnershipGroupResultsTask = (Task<PlanBuyingResultOwnershipGroupDto>)aggregationTasks
-                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateOwnershipGroups)
-                .Task;
-            var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.Result;
-            aggregateOwnershipGroupResultsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
-            _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
+                var aggregateOwnershipGroupResultsTask = (Task<PlanBuyingResultOwnershipGroupDto>)aggregationTasks
+                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateOwnershipGroups)
+                    .Task;
+                var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.Result;
+                aggregateOwnershipGroupResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult, postingType);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
 
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
-            var aggregateRepFirmResultsTask = (Task<PlanBuyingResultRepFirmDto>)aggregationTasks
-                .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateRepFirms)
-                .Task;
-            var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.Result;
-            aggregateRepFirmResultsTaskResult.SpotAllocationModelMode = allocationResult.SpotAllocationModelMode;
-            _PlanBuyingRepository.SavePlanBuyingRepFirmResults(aggregateRepFirmResultsTaskResult);
-            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
+                var aggregateRepFirmResultsTask = (Task<PlanBuyingResultRepFirmDto>)aggregationTasks
+                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateRepFirms)
+                    .Task;
+                var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.Result;
+                aggregateRepFirmResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _PlanBuyingRepository.SavePlanBuyingRepFirmResults(aggregateRepFirmResultsTaskResult, postingType);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
+            }
         }
 
         private ProprietaryInventoryData _CalculateProprietaryInventoryData(
