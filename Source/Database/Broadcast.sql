@@ -493,6 +493,16 @@ GO
 
 /*************************************** End BP-2245 *****************************************************/
 
+/*************************************** Start BP-2257 *****************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_pricing_results' AND COLUMN_NAME= 'calculated_vpvh')
+BEGIN
+	ALTER TABLE plan_version_pricing_results
+	ADD calculated_vpvh  float NULL
+END
+GO
+/*************************************** End BP-2257 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

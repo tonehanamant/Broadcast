@@ -1294,6 +1294,7 @@
           <Property Name="total_spots" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
           <Property Name="spot_allocation_model_mode" Type="int" Nullable="false" />
+          <Property Name="calculated_vpvh" Type="float" />
         </EntityType>
         <EntityType Name="plan_version_pricing_station_details">
           <Key>
@@ -14838,6 +14839,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" FromRole="plan_version_pricing_results" ToRole="plan_version_pricing_job" />
           <Property Name="posting_type" Type="Int32" Nullable="false" />
           <Property Name="spot_allocation_model_mode" Type="Int32" Nullable="false" />
+          <Property Name="calculated_vpvh" Type="Double" />
         </EntityType>
         <EntityType Name="plan_version_pricing_stations">
           <Key>
@@ -18558,6 +18560,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_results">
               <MappingFragment StoreEntitySet="plan_version_pricing_results">
+                <ScalarProperty Name="calculated_vpvh" ColumnName="calculated_vpvh" />
                 <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
                 <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="total_spots" ColumnName="total_spots" />

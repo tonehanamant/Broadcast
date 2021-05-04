@@ -32,6 +32,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int total_spots { get; set; }
         public int posting_type { get; set; }
         public int spot_allocation_model_mode { get; set; }
+        public Nullable<double> calculated_vpvh { get; set; }
     
         public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
