@@ -96,7 +96,7 @@ AND parameter_key = 'Environment'
 SELECT @envUrl = CASE 
 		WHEN @envName = 'PROD' AND @IsStg = 1 THEN REPLACE(@urlBase, '[MachineName]', 'stg.cadent.tv')
 		WHEN @envName = 'PROD' THEN REPLACE(@urlBase, '[MachineName]', 'platform.cadent.tv')
-		WHEN @envName = 'UAT' THEN REPLACE(@urlBase, '[MachineName]', 'cadapps-uat1.dev.crossmw.com')
+		WHEN @envName = 'UAT' THEN REPLACE(@urlBase, '[MachineName]', 'cadapps-uat1.crossmw.com')
 		WHEN @envName = 'QA' THEN REPLACE(@urlBase, '[MachineName]', 'test.cadent.tv')
 		ELSE REPLACE(@urlBase, '[MachineName]', 'cd.cadent.tv')
 	END
@@ -105,8 +105,8 @@ SELECT @envTrafficUrl = CASE
 		WHEN @envName = 'PROD' AND @IsStg = 1 THEN REPLACE(@trafficUrlBase, '[MachineName]', 'cadapps-stg5')
 		WHEN @envName = 'PROD' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'cadapps-prod5')
 		WHEN @envName = 'UAT' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'cadapps-uat1.crossmw.com')
-		WHEN @envName = 'QA' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'devvmqa1.dev.crossmw.com')
-		ELSE REPLACE(@trafficUrlBase, '[MachineName]', 'devvmqa2.dev.crossmw.com')
+		WHEN @envName = 'QA' THEN REPLACE(@trafficUrlBase, '[MachineName]', 'test.cadent.tv')
+		ELSE REPLACE(@trafficUrlBase, '[MachineName]', 'cd.cadent.tv')
 	END	
 
 IF NOT EXISTS (SELECT 1 FROM system_settings.dbo.system_component_parameters
