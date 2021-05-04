@@ -728,12 +728,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //Convert parameters
                 if (convertedParameters.PostingType == PostingTypeEnum.NSI)
                 {
-                    convertedParameters.DeliveryImpressions *= ntiToNsiConversionRate;
+                    convertedParameters.DeliveryImpressions = Math.Floor(convertedParameters.DeliveryImpressions * ntiToNsiConversionRate);
                     convertedParameters.PostingType = PostingTypeEnum.NTI;
                 }
                 else if (convertedParameters.PostingType == PostingTypeEnum.NTI)
                 {
-                    convertedParameters.DeliveryImpressions /= ntiToNsiConversionRate;
+                    convertedParameters.DeliveryImpressions = Math.Floor(convertedParameters.DeliveryImpressions / ntiToNsiConversionRate);
                     convertedParameters.PostingType = PostingTypeEnum.NSI;
                 }
 

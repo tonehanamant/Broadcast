@@ -494,7 +494,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     CPP = 14.6m,
                     Currency = PlanCurrenciesEnum.Impressions,
                     DeliveryRatingPoints = 1234,
-                    MarketGroup = MarketGroupEnum.None
+                    MarketGroup = MarketGroupEnum.None,
+                    PostingType = PostingTypeEnum.NTI
                 };
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
