@@ -36,6 +36,7 @@ using static Services.Broadcast.Entities.Plan.Buying.PlanBuyingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram.ManifestDaypart;
 using static Services.Broadcast.ApplicationServices.Plan.PlanBuyingService;
+using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -72,7 +73,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<ISharedFolderService> _SharedFolderService;
         private Mock<IPlanBuyingScxDataPrep> _PlanBuyingScxDataPrep;
         private Mock<IPlanBuyingScxDataConverter> _PlanBuyingScxDataConverter;
-      
+        private Mock<IAabEngine> _AabEngine;
+        private Mock<IAudienceService> _AudienceServiceMock;
+        private Mock<IDaypartCache> _DaypartCacheMock;
+
         protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
         {
             var launchDarklyClientStub = new LaunchDarklyClientStub();
@@ -101,7 +105,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _SharedFolderService.Object,
                 _PlanBuyingScxDataPrep.Object,
                 _PlanBuyingScxDataConverter.Object,
-                featureToggleHelper
+                featureToggleHelper,
+                _AabEngine.Object,
+                _AudienceServiceMock.Object,
+                _DaypartCacheMock.Object
             );
         }
 
@@ -138,7 +145,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SharedFolderService = new Mock<ISharedFolderService>();
             _PlanBuyingScxDataPrep = new Mock<IPlanBuyingScxDataPrep>();
             _PlanBuyingScxDataConverter = new Mock<IPlanBuyingScxDataConverter>();
-
+            _AabEngine = new Mock<IAabEngine>();
+            _AudienceServiceMock = new Mock<IAudienceService>();
+            _DaypartCacheMock = new Mock<IDaypartCache>();
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(MarketsTestData.GetLatestMarketCoverages());

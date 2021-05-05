@@ -4,6 +4,7 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Buying;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
@@ -210,6 +211,23 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
         PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
+
+        /// <summary>
+        /// Get the allocated spot for program lineup.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The type of posting</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null,
+            SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        /// <summary>
+        /// Gets the proprietary inventory for program lineup.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns>List of ProgramLineupProprietaryInventory objects</returns>
+        List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForBuyingProgramLineup(int jobId);
     }
 
     public class PlanBuyingRepository : BroadcastRepositoryBase, IPlanBuyingRepository
@@ -1215,6 +1233,147 @@ namespace Services.Broadcast.Repositories
         {
             public List<PlanBuyingAllocatedSpot> Allocated = new List<PlanBuyingAllocatedSpot>();
             public List<PlanBuyingAllocatedSpot> Unallocated = new List<PlanBuyingAllocatedSpot>();
+        }
+
+        public List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+
+                var apiResult = (from job in context.plan_version_buying_job
+                                 from apiResults in job.plan_version_buying_api_results
+                                 where job.plan_version_id == planVersionId
+                                    && (!postingType.HasValue || apiResults.posting_type == (int)postingType.Value)
+                                    && (!spotAllocationModelMode.HasValue || apiResults.spot_allocation_model_mode == (int)spotAllocationModelMode.Value)
+                                 select apiResults)
+
+                    .Include(x => x.plan_version_buying_api_result_spots)
+                    .Include(x => x.plan_version_buying_api_result_spots.Select(s => s.inventory_media_week))
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (apiResult == null)
+                    throw new Exception($"No buying runs were found for the plan {planId}");
+
+                return apiResult.plan_version_buying_api_result_spots.Select(_MapToPlanBuyingAllocatedSpot).ToList();
+            });
+        }
+
+        private PlanBuyingAllocatedSpot _MapToPlanBuyingAllocatedSpot(plan_version_buying_api_result_spots spot)
+        {
+            // HACK : When the entity is retrieved the ContractWeek and InventoryWeek entities are sometimes getting flipped.
+            // Be sure to use the correct one by referencing the explicitly stored id.
+            var weeks = new List<media_weeks> { spot.inventory_media_week, spot.contract_media_week };
+            // they both may be same week, so don't use single().
+            var inventoryWeek = weeks.First(w => w.id == spot.inventory_media_week_id);
+            var contractWeek = weeks.First(w => w.id == spot.contract_media_week_id);
+
+            var resultSpot = new PlanBuyingAllocatedSpot
+            {
+                Id = spot.id,
+                StationInventoryManifestId = spot.station_inventory_manifest_id,
+                // impressions are for :30 sec only for buying v3
+                Impressions30sec = spot.impressions30sec,
+                SpotFrequencies = spot.plan_version_buying_api_result_spot_frequencies.Select(x => new SpotFrequency
+                {
+                    SpotLengthId = x.spot_length_id,
+                    SpotCost = x.cost,
+                    Spots = x.spots,
+                    Impressions = x.impressions
+                }).ToList(),
+                InventoryMediaWeek = new MediaWeek
+                {
+                    Id = inventoryWeek.id,
+                    MediaMonthId = inventoryWeek.media_month_id,
+                    WeekNumber = inventoryWeek.week_number,
+                    StartDate = inventoryWeek.start_date,
+                    EndDate = inventoryWeek.end_date
+                },
+                ContractMediaWeek = new MediaWeek
+                {
+                    Id = contractWeek.id,
+                    MediaMonthId = contractWeek.media_month_id,
+                    WeekNumber = contractWeek.week_number,
+                    StartDate = contractWeek.start_date,
+                    EndDate = contractWeek.end_date
+                },
+                StandardDaypart = _MapToStandardDaypartDto(spot.standard_dayparts)
+            };
+            return resultSpot;
+        }
+
+        public List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForBuyingProgramLineup(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planVersion = (from buyingJob in context.plan_version_buying_job
+                                   join pv in context.plan_versions on buyingJob.plan_version_id equals pv.id
+                                   where buyingJob.id == jobId
+                                   select pv).Single($"Could not find plan for job id = {jobId}");
+
+                //get all summary ids selected on the plan
+                var summaryIds = (from pv_ips in context.plan_version_buying_parameter_inventory_proprietary_summaries
+                                  join pv_pp in context.plan_version_buying_parameters
+                                    on pv_ips.plan_version_buying_parameter_id equals pv_pp.id
+                                  where pv_pp.plan_version_buying_job_id == jobId
+                                  select pv_ips.inventory_proprietary_summary_id).ToList();
+
+                //get all records based on the summary ids and plan target audience
+                var result = (from ips in context.inventory_proprietary_summary
+                              join ssa in context.inventory_proprietary_summary_station_audiences
+                                 on ips.id equals ssa.inventory_proprietary_summary_id
+                              join dpm in context.inventory_proprietary_daypart_program_mappings
+                                 on ips.inventory_proprietary_daypart_program_mappings_id equals dpm.id
+                              join dp in context.inventory_proprietary_daypart_programs
+                                 on dpm.inventory_proprietary_daypart_programs_id equals dp.id
+                              join aa in context.audience_audiences on ssa.audience_id equals aa.rating_audience_id
+                              join dd in context.standard_dayparts on dpm.standard_daypart_id equals dd.id
+                              join g in context.genres on dp.genre_id equals g.id
+                              join s in context.stations on ssa.station_id equals s.id
+                              where summaryIds.Contains(ips.id)
+                                    && aa.rating_category_group_id == BroadcastConstants.RatingsGroupId
+                                    && aa.custom_audience_id == planVersion.target_audience_id
+                              select new
+                              {
+                                  ssa.station_id,
+                                  s.market_code,
+                                  dpm.standard_daypart_id,
+                                  dpm.inventory_proprietary_daypart_programs_id,
+                                  ssa.impressions,
+                                  dp.program_name,
+                                  dd.daypart_id,
+                                  genre_name = g.name,
+                                  s.affiliation,
+                                  s.legacy_call_letters
+                              }).ToList();
+
+                if (result == null)
+                    throw new Exception($"No proprietary inventory summary were found for the plan {planVersion.plan_id}");
+
+                return result.GroupBy(x => new { x.station_id, x.standard_daypart_id, x.inventory_proprietary_daypart_programs_id })
+                .Select(x =>
+                {
+                    var first = x.First();
+                    return new ProgramLineupProprietaryInventory
+                    {
+                        Station = new MarketCoverageByStation.Station
+                        {
+                            Id = x.Key.station_id,
+                            Affiliation = first.affiliation,
+                            LegacyCallLetters = first.legacy_call_letters
+                        },
+                        InventoryProprietaryDaypartProgramId = x.Key.inventory_proprietary_daypart_programs_id,
+                        ImpressionsPerWeek = x.Sum(y => y.impressions),
+                        ProgramName = first.program_name,
+                        Genre = first.genre_name,
+                        DaypartId = first.daypart_id,
+                        MarketCode = first.market_code.Value,
+                    };
+                })
+                .ToList();
+            });
         }
     }
 }

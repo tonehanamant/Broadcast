@@ -1,12 +1,15 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -162,6 +165,22 @@ namespace BroadcastComposerWeb.Controllers
         {
             var username = _GetCurrentUserFullName();           
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().ExportPlanBuyingScx(request, username, spotAllocationModelMode));
+        }
+
+        /// <summary>
+        /// Generates the program lineup report.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Identifier of the generated report</returns>
+        [HttpPost]
+        [Route("GenerateProgramLineupReport")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<Guid> GenerateProgramLineupReport([FromBody]ProgramLineupReportRequest request)
+        {
+            var fullName = _GetCurrentUserFullName();
+            var appDataPath = _GetAppDataPath();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>()
+                .GenerateProgramLineupReport(request, fullName, DateTime.Now, appDataPath));
         }
     }
 }

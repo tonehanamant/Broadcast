@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Hangfire;
@@ -7,6 +8,7 @@ using Services.Broadcast.BusinessEngines.PlanBuying;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
@@ -15,6 +17,7 @@ using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.BuyingResults;
+using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -173,6 +176,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
 
         Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        /// <summary>
+        /// Generates the program lineup report.
+        /// </summary>
+        /// <param name="request">ProgramLineupReportRequest object contains selected plan ids</param>
+        /// <param name="userName"></param>
+        /// <param name="currentDate"></param>
+        /// <param name="templatesFilePath">Path to the template files</param>
+        /// <returns>The report id</returns>
+        Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
     }
 
     /// <summary>
@@ -210,6 +222,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingScxDataPrep _PlanBuyingScxDataPrep;
         private readonly IPlanBuyingScxDataConverter _PlanBuyingScxDataConverter;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IAabEngine _AabEngine;
+        private readonly Lazy<bool> _IsAabEnabled;
+        private readonly IAudienceService _AudienceService;
+        private readonly ISpotLengthRepository _SpotLengthRepository;
+        private readonly IDaypartCache _DaypartCache;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -231,7 +248,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   ISharedFolderService sharedFolderService,
                                   IPlanBuyingScxDataPrep planBuyingScxDataPrep,
                                   IPlanBuyingScxDataConverter planBuyingScxDataConverter,
-                                  IFeatureToggleHelper featureToggleHelper)
+                                  IFeatureToggleHelper featureToggleHelper,                                  
+                                  IAabEngine aabEngine,
+                                  IAudienceService audienceService,
+                                  IDaypartCache daypartCache)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -263,6 +283,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingScxDataPrep = planBuyingScxDataPrep;
             _PlanBuyingScxDataConverter = planBuyingScxDataConverter;
             _FeatureToggleHelper = featureToggleHelper;
+            _AabEngine = aabEngine;
+            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
+            _AudienceService = audienceService;
+            _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
+            _DaypartCache = daypartCache;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -2343,6 +2368,171 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var multipleCreativeLengthsEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS);
             return multipleCreativeLengthsEnabled;
+        }
+
+        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
+        {
+            var programLineupReportData = GetProgramLineupReportData(request, currentDate);
+            var reportGenerator = new ProgramLineupReportGenerator(templatesFilePath);
+            var report = reportGenerator.Generate(programLineupReportData);
+
+            return _SharedFolderService.SaveFile(new SharedFolderFile
+            {
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PROGRAM_LINEUP_REPORTS),
+                FileNameWithExtension = report.Filename,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.ProgramLineup,
+                CreatedDate = currentDate,
+                CreatedBy = userName,
+                FileContent = report.Stream
+            });
+
+        }
+
+        public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
+        {
+            if (request.SelectedPlans.IsEmpty())
+                throw new ApplicationException("Choose at least one plan");
+
+            // for now we generate reports only for one plan
+            var planId = request.SelectedPlans.First();
+            _ValidatePlanLocking(planId);
+            var buyingJob = _GetLatestBuyingJob(planId);
+            var plan = _PlanRepository.GetPlan(planId);
+            _ValidateCampaignLocking(plan.CampaignId);
+            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
+            var agency = _GetAgency(campaign);
+            var advertiser = _GetAdvertiser(campaign);
+            var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
+            var spotLengths = _SpotLengthRepository.GetSpotLengths();
+            var allocatedOpenMarketSpots = _PlanBuyingRepository.GetPlanBuyingAllocatedSpotsByPlanId(planId, request.PostingType, request.SpotAllocationModelMode);
+            var proprietaryInventory = _PlanBuyingRepository.GetProprietaryInventoryForBuyingProgramLineup(plan.BuyingParameters.JobId.Value);
+            _SetSpotLengthIdAndCalculateImpressions(plan, proprietaryInventory, spotLengths);
+            _LoadDaypartData(proprietaryInventory);
+            var manifestIdsOpenMarket = allocatedOpenMarketSpots.Select(x => x.StationInventoryManifestId).Distinct();
+            var manifestsOpenMarket = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIdsOpenMarket)
+                .Where(x => x.Station != null && x.Station.MarketCode.HasValue)
+                .ToList();
+            var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
+            var manifestDaypartIds = manifestsOpenMarket.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
+            var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
+
+            var postingType = request.PostingType ?? plan.PostingType;
+            var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Quality;
+            var result = new ProgramLineupReportData(
+                plan,
+                buyingJob,
+                agency,
+                advertiser,
+                guaranteedDemo,
+                spotLengths,
+                currentDate,
+                allocatedOpenMarketSpots,
+                manifestsOpenMarket,
+                marketCoverages,
+                primaryProgramsByManifestDaypartIds,
+                proprietaryInventory,
+                postingType,
+                spotAllocationModelMode
+                );
+            return result;
+        }
+        private void _LoadDaypartData(List<ProgramLineupProprietaryInventory> proprietaryInventory)
+        {
+            proprietaryInventory.ForEach(x => x.Daypart = _DaypartCache.GetDisplayDaypart(x.DaypartId));
+        }
+
+        private void _ValidatePlanLocking(int planId)
+        {
+            const string PLAN_IS_LOCKED_EXCEPTION = "Plan with id {0} has been locked by {1}";
+
+            var planLockingKey = KeyHelper.GetPlanLockingKey(planId);
+            var lockObject = _LockingManagerApplicationService.GetLockObject(planLockingKey);
+
+            if (!lockObject.Success)
+            {
+                var message = string.Format(PLAN_IS_LOCKED_EXCEPTION, planId, lockObject.LockedUserName);
+                throw new ApplicationException(message);
+            }
+        }
+
+        private PlanBuyingJob _GetLatestBuyingJob(int planId)
+        {
+            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+
+            if (job == null)
+                throw new ApplicationException("There are no completed buying runs for the chosen plan. Please run buying");
+
+            if (job.Status == BackgroundJobProcessingStatus.Failed)
+                throw new ApplicationException("The latest buying run was failed. Please run buying again or contact the support");
+
+            if (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing)
+                throw new ApplicationException("There is a buying run in progress right now. Please wait until it is completed");
+
+            return job;
+        }
+
+        private void _ValidateCampaignLocking(int campaignId)
+        {
+            const string CAMPAIGN_IS_LOCKED_EXCEPTION = "Campaign with id {0} has been locked by {1}";
+
+            var campaignLockingKey = KeyHelper.GetCampaignLockingKey(campaignId);
+            var lockObject = _LockingManagerApplicationService.GetLockObject(campaignLockingKey);
+
+            if (!lockObject.Success)
+            {
+                var message = string.Format(CAMPAIGN_IS_LOCKED_EXCEPTION, campaignId, lockObject.LockedUserName);
+                throw new ApplicationException(message);
+            }
+        }
+
+        private AgencyDto _GetAgency(CampaignDto campaign)
+        {
+            var result = _IsAabEnabled.Value
+                ? _AabEngine.GetAgency(campaign.AgencyMasterId.Value)
+                : _AabEngine.GetAgency(campaign.AgencyId.Value);
+
+            return result;
+        }
+
+        private AdvertiserDto _GetAdvertiser(CampaignDto campaign)
+        {
+            var result = _IsAabEnabled.Value
+                ? _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value)
+                : _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
+
+            return result;
+        }
+
+        private void _SetSpotLengthIdAndCalculateImpressions(PlanDto plan
+            , List<ProgramLineupProprietaryInventory> proprietaryInventory
+            , List<LookupDto> spotLengths)
+        {
+            const string SPOT_LENGTH_15 = "15";
+            const string SPOT_LENGTH_30 = "30";
+
+            int spotLengthIdI5 = spotLengths.Where(x => x.Display.Equals(SPOT_LENGTH_15)).Select(x => x.Id).Single();
+            int spotLengthId30 = spotLengths.Where(x => x.Display.Equals(SPOT_LENGTH_30)).Select(x => x.Id).Single();
+
+            int activeWeekCount = plan.WeeklyBreakdownWeeks.Where(w => w.NumberOfActiveDays > 0).Count();
+            var planspotLengthIds = plan.CreativeLengths.Select(x => x.SpotLengthId);
+
+            if (planspotLengthIds.Contains(spotLengthIdI5) && !planspotLengthIds.Contains(spotLengthId30))
+            {
+                proprietaryInventory.ForEach(x =>
+                {
+                    x.TotalImpressions = x.ImpressionsPerWeek * activeWeekCount / 2;
+                    x.SpotLengthId = spotLengthIdI5;
+                });
+            }
+            else
+            {
+                proprietaryInventory.ForEach(x =>
+                {
+                    x.TotalImpressions = x.ImpressionsPerWeek * activeWeekCount;
+                    x.SpotLengthId = spotLengthId30;
+                });
+            }
         }
 
         internal class ProgramWithManifestDaypart

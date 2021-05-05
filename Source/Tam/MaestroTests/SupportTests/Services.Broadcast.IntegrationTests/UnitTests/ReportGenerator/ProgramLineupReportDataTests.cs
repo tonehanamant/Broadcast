@@ -30,5 +30,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ReportGenerator
 
             Assert.AreEqual(expectedFileName, result);
         }
+
+        [Test]
+        [TestCase("Contacts 2020", SpotAllocationModelMode.Quality, "Program_Lineup_Report_B_Contacts 2020_Q_10012020.xlsx")]
+        [TestCase("Contacts 2020", SpotAllocationModelMode.Efficiency, "Program_Lineup_Report_B_Contacts 2020_E_10012020.xlsx")]
+        [TestCase("Contacts 2020", SpotAllocationModelMode.Floor, "Program_Lineup_Report_B_Contacts 2020_F_10012020.xlsx")]
+        [TestCase("Q4'21 TDN SYN Pricing V3 :15 :30", SpotAllocationModelMode.Quality, "Program_Lineup_Report_B_Q4'21 TDN SYN Pricing V3 15 30_Q_10012020.xlsx")]
+        [TestCase("Q4'21 TDN SYN Pricing V3 :15 :30", SpotAllocationModelMode.Efficiency, "Program_Lineup_Report_B_Q4'21 TDN SYN Pricing V3 15 30_E_10012020.xlsx")]
+        [TestCase("Q4'21 TDN SYN Pricing V3 :15 :30", SpotAllocationModelMode.Floor, "Program_Lineup_Report_B_Q4'21 TDN SYN Pricing V3 15 30_F_10012020.xlsx")]
+        public void GetBuyingFileName(string planName, SpotAllocationModelMode spotAllocationModelMode, string expectedFileName)
+        {
+            var testDate = new DateTime(2020, 10, 1);
+            var reportData = new ProgramLineupReportData();
+
+            var result = reportData._GetBuyingFileName(planName, spotAllocationModelMode, testDate);
+
+            Assert.AreEqual(expectedFileName, result);
+        }
     }
 }
