@@ -503,6 +503,15 @@ END
 GO
 /*************************************** End BP-2257 *****************************************************/
 
+/*************************************** Start BP-2381 *****************************************************/
+
+UPDATE plan_version_pricing_parameters SET
+	impressions_goal = FLOOR(impressions_goal)
+WHERE impressions_goal - FLOOR(impressions_goal) > 0
+
+GO
+/*************************************** End BP-2381 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
