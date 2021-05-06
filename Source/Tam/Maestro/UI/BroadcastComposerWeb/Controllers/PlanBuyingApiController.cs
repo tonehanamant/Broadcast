@@ -40,9 +40,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("execution")]
-        public BaseResponse<CurrentBuyingExecution> GetCurrentBuyingExecution(int planId)
+        public BaseResponse<CurrentBuyingExecution> GetCurrentBuyingExecution(int planId, PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetCurrentBuyingExecution(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetCurrentBuyingExecution(planId,postingType));
         }
 
         /// <summary>

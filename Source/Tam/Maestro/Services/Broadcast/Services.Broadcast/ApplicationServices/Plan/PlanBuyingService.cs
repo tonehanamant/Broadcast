@@ -36,7 +36,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
     {
         PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, DateTime currentDate, string username);
 
-        CurrentBuyingExecution GetCurrentBuyingExecution(int planId);
+        CurrentBuyingExecution GetCurrentBuyingExecution(int planId,PostingTypeEnum postingType);
 
         CurrentBuyingExecution GetCurrentBuyingExecutionByJobId(int jobId);
 
@@ -487,7 +487,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _GetCurrentBuyingExecution(job, null);
         }
 
-        private CurrentBuyingExecution _GetCurrentBuyingExecution(PlanBuyingJob job, int? planId,
+        private CurrentBuyingExecution _GetCurrentBuyingExecution(PlanBuyingJob job, int? planId, PostingTypeEnum postingType = PostingTypeEnum.NSI,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             CurrentBuyingExecutionResultDto buyingExecutionResult = null;
@@ -504,7 +504,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                buyingExecutionResult = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id, spotAllocationModelMode);
+                buyingExecutionResult = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id, spotAllocationModelMode,postingType);
 
                 if (buyingExecutionResult != null)
                 {
@@ -532,17 +532,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Job = job,
                 Result = buyingExecutionResult ?? new CurrentBuyingExecutionResultDto
                 {
-                    SpotAllocationModelMode = spotAllocationModelMode
+                    SpotAllocationModelMode = spotAllocationModelMode,
+                    PostingType = postingType
                 },
                 IsBuyingModelRunning = IsBuyingModelRunning(job)
             };
         }
 
-        public CurrentBuyingExecution GetCurrentBuyingExecution(int planId)
+        public CurrentBuyingExecution GetCurrentBuyingExecution(int planId,PostingTypeEnum postingType)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-            return _GetCurrentBuyingExecution(job, planId);
+            return _GetCurrentBuyingExecution(job, planId,postingType);
         }
 
         /// <summary>

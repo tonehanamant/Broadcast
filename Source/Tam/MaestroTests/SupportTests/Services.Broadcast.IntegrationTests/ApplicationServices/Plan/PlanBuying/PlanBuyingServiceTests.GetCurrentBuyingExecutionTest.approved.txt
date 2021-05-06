@@ -16,6 +16,7 @@
     "Notes": null,
     "OptimalCpm": 0.0,
     "PlanVersionId": null,
+    "PostingType": 1,
     "SpotAllocationModelMode": 1
   }
 }

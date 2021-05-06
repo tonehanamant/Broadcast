@@ -13,6 +13,7 @@
     "Notes": "",
     "OptimalCpm": 17.6142,
     "PlanVersionId": 47,
+    "PostingType": 2,
     "SpotAllocationModelMode": 1
   }
 }

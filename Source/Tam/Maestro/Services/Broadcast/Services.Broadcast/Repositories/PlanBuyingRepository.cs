@@ -147,8 +147,9 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">The Posting Type.</param>
         /// <returns></returns>
-        CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode);
+        CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType);
 
         /// <summary>
         /// Gets the buying stations result by job identifier.
@@ -886,28 +887,31 @@ namespace Services.Broadcast.Repositories
 
         /// <inheritdoc/>
         public CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, 
-            SpotAllocationModelMode spotAllocationModelMode)
+            SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var result = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_result_spots)
-                    .Where(x => x.plan_version_buying_job_id == jobId && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
+                    .Where(x => x.plan_version_buying_job_id == jobId && x.spot_allocation_model_mode == (int)spotAllocationModelMode
+                    && x.posting_type == (int)postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
                 if (result == null)
                     return null;
 
-                return new CurrentBuyingExecutionResultDto
+                var BuyingResult= new CurrentBuyingExecutionResultDto
                 {
                     OptimalCpm = result.optimal_cpm,
                     JobId = result.plan_version_buying_job_id,
                     PlanVersionId = result.plan_version_buying_job.plan_version_id,
                     GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
                     HasResults = result.plan_version_buying_result_spots.Any(),
-                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode
+                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode,
+                    PostingType= (PostingTypeEnum)result.posting_type
                 };
+                return BuyingResult;
             });
         }
 
