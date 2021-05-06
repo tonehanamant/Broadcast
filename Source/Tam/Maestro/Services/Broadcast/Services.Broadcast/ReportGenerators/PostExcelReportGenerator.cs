@@ -250,7 +250,7 @@ namespace Services.Broadcast.ReportGenerators
             const string TIMER_STEP_SET_BORDERS = "Set Borders";            
 
             var lineCount = prePostingFile.FileDetails.Count;
-            var demoCount = prePostingFile.DemoLookups.Count;
+            var demoCount = (prePostingFile.DemoLookups == null) ? 0 : prePostingFile.DemoLookups.Count;
             var iterations = lineCount * demoCount;
             var countString = $"FileDetailLineCount : {lineCount}; DemoCount : {demoCount}; Iterations : {iterations};";
 

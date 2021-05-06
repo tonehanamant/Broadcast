@@ -561,6 +561,65 @@ namespace Services.Broadcast.Entities.Campaign
 
             _CalculateTotalsForFlowChartTable(tableData);
             FlowChartQuarterTables.Add(tableData);
+            
+        }
+        //this is the Summary of total quarter daypart table
+        private void _CalculateTotalTableDataSummary(List<FlowChartQuarterTableData> tablesInQuarterDaypart
+            , double totalImpressions)
+        {
+            var SummaryTableCount = tablesInQuarterDaypart.Where(x => x.TableTitle.Contains("Summary")).ToList().Count;
+            List<string> SummaryQuarter = new List<string>();
+            List<FlowChartQuarterTableData> finalSummaryTable = new List<FlowChartQuarterTableData>();
+            if (SummaryTableCount > 0)
+            {
+                for (int i = 0; i < SummaryTableCount; i++)
+                {
+                    var Summarylist = tablesInQuarterDaypart.Where(x => x.TableTitle.Contains("Summary")).ToList();
+                    string quarter = Summarylist[i].TableTitle.Replace(" Summary", "");
+                    SummaryQuarter.Add(quarter);
+                }
+                
+            }
+            if (SummaryQuarter.Count > 0)
+            {
+                for (int i = 0; i < SummaryQuarter.Count; i++)
+                {
+                    finalSummaryTable = new List<FlowChartQuarterTableData>(tablesInQuarterDaypart.Where(x => x.TableTitle.Contains(SummaryQuarter[i])));
+                    tablesInQuarterDaypart.RemoveAll(x => x.TableTitle.Contains(SummaryQuarter[i]));
+                }
+            }
+   
+            var totalTablesInQuarterDaypart = tablesInQuarterDaypart.Where(x => x.TableTitle.Contains("Total")).ToList();
+            var firstTable = tablesInQuarterDaypart.First();
+            var tableData = new FlowChartQuarterTableData
+            {
+                TableTitle = $"{firstTable.QuarterLabel} Summary",
+                WeeksStartDate = firstTable.WeeksStartDate,
+                Months = firstTable.Months
+            };
+            var afterQuaterFilterSummaryTable = totalTablesInQuarterDaypart.Where(x => x.TableTitle.Contains(firstTable.QuarterLabel));
+            for (int i = 0; i < tableData.TotalWeeksInQuarter; i++)
+            {
+                tableData.UnitsValues.Add(afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.UnitsValues[i])));
+                double impressions = afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.ImpressionsValues[i]));
+                tableData.ImpressionsValues.Add(impressions);
+                decimal cost = afterQuaterFilterSummaryTable.Sum(x => Convert.ToDecimal(x.CostValues[i]));
+                tableData.CostValues.Add(cost);
+                tableData.CPMValues.Add(_CalculateCost(impressions, cost));
+
+                //multiply impressions by 1000 to get the raw number because the total impressions are in raw format
+                var distributionPercentage = totalImpressions == 0
+                    ? 0
+                    : (impressions * 1000) / totalImpressions; //don't multiply by 100. excel is doing that as part of the cell format
+                tableData.DistributionPercentages.Add(distributionPercentage);
+            }
+            finalSummaryTable.AddRange(tablesInQuarterDaypart);
+            tablesInQuarterDaypart.Clear();
+            tablesInQuarterDaypart.AddRange(finalSummaryTable);
+
+            _CalculateTotalsForFlowChartTable(tableData);
+            FlowChartQuarterTables.Add(tableData);
+            
         }
 
         //this is the adu table for a quarter in flow chart table
@@ -711,6 +770,9 @@ namespace Services.Broadcast.Entities.Campaign
                     });
 
                     _CalculateAduTableData(tablesInQuarter, plans);
+                    
+                    _CalculateTotalTableDataSummary(FlowChartQuarterTables, totalNumberOfImpressionsForExportedPlans);
+
                 });
         }
 
