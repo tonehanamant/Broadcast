@@ -70,6 +70,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             Assert.IsTrue(result);
         }
 
+        [Test]
+        public void DidPlanPricingInputsChange_ChangeStatusAndGoalBreakdown()
+        {
+            var beforePlan = _GetNewPlan();
+            var afterPlan = _GetNewPlan();
+
+            beforePlan.Status = PlanStatusEnum.Working;
+            beforePlan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery;
+
+            afterPlan.Status = PlanStatusEnum.Contracted;
+            afterPlan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
+
+            var result = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
+
+            Assert.IsFalse(result);
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto

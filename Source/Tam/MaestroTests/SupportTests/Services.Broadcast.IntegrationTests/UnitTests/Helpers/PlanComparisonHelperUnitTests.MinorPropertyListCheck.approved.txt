@@ -65,6 +65,10 @@
   },
   {
     "ClassTypeName": "PlanDto",
+    "PropertyName": "GoalBreakdownType"
+  },
+  {
+    "ClassTypeName": "PlanDto",
     "PropertyName": "PricingParameters"
   },
   {
