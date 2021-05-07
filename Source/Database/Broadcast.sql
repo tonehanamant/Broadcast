@@ -512,6 +512,16 @@ WHERE impressions_goal - FLOOR(impressions_goal) > 0
 GO
 /*************************************** End BP-2381 *****************************************************/
 
+/*************************************** Start BP-2410 *****************************************************/
+
+UPDATE plans SET
+	spot_allocation_model_mode = 1
+WHERE spot_allocation_model_mode IS NULL
+
+GO
+/*************************************** End BP-2410 *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

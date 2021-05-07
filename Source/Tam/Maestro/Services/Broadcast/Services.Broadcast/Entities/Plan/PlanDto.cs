@@ -475,6 +475,14 @@ namespace Services.Broadcast.Entities.Plan
         /// The out of sync status.
         /// </value>
         public bool IsOutOfSync { get; set; }
+
+        /// <summary>
+        /// Gets or sets the committed spot allocation model mode.
+        /// </summary>
+        /// <value>
+        /// The committed spot allocation model mode.
+        /// </value>
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
     }
 
     public class PlanDto_v2 : PlanDto

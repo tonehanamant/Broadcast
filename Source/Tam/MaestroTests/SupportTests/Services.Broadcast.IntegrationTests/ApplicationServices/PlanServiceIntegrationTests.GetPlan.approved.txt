@@ -2070,6 +2070,7 @@
   "ProductMasterId": null,
   "SecondaryAudiences": [],
   "ShareBookId": 458,
+  "SpotAllocationModelMode": 1,
   "Status": 1,
   "TargetCPM": 2.4000,
   "TargetCPP": 2926.8292,

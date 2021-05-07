@@ -556,6 +556,7 @@ namespace Services.Broadcast.Repositories
                 CampaignId = entity.campaign.id,
                 CampaignName = entity.campaign.name,
                 Name = entity.name,
+                SpotAllocationModelMode = EnumHelper.GetEnum<SpotAllocationModelMode>(entity.spot_allocation_model_mode ?? (int)SpotAllocationModelMode.Quality),
                 CreativeLengths = planVersion.plan_version_creative_lengths.Select(_MapCreativeLengthsToDto).ToList(),
                 Equivalized = planVersion.equivalized,
                 Status = EnumHelper.GetEnum<PlanStatusEnum>(planVersion.status),
@@ -730,7 +731,7 @@ namespace Services.Broadcast.Repositories
             plan.product_id = planDto.ProductId;
             plan.product_master_id = planDto.ProductMasterId;
             plan.campaign_id = planDto.CampaignId;
-
+            plan.spot_allocation_model_mode = (int)planDto.SpotAllocationModelMode;
             version.equivalized = planDto.Equivalized;
             version.status = (int)planDto.Status;
             version.flight_start_date = planDto.FlightStartDate.Value;
