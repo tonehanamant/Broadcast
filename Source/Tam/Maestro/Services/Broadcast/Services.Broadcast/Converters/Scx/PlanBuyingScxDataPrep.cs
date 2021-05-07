@@ -316,9 +316,9 @@ namespace Services.Broadcast.Converters.Scx
             return results;
         }
 
-        private decimal _CalculateSpotCostPer30s(decimal spotCost, double spotCostMultiplier)
+        private decimal _CalculateSpotCostPer30s(decimal spotCost, decimal spotCostMultiplier)
         {
-            var costPer30s = spotCost * Convert.ToDecimal(spotCostMultiplier);                                  
+            var costPer30s = spotCost * spotCostMultiplier;                                  
             return costPer30s;
         }
 

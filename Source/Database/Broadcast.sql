@@ -521,7 +521,17 @@ WHERE spot_allocation_model_mode IS NULL
 GO
 /*************************************** End BP-2410 *****************************************************/
 
+/*************************************** Start BP-2379 *****************************************************/
 
+UPDATE plans SET
+	spot_allocation_model_mode = 1
+WHERE spot_allocation_model_mode IS NULL
+
+GO
+/*************************************** End BP-2410 *****************************************************/
+UPDATE spot_length_cost_multipliers
+	SET cost_multiplier = 0.5
+	WHERE spot_length_id = 3
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

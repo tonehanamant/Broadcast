@@ -9,6 +9,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using System;
 
 namespace Services.Broadcast.Repositories
 {
@@ -40,10 +41,10 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns></returns>
         Dictionary<int, int> GetSpotLengthDurationsById();
-        
+
         Dictionary<int, double> GetDeliveryMultipliersBySpotLength();
         Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId();
-        Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers();
+        Dictionary<int, decimal> GetSpotLengthIdsAndCostMultipliers(bool addInventoryCostPremium);
     }
 
     public class SpotLengthBroadcastRepository : BroadcastRepositoryBase, ISpotLengthRepository
@@ -156,13 +157,20 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers()
+        public Dictionary<int, decimal> GetSpotLengthIdsAndCostMultipliers(bool addInventoryCostPremium)
         {
-            return _InReadUncommitedTransaction(
+            var result = _InReadUncommitedTransaction(
                 context =>
                 {
-                    return context.spot_length_cost_multipliers.ToDictionary(x => x.spot_length_id, y => y.cost_multiplier);
+                    var spotLengthCostMultipliers = context.spot_length_cost_multipliers
+                    .ToDictionary(x => x.spot_length_id, y => addInventoryCostPremium ? 
+                    Convert.ToDecimal(y.cost_multiplier) + y.inventory_cost_premium 
+                    : Convert.ToDecimal(y.cost_multiplier));
+
+                    return spotLengthCostMultipliers;
                 });
+
+            return result;
         }
     }
 }

@@ -53,11 +53,11 @@ namespace Services.Broadcast.BusinessEngines
         /// Gets the spot length cost multipliers.
         /// </summary>
         /// <returns>Dictionary of spot length id and spot multiplier</returns>
-        Dictionary<int, double> GetCostMultipliers();
+        Dictionary<int, decimal> GetCostMultipliers();
 
         double GetDeliveryMultiplierBySpotLengthId(int spotLengthId);
 
-        double GetSpotCostMultiplierBySpotLengthId(int spotLengthId);
+        decimal GetSpotCostMultiplierBySpotLengthId(int spotLengthId);
     }
 
     public class SpotLengthEngine : ISpotLengthEngine
@@ -65,7 +65,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly Dictionary<int, int> _SpotLengthIdByValue;
         private readonly Dictionary<int, int> _SpotLengthValueById;
         private readonly Dictionary<int, double> _DeliveryMultipliersBySpotLengthId;
-        private readonly Dictionary<int, double> _SpotCostMultipliersBySpotLengthId;
+        private readonly Dictionary<int, decimal> _SpotCostMultipliersBySpotLengthId;
 
         /// <inheritdoc/>
         public SpotLengthEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
@@ -74,7 +74,7 @@ namespace Services.Broadcast.BusinessEngines
             _SpotLengthIdByValue = spotLengthRepository.GetSpotLengthIdsByDuration();
             _SpotLengthValueById = _SpotLengthIdByValue.ToDictionary(x => x.Value, x => x.Key);
             _DeliveryMultipliersBySpotLengthId = spotLengthRepository.GetDeliveryMultipliersBySpotLengthId();
-            _SpotCostMultipliersBySpotLengthId = spotLengthRepository.GetSpotLengthIdsAndCostMultipliers();
+            _SpotCostMultipliersBySpotLengthId = spotLengthRepository.GetSpotLengthIdsAndCostMultipliers(true);
         }
 
         /// <inheritdoc/>
@@ -90,7 +90,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc/>
-        public Dictionary<int, double> GetCostMultipliers()
+        public Dictionary<int, decimal> GetCostMultipliers()
         {
             return _SpotCostMultipliersBySpotLengthId;
         }
@@ -105,7 +105,7 @@ namespace Services.Broadcast.BusinessEngines
             throw new Exception($"Invalid spot length id: '{spotLengthId}' found");
         }
 
-        public double GetSpotCostMultiplierBySpotLengthId(int spotLengthId)
+        public decimal GetSpotCostMultiplierBySpotLengthId(int spotLengthId)
         {
             if (_SpotCostMultipliersBySpotLengthId.TryGetValue(spotLengthId, out var spotCostMultiplier))
             {

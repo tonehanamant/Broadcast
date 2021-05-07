@@ -84,7 +84,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISMSClient _SmsClient;
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly Dictionary<int, int> _SpotLengthMap;
-        private readonly Dictionary<int, double> _SpotLengthCostMultipliers;
+        private readonly Dictionary<int, decimal> _SpotLengthCostMultipliers;
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IInventoryRepository _InventoryRepository;
@@ -129,7 +129,7 @@ namespace Services.Broadcast.ApplicationServices
             _SmsClient = smsClient;
             _InventoryFileRepository = _broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _SpotLengthMap = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration();
-            _SpotLengthCostMultipliers = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
+            _SpotLengthCostMultipliers = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers(true);
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _StationInventoryGroupService = stationInventoryGroupService;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();

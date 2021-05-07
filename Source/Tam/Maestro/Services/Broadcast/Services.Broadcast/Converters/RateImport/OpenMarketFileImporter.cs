@@ -89,7 +89,7 @@ namespace Services.Broadcast.Converters.RateImport
             _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
         }
 
-        protected Dictionary<int, double> _SpotLengthMultipliers;
+        protected Dictionary<int, decimal> _SpotLengthMultipliers;
 
         public void ExtractFileData(Stream rawStream, InventoryFile inventoryFile)
         {
@@ -439,10 +439,11 @@ namespace Services.Broadcast.Converters.RateImport
             return foundStations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.OrdinalIgnoreCase);
         }
 
-        private Dictionary<int, double> _GetSpotLengthAndMultipliers()
+        private Dictionary<int, decimal> _GetSpotLengthAndMultipliers()
         {
             // load spot Length ids and multipliers
-            var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
+            var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>()
+                .GetSpotLengthIdsAndCostMultipliers(true);
 
             return (from c in _SpotLengthIdsByDuration.Value
                     join d in spotMultipliers on c.Value equals d.Key

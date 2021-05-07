@@ -274,8 +274,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(new Dictionary<int, int>());
 
             _SpotLengthRepository
-                .Setup(x => x.GetSpotLengthIdsAndCostMultipliers())
-                .Returns(new Dictionary<int, double>());
+                .Setup(x => x.GetSpotLengthIdsAndCostMultipliers(true))
+                .Returns(new Dictionary<int, decimal>());
 
             _BroadcastDataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IInventoryRepository>())

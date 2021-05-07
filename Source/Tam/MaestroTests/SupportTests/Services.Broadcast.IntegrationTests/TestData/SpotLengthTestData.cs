@@ -67,22 +67,22 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return deliveryMultipliersBySpotLengthId;
         }
 
-        public static Dictionary<int, double> GetCostMultipliersBySpotLengthId()
+        public static Dictionary<int, decimal> GetCostMultipliersBySpotLengthId()
         {
-            var deliveryMultipliersBySpotLengthId = new Dictionary<int, double>
+            var deliveryMultipliersBySpotLengthId = new Dictionary<int, decimal>
             {
                 {1,1},
                 {2,2},
-                {3,0.65},
+                {3,0.65m},
                 {4,4},
                 {7,3},
-                {8,1.5},
+                {8,1.5m},
                 {5,6},
                 {6,10},
-                {9,0.333333},
+                {9,0.333333m},
                 {10,5},
-                {11,2.5},
-                {12,1.66667},
+                {11,2.5m},
+                {12,1.66667m},
             };
 
             return deliveryMultipliersBySpotLengthId;

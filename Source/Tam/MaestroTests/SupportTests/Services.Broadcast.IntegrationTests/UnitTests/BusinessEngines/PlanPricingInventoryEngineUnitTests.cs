@@ -1400,7 +1400,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _SpotLengthEngineMock
                 .Setup(x => x.GetSpotCostMultiplierBySpotLengthId(It.IsAny<int>()))
-                .Returns(0.5);
+                .Returns(0.5m);
 
             var testClass = _GetTestClass(false, isMultiLengthEnabled);
 
