@@ -2192,16 +2192,9 @@ namespace Services.Broadcast.Repositories
                 if (result == null)
                     return null;
 
-                return new CurrentPricingExecutionResultDto
-                {
-                    PostingType = (PostingTypeEnum)result.posting_type,
-                    OptimalCpm = result.optimal_cpm,
-                    JobId = result.plan_version_pricing_job_id,
-                    PlanVersionId = result.plan_version_pricing_job.plan_version_id,
-                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
-                    HasResults = result.plan_version_pricing_result_spots.Any(),
-                    SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode
-                };
+                var dtoResult = _MapToCurrentPricingExecutionResultDto(result);
+
+                return dtoResult;
             });
         }
 
@@ -2218,18 +2211,25 @@ namespace Services.Broadcast.Repositories
                 if (result == null)
                     return null;
 
-                var results = result.Select(j => new CurrentPricingExecutionResultDto
-                {
-                    PostingType = (PostingTypeEnum)j.posting_type,
-                    OptimalCpm = j.optimal_cpm,
-                    JobId = j.plan_version_pricing_job_id,
-                    PlanVersionId = j.plan_version_pricing_job.plan_version_id,
-                    GoalFulfilledByProprietary = j.goal_fulfilled_by_proprietary,
-                    HasResults = j.plan_version_pricing_result_spots.Any(),
-                    SpotAllocationModelMode = (SpotAllocationModelMode)j.spot_allocation_model_mode
-                }).ToList();
+                var results = result.Select(_MapToCurrentPricingExecutionResultDto).ToList();
                 return results;
             });
+        }
+
+        private CurrentPricingExecutionResultDto _MapToCurrentPricingExecutionResultDto(plan_version_pricing_results entity)
+        {
+            var dto = new CurrentPricingExecutionResultDto
+            {
+                PostingType = (PostingTypeEnum)entity.posting_type,
+                OptimalCpm = entity.optimal_cpm,
+                JobId = entity.plan_version_pricing_job_id,
+                PlanVersionId = entity.plan_version_pricing_job.plan_version_id,
+                GoalFulfilledByProprietary = entity.goal_fulfilled_by_proprietary,
+                HasResults = entity.plan_version_pricing_result_spots.Any(),
+                SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,
+                CalculatedVpvh = entity.calculated_vpvh ?? 0.0
+            };
+            return dto;
         }
 
         public PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId,

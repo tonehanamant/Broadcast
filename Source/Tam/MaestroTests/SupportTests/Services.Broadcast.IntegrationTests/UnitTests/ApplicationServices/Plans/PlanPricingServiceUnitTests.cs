@@ -6014,9 +6014,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     PlanVersionId = 11,
                     JobId = 12,
                     CpmPercentage = 204,
-                    SpotAllocationModelMode = mode
+                    SpotAllocationModelMode = mode,
+                    CalculatedVpvh = 4.3
                 });
-
 
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
@@ -8219,7 +8219,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
                     JobId = 12,
-                    SpotAllocationModelMode = mode
+                    SpotAllocationModelMode = mode,
+                    CalculatedVpvh = 12.3
                 });
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))
@@ -9155,8 +9156,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 63,
                             PostingType = PostingTypeEnum.NTI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Floor
-
+                            SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                            CalculatedVpvh = 12.3
                         },
                         new CurrentPricingExecutionResultDto()
                         {
@@ -9168,8 +9169,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 44,
                             PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Floor
-
+                            SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                            CalculatedVpvh = 4.6
                         },
                         new CurrentPricingExecutionResultDto()
                         {
@@ -9181,8 +9182,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 67,
                             PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
-
+                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                            CalculatedVpvh = 6.2
                         },
                         new CurrentPricingExecutionResultDto()
                         {
@@ -9194,8 +9195,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 47,
                             PostingType = PostingTypeEnum.NTI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
-
+                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                            CalculatedVpvh = 126.3
                         },
                         new CurrentPricingExecutionResultDto()
                         {
@@ -9207,8 +9208,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 160,
                             PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Quality
-
+                            SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                            CalculatedVpvh = 3.1
                         },
                         new CurrentPricingExecutionResultDto()
                         {
@@ -9220,7 +9221,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 112,
                             PostingType = PostingTypeEnum.NTI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Quality
+                            SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                            CalculatedVpvh = 8.2
                         }
                 };
         }
