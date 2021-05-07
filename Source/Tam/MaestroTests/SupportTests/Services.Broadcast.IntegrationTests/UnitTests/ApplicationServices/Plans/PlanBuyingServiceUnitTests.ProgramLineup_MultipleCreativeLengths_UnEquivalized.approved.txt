@@ -1,0 +1,174 @@
+{
+  "AccountExecutive": "",
+  "AccuracyEstimateDate": "2/12/20",
+  "Agency": "1st Image Marketing",
+  "AllocationByDaypartViewRows": [
+    {
+      "FilterLabel": "PRA",
+      "Weight": 0.98765371
+    },
+    {
+      "FilterLabel": "LN",
+      "Weight": 0.00790162
+    },
+    {
+      "FilterLabel": "EM",
+      "Weight": 0.00296311
+    },
+    {
+      "FilterLabel": "EMN",
+      "Weight": 0.00148155
+    }
+  ],
+  "AllocationByDMAViewRows": [
+    {
+      "FilterLabel": "NEW YORK",
+      "Weight": 0.00790162
+    },
+    {
+      "FilterLabel": "BINGHAMTON",
+      "Weight": 0.98913527
+    },
+    {
+      "FilterLabel": "MACON",
+      "Weight": 0.00296311
+    }
+  ],
+  "AllocationByGenreViewRows": [
+    {
+      "FilterLabel": "COMEDY",
+      "Weight": 0.98765371
+    },
+    {
+      "FilterLabel": "",
+      "Weight": 0.00493852
+    },
+    {
+      "FilterLabel": "MOVIE",
+      "Weight": 0.00444466
+    },
+    {
+      "FilterLabel": "NEWS",
+      "Weight": 0.00296311
+    }
+  ],
+  "AllocationBySpotLengthViewRows": [
+    {
+      "FilterLabel": ":15",
+      "Weight": 0.00543237
+    },
+    {
+      "FilterLabel": ":30",
+      "Weight": 0.99802459
+    },
+    {
+      "FilterLabel": ":60",
+      "Weight": 0.00543237
+    }
+  ],
+  "Client": "PetMed Express, Inc",
+  "ClientContact": "",
+  "DefaultViewRows": [
+    {
+      "Genre": "COMEDY",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "THE BIG BANG THEORY",
+      "Weight": 0.98765371
+    },
+    {
+      "Genre": "",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "FALLBACK PROGRAM",
+      "Weight": 0.00493852
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.00296311
+    },
+    {
+      "Genre": "MOVIE",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "1917",
+      "Weight": 0.00296311
+    },
+    {
+      "Genre": "MOVIE",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "JOKER",
+      "Weight": 0.00148155
+    }
+  ],
+  "DetailedViewRows": [
+    {
+      "Daypart": "LN",
+      "Days": "Sa-Su",
+      "DMA": "NEW YORK",
+      "Genre": "",
+      "NetworkAffiliation": "CBS",
+      "Program": "FALLBACK PROGRAM",
+      "Rank": 1,
+      "Station": "WTTV",
+      "TimePeriods": "12:03AM-12:05AM"
+    },
+    {
+      "Daypart": "LN",
+      "Days": "M-F",
+      "DMA": "NEW YORK",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "CBS",
+      "Program": "LATE NEWS",
+      "Rank": 1,
+      "Station": "WTTV",
+      "TimePeriods": "12:03AM-12:04AM"
+    },
+    {
+      "Daypart": "PRA",
+      "Days": "M-Su",
+      "DMA": "BINGHAMTON",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "A101 AFFILIATION",
+      "Program": "THE BIG BANG THEORY",
+      "Rank": 2,
+      "Station": "WNBC",
+      "TimePeriods": "12:02AM-12:40PM"
+    },
+    {
+      "Daypart": "EMN",
+      "Days": "M-F",
+      "DMA": "BINGHAMTON",
+      "Genre": "MOVIE",
+      "NetworkAffiliation": "ABC",
+      "Program": "JOKER",
+      "Rank": 2,
+      "Station": "KSTP",
+      "TimePeriods": "12:01AM-12:02AM"
+    },
+    {
+      "Daypart": "EM",
+      "Days": "M-Su",
+      "DMA": "MACON",
+      "Genre": "MOVIE",
+      "NetworkAffiliation": "CBS",
+      "Program": "1917",
+      "Rank": 3,
+      "Station": "KELO",
+      "TimePeriods": "12:05AM-12:06AM"
+    }
+  ],
+  "ExportFileName": "Program_Lineup_Report_B_Brave Plan_NTI_Q_10172017.xlsx",
+  "FlightEndDate": "03/14/20",
+  "FlightStartDate": "03/01/20",
+  "GuaranteedDemo": "A18-20",
+  "PlanHeaderName": "Brave Plan | Program Lineup*",
+  "PostingType": "NTI",
+  "ReportGeneratedDate": "10/17/17",
+  "SpotAllocationModelMode": "Quality",
+  "SpotLengths": ":15,:30,:60"
+}

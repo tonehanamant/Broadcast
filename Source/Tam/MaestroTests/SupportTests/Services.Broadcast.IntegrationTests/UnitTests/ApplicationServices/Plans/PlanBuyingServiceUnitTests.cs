@@ -37,12 +37,17 @@ using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInve
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram.ManifestDaypart;
 using static Services.Broadcast.ApplicationServices.Plan.PlanBuyingService;
 using Common.Services;
+using Services.Broadcast.Entities.Campaign;
+using Tam.Maestro.Services.ContractInterfaces;
+using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
     [TestFixture]
+    [UseReporter(typeof(DiffReporter))]
     public class PlanBuyingServiceUnitTests
     {
+        private readonly DateTime _CurrentDate = new DateTime(2017, 10, 17, 7, 30, 23);
         private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private Mock<IPlanBuyingApiClient> _BuyingApiClientMock;
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
@@ -76,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IAabEngine> _AabEngine;
         private Mock<IAudienceService> _AudienceServiceMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
+        private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
 
         protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
         {
@@ -115,6 +121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [SetUp]
         public void SetUp()
         {
+            _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _BuyingApiClientMock = new Mock<IPlanBuyingApiClient>();
@@ -214,6 +221,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeekById(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeek);
+
+            _DataRepositoryFactoryMock
+               .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
+               .Returns(_SpotLengthRepositoryMock.Object);
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
@@ -660,7 +671,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanBuyingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
-                .Returns(_GetMultipleInventoryPrograms());            
+                .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
@@ -1149,8 +1160,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetPlanBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
-                { 
-                Id=jobId
+                {
+                    Id = jobId
                 });
 
             var plan = _GetPlan();
@@ -1480,7 +1491,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var parameters = _GetPlanBuyingParametersDto();
             parameters.Margin = 20;
             parameters.JobId = jobId;
-           
+
             _PlanBuyingRepositoryMock
                .Setup(x => x.GetPlanBuyingJob(It.IsAny<int>()))
                .Returns(new PlanBuyingJob
@@ -2303,7 +2314,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var inventory = _GetInventory();
 
-            var plan = new PlanDto {CreativeLengths = new List<CreativeLength> {new CreativeLength { SpotLengthId = 1 }, new CreativeLength {SpotLengthId = 2 }}};
+            var plan = new PlanDto { CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 }, new CreativeLength { SpotLengthId = 2 } } };
             var parameters = new PlanBuyingParametersDto { Margin = 20 };
             var service = _GetService();
             var skippedWeeks = new List<int>();
@@ -2342,7 +2353,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 }
             };
-            
+
             // Act
             var results = service._MapToResultSpotsV3(apiSpotsResults, buyingApiRequest, inventory, parameters, plan, spotsAndMappings.Mappings);
 
@@ -2803,7 +2814,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanBuyingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
-                .Returns(_GetMultipleInventoryPrograms());            
+                .Returns(_GetMultipleInventoryPrograms());
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
@@ -2858,30 +2869,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase( SpotAllocationModelMode.Quality, "PlanBuying_Test Plan Name_20201030_121523_Q")]
-        [TestCase( SpotAllocationModelMode.Efficiency, "PlanBuying_Test Plan Name_20201030_121523_E")]
-        [TestCase( SpotAllocationModelMode.Floor, "PlanBuying_Test Plan Name_20201030_121523_F")]
+        [TestCase(SpotAllocationModelMode.Quality, "PlanBuying_Test Plan Name_20201030_121523_Q")]
+        [TestCase(SpotAllocationModelMode.Efficiency, "PlanBuying_Test Plan Name_20201030_121523_E")]
+        [TestCase(SpotAllocationModelMode.Floor, "PlanBuying_Test Plan Name_20201030_121523_F")]
         public void ExportPlanBuyingScx(SpotAllocationModelMode spotAllocationModelMode, string expectedFileName)
         {
             const string username = "testUser";
             const string planName = "Test Plan Name";
             const string testStreamContent = "<xml>TestContent<xml/>";
             var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
-            
+
             var currentDateTime = new DateTime(2020, 10, 30, 12, 15, 23);
             _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
                 .Returns(currentDateTime);
-            
+
             _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>(), It.IsAny<SpotAllocationModelMode>()))
-                .Returns<PlanBuyingScxExportRequest, DateTime, SpotAllocationModelMode>((a,b,c) => new PlanScxData {PlanName = planName, Generated = b});
+                .Returns<PlanBuyingScxExportRequest, DateTime, SpotAllocationModelMode>((a, b, c) => new PlanScxData { PlanName = planName, Generated = b });
             _PlanBuyingScxDataConverter.Setup(s => s.ConvertData(It.IsAny<PlanScxData>(), It.IsAny<SpotAllocationModelMode>()))
-                .Returns<PlanScxData, SpotAllocationModelMode>((d,e) => new PlanBuyingScxFile
+                .Returns<PlanScxData, SpotAllocationModelMode>((d, e) => new PlanBuyingScxFile
                 {
                     PlanName = d.PlanName,
-                  
+
                     GeneratedTimeStamp = d.Generated,
                     ScxStream = new MemoryStream(Encoding.UTF8.GetBytes(testStreamContent))
-                }); 
+                });
 
             var savedSharedFiles = new List<SharedFolderFile>();
             var testGuid = Guid.NewGuid();
@@ -2893,15 +2904,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var savedFileGuid = service.ExportPlanBuyingScx(request, username, spotAllocationModelMode);
-           
+
             //// Assert           
             var savedSharedFile = savedSharedFiles[0];
             Assert.IsTrue(savedSharedFile.FolderPath.EndsWith(@"\PlanBuyingScx"));
 
             Assert.AreEqual(1, savedSharedFiles.Count);
             Assert.AreEqual(expectedFileName, savedSharedFile.FileName);
-          
-           
+
+
         }
 
         private List<InventoryProprietaryQuarterSummaryDto> _GetInventoryProprietaryQuarterSummary(bool highProprietaryNumbers)
@@ -2910,7 +2921,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 new InventoryProprietaryQuarterSummaryDto
                 {
-                    UnitCost = 100,                    
+                    UnitCost = 100,
                     SummaryByStationByAudience = new List<InventoryProprietarySummaryByStationByAudience>
                     {
                         new InventoryProprietarySummaryByStationByAudience
@@ -2952,7 +2963,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 },
                 new InventoryProprietaryQuarterSummaryDto
                 {
-                    UnitCost = 100,                   
+                    UnitCost = 100,
                     SummaryByStationByAudience = new List<InventoryProprietarySummaryByStationByAudience>
                     {
                         new InventoryProprietarySummaryByStationByAudience
@@ -2977,6 +2988,1593 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     { 101, 0.101d },
                     { 100, 0.1d },
                     { 302, 0.302d }
+                }
+            };
+        }
+
+        [Test]
+        public void ThrowsException_ProgramLineup_WhenNoPlansSelected()
+        {
+            // Arrange
+            var expectedMessage = $"Choose at least one plan";
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int>()
+            };
+
+            var tc = _GetService();
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void ThrowsException_ProgramLineup_WhenNoBuyingRunsDone()
+        {
+            // Arrange
+            const string expectedMessage = "There are no completed buying runs for the chosen plan. Please run buying";
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { 1 }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Dayparts = _GetPlanDayparts()
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                 .Returns(new LockResponse
+                 {
+                     Success = true
+                 });
+
+            var tc = _GetService();
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed, "The latest buying run was failed. Please run buying again or contact the support")]
+        [TestCase(BackgroundJobProcessingStatus.Queued, "There is a buying run in progress right now. Please wait until it is completed")]
+        [TestCase(BackgroundJobProcessingStatus.Processing, "There is a buying run in progress right now. Please wait until it is completed")]
+        public void ThrowsException_ProgramLineup_BuyingJobIsNotAcceptable(
+            BackgroundJobProcessingStatus jobStatus,
+            string expectedMessage)
+        {
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { 1 }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Dayparts = _GetPlanDayparts()
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Status = jobStatus
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                 .Returns(new LockResponse
+                 {
+                     Success = true
+                 });
+
+            var tc = _GetService();
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void ReturnsData_ProgramLineupReport_45UnEquivalized()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
+                    Equivalized = false,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts(),
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetLatestBuyingJob(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetPlanBuyingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void ProgramLineup_MultipleCreativeLengths()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId },
+
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> {
+                        new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                        new CreativeLength { SpotLengthId = 2, Weight = 20 },
+                        new CreativeLength { SpotLengthId = 3, Weight = 30 }
+                    },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts(),
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetLatestBuyingJob(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetPlanBuyingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void ProgramLineup_MultipleCreativeLengths_UnEquivalized()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> {
+                        new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                        new CreativeLength { SpotLengthId = 2, Weight = 20 },
+                        new CreativeLength { SpotLengthId = 3, Weight = 30 }
+                    },
+                    Equivalized = false,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts(),
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void ReturnsData_ProgramLineup_45Equivalized()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts(),
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+               .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+               .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetLatestBuyingJob(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetPlanBuyingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void ReturnsData_ProgramLineup_30Equivalized()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts(),
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+              .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+              .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                 .Returns(new LockResponse
+                 {
+                     Success = true
+                 });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetLatestBuyingJob(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetPlanBuyingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void ProgramLineup_RollupStationSpecificNewsPrograms()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 30001,
+                            StartTimeSeconds = 57600,
+                            EndTimeSeconds = 68399
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 10001,
+                            StartTimeSeconds = 14400,
+                            EndTimeSeconds = 35999
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 20001,
+                            StartTimeSeconds = 39600,
+                            EndTimeSeconds = 46799
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 40001,
+                            StartTimeSeconds = 72000,
+                            EndTimeSeconds = 299
+                        }
+                    },
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+              .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+              .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupForRollupTestData();
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetLatestBuyingJob(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetPlanBuyingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 4001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private List<PlanDaypartDto> _GetPlanDayparts()
+        {
+            return new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 10001,
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = 150
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 20001,
+                    StartTimeSeconds = 230,
+                    EndTimeSeconds = 280
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 30002,
+                    StartTimeSeconds = 350,
+                    EndTimeSeconds = 450
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 40001,
+                    StartTimeSeconds = 100,
+                    EndTimeSeconds = 200
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 50001,
+                    StartTimeSeconds = 100,
+                    EndTimeSeconds = 200
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 60001,
+                    StartTimeSeconds = 200,
+                    EndTimeSeconds = 299
+                }
+            };
+        }
+
+        private List<ProgramLineupProprietaryInventory> _GetProprietaryLineupData()
+        {
+            return new List<ProgramLineupProprietaryInventory>
+            {
+                new ProgramLineupProprietaryInventory{
+                    Genre = "Comedy",
+                    ProgramName = "The big bang theory",
+                    DaypartId = 19,
+                    InventoryProprietaryDaypartProgramId  = 1,
+                    MarketCode = 100,
+                    SpotLengthId = 1,
+                    Station = new MarketCoverageByStation.Station{
+                        Affiliation = "A101 Affiliation",
+                        Id = 101,
+                        LegacyCallLetters = "WNBC"
+                    },
+                    ImpressionsPerWeek = 19999
+                }
+            };
+        }
+
+        private DisplayDaypart _GetDisplayDaypart()
+        {
+            return new DisplayDaypart
+            {
+                Code = "PRA",
+                Name = "Prime Access",
+                Monday = true,
+                Thursday = true,
+                Sunday = true,
+                StartTime = 120,
+                EndTime = 45600,
+                StartAMPM = "6PM-8PM"
+            };
+        }
+
+        private void _SetupBaseProgramLineupTestData()
+        {
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime(2020, 02, 12)
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetPlanBuyingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()))
+                .Returns(_GetPlanBuyingAllocatedSpots());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetStationInventoryManifests());
+
+            _AabEngine
+                .Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(new AgencyDto
+                {
+                    Name = "1st Image Marketing"
+                });
+
+            _AabEngine
+                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(new AdvertiserDto
+                {
+                    Name = "PetMed Express, Inc"
+                });
+
+            _AudienceServiceMock
+                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
+                .Returns(new PlanAudienceDisplay
+                {
+                    Code = "A18-20"
+                });
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoveragesWithStations())
+                .Returns(_GetMarketCoverages());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program>
+                {
+                    {
+                        1001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "Movie",
+                            Name = "Joker"
+                        }
+                    },
+                    {
+                        2001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "Late News"
+                        }
+                    },
+                    {
+                        3001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "Movie",
+                            Name = "1917"
+                        }
+                    }
+                });
+        }
+
+        private void _SetupBaseProgramLineupForRollupTestData()
+        {
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime(2020, 02, 12)
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetPlanBuyingAllocatedSpotsByPlanId(It.IsAny<int>(), It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()))
+                .Returns(_GetPlanBuyingAllocatedSpotsForRollup());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetStationInventoryManifestsForRollup());
+
+            _AabEngine
+                .Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(new AgencyDto
+                {
+                    Name = "1st Image Marketing"
+                });
+
+            _AabEngine
+                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(new AdvertiserDto
+                {
+                    Name = "PetMed Express, Inc"
+                });
+
+            _AudienceServiceMock
+               .Setup(x => x.GetAudienceById(It.IsAny<int>()))
+               .Returns(new PlanAudienceDisplay
+               {
+                   Code = "A18-20"
+               });
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoveragesWithStations())
+                .Returns(_GetMarketCoverages());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program>
+                {
+                    {
+                        1001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 1001 Morning NEWS"
+                        }
+                    },
+                    {
+                        1002,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 1002 Morning NEWS"
+                        }
+                    },
+                    {
+                        2001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 2001 Midday NEWS"
+                        }
+                    },
+                     {
+                        2002,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 2002 Midday NEWS"
+                        }
+                    },
+                     {
+                        3001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 3001 Evening NEWS"
+                        }
+                    },
+                     {
+                        3002,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 3002 Evening NEWS"
+                        }
+                    },
+                     {
+                        4001,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 4001 Late NEWS"
+                        }
+                    },
+                     {
+                        4002,
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 4002 Late NEWS"
+                        }
+                    },
+                });
+        }
+
+        private List<PlanBuyingAllocatedSpot> _GetPlanBuyingAllocatedSpots()
+        {
+            return new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 10,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 10001,
+                        Code = "EMN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 3
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 20,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 20001,
+                        Code = "LN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 3
+                        }
+                    },
+                    Impressions30sec = 20
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 30,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 30002,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 2,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 2,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 2,
+                            Impressions = 10,
+                            SpotLengthId = 3
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 40,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 40001,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 3
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 50,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 50001,
+                        Code = "LN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 3
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 60,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 60001,
+                        Code = "LN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 70,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 60001,
+                        Code = "LN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                }
+            };
+        }
+
+        private List<PlanBuyingAllocatedSpot> _GetPlanBuyingAllocatedSpotsForRollup()
+        {
+            return new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 10,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 10001,
+                        Code = "EMN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 10,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 10002,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 20,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 20001,
+                        Code = "LN"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 20
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 20,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 20002,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 20
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 30,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 30001,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 30,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 30002,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 40,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 40001,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                },new PlanBuyingAllocatedSpot
+                {
+                    StationInventoryManifestId = 40,
+                    StandardDaypart = new StandardDaypartDto
+                    {
+                        Id = 40002,
+                        Code = "EM"
+                    },
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        }
+                    },
+                    Impressions30sec = 10
+                }
+            };
+        }
+
+        private List<StationInventoryManifest> _GetStationInventoryManifestsForRollup()
+        {
+            return new List<StationInventoryManifest>
+                {
+                    new StationInventoryManifest
+                    {
+                        Id = 10,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 100,
+                            LegacyCallLetters = "KSTP",
+                            Affiliation = "ABC"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 1001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 10001,
+                                    StartTime = 14400,
+                                    EndTime = 35999,
+                                    Monday = true,
+                                    Tuesday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 20,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 200,
+                            LegacyCallLetters = "WTTV",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 2001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 20001,
+                                    StartTime = 39600,
+                                    EndTime = 46799,
+                                    Wednesday = true,
+                                    Thursday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 30,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 300,
+                            LegacyCallLetters = "KELO",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 3001,
+                                ProgramName = "The Shawshank Redemption",
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 30001,
+                                    StartTime = 57600,
+                                    EndTime = 68399,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 40,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 300,
+                            LegacyCallLetters = "KELOW",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 4001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 40001,
+                                    StartTime = 72000,
+                                    EndTime = 299,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            }
+                        }
+                    },
+                };
+        }
+
+        private List<StationInventoryManifest> _GetStationInventoryManifests()
+        {
+            return new List<StationInventoryManifest>
+                {
+                    new StationInventoryManifest
+                    {
+                        Id = 10,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 100,
+                            LegacyCallLetters = "KSTP",
+                            Affiliation = "ABC"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 1001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 10001,
+                                    StartTime = 100,
+                                    EndTime = 199,
+                                    Monday = true,
+                                    Tuesday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 20,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 200,
+                            LegacyCallLetters = "WTTV",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 2001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 20001,
+                                    StartTime = 200,
+                                    EndTime = 299,
+                                    Wednesday = true,
+                                    Thursday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 30,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 300,
+                            LegacyCallLetters = "KELO",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 3001,
+                                ProgramName = "The Shawshank Redemption",
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 30001,
+                                    StartTime = 300,
+                                    EndTime = 399,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 40,
+                        Station = null
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 50,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = null
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 60,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 200,
+                            LegacyCallLetters = "WTTV",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 6001,
+                                ProgramName = "Fallback program",
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 60001,
+                                    StartTime = 200,
+                                    EndTime = 299,
+                                    Saturday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 70,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 200,
+                            LegacyCallLetters = "WTTV",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 6001,
+                                ProgramName = "Fallback program",
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 60001,
+                                    StartTime = 200,
+                                    EndTime = 299,
+                                    Saturday = true,
+                                    Sunday = true
+                                }
+                            }
+                        }
+                    },
+                };
+        }
+
+        private MarketCoverageByStation _GetMarketCoverages()
+        {
+            return new MarketCoverageByStation
+            {
+                Markets = new List<MarketCoverageByStation.Market>
+                {
+                    new MarketCoverageByStation.Market
+                    {
+                        MarketCode = 100,
+                        Rank = 2,
+                        MarketName = "Binghamton",
+                        Stations = new List<MarketCoverageByStation.Station>
+                        {
+                            new MarketCoverageByStation.Station
+                            {
+                                Id = 101,
+                                LegacyCallLetters = "A101"
+                            }
+                        }
+                    },
+                    new MarketCoverageByStation.Market
+                    {
+                        MarketCode = 200,
+                        Rank = 1,
+                        MarketName = "New York",
+                        Stations = new List<MarketCoverageByStation.Station>
+                        {
+                            new MarketCoverageByStation.Station
+                            {
+                                Id = 201,
+                                LegacyCallLetters = "B201"
+                            }
+                        }
+                    },
+                    new MarketCoverageByStation.Market
+                    {
+                        MarketCode = 300,
+                        Rank = 3,
+                        MarketName = "Macon",
+                        Stations = new List<MarketCoverageByStation.Station>
+                        {
+                            new MarketCoverageByStation.Station
+                            {
+                                Id = 301,
+                                LegacyCallLetters = "C301"
+                            }
+                        }
+                    }
                 }
             };
         }

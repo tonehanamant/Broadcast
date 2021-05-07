@@ -486,8 +486,8 @@ namespace Services.Broadcast.Repositories
             var spots = result.UnallocatedSpots;
             foreach (var allocated in result.AllocatedSpots)
             {
-                var existingSpot = spots.SingleOrDefault(s => 
-                    s.Id == allocated.Id && 
+                var existingSpot = spots.SingleOrDefault(s =>
+                    s.Id == allocated.Id &&
                     s.ContractMediaWeek == allocated.ContractMediaWeek);
 
                 if (existingSpot == null)
@@ -558,7 +558,7 @@ namespace Services.Broadcast.Repositories
 
         /// <inheritdoc/>
         public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode )
+            SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -577,7 +577,7 @@ namespace Services.Broadcast.Repositories
                     : 0;
 
                 var resultSpotLists = _MapToResultSpotLists(apiResult.plan_version_buying_api_result_spots);
-                
+
                 var allocationResult = new PlanBuyingAllocationResult
                 {
                     BuyingCpm = apiResult.optimal_cpm,
@@ -601,7 +601,7 @@ namespace Services.Broadcast.Repositories
             {
                 var result = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_band_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    .Where(x => x.plan_version_buying_job_id == jobId &&
                     x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -611,7 +611,7 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanBuyingBandsDto
                 {
-                    BuyingJobId= result.plan_version_buying_job_id,
+                    BuyingJobId = result.plan_version_buying_job_id,
                     SpotAllocationModelMode = spotAllocationModelMode,
                     Totals = new PlanBuyingProgramTotalsDto
                     {
@@ -696,7 +696,7 @@ namespace Services.Broadcast.Repositories
             {
                 var entity = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_market_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    .Where(x => x.plan_version_buying_job_id == jobId &&
                         x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -886,7 +886,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, 
+        public CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId,
             SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
@@ -901,7 +901,7 @@ namespace Services.Broadcast.Repositories
                 if (result == null)
                     return null;
 
-                var BuyingResult= new CurrentBuyingExecutionResultDto
+                var BuyingResult = new CurrentBuyingExecutionResultDto
                 {
                     OptimalCpm = result.optimal_cpm,
                     JobId = result.plan_version_buying_job_id,
@@ -909,7 +909,7 @@ namespace Services.Broadcast.Repositories
                     GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
                     HasResults = result.plan_version_buying_result_spots.Any(),
                     SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode,
-                    PostingType= (PostingTypeEnum)result.posting_type
+                    PostingType = (PostingTypeEnum)result.posting_type
                 };
                 return BuyingResult;
             });
@@ -922,7 +922,7 @@ namespace Services.Broadcast.Repositories
             {
                 var result = context.plan_version_buying_results
                     .Include(p => p.plan_version_buying_station_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    .Where(x => x.plan_version_buying_job_id == jobId &&
                     x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -1114,7 +1114,7 @@ namespace Services.Broadcast.Repositories
             {
                 var result = context.plan_version_buying_results
                     .Include(p => p.plan_version_buying_rep_firm_details)
-                    .Where(x => x.plan_version_buying_job_id == jobId && 
+                    .Where(x => x.plan_version_buying_job_id == jobId &&
                     x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -1193,7 +1193,7 @@ namespace Services.Broadcast.Repositories
         {
             // HACK : When the entity is retrieved the ContractWeek and InventoryWeek entities are sometimes getting flipped.
             // Be sure to use the correct one by referencing the explicitly stored id.
-            var weeks = new List<media_weeks> {spot.inventory_media_week, spot.contract_media_week};
+            var weeks = new List<media_weeks> { spot.inventory_media_week, spot.contract_media_week };
             // they both may be same week, so don't use single().
             var inventoryWeek = weeks.First(w => w.id == spot.inventory_media_week_id);
             var contractWeek = weeks.First(w => w.id == spot.contract_media_week_id);
@@ -1255,13 +1255,14 @@ namespace Services.Broadcast.Repositories
 
                     .Include(x => x.plan_version_buying_api_result_spots)
                     .Include(x => x.plan_version_buying_api_result_spots.Select(s => s.inventory_media_week))
+                    .Include(x => x.plan_version_buying_api_result_spots.Select(s => s.plan_version_buying_api_result_spot_frequencies))
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
                 if (apiResult == null)
                     throw new Exception($"No buying runs were found for the plan {planId}");
 
-                return apiResult.plan_version_buying_api_result_spots.Select(_MapToPlanBuyingAllocatedSpot).ToList();
+                return apiResult.plan_version_buying_api_result_spots.Where(x => x.plan_version_buying_api_result_spot_frequencies.Any(y => y.spots > 0)).Select(_MapToPlanBuyingAllocatedSpot).ToList();
             });
         }
 
