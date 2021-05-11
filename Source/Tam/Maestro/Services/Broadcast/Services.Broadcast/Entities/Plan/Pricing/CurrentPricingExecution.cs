@@ -1,5 +1,4 @@
 ﻿using Services.Broadcast.Entities.Enums;
-using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -26,5 +25,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PostingTypeEnum PostingType { get; set; }
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
         public double CalculatedVpvh { get; set; }
+        public decimal TotalBudget { get; set; }
+        public double TotalImpressions { get; set; }
     }
 }

@@ -18,6 +18,8 @@
     "OptimalCpm": 0.0,
     "PlanVersionId": null,
     "PostingType": 0,
-    "SpotAllocationModelMode": 1
+    "SpotAllocationModelMode": 1,
+    "TotalBudget": 0.0,
+    "TotalImpressions": 0.0
   }
 }

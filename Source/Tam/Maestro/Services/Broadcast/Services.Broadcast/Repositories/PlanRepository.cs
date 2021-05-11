@@ -2227,7 +2227,9 @@ namespace Services.Broadcast.Repositories
                 GoalFulfilledByProprietary = entity.goal_fulfilled_by_proprietary,
                 HasResults = entity.plan_version_pricing_result_spots.Any(),
                 SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,
-                CalculatedVpvh = entity.calculated_vpvh ?? 0.0
+                CalculatedVpvh = entity.calculated_vpvh ?? 0.0,
+                TotalBudget = entity.total_budget,
+                TotalImpressions = entity.total_impressions
             };
             return dto;
         }

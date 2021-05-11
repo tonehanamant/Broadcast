@@ -13,6 +13,8 @@
     "Notes": "",
     "OptimalCpm": 17.8691,
     "PostingType": 2,
-    "SpotAllocationModelMode": 1
+    "SpotAllocationModelMode": 1,
+    "TotalBudget": 5560.0000,
+    "TotalImpressions": 311150.0
   }
 }

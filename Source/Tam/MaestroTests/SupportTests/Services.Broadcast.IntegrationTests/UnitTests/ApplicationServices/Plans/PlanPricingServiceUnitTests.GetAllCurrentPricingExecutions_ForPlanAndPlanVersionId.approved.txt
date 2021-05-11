@@ -21,7 +21,9 @@
       "OptimalCpm": 11.0,
       "PlanVersionId": 659,
       "PostingType": 2,
-      "SpotAllocationModelMode": 3
+      "SpotAllocationModelMode": 3,
+      "TotalBudget": 37220.625,
+      "TotalImpressions": 1010680.0
     },
     {
       "CalculatedVpvh": 4.6,
@@ -33,7 +35,9 @@
       "OptimalCpm": 7.0,
       "PlanVersionId": 659,
       "PostingType": 1,
-      "SpotAllocationModelMode": 3
+      "SpotAllocationModelMode": 3,
+      "TotalBudget": 37220.625,
+      "TotalImpressions": 1010680.0
     },
     {
       "CalculatedVpvh": 6.2,
@@ -45,7 +49,9 @@
       "OptimalCpm": 12.0,
       "PlanVersionId": 659,
       "PostingType": 1,
-      "SpotAllocationModelMode": 2
+      "SpotAllocationModelMode": 2,
+      "TotalBudget": 37220.625,
+      "TotalImpressions": 1010680.0
     },
     {
       "CalculatedVpvh": 126.3,
@@ -57,7 +63,9 @@
       "OptimalCpm": 8.0,
       "PlanVersionId": 659,
       "PostingType": 2,
-      "SpotAllocationModelMode": 2
+      "SpotAllocationModelMode": 2,
+      "TotalBudget": 37220.625,
+      "TotalImpressions": 1010680.0
     },
     {
       "CalculatedVpvh": 3.1,
@@ -69,7 +77,9 @@
       "OptimalCpm": 28.0,
       "PlanVersionId": 659,
       "PostingType": 1,
-      "SpotAllocationModelMode": 1
+      "SpotAllocationModelMode": 1,
+      "TotalBudget": 37220.625,
+      "TotalImpressions": 1010680.0
     },
     {
       "CalculatedVpvh": 8.2,
@@ -81,7 +91,9 @@
       "OptimalCpm": 20.0,
       "PlanVersionId": 659,
       "PostingType": 2,
-      "SpotAllocationModelMode": 1
+      "SpotAllocationModelMode": 1,
+      "TotalBudget": 37220.625,
+      "TotalImpressions": 1010680.0
     }
   ]
 }
