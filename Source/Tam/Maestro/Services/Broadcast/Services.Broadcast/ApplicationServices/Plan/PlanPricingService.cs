@@ -630,7 +630,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var isPostingTypeToggleEnabled =
                            _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
             expectedResult = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
-            result= ValidatePricingExecutionResult(result, expectedResult);
+
+            // SDE BP-2419 : Commenting this out 
+            // putting this caused an issue with pre-existing plans that didn't have all 6 flavors
+            // result= ValidatePricingExecutionResult(result, expectedResult);
             return result;
         }
         internal CurrentPricingExecutions ValidatePricingExecutionResult(CurrentPricingExecutions result, int expectedResult)
