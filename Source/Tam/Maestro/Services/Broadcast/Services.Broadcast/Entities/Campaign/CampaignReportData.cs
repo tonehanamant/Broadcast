@@ -510,6 +510,21 @@ namespace Services.Broadcast.Entities.Campaign
             var hiatusDaysCount = tableData.HiatusDays.SelectMany(x => x).Count();
             tableData.HiatusDaysFormattedValues.Add(hiatusDaysCount == 0 ? (int?)null : hiatusDaysCount);
         }
+        private void _CalculateTotalsForFlowChartTableSummary(FlowChartQuarterTableData tableData)
+        {
+            tableData.DistributionPercentages.Add(tableData.DistributionPercentages.DoubleSumOrDefault());
+            tableData.UnitsValues.Add(tableData.UnitsValues.Sum(x => Convert.ToDouble(x)));
+            double impressions = tableData.ImpressionsValues.Sum(x => Convert.ToDouble(x));
+            tableData.ImpressionsValues.Add(impressions);
+            decimal cost = tableData.CostValues.Sum(x => Convert.ToDecimal(x));
+            tableData.CostValues.Add(cost);
+            tableData.CPMValues.Add(_CalculateCost(impressions, cost));
+            var hiatusDaysCount = tableData.HiatusDays.SelectMany(x => x).Count();
+            if (hiatusDaysCount > 0)
+            {
+                tableData.HiatusDaysFormattedValues.Add("X");
+            }
+        }
 
         //this is total on adu table
         private void _CalculateTotalsForAduTable(FlowChartQuarterTableData tableData)
@@ -607,6 +622,19 @@ namespace Services.Broadcast.Entities.Campaign
                 tableData.CostValues.Add(cost);
                 tableData.CPMValues.Add(_CalculateCost(impressions, cost));
 
+                var hiatusDaysThisWeek = afterQuaterFilterSummaryTable.SelectMany(x => x.HiatusDays[i]).ToList();
+                hiatusDaysThisWeek = hiatusDaysThisWeek.Distinct().ToList();
+                tableData.HiatusDays.Add(hiatusDaysThisWeek);
+                var hiatusDaysThisWeekCount = hiatusDaysThisWeek.Count();
+                if (hiatusDaysThisWeekCount > 0)
+                {
+                    tableData.HiatusDaysFormattedValues.Add("X");
+                }
+                else
+                {
+                    tableData.HiatusDaysFormattedValues.Add("");
+                }
+
                 //multiply impressions by 1000 to get the raw number because the total impressions are in raw format
                 var distributionPercentage = totalImpressions == 0
                     ? 0
@@ -617,7 +645,7 @@ namespace Services.Broadcast.Entities.Campaign
             tablesInQuarterDaypart.Clear();
             tablesInQuarterDaypart.AddRange(finalSummaryTable);
 
-            _CalculateTotalsForFlowChartTable(tableData);
+            _CalculateTotalsForFlowChartTableSummary(tableData);
             FlowChartQuarterTables.Add(tableData);
             
         }

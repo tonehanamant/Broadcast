@@ -3,6 +3,7 @@ using Services.Broadcast.Entities.Campaign;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
@@ -13,6 +14,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly int THIRD_MONTH_COLUMN_INDEX = 11;
         private readonly string TABLE_TITLE_COLUMN = "B";
         private readonly (string Column, int Row) DAYPARTS = ("D", 5);
+
+        private string[] hiatusDaysColumn = { "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P" };
 
         private readonly string TABLE_12_WEEKS = "A2:O9";
 
@@ -146,7 +149,13 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT_LARGE;
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
                 .LoadFromArrays(new List<object[]> { table.HiatusDaysFormattedValues.ToArray() });
-
+            if (table.TableTitle.Contains("Summary"))
+            {
+                for (int i = 0; i < table.HiatusDaysFormattedValues.Count; i++)
+                {
+                    flowChartWorksheet.Cells[$"{hiatusDaysColumn[i]}{currentRowIndex}"].Style.Font.Color.SetColor(System.Drawing.Color.Red);
+                }
+            }
             //next table will be starting 2 rows down
             currentRowIndex += 2;
         }
