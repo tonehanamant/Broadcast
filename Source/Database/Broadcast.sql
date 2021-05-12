@@ -93,9 +93,15 @@ FROM system_settings.dbo.system_component_parameters
 WHERE component_id = 'MaestroEnvironment'
 AND parameter_key = 'Environment'
 
+SELECT @urlBase = CASE 
+		WHEN @envName = 'PROD' THEN 'http://[MachineName]/aabapiinternal/api/v1'
+		ELSE 'https://[MachineName]/aabapi/api/v1'
+	END
+
+
 SELECT @envUrl = CASE 
-		WHEN @envName = 'PROD' AND @IsStg = 1 THEN REPLACE(@urlBase, '[MachineName]', 'stg.cadent.tv')
-		WHEN @envName = 'PROD' THEN REPLACE(@urlBase, '[MachineName]', 'platform.cadent.tv')
+		WHEN @envName = 'PROD' AND @IsStg = 1 THEN REPLACE(@urlBase, '[MachineName]', 'cadapps-stg6.crossmw.com')
+		WHEN @envName = 'PROD' THEN REPLACE(@urlBase, '[MachineName]', 'cadapps-prod6.crossmw.com')
 		WHEN @envName = 'UAT' THEN REPLACE(@urlBase, '[MachineName]', 'cadapps-uat1.crossmw.com')
 		WHEN @envName = 'QA' THEN REPLACE(@urlBase, '[MachineName]', 'test.cadent.tv')
 		ELSE REPLACE(@urlBase, '[MachineName]', 'cd.cadent.tv')
