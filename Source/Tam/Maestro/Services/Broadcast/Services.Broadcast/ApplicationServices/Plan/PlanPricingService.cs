@@ -598,6 +598,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private CurrentPricingExecutions _GetAllCurrentPricingExecutions(PlanPricingJob job)
         {
+            int expectedResult = 0;
             List<CurrentPricingExecutionResultDto> pricingExecutionResults = null;
             _PricingRunmodelJobValidation(job);
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
@@ -623,9 +624,49 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }, 
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
-            return result;
-        }        
+            var isPricingEfficiencyModelEnabled =
+                          _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
 
+            var isPostingTypeToggleEnabled =
+                           _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
+            expectedResult = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+            result= ValidatePricingExecutionResult(result, expectedResult);
+            return result;
+        }
+        internal CurrentPricingExecutions ValidatePricingExecutionResult(CurrentPricingExecutions result, int expectedResult)
+        {
+            if (result.IsPricingModelRunning == false)
+                {
+                    if (result.Results.Count!= expectedResult)
+                    {
+                    result.IsPricingModelRunning = true;
+                       
+                    }
+                }
+            return result;
+        }
+        internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled,bool isPostingTypeToggleEnabled)
+        {
+            int expectedResult = 0;
+            
+            if (!isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            {
+                expectedResult = 1;
+            }
+            else if (!isPricingEfficiencyModelEnabled && isPostingTypeToggleEnabled)
+            {
+                expectedResult = 2;
+            }
+            else if (isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            {
+                expectedResult = 3;
+            }
+            else
+            {
+                expectedResult = 6;
+            }
+            return expectedResult;
+        }
         private static void _PricingRunmodelJobValidation(PlanPricingJob job)
         {
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)

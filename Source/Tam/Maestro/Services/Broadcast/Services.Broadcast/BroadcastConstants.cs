@@ -52,6 +52,7 @@
         public static string ENABLE_EXPORT_PRE_BUY = "broadcast-enable-export-pre-buy";
         public static string ENABLE_AAB_NAVIGATION = "broadcast-enable-aab-navigation";
         public static string ENABLE_PRICING_EFFICIENCY_MODEL = "broadcast-enable-pricing-efficiency-model";
+        public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";
         public static string ENABLE_PLAN_MARKET_SOV_CALCULATIONS = "broadcast-enable-plan-market-sov-calculations";
     }
 }

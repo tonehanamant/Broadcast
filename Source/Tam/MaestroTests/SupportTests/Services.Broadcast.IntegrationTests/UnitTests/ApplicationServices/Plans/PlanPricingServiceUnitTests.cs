@@ -1094,11 +1094,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
-        protected PlanPricingServiceUnitTestClass _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
+        protected PlanPricingServiceUnitTestClass _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false,
+                                                                bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
         {
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
 
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
@@ -6029,7 +6032,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAllCurrentPricingExecutions_ForPlanId()
@@ -6053,11 +6056,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.GetAllPricingResultsByJobIds(JobID))
                 .Returns(_GetCurrentPricingExecutionsResults());
-           
+
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
 
-            var service = _GetService();
+            var service = _GetService(false,false,true,true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId,null);
@@ -6130,7 +6133,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
 
-            var service = _GetService();
+            var service = _GetService(false,false,true,true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, PlanVersionId);
@@ -10616,7 +10619,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.All,
                 PostingType = PostingTypeEnum.NSI
-            }; 
+            };
 
             plan.PricingParameters = pricingParameters;
             var proprietaryData = new ProprietaryInventoryData();
@@ -10792,6 +10795,79 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             //assert
             Assert.IsTrue(result.All(x => x.ShareOfVoice.Any()));
             Assert.IsTrue(result.All(x => x.CpmGoal != 1));
+        }
+
+        [Test]
+        [TestCase(false, false, 1)]
+        [TestCase(false, true, 2)]
+        [TestCase(true, false, 3)]
+        [TestCase(true, true, 6)]
+        public void PricingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled, int expectedResult)
+        {
+            var service = _GetService();
+            // Act
+            var count = service.PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+            // Assert     
+            Assert.AreEqual(count, expectedResult);
+        }
+        [Test]
+        public void ValidatePricingExecutionResultTest()
+        {
+          
+            int expectedResult = 3;
+            var result = new CurrentPricingExecutions
+            {
+                Job = new PlanPricingJob
+                {
+                    Id = 1,
+                    HangfireJobId = "11268",
+                    PlanVersionId = 801,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Queued = new DateTime(2011, 05, 22),
+                    Completed = new DateTime(2011, 05, 22),
+                    ErrorMessage = null,
+                    DiagnosticResult = "setting job status to processing"
+                },
+                Results = new List<CurrentPricingExecutionResultDto>
+                {
+                                 new CurrentPricingExecutionResultDto
+                                    {
+                                       OptimalCpm=21,JobId=755,
+                                        PlanVersionId=805,
+                                        GoalFulfilledByProprietary=false,
+                                        Notes="",
+                                        HasResults=true,
+                                        CpmPercentage=4,
+                                        PostingType=PostingTypeEnum.NTI,
+                                        SpotAllocationModelMode=SpotAllocationModelMode.Quality,
+                                        CalculatedVpvh=0,
+                                        TotalBudget=19939,
+                                        TotalImpressions=870597
+                                    },
+                                    new CurrentPricingExecutionResultDto
+                                    {
+                                       OptimalCpm=21,JobId=755,
+                                        PlanVersionId=805,
+                                        GoalFulfilledByProprietary=false,
+                                        Notes="",
+                                        HasResults=true,
+                                        CpmPercentage=4,
+                                        PostingType=PostingTypeEnum.NTI,
+                                        SpotAllocationModelMode=SpotAllocationModelMode.Quality,
+                                        CalculatedVpvh=0,
+                                        TotalBudget=19939,
+                                        TotalImpressions=870597
+                                    }
+                }
+            };
+
+
+
+            var service = _GetService();
+            // Act
+            var results = service.ValidatePricingExecutionResult(result, expectedResult);
+            // Assert     
+            Assert.AreEqual(results.IsPricingModelRunning, true);
         }
 
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()
