@@ -10870,6 +10870,44 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(results.IsPricingModelRunning, true);
         }
 
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, 3, true)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, 5, true)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, 6, false)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, 3, true)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, 5, true)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, 6, false)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, 3, true)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, 5, true)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, 6, false)]
+        [TestCase(BackgroundJobProcessingStatus.Processing, 3, false)]
+        [TestCase(BackgroundJobProcessingStatus.Queued, 3, false)]
+        public void DidPricingJobCompleteWithinThreshold(BackgroundJobProcessingStatus status, int completedMinutesAgo, bool expectedResult)
+        {
+            var currentDateTime = new DateTime(2021, 5, 14, 12, 30, 0);
+            var completedMinutes = currentDateTime.Minute - completedMinutesAgo;
+
+            DateTime? completedWhen = null;
+            if (status != BackgroundJobProcessingStatus.Processing && 
+                status != BackgroundJobProcessingStatus.Queued)
+            {
+                completedWhen = new DateTime(2021, 5, 14, 12, completedMinutes, 0);
+            }
+
+            var job = new PlanPricingJob
+            {
+                Id = 1,
+                Status = status,
+                Completed = completedWhen
+            };
+
+            var service = _GetService();
+            service.UT_CurrentDateTime = currentDateTime;
+
+            var result = service._DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
+
+            Assert.AreEqual(expectedResult, result);
+        }
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()
         {
             return new List<PlanPricingInventoryProgram>

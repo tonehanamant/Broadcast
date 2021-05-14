@@ -598,7 +598,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private CurrentPricingExecutions _GetAllCurrentPricingExecutions(PlanPricingJob job)
         {
-            int expectedResult = 0;
             List<CurrentPricingExecutionResultDto> pricingExecutionResults = null;
             _PricingRunmodelJobValidation(job);
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
@@ -624,30 +623,49 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }, 
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
-            var isPricingEfficiencyModelEnabled =
-                          _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
 
-            var isPostingTypeToggleEnabled =
-                           _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
-            expectedResult = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+            if (job?.Status != BackgroundJobProcessingStatus.Succeeded)
+            {
+                return result;
+            }
 
-            // SDE BP-2419 : Commenting this out 
-            // putting this caused an issue with pre-existing plans that didn't have all 6 flavors
-            // result= ValidatePricingExecutionResult(result, expectedResult);
+            var jobCompletedWithinLastFiveMinutes = _DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
+            if (jobCompletedWithinLastFiveMinutes)
+            {
+                var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
+                var isPostingTypeToggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
+
+                var expectedResultCount = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+                result = ValidatePricingExecutionResult(result, expectedResultCount);
+            }
+
             return result;
         }
+
+        internal bool _DidPricingJobCompleteWithinThreshold(PlanPricingJob job, int thresholdMinutes)
+        {
+            if (!job.Completed.HasValue)
+            {
+                return false;
+            }
+
+            DateTime thresholdMinutesAgo = _GetCurrentDateTime().AddMinutes(-1 * thresholdMinutes);
+            var jobCompletedWithinLastFiveMinutes = job.Completed.Value >= thresholdMinutesAgo;
+            return jobCompletedWithinLastFiveMinutes;
+        }
+
         internal CurrentPricingExecutions ValidatePricingExecutionResult(CurrentPricingExecutions result, int expectedResult)
         {
             if (result.IsPricingModelRunning == false)
+            {
+                if (result.Results.Count!= expectedResult)
                 {
-                    if (result.Results.Count!= expectedResult)
-                    {
                     result.IsPricingModelRunning = true;
-                       
-                    }
                 }
+            }
             return result;
         }
+
         internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled,bool isPostingTypeToggleEnabled)
         {
             int expectedResult = 0;
@@ -670,6 +688,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             return expectedResult;
         }
+
         private static void _PricingRunmodelJobValidation(PlanPricingJob job)
         {
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
