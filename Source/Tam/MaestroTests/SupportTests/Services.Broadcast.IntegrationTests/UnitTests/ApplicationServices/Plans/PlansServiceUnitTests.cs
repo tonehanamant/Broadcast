@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Castle.Components.DictionaryAdapter;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -1249,7 +1250,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var results = _PlanService.Calculate(planBudget);
+            var results = _PlanService.CalculateBudget(planBudget);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
@@ -2109,6 +2110,208 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(testBudget, ntiResult.Budget);
             _NtiToNsiConversionRepository.Verify(s => s.GetLatestNtiToNsiConversionRates(), Times.Once);
             _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Exactly(2));
+        }
+
+        [Test]
+        public void CommitPricingAllocationModel_NoJob()
+        {
+            const string username = "testUser";
+            const PostingTypeEnum testPostingType = PostingTypeEnum.NSI;
+            const SpotAllocationModelMode testSpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+
+            var beforePlan = _GetNewPlan();
+            beforePlan.PostingType = PostingTypeEnum.NTI;
+            beforePlan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+            beforePlan.Budget = 50000;
+            beforePlan.TargetImpressions = 1200000;
+            beforePlan.TargetCPM = 555.6m;
+            beforePlan.Vpvh = 12; // this is the user entered VPVH
+            var planId = beforePlan.Id;
+
+            _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
+                .Returns(beforePlan);
+
+            _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new CurrentPricingExecutions());
+
+            var caught = Assert.Throws<InvalidOperationException>(() =>
+                _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode,
+                    testPostingType, username));
+
+            Assert.IsTrue(caught.Message.Contains($"Did not find a pricing job for PlanId='{planId}'"));
+        }
+
+        [Test]
+        public void CommitPricingAllocationModel_NoJobResults()
+        {
+            const string username = "testUser";
+            const PostingTypeEnum testPostingType = PostingTypeEnum.NSI;
+            const SpotAllocationModelMode testSpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+
+            var beforePlan = _GetNewPlan();
+            beforePlan.PostingType = PostingTypeEnum.NTI;
+            beforePlan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+            beforePlan.Budget = 50000;
+            beforePlan.TargetImpressions = 1200000;
+            beforePlan.TargetCPM = 555.6m;
+            beforePlan.Vpvh = 12; // this is the user entered VPVH
+            var planId = beforePlan.Id;
+
+            _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
+                .Returns(beforePlan);
+
+            _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new CurrentPricingExecutions
+                {
+                    Job = new PlanPricingJob()
+                });
+
+            var caught = Assert.Throws<InvalidOperationException>(() =>
+                _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode,
+                    testPostingType, username));
+
+            Assert.IsTrue(caught.Message.Contains($"Did not find pricing results for PlanId='{planId}'"));
+        }
+
+        [Test]
+        public void CommitPricingAllocationModel()
+        {
+            // Arrange
+            const string username = "testUser";
+            const PostingTypeEnum testPostingType = PostingTypeEnum.NSI;
+            const SpotAllocationModelMode testSpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+            const decimal testBudget = 70000m;
+            const int testImpressions = 2200000;
+            const decimal testOptimalCpm = 123.4m;
+            const int testAudienceId = 31;
+            const int testExpectedPlanVersionNumber = 11;
+            const int testExpectedPlanVersionId = 666;
+
+            var beforePlan = _GetNewPlan();
+            beforePlan.PostingType = PostingTypeEnum.NTI;
+            beforePlan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+            beforePlan.Budget = 50000;
+            beforePlan.TargetImpressions = 1200000;
+            beforePlan.TargetCPM = 555.6m;
+            beforePlan.Vpvh = 12; // this is the user entered VPVH
+            beforePlan.AudienceId = testAudienceId;
+            beforePlan.Id = 23;
+            beforePlan.VersionNumber = 2;
+            beforePlan.VersionId = 24;
+
+            var afterPlanDto = new PlanDto {VersionId = 666};
+
+            _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
+                .Returns(beforePlan)
+                .Returns(afterPlanDto);
+
+            _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new CurrentPricingExecutions
+                {
+                    Job = new PlanPricingJob(),
+                    Results = new List<CurrentPricingExecutionResultDto>
+                    {
+                        new CurrentPricingExecutionResultDto
+                        {
+                            SpotAllocationModelMode = testSpotAllocationModelMode,
+                            PostingType = testPostingType,
+                            OptimalCpm = testOptimalCpm,
+                            TotalBudget = testBudget,
+                            TotalImpressions = testImpressions,
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock.Setup(s => s.GetLatestVersionNumberForPlan(It.IsAny<int>()))
+                .Returns(10);
+
+            var savedPlans = new List<PlanDto>();
+            _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<PlanDto, string, DateTime>((p, v, c) => savedPlans.Add(p));
+
+            var calculateBudgetParams = new List<PlanDeliveryBudget>();
+            _PlanBudgetDeliveryCalculatorMock.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Callback<PlanDeliveryBudget>((s) => calculateBudgetParams.Add(s))
+                .Returns<PlanDeliveryBudget>((b) => new PlanDeliveryBudget {Impressions = testImpressions, RatingPoints = 12, CPP = 1522, 
+                    Universe = 8000000, CPM = b.CPM ?? 8.3m, Budget = b.Budget ?? 125000});
+
+            var weeklyBreakdownRequests = new List<WeeklyBreakdownRequest>();
+            _WeeklyBreakdownEngineMock
+                .Setup(s => s.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Callback<WeeklyBreakdownRequest>(r => weeklyBreakdownRequests.Add(r))
+                .Returns<WeeklyBreakdownRequest>(r => new WeeklyBreakdownResponseDto
+                {
+                    TotalActiveDays = 1,
+                    TotalShareOfVoice = 2,
+                    TotalImpressions = 3,
+                    TotalRatingPoints = 4,
+                    TotalImpressionsPercentage = 5,
+                    TotalBudget = 6,
+                    TotalUnits = 7,
+                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27} }
+                });
+
+            _WeeklyBreakdownEngineMock.Setup(s =>
+                    s.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByStandardDaypart>());
+
+            _WeeklyBreakdownEngineMock.Setup(s =>
+                    s.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(),
+                        It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Returns(new PlanSummaryDto());
+
+            int pricingNewVersion = -1;
+            _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback<int,int>((n,o) => pricingNewVersion = n);
+
+            int buyingNewVersion = -1;
+            _PlanRepositoryMock.Setup(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback<int, int>((n, o) => buyingNewVersion = n);
+
+            // Act
+            var results = _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username,
+                aggregatePlanSynchronously:true);
+            
+            // Assert
+            Assert.IsTrue(results);
+            // Validate saved correct info
+            Assert.AreEqual(1, savedPlans.Count);
+            var savedPlan = savedPlans.First();
+            Assert.AreEqual(testImpressions, savedPlan.TargetImpressions);
+            Assert.AreEqual(testBudget, savedPlan.Budget);
+            Assert.AreEqual(testOptimalCpm, savedPlan.TargetCPM);
+            Assert.AreEqual(testSpotAllocationModelMode, savedPlan.SpotAllocationModelMode);
+            Assert.AreEqual(testPostingType, savedPlan.PostingType);
+            Assert.AreEqual(testExpectedPlanVersionNumber, savedPlan.VersionNumber);
+            // Validate sent correct to the calculator
+            Assert.AreEqual(2, calculateBudgetParams.Count);
+            var sentCalculateBudgetParams = calculateBudgetParams.First();
+            Assert.AreEqual(testAudienceId, sentCalculateBudgetParams.AudienceId);
+            Assert.AreEqual(testBudget, sentCalculateBudgetParams.Budget);
+            Assert.AreEqual(testOptimalCpm, sentCalculateBudgetParams.CPM);
+            Assert.IsFalse(sentCalculateBudgetParams.Impressions.HasValue);
+            // Validate sent correct info to WeeklyBreakdown distributor
+            Assert.AreEqual(1, weeklyBreakdownRequests.Count);
+            var sentWeeklyBreakdownRequest = weeklyBreakdownRequests.First();
+            const string dateFormat = "yyyyMMdd";
+            Assert.AreEqual(beforePlan.FlightStartDate.Value.ToString(dateFormat), sentWeeklyBreakdownRequest.FlightStartDate.ToString(dateFormat));
+            Assert.AreEqual(beforePlan.FlightDays, sentWeeklyBreakdownRequest.FlightDays);
+            Assert.AreEqual(beforePlan.FlightHiatusDays, sentWeeklyBreakdownRequest.FlightHiatusDays);
+            Assert.AreEqual(beforePlan.GoalBreakdownType, sentWeeklyBreakdownRequest.DeliveryType);
+            Assert.AreEqual(beforePlan.TargetImpressions.Value, sentWeeklyBreakdownRequest.TotalImpressions);
+            Assert.AreEqual(beforePlan.Budget.Value, sentWeeklyBreakdownRequest.TotalBudget);
+            Assert.AreEqual(WeeklyBreakdownCalculationFrom.Impressions, sentWeeklyBreakdownRequest.WeeklyBreakdownCalculationFrom);
+            Assert.AreEqual(beforePlan.WeeklyBreakdownWeeks, sentWeeklyBreakdownRequest.Weeks);
+            Assert.AreEqual(beforePlan.CreativeLengths, sentWeeklyBreakdownRequest.CreativeLengths);
+            Assert.AreEqual(beforePlan.Dayparts, sentWeeklyBreakdownRequest.Dayparts);
+            Assert.AreEqual(beforePlan.ImpressionsPerUnit, sentWeeklyBreakdownRequest.ImpressionsPerUnit);
+            Assert.AreEqual(beforePlan.Equivalized, sentWeeklyBreakdownRequest.Equivalized);
+            // Validate it tied in the results.
+            Assert.AreEqual(testExpectedPlanVersionId, pricingNewVersion);
+            Assert.AreEqual(testExpectedPlanVersionId, buyingNewVersion);
         }
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions

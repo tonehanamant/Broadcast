@@ -1489,7 +1489,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase1()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 Budget = 100m,
                 Impressions = 3000d,
@@ -1503,7 +1503,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase2()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPM = 100m,
                 Impressions = 3000d,
@@ -1517,7 +1517,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase3()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPM = 100m,
                 Budget = 3000m,
@@ -1531,7 +1531,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase4()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPP = 100m,
                 Budget = 3000m,
@@ -1545,7 +1545,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase5()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPP = 100m,
                 RatingPoints = 3000d,
@@ -1559,7 +1559,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase6()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 Budget = 100m,
                 RatingPoints = 3000d,
@@ -1573,7 +1573,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase7()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 Budget = 1000,
                 RatingPoints = 0,
@@ -1588,7 +1588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase8()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPM = 13.45m,
                 Impressions = 13.456d,
@@ -1602,7 +1602,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase9()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 Budget = 3000,
                 Impressions = 3000d,
@@ -1616,7 +1616,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase10()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPM = 1,
                 Impressions = 3000d,
@@ -1630,7 +1630,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Calculator_TestCase11()
         {
-            var result = _PlanService.Calculate(new PlanDeliveryBudget
+            var result = _PlanService.CalculateBudget(new PlanDeliveryBudget
             {
                 CPM = 1,
                 Budget = 3000,
@@ -1645,7 +1645,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
+                Assert.That(() => _PlanService.CalculateBudget(new PlanDeliveryBudget
                 {
                     Budget = null,
                     CPM = null,
@@ -1661,7 +1661,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
+                Assert.That(() => _PlanService.CalculateBudget(new PlanDeliveryBudget
                 {
                     Budget = 1,
                     CPM = 1,
@@ -1677,7 +1677,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
+                Assert.That(() => _PlanService.CalculateBudget(new PlanDeliveryBudget
                 {
                     Budget = -1,
                     CPM = null,

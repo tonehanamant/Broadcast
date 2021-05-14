@@ -7,6 +7,7 @@ using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -133,9 +134,9 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>PlanDeliveryBudget object containing the calculated value</returns>
         [HttpPost]
         [Route("CalculateBudget")]
-        public BaseResponse<PlanDeliveryBudget> Calculator(PlanDeliveryBudget planBudget)
+        public BaseResponse<PlanDeliveryBudget> CalculateBudget(PlanDeliveryBudget planBudget)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().Calculate(planBudget));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculateBudget(planBudget));
         }
 
         [HttpPost]
@@ -319,6 +320,19 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
                 .CalculateMarketWeightsClearAll(availableMarkets));
+        }
+
+        [HttpPost]
+        [Route("commit-pricing-allocation-model")]
+        public BaseResponse<bool> CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType)
+        {
+            var username = _GetCurrentUserFullName();
+
+            var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CommitPricingAllocationModel(planId, spotAllocationModelMode, postingType, username));
+
+            return result;
         }
     }
 }

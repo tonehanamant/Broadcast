@@ -77,7 +77,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="planBudget">The plan budget.</param>
         /// <returns>PlanDeliveryBudget object</returns>
-        PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget);
+        PlanDeliveryBudget CalculateBudget(PlanDeliveryBudget planBudget);
 
         /// <summary>
         /// Calculates the posting type budgets.
@@ -197,6 +197,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="availableMarkets">The available markets.</param>
         PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets);
+
+        /// <summary>
+        /// Updates the plan spot allocation mode.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">Type of the posting.</param>
+        /// <param name="username">The username.</param>
+        /// /// <param name="aggregatePlanSynchronously">if set to <c>true</c> [aggregate plan synchronously].</param>
+        /// <returns>True if the operation was successful, otherwise false.</returns>
+        bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType, 
+            string username, bool aggregatePlanSynchronously = false);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -1002,7 +1014,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public PlanDeliveryBudget Calculate(PlanDeliveryBudget planBudget)
+        public PlanDeliveryBudget CalculateBudget(PlanDeliveryBudget planBudget)
         {
             var impressionsHasValue = planBudget.Impressions.HasValue;
             if (impressionsHasValue)
@@ -1023,7 +1035,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             // calculate for the given posting type
             var originalBudgetInput = _MapRequestToBudget(budgetRequest);
-            var originalBudgetCalculationResult = Calculate(originalBudgetInput);
+            var originalBudgetCalculationResult = CalculateBudget(originalBudgetInput);
             var originalPostingTypeResults = _MapBudgetToResult(budgetRequest.PostingType, budgetRequest.StandardDaypartId, originalBudgetCalculationResult);
 
             // convert and calculate for the other posting type
@@ -1085,7 +1097,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             otherBudgetInput.Impressions = convertedImpressions;
             otherBudgetInput.RatingPoints = convertedRatingPoints;
 
-            var otherBudgetCalculationResult = Calculate(otherBudgetInput);
+            var otherBudgetCalculationResult = CalculateBudget(otherBudgetInput);
             var otherPostingTypeResults = _MapBudgetToResult(otherPostingType, budgetRequest.StandardDaypartId, otherBudgetCalculationResult);
 
             var results = new List<PlanDeliveryPostingTypeBudget>
@@ -1500,6 +1512,105 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = _PlanMarketSovCalculator.CalculateMarketWeightsClearAll(availableMarkets);
             return result;
+        }
+
+        /// <inheritdoc />
+        public bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType, string username, bool aggregatePlanSynchronously = false)
+        {
+            var beforePlan = _PlanRepository.GetPlan(planId);
+            var beforePlanVersionId = beforePlan.VersionId;
+
+            // get the latest pricing results per the given 
+            var jobExecutions = _PlanPricingService.GetAllCurrentPricingExecutions(planId, null);
+            if (jobExecutions.Job == null)
+            {
+                throw new InvalidOperationException($"Did not find a pricing job for PlanId='{planId}'.");
+            }
+
+            var pricingResults = jobExecutions.Results?.SingleOrDefault(s => 
+                s.SpotAllocationModelMode == spotAllocationModelMode && 
+                s.PostingType == postingType);
+
+            if (pricingResults == null)
+            {
+                throw new InvalidOperationException(
+                    $"Did not find pricing results for PlanId='{beforePlan.Id}'; JobId='{jobExecutions.Job.Id}'; SpotAllocationMode='{spotAllocationModelMode}'; PostingType='{postingType}';");
+            }
+
+            // Set these known values 
+            beforePlan.SpotAllocationModelMode = pricingResults.SpotAllocationModelMode;
+            beforePlan.PostingType = pricingResults.PostingType;
+
+            beforePlan.TargetCPM = pricingResults.OptimalCpm;
+            beforePlan.Budget = pricingResults.TotalBudget;
+
+            // We will recalculate the impressions and ratings components.
+            var planDeliveryBudget = new PlanDeliveryBudget
+            {
+                AudienceId = beforePlan.AudienceId,
+                Budget = pricingResults.TotalBudget,
+                CPM = pricingResults.OptimalCpm
+            };
+            var calculatedBudget = CalculateBudget(planDeliveryBudget);
+
+            // multiply by 1000 for Imps (000) because the CalculateMethod returns without them.
+            beforePlan.TargetImpressions = calculatedBudget.Impressions * 1000;
+            beforePlan.TargetRatingPoints = calculatedBudget.RatingPoints;
+            beforePlan.TargetCPP = calculatedBudget.CPP;
+
+            // recalculate the weekly breakdown table
+            var weeklyBreakdownRequest = new WeeklyBreakdownRequest
+            {
+                FlightStartDate = beforePlan.FlightStartDate.Value,
+                FlightEndDate = beforePlan.FlightEndDate.Value,
+                FlightDays = beforePlan.FlightDays,
+                FlightHiatusDays = beforePlan.FlightHiatusDays,
+                DeliveryType = beforePlan.GoalBreakdownType,
+                TotalImpressions = beforePlan.TargetImpressions.Value,
+                TotalRatings = beforePlan.TargetRatingPoints.Value,
+                TotalBudget = beforePlan.Budget.Value,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                Weeks = beforePlan.WeeklyBreakdownWeeks,
+                CreativeLengths = beforePlan.CreativeLengths,
+                Dayparts = beforePlan.Dayparts,
+                ImpressionsPerUnit = beforePlan.ImpressionsPerUnit,
+                Equivalized = beforePlan.Equivalized
+            };
+
+            var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);
+
+            beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;
+            beforePlan.WeeklyBreakdownTotals.TotalBudget = calculatedWeeklyBreakdown.TotalBudget;
+            beforePlan.WeeklyBreakdownTotals.TotalImpressions = calculatedWeeklyBreakdown.TotalImpressions;
+            beforePlan.WeeklyBreakdownTotals.TotalRatingPoints = calculatedWeeklyBreakdown.TotalRatingPoints;
+            beforePlan.WeeklyBreakdownTotals.TotalImpressionsPercentage = calculatedWeeklyBreakdown.TotalImpressionsPercentage;
+            beforePlan.WeeklyBreakdownTotals.TotalActiveDays = calculatedWeeklyBreakdown.TotalActiveDays;
+            beforePlan.WeeklyBreakdownTotals.TotalUnits = calculatedWeeklyBreakdown.TotalUnits;
+
+            beforePlan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(beforePlan);
+
+            // finalize pre-save
+            _CalculateDeliveryDataPerAudience(beforePlan);
+            _SetPlanVersionNumber(beforePlan);
+            
+            // save
+            var currentDateTime = _GetCurrentDateTime();
+            _PlanRepository.SavePlan(beforePlan, username, currentDateTime);
+
+            // finalize post-save
+            _UpdateCampaignLastModified(beforePlan.CampaignId, currentDateTime, username);
+            _DispatchPlanAggregation(beforePlan, aggregatePlanSynchronously); 
+            _CampaignAggregationJobTrigger.TriggerJob(beforePlan.CampaignId, username);
+
+            // promote the existing results to the new plan version
+            var afterPlan = _PlanRepository.GetPlan(planId);
+            var afterPlanVersionId = afterPlan.VersionId;
+            
+            _PlanRepository.UpdatePlanPricingVersionId(afterPlanVersionId, beforePlanVersionId);
+            _PlanRepository.UpdatePlanBuyingVersionId(afterPlanVersionId, beforePlanVersionId);
+
+            return true;
         }
     }
 }
