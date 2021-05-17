@@ -637,7 +637,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 var expectedResultCount = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
                 result = ValidatePricingExecutionResult(result, expectedResultCount);
-            }
+            }            
 
             return result;
         }
@@ -661,6 +661,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (result.Results.Count!= expectedResult)
                 {
                     result.IsPricingModelRunning = true;
+                    result.Results = new List<CurrentPricingExecutionResultDto>();
                 }
             }
             return result;
