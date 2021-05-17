@@ -7,6 +7,7 @@ using Hangfire.States;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
@@ -10907,6 +10908,92 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service._DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
 
             Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        [TestCase(1, false, false)]
+        [TestCase(1, true, false)]
+        [TestCase(1, true, true)]
+        [TestCase(2, true, false)]
+        [TestCase(2, true, true)]
+        [TestCase(6, true, true)]
+        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount,  bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        {
+            // Arrange
+            var candidateResults = new List<CurrentPricingExecutionResultDto>();
+
+            candidateResults.Add(new CurrentPricingExecutionResultDto
+            {
+                PostingType = PostingTypeEnum.NTI,
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                OptimalCpm = 23
+            });
+
+            if (startingResultCount > 1)
+            {
+                candidateResults.Add(new CurrentPricingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NSI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                    OptimalCpm = 23
+                });
+            }
+
+            if (startingResultCount == 6)
+            {
+                candidateResults.Add(new CurrentPricingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NSI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    OptimalCpm = 23
+                });
+
+                candidateResults.Add(new CurrentPricingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NTI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    OptimalCpm = 23
+                });
+
+                candidateResults.Add(new CurrentPricingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NSI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                    OptimalCpm = 23
+                });
+
+                candidateResults.Add(new CurrentPricingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NTI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                    OptimalCpm = 23
+                });
+            }
+
+            var service = _GetService();
+
+            // Act
+            var results = service.FillInMissingPricingResultsWithEmptyResults(candidateResults, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+
+            // Assert
+            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            {
+                Assert.AreEqual(1, results.Count());
+                return;
+            }
+
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
+
+            if (!isPricingEfficiencyModelEnabled)
+            {
+                return;
+            }
+
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
         }
 
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()

@@ -622,15 +622,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return result;
             }
 
+            var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
+            var isPostingTypeToggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
+
             var jobCompletedWithinLastFiveMinutes = _DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
-                var isPostingTypeToggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
-
                 var expectedResultCount = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
                 result = ValidatePricingExecutionResult(result, expectedResultCount);
-            }            
+            }
+            else
+            {
+                var filledInResults = FillInMissingPricingResultsWithEmptyResults(result.Results, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+                result.Results = filledInResults;
+            }
 
             return result;
         }
@@ -642,6 +647,48 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 new CurrentPricingExecutionResultDto() {SpotAllocationModelMode = SpotAllocationModelMode.Quality}
             };
             return emptyList;
+        }
+
+        private void _AddEmptyPricingResult(List<CurrentPricingExecutionResultDto> results, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
+        {
+            if (!results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == spotAllocationModelMode))
+            {
+                results.Add(new CurrentPricingExecutionResultDto
+                {
+                    PostingType = postingType,
+                    SpotAllocationModelMode = spotAllocationModelMode
+                });
+            }
+        }
+
+        internal List<CurrentPricingExecutionResultDto> FillInMissingPricingResultsWithEmptyResults(List<CurrentPricingExecutionResultDto> candidateResults,
+            bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        {
+            // We only have to worry about the three use cases
+            // 1) Neither toggle is enabled
+            // 2) isPostingTypeToggleEnabled is enabled and isPricingEfficiencyModelEnabled is not enabled
+            // 3) Both are enabled.
+            var results = candidateResults.DeepCloneUsingSerialization();
+            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            {
+                return results;
+            }
+
+            _AddEmptyPricingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
+            _AddEmptyPricingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Quality);
+
+            if (!isPricingEfficiencyModelEnabled)
+            {
+                return results;
+            }
+
+            _AddEmptyPricingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
+            _AddEmptyPricingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Efficiency);
+
+            _AddEmptyPricingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Floor);
+            _AddEmptyPricingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Floor);
+
+            return results;
         }
 
         internal bool _DidPricingJobCompleteWithinThreshold(PlanPricingJob job, int thresholdMinutes)
