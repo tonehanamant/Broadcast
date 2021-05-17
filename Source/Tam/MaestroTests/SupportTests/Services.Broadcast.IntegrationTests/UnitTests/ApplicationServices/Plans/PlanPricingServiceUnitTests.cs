@@ -18,7 +18,6 @@ using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -10861,13 +10860,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
 
-
-
             var service = _GetService();
             // Act
             var results = service.ValidatePricingExecutionResult(result, expectedResult);
             // Assert     
             Assert.AreEqual(results.IsPricingModelRunning, true);
+            Assert.AreEqual(1, result.Results.Count());
+            Assert.IsFalse(result.Results[0].HasResults);
+            Assert.IsNull(result.Results[0].JobId);
         }
 
         [Test]
@@ -10908,6 +10908,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             Assert.AreEqual(expectedResult, result);
         }
+
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()
         {
             return new List<PlanPricingInventoryProgram>

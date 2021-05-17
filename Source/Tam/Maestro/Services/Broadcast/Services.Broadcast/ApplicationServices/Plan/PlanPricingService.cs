@@ -11,7 +11,6 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -21,13 +20,11 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
-using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -616,11 +613,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new CurrentPricingExecutions
             {
                 Job = job,
-                Results = pricingExecutionResults ?? new List<CurrentPricingExecutionResultDto>()
-                {
-                 new CurrentPricingExecutionResultDto()
-                 { SpotAllocationModelMode=SpotAllocationModelMode.Quality},
-                }, 
+                Results = pricingExecutionResults ?? _GetDefaultPricingResultsList(), 
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
 
@@ -642,6 +635,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
+        private List<CurrentPricingExecutionResultDto> _GetDefaultPricingResultsList()
+        {
+            var emptyList = new List<CurrentPricingExecutionResultDto>
+            {
+                new CurrentPricingExecutionResultDto() {SpotAllocationModelMode = SpotAllocationModelMode.Quality}
+            };
+            return emptyList;
+        }
+
         internal bool _DidPricingJobCompleteWithinThreshold(PlanPricingJob job, int thresholdMinutes)
         {
             if (!job.Completed.HasValue)
@@ -661,7 +663,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (result.Results.Count!= expectedResult)
                 {
                     result.IsPricingModelRunning = true;
-                    result.Results = new List<CurrentPricingExecutionResultDto>();
+                    result.Results = _GetDefaultPricingResultsList();
                 }
             }
             return result;
