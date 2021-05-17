@@ -2574,6 +2574,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (planPricingResult.NsiResults != null)
             {
                 planPricingResult.NsiResults.Totals.AvgImpressions /= 1000;
+                planPricingResult.NsiResults.Totals.Impressions /= 1000;
 
                 foreach (var program in planPricingResult.NsiResults.ProgramDetails)
                 {
@@ -2584,6 +2585,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (planPricingResult.NtiResults != null)
             {
+                planPricingResult.NtiResults.Totals.AvgImpressions /= 1000;
                 planPricingResult.NtiResults.Totals.Impressions /= 1000;
 
                 foreach (var program in planPricingResult.NtiResults.ProgramDetails)

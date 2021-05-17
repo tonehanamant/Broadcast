@@ -19,7 +19,7 @@
       "AvgCpm": 6.0,
       "AvgImpressions": 111.0,
       "Budget": 1131.0,
-      "Impressions": 200000.0,
+      "Impressions": 200.0,
       "ImpressionsPercentage": 100.0,
       "MarketCount": 6,
       "Spots": 3,
@@ -44,7 +44,7 @@
     ],
     "Totals": {
       "AvgCpm": 6.0,
-      "AvgImpressions": 110000.0,
+      "AvgImpressions": 110.0,
       "Budget": 1131.0,
       "Impressions": 180.0,
       "ImpressionsPercentage": 100.0,
