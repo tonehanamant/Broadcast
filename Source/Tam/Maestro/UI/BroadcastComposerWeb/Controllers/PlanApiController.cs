@@ -324,13 +324,12 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("commit-pricing-allocation-model")]
-        public BaseResponse<bool> CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode,
-            PostingTypeEnum postingType)
+        public BaseResponse<bool> CommitPricingAllocationModel(CommitPricingAllocationModelRequest request)
         {
             var username = _GetCurrentUserFullName();
 
             var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                .CommitPricingAllocationModel(planId, spotAllocationModelMode, postingType, username));
+                .CommitPricingAllocationModel(request.PlanId, request.SpotAllocationModelMode, request.PostingType, username));
 
             return result;
         }
