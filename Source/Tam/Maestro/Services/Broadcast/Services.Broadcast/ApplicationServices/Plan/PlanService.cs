@@ -724,7 +724,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 IsAduEnabled = plan.IsAduEnabled,
                 ImpressionsPerUnit = plan.ImpressionsPerUnit,
                 BuyingParameters = plan.BuyingParameters,
-                JobId = plan.JobId
+                JobId = plan.JobId,
+                SpotAllocationModelMode = plan.SpotAllocationModelMode
             };
             
             dto.PricingParameters = new List<PlanPricingParametersDto>();
