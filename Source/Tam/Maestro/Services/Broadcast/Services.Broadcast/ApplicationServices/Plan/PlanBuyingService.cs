@@ -77,18 +77,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Gets the buying ownership groups.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
-        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId,
+        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Gets the buying rep firms.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
-        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId,
+        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType ,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
@@ -144,27 +146,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Gets the programs.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
-        PlanBuyingResultProgramsDto GetPrograms(int planId, 
+        PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType, 
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Gets the stations.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
-        PlanBuyingStationResultDto GetStations(int planId, 
+        PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
         /// </summary>
-        PlanBuyingResultMarketsDto GetMarkets(int planId,
+        PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
-        PlanBuyingBandsDto GetBuyingBands(int planId, 
+        PlanBuyingBandsDto GetBuyingBands(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         [Queue("savebuyingrequest")]
@@ -2232,7 +2236,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return $"Job Id '{jobId}' has been forced to complete.";
         }
 
-        public PlanBuyingResultProgramsDto GetPrograms(int planId,
+        public PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
@@ -2240,7 +2244,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, spotAllocationModelMode);
+            postingType = _GetPlanPostingType(planId, postingType);
+
+            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id,postingType,spotAllocationModelMode);
 
             if (results == null)
                 return null;
@@ -2251,15 +2257,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingBandsDto GetBuyingBands(int planId,
+        public PlanBuyingBandsDto GetBuyingBands(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
+            
+            postingType = _GetPlanPostingType(planId, postingType);
 
-            var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, spotAllocationModelMode);
+            var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, postingType,spotAllocationModelMode);
 
             if (results == null)
                 return null;
@@ -2270,7 +2278,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultMarketsDto GetMarkets(int planId,
+        public PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
@@ -2280,7 +2288,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, spotAllocationModelMode);
+            postingType = _GetPlanPostingType(planId, postingType);
+
+            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id,postingType ,spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2293,14 +2303,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingStationResultDto GetStations(int planId,
+        public PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
+          
+            postingType = _GetPlanPostingType(planId, postingType);
 
-            var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id, spotAllocationModelMode);
+            var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id, postingType,spotAllocationModelMode);
             if (result == null)
                 return null;
 
@@ -2310,7 +2322,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId,
+        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
@@ -2320,7 +2332,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, spotAllocationModelMode);
+            postingType = _GetPlanPostingType(planId, postingType);
+
+            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id,postingType ,spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2333,7 +2347,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId,
+        public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
@@ -2342,8 +2356,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return null;
             }
+               
+            postingType = _GetPlanPostingType(planId, postingType);
 
-            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, spotAllocationModelMode);
+            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType,spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2503,6 +2519,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 : _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
 
             return result;
+        }
+        private PostingTypeEnum? _GetPlanPostingType(int planId, PostingTypeEnum? postingType)
+        {
+            if (postingType == null)
+            {
+                var plan = _PlanRepository.GetPlan(planId);
+                postingType = plan.PostingType;
+                return postingType;
+            }
+            else
+            {
+                return postingType;
+            }
         }
 
         private void _SetSpotLengthIdAndCalculateImpressions(PlanDto plan

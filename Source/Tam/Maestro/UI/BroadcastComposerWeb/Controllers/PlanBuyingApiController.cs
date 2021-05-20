@@ -49,40 +49,42 @@ namespace BroadcastComposerWeb.Controllers
         /// Get programs data from the lastest pricing execution
         /// </summary>
         /// <param name="planId">Plan ID</param>
+        /// <param name="postingType">The Posting Type</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>
         /// <returns>Programs from the lastest pricing execution</returns>
         [HttpGet]
         [Route("programs/{planId}")]
-        public BaseResponse<PlanBuyingResultProgramsDto> GetPrograms(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public BaseResponse<PlanBuyingResultProgramsDto> GetPrograms(int planId, PostingTypeEnum? postingType = null ,SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId, spotAllocationModelMode));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId, postingType,spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("bands/{planId}")]
-        public BaseResponse<PlanBuyingBandsDto> GetBuyingBands(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public BaseResponse<PlanBuyingBandsDto> GetBuyingBands(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingBands(planId, spotAllocationModelMode));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingBands(planId, postingType ,spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("markets/{planId}")]
-        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId, spotAllocationModelMode));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId,postingType ,spotAllocationModelMode));
         }
 
         [HttpGet]
         [Route("ownershipgroups/{planId}")]
-        public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId)
+        public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType = null)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId,postingType));
         }
 
         [HttpGet]
         [Route("repfirms/{planId}")]
-        public BaseResponse<PlanBuyingResultRepFirmDto> GetBuyingRepFirms(int planId)
+        public BaseResponse<PlanBuyingResultRepFirmDto> GetBuyingRepFirms(int planId, PostingTypeEnum? postingType = null)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingRepFirms(planId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingRepFirms(planId,postingType));
         }
 
         [HttpPost]
@@ -154,9 +156,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("stations/{planId}")]
-        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId, spotAllocationModelMode));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId, postingType ,spotAllocationModelMode));
         }
 
         [HttpPost]

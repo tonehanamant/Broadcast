@@ -94,6 +94,7 @@
     ],
     "Id": 0,
     "PlanVersionId": 0,
+    "PostingType": 2,
     "SpotAllocationModelMode": 1,
     "Totals": {
       "AvgCpm": 17.6142,
@@ -202,6 +203,7 @@
     ],
     "Id": 0,
     "PlanVersionId": 0,
+    "PostingType": 2,
     "SpotAllocationModelMode": 2,
     "Totals": {
       "AvgCpm": 17.6142,
@@ -310,6 +312,7 @@
     ],
     "Id": 0,
     "PlanVersionId": 0,
+    "PostingType": 2,
     "SpotAllocationModelMode": 3,
     "Totals": {
       "AvgCpm": 17.6142,
@@ -418,6 +421,7 @@
     ],
     "Id": 0,
     "PlanVersionId": 0,
+    "PostingType": 2,
     "SpotAllocationModelMode": 1,
     "Totals": {
       "AvgCpm": 17.6142,

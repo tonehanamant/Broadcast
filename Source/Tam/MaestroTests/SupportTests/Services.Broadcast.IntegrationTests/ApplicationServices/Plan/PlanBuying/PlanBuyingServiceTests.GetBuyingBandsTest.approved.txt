@@ -91,6 +91,7 @@
       "Spots": 25
     }
   ],
+  "PostingType": 2,
   "SpotAllocationModelMode": 1,
   "Totals": {
     "AvgCpm": 22.0177,

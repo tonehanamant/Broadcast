@@ -26,6 +26,7 @@
         "StationCount": 1
       }
     ],
+    "PostingType": 2,
     "SpotAllocationModelMode": 1,
     "Totals": {
       "AvgCpm": 17.6142,
@@ -66,6 +67,7 @@
         "StationCount": 1
       }
     ],
+    "PostingType": 2,
     "SpotAllocationModelMode": 2,
     "Totals": {
       "AvgCpm": 17.6142,
@@ -106,6 +108,7 @@
         "StationCount": 1
       }
     ],
+    "PostingType": 2,
     "SpotAllocationModelMode": 3,
     "Totals": {
       "AvgCpm": 17.6142,
@@ -146,6 +149,7 @@
         "StationCount": 1
       }
     ],
+    "PostingType": 2,
     "SpotAllocationModelMode": 1,
     "Totals": {
       "AvgCpm": 17.6142,

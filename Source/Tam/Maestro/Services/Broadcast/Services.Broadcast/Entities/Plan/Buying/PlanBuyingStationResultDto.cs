@@ -11,6 +11,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public PlanBuyingProgramTotalsDto Totals { get; set; } = new PlanBuyingProgramTotalsDto();
         public List<PlanBuyingStationDto> Details { get; set; } = new List<PlanBuyingStationDto>();
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
+        public PostingTypeEnum PostingType { get; set; }
+
     }
 
     public class PlanBuyingStationDto
