@@ -87,7 +87,7 @@ namespace Services.Broadcast.Converters.Scx
                     if (stations.Any())
                     {
                         scxOrder.systemOrder = stations
-                            .Where(x => x.TotalSpots > 0)
+                            .Where(x => x.TotalSpots > 0 && filterUnallocated || !filterUnallocated)
                             .Select(station => _GetSystemOrders(data, station, filterUnallocated))
                             .ToArray();
                     }
