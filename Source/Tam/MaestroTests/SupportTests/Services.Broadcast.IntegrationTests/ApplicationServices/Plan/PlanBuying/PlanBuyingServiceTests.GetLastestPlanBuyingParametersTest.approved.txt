@@ -2106,6 +2106,7 @@
     "MinCpm": 1.0000,
     "PlanId": 1849,
     "PlanVersionId": 7236,
+    "PostingType": 0,
     "ProprietaryBlend": 0.2,
     "ProprietaryInventory": [],
     "UnitCaps": 10,

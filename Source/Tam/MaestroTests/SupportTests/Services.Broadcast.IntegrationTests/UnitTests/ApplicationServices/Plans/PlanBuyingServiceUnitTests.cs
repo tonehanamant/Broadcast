@@ -4578,5 +4578,164 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
         }
+
+        [Test]
+        public void GetPlanBuyingGoals_BuyingParameters_Exist_NSI()
+        {
+            // Arrange
+            const int planId = 1197;
+            PostingTypeEnum postingType = PostingTypeEnum.NSI;
+
+            _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(new PlanDto()
+                    {
+                        Id = planId,                        
+                        PostingType = PostingTypeEnum.NSI,                        
+                        BuyingParameters = _GetPlanBuyingParametersDto()
+                    });
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetPlanBuyingGoals(planId, postingType);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()),Times.Never);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetPlanBuyingGoals_BuyingParameters_Exist_NTI()
+        {
+            // Arrange
+            const int planId = 1197;
+            PostingTypeEnum postingType = PostingTypeEnum.NTI;
+
+            _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(new PlanDto()
+                    {
+                        Id = planId,
+                        PostingType = PostingTypeEnum.NTI,
+                        BuyingParameters = _GetPlanBuyingParametersDto()
+                    });
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetPlanBuyingGoals(planId, postingType);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()), Times.Never);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetPlanBuyingGoals_BuyingParameters_Exist_PlanPostingTypeDifferent()
+        {
+            // Arrange
+            const int planId = 1197;
+            PostingTypeEnum postingType = PostingTypeEnum.NSI;
+
+            _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(new PlanDto()
+                    {
+                        Id = planId,
+                        PostingType = PostingTypeEnum.NTI,
+                        Dayparts = _GetPlanDayparts(),
+                        BuyingParameters = _GetPlanBuyingParametersDto()
+                    });
+
+            _PlanRepositoryMock
+                    .Setup(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
+                    .Returns(2);
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetPlanBuyingGoals(planId, postingType);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()), Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetPlanBuyingGoals_BuyingParameters_DontExist()
+        {
+            // Arrange
+            const int planId = 1197;
+            PostingTypeEnum postingType = PostingTypeEnum.NSI;
+
+            _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(new PlanDto()
+                    {
+                        Id = planId,
+                        Budget = 2000,
+                        TargetCPM = 10,
+                        TargetCPP = 10,
+                        Currency = PlanCurrenciesEnum.Impressions,
+                        TargetImpressions = 60000,
+                        TargetRatingPoints = 1000,
+                        VersionId = 77,
+                        PostingType = PostingTypeEnum.NSI,
+                        Dayparts = _GetPlanDayparts()                        
+                    });
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetPlanBuyingGoals(planId, postingType);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()), Times.Never);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetPlanBuyingGoals_BuyingParameters_DontExist_PlanPostingTypeDifferent()
+        {
+            // Arrange
+            const int planId = 1197;
+            PostingTypeEnum postingType = PostingTypeEnum.NSI;
+
+            _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(new PlanDto()
+                    {
+                        Id = planId,
+                        Budget = 2000,
+                        TargetCPM = 10,
+                        TargetCPP = 10,
+                        Currency = PlanCurrenciesEnum.Impressions,
+                        TargetImpressions = 60000,
+                        TargetRatingPoints = 1000,
+                        VersionId = 77,
+                        PostingType = PostingTypeEnum.NTI,
+                        Dayparts = _GetPlanDayparts()
+                    });
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetPlanBuyingGoals(planId, postingType);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()), Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }

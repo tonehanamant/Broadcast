@@ -189,6 +189,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="templatesFilePath">Path to the template files</param>
         /// <returns>The report id</returns>
         Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
+
+        /// <summary>
+        /// Gets the plan buying parameters. 
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The type of posting</param>
+        /// <returns>The PlanBuyingParametersDto object</returns>
+        PlanBuyingParametersDto GetPlanBuyingGoals(int planId, PostingTypeEnum postingType);
     }
 
     /// <summary>
@@ -2627,6 +2635,74 @@ namespace Services.Broadcast.ApplicationServices.Plan
             public PlanBuyingApiRequestSpotsDto_v3 Spot { get; set; }
             public int ProgramMinimumContractMediaWeekId { get; set; }
             public InventorySpotMapping Mapping { get; set; }
+        }
+
+        public PlanBuyingParametersDto GetPlanBuyingGoals(int planId, PostingTypeEnum postingType)
+        {
+            var plan = _PlanRepository.GetPlan(planId);
+            if (plan.BuyingParameters == null)
+            {
+                _SetPlanBuyingParameters(plan);
+            }
+
+            if (plan.BuyingParameters.PostingType == 0)
+            {
+                plan.BuyingParameters.PostingType = plan.PostingType;
+            }
+
+            if (plan.PostingType != postingType)
+            {
+                var ntiToNsiConversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
+                plan.BuyingParameters = _ConvertPlanBuyingParametersToRequestedPostingType(plan.BuyingParameters, ntiToNsiConversionRate);
+            }            
+            return plan.BuyingParameters;
+        }
+        
+        private void _SetPlanBuyingParameters(PlanDto plan)
+        {
+            var buyingDefaults = GetPlanBuyingDefaults();
+            plan.BuyingParameters = new PlanBuyingParametersDto
+            {
+                PlanId = plan.Id,
+                Budget = Convert.ToDecimal(plan.Budget),
+                CPM = Convert.ToDecimal(plan.TargetCPM),
+                CPP = Convert.ToDecimal(plan.TargetCPP),
+                Currency = plan.Currency,
+                DeliveryImpressions = Convert.ToDouble(plan.TargetImpressions) / 1000,
+                DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
+                UnitCaps = buyingDefaults.UnitCaps,
+                UnitCapsType = buyingDefaults.UnitCapsType,
+                Margin = buyingDefaults.Margin,
+                PlanVersionId = plan.VersionId,
+                MarketGroup = buyingDefaults.MarketGroup,
+                PostingType = plan.PostingType
+            };
+
+            ValidateAndApplyMargin(plan.BuyingParameters);
+        }
+        
+        private PlanBuyingParametersDto _ConvertPlanBuyingParametersToRequestedPostingType(PlanBuyingParametersDto planBuyingParameters, double ntiToNsiConversionRate)
+        {
+            if (planBuyingParameters.PostingType == PostingTypeEnum.NSI)
+            {
+                planBuyingParameters.DeliveryImpressions = Math.Floor(planBuyingParameters.DeliveryImpressions * ntiToNsiConversionRate);
+                planBuyingParameters.PostingType = PostingTypeEnum.NTI;
+            }
+            else if (planBuyingParameters.PostingType == PostingTypeEnum.NTI)
+            {
+                planBuyingParameters.DeliveryImpressions = Math.Floor(planBuyingParameters.DeliveryImpressions / ntiToNsiConversionRate);
+                planBuyingParameters.PostingType = PostingTypeEnum.NSI;
+            }
+
+            if (planBuyingParameters.DeliveryImpressions != 0)
+            {
+                planBuyingParameters.CPM = (decimal)((double)planBuyingParameters.Budget / planBuyingParameters.DeliveryImpressions);
+            }
+            else
+            {
+                planBuyingParameters.CPM = 0;                
+            }
+            return planBuyingParameters;
         }
     }
 }

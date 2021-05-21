@@ -184,5 +184,18 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>()
                 .GenerateProgramLineupReport(request, fullName, DateTime.Now, appDataPath));
         }
+
+        /// <summary>
+        /// Gets the plan buying parameters. 
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The type of posting</param>
+        /// <returns>The PlanBuyingParametersDto object</returns>
+        [HttpGet]
+        [Route("plangoals/{planId}")]
+        public BaseResponse<PlanBuyingParametersDto> GetPlanBuyingGoals(int planId, PostingTypeEnum postingType)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPlanBuyingGoals(planId, postingType));
+        }
     }
 }
