@@ -56,6 +56,15 @@ namespace Services.Broadcast.Repositories
         PlanBuyingJob GetLatestBuyingJob(int planId);
 
         /// <summary>
+        /// Gets the Optimal CPM.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="spotAllocationModelMode">Spot Allocation Model Mode.</param>
+        /// <param name="postingType">Posting Type.</param>
+        /// <returns>Optimal CPM</returns>
+        decimal GetOptimalCPM(int jobId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType);
+
+        /// <summary>
         /// Gets the plan buying job.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
@@ -362,6 +371,20 @@ namespace Services.Broadcast.Repositories
                     ErrorMessage = latestJob.error_message,
                     DiagnosticResult = latestJob.diagnostic_result
                 };
+            });
+        }
+
+        public decimal GetOptimalCPM(int jobId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = (from pvbr in context.plan_version_buying_results
+                              where pvbr.plan_version_buying_job_id == jobId
+                                 && pvbr.spot_allocation_model_mode == (int)spotAllocationModelMode
+                                 && pvbr.posting_type == (int)postingType
+                              select pvbr).Select(p => p.optimal_cpm).Single();
+
+                return result;
             });
         }
 

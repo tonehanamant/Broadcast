@@ -87,45 +87,6 @@
                         "Spots": 3
                       }
                     ]
-                  },
-                  {
-                    "DaypartId": 59803,
-                    "DemoValues": [
-                      {
-                        "DemoRank": 1,
-                        "Impressions": 3000.0
-                      }
-                    ],
-                    "ProgramAssignedDaypartCode": "EMN",
-                    "ProgramName": "MyTestProgram",
-                    "SpotCost": 30.0,
-                    "SpotLength": "60",
-                    "TotalCost": 0.0,
-                    "TotalSpots": 0,
-                    "Weeks": [
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2020-09-06T00:00:00",
-                          "_Id": 871,
-                          "_MediaMonthId": 468,
-                          "_StartDate": "2020-08-31T00:00:00",
-                          "_WeekNumber": 1,
-                          "IsDirty": false
-                        },
-                        "Spots": 0
-                      },
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2020-09-13T00:00:00",
-                          "_Id": 872,
-                          "_MediaMonthId": 468,
-                          "_StartDate": "2020-09-07T00:00:00",
-                          "_WeekNumber": 2,
-                          "IsDirty": false
-                        },
-                        "Spots": 0
-                      }
-                    ]
                   }
                 ],
                 "StationCode": 102,
@@ -234,45 +195,6 @@
                         "Spots": 3
                       }
                     ]
-                  },
-                  {
-                    "DaypartId": 59803,
-                    "DemoValues": [
-                      {
-                        "DemoRank": 1,
-                        "Impressions": 3000.0
-                      }
-                    ],
-                    "ProgramAssignedDaypartCode": "EMN",
-                    "ProgramName": "MyTestProgram",
-                    "SpotCost": 30.0,
-                    "SpotLength": "60",
-                    "TotalCost": 0.0,
-                    "TotalSpots": 0,
-                    "Weeks": [
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2020-09-06T00:00:00",
-                          "_Id": 871,
-                          "_MediaMonthId": 468,
-                          "_StartDate": "2020-08-31T00:00:00",
-                          "_WeekNumber": 1,
-                          "IsDirty": false
-                        },
-                        "Spots": 0
-                      },
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2020-09-13T00:00:00",
-                          "_Id": 872,
-                          "_MediaMonthId": 468,
-                          "_StartDate": "2020-09-07T00:00:00",
-                          "_WeekNumber": 2,
-                          "IsDirty": false
-                        },
-                        "Spots": 0
-                      }
-                    ]
                   }
                 ],
                 "StationCode": 102,
@@ -379,45 +301,6 @@
                           "IsDirty": false
                         },
                         "Spots": 3
-                      }
-                    ]
-                  },
-                  {
-                    "DaypartId": 59803,
-                    "DemoValues": [
-                      {
-                        "DemoRank": 1,
-                        "Impressions": 3000.0
-                      }
-                    ],
-                    "ProgramAssignedDaypartCode": "EMN",
-                    "ProgramName": "MyTestProgram",
-                    "SpotCost": 30.0,
-                    "SpotLength": "60",
-                    "TotalCost": 0.0,
-                    "TotalSpots": 0,
-                    "Weeks": [
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2020-09-06T00:00:00",
-                          "_Id": 871,
-                          "_MediaMonthId": 468,
-                          "_StartDate": "2020-08-31T00:00:00",
-                          "_WeekNumber": 1,
-                          "IsDirty": false
-                        },
-                        "Spots": 0
-                      },
-                      {
-                        "MediaWeek": {
-                          "_EndDate": "2020-09-13T00:00:00",
-                          "_Id": 872,
-                          "_MediaMonthId": 468,
-                          "_StartDate": "2020-09-07T00:00:00",
-                          "_WeekNumber": 2,
-                          "IsDirty": false
-                        },
-                        "Spots": 0
                       }
                     ]
                   }

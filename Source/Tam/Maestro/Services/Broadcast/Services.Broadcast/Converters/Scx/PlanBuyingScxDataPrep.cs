@@ -21,7 +21,7 @@ namespace Services.Broadcast.Converters.Scx
 {
     public interface IPlanBuyingScxDataPrep
     {
-        PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency);
     }
 
     public class PlanBuyingScxDataPrep : BaseScxDataPrep, IPlanBuyingScxDataPrep
@@ -55,11 +55,11 @@ namespace Services.Broadcast.Converters.Scx
             _StandardDaypartRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         }
 
-        public PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, SpotAllocationModelMode spotAllocationModelMode)
+        public PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
         {
             _GetValidatedPlanAndJob(request, out var plan, out var job);
-
-            var spots = _GetSpots(request.UnallocatedCpmThreshold, plan.TargetCPM.Value, job.Id, spotAllocationModelMode);
+            var optimalCPM = _GetOptimalCPM(job.Id, spotAllocationModelMode, PostingTypeEnum.NSI);
+            var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode);
             var inventory = _InventoryRepository.GetPlanBuyingScxInventory(job.Id);            
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
@@ -314,6 +314,12 @@ namespace Services.Broadcast.Converters.Scx
             }
             );
             return results;
+        }
+
+        private decimal _GetOptimalCPM(int jobId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
+        {
+            decimal optimalCPM = _PlanBuyingRepository.GetOptimalCPM(jobId, spotAllocationModelMode, postingType);
+            return optimalCPM;
         }
 
         private decimal _CalculateSpotCostPer30s(decimal spotCost, decimal spotCostMultiplier)
