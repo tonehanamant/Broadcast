@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities;
+using FizzWare.NBuilder;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
 {
@@ -38,9 +39,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
 
         private PlanBuyingScxDataPrep _GetTestClass()
         {
-            return new PlanBuyingScxDataPrep(_DataRepositoryFactory.Object, 
-                    _SpotLengthEngine.Object, 
-                    _MediaMonthAndWeekAggregateCache.Object, 
+            return new PlanBuyingScxDataPrep(_DataRepositoryFactory.Object,
+                    _SpotLengthEngine.Object,
+                    _MediaMonthAndWeekAggregateCache.Object,
                     _BroadcastAudiencesCache.Object);
         }
 
@@ -192,7 +193,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
         {
             // Arrange
             var cpmThresholdPercent = 10;
-            var goalCpm = 10;         
+            var goalCpm = 10;
             var beforeSpots = new List<PlanBuyingAllocatedSpot>
             {
                 new PlanBuyingAllocatedSpot
@@ -264,17 +265,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 Assert.AreEqual(expectedResult[i].SpotLengthId, resultIds[i].SpotLengthId);
             }
         }
-   
-        
+
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetScxData()
         {
-            var request = new PlanBuyingScxExportRequest {PlanId = 21, UnallocatedCpmThreshold = 12};
-            var job = new PlanBuyingJob {Id = 1, PlanVersionId = 57};
+            var request = new PlanBuyingScxExportRequest { PlanId = 21, UnallocatedCpmThreshold = 12 };
+            var job = new PlanBuyingJob { Id = 1, PlanVersionId = 57 };
             var plan = new PlanDto
             {
-                Id = 21, 
+                Id = 21,
                 Name = "MyTestPlan",
                 CampaignId = 1,
                 CampaignName = "MyTestCampaign",
@@ -284,7 +285,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 AudienceId = 31,
                 ShareBookId = 460
             };
-            var jobParams = new PlanBuyingParametersDto {Margin = 20};
+            var jobParams = new PlanBuyingParametersDto { Margin = 20 };
             var jobResult = new PlanBuyingAllocationResult
             {
                 SpotAllocationModelMode = SpotAllocationModelMode.Quality,
@@ -318,7 +319,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                         {
                             new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
                             new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
-                        } 
+                        }
                     },
                     new PlanBuyingAllocatedSpot
                     {
@@ -356,7 +357,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                     }
                 }
             };
-            
+
             _PlanBuyingRepository.Setup(s => s.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(job);
             _PlanBuyingRepository.Setup(s => s.GetLatestParametersForPlanBuyingJob(It.IsAny<int>()))
@@ -378,8 +379,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             var resultE = testClass.GetScxData(request, generated, SpotAllocationModelMode.Efficiency);
             var resultF = testClass.GetScxData(request, generated, SpotAllocationModelMode.Floor);
 
-            var result = new            {
-              
+            var result = new
+            {
+
                 Quality = resultQ,
                 Efficiency = resultE,
                 Floor = resultF,
@@ -387,6 +389,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void UnEquivalize()
+        {
+            // Arrange          
+            var planBuyingAllocatedSpots = Builder<PlanBuyingAllocationResult>.CreateNew()
+                .With(x => x.AllocatedSpots = Builder<PlanBuyingAllocatedSpot>.CreateListOfSize(2)
+                        .All()
+                        .With(y => y.SpotFrequencies = Builder<SpotFrequency>.CreateListOfSize(2).Build().ToList())
+                        .Build()
+                        .ToList())
+                .With(x => x.UnallocatedSpots = Builder<PlanBuyingAllocatedSpot>.CreateListOfSize(2)
+                        .All()
+                        .With(y => y.SpotFrequencies = Builder<SpotFrequency>.CreateListOfSize(2).Build().ToList())
+                        .Build()
+                        .ToList())
+                .Build();
+
+            var controlledAllocatedSpot = planBuyingAllocatedSpots.AllocatedSpots[1].SpotFrequencies[1];
+            controlledAllocatedSpot.SpotLengthId = 2;
+            controlledAllocatedSpot.Impressions = 100;
+
+            var controlledUnAllocatedSpot = planBuyingAllocatedSpots.UnallocatedSpots[1].SpotFrequencies[1];
+            controlledUnAllocatedSpot.SpotLengthId = 3;
+            controlledUnAllocatedSpot.Impressions = 200;
+
+            var testClass = _GetTestClass();
+
+            // Act
+           testClass._UnEquivalizeSpots(planBuyingAllocatedSpots);
+
+            // Assert
+            Assert.AreEqual(50, controlledAllocatedSpot.Impressions);
+            Assert.AreEqual(400, controlledUnAllocatedSpot.Impressions);
+
+
         }
     }
 }

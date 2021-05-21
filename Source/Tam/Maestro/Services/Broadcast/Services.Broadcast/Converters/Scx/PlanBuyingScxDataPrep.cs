@@ -59,7 +59,7 @@ namespace Services.Broadcast.Converters.Scx
         {
             _GetValidatedPlanAndJob(request, out var plan, out var job);
             var optimalCPM = _GetOptimalCPM(job.Id, spotAllocationModelMode, PostingTypeEnum.NSI);
-            var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode);
+            var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode, plan.Equivalized);
             var inventory = _InventoryRepository.GetPlanBuyingScxInventory(job.Id);            
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
@@ -253,11 +253,16 @@ namespace Services.Broadcast.Converters.Scx
             }
         }
 
-        internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, SpotAllocationModelMode spotAllocationModelMode )
+        internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, SpotAllocationModelMode spotAllocationModelMode, bool isEquivalized = false)
         {
-            var jobParams = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(jobId);
+            //var jobParams = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(jobId);
             var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode);            
             var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
+
+            if (isEquivalized)
+            {
+                _UnEquivalizeSpots(jobSpotsResults);
+            }
 
             var unallocated = unallocatedCpmThreshold.HasValue
                 ? _ApplyCpmThreshold(unallocatedCpmThreshold.Value, planTargetCpm, jobSpotsResults.UnallocatedSpots)
@@ -269,6 +274,24 @@ namespace Services.Broadcast.Converters.Scx
 
             var allSpots = jobSpotsResults.AllocatedSpots.Concat(unallocated).ToList();
             return allSpots;
+        }
+
+        internal void _UnEquivalizeSpots(PlanBuyingAllocationResult jobSpotsResults)
+        {
+            if (jobSpotsResults == null) return;
+
+            var jobSpotsFrequencies = jobSpotsResults.AllocatedSpots.Union(jobSpotsResults.UnallocatedSpots)
+                .SelectMany(x => x.SpotFrequencies)
+                .ToArray();
+
+            var deliveryMultipliers = _SpotLengthEngine.GetDeliveryMultipliers();
+
+            for (var i = 0; i < jobSpotsFrequencies.Count(); i++)
+            {
+                var spot = jobSpotsFrequencies[i];
+                var deliveryMultiplier = deliveryMultipliers[spot.SpotLengthId];
+                spot.Impressions /= deliveryMultiplier;
+            }
         }
 
         internal List<PlanBuyingAllocatedSpot> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm,  List<PlanBuyingAllocatedSpot> spots)
