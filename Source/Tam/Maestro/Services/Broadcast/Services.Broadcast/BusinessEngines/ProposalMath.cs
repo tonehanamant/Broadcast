@@ -29,7 +29,10 @@ namespace Services.Broadcast.BusinessEngines
         {
             return totalImpressions == 0 ? 0 : (totalCost / (decimal)totalImpressions) * 1000;
         }
-
+        public static double CalculateVPVH(double projectedImpressions, double householdProjectedImpressions)
+        {
+            return projectedImpressions / (householdProjectedImpressions == 0.0 ? 1 : householdProjectedImpressions);
+        }
         public static decimal CalculateCost(decimal cpm, double impressions)
         {
             return cpm * (decimal)impressions / 1000;

@@ -18,7 +18,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             Assert.That(ProposalMath.CalculateCpm(cost, impressions), Is.EqualTo(cpm));
         }
-
         [TestCase(.5, .5, 1000)]
         [TestCase(1, 1, 1000)]
         [TestCase(1, 13, 13000)]
@@ -28,6 +27,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         public void CalculateCost(decimal cpm, decimal cost, int impressions)
         {
             Assert.That(ProposalMath.CalculateCost(cpm, impressions), Is.EqualTo(cost));
+        }
+        [TestCase(945222.82107598265, 3675017.06392121, 0.25720229447518222)]
+        [TestCase(2917764.81390233, 2917764.81390233, 1)]       
+        public void CalculateVPVH(double projectedImpressions, double householdProjectedImpressions, double VPVH)
+        {
+            Assert.That(ProposalMath.CalculateVPVH(projectedImpressions, householdProjectedImpressions), Is.EqualTo(VPVH));
         }
 
         [TestCase(312, 0, 0, 0, 0, 0)]

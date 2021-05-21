@@ -2357,7 +2357,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     StandardDaypart = standardDaypartsById[originalSpot.DaypartId],
                     Impressions30sec = originalSpot.Impressions30sec,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
-                    InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)
+                    InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId),
+                    ProjectedImpressions= program.ProjectedImpressions,
+                    HouseholdProjectedImpressions = program.HouseholdProjectedImpressions
                 };
 
                 results.Add(spotResult);
@@ -2365,7 +2367,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return results;
         }
-
+       
         public void _ValidateAllocationResult(PlanPricingAllocationResult apiResponse)
         {
             if (!string.IsNullOrEmpty(apiResponse.RequestId) && !apiResponse.Spots.Any())

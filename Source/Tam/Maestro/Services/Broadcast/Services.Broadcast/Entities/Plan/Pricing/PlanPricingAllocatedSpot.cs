@@ -15,7 +15,9 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double Impressions30sec { get; set; }
         public StandardDaypartDto StandardDaypart { get; set; }
         public List<SpotFrequency> SpotFrequencies { get; set; }
-
+       
+        public double HouseholdProjectedImpressions { get; set; }
+        public double ProjectedImpressions { get; set; }
         public double TotalImpressions => SpotFrequencies.Sum(x => x.Impressions * x.Spots);
 
         public decimal TotalCost => SpotFrequencies.Sum(x => x.SpotCost * x.Spots);

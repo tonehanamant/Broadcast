@@ -2015,7 +2015,9 @@ namespace Services.Broadcast.Repositories
                     goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
                     total_spots = pricingResult.Totals.Spots,
                     posting_type = (int)pricingResult.PostingType,
-                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode
+                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode,
+                    calculated_vpvh= pricingResult.Totals.CalculatedVPVH
+
                 };
 
                 context.plan_version_pricing_results.Add(planPricingResult);

@@ -33,7 +33,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double PercentageOfBuy { get; set; }
         public int Spots { get; set; }
         public decimal Budget { get; set; }
-        public bool IsProprietary { get; set; }
+        public bool IsProprietary { get; set; }      
     }
 
     public class PlanPricingProgramTotalsDto
@@ -46,5 +46,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal Budget { get; set; }
         public int Spots { get; set; }
         public decimal ImpressionsPercentage { get; set; }
+        public double CalculatedVPVH { get; set; }
+
     }
 }

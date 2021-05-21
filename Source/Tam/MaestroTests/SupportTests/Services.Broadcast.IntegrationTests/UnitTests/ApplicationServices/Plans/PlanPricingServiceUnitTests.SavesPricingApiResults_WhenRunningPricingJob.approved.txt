@@ -17,6 +17,7 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
+        "HouseholdProjectedImpressions": 0.0,
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": {
@@ -27,6 +28,7 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
+        "ProjectedImpressions": 0.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
@@ -57,6 +59,7 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
+        "HouseholdProjectedImpressions": 0.0,
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": {
@@ -67,6 +70,7 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
+        "ProjectedImpressions": 0.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
@@ -97,6 +101,7 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
+        "HouseholdProjectedImpressions": 0.0,
         "Id": 2,
         "Impressions30sec": 1500.0,
         "InventoryMediaWeek": {
@@ -107,6 +112,7 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
+        "ProjectedImpressions": 0.0,
         "SpotFrequencies": [
           {
             "Impressions": 1500.0,
