@@ -1,6 +1,6 @@
 ﻿{
   "AudienceId": 31,
-  "Budget": 180.98320,
+  "Budget": 180.9832,
   "CPM": 13.45,
   "CPP": 0.0,
   "Impressions": 13.0,

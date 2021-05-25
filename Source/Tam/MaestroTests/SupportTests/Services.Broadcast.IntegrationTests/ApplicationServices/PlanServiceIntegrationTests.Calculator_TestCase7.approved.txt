@@ -1,8 +1,8 @@
 ﻿{
   "AudienceId": 34,
   "Budget": 1000.0,
-  "CPM": 0.04000,
-  "CPP": 97.08737864077669902912621359,
+  "CPM": 0.0400,
+  "CPP": 97.0874,
   "Impressions": 25000.0,
   "RatingPoints": 10.3,
   "Universe": 243210000.0

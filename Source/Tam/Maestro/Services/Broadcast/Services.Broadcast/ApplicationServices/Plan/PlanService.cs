@@ -1025,10 +1025,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planBudget.Impressions = planBudget.Impressions.Value * 1000;
             }
 
-            planBudget = _BudgetCalculator.CalculateBudget(planBudget);
+            var result = _BudgetCalculator.CalculateBudget(planBudget);
+            
+            result.Impressions = Math.Floor(result.Impressions.Value / 1000);
+            // BP-2482 : Found that the database plan_version.target_cpm, target_cpp and budget columns are Sql Type Money.
+            // On insert their values will be rounded to the 4th decimal.
+            // We will do the same here to close the loop.
+            result.CPP = result.CPP.AsSqlTypeMoney();
+            result.CPM = result.CPM.AsSqlTypeMoney();
+            result.Budget = result.Budget.AsSqlTypeMoney();
 
-            planBudget.Impressions = Math.Floor(planBudget.Impressions.Value / 1000);
-            return planBudget;
+            return result;
         }
 
         ///<inheritdoc/>

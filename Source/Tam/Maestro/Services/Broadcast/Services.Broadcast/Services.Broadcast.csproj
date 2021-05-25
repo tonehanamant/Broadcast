@@ -837,6 +837,7 @@
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\DetectionExtensions.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
+    <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\PlanDaypartExtensions.cs" />
     <Compile Include="Extensions\QuarterDetailExtension.cs" />

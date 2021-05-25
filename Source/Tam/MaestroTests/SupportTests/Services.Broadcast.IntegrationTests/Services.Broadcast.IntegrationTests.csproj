@@ -561,6 +561,7 @@
     <Compile Include="UnitTests\Extensions\ExcelWorksheetExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\ListExtentionsUnitTest.cs" />
     <Compile Include="UnitTests\Extensions\MediaMonthExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\NumericExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\PlanDaypartExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\QuarterDetailExtensionUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\StringExtensionsUnitTests.cs" />
