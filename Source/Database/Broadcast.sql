@@ -81,7 +81,7 @@ GO
 
 DECLARE @envName VARCHAR(50)
 DECLARE @trafficUrlBase VARCHAR(500) = 'http://[MachineName]/traffic/api/company'
-DECLARE @urlBase VARCHAR(500) = 'https://[MachineName]/aabapi/api/v1'
+DECLARE @urlBase VARCHAR(500) = 'https://[MachineName]/aabapiinternal/api/v1'
 DECLARE @envTrafficUrl VARCHAR(500)
 DECLARE @envUrl VARCHAR(500)
 DECLARE @IsStg BIT
@@ -92,11 +92,6 @@ SELECT @envName = parameter_value
 FROM system_settings.dbo.system_component_parameters
 WHERE component_id = 'MaestroEnvironment'
 AND parameter_key = 'Environment'
-
-SELECT @urlBase = CASE 
-		WHEN @envName = 'PROD' THEN 'http://[MachineName]/aabapiinternal/api/v1'
-		ELSE 'https://[MachineName]/aabapi/api/v1'
-	END
 
 
 SELECT @envUrl = CASE 
