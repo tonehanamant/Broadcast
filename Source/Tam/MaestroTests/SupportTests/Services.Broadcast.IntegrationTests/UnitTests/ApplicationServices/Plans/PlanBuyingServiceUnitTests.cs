@@ -2883,8 +2883,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
                 .Returns(currentDateTime);
 
-            _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>(), It.IsAny<SpotAllocationModelMode>()))
-                .Returns<PlanBuyingScxExportRequest, DateTime, SpotAllocationModelMode>((a, b, c) => new PlanScxData { PlanName = planName, Generated = b });
+            _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>(), 
+                It.IsAny<SpotAllocationModelMode>(),
+                It.IsAny<PostingTypeEnum>()))
+                .Returns<PlanBuyingScxExportRequest, DateTime, SpotAllocationModelMode, PostingTypeEnum>((a, b, c, d) => new PlanScxData { PlanName = planName, Generated = b });
             _PlanBuyingScxDataConverter.Setup(s => s.ConvertData(It.IsAny<PlanScxData>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns<PlanScxData, SpotAllocationModelMode>((d, e) => new PlanBuyingScxFile
                 {

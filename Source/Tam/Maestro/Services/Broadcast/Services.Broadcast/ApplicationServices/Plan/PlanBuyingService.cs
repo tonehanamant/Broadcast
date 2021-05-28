@@ -179,7 +179,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
 
-        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, 
+            PostingTypeEnum postingType = PostingTypeEnum.NSI);
         /// <summary>
         /// Generates the program lineup report.
         /// </summary>
@@ -343,14 +345,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return data;
         }
 
-        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, SpotAllocationModelMode spotAllocationModelMode )
+        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, 
+            SpotAllocationModelMode spotAllocationModelMode, 
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var generated = _DateTimeEngine.GetCurrentMoment();
 
             _ValidatePlanBuyingScxExportRequest(request);
             
-            var scxData = _PlanBuyingScxDataPrep.GetScxData(request, generated, spotAllocationModelMode);
+            var scxData = _PlanBuyingScxDataPrep.GetScxData(request, generated, spotAllocationModelMode, postingType);
             var scxFile = _PlanBuyingScxDataConverter.ConvertData(scxData, spotAllocationModelMode);
             scxFile.spotAllocationModelMode = spotAllocationModelMode.ToString().Substring(0, 1);
             var sharedFile = new SharedFolderFile

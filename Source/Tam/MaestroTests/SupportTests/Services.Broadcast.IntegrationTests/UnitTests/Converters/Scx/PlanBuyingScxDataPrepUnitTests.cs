@@ -362,7 +362,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 .Returns(job);
             _PlanBuyingRepository.Setup(s => s.GetLatestParametersForPlanBuyingJob(It.IsAny<int>()))
                 .Returns(jobParams);
-            _PlanBuyingRepository.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+            _PlanBuyingRepository.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>(), It.IsAny<PostingTypeEnum>()))
                 .Returns(jobResult);
 
             _PlanRepository.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))

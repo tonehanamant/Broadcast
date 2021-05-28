@@ -21,7 +21,9 @@ namespace Services.Broadcast.Converters.Scx
 {
     public interface IPlanBuyingScxDataPrep
     {
-        PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency);
+        PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+            PostingTypeEnum postingType = PostingTypeEnum.NSI);
     }
 
     public class PlanBuyingScxDataPrep : BaseScxDataPrep, IPlanBuyingScxDataPrep
@@ -55,11 +57,13 @@ namespace Services.Broadcast.Converters.Scx
             _StandardDaypartRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         }
 
-        public PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
+        public PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, 
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             _GetValidatedPlanAndJob(request, out var plan, out var job);
-            var optimalCPM = _GetOptimalCPM(job.Id, spotAllocationModelMode, PostingTypeEnum.NSI);
-            var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode, plan.Equivalized);
+            var optimalCPM = _GetOptimalCPM(job.Id, spotAllocationModelMode, postingType);
+            var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode, plan.Equivalized, postingType);
             var inventory = _InventoryRepository.GetPlanBuyingScxInventory(job.Id);            
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
@@ -253,10 +257,12 @@ namespace Services.Broadcast.Converters.Scx
             }
         }
 
-        internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, SpotAllocationModelMode spotAllocationModelMode, bool isEquivalized = false)
+        internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, 
+            SpotAllocationModelMode spotAllocationModelMode, 
+            bool isEquivalized = false, 
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
-            //var jobParams = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(jobId);
-            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode);            
+            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode, postingType);            
             var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
 
             if (isEquivalized)
