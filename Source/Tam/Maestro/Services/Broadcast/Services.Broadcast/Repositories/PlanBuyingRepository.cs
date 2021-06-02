@@ -167,6 +167,14 @@ namespace Services.Broadcast.Repositories
         CurrentBuyingExecutionResultDto GetBuyingResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType);
 
         /// <summary>
+        /// Gets the buying results by job identifier.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
+        /// <returns></returns>
+        List<CurrentBuyingExecutionResultDto> GetBuyingResultsByJobId(int jobId, PostingTypeEnum postingType);
+
+        /// <summary>
         /// Gets the buying stations result by job identifier.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
@@ -466,6 +474,21 @@ namespace Services.Broadcast.Repositories
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
                 MarketGroup = (MarketGroupEnum)entity.market_group
+            };
+            return dto;
+        }
+
+        private CurrentBuyingExecutionResultDto _MapToCurrentBuyingExecutionResultDto(plan_version_buying_results entity)
+        {
+            var dto = new CurrentBuyingExecutionResultDto
+            {
+                OptimalCpm = entity.optimal_cpm,
+                JobId = entity.plan_version_buying_job_id,
+                PlanVersionId = entity.plan_version_buying_job.plan_version_id,
+                GoalFulfilledByProprietary = entity.goal_fulfilled_by_proprietary,
+                HasResults = entity.plan_version_buying_result_spots.Any(),
+                SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,
+                PostingType = (PostingTypeEnum)entity.posting_type
             };
             return dto;
         }
@@ -949,6 +972,26 @@ namespace Services.Broadcast.Repositories
                     SpotAllocationModelMode = (SpotAllocationModelMode)result.spot_allocation_model_mode,
                     PostingType = (PostingTypeEnum)result.posting_type
                 };
+                return BuyingResult;
+            });
+        }
+
+        public List<CurrentBuyingExecutionResultDto> GetBuyingResultsByJobId(int jobId,PostingTypeEnum postingType)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_buying_results
+                    .Include(x => x.plan_version_buying_result_spots)
+                    .Where(x => x.plan_version_buying_job_id == jobId
+                    && x.posting_type == (int)postingType)
+                    .OrderByDescending(p => p.id)
+                    .ToList();
+
+                if (result == null)
+                    return null;
+
+                var BuyingResult = result.Select(_MapToCurrentBuyingExecutionResultDto).ToList();
+                
                 return BuyingResult;
             });
         }

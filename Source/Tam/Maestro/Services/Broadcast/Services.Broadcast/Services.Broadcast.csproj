@@ -502,6 +502,7 @@
     <Compile Include="Entities\Aab\aab_agency.cs" />
     <Compile Include="Entities\Aab\aab_product.cs" />
     <Compile Include="Entities\Enums\SpotAllocationModelMode.cs" />
+    <Compile Include="Entities\Plan\Buying\CurrentBuyingExecutions.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />

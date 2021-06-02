@@ -38,6 +38,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         CurrentBuyingExecution GetCurrentBuyingExecution(int planId,PostingTypeEnum postingType);
 
+        CurrentBuyingExecutions GetCurrentBuyingExecution_v2(int planId, PostingTypeEnum postingType);
+
         CurrentBuyingExecution GetCurrentBuyingExecutionByJobId(int jobId);
 
         /// <summary>
@@ -555,11 +557,83 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
+
+        private CurrentBuyingExecutions _GetCurrentBuyingExecution_v2(PlanBuyingJob job, int? planId, PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        {
+            List<CurrentBuyingExecutionResultDto> buyingExecutionResults = null;
+
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
+            {
+                //in case the error is comming from the Buying Run model, the error message field will have better
+                //message then the generic we construct here
+                if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
+                    throw new Exception(job.ErrorMessage);
+                throw new Exception(
+                    "Error encountered while running Buying Model, please contact a system administrator for help");
+            }
+
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
+            {
+                buyingExecutionResults = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id,postingType);
+
+                if (buyingExecutionResults != null)
+                {
+                    foreach (var buyingExecutionResult in buyingExecutionResults)
+                    {
+                        _GetBuyingExecutionResult(buyingExecutionResult);
+                    }
+                }
+            }
+
+            //buyingExecutionResult might be null when there is no buying run for the latest version            
+            return new CurrentBuyingExecutions
+            {
+                Job = job,
+                Results = buyingExecutionResults ?? _GetDefaultBuyingResultsList(postingType),
+                IsBuyingModelRunning = IsBuyingModelRunning(job)
+            };
+        }
+
+        private List<CurrentBuyingExecutionResultDto> _GetDefaultBuyingResultsList(PostingTypeEnum postingType)
+        {
+            var emptyList = new List<CurrentBuyingExecutionResultDto>
+            {
+                new CurrentBuyingExecutionResultDto() {PostingType = postingType}
+            };
+            return emptyList;
+        }
+
         public CurrentBuyingExecution GetCurrentBuyingExecution(int planId,PostingTypeEnum postingType)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
             return _GetCurrentBuyingExecution(job, planId,postingType);
+        }
+
+        public CurrentBuyingExecutions GetCurrentBuyingExecution_v2(int planId, PostingTypeEnum postingType)
+        {
+            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+
+            return _GetCurrentBuyingExecution_v2(job, planId, postingType);
+        }
+
+        private void _GetBuyingExecutionResult(CurrentBuyingExecutionResultDto buyingExecutionResult)
+        {
+            buyingExecutionResult.Notes = buyingExecutionResult.GoalFulfilledByProprietary
+                                   ? "Proprietary goals meet plan goals"
+                                   : string.Empty;
+            if (buyingExecutionResult.JobId.HasValue)
+            {
+                decimal goalCpm;
+                if (buyingExecutionResult.PlanVersionId.HasValue)
+                    goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.PlanVersionId.Value,
+                        buyingExecutionResult.JobId.Value);
+                else
+                    goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.JobId.Value);
+
+                buyingExecutionResult.CpmPercentage =
+                    CalculateCpmPercentage(buyingExecutionResult.OptimalCpm, goalCpm);
+            }
         }
 
         /// <summary>

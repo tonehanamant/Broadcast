@@ -45,6 +45,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetCurrentBuyingExecution(planId,postingType));
         }
 
+        [HttpPost]
+        [Route("~/api/v2/Buying/execution")]
+        public BaseResponse<CurrentBuyingExecutions> GetCurrentBuyingExecution_v2(int planId, PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetCurrentBuyingExecution_v2(planId, postingType));
+        }
+
         /// <summary>
         /// Get programs data from the lastest pricing execution
         /// </summary>

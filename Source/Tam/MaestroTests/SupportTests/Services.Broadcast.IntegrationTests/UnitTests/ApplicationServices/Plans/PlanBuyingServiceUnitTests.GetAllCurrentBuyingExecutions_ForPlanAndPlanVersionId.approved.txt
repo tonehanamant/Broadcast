@@ -1,0 +1,17 @@
+{
+  "IsBuyingModelRunning": false,
+  "Job": null,
+  "Results": [
+    {
+      "CpmPercentage": 0,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": false,
+      "JobId": null,
+      "Notes": null,
+      "OptimalCpm": 0.0,
+      "PlanVersionId": null,
+      "PostingType": 1,
+      "SpotAllocationModelMode": 0
+    }
+  ]
+}

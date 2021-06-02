@@ -1,0 +1,81 @@
+{
+  "IsBuyingModelRunning": false,
+  "Job": {
+    "Completed": "2021-03-24T11:13:13",
+    "DiagnosticResult": "DiagnosticResult",
+    "ErrorMessage": null,
+    "HangfireJobId": "9895",
+    "Id": 506,
+    "PlanVersionId": 659,
+    "Queued": "2021-03-24T11:12:13",
+    "Status": 3
+  },
+  "Results": [
+    {
+      "CpmPercentage": 163,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": true,
+      "JobId": 12,
+      "Notes": "",
+      "OptimalCpm": 11.0,
+      "PlanVersionId": 659,
+      "PostingType": 2,
+      "SpotAllocationModelMode": 3
+    },
+    {
+      "CpmPercentage": 104,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": true,
+      "JobId": 506,
+      "Notes": "",
+      "OptimalCpm": 7.0,
+      "PlanVersionId": 659,
+      "PostingType": 1,
+      "SpotAllocationModelMode": 3
+    },
+    {
+      "CpmPercentage": 178,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": true,
+      "JobId": 506,
+      "Notes": "",
+      "OptimalCpm": 12.0,
+      "PlanVersionId": 659,
+      "PostingType": 1,
+      "SpotAllocationModelMode": 2
+    },
+    {
+      "CpmPercentage": 119,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": true,
+      "JobId": 506,
+      "Notes": "",
+      "OptimalCpm": 8.0,
+      "PlanVersionId": 659,
+      "PostingType": 2,
+      "SpotAllocationModelMode": 2
+    },
+    {
+      "CpmPercentage": 415,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": true,
+      "JobId": 506,
+      "Notes": "",
+      "OptimalCpm": 28.0,
+      "PlanVersionId": 659,
+      "PostingType": 1,
+      "SpotAllocationModelMode": 1
+    },
+    {
+      "CpmPercentage": 296,
+      "GoalFulfilledByProprietary": false,
+      "HasResults": true,
+      "JobId": 506,
+      "Notes": "",
+      "OptimalCpm": 20.0,
+      "PlanVersionId": 659,
+      "PostingType": 2,
+      "SpotAllocationModelMode": 1
+    }
+  ]
+}
