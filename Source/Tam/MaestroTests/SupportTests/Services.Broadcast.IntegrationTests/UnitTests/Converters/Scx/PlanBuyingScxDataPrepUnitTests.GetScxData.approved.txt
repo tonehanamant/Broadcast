@@ -57,7 +57,7 @@
                         "Impressions": 2400.0
                       }
                     ],
-                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramAssignedDaypartCode": "CUS",
                     "ProgramName": "MyTestProgram",
                     "SpotCost": 20.0,
                     "SpotLength": "30",
@@ -165,7 +165,7 @@
                         "Impressions": 2400.0
                       }
                     ],
-                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramAssignedDaypartCode": "CUS",
                     "ProgramName": "MyTestProgram",
                     "SpotCost": 20.0,
                     "SpotLength": "30",
@@ -273,7 +273,7 @@
                         "Impressions": 2400.0
                       }
                     ],
-                    "ProgramAssignedDaypartCode": "EMN",
+                    "ProgramAssignedDaypartCode": "CUS",
                     "ProgramName": "MyTestProgram",
                     "SpotCost": 20.0,
                     "SpotLength": "30",

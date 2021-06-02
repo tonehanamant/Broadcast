@@ -122,14 +122,15 @@ namespace Services.Broadcast.Converters.Scx
                 foreach (var marketStationGroup in marketStationGroups)
                 {
                     var daypartGroups = marketStationGroup
-                        .GroupBy(g => new {g.InventoryId, g.StandardDaypartId })
+                        .GroupBy(x => new { x.InventoryId, DaypartId = x.SpotInventory.ManifestDayparts.Select(d => d.Daypart.Id).FirstOrDefault() })
                         .ToList();
 
                     var programs = new List<ScxMarketDto.ScxStation.ScxProgram>();
                     foreach (var daypartGroup in daypartGroups)
                     {
-                        var daypartId = standardDaypartDaypartIds[daypartGroup.Key.StandardDaypartId];
-                        var programAssignedDaypartCode = standardDaypartCodes[daypartGroup.Key.StandardDaypartId];
+                        var daypart = daypartGroup.SelectMany(g => g.SpotInventory.ManifestDayparts.Select(d => d.Daypart)).First();
+                        var daypartId = daypart.Id;
+                        var programAssignedDaypartCode = daypart.Code;
 
                         // While inventory manifest dayparts is a list, there are no examples in the db of an inventory having more than one daypart.
                         // So we will grab the first record and go with it.

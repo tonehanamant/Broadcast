@@ -19,6 +19,7 @@ using System.Linq;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities;
 using FizzWare.NBuilder;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
 {
@@ -352,7 +353,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                         new StationInventoryManifestDaypart
                         {
                             PrimaryProgramId = 12,
-                            Programs = new List<StationInventoryManifestDaypartProgram> {new StationInventoryManifestDaypartProgram {Id=12, ProgramName = "MyTestProgram"}}
+                            Programs = new List<StationInventoryManifestDaypartProgram> {new StationInventoryManifestDaypartProgram {Id=12, ProgramName = "MyTestProgram"}},
+                            Daypart = new DisplayDaypart{
+                                Id = 59803,
+                                Code = "CUS"
+                            }
                         }
                     }
                 }
