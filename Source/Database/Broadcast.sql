@@ -81,7 +81,7 @@ GO
 
 DECLARE @envName VARCHAR(50)
 DECLARE @trafficUrlBase VARCHAR(500) = 'http://[MachineName]/traffic/api/company'
-DECLARE @urlBase VARCHAR(500) = 'https://[MachineName]/aabapiinternal/api/v1'
+DECLARE @urlBase VARCHAR(500) = 'http://[MachineName]/aabapiinternal/api/v1'
 DECLARE @envTrafficUrl VARCHAR(500)
 DECLARE @envUrl VARCHAR(500)
 DECLARE @IsStg BIT
