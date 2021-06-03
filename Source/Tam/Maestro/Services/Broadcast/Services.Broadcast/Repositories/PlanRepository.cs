@@ -2015,9 +2015,7 @@ namespace Services.Broadcast.Repositories
                     goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
                     total_spots = pricingResult.Totals.Spots,
                     posting_type = (int)pricingResult.PostingType,
-                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode,
-                    calculated_vpvh= pricingResult.Totals.CalculatedVPVH
-
+                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode
                 };
 
                 context.plan_version_pricing_results.Add(planPricingResult);
@@ -2228,8 +2226,7 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = entity.plan_version_pricing_job.plan_version_id,
                 GoalFulfilledByProprietary = entity.goal_fulfilled_by_proprietary,
                 HasResults = entity.plan_version_pricing_result_spots.Any(),
-                SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,
-                CalculatedVpvh = entity.calculated_vpvh ?? 0.0,
+                SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,                
                 TotalBudget = entity.total_budget,
                 TotalImpressions = entity.total_impressions
             };

@@ -53,7 +53,6 @@
     "AvgCpm": 15.094339622641509433962264200,
     "AvgImpressions": 2409.09090909,
     "Budget": 800.0,
-    "CalculatedVPVH": 0.0,
     "Impressions": 53000.0,
     "ImpressionsPercentage": 0.0,
     "MarketCount": 2,

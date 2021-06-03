@@ -6,7 +6,6 @@
     "Status": 3
   },
   "Result": {
-    "CalculatedVpvh": 0.0,
     "CpmPercentage": 1787,
     "GoalFulfilledByProprietary": false,
     "HasResults": true,

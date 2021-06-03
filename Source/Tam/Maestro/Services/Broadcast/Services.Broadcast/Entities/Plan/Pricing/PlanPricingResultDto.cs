@@ -46,7 +46,5 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal Budget { get; set; }
         public int Spots { get; set; }
         public decimal ImpressionsPercentage { get; set; }
-        public double CalculatedVPVH { get; set; }
-
     }
 }

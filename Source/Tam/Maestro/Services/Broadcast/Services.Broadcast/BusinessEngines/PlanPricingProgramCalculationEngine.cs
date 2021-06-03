@@ -33,10 +33,7 @@ namespace Services.Broadcast.BusinessEngines
             var openMarketTotalSpots = openMarketPrograms.Sum(x => x.TotalSpots);
 
             var openMarketMarketCount = openMarketPrograms.SelectMany(x => x.MarketCodes).Distinct().Count();
-            var openMarketStationCount = openMarketPrograms.SelectMany(x => x.Stations).Distinct().Count();
-
-            var projectedImpressions = openMarketPrograms.Sum(x => x.ProjectedImpressions);
-            var householdProjectedImpressions = openMarketPrograms.Sum(x => x.HouseholdProjectedImpressions);
+            var openMarketStationCount = openMarketPrograms.SelectMany(x => x.Stations).Distinct().Count();            
 
             var proprietaryTotalCost = proprietaryInventoryData.ProprietarySummaries.Sum(x => x.TotalCostWithMargin);
             var proprietaryTotalImpressions = proprietaryInventoryData.ProprietarySummaries.Sum(x => x.TotalImpressions);
@@ -89,8 +86,7 @@ namespace Services.Broadcast.BusinessEngines
                 AvgCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions),
                 Budget = totalCost,
                 Impressions = totalImpressions,
-                Spots = totalSpots,
-                CalculatedVPVH = ProposalMath.CalculateVPVH(projectedImpressions, householdProjectedImpressions)
+                Spots = totalSpots               
             };
 
             result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
@@ -122,7 +118,7 @@ namespace Services.Broadcast.BusinessEngines
                 var allocatedStations = _GetAllocatedStations(apiResponse, programInventory);
                 var allocatedProgramSpots = _GetAllocatedProgramSpots(apiResponse, programInventory);
 
-                _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots, out var projectedImpressions, out var householdProjectedImpressions);
+                _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots);
 
                 if (programSpots == 0)
                     continue;
@@ -137,11 +133,7 @@ namespace Services.Broadcast.BusinessEngines
                     TotalCost = programCost,
                     TotalSpots = programSpots,
                     Stations = allocatedStations.Select(s => s.LegacyCallLetters).Distinct().ToList(),
-                    MarketCodes = allocatedStations.Select(s => s.MarketCode.Value).Distinct().ToList(),
-                    HouseholdProjectedImpressions = householdProjectedImpressions,
-                    ProjectedImpressions = projectedImpressions
-
-
+                    MarketCodes = allocatedStations.Select(s => s.MarketCode.Value).Distinct().ToList()
                 };
 
                 result.Add(program);
@@ -180,21 +172,16 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<PlanPricingAllocatedSpot> allocatedProgramSpots,
             out decimal totalProgramCost,
             out double totalProgramImpressions,
-            out int totalProgramSpots,
-             out double projectedImpressions, out double householdProjectedImpressions)
+            out int totalProgramSpots)
         {
             totalProgramCost = 0;
             totalProgramImpressions = 0;
-            totalProgramSpots = 0;
-            projectedImpressions = 0;
-            householdProjectedImpressions = 0;
+            totalProgramSpots = 0;            
             foreach (var apiProgram in allocatedProgramSpots)
             {
                 totalProgramCost += apiProgram.TotalCostWithMargin;
                 totalProgramImpressions += apiProgram.TotalImpressions;
-                totalProgramSpots += apiProgram.TotalSpots;
-                projectedImpressions += apiProgram.ProjectedImpressions;
-                householdProjectedImpressions += apiProgram.HouseholdProjectedImpressions;
+                totalProgramSpots += apiProgram.TotalSpots;                
             }
         }
     }

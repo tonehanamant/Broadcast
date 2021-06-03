@@ -28,6 +28,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             Assert.That(ProposalMath.CalculateCost(cpm, impressions), Is.EqualTo(cost));
         }
+        [Ignore("BP-2513 : VPVH_Calculated")]
         [TestCase(945222.82107598265, 3675017.06392121, 0.25720229447518222)]
         [TestCase(2917764.81390233, 2917764.81390233, 1)]       
         public void CalculateVPVH(double projectedImpressions, double householdProjectedImpressions, double VPVH)

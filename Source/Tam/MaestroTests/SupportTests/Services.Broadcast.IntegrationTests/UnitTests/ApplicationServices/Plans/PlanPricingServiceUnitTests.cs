@@ -6017,8 +6017,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     PlanVersionId = 11,
                     JobId = 12,
                     CpmPercentage = 204,
-                    SpotAllocationModelMode = mode,
-                    CalculatedVpvh = 4.3
+                    SpotAllocationModelMode = mode                    
+                    //,CalculatedVpvh = 4.3 // Commented as per requirement of BP-2513
                 });
 
             _PlanRepositoryMock
@@ -8222,8 +8222,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
                     JobId = 12,
-                    SpotAllocationModelMode = mode,
-                    CalculatedVpvh = 12.3
+                    SpotAllocationModelMode = mode
+                    //,CalculatedVpvh = 12.3  // Commented as per requirement of BP-2513
                 });
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))
@@ -9160,7 +9160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 63,
                             PostingType = PostingTypeEnum.NTI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Floor,
-                            CalculatedVpvh = 12.3,
+                            //CalculatedVpvh = 12.3, // Commented as per requirement of BP-2513
                             TotalImpressions = 1010680,
                             TotalBudget = 37220.625m
                         },
@@ -9175,7 +9175,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 44,
                             PostingType = PostingTypeEnum.NSI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Floor,
-                            CalculatedVpvh = 4.6,
+                            //CalculatedVpvh = 4.6, // Commented as per requirement of BP-2513
                             TotalImpressions = 1010680,
                             TotalBudget = 37220.625m
                         },
@@ -9190,7 +9190,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 67,
                             PostingType = PostingTypeEnum.NSI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-                            CalculatedVpvh = 6.2,
+                            //CalculatedVpvh = 6.2, // Commented as per requirement of BP-2513
                             TotalImpressions = 1010680,
                             TotalBudget = 37220.625m
                         },
@@ -9205,7 +9205,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 47,
                             PostingType = PostingTypeEnum.NTI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-                            CalculatedVpvh = 126.3,
+                            //CalculatedVpvh = 126.3, // Commented as per requirement of BP-2513
                             TotalImpressions = 1010680,
                             TotalBudget = 37220.625m
                         },
@@ -9220,7 +9220,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 160,
                             PostingType = PostingTypeEnum.NSI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Quality,
-                            CalculatedVpvh = 3.1,
+                            //CalculatedVpvh = 3.1, // Commented as per requirement of BP-2513
                             TotalImpressions = 1010680,
                             TotalBudget = 37220.625m
                         },
@@ -9235,7 +9235,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 112,
                             PostingType = PostingTypeEnum.NTI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Quality,
-                            CalculatedVpvh = 8.2,
+                            //CalculatedVpvh = 8.2, // Commented as per requirement of BP-2513
                             TotalImpressions = 1010680,
                             TotalBudget = 37220.625m
                         }
@@ -10840,7 +10840,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                         CpmPercentage=4,
                                         PostingType=PostingTypeEnum.NTI,
                                         SpotAllocationModelMode=SpotAllocationModelMode.Quality,
-                                        CalculatedVpvh=0,
+                                        //CalculatedVpvh=0, // Commented as per requirement of BP-2513
                                         TotalBudget=19939,
                                         TotalImpressions=870597
                                     },
@@ -10854,7 +10854,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                         CpmPercentage=4,
                                         PostingType=PostingTypeEnum.NTI,
                                         SpotAllocationModelMode=SpotAllocationModelMode.Quality,
-                                        CalculatedVpvh=0,
+                                        //CalculatedVpvh=0, // Commented as per requirement of BP-2513
                                         TotalBudget=19939,
                                         TotalImpressions=870597
                                     }

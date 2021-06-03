@@ -9,13 +9,10 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal AvgCpm { get; set; }
         public double AvgImpressions { get; set; }
         public double PercentageOfBuy { get; set; }
-        public double TotalImpressions { get; set; }
-        public double CalculatedVPVH { get; set; }
+        public double TotalImpressions { get; set; }        
         public decimal TotalCost { get; set; }
         public int TotalSpots { get; set; }
         public List<string> Stations { get; set; }
         public List<int> MarketCodes { get; set; }
-        public double ProjectedImpressions { get; set; }
-        public double HouseholdProjectedImpressions { get; set; }
     }
 }
