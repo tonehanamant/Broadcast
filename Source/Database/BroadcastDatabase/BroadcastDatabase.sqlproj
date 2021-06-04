@@ -269,6 +269,7 @@
     <Build Include="dbo\Stored Procedures\usp_GetPostedProposals.sql" />
     <Build Include="dbo\Stored Procedures\spIndex_rebuild_daily.sql" />
     <Build Include="dbo\User Defined Types\ProgramMappingUpdateRequests.sql" />
+    <Build Include="dbo\Tables\plan_version_pricing_results_dayparts.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

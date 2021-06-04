@@ -16,6 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public plan_version_pricing_results()
         {
+            this.plan_version_pricing_results_dayparts = new HashSet<plan_version_pricing_results_dayparts>();
             this.plan_version_pricing_result_spots = new HashSet<plan_version_pricing_result_spots>();
         }
     
@@ -32,9 +33,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int total_spots { get; set; }
         public int posting_type { get; set; }
         public int spot_allocation_model_mode { get; set; }
-        public Nullable<double> calculated_vpvh { get; set; }
     
-        public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
+        public virtual ICollection<plan_version_pricing_results_dayparts> plan_version_pricing_results_dayparts { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
+        public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
     }
 }

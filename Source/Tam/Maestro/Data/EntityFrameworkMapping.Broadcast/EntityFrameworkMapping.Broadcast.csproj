@@ -616,6 +616,9 @@
     <Compile Include="plan_version_pricing_results.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_pricing_results_dayparts.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_pricing_result_spots.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

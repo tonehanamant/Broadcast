@@ -535,6 +535,33 @@ UPDATE spot_length_cost_multipliers
 	WHERE spot_length_id = 3
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
+/*************************************** Start BP-2514 *****************************************************/
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_pricing_results' AND COLUMN_NAME= 'calculated_vpvh')
+BEGIN
+	ALTER TABLE plan_version_pricing_results
+	DROP COLUMN calculated_vpvh
+END
+
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'plan_version_pricing_results_dayparts')
+BEGIN
+	CREATE TABLE plan_version_pricing_results_dayparts
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY, 
+		[plan_version_pricing_result_id] INT NOT NULL, 
+		[standard_daypart_id] INT NOT NULL, 
+		[calculated_vpvh] FLOAT NOT NULL,
+		CONSTRAINT [FK_plan_version_pricing_results_dayparts_plan_version_pricing_results] FOREIGN KEY ([plan_version_pricing_result_id]) REFERENCES [dbo].[plan_version_pricing_results],
+		CONSTRAINT [FK_plan_version_pricing_results_dayparts_standard_dayparts] FOREIGN KEY ([standard_daypart_id]) REFERENCES [dbo].[standard_dayparts]
+	)
+END
+
+GO
+
+/*************************************** END BP-2514 *****************************************************/
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '21.02.2' -- Current release version
