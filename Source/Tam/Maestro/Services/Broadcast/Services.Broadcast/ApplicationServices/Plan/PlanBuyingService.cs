@@ -36,7 +36,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
     {
         PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, DateTime currentDate, string username);
 
-        CurrentBuyingExecution GetCurrentBuyingExecution(int planId,PostingTypeEnum postingType);
+        CurrentBuyingExecution GetCurrentBuyingExecution(int planId, PostingTypeEnum postingType);
 
         CurrentBuyingExecutions GetCurrentBuyingExecution_v2(int planId, PostingTypeEnum postingType);
 
@@ -92,7 +92,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
-        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType ,
+        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
-        PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType, 
+        PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         /// <summary>
@@ -181,8 +181,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
 
-        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, 
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, 
+        Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,
             PostingTypeEnum postingType = PostingTypeEnum.NSI);
         /// <summary>
         /// Generates the program lineup report.
@@ -264,7 +264,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   ISharedFolderService sharedFolderService,
                                   IPlanBuyingScxDataPrep planBuyingScxDataPrep,
                                   IPlanBuyingScxDataConverter planBuyingScxDataConverter,
-                                  IFeatureToggleHelper featureToggleHelper,                                  
+                                  IFeatureToggleHelper featureToggleHelper,
                                   IAabEngine aabEngine,
                                   IAudienceService audienceService,
                                   IDaypartCache daypartCache)
@@ -347,22 +347,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return data;
         }
 
-        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username, 
-            SpotAllocationModelMode spotAllocationModelMode, 
+        public Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username,
+            SpotAllocationModelMode spotAllocationModelMode,
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var generated = _DateTimeEngine.GetCurrentMoment();
 
             _ValidatePlanBuyingScxExportRequest(request);
-            
+
             var scxData = _PlanBuyingScxDataPrep.GetScxData(request, generated, spotAllocationModelMode, postingType);
             var scxFile = _PlanBuyingScxDataConverter.ConvertData(scxData, spotAllocationModelMode);
             scxFile.spotAllocationModelMode = spotAllocationModelMode.ToString().Substring(0, 1);
             var sharedFile = new SharedFolderFile
             {
-                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PLAN_BUYING_SCX),              
-                FileNameWithExtension = scxFile.FileName ,
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PLAN_BUYING_SCX),
+                FileNameWithExtension = scxFile.FileName,
                 FileMediaType = fileMediaType,
                 FileUsage = SharedFolderFileUsage.PlanBuyingScx,
                 CreatedDate = generated,
@@ -376,7 +376,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal void _ValidatePlanBuyingScxExportRequest(PlanBuyingScxExportRequest request)
         {
-            if (request.UnallocatedCpmThreshold.HasValue && 
+            if (request.UnallocatedCpmThreshold.HasValue &&
                 (request.UnallocatedCpmThreshold.Value < 1 || request.UnallocatedCpmThreshold.Value > 100))
             {
                 throw new InvalidOperationException($"Invalid value for UnallocatedCpmThreshold : '{request.UnallocatedCpmThreshold.Value}'; Valid range is 1-100.");
@@ -522,7 +522,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                buyingExecutionResult = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id, spotAllocationModelMode,postingType);
+                buyingExecutionResult = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id, spotAllocationModelMode, postingType);
 
                 if (buyingExecutionResult != null)
                 {
@@ -574,7 +574,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                buyingExecutionResults = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id,postingType);
+                buyingExecutionResults = _PlanBuyingRepository.GetBuyingResultsByJobId(job.Id, postingType);
 
                 if (buyingExecutionResults != null)
                 {
@@ -603,11 +603,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return emptyList;
         }
 
-        public CurrentBuyingExecution GetCurrentBuyingExecution(int planId,PostingTypeEnum postingType)
+        public CurrentBuyingExecution GetCurrentBuyingExecution(int planId, PostingTypeEnum postingType)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-            return _GetCurrentBuyingExecution(job, planId,postingType);
+            return _GetCurrentBuyingExecution(job, planId, postingType);
         }
 
         public CurrentBuyingExecutions GetCurrentBuyingExecution_v2(int planId, PostingTypeEnum postingType)
@@ -888,7 +888,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private List<ShareOfVoice> _GetShareOfVoice(
-            MarketCoverageDto topMarkets, 
+            MarketCoverageDto topMarkets,
             IEnumerable<PlanAvailableMarketDto> marketsWithSov,
             ProprietaryInventoryData proprietaryInventoryData,
             double planImpressionsGoal, SpotAllocationModelMode spotAllocationModelMode)
@@ -984,38 +984,38 @@ namespace Services.Broadcast.ApplicationServices.Plan
             CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
             PlanBuyingJobDiagnostic diagnostic)
         {
-           
+
             var results = new List<PlanBuyingAllocationResult>();
-            
 
-           
-                results.Add(new PlanBuyingAllocationResult
-                {
-                    JobId = jobId,
-                    PlanVersionId = plan.VersionId,
-                    BuyingVersion = _GetPricingModelVersion().ToString(),
-                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-                    PostingType=plan.PostingType
-                });
 
-                results.Add(new PlanBuyingAllocationResult
-                {
-                    JobId = jobId,
-                    PlanVersionId = plan.VersionId,
-                    BuyingVersion = _GetPricingModelVersion().ToString(),
-                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
-                    PostingType = plan.PostingType
-                });
-          
-                results.Add(new PlanBuyingAllocationResult
-                {
-                    JobId = jobId,
-                    PlanVersionId = plan.VersionId,
-                    BuyingVersion = _GetPricingModelVersion().ToString(),
-                    SpotAllocationModelMode = SpotAllocationModelMode.Quality,
-                    PostingType = plan.PostingType,
-                });
-          
+
+            results.Add(new PlanBuyingAllocationResult
+            {
+                JobId = jobId,
+                PlanVersionId = plan.VersionId,
+                BuyingVersion = _GetPricingModelVersion().ToString(),
+                SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                PostingType = plan.PostingType
+            });
+
+            results.Add(new PlanBuyingAllocationResult
+            {
+                JobId = jobId,
+                PlanVersionId = plan.VersionId,
+                BuyingVersion = _GetPricingModelVersion().ToString(),
+                SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                PostingType = plan.PostingType
+            });
+
+            results.Add(new PlanBuyingAllocationResult
+            {
+                JobId = jobId,
+                PlanVersionId = plan.VersionId,
+                BuyingVersion = _GetPricingModelVersion().ToString(),
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                PostingType = plan.PostingType,
+            });
+
 
             if (!goalsFulfilledByProprietaryInventory)
             {
@@ -1040,7 +1040,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     throw ex.Flatten().InnerExceptions.First();
                 }
 
-                
+
             }
 
             return results;
@@ -1161,7 +1161,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                         token.ThrowIfCancellationRequested();
 
-                        /*** Start Aggregations ***/                    
+                        /*** Start Aggregations ***/
 
                         var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
                         {
@@ -1238,8 +1238,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             aggregateRepFirmResultsTask));
                         aggregateRepFirmResultsTask.Start();
                     }
-                        token.ThrowIfCancellationRequested();
-                   
+                    token.ThrowIfCancellationRequested();
+
                     //Wait for all tasks nti and nsi to finish
                     var allAggregationTasks = Task.WhenAll(aggregationTasks.Select(x => x.Task).ToArray());
                     allAggregationTasks.Wait();
@@ -1610,7 +1610,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_MAPPING_ALLOCATED_SPOTS);
             var mappedResults = _MapToResultSpotsV2(apiAllocationResult, buyingApiRequest, inventory, parameters, spotsAndMappings.Mappings);
-            
+
             allocationResult.AllocatedSpots = mappedResults.Allocated;
             allocationResult.UnallocatedSpots = mappedResults.Unallocated;
             allocationResult.RequestId = apiAllocationResult.RequestId;
@@ -1627,7 +1627,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanBuyingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            var apiVersion = "3";
+            var apiVersion = "4";
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
             var buyingModelWeeks = _GetBuyingModelWeeks_v3(plan, parameters, proprietaryInventoryData, out List<int> skippedWeeksIds, allocationResult.SpotAllocationModelMode);
@@ -1642,6 +1642,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Weeks = buyingModelWeeks,
                 Spots = spotsAndMappings.Spots
             };
+
+            var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();
+            _HandleMissingSpotCosts(planSpotLengthIds, buyingApiRequest);
 
             _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion));
 
@@ -1689,6 +1692,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         SpotLengthId = x.SpotLengthId,
                         SpotLengthCost = x.Cost
                     }).ToList();
+
                     if (!validSpotCosts.Any())
                     {
                         continue;
@@ -1703,7 +1707,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         var impressions = program.Impressions;
 
                         if (impressions <= 0)
+                        {
                             continue;
+                        }
 
                         foreach (var programWeek in program.ManifestWeeks)
                         {
@@ -1801,10 +1807,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0.001;
             var topMarkets = _GetTopMarkets(parameters.MarketGroup);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
-          
+
             var shareOfVoice = spotAllocationModelMode == SpotAllocationModelMode.Floor ?
                new List<ShareOfVoice>() : _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal, spotAllocationModelMode);
-          
+
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
             var planBuyingParameters = plan.BuyingParameters;
 
@@ -1838,7 +1844,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     MediaWeekId = mediaWeekId,
                     ImpressionGoal = impressionGoal,
-                   
+
                     CpmGoal = spotAllocationModelMode == SpotAllocationModelMode.Quality ?
                         ProposalMath.CalculateCpm(weeklyBudget, impressionGoal) : 1,
                     MarketCoverageGoal = marketCoverageGoal,
@@ -2282,7 +2288,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var buyingApiRequest = new PlanBuyingApiRequestDto_v3
             {
-                Weeks = _GetBuyingModelWeeks_v3(plan, parameters, new ProprietaryInventoryData(), out List<int> skippedWeeksIds,SpotAllocationModelMode.Quality),
+                Weeks = _GetBuyingModelWeeks_v3(plan, parameters, new ProprietaryInventoryData(), out List<int> skippedWeeksIds, SpotAllocationModelMode.Quality),
                 Spots = _GetBuyingModelSpots_v3(groupedInventory, skippedWeeksIds).Spots
             };
 
@@ -2332,7 +2338,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             postingType = _GetPlanPostingType(planId, postingType);
 
-            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id,postingType,spotAllocationModelMode);
+            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, postingType, spotAllocationModelMode);
 
             if (results == null)
                 return null;
@@ -2350,10 +2356,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
-            
+
             postingType = _GetPlanPostingType(planId, postingType);
 
-            var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, postingType,spotAllocationModelMode);
+            var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, postingType, spotAllocationModelMode);
 
             if (results == null)
                 return null;
@@ -2376,7 +2382,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             postingType = _GetPlanPostingType(planId, postingType);
 
-            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id,postingType ,spotAllocationModelMode);
+            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, postingType, spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2395,10 +2401,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
-          
+
             postingType = _GetPlanPostingType(planId, postingType);
 
-            var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id, postingType,spotAllocationModelMode);
+            var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id, postingType, spotAllocationModelMode);
             if (result == null)
                 return null;
 
@@ -2420,7 +2426,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             postingType = _GetPlanPostingType(planId, postingType);
 
-            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id,postingType ,spotAllocationModelMode);
+            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, postingType, spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2442,10 +2448,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return null;
             }
-               
+
             postingType = _GetPlanPostingType(planId, postingType);
 
-            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType,spotAllocationModelMode);
+            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType, spotAllocationModelMode);
 
             if (results == null)
             {
@@ -2732,10 +2738,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var ntiToNsiConversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
                 plan.BuyingParameters = _ConvertPlanBuyingParametersToRequestedPostingType(plan.BuyingParameters, ntiToNsiConversionRate);
-            }            
+            }
             return plan.BuyingParameters;
         }
-        
+
         private void _SetPlanBuyingParameters(PlanDto plan)
         {
             var buyingDefaults = GetPlanBuyingDefaults();
@@ -2758,7 +2764,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             ValidateAndApplyMargin(plan.BuyingParameters);
         }
-        
+
         private PlanBuyingParametersDto _ConvertPlanBuyingParametersToRequestedPostingType(PlanBuyingParametersDto planBuyingParameters, double ntiToNsiConversionRate)
         {
             if (planBuyingParameters.PostingType == PostingTypeEnum.NSI)
@@ -2778,9 +2784,42 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                planBuyingParameters.CPM = 0;                
+                planBuyingParameters.CPM = 0;
             }
             return planBuyingParameters;
         }
+
+        internal void _HandleMissingSpotCosts(List<int> planSpotLengthIds, PlanBuyingApiRequestDto_v3 request)
+        {
+            const decimal missingLengthCost = 100000m;
+            var spotLengthCount = planSpotLengthIds.Count;
+            var missingSpotCosts = request.Spots.Where(s => s.SpotCost.Count != spotLengthCount).ToList();
+
+            foreach (var missingSpot in missingSpotCosts)
+            {
+                // which one is missing?
+                var accountedFor = missingSpot.SpotCost.Select(s => s.SpotLengthId).ToList();
+                var missingLengths = planSpotLengthIds.Except(accountedFor).ToList();
+
+                foreach (var missingLength in missingLengths)
+                {
+                    // add it with a high cost (decimal.MaxValue)
+                    var toAdd = new SpotCost_v3
+                    {
+                        SpotLengthId = missingLength,
+                        SpotLengthCost = missingLengthCost
+                    };
+                    missingSpot.SpotCost.Add(toAdd);
+                }
+            }
+
+            // Verify the request was filled in.
+            var afterCount = request.Spots.Count(s => s.SpotCost.Count != spotLengthCount);
+            if (afterCount > 0)
+            {
+                throw new ApplicationException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
+            }
+        }
+
     }
 }
