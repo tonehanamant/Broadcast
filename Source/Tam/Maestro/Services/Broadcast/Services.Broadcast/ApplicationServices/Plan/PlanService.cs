@@ -1026,8 +1026,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             var result = _BudgetCalculator.CalculateBudget(planBudget);
-            
-            result.Impressions = Math.Floor(result.Impressions.Value / 1000);
+            // if the UI is sending the user entered value keep it as it is or calculated value means round it off
+            if (impressionsHasValue)
+            {
+                result.Impressions =result.Impressions.Value / 1000;
+            }
+            else
+            {
+                result.Impressions = Math.Floor(result.Impressions.Value / 1000);
+            }          
             // BP-2482 : Found that the database plan_version.target_cpm, target_cpp and budget columns are Sql Type Money.
             // On insert their values will be rounded to the 4th decimal.
             // We will do the same here to close the loop.
@@ -1064,9 +1071,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (budgetRequest.DeliveryImpressions.HasValue)
             {
                 convertedImpressions =
-                    otherPostingType == PostingTypeEnum.NTI
+                    Math.Floor(otherPostingType == PostingTypeEnum.NTI
                         ? budgetRequest.DeliveryImpressions.Value * conversionRate.ConversionRate
-                        : budgetRequest.DeliveryImpressions.Value / conversionRate.ConversionRate;
+                        : budgetRequest.DeliveryImpressions.Value / conversionRate.ConversionRate);
             }
             else if (budgetRequest.DeliveryRatingPoints.HasValue)
             {

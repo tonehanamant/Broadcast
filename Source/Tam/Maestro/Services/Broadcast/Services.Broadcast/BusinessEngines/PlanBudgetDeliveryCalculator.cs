@@ -49,7 +49,7 @@ namespace Services.Broadcast.BusinessEngines
                 result.CPM = _CalculateCPM(input.Budget, input.Impressions);
                 var ratingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
                 result.RatingPoints = ratingPoints;
-                result.CPP = _CalculateCPP(input.Budget, ratingPoints);
+                result.CPP = _CalculateCPP(input.Budget, ratingPoints);                
                 return result;
             }
 
@@ -58,7 +58,7 @@ namespace Services.Broadcast.BusinessEngines
                 result.Budget = _CalculateBudgetByCPM(input.Impressions, input.CPM);
                 var ratingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
                 result.RatingPoints = ratingPoints;
-                result.CPP = _CalculateCPP(input.Budget, ratingPoints);
+                result.CPP = _CalculateCPP(input.Budget, ratingPoints);              
                 return result;
             }
 
@@ -67,15 +67,16 @@ namespace Services.Broadcast.BusinessEngines
                 result.Impressions = _CalculateDeliveryImpressionsByCPM(input.Budget, input.CPM);
                 var ratingPoints = _CalculateDeliveryRatingPoints(result.Impressions, input.Universe.Value);
                 result.RatingPoints = ratingPoints;
-                result.CPP = _CalculateCPP(input.Budget, ratingPoints);
+                result.CPP = _CalculateCPP(input.Budget, ratingPoints);               
                 return result;
+
             }
 
             if (input.RatingPoints.HasValue && input.Budget.HasValue)
             {
                 result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(input.Budget, result.Impressions);
-                result.CPP = _CalculateCPP(input.Budget, input.RatingPoints);
+                result.CPP = _CalculateCPP(input.Budget, input.RatingPoints);               
                 return result;
             }
 
@@ -83,7 +84,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 result.Budget = _CalculateBudgetByCPP(input.RatingPoints, input.CPP);
                 result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
-                result.CPM = _CalculateCPM(result.Budget, result.Impressions);
+                result.CPM = _CalculateCPM(result.Budget, result.Impressions);                
                 return result;
             }
 
@@ -92,7 +93,7 @@ namespace Services.Broadcast.BusinessEngines
                 var ratingPoints = _CalculateDeliveryRatingPointsByCPP(input.Budget, input.CPP);
                 result.RatingPoints = ratingPoints;
                 result.Impressions = _CalculateDeliveryImpressionsByUniverse(ratingPoints, input.Universe.Value);
-                result.CPM = _CalculateCPM(input.Budget, result.Impressions);
+                result.CPM = _CalculateCPM(input.Budget, result.Impressions);                
                 return result;
             }
             throw new Exception("At least 2 values needed to calculate goal amount");

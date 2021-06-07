@@ -3,7 +3,7 @@
   "Budget": 180.9832,
   "CPM": 13.45,
   "CPP": 0.0,
-  "Impressions": 13.0,
+  "Impressions": 13.456,
   "RatingPoints": 0.0,
   "Universe": 120600000.0
 }
