@@ -6490,7 +6490,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BroadcastModelStoreContainer">
-          <EntitySet Name="plan_version_pricing_results_dayparts" EntityType="Self.plan_version_pricing_results_dayparts" Schema="CADENT\apatil" store:Type="Tables" />
+          <EntitySet Name="plan_version_pricing_results_dayparts" EntityType="Self.plan_version_pricing_results_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_client_scrub_audiences" EntityType="Self.affidavit_client_scrub_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_client_scrubs" EntityType="Self.affidavit_client_scrubs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_file_detail_demographics" EntityType="Self.affidavit_file_detail_demographics" Schema="dbo" store:Type="Tables" />
