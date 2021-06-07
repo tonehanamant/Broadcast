@@ -547,7 +547,7 @@ GO
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'plan_version_pricing_results_dayparts')
 BEGIN
-	CREATE TABLE plan_version_pricing_results_dayparts
+	CREATE TABLE [dbo].plan_version_pricing_results_dayparts
 	(
 		[id] INT NOT NULL PRIMARY KEY IDENTITY, 
 		[plan_version_pricing_result_id] INT NOT NULL, 
