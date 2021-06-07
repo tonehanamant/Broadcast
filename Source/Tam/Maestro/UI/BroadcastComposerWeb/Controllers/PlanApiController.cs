@@ -324,6 +324,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("commit-pricing-allocation-model")]
+        [Authorize]
         public BaseResponse<bool> CommitPricingAllocationModel(CommitPricingAllocationModelRequest request)
         {
             var username = _GetCurrentUserFullName();
