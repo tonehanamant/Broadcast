@@ -192,7 +192,7 @@ namespace Services.Broadcast.Repositories
         PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
-        PlanPricingAllocationResultDto GetPricingApiResultsByJobId_v2(int jobId, 
+        PlanPricingAllocationResultDto GetPricingApiResultsByJobId_v2(int jobId,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
 
@@ -1338,7 +1338,7 @@ namespace Services.Broadcast.Repositories
                 };
             });
         }
-        
+
         /// <inheritdoc/>
         public PlanPricingJob GetPlanPricingJob(int jobId)
         {
@@ -1905,7 +1905,7 @@ namespace Services.Broadcast.Repositories
                          .Max();
 
                 var conversionRate = context.nti_to_nsi_conversion_rates
-                    .Where(x => standardDayPartIds.Contains(x.standard_daypart_id) && x.media_month_id== latestMediaMonth)
+                    .Where(x => standardDayPartIds.Contains(x.standard_daypart_id) && x.media_month_id == latestMediaMonth)
                     .Average(x => x.conversion_rate);
 
                 return conversionRate;
@@ -2015,9 +2015,18 @@ namespace Services.Broadcast.Repositories
                     goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
                     total_spots = pricingResult.Totals.Spots,
                     posting_type = (int)pricingResult.PostingType,
-                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode
+                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode                   
                 };
+                foreach (var planVersionPricingDaypart in pricingResult.PlanVersionPricingDaypartsList)
+                {
+                    var planVersionPricingDayparts = new plan_version_pricing_results_dayparts
+                    {
+                        standard_daypart_id = planVersionPricingDaypart.StandardDaypartId,
+                        calculated_vpvh = planVersionPricingDaypart.CalculatedVPVH
+                    };
 
+                    planPricingResult.plan_version_pricing_results_dayparts.Add(planVersionPricingDayparts);
+                }
                 context.plan_version_pricing_results.Add(planPricingResult);
 
                 context.SaveChanges();
@@ -2184,7 +2193,7 @@ namespace Services.Broadcast.Repositories
 
                 var result = context.plan_version_pricing_results
                     .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType 
+                    .Where(x => x.plan_version_pricing_job_id == jobId && x.posting_type == postingType
                         && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -2202,11 +2211,11 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                     var result = context.plan_version_pricing_results
-                    .Include(x => x.plan_version_pricing_result_spots)
-                    .Where(x => x.plan_version_pricing_job_id == jobId)
-                    .OrderByDescending(p => p.id)
-                    .ToList();
+                var result = context.plan_version_pricing_results
+               .Include(x => x.plan_version_pricing_result_spots)
+               .Where(x => x.plan_version_pricing_job_id == jobId)
+               .OrderByDescending(p => p.id)
+               .ToList();
 
                 if (result == null)
                     return null;
@@ -2226,7 +2235,7 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = entity.plan_version_pricing_job.plan_version_id,
                 GoalFulfilledByProprietary = entity.goal_fulfilled_by_proprietary,
                 HasResults = entity.plan_version_pricing_result_spots.Any(),
-                SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,                
+                SpotAllocationModelMode = (SpotAllocationModelMode)entity.spot_allocation_model_mode,
                 TotalBudget = entity.total_budget,
                 TotalImpressions = entity.total_impressions
             };
@@ -2382,7 +2391,7 @@ namespace Services.Broadcast.Repositories
                                     && (!postingType.HasValue || apiResults.posting_type == (int)postingType.Value)
                                     && (!spotAllocationModelMode.HasValue || apiResults.spot_allocation_model_mode == (int)spotAllocationModelMode.Value)
                                  select apiResults)
-                                    
+
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
                     .OrderByDescending(p => p.id)

@@ -439,6 +439,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
+                    HouseholdProjectedImpressions=5000,
                     Cpm = 10,
                     InventorySource = new InventorySource
                     {

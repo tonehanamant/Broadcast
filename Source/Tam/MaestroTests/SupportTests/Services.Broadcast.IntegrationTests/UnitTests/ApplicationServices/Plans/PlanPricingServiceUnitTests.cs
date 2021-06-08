@@ -4518,6 +4518,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
+                        HouseholdProjectedImpressions = 1100,
                         ManifestRates = new List<ManifestRate>
                         {
                             new ManifestRate
@@ -4590,6 +4591,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
+                        HouseholdProjectedImpressions = 1500,
                         ManifestRates = new List<ManifestRate>
                         {
                             new ManifestRate

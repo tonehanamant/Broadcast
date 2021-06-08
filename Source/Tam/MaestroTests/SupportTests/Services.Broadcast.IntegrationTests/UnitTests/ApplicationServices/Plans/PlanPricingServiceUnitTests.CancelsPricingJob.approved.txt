@@ -17,6 +17,7 @@
       "Notes": null,
       "OptimalCpm": 0.0,
       "PlanVersionId": 0,
+      "PlanVersionPricingDaypartsList": [],
       "PostingType": 0,
       "Programs": [],
       "SpotAllocationModelMode": 1,

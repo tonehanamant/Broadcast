@@ -20,7 +20,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePricingBandTest()
+        public void CalculateProgramResults()
         {
             var inventory = _GetInventory();
             var proprietaryInventory = new ProprietaryInventoryData
@@ -127,6 +127,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
+                    HouseholdProjectedImpressions= 5000,
                     Cpm = 10,
                     InventorySource = new InventorySource
                     {
@@ -161,7 +162,59 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         {
                             Id = 1
                         }
-                    }
+                    },
+                    StandardDaypartId=3
+                },
+                 new PlanPricingInventoryProgram
+                {
+                    ManifestId = 1,
+                    InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
+                    ProjectedImpressions = 5000,
+                    ProvidedImpressions = 5000,
+                    HouseholdProjectedImpressions= 5000,
+                    Cpm = 10,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 1,
+                        InventoryType = InventorySourceTypeEnum.OpenMarket,
+                        IsActive = true,
+                        Name = "Open Market"
+                    },
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 1,
+                        LegacyCallLetters = "AAAA",
+                        MarketCode = 404
+                    },
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Id = 1,
+                            PrimaryProgramId = 1,
+                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                            {
+                                Id = 1,
+                                Name = "Steve Wilkos Show-CW+"
+                            },
+                            Daypart = new DisplayDaypart(1, 1000, 2000, true, false, false, false, false, false, false)
+                        }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            Id = 1
+                        }
+                    },
+                    StandardDaypartId=14
                 }
             };
         }

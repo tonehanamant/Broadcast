@@ -1,6 +1,8 @@
-﻿using Services.Broadcast.Entities;
+﻿using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,7 @@ namespace Services.Broadcast.BusinessEngines
     }
 
     public class PlanPricingProgramCalculationEngine : IPlanPricingProgramCalculationEngine
-    {
+    {      
         public PlanPricingResultBaseDto CalculateProgramResults(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse,
@@ -28,6 +30,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = new PlanPricingResultBaseDto();
             var openMarketPrograms = _GetAllocatedPrograms(inventory, apiResponse);
+            var planVersionPricingDaypartsList = _GetAllocatedDayparts(inventory);
             var openMarketTotalCost = openMarketPrograms.Sum(x => x.TotalCost);
             var openMarketTotalImpressions = openMarketPrograms.Sum(x => x.TotalImpressions);
             var openMarketTotalSpots = openMarketPrograms.Sum(x => x.TotalSpots);
@@ -94,10 +97,36 @@ namespace Services.Broadcast.BusinessEngines
             result.JobId = apiResponse.JobId;
             result.PlanVersionId = apiResponse.PlanVersionId;
             result.PostingType = postingType;
-
+            result.PlanVersionPricingDaypartsList = planVersionPricingDaypartsList;
             return result;
         }
+        private List<PlanPricingResultsDaypartDto> _GetAllocatedDayparts(
+          List<PlanPricingInventoryProgram> inventory
+         )
+        {
+            var result = new List<PlanPricingResultsDaypartDto>();
 
+            var inventoryGroupedByStandardDaypart = inventory
+               .SelectMany(x => x.ManifestDayparts.Select(d => new PlanPricingImpressionsWithDaypart
+               {
+                   HouseholdProjectedImpressions = x.HouseholdProjectedImpressions,
+                   ProjectedImpressions = x.ProjectedImpressions,
+                    StandardDaypartId = x.StandardDaypartId
+
+               }))
+               .GroupBy(x => x.StandardDaypartId);
+            foreach (var daypart in inventoryGroupedByStandardDaypart)
+            {
+                var dayparts = new PlanPricingResultsDaypartDto
+                {
+                   CalculatedVPVH = ProposalMath.CalculateVPVH(daypart.Sum(x => x.ProjectedImpressions), daypart.Sum(x => x.HouseholdProjectedImpressions)),
+                    StandardDaypartId = daypart.Key                 
+
+                };
+                result.Add(dayparts);
+            }
+            return result;
+        }
         private List<PlanPricingProgram> _GetAllocatedPrograms(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse)

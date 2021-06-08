@@ -603,7 +603,9 @@
     <Compile Include="Entities\Plan\PlanDeliveryPostingTypeBudget.cs" />
     <Compile Include="Entities\Plan\Pricing\CurrentPricingExecutions.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingBand.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingImpressionsWithDaypart.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarkets.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingResultsDaypartDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
     <Compile Include="Entities\ProcessWorkflowTimers.cs" />
     <Compile Include="Entities\Scx\PlanBuyingScxFile.cs" />

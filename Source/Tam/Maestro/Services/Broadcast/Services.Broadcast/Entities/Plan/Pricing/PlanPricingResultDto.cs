@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Enums;
+﻿using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
@@ -13,7 +14,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public bool GoalFulfilledByProprietary { get; set; }
         public PostingTypeEnum PostingType { get; internal set; }
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
-    }
+        public List<PlanPricingResultsDaypartDto> PlanVersionPricingDaypartsList { get; set; } = new List<PlanPricingResultsDaypartDto>();
+}
 
     public class PlanPricingResultDto : PlanPricingResultBaseDto
     {
