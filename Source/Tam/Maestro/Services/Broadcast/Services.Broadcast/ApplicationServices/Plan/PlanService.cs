@@ -421,10 +421,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // if a new version was published then the VersionId is the latest published version.
             // if a draft was saved then the VersionId is the draft version instead.
             var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
-
-            _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy);
-            _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan);
-
+            if (!plan.IsDraft)
+            {
+                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy);
+                _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan);
+            }
             processTimers.End(SW_KEY_POST_PLAN_SAVE);
             processTimers.End(SW_KEY_TOTAL_DURATION);
             var timersReport = processTimers.ToString();
