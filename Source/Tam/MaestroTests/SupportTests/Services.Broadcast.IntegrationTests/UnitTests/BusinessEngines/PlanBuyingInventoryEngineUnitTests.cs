@@ -1578,15 +1578,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanBuyingInventoryProgram
                 {
                     ProjectedImpressions = 1000,
-                    ProvidedImpressions = 2000
+                    ProvidedImpressions = 2000,
+                    StandardDaypartId=1
                 }
             };
             var testEngine = _GetTestClass();
 
             testEngine._ApplyNTIConversionToNSI(plan, programs);
 
-            Assert.AreEqual(1000, programs.Single().ProjectedImpressions);
-            Assert.AreEqual(2000, programs.Single().ProvidedImpressions);
+            Assert.AreEqual(750, programs.Single().ProjectedImpressions);
+            Assert.AreEqual(1500, programs.Single().ProvidedImpressions);
         }
 
         [Test]

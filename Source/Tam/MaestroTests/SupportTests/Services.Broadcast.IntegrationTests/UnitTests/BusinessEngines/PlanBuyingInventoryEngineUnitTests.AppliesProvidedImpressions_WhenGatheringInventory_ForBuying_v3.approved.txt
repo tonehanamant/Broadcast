@@ -1,8 +1,8 @@
 {
   "inventory": [
     {
-      "Cpm": 6.6666666666666666666666667000,
-      "Impressions": 1500.0,
+      "Cpm": 8.888888888888888888888888900,
+      "Impressions": 1125.0,
       "InventoryBuyingQuarterType": "Plan",
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -63,10 +63,10 @@
           "Spots": 0
         }
       ],
-      "NsiToNtiImpressionConversionRate": 1.0,
+      "NsiToNtiImpressionConversionRate": 0.75,
       "PostingType": 1,
       "ProjectedImpressions": 0.0,
-      "ProvidedImpressions": 1500.0,
+      "ProvidedImpressions": 1125.0,
       "SpotLengthId": 1,
       "StandardDaypartId": 1,
       "Station": {

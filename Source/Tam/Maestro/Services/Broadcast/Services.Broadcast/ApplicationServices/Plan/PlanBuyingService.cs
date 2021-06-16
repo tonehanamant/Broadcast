@@ -1155,8 +1155,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         allocationResults.Add(targetPostingType, postingAllocationResult);
                         /*** Use the Results ***/
                         diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
-                        allocationResult.BuyingCpm =
-                            _CalculateBuyingCpm(allocationResult.AllocatedSpots, proprietaryInventoryData);
+                        postingAllocationResult.BuyingCpm =
+                            _CalculateBuyingCpm(postingAllocationResult.AllocatedSpots, proprietaryInventoryData);
                         diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_CPM);
 
                         token.ThrowIfCancellationRequested();
@@ -1171,7 +1171,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
                             return programResults;
                         });
-                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculatePrograms,
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculatePrograms,
                             calculateBuyingProgramsTask));
                         calculateBuyingProgramsTask.Start();
 
@@ -1183,7 +1183,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
                             return buyingBands;
                         });
-                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateBands,
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateBands,
                             calculateBuyingBandsTask));
                         calculateBuyingBandsTask.Start();
 
@@ -1196,7 +1196,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_STATIONS);
                             return buyingStations;
                         });
-                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateStations,
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateStations,
                             calculateBuyingStationsTask));
                         calculateBuyingStationsTask.Start();
 
@@ -1210,7 +1210,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                             return buyingMarketResults;
                         });
-                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateMarkets,
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateMarkets,
                             aggregateMarketResultsTask));
                         aggregateMarketResultsTask.Start();
 
@@ -1222,7 +1222,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
                             return buyingOwnershipGroupResults;
                         });
-                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateOwnershipGroups,
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateOwnershipGroups,
                             aggregateOwnershipGroupResultsTask));
                         aggregateOwnershipGroupResultsTask.Start();
 
@@ -1234,7 +1234,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_REP_FIRM_RESULTS);
                             return buyingOwnershipGroupResults;
                         });
-                        aggregationTasks.Add(new AggregationTask(BuyingJobTaskNameEnum.CalculateRepFirms,
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateRepFirms,
                             aggregateRepFirmResultsTask));
                         aggregateRepFirmResultsTask.Start();
                     }
@@ -1331,11 +1331,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal class AggregationTask
         {
+            public PostingTypeEnum PostingType { get; set; }
             public BuyingJobTaskNameEnum TaskName { get; set; }
             public Task Task { get; set; }
 
-            public AggregationTask(BuyingJobTaskNameEnum taskName, Task task)
+            public AggregationTask(PostingTypeEnum postingType, BuyingJobTaskNameEnum taskName, Task task)
             {
+                PostingType = postingType;
                 TaskName = taskName;
                 Task = task;
             }
@@ -1353,7 +1355,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
                 var calculateBuyingProgramsTask = (Task<PlanBuyingResultBaseDto>)aggregationTasks
-                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculatePrograms)
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculatePrograms)
                     .Task;
                 var calculateBuyingProgramsTaskResult = calculateBuyingProgramsTask.Result;
                 calculateBuyingProgramsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
@@ -1363,7 +1365,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
                 var calculateBuyingBandTask = (Task<PlanBuyingBandsDto>)aggregationTasks
-                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateBands)
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateBands)
                     .Task;
                 var calculateBuyingBandTaskResult = calculateBuyingBandTask.Result;
                 calculateBuyingBandTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
@@ -1372,7 +1374,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
                 var calculateBuyingStationTask = (Task<PlanBuyingStationResultDto>)aggregationTasks
-                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateStations)
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateStations)
                     .Task;
                 var calculateBuyingStationTaskResult = calculateBuyingStationTask.Result;
                 calculateBuyingStationTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
@@ -1381,7 +1383,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
                 var aggregateMarketResultsTask = (Task<PlanBuyingResultMarketsDto>)aggregationTasks
-                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateMarkets)
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateMarkets)
                     .Task;
                 var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
                 aggregateMarketResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
@@ -1390,7 +1392,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
                 var aggregateOwnershipGroupResultsTask = (Task<PlanBuyingResultOwnershipGroupDto>)aggregationTasks
-                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateOwnershipGroups)
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateOwnershipGroups)
                     .Task;
                 var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.Result;
                 aggregateOwnershipGroupResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
@@ -1399,7 +1401,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
                 var aggregateRepFirmResultsTask = (Task<PlanBuyingResultRepFirmDto>)aggregationTasks
-                    .First(x => x.TaskName == BuyingJobTaskNameEnum.CalculateRepFirms)
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateRepFirms)
                     .Task;
                 var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.Result;
                 aggregateRepFirmResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;

@@ -22,14 +22,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -45,7 +45,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -69,14 +69,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -92,7 +92,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -116,14 +116,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -139,7 +139,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -163,14 +163,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -186,7 +186,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -210,14 +210,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -233,7 +233,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -257,14 +257,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -280,7 +280,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -304,14 +304,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -327,7 +327,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -351,14 +351,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -374,7 +374,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -398,14 +398,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -421,7 +421,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -445,14 +445,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -468,7 +468,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -492,14 +492,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -515,7 +515,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -539,14 +539,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -562,7 +562,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -586,14 +586,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -609,7 +609,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -633,14 +633,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -656,7 +656,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -680,14 +680,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -703,7 +703,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -727,14 +727,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -750,7 +750,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -774,14 +774,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -797,7 +797,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -821,14 +821,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -844,7 +844,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -868,14 +868,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -891,7 +891,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -915,14 +915,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -938,7 +938,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -962,14 +962,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -985,7 +985,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -1009,14 +1009,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1032,7 +1032,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -1056,14 +1056,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1079,7 +1079,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -1103,14 +1103,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1126,7 +1126,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -1150,14 +1150,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1173,11 +1173,11 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       }
     ],
-    "BuyingCpm": 17.6142,
+    "BuyingCpm": 12.3299,
     "BuyingVersion": "4",
     "PostingType": 1,
     "RequestId": null,
@@ -1207,14 +1207,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1230,7 +1230,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -1254,14 +1254,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1277,7 +1277,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -1301,14 +1301,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1324,7 +1324,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -1348,14 +1348,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1371,7 +1371,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -1395,14 +1395,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1418,7 +1418,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -1442,14 +1442,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1465,7 +1465,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -1489,14 +1489,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1512,7 +1512,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -1536,14 +1536,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1559,7 +1559,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -1583,14 +1583,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1606,7 +1606,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -1630,14 +1630,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1653,7 +1653,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -1677,14 +1677,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1700,7 +1700,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -1724,14 +1724,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1747,7 +1747,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -1771,14 +1771,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1794,7 +1794,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -1818,14 +1818,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1841,7 +1841,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -1865,14 +1865,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1888,7 +1888,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -1912,14 +1912,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1935,7 +1935,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -1959,14 +1959,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -1982,7 +1982,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -2006,14 +2006,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2029,7 +2029,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -2053,14 +2053,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2076,7 +2076,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -2100,14 +2100,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2123,7 +2123,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -2147,14 +2147,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2170,7 +2170,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -2194,14 +2194,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2217,7 +2217,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -2241,14 +2241,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2264,7 +2264,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -2288,14 +2288,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2311,7 +2311,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -2335,14 +2335,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2358,11 +2358,11 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       }
     ],
-    "BuyingCpm": 17.6142,
+    "BuyingCpm": 12.3299,
     "BuyingVersion": "4",
     "PostingType": 1,
     "RequestId": null,
@@ -2392,14 +2392,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2415,7 +2415,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -2439,14 +2439,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2462,7 +2462,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -2486,14 +2486,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2509,7 +2509,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -2533,14 +2533,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2556,7 +2556,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -2580,14 +2580,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2603,7 +2603,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -2627,14 +2627,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2650,7 +2650,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -2674,14 +2674,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2697,7 +2697,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -2721,14 +2721,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2744,7 +2744,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -2768,14 +2768,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2791,7 +2791,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -2815,14 +2815,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2838,7 +2838,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -2862,14 +2862,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2885,7 +2885,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -2909,14 +2909,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2932,7 +2932,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -2956,14 +2956,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -2979,7 +2979,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -3003,14 +3003,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3026,7 +3026,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -3050,14 +3050,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3073,7 +3073,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -3097,14 +3097,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3120,7 +3120,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -3144,14 +3144,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3167,7 +3167,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -3191,14 +3191,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3214,7 +3214,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -3238,14 +3238,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3261,7 +3261,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -3285,14 +3285,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3308,7 +3308,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -3332,14 +3332,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3355,7 +3355,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -3379,14 +3379,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3402,7 +3402,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -3426,14 +3426,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3449,7 +3449,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -3473,14 +3473,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3496,7 +3496,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -3520,14 +3520,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3543,11 +3543,11 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       }
     ],
-    "BuyingCpm": 17.6142,
+    "BuyingCpm": 12.3299,
     "BuyingVersion": "4",
     "PostingType": 1,
     "RequestId": null,
@@ -3577,14 +3577,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3600,7 +3600,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -3624,14 +3624,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3647,7 +3647,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -3671,14 +3671,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3694,7 +3694,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -3718,14 +3718,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3741,7 +3741,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -3765,14 +3765,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 24150.0,
+            "Impressions": 34500.0,
             "SpotCost": 376.8750,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 48300.0,
+            "Impressions": 69000.0,
             "SpotCost": 753.7500,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3788,7 +3788,7 @@
         "StationInventoryManifestId": 287146,
         "TotalCost": 1130.6250,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 72450.0,
+        "TotalImpressions": 103500.0,
         "TotalSpots": 2
       },
       {
@@ -3812,14 +3812,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3835,7 +3835,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -3859,14 +3859,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3882,7 +3882,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -3906,14 +3906,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3929,7 +3929,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -3953,14 +3953,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -3976,7 +3976,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -4000,14 +4000,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 21140.0,
+            "Impressions": 30200.0,
             "SpotCost": 402.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 42280.0,
+            "Impressions": 60400.0,
             "SpotCost": 804.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4023,7 +4023,7 @@
         "StationInventoryManifestId": 287150,
         "TotalCost": 1206.0000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 63420.0,
+        "TotalImpressions": 90600.0,
         "TotalSpots": 2
       },
       {
@@ -4047,14 +4047,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4070,7 +4070,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -4094,14 +4094,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4117,7 +4117,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -4141,14 +4141,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4164,7 +4164,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -4188,14 +4188,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4211,7 +4211,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -4235,14 +4235,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 16380.0,
+            "Impressions": 23400.0,
             "SpotCost": 301.5000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 32760.0,
+            "Impressions": 46800.0,
             "SpotCost": 603.0000,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4258,7 +4258,7 @@
         "StationInventoryManifestId": 287154,
         "TotalCost": 904.5000,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 49140.0,
+        "TotalImpressions": 70200.0,
         "TotalSpots": 2
       },
       {
@@ -4282,14 +4282,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4305,7 +4305,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -4329,14 +4329,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4352,7 +4352,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -4376,14 +4376,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4399,7 +4399,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -4423,14 +4423,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4446,7 +4446,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -4470,14 +4470,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 210.0,
+            "Impressions": 300.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 420.0,
+            "Impressions": 600.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4493,7 +4493,7 @@
         "StationInventoryManifestId": 288693,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 630.0,
+        "TotalImpressions": 900.0,
         "TotalSpots": 2
       },
       {
@@ -4517,14 +4517,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4540,7 +4540,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -4564,14 +4564,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4587,7 +4587,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -4611,14 +4611,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4634,7 +4634,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -4658,14 +4658,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4681,7 +4681,7 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       },
       {
@@ -4705,14 +4705,14 @@
         },
         "SpotFrequencies": [
           {
-            "Impressions": 140.0,
+            "Impressions": 200.0,
             "SpotCost": 6.0300,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
-            "Impressions": 280.0,
+            "Impressions": 400.0,
             "SpotCost": 12.0600,
             "SpotCostWithMargin": 0.0,
             "SpotLengthId": 2,
@@ -4728,11 +4728,11 @@
         "StationInventoryManifestId": 288694,
         "TotalCost": 18.0900,
         "TotalCostWithMargin": 0.0,
-        "TotalImpressions": 420.0,
+        "TotalImpressions": 600.0,
         "TotalSpots": 2
       }
     ],
-    "BuyingCpm": 17.6142,
+    "BuyingCpm": 12.3299,
     "BuyingVersion": "4",
     "PostingType": 1,
     "RequestId": null,

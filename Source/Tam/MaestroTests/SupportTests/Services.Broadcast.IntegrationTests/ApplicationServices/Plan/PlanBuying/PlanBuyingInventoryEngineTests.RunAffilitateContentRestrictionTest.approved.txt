@@ -112,7 +112,7 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 1,
     "ProjectedImpressions": 122.78,
     "ProvidedImpressions": 420.0,
@@ -248,7 +248,7 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 1,
     "ProjectedImpressions": 304.2375,
     "ProvidedImpressions": 420.0,
@@ -384,7 +384,7 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 1,
     "ProjectedImpressions": 406.0,
     "ProvidedImpressions": 280.0,

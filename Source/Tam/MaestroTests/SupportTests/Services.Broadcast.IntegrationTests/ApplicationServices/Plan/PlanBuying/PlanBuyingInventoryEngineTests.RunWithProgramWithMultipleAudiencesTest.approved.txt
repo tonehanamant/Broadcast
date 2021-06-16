@@ -72,7 +72,7 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 1,
     "ProjectedImpressions": 14938.7175,
     "ProvidedImpressions": null,
@@ -168,7 +168,7 @@
         "Spots": 0
       }
     ],
-    "NsiToNtiImpressionConversionRate": 1.0,
+    "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 1,
     "ProjectedImpressions": 14938.7175,
     "ProvidedImpressions": 700.0,

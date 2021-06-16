@@ -650,9 +650,6 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             List<PlanBuyingInventoryProgram> programs)
         {
-            if (plan.PostingType != PostingTypeEnum.NTI)
-                return;
-
             var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
                     .GetLatestNtiToNsiConversionRates()
                     .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
@@ -660,8 +657,8 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var conversionRate = conversionRatesByDaypartCodeId[program.StandardDaypartId];
-
                 program.ProjectedImpressions *= conversionRate;
+                program.NsiToNtiImpressionConversionRate = conversionRate;
 
                 if (program.ProvidedImpressions.HasValue)
                     program.ProvidedImpressions *= conversionRate;
