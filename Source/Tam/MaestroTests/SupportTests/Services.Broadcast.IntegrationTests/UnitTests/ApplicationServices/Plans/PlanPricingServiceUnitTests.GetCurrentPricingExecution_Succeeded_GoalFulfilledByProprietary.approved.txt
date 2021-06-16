@@ -14,6 +14,7 @@
     "CpmPercentage": 74,
     "GoalFulfilledByProprietary": true,
     "HasResults": false,
+    "Id": 15,
     "JobId": 12,
     "Notes": "Proprietary goals meet plan goals",
     "OptimalCpm": 5.0,

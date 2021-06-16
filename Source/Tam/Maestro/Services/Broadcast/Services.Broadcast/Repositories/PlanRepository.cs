@@ -221,6 +221,7 @@ namespace Services.Broadcast.Repositories
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         double GetNsiToNtiConversionRate(List<PlanDaypartDto> planDayparts);
+        List<PlanPricingResultsDaypartDto> GetPlanPricingResultsDaypartsByPlanPricingResultId(int planPricingResultId);        
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -2229,6 +2230,7 @@ namespace Services.Broadcast.Repositories
         {
             var dto = new CurrentPricingExecutionResultDto
             {
+                Id = entity.id,
                 PostingType = (PostingTypeEnum)entity.posting_type,
                 OptimalCpm = entity.optimal_cpm,
                 JobId = entity.plan_version_pricing_job_id,
@@ -2657,5 +2659,22 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public List<PlanPricingResultsDaypartDto> GetPlanPricingResultsDaypartsByPlanPricingResultId(int planPricingResultId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_pricing_results_dayparts
+                    .Where(x => x.plan_version_pricing_result_id == planPricingResultId)
+                    .Select(x => new PlanPricingResultsDaypartDto
+                    {
+                        Id = x.id,
+                        PlanVersionPricingResultId = x.plan_version_pricing_result_id,
+                        StandardDaypartId = x.standard_daypart_id,
+                        CalculatedVPVH = x.calculated_vpvh
+                    }).ToList();
+
+                return result;
+            });
+        }
     }
 }

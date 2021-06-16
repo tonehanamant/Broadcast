@@ -12,6 +12,7 @@
     "CpmPercentage": 0,
     "GoalFulfilledByProprietary": false,
     "HasResults": false,
+    "Id": 0,
     "JobId": null,
     "Notes": null,
     "OptimalCpm": 0.0,

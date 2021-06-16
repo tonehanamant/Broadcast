@@ -1456,7 +1456,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planVersionId = _PlanService.CheckForDraft(planId);
                 var execution = _PlanPricingService.GetCurrentPricingExecution(planId, planVersionId);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
+                var jsonResolver = new IgnorableSerializerContractResolver(); 
+                jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "Id");
                 jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "JobId");
                 jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "PlanVersionId");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");

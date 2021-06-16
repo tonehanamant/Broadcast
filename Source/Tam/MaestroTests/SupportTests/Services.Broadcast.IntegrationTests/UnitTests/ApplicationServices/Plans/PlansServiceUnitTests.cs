@@ -169,6 +169,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();           
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.VPVH_DEMO, false);
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
@@ -2365,5 +2366,86 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
         }
 
+        [Test]
+        public void GetPlan_v2_CalculateVPVHForPlan_ToggleOn()
+        {
+            // Arrange
+            var planToReturn = _GetNewPlan();
+            
+            _InventoryProprietarySummaryRepositoryMock
+                .Setup(x => x.GetInventorySummaryDataById(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetInventorySummaryProprietaryData());
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns((int planId, int versionId) =>
+                {
+                    planToReturn.Id = planId;
+                    planToReturn.VersionId = versionId;
+                    planToReturn.PricingParameters.PostingType = PostingTypeEnum.NSI;                    
+                    return planToReturn;
+                });
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(.85d);
+
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengths())
+                .Returns(new Dictionary<int, int> { { 30, 1 } });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(
+                    It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(),
+                    It.IsAny<double>(),
+                    It.IsAny<List<CreativeLength>>(),
+                    It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForPlanVersion(It.IsAny<int>()))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 42
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new CurrentPricingExecutionResultDto()
+                {
+                    Id = 10
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingResultsDaypartsByPlanPricingResultId(It.IsAny<int>()))
+                .Returns(new List<PlanPricingResultsDaypartDto>
+                {
+                    new PlanPricingResultsDaypartDto(){
+                        Id = 101,
+                        PlanVersionPricingResultId = 10,
+                        StandardDaypartId = 22,
+                        CalculatedVPVH = 0.546
+                    },
+                    new PlanPricingResultsDaypartDto(){
+                        Id = 101,
+                        PlanVersionPricingResultId = 10,
+                        StandardDaypartId = 2,
+                        CalculatedVPVH = 0.227
+                    }
+                });
+
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.VPVH_DEMO] = true;
+
+            // Act
+            var result = _PlanService.GetPlan_v2(1, 1);
+            var expectedVPVH = 0.3865;
+
+            // Assert            
+            Assert.AreEqual(expectedVPVH, result.Vpvh);
+        }        
     }
 }

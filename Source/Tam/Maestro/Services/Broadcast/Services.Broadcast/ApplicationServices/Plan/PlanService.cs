@@ -664,6 +664,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanDto_v2 GetPlan_v2(int planId, int? versionId = null)
         {
             var plan = GetPlan(planId, versionId);
+            var isVPVHDemoEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.VPVH_DEMO);
+            if (isVPVHDemoEnabled)
+            {
+                _CalculateVPVHForPlan(plan);
+            }
             var conversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
             var plan_v2 = _MapPlanDtoToPlanDto_v2(plan, conversionRate);
             return plan_v2;
@@ -1627,6 +1632,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanRepository.UpdatePlanBuyingVersionId(afterPlanVersionId, beforePlanVersionId);
 
             return true;
+        }
+        private List<PlanPricingResultsDaypartDto> _GetPlanPricingResultsDayparts(PlanDto planDto)
+        {
+            List<PlanPricingResultsDaypartDto> planPricingResultsDayparts = null;
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planDto.VersionId);
+            if (job != null)
+            {
+                var planPricingResult = _PlanRepository.GetPricingResultsByJobId(job.Id, planDto.SpotAllocationModelMode);
+                if (planPricingResult != null)
+                {
+                    planPricingResultsDayparts = _PlanRepository.GetPlanPricingResultsDaypartsByPlanPricingResultId(planPricingResult.Id);
+                }
+            }
+            return planPricingResultsDayparts;
+        }
+
+        private void _CalculateVPVHForPlan(PlanDto planDto)
+        {
+            var planPricingResultsDayparts = _GetPlanPricingResultsDayparts(planDto);
+            if (planPricingResultsDayparts != null)
+            {                
+                planDto.Vpvh = planPricingResultsDayparts.Average(x => x.CalculatedVPVH);
+            }            
         }
     }
 }

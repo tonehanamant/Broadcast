@@ -15,6 +15,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
     public class CurrentPricingExecutionResultDto
     {
+        public int Id { get; set; }
         public decimal OptimalCpm { get; set; }
         public int? JobId { get; set; }
         public int? PlanVersionId { get; set; }

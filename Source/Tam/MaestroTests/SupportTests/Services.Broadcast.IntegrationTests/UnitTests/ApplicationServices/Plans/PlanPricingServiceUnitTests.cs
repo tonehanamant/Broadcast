@@ -6014,6 +6014,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns<int, SpotAllocationModelMode>((id, mode) => new CurrentPricingExecutionResultDto
                 {
+                    Id = 15,
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
@@ -8220,6 +8221,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns<int, SpotAllocationModelMode>((id, mode) => new CurrentPricingExecutionResultDto
                 {
+                    Id = 15,
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
@@ -9153,6 +9155,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new CurrentPricingExecutionResultDto()
                         {
+                            Id = 15,
                             OptimalCpm = 11,
                             JobId = 12,
                             PlanVersionId = 659,
@@ -9168,6 +9171,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         new CurrentPricingExecutionResultDto()
                         {
+                            Id = 15,
                             OptimalCpm = 7,
                             JobId = 506,
                             PlanVersionId = 659,
@@ -9183,6 +9187,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         new CurrentPricingExecutionResultDto()
                         {
+                            Id = 15,
                             OptimalCpm = 12,
                             JobId = 506,
                             PlanVersionId = 659,
@@ -9198,6 +9203,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         new CurrentPricingExecutionResultDto()
                         {
+                            Id = 15,
                             OptimalCpm = 8,
                             JobId = 506,
                             PlanVersionId = 659,
@@ -9213,6 +9219,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         new CurrentPricingExecutionResultDto()
                         {
+                            Id = 15,
                             OptimalCpm = 28,
                             JobId = 506,
                             PlanVersionId = 659,
@@ -9228,6 +9235,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         new CurrentPricingExecutionResultDto()
                         {
+                            Id = 15,
                             OptimalCpm = 20,
                             JobId = 506,
                             PlanVersionId = 659,
@@ -10834,6 +10842,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                                  new CurrentPricingExecutionResultDto
                                     {
+                                        Id = 15,
                                        OptimalCpm=21,JobId=755,
                                         PlanVersionId=805,
                                         GoalFulfilledByProprietary=false,
@@ -10848,6 +10857,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                     },
                                     new CurrentPricingExecutionResultDto
                                     {
+                                        Id = 15,
                                        OptimalCpm=21,JobId=755,
                                         PlanVersionId=805,
                                         GoalFulfilledByProprietary=false,
