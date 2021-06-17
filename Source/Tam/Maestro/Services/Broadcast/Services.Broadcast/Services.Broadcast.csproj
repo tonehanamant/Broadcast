@@ -476,6 +476,7 @@
     <Compile Include="ApplicationServices\AffiliateService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
+    <Compile Include="ApplicationServices\BroadcastLockingService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\HealthService.cs" />
@@ -502,6 +503,7 @@
     <Compile Include="Entities\Aab\aab_agency.cs" />
     <Compile Include="Entities\Aab\aab_product.cs" />
     <Compile Include="Entities\Enums\SpotAllocationModelMode.cs" />
+    <Compile Include="Entities\BroadcastLockResponse.cs" />
     <Compile Include="Entities\Plan\Buying\CurrentBuyingExecutions.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
@@ -608,6 +610,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultsDaypartDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
     <Compile Include="Entities\ProcessWorkflowTimers.cs" />
+    <Compile Include="Entities\BroadcastReleaseLockResponse.cs" />
     <Compile Include="Entities\Scx\PlanBuyingScxFile.cs" />
     <Compile Include="Entities\Scx\PlanScxData.cs" />
     <Compile Include="Entities\ServiceExecutionResult.cs" />

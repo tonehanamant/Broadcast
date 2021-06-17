@@ -489,6 +489,7 @@
     <Compile Include="TestData\QuartersTestData.cs" />
     <Compile Include="TestData\SpotLengthTestData.cs" />
     <Compile Include="TestData\StationsTestData.cs" />
+    <Compile Include="UnitTests\ApplicationServices\BroadcastLockingServiceUnitTest.cs" />
     <Compile Include="UnitTests\ApplicationServices\DaypartDefaultServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTestClass.cs" />
