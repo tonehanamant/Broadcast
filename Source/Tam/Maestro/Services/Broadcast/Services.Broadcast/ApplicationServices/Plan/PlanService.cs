@@ -510,6 +510,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (beforePlan.IsDraft && !plan.IsDraft)
             {
+                beforePlan = _PlanRepository.GetPlan(plan.Id);
                 return SaveState.PromotingDraft;
             }
 
