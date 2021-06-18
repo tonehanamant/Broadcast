@@ -1570,6 +1570,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
         }
 
+
         private PlanDto _GetBasePlanForCampaignExport()
         {
             const string fileName = "BasePlanForCampaignExportUnitTests.json";

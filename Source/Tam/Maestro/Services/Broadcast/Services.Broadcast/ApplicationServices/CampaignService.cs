@@ -513,13 +513,22 @@ namespace Services.Broadcast.ApplicationServices
 
             AgencyDto agency = _GetAgency(campaign);
             AdvertiserDto advertiser = _GetAdvertiser(campaign);
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = new Dictionary<int, List<PlanPricingResultsDaypartDto>>();
             var plans = campaign.Plans
                 .Select(x =>
                 {
-                    var plan = _PlanRepository.GetPlan(x.PlanId);
+                    var plan = _PlanRepository.GetPlan(x.PlanId);                   
                     DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
                     return plan;
                 }).ToList();
+           foreach( var plan in plans)
+            {
+                var dayparts = _GetPlanPricingResultsDayparts(plan);
+                if (dayparts != null)
+                {
+                    planPricingResultsDayparts.Add(plan.Id, dayparts);
+                }
+            }
             _ValidateGuaranteedAudiences(plans);
             _ValidateSecondaryAudiences(plans);
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
@@ -528,7 +537,7 @@ namespace Services.Broadcast.ApplicationServices
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
             var spotLengthDeliveryMultipliers = _SpotLengthRepository.GetDeliveryMultipliersBySpotLengthId();
             var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
-            var audiences = _AudienceService.GetAudiences();
+            var audiences = _AudienceService.GetAudiences();          
 
             var campaignReportData = new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
                 spotLengths,
@@ -538,7 +547,7 @@ namespace Services.Broadcast.ApplicationServices
                  _MediaMonthAndWeekAggregateCache,
                 _QuarterCalculationEngine,
                 _DateTimeEngine,
-                _WeeklyBreakdownEngine);
+                _WeeklyBreakdownEngine, planPricingResultsDayparts,_FeatureToggleHelper);
 
             return campaignReportData;
         }
@@ -827,6 +836,20 @@ namespace Services.Broadcast.ApplicationServices
                 : _AabEngine.GetAdvertiser(campaign.Advertiser.Id.Value);
 
             return result;
+        }
+        private List<PlanPricingResultsDaypartDto> _GetPlanPricingResultsDayparts(PlanDto planDto)
+        {
+            List<PlanPricingResultsDaypartDto> planPricingResultsDayparts = null;
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planDto.VersionId);
+            if (job != null)
+            {
+                var planPricingResult = _PlanRepository.GetPricingResultsByJobId(job.Id, planDto.SpotAllocationModelMode);
+                if (planPricingResult != null)
+                {
+                    planPricingResultsDayparts = _PlanRepository.GetPlanPricingResultsDaypartsByPlanPricingResultId(planPricingResult.Id);
+                }
+            }
+            return planPricingResultsDayparts;
         }
     }
 }

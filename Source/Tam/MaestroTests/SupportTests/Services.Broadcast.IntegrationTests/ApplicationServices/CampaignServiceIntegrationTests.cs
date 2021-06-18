@@ -850,7 +850,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Proposal,
-                    SelectedPlans = new List<int> { 2541, 2579 }
+                    SelectedPlans = new List<int> { 2541, 2579 },
                 });
 
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
@@ -862,6 +862,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CampaignExport_30SecEquivalizedAndNot()
         {
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = new Dictionary<int, List<PlanPricingResultsDaypartDto>>();
             using (new TransactionScopeWrapper())
             {
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest

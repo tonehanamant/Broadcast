@@ -552,6 +552,7 @@
     <Compile Include="UnitTests\Converters\Scx\PlanBuyingScxDataPrepUnitTests.cs" />
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
+    <Compile Include="UnitTests\EntitiesUnitTests\CampaignReportDataUnitTest.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\QuoteReport\QuoteReportDataTests.cs" />
     <Compile Include="UnitTests\Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensionsUnitTests.cs" />

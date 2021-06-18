@@ -13,6 +13,7 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using static Services.Broadcast.Entities.Campaign.ProposalQuarterTableData;
+using Services.Broadcast.Entities.Plan.Pricing;
 
 namespace Services.Broadcast.Entities.Campaign
 {
@@ -56,9 +57,9 @@ namespace Services.Broadcast.Entities.Campaign
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly List<LookupDto> _AllSpotLengths;
         private readonly Dictionary<int, double> _SpotLengthDeliveryMultipliers;
-
         private static List<StandardDaypartDto> _StandardDaypartList;
-
+        internal static Lazy<bool> _IsVPVHDemoEnabled;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         public CampaignReportData(CampaignExportTypeEnum exportType, CampaignDto campaign
             , List<PlanDto> plans, AgencyDto agency, AdvertiserDto advertiser
             , List<PlanAudienceDisplay> guaranteedDemos
@@ -69,18 +70,19 @@ namespace Services.Broadcast.Entities.Campaign
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine
             , IDateTimeEngine dateTimeEngine
-            , IWeeklyBreakdownEngine weeklyBreakdownEngine)
+            , IWeeklyBreakdownEngine weeklyBreakdownEngine, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts, IFeatureToggleHelper featureToggleHelper)
         {
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
-
             _AllSpotLengths = spotLengths;
             _SpotLengthDeliveryMultipliers = spotLengthDeliveryMultipliers;
             _StandardDaypartList = standardDayparts;
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsVPVHDemoEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.VPVH_DEMO));
 
-            List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans);
+            List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans, planPricingResultsDayparts);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
                 , guaranteedDemos, orderedAudiences, dateTimeEngine);
 
@@ -209,8 +211,8 @@ namespace Services.Broadcast.Entities.Campaign
                 , campaignModifiedDate.ToString(DATE_FORMAT_FILENAME));
         }
 
-        private List<PlanProjectionForCampaignExport> _ProjectPlansForProposalExport(List<PlanDto> plans)
-        {
+        private List<PlanProjectionForCampaignExport> _ProjectPlansForProposalExport(List<PlanDto> plans, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
+        {                     
             List<PlanProjectionForCampaignExport> result = new List<PlanProjectionForCampaignExport>();
             plans.ForEach(plan =>
             {
@@ -235,7 +237,7 @@ namespace Services.Broadcast.Entities.Campaign
                         newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
                         newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, _SpotLengthDeliveryMultipliers);
 
-                        _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan);
+                        _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts);
                         _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan);
                         _ProjectSecondaryAudiencesData(plan, weekComponent, newProjectedPlan, newProjectedPlan.TotalHHImpressions);
 
@@ -262,6 +264,34 @@ namespace Services.Broadcast.Entities.Campaign
             return plan.Dayparts.Single(x => x.DaypartCodeId == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
         }
 
+        internal static void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport projection, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
+        {
+            projection.GuaranteedAudience.IsGuaranteedAudience = true;
+            projection.GuaranteedAudience.AudienceId = plan.AudienceId;
+            projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
+            projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
+            projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
+            //planPricingResultsDayparts is null because pricing hasn't been run for the plan yet
+            if (_IsVPVHDemoEnabled.Value && planPricingResultsDayparts != null)
+            {
+                var daypartsOfPlan = planPricingResultsDayparts.Where(x => x.Key == plan.Id).Select(y => y.Value).FirstOrDefault();
+                if (daypartsOfPlan != null)
+                {
+                    var pricingResultsDayparts = daypartsOfPlan.Where(x => x.StandardDaypartId == projection.DaypartCodeId).FirstOrDefault();
+                    if (pricingResultsDayparts != null)
+                    {
+                        projection.GuaranteedAudience.VPVH = pricingResultsDayparts.CalculatedVPVH;
+                    }
+                }
+            }
+            //if pricing wasn't run it will use the existing vpvh
+            else
+            {
+
+                projection.GuaranteedAudience.VPVH = plan.Vpvh;
+            }           
+        }
+
         private static void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport projection)
         {
             projection.GuaranteedAudience.IsGuaranteedAudience = true;
@@ -269,6 +299,7 @@ namespace Services.Broadcast.Entities.Campaign
             projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
             projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
             projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
+            
         }
 
         private static void _ProjectSecondaryAudiencesData(
@@ -434,7 +465,17 @@ namespace Services.Broadcast.Entities.Campaign
                         double totalImpressions = items.Sum(x => x.GuaranteedAudience.TotalImpressions) / 1000;
                         double totalHHRatingPoints = items.Sum(x => x.TotalHHRatingPoints);
                         double totalHHImpressions = items.Sum(x => x.TotalHHImpressions) / 1000;
-                        string spotLengthLabel = $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}";
+                        string spotLengthLabel = $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}";                                              
+                        double vpvh = 0;
+                        if (_IsVPVHDemoEnabled.Value)
+                        { 
+                            vpvh = items.Average(x => x.GuaranteedAudience.VPVH);
+                        }
+                        else
+                        {
+                            vpvh = ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions);
+                        }
+                        
                         var row = new ProposalQuarterTableRowData
                         {
                             DaypartCode = daypartGroup.Key.DaypartCode,
@@ -456,7 +497,7 @@ namespace Services.Broadcast.Entities.Campaign
                             },
                             GuaranteedData = new AudienceData
                             {
-                                VPVH = ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions),
+                                VPVH = vpvh,
                                 RatingPoints = (unitsSum == 0 ? 0 : totalRatingPoints / unitsSum),
                                 TotalRatingPoints = totalRatingPoints,
                                 Impressions = (unitsSum == 0 ? 0 : totalImpressions / unitsSum),
@@ -1037,8 +1078,7 @@ namespace Services.Broadcast.Entities.Campaign
                     double totalHHRatingPoints = items.Sum(x => x.HHData.TotalRatingPoints);
                     double totalHHImpressions = items.Sum(x => x.HHData.TotalImpressions);
                     double totalRatingPoints = items.Sum(x => x.GuaranteedData.TotalRatingPoints);
-                    double totalImpressions = items.Sum(x => x.GuaranteedData.TotalImpressions);
-
+                    double totalImpressions = items.Sum(x => x.GuaranteedData.TotalImpressions);                                                  
                     var row = new ProposalQuarterTableRowData
                     {
                         DaypartCode = group.Key.DaypartCode,
@@ -1223,7 +1263,7 @@ namespace Services.Broadcast.Entities.Campaign
             CampaignEndQuarter = maxEndDate != null ? _QuarterCalculationEngine.GetQuarterRangeByDate(maxEndDate).ShortFormat() : string.Empty;
         }
 
-        private class PlanProjectionForCampaignExport
+        public class PlanProjectionForCampaignExport
         {
             public int QuarterNumber { get; set; }
             public int QuarterYear { get; set; }
@@ -1257,7 +1297,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             public List<DateTime> HiatusDays { get; set; } = new List<DateTime>();
 
-            internal class Audience
+            public class Audience
             {
                 public int AudienceId { get; set; }
                 public double VPVH { get; set; }
