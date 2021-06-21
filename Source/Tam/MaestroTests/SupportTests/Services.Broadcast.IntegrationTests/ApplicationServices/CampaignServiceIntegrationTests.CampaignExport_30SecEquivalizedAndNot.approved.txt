@@ -946,7 +946,7 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 10000.0,
           "TotalRatingPoints": 7.2,
-          "VPVH": 0.649
+          "VPVH": 1.29800004
         },
         "HHData": {
           "CPM": 1.557599999999995529688,
@@ -1012,7 +1012,7 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 5000.0,
             "TotalRatingPoints": 3.9,
-            "VPVH": 0.649
+            "VPVH": 0.64900002
           },
           "HHData": {
             "CPM": 1.5575999999999995732176,
@@ -1077,7 +1077,7 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 5000.0,
             "TotalRatingPoints": 3.3,
-            "VPVH": 0.649
+            "VPVH": 0.64900002
           },
           "HHData": {
             "CPM": 1.5575999999999995732176,

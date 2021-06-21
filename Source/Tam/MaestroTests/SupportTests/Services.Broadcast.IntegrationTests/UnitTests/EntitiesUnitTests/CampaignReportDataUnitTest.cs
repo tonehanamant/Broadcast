@@ -26,7 +26,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = null;
             CampaignReportData._IsVPVHDemoEnabled= new Lazy<bool>(() => true);
             _ProjectGuaranteedAudienceDataByWeek(plan, planWeek, projection, planPricingResultsDayparts);
-            Assert.AreEqual(0.234543, projection.GuaranteedAudience.VPVH);
+            Assert.AreEqual(0, projection.GuaranteedAudience.VPVH);
         }
 
         [Test]
