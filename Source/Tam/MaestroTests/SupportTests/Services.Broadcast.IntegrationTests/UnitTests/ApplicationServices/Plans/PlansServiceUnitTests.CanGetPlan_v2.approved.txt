@@ -180,7 +180,7 @@
   "Status": 1,
   "TargetCPM": 12.0,
   "TargetCPP": 50.0,
-  "TargetImpressions": 0.1,
+  "TargetImpressions": 0.0,
   "TargetRatingPoints": 50.0,
   "TargetUniverse": 0.0,
   "TotalActiveDays": 0,

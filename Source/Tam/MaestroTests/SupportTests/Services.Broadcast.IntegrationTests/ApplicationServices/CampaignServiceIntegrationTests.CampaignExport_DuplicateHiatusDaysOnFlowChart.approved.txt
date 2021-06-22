@@ -1118,7 +1118,7 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 10000.0,
           "TotalRatingPoints": 4.0,
-          "VPVH": 1.15516333
+          "VPVH": 1.161
         },
         "HHData": {
           "CPM": 29.0249999999999851392,
@@ -1147,7 +1147,7 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 10000.0,
           "TotalRatingPoints": 4.0,
-          "VPVH": 1.15516333
+          "VPVH": 1.138
         },
         "HHData": {
           "CPM": 28.4500000000000154768,
@@ -1176,7 +1176,7 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 20000.0,
           "TotalRatingPoints": 8.2,
-          "VPVH": 1.15516333
+          "VPVH": 1.161
         },
         "HHData": {
           "CPM": 29.02500000000005253525,
@@ -1293,7 +1293,7 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 10000.0,
             "TotalRatingPoints": 4.0,
-            "VPVH": 1.15516333
+            "VPVH": 1.161
           },
           "HHData": {
             "CPM": 29.0249999999999851392,
@@ -1322,7 +1322,7 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 10000.0,
             "TotalRatingPoints": 4.0,
-            "VPVH": 1.15516333
+            "VPVH": 1.138
           },
           "HHData": {
             "CPM": 28.4500000000000154768,
@@ -1351,7 +1351,7 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 20000.0,
             "TotalRatingPoints": 8.2,
-            "VPVH": 1.15516333
+            "VPVH": 1.161
           },
           "HHData": {
             "CPM": 29.02500000000005253525,

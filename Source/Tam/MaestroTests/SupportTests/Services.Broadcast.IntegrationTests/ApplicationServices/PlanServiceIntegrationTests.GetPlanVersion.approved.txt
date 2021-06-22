@@ -158,7 +158,7 @@
   "Status": 1,
   "TargetCPM": 12.0000,
   "TargetCPP": 200951583.9999,
-  "TargetImpressions": 0.1,
+  "TargetImpressions": 0.0,
   "TargetRatingPoints": 6.0,
   "TargetUniverse": 120600000.0,
   "TotalActiveDays": 0,

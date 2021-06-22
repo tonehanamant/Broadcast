@@ -592,7 +592,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)
             {
-                plan.TargetImpressions /= 1000;
+                plan.TargetImpressions = Math.Truncate(Convert.ToDouble(plan.TargetImpressions / 1000));
             }
             plan.HHImpressions /= 1000;
             foreach (var audience in plan.SecondaryAudiences)
