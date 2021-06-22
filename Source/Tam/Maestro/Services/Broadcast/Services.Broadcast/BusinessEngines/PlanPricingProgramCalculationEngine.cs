@@ -119,7 +119,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var dayparts = new PlanPricingResultsDaypartDto
                 {
-                   CalculatedVPVH = ProposalMath.CalculateVPVH(daypart.Sum(x => x.ProjectedImpressions), daypart.Sum(x => x.HouseholdProjectedImpressions)),
+                   CalculatedVpvh = ProposalMath.CalculateVPVH(daypart.Sum(x => x.ProjectedImpressions), daypart.Sum(x => x.HouseholdProjectedImpressions)),
                     StandardDaypartId = daypart.Key                 
 
                 };

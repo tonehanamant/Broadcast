@@ -589,10 +589,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 { 
                     goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value);                
                 }
+                pricingExecutionResult.CalculatedVpvh = GetCalculatedDaypartVPVH(pricingExecutionResult.Id);
                 pricingExecutionResult.CpmPercentage = CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
             }
         }
-
+        internal double GetCalculatedDaypartVPVH(int PlanVersionPricingResultId)
+        {
+            double calculatedVpvhAvg = 0.0;
+            List<PlanPricingResultsDaypartDto> planVersionPricingResultsDayparts = null;
+            planVersionPricingResultsDayparts = _PlanRepository.GetPricingResultsDayparts(PlanVersionPricingResultId);
+            if (planVersionPricingResultsDayparts != null && planVersionPricingResultsDayparts.Count > 0)
+            {
+                calculatedVpvhAvg = (from rows in planVersionPricingResultsDayparts
+                                         select rows).Average(e => e.CalculatedVpvh);
+            }
+           
+            return calculatedVpvhAvg;
+          
+        }
         private CurrentPricingExecutions _GetAllCurrentPricingExecutions(PlanPricingJob job)
         {
             List<CurrentPricingExecutionResultDto> pricingExecutionResults = null;

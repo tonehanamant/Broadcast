@@ -5,13 +5,13 @@
   "PlanVersionId": 1,
   "PlanVersionPricingDaypartsList": [
     {
-      "CalculatedVPVH": 1.0,
+      "CalculatedVpvh": 1.0,
       "Id": 0,
       "PlanVersionPricingResultId": 0,
       "StandardDaypartId": 3
     },
     {
-      "CalculatedVPVH": 1.0,
+      "CalculatedVpvh": 1.0,
       "Id": 0,
       "PlanVersionPricingResultId": 0,
       "StandardDaypartId": 14

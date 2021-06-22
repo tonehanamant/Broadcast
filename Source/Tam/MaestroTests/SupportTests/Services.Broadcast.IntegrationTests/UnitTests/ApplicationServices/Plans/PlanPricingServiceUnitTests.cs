@@ -6020,7 +6020,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     PlanVersionId = 11,
                     JobId = 12,
                     CpmPercentage = 204,
-                    SpotAllocationModelMode = mode                    
+                    SpotAllocationModelMode = mode
                     //,CalculatedVpvh = 4.3 // Commented as per requirement of BP-2513
                 });
 
@@ -6063,10 +6063,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
 
-            var service = _GetService(false,false,true,true);
+            var service = _GetService(false, false, true, true);
 
             // Act
-            var result = service.GetAllCurrentPricingExecutions(planId,null);
+            var result = service.GetAllCurrentPricingExecutions(planId, null);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -6136,7 +6136,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
 
-            var service = _GetService(false,false,true,true);
+            var service = _GetService(false, false, true, true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, PlanVersionId);
@@ -10823,7 +10823,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void ValidatePricingExecutionResultTest()
         {
-          
+
             int expectedResult = 3;
             var result = new CurrentPricingExecutions
             {
@@ -10901,7 +10901,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var completedMinutes = currentDateTime.Minute - completedMinutesAgo;
 
             DateTime? completedWhen = null;
-            if (status != BackgroundJobProcessingStatus.Processing && 
+            if (status != BackgroundJobProcessingStatus.Processing &&
                 status != BackgroundJobProcessingStatus.Queued)
             {
                 completedWhen = new DateTime(2021, 5, 14, 12, completedMinutes, 0);
@@ -10929,7 +10929,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(2, true, false)]
         [TestCase(2, true, true)]
         [TestCase(6, true, true)]
-        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount,  bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount, bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
         {
             // Arrange
             var candidateResults = new List<CurrentPricingExecutionResultDto>();
@@ -12007,6 +12007,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
         }
 
+        [Test]
+        public void GetCalculatedDaypartVPVG()
+        {
+            int PlanVersionPricingResultId = 2632;
+            _PlanRepositoryMock
+               .Setup(x => x.GetPricingResultsDayparts(It.IsAny<int>()))
+               .Returns(new List<PlanPricingResultsDaypartDto>
+               {
+                    new PlanPricingResultsDaypartDto
+                    {
+                    Id = 1,
+                    PlanVersionPricingResultId = 1,
+                    CalculatedVpvh = 4,
+                    StandardDaypartId = 1
+                    },
+                    new PlanPricingResultsDaypartDto
+                    {
+                    Id = 1,
+                    PlanVersionPricingResultId = 1,
+                    CalculatedVpvh = 5,
+                    StandardDaypartId = 1
+                    },
+                     new PlanPricingResultsDaypartDto
+                    {
+                    Id = 1,
+                    PlanVersionPricingResultId = 1,
+                    CalculatedVpvh = 3,
+                    StandardDaypartId = 1
+                    }
+                });
+            var service = _GetService();
+            // Act
+            var avgVPVh = service.GetCalculatedDaypartVPVH(PlanVersionPricingResultId);
+            // Assert     
+            Assert.AreEqual(avgVPVh,4);
+        }
+
         private PlanDto _GetPlan()
         {
             return new PlanDto
@@ -12152,5 +12189,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
             };
         }
+
     }
 }

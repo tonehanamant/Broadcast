@@ -1687,7 +1687,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planPricingResultsDayparts = _GetPlanPricingResultsDayparts(planDto);
             if (planPricingResultsDayparts != null)
             {                
-                planDto.Vpvh = planPricingResultsDayparts.Average(x => x.CalculatedVPVH);
+                planDto.Vpvh = planPricingResultsDayparts.Average(x => x.CalculatedVpvh);
             }            
         }
     }

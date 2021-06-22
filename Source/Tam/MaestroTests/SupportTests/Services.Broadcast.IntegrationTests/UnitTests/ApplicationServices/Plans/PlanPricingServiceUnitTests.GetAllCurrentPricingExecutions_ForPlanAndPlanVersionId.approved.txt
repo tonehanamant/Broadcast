@@ -12,6 +12,7 @@
   },
   "Results": [
     {
+      "CalculatedVpvh": 0.0,
       "CpmPercentage": 163,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,
@@ -26,6 +27,7 @@
       "TotalImpressions": 1010680.0
     },
     {
+      "CalculatedVpvh": 0.0,
       "CpmPercentage": 104,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,
@@ -40,6 +42,7 @@
       "TotalImpressions": 1010680.0
     },
     {
+      "CalculatedVpvh": 0.0,
       "CpmPercentage": 178,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,
@@ -54,6 +57,7 @@
       "TotalImpressions": 1010680.0
     },
     {
+      "CalculatedVpvh": 0.0,
       "CpmPercentage": 119,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,
@@ -68,6 +72,7 @@
       "TotalImpressions": 1010680.0
     },
     {
+      "CalculatedVpvh": 0.0,
       "CpmPercentage": 415,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,
@@ -82,6 +87,7 @@
       "TotalImpressions": 1010680.0
     },
     {
+      "CalculatedVpvh": 0.0,
       "CpmPercentage": 296,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,

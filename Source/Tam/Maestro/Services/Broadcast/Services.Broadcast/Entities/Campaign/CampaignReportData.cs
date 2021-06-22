@@ -280,7 +280,7 @@ namespace Services.Broadcast.Entities.Campaign
                     var pricingResultsDayparts = daypartsOfPlan.Where(x => x.StandardDaypartId == projection.DaypartCodeId).FirstOrDefault();
                     if (pricingResultsDayparts != null)
                     {
-                        projection.GuaranteedAudience.VPVH = pricingResultsDayparts.CalculatedVPVH;
+                        projection.GuaranteedAudience.VPVH = pricingResultsDayparts.CalculatedVpvh;
                     }
                 }                
             }          

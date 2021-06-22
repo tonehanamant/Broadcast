@@ -163,7 +163,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="jobId">The job identifier</param>
         /// <returns></returns>
         decimal GetGoalCpm(int jobId);
-
+        /// <summary>Get average calculated VPVH from plan_version_pricing_results_dayparts table
+        /// </summary>
+        /// <param name="PlanVersionPricingResultId">The plan_version_pricing_results identifier</param>
+        /// <returns></returns>
+        List<PlanPricingResultsDaypartDto> GetPricingResultsDayparts(int PlanVersionPricingResultId);
         /// <summary>
         /// Updates plan pricing version to point to the previous version of the plan pricing data
         /// </summary>
@@ -2023,7 +2027,7 @@ namespace Services.Broadcast.Repositories
                     var planVersionPricingDayparts = new plan_version_pricing_results_dayparts
                     {
                         standard_daypart_id = planVersionPricingDaypart.StandardDaypartId,
-                        calculated_vpvh = planVersionPricingDaypart.CalculatedVPVH
+                        calculated_vpvh = planVersionPricingDaypart.CalculatedVpvh
                     };
 
                     planPricingResult.plan_version_pricing_results_dayparts.Add(planVersionPricingDayparts);
@@ -2379,6 +2383,21 @@ namespace Services.Broadcast.Repositories
                 return result;
             });
         }
+        public List<PlanPricingResultsDaypartDto> GetPricingResultsDayparts(int PlanVersionPricingResultId)
+        {
+           return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_pricing_results_dayparts.Where(p => p.plan_version_pricing_result_id == PlanVersionPricingResultId)
+                .Select(d => new PlanPricingResultsDaypartDto
+                {
+                    Id = d.id,
+                    PlanVersionPricingResultId = d.plan_version_pricing_result_id,
+                    CalculatedVpvh = d.calculated_vpvh,
+                    StandardDaypartId = d.standard_daypart_id
+                }).ToList();               
+                return result;
+            });
+        }
 
         public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
@@ -2670,7 +2689,7 @@ namespace Services.Broadcast.Repositories
                         Id = x.id,
                         PlanVersionPricingResultId = x.plan_version_pricing_result_id,
                         StandardDaypartId = x.standard_daypart_id,
-                        CalculatedVPVH = x.calculated_vpvh
+                        CalculatedVpvh = x.calculated_vpvh
                     }).ToList();
 
                 return result;

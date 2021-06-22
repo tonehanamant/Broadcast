@@ -175,7 +175,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                             Id = 101,
                             PlanVersionPricingResultId = 10,
                             StandardDaypartId = 15,
-                            CalculatedVPVH = 0.546
+                            CalculatedVpvh = 0.546
                         }
                     }
                 }

@@ -11,7 +11,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int Id { get; set; }
         public int PlanVersionPricingResultId { get; set; }
         public int StandardDaypartId { get; set; }
-        public double CalculatedVPVH { get; set; }
+        public double CalculatedVpvh { get; set; }
 
       
     }

@@ -2444,13 +2444,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 101,
                         PlanVersionPricingResultId = 10,
                         StandardDaypartId = 22,
-                        CalculatedVPVH = 0.546
+                        CalculatedVpvh = 0.546
                     },
                     new PlanPricingResultsDaypartDto(){
                         Id = 101,
                         PlanVersionPricingResultId = 10,
                         StandardDaypartId = 2,
-                        CalculatedVPVH = 0.227
+                        CalculatedVpvh = 0.227
                     }
                 });
 

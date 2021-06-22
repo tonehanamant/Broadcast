@@ -24,7 +24,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public bool HasResults { get; set; }
         public int CpmPercentage { get; set; }
         public PostingTypeEnum PostingType { get; set; }
-        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }        
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
+        public double CalculatedVpvh { get; set; }
         public decimal TotalBudget { get; set; }
         public double TotalImpressions { get; set; }
     }
