@@ -1567,6 +1567,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             beforePlan.TargetCPM = pricingResults.OptimalCpm;
             beforePlan.Budget = pricingResults.TotalBudget;
 
+            /***
+             * Recalculate the budget goals
+             */
+
             // We will recalculate the impressions and ratings components.
             var planDeliveryBudget = new PlanDeliveryBudget
             {
@@ -1581,6 +1585,34 @@ namespace Services.Broadcast.ApplicationServices.Plan
             beforePlan.TargetRatingPoints = calculatedBudget.RatingPoints;
             beforePlan.TargetCPP = calculatedBudget.CPP;
 
+            /***
+             * Recalculate the Weekly Breakdown
+             */
+
+            // the request wants the impressions as Imps (000)
+            var requestTotalImpressions = beforePlan.TargetImpressions.Value / 1000;
+            var requestWeeks = beforePlan.WeeklyBreakdownWeeks.Select(w => new WeeklyBreakdownWeek
+            {
+                WeekNumber = w.WeekNumber,
+                MediaWeekId = w.MediaWeekId,
+                StartDate = w.StartDate,
+                EndDate = w.EndDate,
+                NumberOfActiveDays = w.NumberOfActiveDays,
+                ActiveDays = w.ActiveDays,
+                WeeklyImpressions = w.WeeklyImpressions / 1000, // the request has less impressions too
+                WeeklyImpressionsPercentage = w.WeeklyImpressionsPercentage,
+                WeeklyRatings = w.WeeklyRatings,
+                WeeklyBudget = w.WeeklyBudget,
+                WeeklyAdu = w.WeeklyAdu,
+                AduImpressions = w.AduImpressions,
+                SpotLengthId = w.SpotLengthId,
+                DaypartCodeId = w.DaypartCodeId,
+                PercentageOfWeek = w.PercentageOfWeek,
+                IsUpdated = w.IsUpdated,
+                UnitImpressions = w.UnitImpressions,
+                WeeklyUnits = 0 // this will be calculated
+            }).ToList();
+
             // recalculate the weekly breakdown table
             var weeklyBreakdownRequest = new WeeklyBreakdownRequest
             {
@@ -1589,28 +1621,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FlightDays = beforePlan.FlightDays,
                 FlightHiatusDays = beforePlan.FlightHiatusDays,
                 DeliveryType = beforePlan.GoalBreakdownType,
-                TotalImpressions = beforePlan.TargetImpressions.Value,
+                TotalImpressions = requestTotalImpressions,
                 TotalRatings = beforePlan.TargetRatingPoints.Value,
                 TotalBudget = beforePlan.Budget.Value,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                Weeks = beforePlan.WeeklyBreakdownWeeks,
+                Weeks = requestWeeks,
                 CreativeLengths = beforePlan.CreativeLengths,
                 Dayparts = beforePlan.Dayparts,
                 ImpressionsPerUnit = beforePlan.ImpressionsPerUnit,
                 Equivalized = beforePlan.Equivalized
             };
-
             var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);
 
-            beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;
-            beforePlan.WeeklyBreakdownTotals.TotalBudget = calculatedWeeklyBreakdown.TotalBudget;
-            beforePlan.WeeklyBreakdownTotals.TotalImpressions = calculatedWeeklyBreakdown.TotalImpressions;
-            beforePlan.WeeklyBreakdownTotals.TotalRatingPoints = calculatedWeeklyBreakdown.TotalRatingPoints;
-            beforePlan.WeeklyBreakdownTotals.TotalImpressionsPercentage = calculatedWeeklyBreakdown.TotalImpressionsPercentage;
-            beforePlan.WeeklyBreakdownTotals.TotalActiveDays = calculatedWeeklyBreakdown.TotalActiveDays;
-            beforePlan.WeeklyBreakdownTotals.TotalUnits = calculatedWeeklyBreakdown.TotalUnits;
+            // put the 1000 back on for putting back on the plan to end the operation
+            calculatedWeeklyBreakdown.Weeks.ForEach(w => w.WeeklyImpressions *= 1000);
+            beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;            
 
-            beforePlan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(beforePlan);
+            // redistribute to make sure it's all balanced
+            var rebalancedWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(beforePlan);
+            beforePlan.WeeklyBreakdownWeeks = rebalancedWeeks;
+
+            /***
+             * Finalize and Save
+             */
 
             // finalize pre-save
             _CalculateDeliveryDataPerAudience(beforePlan);

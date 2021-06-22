@@ -2249,7 +2249,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     TotalImpressionsPercentage = 5,
                     TotalBudget = 6,
                     TotalUnits = 7,
-                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27} }
+                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27, WeeklyImpressions = (testImpressions /1000)} }
                 });
 
             _WeeklyBreakdownEngineMock.Setup(s =>
@@ -2299,17 +2299,33 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var sentWeeklyBreakdownRequest = weeklyBreakdownRequests.First();
             const string dateFormat = "yyyyMMdd";
             Assert.AreEqual(beforePlan.FlightStartDate.Value.ToString(dateFormat), sentWeeklyBreakdownRequest.FlightStartDate.ToString(dateFormat));
-            Assert.AreEqual(beforePlan.FlightDays, sentWeeklyBreakdownRequest.FlightDays);
-            Assert.AreEqual(beforePlan.FlightHiatusDays, sentWeeklyBreakdownRequest.FlightHiatusDays);
+            Assert.AreEqual(beforePlan.FlightDays.Count, sentWeeklyBreakdownRequest.FlightDays.Count);
+            Assert.AreEqual(beforePlan.FlightHiatusDays.Count, sentWeeklyBreakdownRequest.FlightHiatusDays.Count);
             Assert.AreEqual(beforePlan.GoalBreakdownType, sentWeeklyBreakdownRequest.DeliveryType);
-            Assert.AreEqual(beforePlan.TargetImpressions.Value, sentWeeklyBreakdownRequest.TotalImpressions);
             Assert.AreEqual(beforePlan.Budget.Value, sentWeeklyBreakdownRequest.TotalBudget);
             Assert.AreEqual(WeeklyBreakdownCalculationFrom.Impressions, sentWeeklyBreakdownRequest.WeeklyBreakdownCalculationFrom);
-            Assert.AreEqual(beforePlan.WeeklyBreakdownWeeks, sentWeeklyBreakdownRequest.Weeks);
-            Assert.AreEqual(beforePlan.CreativeLengths, sentWeeklyBreakdownRequest.CreativeLengths);
-            Assert.AreEqual(beforePlan.Dayparts, sentWeeklyBreakdownRequest.Dayparts);
+            Assert.AreEqual(beforePlan.WeeklyBreakdownWeeks.Count, sentWeeklyBreakdownRequest.Weeks.Count);
+            Assert.AreEqual(beforePlan.CreativeLengths.Count, sentWeeklyBreakdownRequest.CreativeLengths.Count);
+            Assert.AreEqual(beforePlan.Dayparts.Count, sentWeeklyBreakdownRequest.Dayparts.Count);
             Assert.AreEqual(beforePlan.ImpressionsPerUnit, sentWeeklyBreakdownRequest.ImpressionsPerUnit);
             Assert.AreEqual(beforePlan.Equivalized, sentWeeklyBreakdownRequest.Equivalized);
+
+            // modified for Imps (000)
+            // validate the request values were converted correctly7
+            var expectedRequestImpressions = beforePlan.TargetImpressions.Value / 1000;
+            Assert.AreEqual(expectedRequestImpressions, sentWeeklyBreakdownRequest.TotalImpressions);
+            foreach (var requestedWeek in sentWeeklyBreakdownRequest.Weeks)
+            {
+                var mediaWeekId = requestedWeek.MediaWeekId;
+                var expectedImpressions = beforePlan.WeeklyBreakdownWeeks.Single(w => w.MediaWeekId == mediaWeekId)
+                                              .WeeklyImpressions * 1000;
+                Assert.AreEqual(expectedImpressions, requestedWeek.WeeklyImpressions);
+            }
+
+            // modified back from Imps (000)
+            // validate the saved values were converted correctly
+            savedPlan.WeeklyBreakdownWeeks.ForEach(w => Assert.AreEqual(testImpressions, w.WeeklyImpressions));
+
             // Validate it tied in the results.
             Assert.AreEqual(testExpectedPlanVersionId, pricingNewVersion);
             Assert.AreEqual(testExpectedPlanVersionId, buyingNewVersion);
