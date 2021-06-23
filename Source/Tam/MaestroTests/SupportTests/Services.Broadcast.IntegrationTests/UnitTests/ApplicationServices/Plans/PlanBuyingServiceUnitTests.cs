@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Hangfire;
@@ -10,12 +11,16 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanBuying;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
@@ -26,20 +31,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
-using Services.Broadcast.Converters.Scx;
-using Services.Broadcast.Entities.Scx;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanBuyingInventoryEngine;
 using static Services.Broadcast.Entities.Plan.Buying.PlanBuyingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram.ManifestDaypart;
-using static Services.Broadcast.ApplicationServices.Plan.PlanBuyingService;
-using Common.Services;
-using Services.Broadcast.Entities.Campaign;
-using Tam.Maestro.Services.ContractInterfaces;
-using Services.Broadcast.Entities.StationInventory;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -83,11 +81,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
 
-        protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
+        protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false,
+            bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
         {
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
+
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             return new PlanBuyingService(
@@ -4768,7 +4770,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
 
-            var service = _GetService();
+            var service = _GetService(false, false, true, true);
 
             // Act
             var result = service.GetCurrentBuyingExecution_v2(planId, PostingTypeEnum.NSI);
@@ -4811,6 +4813,204 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual(true, result.IsBuyingModelRunning);
+        }
+
+        [Test]
+        public void ValidateBuyingExecutionResultTest()
+        {
+            int expectedResult = 3;
+            var result = new CurrentBuyingExecutions
+            {
+                Job = new PlanBuyingJob
+                {
+                    Id = 1,
+                    HangfireJobId = "11268",
+                    PlanVersionId = 801,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Queued = new DateTime(2011, 05, 22),
+                    Completed = new DateTime(2011, 05, 22),
+                    ErrorMessage = null,
+                    DiagnosticResult = "setting job status to processing"
+                },
+                Results = new List<CurrentBuyingExecutionResultDto>
+                {
+                                 new CurrentBuyingExecutionResultDto
+                                    {
+                                        //Id = 15,
+                                        OptimalCpm=21,
+                                        JobId=755,
+                                        PlanVersionId=805,
+                                        GoalFulfilledByProprietary=false,
+                                        Notes="",
+                                        HasResults=true,
+                                        CpmPercentage=4,
+                                        PostingType=PostingTypeEnum.NTI,
+                                        SpotAllocationModelMode=SpotAllocationModelMode.Quality
+                                    },
+                                    new CurrentBuyingExecutionResultDto
+                                    {
+                                        //Id = 15,
+                                        OptimalCpm=21,JobId=755,
+                                        PlanVersionId=805,
+                                        GoalFulfilledByProprietary=false,
+                                        Notes="",
+                                        HasResults=true,
+                                        CpmPercentage=4,
+                                        PostingType=PostingTypeEnum.NTI,
+                                        SpotAllocationModelMode=SpotAllocationModelMode.Quality
+                                    }
+                }
+            };
+
+            var service = _GetService();
+            // Act
+            var results = service._ValidateBuyingExecutionResult(result, expectedResult);
+            // Assert     
+            Assert.AreEqual(results.IsBuyingModelRunning, true);
+            Assert.AreEqual(1, result.Results.Count());
+            Assert.IsFalse(result.Results[0].HasResults);
+            Assert.IsNull(result.Results[0].JobId);
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, 3, true)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, 5, true)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, 6, false)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, 3, true)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, 5, true)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, 6, false)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, 3, true)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, 5, true)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, 6, false)]
+        [TestCase(BackgroundJobProcessingStatus.Processing, 3, false)]
+        [TestCase(BackgroundJobProcessingStatus.Queued, 3, false)]
+        public void DidBuyingJobCompleteWithinThreshold(BackgroundJobProcessingStatus status, int completedMinutesAgo, bool expectedResult)
+        {
+            var currentDateTime = new DateTime(2021, 5, 14, 12, 30, 0);
+            var completedMinutes = currentDateTime.Minute - completedMinutesAgo;
+
+            DateTime? completedWhen = null;
+            if (status != BackgroundJobProcessingStatus.Processing &&
+                status != BackgroundJobProcessingStatus.Queued)
+            {
+                completedWhen = new DateTime(2021, 5, 14, 12, completedMinutes, 0);
+            }
+
+            var job = new PlanBuyingJob
+            {
+                Id = 1,
+                Status = status,
+                Completed = completedWhen
+            };
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
+            var service = _GetService();
+
+            var result = service._DidBuyingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        [TestCase(false, false, 1)]
+        [TestCase(false, true, 2)]
+        [TestCase(true, false, 3)]
+        [TestCase(true, true, 6)]
+        public void BuyingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled, int expectedResult)
+        {
+            var service = _GetService();
+            // Act
+            var count = service._GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+            // Assert     
+            Assert.AreEqual(count, expectedResult);
+        }
+
+        [Test]
+        [TestCase(1, false, false)]
+        [TestCase(1, true, false)]
+        [TestCase(1, true, true)]
+        [TestCase(2, true, false)]
+        [TestCase(2, true, true)]
+        [TestCase(6, true, true)]
+        public void FillInMissingBuyingResultsWithEmptyResults(int startingResultCount, bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        {
+            // Arrange
+            var candidateResults = new List<CurrentBuyingExecutionResultDto>();
+
+            candidateResults.Add(new CurrentBuyingExecutionResultDto
+            {
+                PostingType = PostingTypeEnum.NTI,
+                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                OptimalCpm = 23
+            });
+
+            if (startingResultCount > 1)
+            {
+                candidateResults.Add(new CurrentBuyingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NSI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                    OptimalCpm = 23
+                });
+            }
+
+            if (startingResultCount == 6)
+            {
+                candidateResults.Add(new CurrentBuyingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NSI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    OptimalCpm = 23
+                });
+
+                candidateResults.Add(new CurrentBuyingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NTI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    OptimalCpm = 23
+                });
+
+                candidateResults.Add(new CurrentBuyingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NSI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                    OptimalCpm = 23
+                });
+
+                candidateResults.Add(new CurrentBuyingExecutionResultDto
+                {
+                    PostingType = PostingTypeEnum.NTI,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                    OptimalCpm = 23
+                });
+            }
+
+            var service = _GetService();
+
+            // Act
+            var results = service._FillInMissingBuyingResultsWithEmptyResults(candidateResults, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+
+            // Assert
+            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            {
+                Assert.AreEqual(1, results.Count());
+                return;
+            }
+
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
+
+            if (!isPricingEfficiencyModelEnabled)
+            {
+                return;
+            }
+
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
+            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
         }
 
         private List<CurrentBuyingExecutionResultDto> _GetCurrentBuyingExecutionsResults()

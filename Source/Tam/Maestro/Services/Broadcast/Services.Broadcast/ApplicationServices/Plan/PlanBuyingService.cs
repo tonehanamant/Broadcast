@@ -586,12 +586,133 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             //buyingExecutionResult might be null when there is no buying run for the latest version            
-            return new CurrentBuyingExecutions
+            var result = new CurrentBuyingExecutions
             {
                 Job = job,
                 Results = buyingExecutionResults ?? _GetDefaultBuyingResultsList(postingType),
                 IsBuyingModelRunning = IsBuyingModelRunning(job)
             };
+
+            if (job?.Status != BackgroundJobProcessingStatus.Succeeded)
+            {
+                return result;
+            }
+
+            var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
+            var isPostingTypeToggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
+
+            var jobCompletedWithinLastFiveMinutes = _DidBuyingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
+            if (jobCompletedWithinLastFiveMinutes)
+            {
+                var expectedResultCount = _GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+                result = _ValidateBuyingExecutionResult(result, expectedResultCount);
+            }
+            else
+            {
+                var filledInResults = _FillInMissingBuyingResultsWithEmptyResults(result.Results, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+                result.Results = filledInResults;
+            }
+
+            return result;
+        }
+
+        private List<CurrentBuyingExecutionResultDto> _GetDefaultBuyingResultsList()
+        {
+            var emptyList = new List<CurrentBuyingExecutionResultDto>
+            {
+                new CurrentBuyingExecutionResultDto() {SpotAllocationModelMode = SpotAllocationModelMode.Quality}
+            };
+            return emptyList;
+        }
+
+        private void _AddEmptyBuyingResult(List<CurrentBuyingExecutionResultDto> results, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
+        {
+            if (!results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == spotAllocationModelMode))
+            {
+                results.Add(new CurrentBuyingExecutionResultDto
+                {
+                    PostingType = postingType,
+                    SpotAllocationModelMode = spotAllocationModelMode
+                });
+            }
+        }
+
+        internal List<CurrentBuyingExecutionResultDto> _FillInMissingBuyingResultsWithEmptyResults(List<CurrentBuyingExecutionResultDto> candidateResults,
+            bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        {
+            // We only have to worry about the three use cases
+            // 1) Neither toggle is enabled
+            // 2) isPostingTypeToggleEnabled is enabled and isPricingEfficiencyModelEnabled is not enabled
+            // 3) Both are enabled.
+            var results = candidateResults.DeepCloneUsingSerialization();
+            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            {
+                return results;
+            }
+
+            _AddEmptyBuyingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
+            _AddEmptyBuyingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Quality);
+
+            if (!isPricingEfficiencyModelEnabled)
+            {
+                return results;
+            }
+
+            _AddEmptyBuyingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
+            _AddEmptyBuyingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Efficiency);
+
+            _AddEmptyBuyingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Floor);
+            _AddEmptyBuyingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Floor);
+
+            return results;
+        }
+
+        internal bool _DidBuyingJobCompleteWithinThreshold(PlanBuyingJob job, int thresholdMinutes)
+        {
+            if (!job.Completed.HasValue)
+            {
+                return false;
+            }
+
+            DateTime thresholdMinutesAgo = _DateTimeEngine.GetCurrentMoment().AddMinutes(-1 * thresholdMinutes);
+            var jobCompletedWithinLastFiveMinutes = job.Completed.Value >= thresholdMinutesAgo;
+            return jobCompletedWithinLastFiveMinutes;
+        }
+
+        internal CurrentBuyingExecutions _ValidateBuyingExecutionResult(CurrentBuyingExecutions result, int expectedResult)
+        {
+            if (result.IsBuyingModelRunning == false)
+            {
+                if (result.Results.Count != expectedResult)
+                {
+                    result.IsBuyingModelRunning = true;
+                    result.Results = _GetDefaultBuyingResultsList();
+                }
+            }
+            return result;
+        }
+
+        internal int _GetBuyingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled)
+        {
+            int expectedResult = 0;
+
+            if (!isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            {
+                expectedResult = 1;
+            }
+            else if (!isPricingEfficiencyModelEnabled && isPostingTypeToggleEnabled)
+            {
+                expectedResult = 2;
+            }
+            else if (isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            {
+                expectedResult = 3;
+            }
+            else
+            {
+                expectedResult = 6;
+            }
+            return expectedResult;
         }
 
         private List<CurrentBuyingExecutionResultDto> _GetDefaultBuyingResultsList(PostingTypeEnum postingType)
