@@ -44,8 +44,8 @@ namespace Services.Broadcast.ApplicationServices
         bool SaveStationContact(StationContact stationContacts, string userName);
         bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName);
         List<LookupDto> GetAllMaestroGenres();
-        LockResponse LockStation(int stationCode);
-        ReleaseLockResponse UnlockStation(int stationCode);
+        BroadcastLockResponse LockStation(int stationCode);
+        BroadcastReleaseLockResponse UnlockStation(int stationCode);
         RatesInitialDataDto GetInitialRatesData();
         Decimal ConvertRateForSpotLength(decimal rateFor30s, int outputRateSpotLength);
         List<StationContact> FindStationContactsByName(string query);
@@ -692,13 +692,13 @@ namespace Services.Broadcast.ApplicationServices
                    || (startDate1 < startDate2 && endDate1 > endDate2);
         }
 
-        public LockResponse LockStation(int stationCode)
+        public BroadcastLockResponse LockStation(int stationCode)
         {
             var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             return _LockingEngine.LockStation(station.Id);
         }
 
-        public ReleaseLockResponse UnlockStation(int stationCode)
+        public BroadcastReleaseLockResponse UnlockStation(int stationCode)
         {
             var station = _StationRepository.GetBroadcastStationByCode(stationCode);
             return _LockingEngine.UnlockStation(station.Id);

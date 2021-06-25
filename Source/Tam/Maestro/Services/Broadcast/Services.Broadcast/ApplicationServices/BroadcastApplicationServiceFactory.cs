@@ -59,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices
 
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
                         _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
+                        _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
                         _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
 
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();

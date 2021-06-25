@@ -136,7 +136,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Stations/{stationCode}/Lock")]
-        public BaseResponse<LockResponse> LockStation(int stationCode)
+        public BaseResponse<BroadcastLockResponse> LockStation(int stationCode)
         {
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().LockStation(stationCode));
@@ -144,7 +144,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Stations/{stationCode}/UnLock")]
-        public BaseResponse<ReleaseLockResponse> UnlockStation(int stationCode)
+        public BaseResponse<BroadcastReleaseLockResponse> UnlockStation(int stationCode)
         {
             return _ConvertToBaseResponse(
                 () => _ApplicationServiceFactory.GetApplicationService<IInventoryService>().UnlockStation(stationCode));

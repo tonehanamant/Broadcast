@@ -33,27 +33,35 @@ namespace Services.Broadcast.ApplicationServices
 
         public BroadcastLockResponse LockObject(string key)
         {
+            BroadcastLockResponse broadcastLockResponse = null;
             var lockResponse = _SmsClient.LockObject(key, GetUserSID());
-            BroadcastLockResponse broadcastLockResponse = new BroadcastLockResponse
+            if (lockResponse != null)
             {
-                Error = lockResponse.Error,
-                Key = lockResponse.Key,
-                LockedUserId = lockResponse.LockedUserId,
-                LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
-                Success = lockResponse.Success
-            };
+                broadcastLockResponse = new BroadcastLockResponse
+                {
+                    Error = lockResponse.Error,
+                    Key = lockResponse.Key,
+                    LockedUserId = lockResponse.LockedUserId,
+                    LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
+                    Success = lockResponse.Success
+                };
+            }
             return broadcastLockResponse;
         }
 
         public BroadcastReleaseLockResponse ReleaseObject(string key)
-        {           
+        {
+            BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
             var releaseLockResponse = _SmsClient.ReleaseObject(key, GetUserSID());
-            BroadcastReleaseLockResponse broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+            if (releaseLockResponse != null)
             {
-                Error = releaseLockResponse.Error,
-                Key = releaseLockResponse.Key,              
-                Success = releaseLockResponse.Success
-            };
+                broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                {
+                    Error = releaseLockResponse.Error,
+                    Key = releaseLockResponse.Key,
+                    Success = releaseLockResponse.Success
+                };
+            }
             return broadcastReleaseLockResponse;
         }
 

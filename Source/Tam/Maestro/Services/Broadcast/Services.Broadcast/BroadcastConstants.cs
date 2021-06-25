@@ -55,5 +55,6 @@
         public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";
         public static string ENABLE_PLAN_MARKET_SOV_CALCULATIONS = "broadcast-enable-plan-market-sov-calculations";
         public static string VPVH_DEMO = "broadcast-vpvh-demo";
+        public static string ENABLE_LOCKING_CONSOLIDATION = "broadcast-enable-locking-consolidation";
     }
 }
