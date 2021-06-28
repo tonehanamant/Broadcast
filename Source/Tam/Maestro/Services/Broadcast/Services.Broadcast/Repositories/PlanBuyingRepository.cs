@@ -473,7 +473,8 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
-                MarketGroup = (MarketGroupEnum)entity.market_group
+                MarketGroup = (MarketGroupEnum)entity.market_group,
+                PostingType = (PostingTypeEnum)entity.posting_type
             };
             return dto;
         }
@@ -524,7 +525,8 @@ namespace Services.Broadcast.Repositories
                         {
                             inventory_proprietary_summary_id = x.Id
                         })
-                        .ToList()
+                        .ToList(),
+                    posting_type = (int)planBuyingParametersDto.PostingType
                 };
 
                 context.plan_version_buying_parameters.Add(planBuyingParameters);

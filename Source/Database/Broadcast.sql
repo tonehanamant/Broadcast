@@ -562,6 +562,36 @@ GO
 
 /*************************************** END BP-2514 *****************************************************/
 
+/*************************************** START BP-2642 *****************************************************/
+
+DECLARE @AddColumnSql VARCHAR(MAX) = 
+'ALTER TABLE plan_version_buying_parameters
+	ADD posting_type INT NULL'
+
+DECLARE @PopulateSql VARCHAR(MAX) =
+'UPDATE bp SET
+	posting_type = v.posting_type
+FROM plan_versions v
+JOIN plan_version_buying_parameters bp
+	ON bp.plan_version_id = v.id
+WHERE bp.posting_type IS NULL'
+
+DECLARE @AlterSql VARCHAR(MAX) = 
+'ALTER TABLE plan_version_buying_parameters
+ALTER COLUMN posting_type INT NOT NULL'
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_buying_parameters' AND COLUMN_NAME= 'posting_type')
+BEGIN
+	EXEC (@AddColumnSql)
+	EXEC (@PopulateSql)
+	EXEC (@AlterSql)
+END
+
+GO
+
+/*************************************** END BP-2642 *****************************************************/
+
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '21.02.2' -- Current release version

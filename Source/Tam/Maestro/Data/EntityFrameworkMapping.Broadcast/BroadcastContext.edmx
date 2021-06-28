@@ -5,15 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BroadcastModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="plan_version_pricing_results_dayparts">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="plan_version_pricing_result_id" Type="int" Nullable="false" />
-          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
-          <Property Name="calculated_vpvh" Type="float" Nullable="false" />
-        </EntityType>
         <EntityType Name="affidavit_client_scrub_audiences">
           <Key>
             <PropertyRef Name="affidavit_client_scrub_id" />
@@ -977,6 +968,7 @@
           <Property Name="budget_adjusted" Type="money" Nullable="false" />
           <Property Name="cpm_adjusted" Type="money" Nullable="false" />
           <Property Name="market_group" Type="int" Nullable="false" />
+          <Property Name="posting_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_rep_firm_details">
           <Key>
@@ -1303,6 +1295,15 @@
           <Property Name="total_spots" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
           <Property Name="spot_allocation_model_mode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_pricing_results_dayparts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_pricing_result_id" Type="int" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
+          <Property Name="calculated_vpvh" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_station_details">
           <Key>
@@ -6490,7 +6491,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BroadcastModelStoreContainer">
-          <EntitySet Name="plan_version_pricing_results_dayparts" EntityType="Self.plan_version_pricing_results_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_client_scrub_audiences" EntityType="Self.affidavit_client_scrub_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_client_scrubs" EntityType="Self.affidavit_client_scrubs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_file_detail_demographics" EntityType="Self.affidavit_file_detail_demographics" Schema="dbo" store:Type="Tables" />
@@ -6592,6 +6592,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_pricing_parameters" EntityType="Self.plan_version_pricing_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_result_spots" EntityType="Self.plan_version_pricing_result_spots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_results" EntityType="Self.plan_version_pricing_results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_pricing_results_dayparts" EntityType="Self.plan_version_pricing_results_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_station_details" EntityType="Self.plan_version_pricing_station_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_pricing_stations" EntityType="Self.plan_version_pricing_stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_secondary_audiences" EntityType="Self.plan_version_secondary_audiences" Schema="dbo" store:Type="Tables" />
@@ -15276,6 +15277,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" FromRole="plan_version_buying_parameters" ToRole="plan_version_buying_job" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" FromRole="plan_version_buying_parameters" ToRole="plan_versions" />
           <NavigationProperty Name="plan_version_buying_parameter_inventory_proprietary_summaries" Relationship="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters" FromRole="plan_version_buying_parameters" ToRole="plan_version_buying_parameter_inventory_proprietary_summaries" />
+          <Property Name="posting_type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_result_spots">
           <Key>
@@ -18797,6 +18799,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_buying_parameters">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_parameters">
               <MappingFragment StoreEntitySet="plan_version_buying_parameters">
+                <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="market_group" ColumnName="market_group" />
                 <ScalarProperty Name="cpm_adjusted" ColumnName="cpm_adjusted" />
                 <ScalarProperty Name="budget_adjusted" ColumnName="budget_adjusted" />
