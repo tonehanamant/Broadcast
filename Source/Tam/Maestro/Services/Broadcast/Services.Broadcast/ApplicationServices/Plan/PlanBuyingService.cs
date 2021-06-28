@@ -599,17 +599,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
-            var isPostingTypeToggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
 
             var jobCompletedWithinLastFiveMinutes = _DidBuyingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var expectedResultCount = _GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+                var expectedResultCount = _GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
                 result = _ValidateBuyingExecutionResult(result, expectedResultCount);
             }
             else
             {
-                var filledInResults = _FillInMissingBuyingResultsWithEmptyResults(result.Results, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+                var filledInResults = _FillInMissingBuyingResultsWithEmptyResults(result.Results, postingType, isPricingEfficiencyModelEnabled);
                 result.Results = filledInResults;
             }
 
@@ -637,32 +636,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal List<CurrentBuyingExecutionResultDto> _FillInMissingBuyingResultsWithEmptyResults(List<CurrentBuyingExecutionResultDto> candidateResults,
-            bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        internal List<CurrentBuyingExecutionResultDto> _FillInMissingBuyingResultsWithEmptyResults(List<CurrentBuyingExecutionResultDto> candidateResults, PostingTypeEnum postingType,
+            bool isPricingEfficiencyModelEnabled)
         {
-            // We only have to worry about the three use cases
-            // 1) Neither toggle is enabled
-            // 2) isPostingTypeToggleEnabled is enabled and isPricingEfficiencyModelEnabled is not enabled
-            // 3) Both are enabled.
             var results = candidateResults.DeepCloneUsingSerialization();
-            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
-            {
-                return results;
-            }
-
-            _AddEmptyBuyingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
-            _AddEmptyBuyingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Quality);
-
+            
             if (!isPricingEfficiencyModelEnabled)
             {
                 return results;
             }
 
-            _AddEmptyBuyingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
-            _AddEmptyBuyingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Efficiency);
-
-            _AddEmptyBuyingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Floor);
-            _AddEmptyBuyingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Floor);
+            _AddEmptyBuyingResult(results, postingType, SpotAllocationModelMode.Efficiency);
+            _AddEmptyBuyingResult(results, postingType, SpotAllocationModelMode.Floor);
 
             return results;
         }
@@ -692,25 +677,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        internal int _GetBuyingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled)
+        internal int _GetBuyingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled)
         {
             int expectedResult = 0;
 
-            if (!isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            if (!isPricingEfficiencyModelEnabled)
             {
                 expectedResult = 1;
             }
-            else if (!isPricingEfficiencyModelEnabled && isPostingTypeToggleEnabled)
-            {
-                expectedResult = 2;
-            }
-            else if (isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
-            {
-                expectedResult = 3;
-            }
             else
             {
-                expectedResult = 6;
+                expectedResult = 3;
             }
             return expectedResult;
         }

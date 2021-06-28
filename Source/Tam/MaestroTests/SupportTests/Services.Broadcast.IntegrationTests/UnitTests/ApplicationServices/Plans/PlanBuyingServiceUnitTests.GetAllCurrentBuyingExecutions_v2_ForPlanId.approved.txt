@@ -23,28 +23,6 @@
       "SpotAllocationModelMode": 3
     },
     {
-      "CpmPercentage": 104,
-      "GoalFulfilledByProprietary": false,
-      "HasResults": true,
-      "JobId": 506,
-      "Notes": "",
-      "OptimalCpm": 7.0,
-      "PlanVersionId": 659,
-      "PostingType": 1,
-      "SpotAllocationModelMode": 3
-    },
-    {
-      "CpmPercentage": 178,
-      "GoalFulfilledByProprietary": false,
-      "HasResults": true,
-      "JobId": 506,
-      "Notes": "",
-      "OptimalCpm": 12.0,
-      "PlanVersionId": 659,
-      "PostingType": 1,
-      "SpotAllocationModelMode": 2
-    },
-    {
       "CpmPercentage": 119,
       "GoalFulfilledByProprietary": false,
       "HasResults": true,
@@ -54,17 +32,6 @@
       "PlanVersionId": 659,
       "PostingType": 1,
       "SpotAllocationModelMode": 2
-    },
-    {
-      "CpmPercentage": 415,
-      "GoalFulfilledByProprietary": false,
-      "HasResults": true,
-      "JobId": 506,
-      "Notes": "",
-      "OptimalCpm": 28.0,
-      "PlanVersionId": 659,
-      "PostingType": 1,
-      "SpotAllocationModelMode": 1
     },
     {
       "CpmPercentage": 296,

@@ -4761,7 +4761,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Completed = new DateTime(2021, 3, 24, 11, 13, 13),
                     ErrorMessage = null,
                     DiagnosticResult = "DiagnosticResult"
-                });
+                });                        
 
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetBuyingResultsByJobId(JobID,PostingTypeEnum.NSI))
@@ -4914,34 +4914,33 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, false, 1)]
-        [TestCase(false, true, 2)]
-        [TestCase(true, false, 3)]
-        [TestCase(true, true, 6)]
-        public void BuyingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled, int expectedResult)
+        [TestCase(false, 1)]
+        [TestCase(true, 3)]
+        public void BuyingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, int expectedResult)
         {
             var service = _GetService();
             // Act
-            var count = service._GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+            var count = service._GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
             // Assert     
             Assert.AreEqual(count, expectedResult);
         }
 
         [Test]
-        [TestCase(1, false, false)]
-        [TestCase(1, true, false)]
-        [TestCase(1, true, true)]
-        [TestCase(2, true, false)]
-        [TestCase(2, true, true)]
-        [TestCase(6, true, true)]
-        public void FillInMissingBuyingResultsWithEmptyResults(int startingResultCount, bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        [TestCase(1, PostingTypeEnum.NSI, false)]
+        [TestCase(1, PostingTypeEnum.NSI, true)]
+        [TestCase(2, PostingTypeEnum.NSI, true)]
+        [TestCase(3, PostingTypeEnum.NTI, true)]
+        public void FillInMissingBuyingResultsWithEmptyResults(int startingResultCount, PostingTypeEnum postingType, bool isPricingEfficiencyModelEnabled)
         {
+            // only the one posting type ever.
+
+
             // Arrange
             var candidateResults = new List<CurrentBuyingExecutionResultDto>();
 
             candidateResults.Add(new CurrentBuyingExecutionResultDto
             {
-                PostingType = PostingTypeEnum.NTI,
+                PostingType = postingType,
                 SpotAllocationModelMode = SpotAllocationModelMode.Quality,
                 OptimalCpm = 23
             });
@@ -4950,38 +4949,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 candidateResults.Add(new CurrentBuyingExecutionResultDto
                 {
-                    PostingType = PostingTypeEnum.NSI,
-                    SpotAllocationModelMode = SpotAllocationModelMode.Quality,
-                    OptimalCpm = 23
-                });
-            }
-
-            if (startingResultCount == 6)
-            {
-                candidateResults.Add(new CurrentBuyingExecutionResultDto
-                {
-                    PostingType = PostingTypeEnum.NSI,
+                    PostingType = postingType,
                     SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
                     OptimalCpm = 23
                 });
-
+                
                 candidateResults.Add(new CurrentBuyingExecutionResultDto
                 {
-                    PostingType = PostingTypeEnum.NTI,
-                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-                    OptimalCpm = 23
-                });
-
-                candidateResults.Add(new CurrentBuyingExecutionResultDto
-                {
-                    PostingType = PostingTypeEnum.NSI,
-                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
-                    OptimalCpm = 23
-                });
-
-                candidateResults.Add(new CurrentBuyingExecutionResultDto
-                {
-                    PostingType = PostingTypeEnum.NTI,
+                    PostingType = postingType,
                     SpotAllocationModelMode = SpotAllocationModelMode.Floor,
                     OptimalCpm = 23
                 });
@@ -4990,27 +4965,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var results = service._FillInMissingBuyingResultsWithEmptyResults(candidateResults, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+            var results = service._FillInMissingBuyingResultsWithEmptyResults(candidateResults, postingType, isPricingEfficiencyModelEnabled);
 
             // Assert
-            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            if (!isPricingEfficiencyModelEnabled)
             {
                 Assert.AreEqual(1, results.Count());
                 return;
             }
 
-            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
-            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
+            Assert.IsTrue(results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
 
             if (!isPricingEfficiencyModelEnabled)
             {
                 return;
             }
 
-            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
-            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
-            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
-            Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
+            Assert.IsTrue(results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
+            Assert.IsTrue(results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
         }
 
         private List<CurrentBuyingExecutionResultDto> _GetCurrentBuyingExecutionsResults()
@@ -5031,30 +5003,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         new CurrentBuyingExecutionResultDto()
                         {
-                            OptimalCpm = 7,
-                            JobId = 506,
-                            PlanVersionId = 659,
-                            GoalFulfilledByProprietary = false,
-                            Notes = "",
-                            HasResults = true,
-                            CpmPercentage = 44,
-                            PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Floor
-                        },
-                        new CurrentBuyingExecutionResultDto()
-                        {
-                            OptimalCpm = 12,
-                            JobId = 506,
-                            PlanVersionId = 659,
-                            GoalFulfilledByProprietary = false,
-                            Notes = "",
-                            HasResults = true,
-                            CpmPercentage = 67,
-                            PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
-                        },
-                        new CurrentBuyingExecutionResultDto()
-                        {
                             OptimalCpm = 8,
                             JobId = 506,
                             PlanVersionId = 659,
@@ -5064,18 +5012,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             CpmPercentage = 47,
                             PostingType = PostingTypeEnum.NSI,
                             SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
-                        },
-                        new CurrentBuyingExecutionResultDto()
-                        {
-                            OptimalCpm = 28,
-                            JobId = 506,
-                            PlanVersionId = 659,
-                            GoalFulfilledByProprietary = false,
-                            Notes = "",
-                            HasResults = true,
-                            CpmPercentage = 160,
-                            PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Quality
                         },
                         new CurrentBuyingExecutionResultDto()
                         {
