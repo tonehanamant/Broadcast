@@ -2128,9 +2128,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.TargetCPM = 555.6m;
             beforePlan.Vpvh = 12; // this is the user entered VPVH
             var planId = beforePlan.Id;
+            beforePlan.PricingParameters.ProprietaryInventory = new List<InventoryProprietarySummary>();
 
             _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
                 .Returns(beforePlan);
+
+            _SpotLengthEngineMock.Setup(s => s.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(), It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>());
 
             _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new CurrentPricingExecutions());
@@ -2157,9 +2167,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.TargetCPM = 555.6m;
             beforePlan.Vpvh = 12; // this is the user entered VPVH
             var planId = beforePlan.Id;
+            beforePlan.PricingParameters.ProprietaryInventory = new List<InventoryProprietarySummary>();
 
             _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
                 .Returns(beforePlan);
+
+            _SpotLengthEngineMock.Setup(s => s.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(), It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>());
 
             _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new CurrentPricingExecutions
@@ -2182,7 +2202,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const PostingTypeEnum testPostingType = PostingTypeEnum.NSI;
             const SpotAllocationModelMode testSpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
             const decimal testBudget = 70000m;
-            const int testImpressions = 2200000;
+            const double testImpressions = 22000000;
             const decimal testOptimalCpm = 123.4m;
             const int testAudienceId = 31;
             const int testExpectedPlanVersionNumber = 11;
@@ -2199,12 +2219,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.Id = 23;
             beforePlan.VersionNumber = 2;
             beforePlan.VersionId = 24;
+            beforePlan.PricingParameters.ProprietaryInventory = new List<InventoryProprietarySummary>();
+            beforePlan.BuyingParameters = new PlanBuyingParametersDto();
 
             var afterPlanDto = new PlanDto {VersionId = 666};
+
+            _SpotLengthEngineMock.Setup(s => s.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 
             _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
                 .Returns(beforePlan)
                 .Returns(afterPlanDto);
+
+            _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(beforePlan)
+                .Returns(afterPlanDto);
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(), It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>());
 
             _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new CurrentPricingExecutions
@@ -2249,7 +2284,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     TotalImpressionsPercentage = 5,
                     TotalBudget = 6,
                     TotalUnits = 7,
-                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27, WeeklyImpressions = (testImpressions /1000)} }
+                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27, WeeklyImpressions = testImpressions} }
                 });
 
             _WeeklyBreakdownEngineMock.Setup(s =>
@@ -2303,28 +2338,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(beforePlan.FlightHiatusDays.Count, sentWeeklyBreakdownRequest.FlightHiatusDays.Count);
             Assert.AreEqual(beforePlan.GoalBreakdownType, sentWeeklyBreakdownRequest.DeliveryType);
             Assert.AreEqual(beforePlan.Budget.Value, sentWeeklyBreakdownRequest.TotalBudget);
-            Assert.AreEqual(WeeklyBreakdownCalculationFrom.Impressions, sentWeeklyBreakdownRequest.WeeklyBreakdownCalculationFrom);
+            Assert.AreEqual(WeeklyBreakdownCalculationFrom.Percentage, sentWeeklyBreakdownRequest.WeeklyBreakdownCalculationFrom);
             Assert.AreEqual(beforePlan.WeeklyBreakdownWeeks.Count, sentWeeklyBreakdownRequest.Weeks.Count);
             Assert.AreEqual(beforePlan.CreativeLengths.Count, sentWeeklyBreakdownRequest.CreativeLengths.Count);
             Assert.AreEqual(beforePlan.Dayparts.Count, sentWeeklyBreakdownRequest.Dayparts.Count);
             Assert.AreEqual(beforePlan.ImpressionsPerUnit, sentWeeklyBreakdownRequest.ImpressionsPerUnit);
             Assert.AreEqual(beforePlan.Equivalized, sentWeeklyBreakdownRequest.Equivalized);
 
-            // modified for Imps (000)
-            // validate the request values were converted correctly7
-            var expectedRequestImpressions = beforePlan.TargetImpressions.Value / 1000;
-            Assert.AreEqual(expectedRequestImpressions, sentWeeklyBreakdownRequest.TotalImpressions);
-            foreach (var requestedWeek in sentWeeklyBreakdownRequest.Weeks)
-            {
-                var mediaWeekId = requestedWeek.MediaWeekId;
-                var expectedImpressions = beforePlan.WeeklyBreakdownWeeks.Single(w => w.MediaWeekId == mediaWeekId)
-                                              .WeeklyImpressions * 1000;
-                Assert.AreEqual(expectedImpressions, requestedWeek.WeeklyImpressions);
-            }
-
-            // modified back from Imps (000)
-            // validate the saved values were converted correctly
-            savedPlan.WeeklyBreakdownWeeks.ForEach(w => Assert.AreEqual(testImpressions, w.WeeklyImpressions));
+            var expectedRequestedTotalImpressions = beforePlan.TargetImpressions / 1000;
+            Assert.AreEqual(expectedRequestedTotalImpressions, sentWeeklyBreakdownRequest.TotalImpressions);
 
             // Validate it tied in the results.
             Assert.AreEqual(testExpectedPlanVersionId, pricingNewVersion);

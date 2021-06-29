@@ -319,6 +319,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
+            var result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, forceKeepModelResults : false);
+            return result;
+        }
+
+        private int _DoSavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool forceKeepModelResults)
+        {
             const string SW_KEY_TOTAL_DURATION = "Total duration";
             const string SW_KEY_PRE_PLAN_VALIDATION = "Pre Plan Validation";
             const string SW_KEY_PLAN_VALIDATION = "Plan Validation";
@@ -423,7 +429,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
             if (!plan.IsDraft)
             {
-                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy);
+                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, forceKeepModelResults);
                 _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan);
             }
             processTimers.End(SW_KEY_POST_PLAN_SAVE);
@@ -451,12 +457,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy)
+        internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy, bool forceKeepModelResults)
         {
             // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
             // This sets the default parameters in case we don't promote existing results.
             _SetPlanPricingParameters(plan);            
-            var shouldPromotePricingResults = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
+
+            var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
 
             _FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults);
         }
@@ -1540,7 +1547,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode,
             PostingTypeEnum postingType, string username, bool aggregatePlanSynchronously = false)
         {
-            var beforePlan = _PlanRepository.GetPlan(planId);
+            // use the service, not the repo, so that transformations happen.
+            var beforePlan = GetPlan(planId);          
             var beforePlanVersionId = beforePlan.VersionId;
 
             // get the latest pricing results per the given 
@@ -1571,7 +1579,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
              * Recalculate the budget goals
              */
 
-            // We will recalculate the impressions and ratings components.
             var planDeliveryBudget = new PlanDeliveryBudget
             {
                 AudienceId = beforePlan.AudienceId,
@@ -1581,39 +1588,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var calculatedBudget = CalculateBudget(planDeliveryBudget);
 
             // multiply by 1000 for Imps (000) because the CalculateMethod returns without them.
-            beforePlan.TargetImpressions = calculatedBudget.Impressions * 1000;
+            beforePlan.TargetImpressions = calculatedBudget.Impressions;
             beforePlan.TargetRatingPoints = calculatedBudget.RatingPoints;
+            beforePlan.TargetUniverse = calculatedBudget.Universe.Value;
             beforePlan.TargetCPP = calculatedBudget.CPP;
 
             /***
              * Recalculate the Weekly Breakdown
              */
 
-            // the request wants the impressions as Imps (000)
-            var requestTotalImpressions = beforePlan.TargetImpressions.Value / 1000;
-            var requestWeeks = beforePlan.WeeklyBreakdownWeeks.Select(w => new WeeklyBreakdownWeek
-            {
-                WeekNumber = w.WeekNumber,
-                MediaWeekId = w.MediaWeekId,
-                StartDate = w.StartDate,
-                EndDate = w.EndDate,
-                NumberOfActiveDays = w.NumberOfActiveDays,
-                ActiveDays = w.ActiveDays,
-                WeeklyImpressions = w.WeeklyImpressions / 1000, // the request has less impressions too
-                WeeklyImpressionsPercentage = w.WeeklyImpressionsPercentage,
-                WeeklyRatings = w.WeeklyRatings,
-                WeeklyBudget = w.WeeklyBudget,
-                WeeklyAdu = w.WeeklyAdu,
-                AduImpressions = w.AduImpressions,
-                SpotLengthId = w.SpotLengthId,
-                DaypartCodeId = w.DaypartCodeId,
-                PercentageOfWeek = w.PercentageOfWeek,
-                IsUpdated = w.IsUpdated,
-                UnitImpressions = w.UnitImpressions,
-                WeeklyUnits = 0 // this will be calculated
-            }).ToList();
-
-            // recalculate the weekly breakdown table
             var weeklyBreakdownRequest = new WeeklyBreakdownRequest
             {
                 FlightStartDate = beforePlan.FlightStartDate.Value,
@@ -1621,49 +1604,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FlightDays = beforePlan.FlightDays,
                 FlightHiatusDays = beforePlan.FlightHiatusDays,
                 DeliveryType = beforePlan.GoalBreakdownType,
-                TotalImpressions = requestTotalImpressions,
+                TotalImpressions = beforePlan.TargetImpressions.Value,
                 TotalRatings = beforePlan.TargetRatingPoints.Value,
                 TotalBudget = beforePlan.Budget.Value,
-                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                Weeks = requestWeeks,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Percentage,
+                Weeks = beforePlan.WeeklyBreakdownWeeks,
                 CreativeLengths = beforePlan.CreativeLengths,
                 Dayparts = beforePlan.Dayparts,
                 ImpressionsPerUnit = beforePlan.ImpressionsPerUnit,
                 Equivalized = beforePlan.Equivalized
             };
             var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);
-
-            // put the 1000 back on for putting back on the plan to end the operation
-            calculatedWeeklyBreakdown.Weeks.ForEach(w => w.WeeklyImpressions *= 1000);
+            
             beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;            
 
-            // redistribute to make sure it's all balanced
-            var rebalancedWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(beforePlan);
-            beforePlan.WeeklyBreakdownWeeks = rebalancedWeeks;
-
-            /***
+             /***
              * Finalize and Save
              */
-
-            // finalize pre-save
-            _CalculateDeliveryDataPerAudience(beforePlan);
-            _SetPlanVersionNumber(beforePlan);
-            
-            // save
             var currentDateTime = _GetCurrentDateTime();
-            _PlanRepository.SavePlan(beforePlan, username, currentDateTime);
-
-            // finalize post-save
-            _UpdateCampaignLastModified(beforePlan.CampaignId, currentDateTime, username);
-            _DispatchPlanAggregation(beforePlan, aggregatePlanSynchronously); 
-            _CampaignAggregationJobTrigger.TriggerJob(beforePlan.CampaignId, username);
-
-            // promote the existing results to the new plan version
-            var afterPlan = _PlanRepository.GetPlan(planId);
-            var afterPlanVersionId = afterPlan.VersionId;
-            
-            _PlanRepository.UpdatePlanPricingVersionId(afterPlanVersionId, beforePlanVersionId);
-            _PlanRepository.UpdatePlanBuyingVersionId(afterPlanVersionId, beforePlanVersionId);
+            // use the service, not the repo, so all validations, etc are used.
+            _DoSavePlan(beforePlan, username, currentDateTime, aggregatePlanSynchronously, forceKeepModelResults: true);
 
             return true;
         }
