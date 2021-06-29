@@ -584,10 +584,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId.Value,
                         pricingExecutionResult.JobId.Value);
-                }                    
+                }
                 else
-                { 
-                    goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value);                
+                {
+                    goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value);
                 }
                 pricingExecutionResult.CalculatedVpvh = GetCalculatedDaypartVPVH(pricingExecutionResult.Id);
                 pricingExecutionResult.CpmPercentage = CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
@@ -601,11 +601,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (planVersionPricingResultsDayparts != null && planVersionPricingResultsDayparts.Count > 0)
             {
                 calculatedVpvhAvg = (from rows in planVersionPricingResultsDayparts
-                                         select rows).Average(e => e.CalculatedVpvh);
+                                     select rows).Average(e => e.CalculatedVpvh);
             }
-           
+
             return calculatedVpvhAvg;
-          
+
         }
         private CurrentPricingExecutions _GetAllCurrentPricingExecutions(PlanPricingJob job)
         {
@@ -627,7 +627,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new CurrentPricingExecutions
             {
                 Job = job,
-                Results = pricingExecutionResults ?? _GetDefaultPricingResultsList(), 
+                Results = pricingExecutionResults ?? _GetDefaultPricingResultsList(),
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
 
@@ -721,7 +721,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (result.IsPricingModelRunning == false)
             {
-                if (result.Results.Count!= expectedResult)
+                if (result.Results.Count != expectedResult)
                 {
                     result.IsPricingModelRunning = true;
                     result.Results = _GetDefaultPricingResultsList();
@@ -730,10 +730,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled,bool isPostingTypeToggleEnabled)
+        internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled)
         {
             int expectedResult = 0;
-            
+
             if (!isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
             {
                 expectedResult = 1;
@@ -767,7 +767,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         public CurrentPricingExecution GetCurrentPricingExecution(int planId)
-        { 
+        {
             return GetCurrentPricingExecution(planId, null);
         }
 
@@ -1248,25 +1248,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (!goalsFulfilledByProprietaryInventory)
             {
-                try
+
+                foreach (var allocationResult in results)
                 {
-                    Parallel.ForEach(results, (allocationResult) =>
-                    {
-                        _SendPricingRequest(
-                            allocationResult,
-                            plan,
-                            jobId,
-                            inventory,
-                            token,
-                            diagnostic,
-                            planPricingParametersDto,
-                            proprietaryInventoryData);
-                    });
+                    _SendPricingRequest(
+                        allocationResult,
+                        plan,
+                        jobId,
+                        inventory,
+                        token,
+                        diagnostic,
+                        planPricingParametersDto,
+                        proprietaryInventoryData);
                 }
-                catch (AggregateException ex)
-                {
-                    throw ex.Flatten().InnerExceptions.First();
-                }
+
             }
 
             return results;
@@ -2372,7 +2367,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     Impressions30sec = originalSpot.Impressions30sec,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
                     InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId),
-                    ProjectedImpressions= program.ProjectedImpressions,
+                    ProjectedImpressions = program.ProjectedImpressions,
                     HouseholdProjectedImpressions = program.HouseholdProjectedImpressions
                 };
 
@@ -2381,7 +2376,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return results;
         }
-       
+
         public void _ValidateAllocationResult(PlanPricingAllocationResult apiResponse)
         {
             if (!string.IsNullOrEmpty(apiResponse.RequestId) && !apiResponse.Spots.Any())

@@ -640,7 +640,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             bool isPricingEfficiencyModelEnabled)
         {
             var results = candidateResults.DeepCloneUsingSerialization();
-            
+
             if (!isPricingEfficiencyModelEnabled)
             {
                 return results;
@@ -1118,27 +1118,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!goalsFulfilledByProprietaryInventory)
             {
 
-                try
+                foreach (var allocationResult in results)
                 {
-                    Parallel.ForEach(results, (allocationResult) =>
-                    {
-                        _SendBuyingRequest(
-                            allocationResult,
-                            plan,
-                            jobId,
-                            inventory,
-                            token,
-                            diagnostic,
-                            planBuyingParametersDto,
-                            proprietaryInventoryData);
-                    });
+                    _SendBuyingRequest(
+                        allocationResult,
+                        plan,
+                        jobId,
+                        inventory,
+                        token,
+                        diagnostic,
+                        planBuyingParametersDto,
+                        proprietaryInventoryData);
                 }
-                catch (AggregateException ex)
-                {
-                    throw ex.Flatten().InnerExceptions.First();
-                }
-
-
             }
 
             return results;
