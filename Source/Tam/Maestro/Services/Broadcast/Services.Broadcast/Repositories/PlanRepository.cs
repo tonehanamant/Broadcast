@@ -643,7 +643,8 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = arg.plan_version_id,
                 AdjustedCPM = arg.cpm_adjusted,
                 AdjustedBudget = arg.budget_adjusted,
-                MarketGroup = (MarketGroupEnum)arg.market_group
+                MarketGroup = (MarketGroupEnum)arg.market_group,
+                PostingType = (PostingTypeEnum)arg.posting_type
             };
         }
 

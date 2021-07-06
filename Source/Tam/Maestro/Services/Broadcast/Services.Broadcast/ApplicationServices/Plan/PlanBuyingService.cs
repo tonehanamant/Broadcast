@@ -2828,12 +2828,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _SetPlanBuyingParameters(plan);
             }
 
-            if (plan.BuyingParameters.PostingType == 0)
-            {
-                plan.BuyingParameters.PostingType = plan.PostingType;
-            }
-
-            if (plan.PostingType != postingType)
+            if (plan.BuyingParameters.PostingType != postingType)
             {
                 var ntiToNsiConversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
                 plan.BuyingParameters = _ConvertPlanBuyingParametersToRequestedPostingType(plan.BuyingParameters, ntiToNsiConversionRate);
