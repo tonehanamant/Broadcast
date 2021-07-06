@@ -9,6 +9,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -26,7 +27,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			IProgramsSearchApiClient programsSearchApiClient,
 			IProgramMappingCleanupEngine programMappingCleanupEngine,
             IMasterProgramListImporter masterListImporter,
-			IDateTimeEngine dateTimeEngine)
+			IDateTimeEngine dateTimeEngine,
+			IFeatureToggleHelper featureToggleHelper)
 			: base(backgroundJobClient,
 				broadcastDataRepositoryFactory,
 				sharedFolderService,
@@ -36,7 +38,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 				programsSearchApiClient,
 				programMappingCleanupEngine,
                 masterListImporter,
-				dateTimeEngine)
+				dateTimeEngine,
+				featureToggleHelper)
 		{
 		}
         

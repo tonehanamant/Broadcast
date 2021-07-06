@@ -104,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 }, new DateTime(2019, 11, 4)
                 , "test user");
 
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196,PostingTypeEnum.NSI);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196, PostingTypeEnum.NSI);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingJob), "Id");
@@ -138,7 +138,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     Queued = currentDate.AddSeconds(6),
                 });
 
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196,PostingTypeEnum.NSI);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196, PostingTypeEnum.NSI);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingJob), "Id");
@@ -200,7 +200,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     Queued = currentDate.AddSeconds(6),
                 });
 
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196,PostingTypeEnum.NSI);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196, PostingTypeEnum.NSI);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingJob), "Id");
@@ -233,7 +233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     Queued = currentDate.AddSeconds(6)
                 });
 
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196,PostingTypeEnum.NSI);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(1196, PostingTypeEnum.NSI);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingJob), "Id");
@@ -320,7 +320,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job2.Id, CancellationToken.None);
 
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(1197,PostingTypeEnum.NTI);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(1197, PostingTypeEnum.NTI);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingJob), "Id");
@@ -409,8 +409,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var bands = _PlanBuyingService.GetBuyingBands(planBuyingRequestDto.PlanId.Value,PostingTypeEnum.NTI);
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value,PostingTypeEnum.NTI);
+                var bands = _PlanBuyingService.GetBuyingBands(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingBandsDto>();
                 Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.AvgCpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
@@ -429,8 +429,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var stations = _PlanBuyingService.GetStations(planBuyingRequestDto.PlanId.Value,null);
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value,PostingTypeEnum.NTI);
+                var stations = _PlanBuyingService.GetStations(planBuyingRequestDto.PlanId.Value, null);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingStationResultDto>();
                 Assert.AreEqual(result.Result.OptimalCpm, stations.Totals.AvgCpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
@@ -449,8 +449,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var repFirms = _PlanBuyingService.GetBuyingRepFirms(planBuyingRequestDto.PlanId.Value,null);
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value,PostingTypeEnum.NTI);
+                var repFirms = _PlanBuyingService.GetBuyingRepFirms(planBuyingRequestDto.PlanId.Value, null);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultRepFirmDto>();
                 Assert.AreEqual(result.Result.OptimalCpm, repFirms.Totals.AvgCpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(repFirms, jsonSettings));
@@ -469,8 +469,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var programs = _PlanBuyingService.GetPrograms(planBuyingRequestDto.PlanId.Value,null);
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value,PostingTypeEnum.NTI);
+                var programs = _PlanBuyingService.GetPrograms(planBuyingRequestDto.PlanId.Value, null);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
 
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultProgramsDto>();
                 Assert.AreEqual(result.Result.OptimalCpm, programs.Totals.AvgCpm);
@@ -490,7 +490,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value,null);
+                var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
@@ -512,7 +512,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, secondJob.Id, CancellationToken.None);
 
-                var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value,null);
+                var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
 
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
@@ -535,7 +535,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value,null);
+                var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
@@ -552,7 +552,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var markets = _PlanBuyingService.GetBuyingOwnershipGroups(planBuyingRequestDto.PlanId.Value,null);
+                var markets = _PlanBuyingService.GetBuyingOwnershipGroups(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultOwnershipGroupDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
@@ -630,7 +630,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN.xlsx", processInventoryRatings: true);
 
             _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(
-                inventorySourceId, 
+                inventorySourceId,
                 startDate,
                 endDate);
 
@@ -769,7 +769,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         private JsonSerializerSettings _GetJsonSettingsForBuyingResults()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
-            
+
             jsonResolver.Ignore(typeof(PlanBuyingAllocationResult), "JobId");
             jsonResolver.Ignore(typeof(PlanBuyingAllocationResult), "PlanVersionId");
 
@@ -872,10 +872,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = _SavePlanAndRunBuyingJob(plan);
 
-                var resultDefault = _PlanBuyingService.GetBuyingBands(plan.Id,null);
-                var resultQ = _PlanBuyingService.GetBuyingBands(plan.Id, null,SpotAllocationModelMode.Quality);
-                var resultE = _PlanBuyingService.GetBuyingBands(plan.Id, null,SpotAllocationModelMode.Efficiency);
-                var resultF = _PlanBuyingService.GetBuyingBands(plan.Id, null,SpotAllocationModelMode.Floor);
+                var resultDefault = _PlanBuyingService.GetBuyingBands(plan.Id, null);
+                var resultQ = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Quality);
+                var resultE = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
@@ -907,10 +907,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = _SavePlanAndRunBuyingJob(plan);
 
-                var resultDefault = _PlanBuyingService.GetStations(plan.Id,null);
-                var resultQ = _PlanBuyingService.GetStations(plan.Id, null,SpotAllocationModelMode.Quality);
-                var resultE = _PlanBuyingService.GetStations(plan.Id, null,SpotAllocationModelMode.Efficiency);
-                var resultF = _PlanBuyingService.GetStations(plan.Id, null,SpotAllocationModelMode.Floor);
+                var resultDefault = _PlanBuyingService.GetStations(plan.Id, null);
+                var resultQ = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Quality);
+                var resultE = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
@@ -942,10 +942,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = _SavePlanAndRunBuyingJob(plan);
 
-                var resultDefault = _PlanBuyingService.GetMarkets(plan.Id,null);
-                var resultQ = _PlanBuyingService.GetMarkets(plan.Id, null,SpotAllocationModelMode.Quality);
-                var resultE = _PlanBuyingService.GetMarkets(plan.Id, null,SpotAllocationModelMode.Efficiency);
-                var resultF = _PlanBuyingService.GetMarkets(plan.Id, null,SpotAllocationModelMode.Floor);
+                var resultDefault = _PlanBuyingService.GetMarkets(plan.Id, null);
+                var resultQ = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Quality);
+                var resultE = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
@@ -977,10 +977,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = _SavePlanAndRunBuyingJob(plan);
 
-                var resultDefault = _PlanBuyingService.GetPrograms(plan.Id,null);
-                var resultQ = _PlanBuyingService.GetPrograms(plan.Id, null,SpotAllocationModelMode.Quality);
-                var resultE = _PlanBuyingService.GetPrograms(plan.Id, null,SpotAllocationModelMode.Efficiency);
-                var resultF = _PlanBuyingService.GetPrograms(plan.Id, null,SpotAllocationModelMode.Floor);
+                var resultDefault = _PlanBuyingService.GetPrograms(plan.Id, null);
+                var resultQ = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Quality);
+                var resultE = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Efficiency);
+                var resultF = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
@@ -1012,8 +1012,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = _SavePlanAndRunBuyingJob(plan);
 
-                var resultDefault = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id,null);
-                var resultQ = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null,SpotAllocationModelMode.Quality);
+                var resultDefault = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null);
+                var resultQ = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Floor);
 
@@ -1047,7 +1047,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = _SavePlanAndRunBuyingJob(plan);
 
-                var resultDefault = _PlanBuyingService.GetBuyingRepFirms(plan.Id,null);
+                var resultDefault = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Floor);

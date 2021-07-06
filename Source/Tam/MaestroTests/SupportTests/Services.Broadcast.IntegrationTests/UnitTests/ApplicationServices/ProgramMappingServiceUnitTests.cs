@@ -131,7 +131,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _ProgramsSearchApiClientMock.Object,
                 _ProgramMappingCleanupEngine.Object,
                 _MasterListImporterMock.Object,
-                _DateTimeEngineMock.Object);
+                _DateTimeEngineMock.Object,
+                null);
         }
 
         [Test]
@@ -410,7 +411,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null, null);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);

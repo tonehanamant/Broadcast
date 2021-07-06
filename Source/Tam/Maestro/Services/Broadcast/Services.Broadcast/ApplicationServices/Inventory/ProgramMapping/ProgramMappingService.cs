@@ -103,6 +103,9 @@ namespace Services.Broadcast.ApplicationServices
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
         private const float MATCH_NOT_FOUND = 0;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<bool> _IsInternalProgramSearchEnabled;
 
         public ProgramMappingService(
             IBackgroundJobClient backgroundJobClient,
@@ -114,7 +117,8 @@ namespace Services.Broadcast.ApplicationServices
             IProgramsSearchApiClient programsSearchApiClient,
             IProgramMappingCleanupEngine programMappingCleanupEngine,
             IMasterProgramListImporter masterListImporter,
-            IDateTimeEngine dateTimeEngine)
+            IDateTimeEngine dateTimeEngine,
+            IFeatureToggleHelper featureToggleHelper)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
@@ -129,6 +133,9 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramCleanupEngine = programMappingCleanupEngine;
             _MasterProgramListImporter = masterListImporter;
             _DateTimeEngine = dateTimeEngine;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _IsInternalProgramSearchEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.INTERNAL_PROGRAM_SEARCH));
         }
 
         /// <inheritdoc />
@@ -704,7 +711,7 @@ namespace Services.Broadcast.ApplicationServices
 
         protected virtual bool _GetEnableInternalProgramSearch()
         {
-            return BroadcastServiceSystemParameter.EnableInternalProgramSearch;
+            return _IsPipelineVariablesEnabled.Value ? _IsInternalProgramSearchEnabled.Value : BroadcastServiceSystemParameter.EnableInternalProgramSearch;
         }
 
         //BP1-402 is pushed to next release so leaving this code for later use. Additional testing and coordination to point to the Dativa Search would be required.

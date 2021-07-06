@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			};
 
 			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
-				broadcastDataRepositoryFactory.Object);
+				broadcastDataRepositoryFactory.Object, null);
 			service.UT_EnableInternalProgramSearch = true;
 
 			// Act
@@ -85,7 +85,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			};
 
 			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
-				broadcastDataRepositoryFactory.Object);
+				broadcastDataRepositoryFactory.Object, null);
 			service.UT_EnableInternalProgramSearch = true;
 
 			// Act
@@ -126,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			};
 
 			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
-				broadcastDataRepositoryFactory.Object);
+				broadcastDataRepositoryFactory.Object, null);
 			service.UT_EnableInternalProgramSearch = true;
 
 			// Act

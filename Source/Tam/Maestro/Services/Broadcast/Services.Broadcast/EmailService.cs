@@ -2,6 +2,7 @@
 using ConfigurationService.Client;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -21,10 +22,16 @@ namespace Common.Services
     public class EmailerService : BroadcastBaseClass, IEmailerService
     {
         private IConfigurationWebApiClient _configurationWebApiClient;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
-        public EmailerService(IConfigurationWebApiClient configurationWebApiClient)
+        public EmailerService(IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper)
         {
             _configurationWebApiClient = configurationWebApiClient;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
 
         public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, string[] pTos, List<string> attachFileNames = null)
@@ -40,7 +47,7 @@ namespace Common.Services
 
         public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, List<MailAddress> pTos, List<string> attachFileNames = null)
         {
-            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+            if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return false;
 
             _LogInfo("Attempting to send email.");

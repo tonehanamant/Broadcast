@@ -3,6 +3,7 @@ using ConfigurationService.Client;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -11,8 +12,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 		public ProgramServiceUnitTestClass(IGenreCache genreCache,
 			IConfigurationWebApiClient configurationWebApiClient,
 			IProgramsSearchApiClient programsSearchApiClient,
-			IDataRepositoryFactory broadcastDataRepositoryFactory)
-			: base(genreCache, configurationWebApiClient, programsSearchApiClient, broadcastDataRepositoryFactory)
+			IDataRepositoryFactory broadcastDataRepositoryFactory,
+			IFeatureToggleHelper featureToggleHelper)
+			: base(genreCache, configurationWebApiClient, programsSearchApiClient, broadcastDataRepositoryFactory, featureToggleHelper)
 		{
 		}
 

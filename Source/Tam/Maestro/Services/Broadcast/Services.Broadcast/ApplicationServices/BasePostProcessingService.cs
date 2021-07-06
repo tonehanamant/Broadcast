@@ -28,6 +28,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IConfigurationWebApiClient _configurationWebApiClient;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -37,7 +40,8 @@ namespace Services.Broadcast.ApplicationServices
             , IEmailerService emailerService
             , IFileService fileService
             , IDataLakeFileService dataLakeFileService
-            , IConfigurationWebApiClient configurationWebApiClient)
+            , IConfigurationWebApiClient configurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper)
         {
             _EmailHelper = emailHelper;
             _WWTVFtpHelper = wwtvFTPHelper;
@@ -46,6 +50,9 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _DataLakeFileService = dataLakeFileService;
             _configurationWebApiClient = configurationWebApiClient;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
 
         /// <summary>
@@ -105,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public void EmailFTPErrorFiles(List<string> filePaths)
         {
-            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+            if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)        
                 return;
 
             filePaths.ForEach(filePath =>

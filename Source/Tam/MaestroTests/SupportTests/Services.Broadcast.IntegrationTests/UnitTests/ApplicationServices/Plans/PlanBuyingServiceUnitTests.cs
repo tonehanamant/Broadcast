@@ -80,17 +80,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IAudienceService> _AudienceServiceMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
         protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false,
             bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
         {
-            var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
 
-            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
             return new PlanBuyingService(
                 _DataRepositoryFactoryMock.Object,
@@ -5028,6 +5033,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
         }
 
-        
+        [Test]
+        [TestCase(false, false, false, false, 3)]
+        [TestCase(true, true, false, false, 1)]
+        [TestCase(true, true, true, false, 2)]
+        [TestCase(true, true, true, true, 3)]
+        public void GetSupportedInventorySourceTypes(bool isPipelineVariablesEnabled, bool isPricingModelOpenMarketInventoryEnabled, bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
+        {
+            // Arrange
+            var service = _GetService();
+
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = isPipelineVariablesEnabled;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = isPricingModelOpenMarketInventoryEnabled;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = isPricingModelBarterInventoryEnabled;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = isPricingModelProprietaryOAndOInventoryEnabled;
+
+            // Act
+            var results = service._GetSupportedInventorySourceTypes();
+
+            // Assert            
+            Assert.AreEqual(expectedResult, results.Count());
+        }
     }
 }

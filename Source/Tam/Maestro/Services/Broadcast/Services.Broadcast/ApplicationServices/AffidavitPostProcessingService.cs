@@ -54,7 +54,8 @@ namespace Services.Broadcast.ApplicationServices
             , IEmailerService emailerService
             , IFileService fileService
             , IDataLakeFileService dataLakeFileService
-            , IConfigurationWebApiClient configurationWebApiClient): base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient)
+            , IConfigurationWebApiClient configurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient, featureToggleHelper)
         {
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;

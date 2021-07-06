@@ -56,5 +56,12 @@
         public static string ENABLE_PLAN_MARKET_SOV_CALCULATIONS = "broadcast-enable-plan-market-sov-calculations";
         public static string VPVH_DEMO = "broadcast-vpvh-demo";
         public static string ENABLE_LOCKING_CONSOLIDATION = "broadcast-enable-locking-consolidation";
+        public static string ENABLE_PIPELINE_VARIABLES = "Broadcast-Enable-Pipeline-Variables";
+        public static string PRICING_MODEL_OPEN_MARKET_INVENTORY = "broadcast-pricing-model-open-market-inventory";
+        public static string EMAIL_NOTIFICATIONS = "broadcast-email-notifications";
+        public static string PRICING_MODEL_BARTER_INVENTORY = "broadcast-pricing-model-barter-inventory";
+        public static string PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = "broadcast-pricing-model-proprietary-o-and-o-inventory";
+        public static string INTERNAL_PROGRAM_SEARCH = "broadcast-internal-program-search";
+        public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";
     }
 }

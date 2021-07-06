@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
@@ -29,10 +30,16 @@ namespace Services.Broadcast.Helpers
     public class FileTransferEmailHelper : IFileTransferEmailHelper
     {
         private readonly IEmailerService _EmailerService;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
-        public FileTransferEmailHelper(IEmailerService emailerService)
+        public FileTransferEmailHelper(IEmailerService emailerService, IFeatureToggleHelper featureToggleHelper)
         {
             _EmailerService = emailerService;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
 
         /// <summary>
@@ -65,7 +72,7 @@ namespace Services.Broadcast.Helpers
         /// <param name="subject">Email subject</param>
         public void SendEmail(string emailBody, string subject)
         {
-            if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+            if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return;
 
             var to = new List<MailAddress>() { new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail) };

@@ -187,6 +187,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
+        private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
+        private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -237,6 +241,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
             _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
+            _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
+            _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
         }
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
@@ -2222,17 +2230,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 .ToList();
         }
 
-        private List<InventorySourceTypeEnum> _GetSupportedInventorySourceTypes()
+        internal List<InventorySourceTypeEnum> _GetSupportedInventorySourceTypes()
         {
             var result = new List<InventorySourceTypeEnum>();
 
-            if (BroadcastServiceSystemParameter.EnableOpenMarketInventoryForPricingModel)
+            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelOpenMarketInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableOpenMarketInventoryForPricingModel)
                 result.Add(InventorySourceTypeEnum.OpenMarket);
 
-            if (BroadcastServiceSystemParameter.EnableBarterInventoryForPricingModel)
+            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelBarterInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableBarterInventoryForPricingModel)
                 result.Add(InventorySourceTypeEnum.Barter);
 
-            if (BroadcastServiceSystemParameter.EnableProprietaryOAndOInventoryForPricingModel)
+            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelProprietaryOAndOInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableProprietaryOAndOInventoryForPricingModel)
                 result.Add(InventorySourceTypeEnum.ProprietaryOAndO);
 
             return result;

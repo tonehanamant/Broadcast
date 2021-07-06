@@ -48,9 +48,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, false);
             // register our stub instance so it is used to instantiate the service
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
-            
+
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
-            
+
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
@@ -1103,7 +1103,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
 
             // Act
-            var result = ((PlanPricingService) planPricingService).GetQuoteReportData(request);
+            var result = ((PlanPricingService)planPricingService).GetQuoteReportData(request);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1113,11 +1113,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = new QuoteRequestDto
             {
-                FlightStartDate = new DateTime(2018,12,17),
-                FlightEndDate = new DateTime(2018,12,23),
+                FlightStartDate = new DateTime(2018, 12, 17),
+                FlightEndDate = new DateTime(2018, 12, 23),
                 FlightHiatusDays = new List<DateTime>(),
-                FlightDays = new List<int> {1,2,3,4,5,6,7},
-                CreativeLengths = new List<CreativeLength> {new CreativeLength {SpotLengthId = 1, Weight = 100 }},
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 100 } },
                 Equivalized = true,
                 AudienceId = 31,
                 SecondaryAudiences = new List<PlanAudienceDto>
@@ -1456,7 +1456,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planVersionId = _PlanService.CheckForDraft(planId);
                 var execution = _PlanPricingService.GetCurrentPricingExecution(planId, planVersionId);
 
-                var jsonResolver = new IgnorableSerializerContractResolver(); 
+                var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "Id");
                 jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "JobId");
                 jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "PlanVersionId");
@@ -1901,7 +1901,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SavePricingResultsTest()
         {
             string resultsToVerify;
-            var jsonSettings = _GetJsonSettingsForPricingResults();            
+            var jsonSettings = _GetJsonSettingsForPricingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRun();
 
             using (new TransactionScopeWrapper())
@@ -1914,7 +1914,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
 
             Approvals.Verify(resultsToVerify);
-        }        
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -2061,13 +2061,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var comparibleOptimalCpm = $"{executionResult.Result.OptimalCpm: 0.000}";
                 var comparibleResultCpm = $"{resultDefault.NtiResults.Totals.Cpm: 0.000}";
 
-                Assert.AreEqual(comparibleOptimalCpm,comparibleResultCpm);
+                Assert.AreEqual(comparibleOptimalCpm, comparibleResultCpm);
                 resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
             }
 
             Approvals.Verify(resultsToVerify);
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]

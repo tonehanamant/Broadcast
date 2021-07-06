@@ -12,6 +12,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -27,18 +28,25 @@ namespace Services.Broadcast.ApplicationServices
         private IConfigurationWebApiClient _ConfigurationWebApiClient;
         private IProgramsSearchApiClient _ProgramsSearchApiClient;
         private readonly IProgramNameRepository _ProgramNameRepository;
+		private readonly IFeatureToggleHelper _FeatureToggleHelper;
+		private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+		private readonly Lazy<bool> _IsInternalProgramSearchEnabled;
 
-        public ProgramService(
+		public ProgramService(
             IGenreCache genreCache,
             IConfigurationWebApiClient configurationWebApiClient,
             IProgramsSearchApiClient programsSearchApiClient,
-            IDataRepositoryFactory broadcastDataRepositoryFactory)
-        {
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
+			IFeatureToggleHelper featureToggleHelper)
+		{
             _GenreCache = genreCache;
             _ConfigurationWebApiClient = configurationWebApiClient;
             _ProgramsSearchApiClient = programsSearchApiClient;
             _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
-        }
+			_FeatureToggleHelper = featureToggleHelper;
+			_IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+			_IsInternalProgramSearchEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.INTERNAL_PROGRAM_SEARCH));
+		}
 
         public List<ProgramDto> GetPrograms(SearchRequestProgramDto searchRequest, string userName)
         {
@@ -94,7 +102,7 @@ namespace Services.Broadcast.ApplicationServices
 
 		protected virtual bool _GetEnableInternalProgramSearch()
 		{
-			return BroadcastServiceSystemParameter.EnableInternalProgramSearch;
+			return _IsPipelineVariablesEnabled.Value ? _IsInternalProgramSearchEnabled.Value : BroadcastServiceSystemParameter.EnableInternalProgramSearch;
 		}
 		private List<ProgramDto> _LoadProgramFromExternalApi(SearchRequestProgramDto searchRequest)
 		{

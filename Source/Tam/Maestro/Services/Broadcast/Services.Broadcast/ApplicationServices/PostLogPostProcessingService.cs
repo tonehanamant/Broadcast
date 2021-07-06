@@ -57,7 +57,8 @@ namespace Services.Broadcast.ApplicationServices
             , IEmailerService emailerService
             , IFileService fileService
             , IDataLakeFileService dataLakeFileService
-            , IConfigurationWebApiClient configurationWebApiClient) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient)
+            , IConfigurationWebApiClient configurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient, featureToggleHelper)
         {
             _WWTVFtpHelper = wwtvFtpHelper;
             _EmailProcessorService = emailService;
