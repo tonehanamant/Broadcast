@@ -1645,7 +1645,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _CalculateVPVHForPlan(PlanDto planDto)
         {
             var planPricingResultsDayparts = _GetPlanPricingResultsDayparts(planDto);
-            if (planPricingResultsDayparts != null)
+            if (planPricingResultsDayparts?.Any() ?? false)
             {                
                 planDto.Vpvh = planPricingResultsDayparts.Average(x => x.CalculatedVpvh);
             }            
