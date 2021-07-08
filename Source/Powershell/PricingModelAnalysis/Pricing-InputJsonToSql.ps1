@@ -488,7 +488,7 @@ if ($(Test-Path $outputFileName) -eq $true)
 
 Write-OutputWithTime "Reading the input file..."
 
-$content = $(Get-Content -Raw -Path $inputFileName | ConvertFrom-Json).Data
+$content = $(Get-Content -Raw -Path $inputFileName | ConvertFrom-Json)
 $contracts = $content.contract
 $inventories = $content.inventory
 
