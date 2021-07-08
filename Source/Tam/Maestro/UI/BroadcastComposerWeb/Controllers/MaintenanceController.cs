@@ -148,6 +148,24 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult ResetLastStationsFromForecastDatabaseJob()
+        {
+            try
+            {
+                var username = _GetCurrentUserFullName();
+                var service = _ApplicationServiceFactory.GetApplicationService<IStationService>();
+                var deletedCount = service.ResetLastStationsFromForecastDatabaseJob(username);
+                TempData["Message"] = $"Reset completed.  Deleted {deletedCount} records.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [Route("ImportProgramMappings")]
         public ActionResult ImportProgramMappings(HttpPostedFileBase file)

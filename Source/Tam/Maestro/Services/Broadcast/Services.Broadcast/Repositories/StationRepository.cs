@@ -111,6 +111,8 @@ namespace Services.Broadcast.Repositories
         void UpdateStation(string ownerName, string repFirmName, int stationId, bool isTrueInd, string user, DateTime timeStamp);
 
         List<DisplayBroadcastStation> GetBroadcastStationsByIds(IEnumerable<int> stationIds);
+
+        int DeleteStationMonthDetailsForMonth(int mediaMonthId);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -543,6 +545,19 @@ namespace Services.Broadcast.Repositories
                         .ToList();
 
                     return montDetails;
+                });
+        }
+
+        public int DeleteStationMonthDetailsForMonth(int mediaMonthId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var deletedCount = context.station_month_details
+                        .RemoveRange(context.station_month_details.Where(s => s.media_month_id == mediaMonthId))
+                        .Count();
+                    context.SaveChanges();
+                    return deletedCount;
                 });
         }
     }

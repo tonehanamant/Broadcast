@@ -531,6 +531,14 @@
                 <input class="button" type="submit" value="Submit" id="txt Perform Nightly Stations Update" />
             </div>
         }
+            
+            @using (Html.BeginForm("ResetLastStationsFromForecastDatabaseJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Reset the last Nightly Stations Update</h1>
+                    <input class="button" type="submit" value="Submit" id="txt Reset the Last Nightly Stations Update" />
+                </div>
+            }
 
             <div class="form">
                 <h1 class="heading">Cleanup Dayparts</h1>

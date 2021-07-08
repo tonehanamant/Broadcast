@@ -8,6 +8,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -154,7 +155,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private StationService _GetService(
             INsiStationRepository nsiStationRepo, 
             IStationRepository stationRepo,
-            IStationMappingService stationMappingService
+            IStationMappingService stationMappingService,
+            DateTime? currentDateTime = null
             )
         {
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
@@ -164,7 +166,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             dataRepositoryFactory.Setup(s => s.GetDataRepository<IStationRepository>())
                 .Returns(stationRepo);
 
-            var service = new StationService(dataRepositoryFactory.Object, stationMappingService);
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+            dateTimeEngine.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime.HasValue ? currentDateTime.Value : DateTime.Now);
+
+            var service = new StationService(dataRepositoryFactory.Object, stationMappingService, dateTimeEngine.Object);
             return service;
         }
     }
