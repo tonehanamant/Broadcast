@@ -593,6 +593,12 @@ GO
 
 /*************************************** START BP-2645 *****************************************************/
 
+IF (NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'real_isci_ingest_jobs' AND COLUMN_NAME= 'queued_by')
+	AND OBJECT_ID('real_isci_ingest_jobs') IS NOT NULL)
+BEGIN	
+	DROP TABLE real_isci_ingest_jobs
+END
+
 IF OBJECT_ID('real_isci_ingest_jobs') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[real_isci_ingest_jobs]
@@ -600,6 +606,7 @@ BEGIN
 		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
 		[status] INT NOT NULL,
 		[queued_at] DATETIME2 NOT NULL,
+		[queued_by] VARCHAR(100) NOT NULL,
 		[completed_at] DATETIME2 NULL,
 		[error_message] NVARCHAR(MAX) NULL
 	)
@@ -664,6 +671,23 @@ END
 
 GO
 /*************************************** END BP-2645 *****************************************************/
+
+/*************************************** START BP-2651 *****************************************************/
+
+IF OBJECT_ID('export_unmapped_program_names_jobs') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[export_unmapped_program_names_jobs]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[status] INT NOT NULL,
+		[queued_at] DATETIME2 NOT NULL,
+		[queued_by] VARCHAR(100) NOT NULL,
+		[completed_at] DATETIME2 NULL,
+		[error_message] NVARCHAR(MAX) NULL
+	)
+END
+GO
+/*************************************** END BP-2651 *****************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 

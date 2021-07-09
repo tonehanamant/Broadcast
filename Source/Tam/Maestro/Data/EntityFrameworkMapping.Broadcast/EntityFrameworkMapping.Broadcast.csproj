@@ -378,6 +378,9 @@
     <Compile Include="detection_post_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="export_unmapped_program_names_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="genre.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

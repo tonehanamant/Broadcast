@@ -324,6 +324,17 @@
           <Property Name="delivery" Type="float" Nullable="false" />
           <Property Name="audience_rank" Type="int" />
         </EntityType>
+        <EntityType Name="export_unmapped_program_names_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="queued_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="queued_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="error_message" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="genre_mappings">
           <Key>
             <PropertyRef Name="maestro_genre_id" />
@@ -1999,6 +2010,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="queued_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="queued_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="completed_at" Type="datetime2" Precision="7" />
           <Property Name="error_message" Type="nvarchar(max)" />
         </EntityType>
@@ -6603,6 +6615,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="detection_map_types" EntityType="Self.detection_map_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="detection_maps" EntityType="Self.detection_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="detection_post_details" EntityType="Self.detection_post_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="export_unmapped_program_names_jobs" EntityType="Self.export_unmapped_program_names_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genre_mappings" EntityType="Self.genre_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_export_jobs" EntityType="Self.inventory_export_jobs" Schema="dbo" store:Type="Tables" />
@@ -9453,7 +9466,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_pricing_result_spots" EntitySet="plan_version_pricing_result_spots" />
           </AssociationSet>
           <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
-          <EntitySet Name="real_isci_ingest_jobs" EntityType="BroadcastModel.real_isci_ingest_jobs" />
           <EntitySet Name="reel_isci_advertiser_name_references" EntityType="BroadcastModel.reel_isci_advertiser_name_references" />
           <EntitySet Name="reel_isci_products" EntityType="BroadcastModel.reel_isci_products" />
           <EntitySet Name="reel_iscis" EntityType="BroadcastModel.reel_iscis" />
@@ -9469,6 +9481,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="reel_iscis" EntitySet="reel_iscis" />
           </AssociationSet>
+          <EntitySet Name="export_unmapped_program_names_jobs" EntityType="BroadcastModel.export_unmapped_program_names_jobs" />
+          <EntitySet Name="real_isci_ingest_jobs" EntityType="BroadcastModel.real_isci_ingest_jobs" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -16490,16 +16504,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
         </EntityType>
-        <EntityType Name="real_isci_ingest_jobs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="completed_at" Type="DateTime" Precision="7" />
-          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="reel_isci_advertiser_name_references">
           <Key>
             <PropertyRef Name="id" />
@@ -16570,6 +16574,28 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="export_unmapped_program_names_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="real_isci_ingest_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19336,17 +19362,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="real_isci_ingest_jobs">
-            <EntityTypeMapping TypeName="BroadcastModel.real_isci_ingest_jobs">
-              <MappingFragment StoreEntitySet="real_isci_ingest_jobs">
-                <ScalarProperty Name="error_message" ColumnName="error_message" />
-                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
-                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="reel_isci_advertiser_name_references">
             <EntityTypeMapping TypeName="BroadcastModel.reel_isci_advertiser_name_references">
               <MappingFragment StoreEntitySet="reel_isci_advertiser_name_references">
@@ -19375,6 +19390,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="active_start_date" ColumnName="active_start_date" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="export_unmapped_program_names_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.export_unmapped_program_names_jobs">
+              <MappingFragment StoreEntitySet="export_unmapped_program_names_jobs">
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="real_isci_ingest_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.real_isci_ingest_jobs">
+              <MappingFragment StoreEntitySet="real_isci_ingest_jobs">
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
