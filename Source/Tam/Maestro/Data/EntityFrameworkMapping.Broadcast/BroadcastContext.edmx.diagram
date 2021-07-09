@@ -510,6 +510,14 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_dayparts_plan_version_pricing_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="34.125" />
+        <EntityTypeShape EntityType="BroadcastModel.real_isci_ingest_jobs" Width="1.5" PointX="30.375" PointY="4.75" />
+        <EntityTypeShape EntityType="BroadcastModel.reel_isci_advertiser_name_references" Width="1.5" PointX="5.25" PointY="89.5" />
+        <EntityTypeShape EntityType="BroadcastModel.reel_isci_products" Width="1.5" PointX="32.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BroadcastModel.reel_iscis" Width="1.5" PointX="3" PointY="89.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis" />
+        <AssociationConnector Association="BroadcastModel.FK_reel_iscis_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

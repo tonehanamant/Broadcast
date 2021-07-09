@@ -591,6 +591,79 @@ GO
 
 /*************************************** END BP-2642 *****************************************************/
 
+/*************************************** START BP-2645 *****************************************************/
+
+IF OBJECT_ID('real_isci_ingest_jobs') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[real_isci_ingest_jobs]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[status] INT NOT NULL,
+		[queued_at] DATETIME2 NOT NULL,
+		[completed_at] DATETIME2 NULL,
+		[error_message] NVARCHAR(MAX) NULL
+	)
+END
+
+GO
+/*************************************** END BP-2645 *****************************************************/
+
+/*************************************** START BP-2645 *****************************************************/
+
+IF OBJECT_ID('reel_iscis') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[reel_iscis]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[isci] VARCHAR(50) NOT NULL,
+		[spot_length_id] INT NOT NULL,
+		[active_start_date] DATETIME2 NOT NULL,
+		[active_end_date] DATETIME2 NOT NULL,
+		[ingested_at] DATETIME2 NOT NULL,
+		CONSTRAINT [FK_reel_iscis_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths]([ID])
+	)	
+END
+
+IF OBJECT_ID('reel_isci_advertiser_name_references') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[reel_isci_advertiser_name_references]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[reel_isci_id] INT NOT NULL,
+		[advertiser_name_reference] NVARCHAR(100) NOT NULL,
+		CONSTRAINT [FK_reel_isci_advertiser_name_references_reel_iscis] FOREIGN KEY ([reel_isci_id]) REFERENCES [dbo].[reel_iscis]([ID]) ON DELETE CASCADE
+	) 
+END
+
+IF OBJECT_ID('reel_isci_products') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[reel_isci_products]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[isci] VARCHAR(50) NOT NULL,
+		[product_name] VARCHAR(50) NOT NULL,
+		[created_at] DATETIME2 NOT NULL,
+		[created_by] VARCHAR(100) NOT NULL
+	)
+END
+
+IF OBJECT_ID('plan_iscis') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_iscis]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[plan_id] INT NOT NULL, 
+		[isci] VARCHAR(50) NOT NULL, 
+		[created_at] DATETIME2 NOT NULL,
+		[created_by] VARCHAR(100) NOT NULL,
+		[deleted_at] DATETIME2 NULL,
+		[deleted_by] VARCHAR(100) NULL,
+		CONSTRAINT [FK_plan_iscis_plans] FOREIGN KEY ([plan_id]) REFERENCES [dbo].[plans] ([id])
+	)
+END
+
+GO
+/*************************************** END BP-2645 *****************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 

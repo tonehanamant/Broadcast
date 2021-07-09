@@ -805,6 +805,18 @@
           <Property Name="universe" Type="float" Nullable="false" />
           <Property Name="nti_universe_header_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_iscis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_id" Type="int" Nullable="false" />
+          <Property Name="isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="deleted_at" Type="datetime2" Precision="7" />
+          <Property Name="deleted_by" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="plan_version_audience_daypart_vpvh">
           <Key>
             <PropertyRef Name="id" />
@@ -1979,6 +1991,45 @@
           <Property Name="media_month_id" Type="int" Nullable="false" />
           <Property Name="annual_adjustment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="nti_adjustment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="real_isci_ingest_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="queued_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="error_message" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="reel_isci_advertiser_name_references">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reel_isci_id" Type="int" Nullable="false" />
+          <Property Name="advertiser_name_reference" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reel_isci_products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="product_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reel_iscis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="spot_length_id" Type="int" Nullable="false" />
+          <Property Name="active_start_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="active_end_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="rep_firms">
           <Key>
@@ -3609,6 +3660,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_dayparts">
               <PropertyRef Name="standard_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_iscis_plans">
+          <End Role="plans" Type="Self.plans" Multiplicity="1" />
+          <End Role="plan_iscis" Type="Self.plan_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_iscis">
+              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5476,6 +5539,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_reel_isci_advertiser_name_references_reel_iscis">
+          <End Role="reel_iscis" Type="Self.reel_iscis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reel_isci_advertiser_name_references" Type="Self.reel_isci_advertiser_name_references" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reel_iscis">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reel_isci_advertiser_name_references">
+              <PropertyRef Name="reel_isci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reel_iscis_spot_lengths">
+          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="1" />
+          <End Role="reel_iscis" Type="Self.reel_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reel_iscis">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_schedule_audiences_audiences">
           <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
           <End Role="schedule_audiences" Type="Self.schedule_audiences" Multiplicity="*" />
@@ -6556,6 +6645,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="nti_universe_details" EntityType="Self.nti_universe_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_universe_headers" EntityType="Self.nti_universe_headers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_universes" EntityType="Self.nti_universes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_iscis" EntityType="Self.plan_iscis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_audience_daypart_vpvh" EntityType="Self.plan_version_audience_daypart_vpvh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
@@ -6641,6 +6731,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposal_versions" EntityType="Self.proposal_versions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposals" EntityType="Self.proposals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rating_adjustments" EntityType="Self.rating_adjustments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="real_isci_ingest_jobs" EntityType="Self.real_isci_ingest_jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reel_isci_advertiser_name_references" EntityType="Self.reel_isci_advertiser_name_references" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reel_isci_products" EntityType="Self.reel_isci_products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reel_iscis" EntityType="Self.reel_iscis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rep_firms" EntityType="Self.rep_firms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="schedule_audiences" EntityType="Self.schedule_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="schedule_detail_audiences" EntityType="Self.schedule_detail_audiences" Schema="dbo" store:Type="Tables" />
@@ -7040,6 +7134,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_dayparts_standard_dayparts" Association="Self.FK_plan_dayparts_standard_dayparts">
             <End Role="standard_dayparts" EntitySet="standard_dayparts" />
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_iscis_plans" Association="Self.FK_plan_iscis_plans">
+            <End Role="plans" EntitySet="plans" />
+            <End Role="plan_iscis" EntitySet="plan_iscis" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_secondary_audiences_audiences" Association="Self.FK_plan_secondary_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -7608,6 +7706,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_rating_adjustments_media_months" Association="Self.FK_rating_adjustments_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="rating_adjustments" EntitySet="rating_adjustments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reel_isci_advertiser_name_references_reel_iscis" Association="Self.FK_reel_isci_advertiser_name_references_reel_iscis">
+            <End Role="reel_iscis" EntitySet="reel_iscis" />
+            <End Role="reel_isci_advertiser_name_references" EntitySet="reel_isci_advertiser_name_references" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reel_iscis_spot_lengths" Association="Self.FK_reel_iscis_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="reel_iscis" EntitySet="reel_iscis" />
           </AssociationSet>
           <AssociationSet Name="FK_schedule_audiences_audiences" Association="Self.FK_schedule_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -9346,6 +9452,23 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_pricing_results" EntitySet="plan_version_pricing_results" />
             <End Role="plan_version_pricing_result_spots" EntitySet="plan_version_pricing_result_spots" />
           </AssociationSet>
+          <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
+          <EntitySet Name="real_isci_ingest_jobs" EntityType="BroadcastModel.real_isci_ingest_jobs" />
+          <EntitySet Name="reel_isci_advertiser_name_references" EntityType="BroadcastModel.reel_isci_advertiser_name_references" />
+          <EntitySet Name="reel_isci_products" EntityType="BroadcastModel.reel_isci_products" />
+          <EntitySet Name="reel_iscis" EntityType="BroadcastModel.reel_iscis" />
+          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_iscis" EntitySet="plan_iscis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reel_isci_advertiser_name_references_reel_iscis" Association="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis">
+            <End Role="reel_iscis" EntitySet="reel_iscis" />
+            <End Role="reel_isci_advertiser_name_references" EntitySet="reel_isci_advertiser_name_references" />
+          </AssociationSet>
+          <AssociationSet Name="FK_reel_iscis_spot_lengths" Association="BroadcastModel.FK_reel_iscis_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="reel_iscis" EntitySet="reel_iscis" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -10289,6 +10412,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan_version_pricing_api_result_spot_frequencies" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_pricing_api_result_spot_frequencies" />
           <NavigationProperty Name="plan_version_buying_api_result_spot_frequencies" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_buying_api_result_spot_frequencies" />
+          <NavigationProperty Name="reel_iscis" Relationship="BroadcastModel.FK_reel_iscis_spot_lengths" FromRole="spot_lengths" ToRole="reel_iscis" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -12899,6 +13023,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan" ToRole="plan_versions" />
           <Property Name="product_master_id" Type="Guid" />
           <Property Name="spot_allocation_model_mode" Type="Int32" />
+          <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -16352,6 +16477,99 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="plan_iscis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="deleted_at" Type="DateTime" Precision="7" />
+          <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
+        </EntityType>
+        <EntityType Name="real_isci_ingest_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="reel_isci_advertiser_name_references">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reel_isci_id" Type="Int32" Nullable="false" />
+          <Property Name="advertiser_name_reference" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="reel_iscis" Relationship="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis" FromRole="reel_isci_advertiser_name_references" ToRole="reel_iscis" />
+        </EntityType>
+        <EntityType Name="reel_isci_products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="product_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="reel_iscis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="active_start_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="active_end_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="reel_isci_advertiser_name_references" Relationship="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis" FromRole="reel_iscis" ToRole="reel_isci_advertiser_name_references" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_reel_iscis_spot_lengths" FromRole="reel_iscis" ToRole="spot_lengths" />
+        </EntityType>
+        <Association Name="FK_plan_iscis_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_iscis" Role="plan_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_iscis">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reel_isci_advertiser_name_references_reel_iscis">
+          <End Type="BroadcastModel.reel_iscis" Role="reel_iscis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.reel_isci_advertiser_name_references" Role="reel_isci_advertiser_name_references" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reel_iscis">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reel_isci_advertiser_name_references">
+              <PropertyRef Name="reel_isci_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_reel_iscis_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.reel_iscis" Role="reel_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="reel_iscis">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19101,6 +19319,62 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="total_station_count" ColumnName="total_station_count" />
                 <ScalarProperty Name="total_market_count" ColumnName="total_market_count" />
                 <ScalarProperty Name="optimal_cpm" ColumnName="optimal_cpm" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_iscis">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_iscis">
+              <MappingFragment StoreEntitySet="plan_iscis">
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="real_isci_ingest_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.real_isci_ingest_jobs">
+              <MappingFragment StoreEntitySet="real_isci_ingest_jobs">
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reel_isci_advertiser_name_references">
+            <EntityTypeMapping TypeName="BroadcastModel.reel_isci_advertiser_name_references">
+              <MappingFragment StoreEntitySet="reel_isci_advertiser_name_references">
+                <ScalarProperty Name="advertiser_name_reference" ColumnName="advertiser_name_reference" />
+                <ScalarProperty Name="reel_isci_id" ColumnName="reel_isci_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reel_isci_products">
+            <EntityTypeMapping TypeName="BroadcastModel.reel_isci_products">
+              <MappingFragment StoreEntitySet="reel_isci_products">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reel_iscis">
+            <EntityTypeMapping TypeName="BroadcastModel.reel_iscis">
+              <MappingFragment StoreEntitySet="reel_iscis">
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="active_end_date" ColumnName="active_end_date" />
+                <ScalarProperty Name="active_start_date" ColumnName="active_start_date" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

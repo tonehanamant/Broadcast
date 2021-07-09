@@ -270,6 +270,11 @@
     <Build Include="dbo\Stored Procedures\spIndex_rebuild_daily.sql" />
     <Build Include="dbo\User Defined Types\ProgramMappingUpdateRequests.sql" />
     <Build Include="dbo\Tables\plan_version_pricing_results_dayparts.sql" />
+    <Build Include="dbo\Tables\real_isci_ingest_jobs.sql" />
+    <Build Include="dbo\Tables\reel_iscis.sql" />
+    <Build Include="dbo\Tables\reel_isci_advertiser_name_references.sql" />
+    <Build Include="dbo\Tables\reel_isci_products.sql" />
+    <Build Include="dbo\Tables\plan_iscis.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

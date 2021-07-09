@@ -33,6 +33,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
             this.plan_version_pricing_api_result_spot_frequencies = new HashSet<plan_version_pricing_api_result_spot_frequencies>();
             this.plan_version_buying_api_result_spot_frequencies = new HashSet<plan_version_buying_api_result_spot_frequencies>();
+            this.reel_iscis = new HashSet<reel_iscis>();
         }
     
         public int id { get; set; }
@@ -58,5 +59,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spot_frequencies> plan_version_pricing_api_result_spot_frequencies { get; set; }
         public virtual ICollection<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
+        public virtual ICollection<reel_iscis> reel_iscis { get; set; }
     }
 }
