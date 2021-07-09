@@ -4,6 +4,7 @@ using log4net;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Caching;
@@ -38,7 +39,7 @@ namespace Services.Broadcast.Cache
 
     public class TrafficApiCache : BroadcastBaseClass, ITrafficApiCache
     {
-        private readonly int CACHE_ITEM_TTL_SECONDS;
+        private Lazy<int> CACHE_ITEM_TTL_SECONDS;
         private readonly ITrafficApiClient _TrafficApiClient;
 
         private const string CACHE_NAME_AGENCIES = "Agencies";
@@ -58,21 +59,16 @@ namespace Services.Broadcast.Cache
         private const string CACHE_NAME_PRODUCTS = "Products";
         private readonly BaseMemoryCache<ProductDto> _ProductsCache = new BaseMemoryCache<ProductDto>(CACHE_NAME_PRODUCTS);
 
-        public TrafficApiCache(ITrafficApiClient trafficApiClient)
-        {
-            var log = LogManager.GetLogger(GetType());
-            if (BroadcastServiceSystemParameter.AABCacheExpirationSeconds < 0)
-            {
-                var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage("Parameter AABCacheExpirationSeconds does not have a value"
-                    , GetType(), string.Empty);
-                log.Warn(logMessage.ToJson());
-                CACHE_ITEM_TTL_SECONDS = 300; //default to 5 minutes
-            }
-            else
-            {
-                CACHE_ITEM_TTL_SECONDS = BroadcastServiceSystemParameter.AABCacheExpirationSeconds;
-            }
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
+        public TrafficApiCache(ITrafficApiClient trafficApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        {
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            CACHE_ITEM_TTL_SECONDS = new Lazy<int>(_GetCacheItemTtlSeconds);
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
             _TrafficApiClient = trafficApiClient;
         }
 
@@ -97,25 +93,25 @@ namespace Services.Broadcast.Cache
 
         public List<AdvertiserDto> GetAdvertisers()
         {
-            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
+            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS.Value) };
             return _AgencyAdvertisersCache.GetOrCreate(CACHE_NAME_ADVERTISERS, () => _TrafficApiClient.GetAdvertisers(), policy);
         }
 
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
+            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS.Value) };
             return _AdvertisersCache.GetOrCreate(advertiserId.ToString(), () => _TrafficApiClient.GetAdvertiser(advertiserId), policy);
         }
 
         public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
         {
-            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
+            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS.Value) };
             return _AdvertiserProductsCache.GetOrCreate(advertiserId.ToString(), () => _TrafficApiClient.GetProductsByAdvertiserId(advertiserId), policy);
         }
 
         public ProductDto GetProduct(int productId)
         {
-            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
+            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS.Value) };
             return _ProductsCache.GetOrCreate(productId.ToString(), () => _TrafficApiClient.GetProduct(productId), policy);
         }
 
@@ -140,7 +136,7 @@ namespace Services.Broadcast.Cache
             List<AgencyDto> agencies = null;
             var policy = new CacheItemPolicy
             {
-                AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS),
+                AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS.Value),
                 RemovedCallback = BuildAgencyCache
             };
 
@@ -158,6 +154,41 @@ namespace Services.Broadcast.Cache
                 _Agencies = null;
             }
             _AgencyCache.Add(CACHE_KEY_AGENCIES, agencies, policy);
+        }
+        private int _GetCacheItemTtlSeconds()
+        {
+            var log = LogManager.GetLogger(GetType());
+            if (_IsPipelineVariablesEnabled.Value)
+            {
+                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCACHEEXPIRATIONSECONDS_KEY, 300);
+                if (AABCacheExpirationSeconds < 0)
+                {
+                    var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage("Parameter AABCacheExpirationSeconds does not have a value"
+                        , GetType(), string.Empty);
+                    log.Warn(logMessage.ToJson());
+                   return  300; //default to 5 minutes
+                }
+                else
+                {
+                    return AABCacheExpirationSeconds;
+                }             
+            }
+            else
+            {
+                if (BroadcastServiceSystemParameter.AABCacheExpirationSeconds < 0)
+                {
+                    var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage("Parameter AABCacheExpirationSeconds does not have a value"
+                        , GetType(), string.Empty);
+                    log.Warn(logMessage.ToJson());
+                    return 300; //default to 5 minutes
+                }
+                else
+                {
+                    return BroadcastServiceSystemParameter.AABCacheExpirationSeconds;
+                }
+               
+            }
+
         }
     }
 }

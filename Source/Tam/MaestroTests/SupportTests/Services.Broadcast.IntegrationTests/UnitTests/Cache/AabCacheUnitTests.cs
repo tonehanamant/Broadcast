@@ -28,10 +28,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var agencies = _GetAgencies();
             var expectedResultCount = agencies.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAgencies())
                 .Returns(agencies);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object,featureToggleHelper.Object,configurationSettingsHelper.Object);
 
             // Act
             var result = tc.GetAgencies();
@@ -51,10 +53,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var agencies = _GetAgencies();
             var expectedResultCount = agencies.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAgencies())
                 .Returns(agencies);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             tc.GetAgencies();
@@ -74,10 +78,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var agencies = _GetAgencies();
             var expectedResultCount = agencies.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAgencies())
                 .Returns(agencies);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             tc.GetAgencies();
@@ -96,10 +102,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var advertisers = _GetAdvertisers();
             var expectedResultCount = advertisers.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAdvertisers())
                 .Returns(advertisers);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             var result = tc.GetAdvertisers();
@@ -119,10 +127,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var advertisers = _GetAdvertisers();
             var expectedResultCount = advertisers.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAdvertisers())
                 .Returns(advertisers);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             tc.GetAdvertisers();
@@ -142,10 +152,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var advertisers = _GetAdvertisers();
             var expectedResultCount = advertisers.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAdvertisers())
                 .Returns(advertisers);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             tc.GetAdvertisers();
@@ -165,10 +177,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var advertiserProducts = _GetAdvertiserProducts();
             var expectedResultCount = advertiserProducts.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAdvertiserProducts(testAdvertiserMasterId))
                 .Returns(advertiserProducts);
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             var result = tc.GetAdvertiserProducts(testAdvertiserMasterId);
@@ -189,11 +203,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var advertiserProducts = _GetAdvertiserProducts();
             var expectedResultCount = advertiserProducts.Count;
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAdvertiserProducts(testAdvertiserMasterId))
                 .Returns(advertiserProducts);
             const int expectedCallCount = 3;
 
-            var tc = new AabCache(aabApiClient.Object);
+            var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
             // Act
             tc.GetAdvertiserProducts(testAdvertiserMasterId);

@@ -12,6 +12,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
     [Category("short_running")]
     public class TrafficApiCacheTests
     {
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
         [SetUp]
         public void SetUp()
         {
@@ -24,7 +25,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         public void GetAgencies()
         {
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient,featureToggleHelper,configurationSettingsHelper);
 
             var result = cache.GetAgencies();
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -36,7 +39,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             const int agencyId = 3;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result = cache.GetAgency(agencyId);
 
@@ -49,7 +54,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result = cache.GetAdvertisers();
 
@@ -63,8 +70,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             const int advertiserId = 3;
             const int expectedClientCallCount = 1;
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result = cache.GetAdvertiser(advertiserId);
 
@@ -79,7 +88,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int advertiserId = 3;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result1 = cache.GetAdvertiser(advertiserId);
             var result2 = cache.GetAdvertiser(advertiserId);
@@ -95,7 +106,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int advertiserId = 666;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             Assert.That(() => cache.GetAdvertiser(advertiserId),
                 Throws.TypeOf<Exception>().With.Message.EqualTo($"Cannot fetch data of the advertiser {advertiserId}"));
@@ -109,7 +122,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int advertiserId = 3;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result = cache.GetProductsByAdvertiserId(advertiserId);
 
@@ -124,7 +139,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int advertiserId = 3;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result1 = cache.GetProductsByAdvertiserId(advertiserId);
             var result2 = cache.GetProductsByAdvertiserId(advertiserId);
@@ -140,7 +157,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int advertiserId = 666;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             Assert.That(() => cache.GetProductsByAdvertiserId(advertiserId),
                 Throws.TypeOf<Exception>().With.Message.EqualTo($"Cannot fetch products data for advertiser {advertiserId}."));
@@ -154,7 +173,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int productId = 2;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result = cache.GetProduct(productId);
 
@@ -169,7 +190,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int productId = 2;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             var result1 = cache.GetProduct(productId);
             var result2 = cache.GetProduct(productId);
@@ -185,7 +208,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             const int productId = 666;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             Assert.That(() => cache.GetProduct(productId),
                 Throws.TypeOf<Exception>().With.Message.EqualTo($"Cannot fetch data of the product {productId}"));
@@ -197,7 +222,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             const int expectedClientCallCount = 2;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             cache.GetAgencies();
             cache.ClearAgenciesCache();
@@ -211,7 +238,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         {
             const int expectedClientCallCount = 2;
             var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
+            var configurationSettingsHelper = new ConfigurationSettingsHelper();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            var cache = new TrafficApiCache(trafficApiClient, featureToggleHelper, configurationSettingsHelper);
 
             cache.GetAdvertisers();
             cache.GetAdvertiser(1);

@@ -495,6 +495,8 @@
     <Compile Include="BusinessEngines\PlanMarketSovCalculator.cs" />
     <Compile Include="Cache\AabCache.cs" />
     <Compile Include="Clients\AgencyAdvertiserBrandApiClient.cs" />
+    <Compile Include="ConfigurationSettingsHelper.cs" />
+    <Compile Include="ConnectionStringConfigKeys.cs" />
     <Compile Include="Converters\RateImport\InventoryImportManifestDuplicateHandler.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataPrep.cs" />
     <Compile Include="Converters\Scx\PlanBuyingScxDataConverter.cs" />
@@ -866,6 +868,7 @@
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="ConfigKeys.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ContractReportGenerator.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ExportSharedLogic.cs" />
     <Compile Include="ReportGenerators\CampaignExport\FlowChartReportGenerator.cs" />
@@ -1435,6 +1438,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="appsettings.json" />
     <None Include="Entities\spotcableOrder_101.xsd">
       <SubType>Designer</SubType>
     </None>

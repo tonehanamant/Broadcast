@@ -91,6 +91,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IImpressionsService _AffidavitImpressionsService;
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
         const char ISCI_DAYS_DELIMITER = '-';
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
@@ -106,7 +109,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalProprietaryInventoryService proposalProprietaryInventoryService,
             IImpressionsService affidavitImpressionsService,
             IMyEventsReportNamingEngine myEventsReportNamingEngine,
-            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService)
+            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AudiencesCache = audiencesCache;
@@ -131,6 +134,9 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitImpressionsService = affidavitImpressionsService;
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
             _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -528,12 +534,23 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (proposalDto.PostType.Equals(PostingTypeEnum.NTI))
                 {
-                    //set default value for NTI Conversion factor
-                    detail.NtiConversionFactor = detail.NtiConversionFactor == null
-                        ? BroadcastServiceSystemParameter.DefaultNtiConversionFactor
-                        : detail.NtiConversionFactor.Value;
+                    if(_IsPipelineVariablesEnabled.Value)
+                    {
+                        var defaultNtiConversionFactor = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DEFAULTNTICONVERSIONFACTOR_KEY, 0.2);
+                        //set default value for NTI Conversion factor
+                        detail.NtiConversionFactor = detail.NtiConversionFactor == null
+                            ? defaultNtiConversionFactor
+                            : detail.NtiConversionFactor.Value;
+                    }
+                    else
+                    {
+                        //set default value for NTI Conversion factor
+                        detail.NtiConversionFactor = detail.NtiConversionFactor == null
+                            ? BroadcastServiceSystemParameter.DefaultNtiConversionFactor
+                            : detail.NtiConversionFactor.Value;
+                    }
+                   
                 }
-
                 //set default value for My Events Report Name
                 detail.Quarters.ForEach(y => y.Weeks.ForEach(week =>
                 {
@@ -1100,15 +1117,17 @@ namespace Services.Broadcast.ApplicationServices
 
             var proposalQuarterDto = _GetProposalQuarterDtos(proposalMediaWeeks);
 
+            var defaultNtiConversionFactor = _IsPipelineVariablesEnabled.Value 
+                                             ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DEFAULTNTICONVERSIONFACTOR_KEY, 0.2)
+                                             : BroadcastServiceSystemParameter.DefaultNtiConversionFactor;
             var proposalDetail = new ProposalDetailDto
             {
                 FlightStartDate = proposalDetailRequestDto.StartDate,
                 FlightEndDate = proposalDetailRequestDto.EndDate,
                 Quarters = proposalQuarterDto.OrderBy(q => q.Year).ThenBy(q => q.Quarter).ToList(),
                 DefaultProjectionBooks = _ProjectionBooksService.GetDefaultProjectionBooks(proposalDetailRequestDto.StartDate),
-                NtiConversionFactor = BroadcastServiceSystemParameter.DefaultNtiConversionFactor
-            };
-
+                NtiConversionFactor = defaultNtiConversionFactor
+            };           
             _ProposalCalculationEngine.SetQuarterTotals(proposalDetail);
 
             return proposalDetail;
@@ -1219,7 +1238,8 @@ namespace Services.Broadcast.ApplicationServices
                 SchedulePostTypes = EnumExtensions.ToLookupDtoList<PostingTypeEnum>(),
                 Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
                     .OrderBy(m => m.Display).ToList(),
-                DefaultMarketCoverage = BroadcastServiceSystemParameter.DefaultMarketCoverage,
+                
+                DefaultMarketCoverage = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DEFAULTMARKETCOVERAGE_KEY, 0.8) : BroadcastServiceSystemParameter.DefaultMarketCoverage,
                 ProprietaryPricingInventorySources = EnumHelper.GetProprietaryInventorySources().Select(p => new LookupDto
                 {
                     Id = (int)p,
@@ -1241,7 +1261,7 @@ namespace Services.Broadcast.ApplicationServices
                 Statuses = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalStatusType>(),
                 MarketGroups = EnumExtensions.ToLookupDtoList<ProposalEnums.ProposalMarketGroups>()
             };
-
+           
             return result;
         }
 

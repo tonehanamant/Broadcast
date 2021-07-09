@@ -39,7 +39,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVFtpHelper _WWTVFtpHelper;
         private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
         private readonly IEmailerService _EmailerService;
-        private readonly IFileService _FileService;        
+        private readonly IFileService _FileService;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -54,8 +56,7 @@ namespace Services.Broadcast.ApplicationServices
             , IEmailerService emailerService
             , IFileService fileService
             , IDataLakeFileService dataLakeFileService
-            , IConfigurationWebApiClient configurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient, featureToggleHelper)
+            , IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient,featureToggleHelper,configurationSettingsHelper)
         {
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;
@@ -63,6 +64,8 @@ namespace Services.Broadcast.ApplicationServices
             _WWTVSharedNetworkHelper = wWTVSharedNetworkHelper;
             _EmailerService = emailerService;
             _FileService = fileService;
+            _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
         
         /// <summary>

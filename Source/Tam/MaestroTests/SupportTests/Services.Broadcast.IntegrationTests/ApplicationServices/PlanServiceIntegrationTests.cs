@@ -39,6 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();           
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, true);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
             // register our stub instance so it is used to instantiate the service
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
 
@@ -760,12 +761,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CreatePlan_NotExistingProduct()
         {
-            const int notExistingProductId = 666;
-
+            const int notExistingProductId = 666;          
             using (new TransactionScopeWrapper())
             {
                 var stubTrafficClient = new TrafficApiClientStub();
-                var actualTrafficCache = new TrafficApiCache(stubTrafficClient);
+                var configurationSettingsHelper = new ConfigurationSettingsHelper();
+                var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+                var actualTrafficCache = new TrafficApiCache(stubTrafficClient,featureToggleHelper,configurationSettingsHelper);
 
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(actualTrafficCache);
                 var planService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();

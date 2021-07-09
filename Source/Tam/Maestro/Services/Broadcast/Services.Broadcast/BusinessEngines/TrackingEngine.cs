@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,10 @@ namespace Services.Broadcast.BusinessEngines
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        internal static Lazy<bool> _IsPipelineVariablesEnabled;
+
         private enum DetectionMapTypes
         {
             Station = 1
@@ -36,12 +41,16 @@ namespace Services.Broadcast.BusinessEngines
 
         private Dictionary<string, List<string>> _StationMaps;
         private Dictionary<string, List<string>> _ProgramMaps;
-        private readonly int _BroadcastMatchingBuffer = BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
 
-        public TrackingEngine(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache)
+        private Lazy<int> _BroadcastMatchingBuffer;
+        public TrackingEngine(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _DataRepositoryFactory = broadcastDataRepositoryFactory;
             _DaypartCache = daypartCache;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _BroadcastMatchingBuffer = new Lazy<int>(_GetBroadcastMatchingBuffer);
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
         }
 
         public DetectionTrackingDetail AcceptScheduleLeadIn(AcceptScheduleLeadinRequest request)
@@ -335,7 +344,7 @@ namespace Services.Broadcast.BusinessEngines
             var dayparts = _DaypartCache.GetDisplayDayparts(scheduleDetails.Select(d => d.ScheduleDetail.DaypartId));
             foreach (var scheduleDetail in scheduleDetails)
             {
-                var bufferInSeconds = _BroadcastMatchingBuffer;
+                var bufferInSeconds = _BroadcastMatchingBuffer.Value;
 
                 var displayDaypart = dayparts[scheduleDetail.ScheduleDetail.DaypartId];
                 var actualStartTime = displayDaypart.StartTime < 0 ? BroadcastConstants.OneDayInSeconds - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
@@ -463,5 +472,12 @@ namespace Services.Broadcast.BusinessEngines
                     }).ToList(),
             };
         }
+        private int _GetBroadcastMatchingBuffer()
+        {
+            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BROADCASTMATCHINGBUFFER_KEY, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            return broadcastMatchingBuffer;
+
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using Common.Services;
 using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines
@@ -31,8 +32,11 @@ namespace Services.Broadcast.BusinessEngines
     {
         public List<MatchingProposalWeek> _MatchingProposalWeeks;
         public List<FileDetailProblem> _MatchingProblems;
-        private readonly int _BroadcastMatchingBuffer;
+        private Lazy<int> _BroadcastMatchingBuffer;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
         ///<inheritdoc/>
         public List<FileDetailProblem> GetMatchingProblems()
@@ -40,10 +44,13 @@ namespace Services.Broadcast.BusinessEngines
             return _MatchingProblems;
         }
 
-        public MatchingEngine(IDaypartCache daypartCache)
+        public MatchingEngine(IDaypartCache daypartCache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _DaypartCache = daypartCache;
-            _BroadcastMatchingBuffer = BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _BroadcastMatchingBuffer = new Lazy<int>(_GetBroadcastMatchingBuffer);
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
         }
 
         ///<inheritdoc/>
@@ -137,7 +144,8 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var proposalDetail in proposalWeeksByProposalDetail)
             {
-                var bufferInSeconds = _BroadcastMatchingBuffer;
+
+                var bufferInSeconds = _BroadcastMatchingBuffer.Value;
                 var displayDaypart = dayparts[proposalDetail.First().ProposalVersionDetailDaypartId];
                 var actualStartTime = displayDaypart.StartTime < 0 ? BroadcastConstants.OneDayInSeconds - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
                 //add 1 second to include the daypart endTime as valid time
@@ -216,6 +224,13 @@ namespace Services.Broadcast.BusinessEngines
             return affidavitDetailAirDate >= proposalDetailWeek.ProposalVersionDetailWeekStart &&
                    affidavitDetailAirDate <= proposalDetailWeek.ProposalVersionDetailWeekEnd &&
                    proposalDetailWeek.Spots != 0;
+        }
+
+        private int _GetBroadcastMatchingBuffer()
+        {
+            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BROADCASTMATCHINGBUFFER_KEY, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            return broadcastMatchingBuffer;
+
         }
     }
 }

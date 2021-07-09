@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,9 @@ namespace Services.Broadcast.Cache
 
         private const string CACHE_NAME_ADVERTISERS = "Advertisers";
         private readonly BaseMemoryCache<List<AdvertiserDto>> _AdvertisersCache = new BaseMemoryCache<List<AdvertiserDto>>(CACHE_NAME_ADVERTISERS);
-
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        internal static Lazy<bool> _IsPipelineVariablesEnabled;
         private IAgencyAdvertiserBrandApiClient _AabApiClient;
         private Lazy<int> _CacheItemTtlSeconds;
 
@@ -60,11 +63,16 @@ namespace Services.Broadcast.Cache
         /// Initializes a new instance of the <see cref="AabCache"/> class.
         /// </summary>
         /// <param name="aabApiClient">The aab API client.</param>
-        public AabCache(IAgencyAdvertiserBrandApiClient aabApiClient)
+        /// <param name="featureToggleHelper"> Feature Toggle Helper.</param>
+        /// <param name="configurationSettingsHelper">Configuration Settings Helper.</param>
+        public AabCache(IAgencyAdvertiserBrandApiClient aabApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _AabApiClient = aabApiClient;
             _CacheItemTtlSeconds = new Lazy<int>(_GetCacheItemTtlSeconds);
-        }
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+        }      
 
         /// <inheritdoc />
         public List<AgencyDto> GetAgencies()
@@ -104,11 +112,24 @@ namespace Services.Broadcast.Cache
         }
 
         private int _GetCacheItemTtlSeconds()
-        {
-            var result = BroadcastServiceSystemParameter.AABCacheExpirationSeconds < 0
+        {        
+           if (_IsPipelineVariablesEnabled.Value)
+            {
+                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCACHEEXPIRATIONSECONDS_KEY,300);
+                var result =AABCacheExpirationSeconds < 0
+               ? 300 //default to 5 minutes
+               : AABCacheExpirationSeconds;
+                return result;
+            }
+            else
+            {
+                var result = BroadcastServiceSystemParameter.AABCacheExpirationSeconds < 0
                 ? 300 //default to 5 minutes
                 : BroadcastServiceSystemParameter.AABCacheExpirationSeconds;
-            return result;
+                return result;
+            }
+           
+            
         }
 
         private CacheItemPolicy _GetCacheItemPolicy()

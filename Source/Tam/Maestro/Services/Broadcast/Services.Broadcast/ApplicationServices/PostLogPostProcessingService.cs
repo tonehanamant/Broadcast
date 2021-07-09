@@ -47,6 +47,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWWTVSharedNetworkHelper _WWTVSharedNetworkHelper;
         private readonly IEmailerService _EmailerService;
         private readonly IFileService _FileService;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public PostLogPostProcessingService(IWWTVFtpHelper wwtvFtpHelper
             , IWWTVEmailProcessorService emailService
@@ -58,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices
             , IFileService fileService
             , IDataLakeFileService dataLakeFileService
             , IConfigurationWebApiClient configurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient, featureToggleHelper)
+            , IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient, featureToggleHelper,configurationSettingsHelper)
         {
             _WWTVFtpHelper = wwtvFtpHelper;
             _EmailProcessorService = emailService;
@@ -66,6 +68,8 @@ namespace Services.Broadcast.ApplicationServices
             _WWTVSharedNetworkHelper = wWTVSharedNetworkHelper;
             _EmailerService = emailerService;
             _FileService = fileService;
+            _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         ///<inheritdoc/>

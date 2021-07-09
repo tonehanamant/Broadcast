@@ -18,6 +18,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<IDetectionRepository> _DetectionRepositoryMock;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper;
+        private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
 
         [SetUp]
         public void Setup()
@@ -26,11 +28,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _DetectionRepositoryMock = new Mock<IDetectionRepository>();
             _DataRepositoryFactoryMock.Setup(s => s.GetDataRepository<IDetectionRepository>()).Returns(_DetectionRepositoryMock.Object);
             _DaypartCacheMock = new Mock<IDaypartCache>();
+             _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+             _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
 
-            _TrackingEngine = new TrackingEngine(_DataRepositoryFactoryMock.Object, _DaypartCacheMock.Object);
+            _TrackingEngine = new TrackingEngine(_DataRepositoryFactoryMock.Object, _DaypartCacheMock.Object,_FeatureToggleHelper.Object,_ConfigurationSettingsHelper.Object);
         }
 
         [Test]

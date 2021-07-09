@@ -23,13 +23,15 @@ namespace Common.Services
     {
         private IConfigurationWebApiClient _configurationWebApiClient;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
-        public EmailerService(IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper)
+        public EmailerService(IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _configurationWebApiClient = configurationWebApiClient;
             _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
@@ -48,7 +50,7 @@ namespace Common.Services
         public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, List<MailAddress> pTos, List<string> attachFileNames = null)
         {
             if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
-                return false;
+                return false;              
 
             _LogInfo("Attempting to send email.");
 
@@ -61,7 +63,7 @@ namespace Common.Services
 
                 using (SmtpClient lSmtpClient = new SmtpClient())
                 {
-                    lSmtpClient.Host = BroadcastServiceSystemParameter.EmailHost;
+                    lSmtpClient.Host= _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EMAILHOST_KEY, "smtp.office365.com") : BroadcastServiceSystemParameter.EmailHost;                                      
                     lSmtpClient.EnableSsl = true;
                     lSmtpClient.Port = 587;
                     lSmtpClient.Credentials = GetSMTPNetworkCredential();

@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using System;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -14,11 +15,18 @@ namespace Services.Broadcast.BusinessEngines
     }
     public class ProgramScrubbingEngine : IProgramScrubbingEngine
     {
-        private readonly int _BroadcastMatchingBuffer;
+        private Lazy<int> _BroadcastMatchingBuffer;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public ProgramScrubbingEngine()
+        public ProgramScrubbingEngine(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
-            _BroadcastMatchingBuffer =  BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _BroadcastMatchingBuffer = new Lazy<int>(_GetBroadcastMatchingBuffer);
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+                      
         }
 
         public void Scrub(ProposalDetailDto proposalDetail, ScrubbingFileDetail affidavitDetail, ClientScrub scrub)
@@ -27,8 +35,8 @@ namespace Services.Broadcast.BusinessEngines
 
             var actualStartTime = affidavitDetail.LeadInEndTime;
             var actualEndTime = affidavitDetail.LeadOutStartTime;
-            var adjustedStartTime = actualStartTime + _BroadcastMatchingBuffer >= BroadcastConstants.OneDayInSeconds ? actualStartTime + _BroadcastMatchingBuffer - BroadcastConstants.OneDayInSeconds : actualStartTime + _BroadcastMatchingBuffer;
-            var adjustedEndTime = actualEndTime - _BroadcastMatchingBuffer < 0  ? actualEndTime - _BroadcastMatchingBuffer + BroadcastConstants.OneDayInSeconds : actualEndTime - _BroadcastMatchingBuffer;
+            var adjustedStartTime = actualStartTime + _BroadcastMatchingBuffer.Value >= BroadcastConstants.OneDayInSeconds ? actualStartTime + _BroadcastMatchingBuffer.Value - BroadcastConstants.OneDayInSeconds : actualStartTime + _BroadcastMatchingBuffer.Value;
+            var adjustedEndTime = actualEndTime - _BroadcastMatchingBuffer.Value < 0  ? actualEndTime - _BroadcastMatchingBuffer.Value + BroadcastConstants.OneDayInSeconds : actualEndTime - _BroadcastMatchingBuffer.Value;
 
             var isLeadIn = adjustedStartTime > actualStartTime &&
                 affidavitDetail.AirTime >= actualStartTime &&
@@ -159,6 +167,12 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
             return matchesShowType;
+        }
+        private int _GetBroadcastMatchingBuffer()
+        {
+            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BROADCASTMATCHINGBUFFER_KEY, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            return broadcastMatchingBuffer;
+
         }
     }
 }

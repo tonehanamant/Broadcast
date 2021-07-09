@@ -29,6 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IConfigurationWebApiClient _configurationWebApiClient;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
@@ -41,7 +42,7 @@ namespace Services.Broadcast.ApplicationServices
             , IFileService fileService
             , IDataLakeFileService dataLakeFileService
             , IConfigurationWebApiClient configurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper)
+            , IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _EmailHelper = emailHelper;
             _WWTVFtpHelper = wwtvFTPHelper;
@@ -51,6 +52,7 @@ namespace Services.Broadcast.ApplicationServices
             _DataLakeFileService = dataLakeFileService;
             _configurationWebApiClient = configurationWebApiClient;
             _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }

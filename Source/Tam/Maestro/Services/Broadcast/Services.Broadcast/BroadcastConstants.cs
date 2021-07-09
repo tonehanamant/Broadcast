@@ -28,6 +28,8 @@
 
         public const int SpotLengthId30 = 1;
 
+        public static string CONFIG_FILE_NAME = "appsettings.json";
+      
         public class FolderNames
         {
             public const string SCX_EXPORT_DIRECTORY = "ScxFiles";

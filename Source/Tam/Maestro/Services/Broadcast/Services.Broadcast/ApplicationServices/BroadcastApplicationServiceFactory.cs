@@ -305,7 +305,7 @@ namespace Services.Broadcast.ApplicationServices
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
-
+           
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
@@ -321,6 +321,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
+
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

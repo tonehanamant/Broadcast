@@ -40,6 +40,9 @@ namespace Services.Broadcast
         }
         public T GetConfigValueWithDefault<T>(string key, T defaultValue)
         {
+            string defaultValueType = string.Empty;
+            string typeDictionary = string.Empty;
+            defaultValueType = defaultValue.GetType().Name;
             T result = default(T);
            
             object value;
@@ -61,6 +64,7 @@ namespace Services.Broadcast
             }
             else
             {
+                    _LogWarning(string.Format("The key {0} doesn't contain any value hence default value is returned", key));
                 result = defaultValue;
                 _LogWarning($"The key '{key}' doesn't exist");
                 
