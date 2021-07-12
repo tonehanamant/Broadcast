@@ -26,6 +26,16 @@ namespace Services.Broadcast
 		public static readonly string InventorySummaryCacheAbsoluteExpirationSeconds = "InventorySummaryCacheAbsoluteExpirationSeconds";
 		public static readonly string MediaMonthCruchCacheSlidingExpirationSeconds = "MediaMonthCruchCacheSlidingExpirationSeconds";
 		public static readonly string NumberOfFallbackQuartersForPricing = "NumberOfFallbackQuartersForPricing";
+		public static readonly string EMAILPASSWORD_KEY = "EmailPassword";
+		public static readonly string EMAILUSERNAME_KEY = "EmailUsername";
+		public static readonly string ENABLEBARTERINVENTORYFORPRICINGMODEL_KEY = "EnableBarterInventoryForPricingModel";
+		public static readonly string ENABLECAMPAIGNSLOCKING_KEY = "EnableCampaignsLocking";
+		public static readonly string ENABLEINTERNALPROGRAMSEARCH_KEY = "EnableInternalProgramSearch";
+		public static readonly string ENABLEOPENMARKETINVENTORYFORPRICINGMODEL_KEY = "EnableOpenMarketInventoryForPricingModel";
+		public static readonly string ENABLEPROPRIETARYOANDOINVENTORYFORPRICINGMODEL_KEY = "EnableProprietaryOAndOInventoryForPricingModel";
+		public static readonly string FLOORMODELCPMGOAL_KEY = "FloorModelCpmGoal";
+		public static readonly string INVENTORYPROCESSINGGROUPMONITORPAUSESECONDS_KEY = "InventoryProcessingGroupMonitorPauseSeconds";
+		public static readonly string INVENTORYPROCESSINGGROUPTIMEOUTHOURS_KEY = "InventoryProcessingGroupTimeoutHours";
 	}
 }
 

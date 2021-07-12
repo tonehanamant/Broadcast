@@ -143,10 +143,10 @@ namespace Common.Services
             return new MailAddress(account);
         }
 
-        public static NetworkCredential GetSMTPNetworkCredential()
+        public NetworkCredential GetSMTPNetworkCredential()
         {
-            var pwd = BroadcastServiceSystemParameter.EmailPassword;
-            var usr = BroadcastServiceSystemParameter.EmailUsername;
+            var pwd = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EMAILPASSWORD_KEY, "7TUCE+HAp3LDexQ6JIvaEA==") : BroadcastServiceSystemParameter.EmailPassword;
+            var usr = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EMAILUSERNAME_KEY, "broadcastsmtp@crossmw.com") : BroadcastServiceSystemParameter.EmailUsername;
 
             if (!string.IsNullOrEmpty(pwd))
                 pwd = EncryptionHelper.DecryptString(pwd, BroadcastConstants.EMAIL_PROFILE_SEED).Replace("\n", "\\n");
