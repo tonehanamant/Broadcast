@@ -5,6 +5,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Vpvh;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -49,8 +50,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="pConfigurationWebApiClient">The p configuration web API client.</param>
         public VpvhRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public List<VpvhQuarter> GetQuarters(QuarterDto quarter)
         {

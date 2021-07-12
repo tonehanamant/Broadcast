@@ -13,6 +13,7 @@ using Services.Broadcast.Extensions;
 using System.Data;
 using System.Data.SqlClient;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -34,8 +35,8 @@ namespace Services.Broadcast.Repositories
     public class ProgramMappingRepository : BroadcastRepositoryBase, IProgramMappingRepository
     {
         public ProgramMappingRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient) 
-            : base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient)
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) 
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
         {
         }
 

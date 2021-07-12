@@ -2,6 +2,7 @@
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.ProgramMapping;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -19,8 +20,8 @@ namespace Services.Broadcast.Repositories
     {
         public ProgramNameMappingKeywordRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper,
-            IConfigurationWebApiClient configurationWebApiClient) :
-            base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient)
+            IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) :
+            base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
         {
         }
 

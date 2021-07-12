@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.Plan;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -48,10 +49,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="pBroadcastContextFactory">The p broadcast context factory.</param>
         /// <param name="pTransactionHelper">The p transaction helper.</param>
         /// <param name="pConfigurationWebApiClient">The p configuration web API client.</param>
+        /// <param name="featureToggleHelper">The p featuretogglehelper.</param>
+        /// <param name="configurationSettingsHelper">The p configuration key.</param>
         public PlanSummaryRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
         {
         }
 

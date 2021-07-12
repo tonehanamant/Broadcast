@@ -10,6 +10,7 @@ using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -194,8 +195,8 @@ namespace Services.Broadcast.Repositories
         private static object _ProgramsBulkInsertLock = new object();
       
         public InventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public void RemoveManifestGroups(List<int> groupIds)
         {

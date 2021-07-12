@@ -1438,7 +1438,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="appsettings.json" />
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Entities\spotcableOrder_101.xsd">
       <SubType>Designer</SubType>
     </None>

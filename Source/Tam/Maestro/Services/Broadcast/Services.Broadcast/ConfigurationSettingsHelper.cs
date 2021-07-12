@@ -40,9 +40,7 @@ namespace Services.Broadcast
         }
         public T GetConfigValueWithDefault<T>(string key, T defaultValue)
         {
-            string defaultValueType = string.Empty;
-            string typeDictionary = string.Empty;
-            defaultValueType = defaultValue.GetType().Name;
+          
             T result = default(T);
            
             object value;
@@ -63,9 +61,8 @@ namespace Services.Broadcast
                 
             }
             else
-            {
-                    _LogWarning(string.Format("The key {0} doesn't contain any value hence default value is returned", key));
-                result = defaultValue;
+            {                  
+                 result = defaultValue;
                 _LogWarning($"The key '{key}' doesn't exist");
                 
             }
@@ -87,19 +84,18 @@ namespace Services.Broadcast
                 catch (Exception e)
                 {
                     _LogError($"Key '{key}' found but of incorrect type");
-                    throw new InvalidOperationException($"Key '{key}' found but of incorrect type : {e.Message}");
-
-                }
+                    throw new InvalidOperationException ($"Key '{key}' found but of incorrect type : {e.Message}");
+               }
                 
             }
             else
             {
                 _LogError($"The key '{key}' doesn't exist");
-                throw new ApplicationException($"The key '{key}' doesn't exist");
+                throw new InvalidOperationException($"The key '{key}' doesn't exist");
             }
             return result;
         }
-        private Dictionary<object, object> _LoadConfigItems(string fileName)
+        internal Dictionary<object, object> _LoadConfigItems(string fileName)
         {
             Dictionary<object, object> configData = new Dictionary<object, object>();
 

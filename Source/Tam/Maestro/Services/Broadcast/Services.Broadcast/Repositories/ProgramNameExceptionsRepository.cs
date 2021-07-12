@@ -7,6 +7,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramMapping;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -20,8 +21,8 @@ namespace Services.Broadcast.Repositories
 	public class ProgramNameExceptionsRepository : BroadcastRepositoryBase, IProgramNameExceptionsRepository
 	{
 		public ProgramNameExceptionsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-			ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
-			: base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient)
+			ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+			: base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
 		{
 		}
 

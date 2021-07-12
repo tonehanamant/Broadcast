@@ -14,6 +14,8 @@
 
         public static string EMAIL_PROFILE_SEED = "34oqdfn201@#4-u34nssk10Q@94ihaefje34092";
 
+        public static string CONFIG_FILE_NAME = "appsettings.json";
+
         public const int LogoCachingDurationInSeconds = 3600;
 
         public const int NeilsonTimeSlotInSeconds = 900;    // 15 minute timeslot should be moved to System_Settings
@@ -26,9 +28,8 @@
 
         public const int DefaultDatabaseQueryChunkSize = 1000;
 
-        public const int SpotLengthId30 = 1;
-
-        public static string CONFIG_FILE_NAME = "appsettings.json";
+        public const int SpotLengthId30 = 1;  
+        
       
         public class FolderNames
         {

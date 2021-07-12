@@ -12,6 +12,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using IsolationLevel = System.Transactions.IsolationLevel;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -36,8 +37,8 @@ namespace Services.Broadcast.Repositories
     public class ProposalInventoryRepository : BroadcastRepositoryBase, IProposalInventoryRepository
     {
         public ProposalInventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public List<InventoryDetail> GetSortedFilteredInventoryDetails(ICollection<int> relevantMediaWeeks, List<int> proposalMarketIds, IEnumerable<int> spotLengths)
         {

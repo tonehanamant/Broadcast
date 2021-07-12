@@ -19,6 +19,7 @@ using Services.Broadcast.Extensions;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -57,8 +58,8 @@ namespace Services.Broadcast.Repositories
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
     {
         public StationProgramRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public List<ProposalProgramDto> GetPrograms(DateTime flightStart, DateTime flightEnd,
             int spotLengthId, int inventorySourceId, List<int> marketIds)

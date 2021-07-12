@@ -157,7 +157,7 @@ namespace Common.Services.Repositories
             return context;
         }
 
-        private string GetConnectionString()
+        protected virtual string GetConnectionString()
         {
             if (_Cache.Contains(_ConnectionStringType))
             {

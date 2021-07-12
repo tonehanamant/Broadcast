@@ -3,6 +3,7 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using log4net;
 using Services.Broadcast;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,13 +20,20 @@ namespace Common.Services.Repositories
     public class BroadcastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastContext>
     {
         private readonly ILog _Log;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
-        public BroadcastRepositoryBase(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
+        public BroadcastRepositoryBase(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
             : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastConnectionString.ToString())
         {
             _Log = LogManager.GetLogger(GetType());
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
-
+       
         public string GetDbInfo()
         {
             return _InReadUncommitedTransaction(
@@ -103,6 +111,19 @@ namespace Common.Services.Repositories
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Debug(logMessage.ToJson());
+        }
+        protected override string GetConnectionString()
+        {
+            string connectionString = string.Empty;
+            if (_IsPipelineVariablesEnabled.Value)
+            {
+                connectionString = _ConfigurationSettingsHelper.GetConfigValue<string>(ConnectionStringConfigKeys.CONNECTIONSTRINGS_BROADCAST);
+            }
+            else
+            {
+                connectionString = base.GetConnectionString();
+            }
+            return connectionString;
         }
     }
 }

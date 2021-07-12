@@ -6,6 +6,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -90,10 +91,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="pBroadcastContextFactory">The p broadcast context factory.</param>
         /// <param name="pTransactionHelper">The p transaction helper.</param>
         /// <param name="pConfigurationWebApiClient">The p configuration web API client.</param>
+         /// <param name="featureToggleHelper">The p configuration web API client.</param>
+         /// <param name="configurationSettingsHelper">The p configuration web API client.</param>
         public CampaignRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         /// <inheritdoc />
         public int CreateCampaign(SaveCampaignDto campaignDto, string createdBy, DateTime createdDate)

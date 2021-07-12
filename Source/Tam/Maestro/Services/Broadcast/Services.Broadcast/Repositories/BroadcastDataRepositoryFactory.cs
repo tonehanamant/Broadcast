@@ -2,12 +2,15 @@
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories.Inventory;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 using Tam.Maestro.Services.Clients;
 using Unity;
+using Unity.Lifetime;
 
 namespace Services.Broadcast.Repositories
 {
@@ -21,12 +24,12 @@ namespace Services.Broadcast.Repositories
             {
                 return;
             }
-
+            
+                instance.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
+            instance.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();           
             instance.RegisterType<ITransactionHelper, TransactionHelper>();
-
             instance.RegisterType<IBroadcastContextFactory, BroadcastContextFactory>();
             instance.RegisterType<IContextFactory<QueryHintBroadcastContext>, BroadcastContextFactory>();
-
             instance.RegisterType<IContextFactory<QueryHintBroadcastForecastContext>, BroadcastForecastContextFactory>();
 
             instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
@@ -109,7 +112,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IProgramNameMappingKeywordRepository, ProgramNameMappingKeywordRepository>();
             instance.RegisterType<IInventoryProprietaryDaypartRepository, InventoryProprietaryDaypartRepository>();
             instance.RegisterType<IAabDataMigrationRepository, AabDataMigrationRepository>();
-
+            instance.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
             WasRegistered = true;
         }
     }

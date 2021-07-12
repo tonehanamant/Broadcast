@@ -984,7 +984,8 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>Copy /Y "$(TargetDir)ServiceCommonAppSettings.config" "$(TargetDir)..\ServiceCommonAppSettings.config"</PostBuildEvent>
+    <PostBuildEvent>Copy /Y "$(TargetDir)ServiceCommonAppSettings.config" "$(TargetDir)..\ServiceCommonAppSettings.config"
+Copy /Y "$(TargetDir)appsettings.json" "$(TargetDir)..\appsettings.json"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <PreBuildEvent>echo DATE: %25date%25 &gt; $(ProjectDir)api_build.txt

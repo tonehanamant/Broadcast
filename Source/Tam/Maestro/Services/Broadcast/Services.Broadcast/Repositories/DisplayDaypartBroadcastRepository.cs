@@ -13,6 +13,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using Services.Broadcast.Entities;
 using Common.Services.Extensions;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -56,8 +57,8 @@ namespace Services.Broadcast.Repositories
     public class DisplayDaypartBroadcastRepository : BroadcastRepositoryBase, IDisplayDaypartRepository
     {
         public DisplayDaypartBroadcastRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public int SaveDaypart(DisplayDaypart pDaypart)
         {

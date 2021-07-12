@@ -13,6 +13,7 @@ using ConfigurationService.Client;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 using System.Data.Entity;
 using System;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -37,8 +38,8 @@ namespace Services.Broadcast.Repositories
     public class ProprietaryInventoryRepository : BroadcastRepositoryBase, IProprietaryRepository
     {
         public ProprietaryInventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId)
         {

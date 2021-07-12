@@ -429,9 +429,13 @@
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="DaypartCacheTests.cs" />
     <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Campaign export\BasePlanForCampaignExportUnitTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Helpers\ConfigurationSettingsTestHelper.cs" />
     <Compile Include="Helpers\ReflectionTestHelper.cs" />
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />

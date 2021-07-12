@@ -549,7 +549,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId)
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
-
             return _GetCurrentPricingExecution(job);
         }
 
