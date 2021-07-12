@@ -689,6 +689,17 @@ END
 GO
 /*************************************** END BP-2651 *****************************************************/
 
+/*************************************** START BP-2741 *****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'flight_notes_internal')
+BEGIN	
+	ALTER TABLE plan_versions
+		ADD [flight_notes_internal] NVARCHAR (1024) NULL
+END
+GO
+
+/*************************************** END BP-2741 *****************************************************/
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '21.02.2' -- Current release version

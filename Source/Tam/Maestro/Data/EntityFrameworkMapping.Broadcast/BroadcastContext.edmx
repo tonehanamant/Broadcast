@@ -1455,6 +1455,7 @@
           <Property Name="version_number" Type="int" />
           <Property Name="is_adu_enabled" Type="bit" Nullable="false" />
           <Property Name="impressions_per_unit" Type="float" />
+          <Property Name="flight_notes_internal" Type="nvarchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="plans">
           <Key>
@@ -14212,6 +14213,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_parameters" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_parameters" />
           <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_versions" FromRole="plan_versions" ToRole="plan_version_buying_job" />
           <NavigationProperty Name="plan_version_buying_parameters" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" FromRole="plan_versions" ToRole="plan_version_buying_parameters" />
+          <Property Name="flight_notes_internal" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -18599,6 +18601,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
+                <ScalarProperty Name="flight_notes_internal" ColumnName="flight_notes_internal" />
                 <ScalarProperty Name="impressions_per_unit" ColumnName="impressions_per_unit" />
                 <ScalarProperty Name="is_adu_enabled" ColumnName="is_adu_enabled" />
                 <ScalarProperty Name="version_number" ColumnName="version_number" />

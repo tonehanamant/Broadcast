@@ -6,6 +6,7 @@
     [flight_start_date]     DATETIME        NOT NULL,
     [flight_end_date]       DATETIME        NOT NULL,
     [flight_notes]          NVARCHAR (1024) NULL,
+    [flight_notes_internal] NVARCHAR (1024) NULL,
     [audience_type]         INT             NOT NULL,
     [posting_type]          INT             NOT NULL,
     [target_audience_id]    INT             NOT NULL,
