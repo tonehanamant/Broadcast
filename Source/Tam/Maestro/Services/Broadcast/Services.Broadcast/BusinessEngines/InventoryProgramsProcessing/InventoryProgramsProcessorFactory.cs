@@ -5,6 +5,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using System;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
@@ -32,6 +33,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
         private readonly IEnvironmentService _EnvironmentService;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         public InventoryProgramsProcessorFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -41,7 +44,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IGenreCache genreCache,
             IFileService fileService,
             IEmailerService emailerService,
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
@@ -51,6 +56,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _FileService = fileService;
             _EmailerService = emailerService;
             _EnvironmentService = environmentService;
+            _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         public IInventoryProgramsProcessingEngine GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType jobType)
@@ -65,7 +72,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _GenreCache,
                         _FileService,
                         _EmailerService,
-                        _EnvironmentService
+                        _EnvironmentService,
+                        _FeatureToggleHelper,
+                        _ConfigurationSettingsHelper
                     );
                 case InventoryProgramsProcessorType.BySource:
                     return new InventoryProgramsBySourceProcessor(
@@ -76,7 +85,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _GenreCache,
                         _FileService,
                         _EmailerService,
-                        _EnvironmentService
+                        _EnvironmentService,
+                        _FeatureToggleHelper,
+                        _ConfigurationSettingsHelper
                         );
                 case InventoryProgramsProcessorType.BySourceUnprocessed:
                     return new InventoryProgramsBySourceUnprocessedProcessor(
@@ -87,7 +98,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _GenreCache,
                         _FileService,
                         _EmailerService,
-                        _EnvironmentService
+                        _EnvironmentService,
+                        _FeatureToggleHelper,
+                        _ConfigurationSettingsHelper
                     );
                 default:
                     throw new NotImplementedException("Unsupported job type.");

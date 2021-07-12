@@ -4,6 +4,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +23,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IGenreCache genreCache,
             IFileService fileService,
             IEmailerService emailerService,
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
@@ -30,7 +33,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 genreCache,
                 fileService,
                 emailerService,
-                environmentService)
+                environmentService,
+                featureToggleHelper,
+                configurationSettingsHelper)
         {
         }
 

@@ -310,10 +310,7 @@ namespace Services.Broadcast.ApplicationServices
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
             DaypartCache.DaypartCacheInstance = new DaypartCache(daypartRepo);
-            unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);
-
-            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>());
-            unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
+            unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);            
 
             // singletons
             unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager());
@@ -323,6 +320,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
 
+            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>(), unityContainer.Resolve<IFeatureToggleHelper>(), unityContainer.Resolve<IConfigurationSettingsHelper>());
+            unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

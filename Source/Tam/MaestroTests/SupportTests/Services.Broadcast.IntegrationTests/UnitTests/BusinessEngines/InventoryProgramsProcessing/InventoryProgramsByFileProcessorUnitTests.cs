@@ -12,6 +12,7 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private Mock<IFileService> _FileService = new Mock<IFileService>();
         private Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
         private Mock<IEnvironmentService> _EnvironmentService = new Mock<IEnvironmentService>();
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+        private Mock<IFeatureToggleHelper> _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1248,7 +1251,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 _GenreCacheMock.Object,
                 _FileService.Object,
                 _EmailerService.Object,
-                _EnvironmentService.Object);
+                _EnvironmentService.Object,
+                _FeatureToggleHelper.Object,
+                _ConfigurationSettingsHelper.Object);
             return engine;
         }
     }

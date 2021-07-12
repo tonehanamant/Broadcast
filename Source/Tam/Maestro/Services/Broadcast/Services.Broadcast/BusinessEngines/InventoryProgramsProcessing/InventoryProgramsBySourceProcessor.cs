@@ -6,6 +6,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,14 +29,18 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IGenreCache genreCache,
             IFileService fileService,
             IEmailerService emailerService,
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
                 genreCache,
                 fileService,
                 emailerService,
-                environmentService)
+                environmentService,
+                featureToggleHelper,
+                configurationSettingsHelper)
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();

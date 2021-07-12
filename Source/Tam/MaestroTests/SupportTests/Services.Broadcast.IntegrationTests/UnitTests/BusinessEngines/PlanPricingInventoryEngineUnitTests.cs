@@ -45,6 +45,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private Mock<IStandardDaypartRepository> _StandardDaypartRepository;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()
@@ -104,6 +105,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _MediaMonthAndWeekAggregateCache
                 .Setup(s => s.GetMediaWeeksIntersecting(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns<DateTime, DateTime>((start, end) => MediaMonthAndWeekTestData.GetMediaWeeksIntersecting(start, end));
+
+            _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
         }
 
         private PlanPricingInventoryEngineTestClass _GetTestClass(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
@@ -121,7 +124,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 _DaypartCacheMock.Object,
                 _QuarterCalculationEngineMock.Object,
                 _SpotLengthEngineMock.Object, 
-                featureToggleHelper);
+                featureToggleHelper,
+                _ConfigurationSettingsHelper.Object);
 
             return planPricingInventoryEngine;
         }

@@ -18,6 +18,14 @@ namespace Services.Broadcast
 		public static readonly string EFFICIENCYMODELCPMGOAL_KEY = "EfficiencyModelCpmGoal";
 		public static readonly string EMAILHOST_KEY = "EmailHost";
 		public static readonly string EMAILNOTIFICATIONSENABLED_KEY = "EmailNotificationsEnabled";
+		public static readonly string InventoryProgramsEngineDeleteBatchSize = "InventoryProgramsEngineDeleteBatchSize";
+		public static readonly string InventoryProgramsEngineMaxDop = "InventoryProgramsEngineMaxDop";
+		public static readonly string InventoryProgramsEngineParallelBatchSize = "InventoryProgramsEngineParallelBatchSize";
+		public static readonly string InventoryProgramsEngineParallelEnabled = "InventoryProgramsEngineParallelEnabled";
+		public static readonly string InventoryProgramsEngineSaveBatchSize = "InventoryProgramsEngineSaveBatchSize";
+		public static readonly string InventorySummaryCacheAbsoluteExpirationSeconds = "InventorySummaryCacheAbsoluteExpirationSeconds";
+		public static readonly string MediaMonthCruchCacheSlidingExpirationSeconds = "MediaMonthCruchCacheSlidingExpirationSeconds";
+		public static readonly string NumberOfFallbackQuartersForPricing = "NumberOfFallbackQuartersForPricing";
 	}
 }
 

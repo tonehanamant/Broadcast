@@ -4,6 +4,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,8 +19,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             IGenreCache genreCache,
             IFileService fileService,
             IEmailerService emailerService,
-            IEnvironmentService environmentService
-            )
+            IEnvironmentService environmentService,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
             : base(
                   broadcastDataRepositoryFactory, 
                   programGuideApiClient, 
@@ -27,7 +29,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                   genreCache,
                   fileService,
                   emailerService,
-                  environmentService)
+                  environmentService,
+                  featureToggleHelper,
+                  configurationSettingsHelper)
         {
         }
 

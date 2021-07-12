@@ -50,11 +50,13 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<int> _NumberOfFallbackQuartersForPricing;
         protected Lazy<bool> _UseTrueIndependentStations;
         protected Lazy<bool> _IsMultiSpotLengthEnabled;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         protected Lazy<List<Day>> _CadentDayDefinitions;
         /// <summary>
@@ -70,7 +72,8 @@ namespace Services.Broadcast.BusinessEngines
                                           IDaypartCache daypartCache,
                                           IQuarterCalculationEngine quarterCalculationEngine,
                                           ISpotLengthEngine spotLengthEngine,
-                                          IFeatureToggleHelper featureToggleHelper)
+                                          IFeatureToggleHelper featureToggleHelper,
+                                          IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
@@ -87,10 +90,12 @@ namespace Services.Broadcast.BusinessEngines
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
 
             // register lazy delegates - settings
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
-            _NumberOfFallbackQuartersForPricing = new Lazy<int>(() => BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _NumberOfFallbackQuartersForPricing = new Lazy<int>(_GetNumberOfFallbackQuartersForPricing);
             _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _IsMultiSpotLengthEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS));
 
@@ -1257,6 +1262,11 @@ namespace Services.Broadcast.BusinessEngines
             public ProgramInventoryDaypart ProgramInventoryDaypart { get; set; }
             public int SingleIntersectionTime { get; set; }
             public int TotalIntersectingTime { get; set; }
+        }
+        private int _GetNumberOfFallbackQuartersForPricing()
+        {
+            var result = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.NumberOfFallbackQuartersForPricing, 8) : BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
+            return result;  
         }
     }
 }

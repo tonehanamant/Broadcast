@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,9 @@ namespace Common.Services
 
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
 
         private static readonly Lazy<IMediaMonthCrunchCache> _Lazy = new Lazy<IMediaMonthCrunchCache>(
@@ -44,15 +48,18 @@ namespace Common.Services
             });
 
         //This is only public so that the class can be tested.
-        public MediaMonthCrunchCache(IDataRepositoryFactory dataRepositoryFactory,IMediaMonthAndWeekAggregateCache cache)
+        public MediaMonthCrunchCache(IDataRepositoryFactory dataRepositoryFactory,IMediaMonthAndWeekAggregateCache cache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = cache;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
 
             try
             {
                 _CacheTimeoutInSeconds =
-                    Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
+                    _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.MediaMonthCruchCacheSlidingExpirationSeconds, 7200) : Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
                 if (_CacheTimeoutInSeconds <= 0)
                     _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
             }

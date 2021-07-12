@@ -3,6 +3,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -27,11 +28,19 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     {
         protected readonly IInventoryRepository _InventoryRepository;
         protected readonly IProgramMappingRepository _ProgramMappingRepository;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
-        public InventoryProgramsRepairEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public InventoryProgramsRepairEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         public void RepairInventoryPrograms(CancellationToken token)
@@ -125,7 +134,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual int _GetSaveBatchSize()
         {
-            return BroadcastServiceSystemParameter.InventoryProgramsEngineSaveBatchSize;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineSaveBatchSize, 5000) : BroadcastServiceSystemParameter.InventoryProgramsEngineSaveBatchSize;
         }
     }
 }

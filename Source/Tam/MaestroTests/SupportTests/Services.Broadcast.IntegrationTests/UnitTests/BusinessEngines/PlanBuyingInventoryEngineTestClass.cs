@@ -19,7 +19,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IDaypartCache daypartCache,
             IQuarterCalculationEngine quarterCalculationEngine,
             ISpotLengthEngine spotLengthEngine, 
-            IFeatureToggleHelper featureToggleHelper)
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
             : base(
                   broadcastDataRepositoryFactory, 
                   impressionsCalculationEngine,
@@ -28,7 +29,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                   daypartCache,
                   quarterCalculationEngine,
                   spotLengthEngine, 
-                  featureToggleHelper)
+                  featureToggleHelper,
+                  configurationSettingsHelper)
         {
             // override our lazy delegates
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => UT_ThresholdInSecondsForProgramIntersect);

@@ -58,9 +58,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IGenreCache _GenreCache;
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
-        private readonly IEnvironmentService _EnvironmentService;
+        private readonly IEnvironmentService _EnvironmentService;        
 
         private readonly ILog _Log;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         protected InventoryProgramsProcessingEngineBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -69,7 +72,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IGenreCache genreCache,
             IFileService fileService,
             IEmailerService emailerService,
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _ProgramGuideApiClient = programGuideApiClient;
             _StationMappingService = stationMappingService;
@@ -82,6 +87,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
 
             _Log = LogManager.GetLogger(GetType());
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         protected abstract IInventoryProgramsJobsRepository _GetJobsRepository();
@@ -1246,12 +1254,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual int _GetSaveBatchSize()
         {
-            return BroadcastServiceSystemParameter.InventoryProgramsEngineSaveBatchSize;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineSaveBatchSize, 5000) : BroadcastServiceSystemParameter.InventoryProgramsEngineSaveBatchSize;
         }
 
         protected virtual int _GetDeleteBatchSize()
         {
-            return BroadcastServiceSystemParameter.InventoryProgramsEngineDeleteBatchSize;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineDeleteBatchSize, 5000) : BroadcastServiceSystemParameter.InventoryProgramsEngineDeleteBatchSize;
         }
 
         protected virtual int _GetRequestElementMaxCount()
@@ -1261,17 +1269,17 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual bool _GetParallelApiCallsEnabled()
         {
-            return BroadcastServiceSystemParameter.InventoryProgramsEngineParallelEnabled;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineParallelEnabled, false) : BroadcastServiceSystemParameter.InventoryProgramsEngineParallelEnabled;
         }
 
         protected virtual int _GetParallelApiCallsBatchSize()
         {
-            return BroadcastServiceSystemParameter.InventoryProgramsEngineParallelBatchSize;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineParallelBatchSize, 10) : BroadcastServiceSystemParameter.InventoryProgramsEngineParallelBatchSize;
         }
 
         protected virtual int _GetMaxDegreesOfParallelism()
         {
-            return BroadcastServiceSystemParameter.InventoryProgramsEngineMaxDop;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineMaxDop, -1) : BroadcastServiceSystemParameter.InventoryProgramsEngineMaxDop;
         }
 
         protected string _GetProgramGuideInterfaceExportDirectoryPath()

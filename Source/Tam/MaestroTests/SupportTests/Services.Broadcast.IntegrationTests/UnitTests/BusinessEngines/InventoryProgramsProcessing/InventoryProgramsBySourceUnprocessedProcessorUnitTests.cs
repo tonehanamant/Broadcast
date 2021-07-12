@@ -20,6 +20,7 @@ using ApprovalTests.Reporters;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {
@@ -37,6 +38,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private Mock<IFileService> _FileService = new Mock<IFileService>();
         private Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
         private Mock<IEnvironmentService> _EnvironmentService = new Mock<IEnvironmentService>();
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+        private Mock<IFeatureToggleHelper> _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -356,7 +359,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 _GenreCacheMock.Object,
                 _FileService.Object,
                 _EmailerService.Object,
-                _EnvironmentService.Object);
+                _EnvironmentService.Object,
+                _FeatureToggleHelper.Object,
+                _ConfigurationSettingsHelper.Object);
 
             return engine;
         }
