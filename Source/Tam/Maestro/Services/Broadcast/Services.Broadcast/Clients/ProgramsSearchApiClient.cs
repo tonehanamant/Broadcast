@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,17 +16,29 @@ namespace Services.Broadcast.Clients
     public class ProgramsSearchApiClient : TokenizedClientBase, IProgramsSearchApiClient
     {
         private readonly string _ProgramsSearchUrl;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsPipelineVariablesEnabled;
+        private Lazy<string> _ProgramsSearchClientId;
+        private Lazy<string> _ProgramsSearchEncryptedSecret;
 
-        public ProgramsSearchApiClient(IAwsCognitoClient tokenClient) : base(tokenClient)
+        public ProgramsSearchApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(tokenClient)
         {
+            
             _ProgramsSearchUrl = BroadcastServiceSystemParameter.ProgramsSearchUrl;
-            _ConfigureTokenizedClient(BroadcastServiceSystemParameter.ProgramsSearchTokenUrl, 
-                BroadcastServiceSystemParameter.ProgramsSearchClientId, 
-                BroadcastServiceSystemParameter.ProgramsSearchEncryptedSecret);
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _ProgramsSearchClientId = new Lazy<string>(_GetProgramsSearchClientId);
+            _ProgramsSearchEncryptedSecret = new Lazy<string>(GetProgramsSearchEncryptedSecret);
+           
         }
         
         public List<SearchProgramDativaResponseDto> GetPrograms(SearchRequestProgramDto searchRequest)
         {
+            _ConfigureTokenizedClient(BroadcastServiceSystemParameter.ProgramsSearchTokenUrl,
+               _ProgramsSearchClientId.Value,
+               _ProgramsSearchEncryptedSecret.Value);
             var token = _GetToken();
             var body = new SearchProgramDativaRequestDto
             {
@@ -53,6 +66,14 @@ namespace Services.Broadcast.Clients
                     throw new Exception("Error reading data from the ProgramSearch API", ex);
                 }
             }
+        }
+        private string _GetProgramsSearchClientId()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHCLIENTID_KEY, "5e9kdecif9k6r7ttetgd4e500t") : BroadcastServiceSystemParameter.ProgramsSearchClientId;
+        }
+        private string GetProgramsSearchEncryptedSecret()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHENCRYPTEDSECRET_KEY, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=") : BroadcastServiceSystemParameter.ProgramsSearchEncryptedSecret;
         }
     }
 }

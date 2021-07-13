@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.ProgramGuide;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,22 +25,29 @@ namespace Services.Broadcast.Clients
         private readonly IAwsCognitoClient _TokenClient;
         private readonly string _ProgramGuideUrl;
         private readonly string _TokenUrl;
-        private readonly string _ClientId;
-        private readonly string _ClientSecret;
-        private readonly int _TimeoutSeconds;
+        private Lazy<string> _ClientId;
+        private Lazy<string> _ClientSecret;
+        private Lazy<int> _TimeoutSeconds;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsPipelineVariablesEnabled;      
+        public static Lazy<int> RequestElementMaxCount;
+        private Lazy<string> encryptedSecret;
 
-        public static int RequestElementMaxCount => BroadcastServiceSystemParameter.ProgramGuideRequestElementMaxCount;
-
-        public ProgramGuideApiClient(IAwsCognitoClient tokenClient)
+        public ProgramGuideApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _TokenClient = tokenClient;
-
-            var encryptedSecret = BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
-            _ClientSecret = EncryptionHelper.DecryptString(encryptedSecret, EncryptionHelper.EncryptionKey);
-            _ClientId = BroadcastServiceSystemParameter.ProgramGuideClientId;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+             encryptedSecret = new Lazy<string>( _GetProgramGuideEncryptedSecret);
+            _ClientSecret = new Lazy<string>(()=> EncryptionHelper.DecryptString(encryptedSecret.Value, EncryptionHelper.EncryptionKey));
+            _ClientId = new Lazy<string>(_GetClientId);
             _TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
             _ProgramGuideUrl = BroadcastServiceSystemParameter.ProgramGuideUrl;
-            _TimeoutSeconds = BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
+            _TimeoutSeconds = new Lazy<int>(_GetTimeoutSeconds);           
+            RequestElementMaxCount = new Lazy<int>(_GetRequestElementMaxCount);
+
         }
 
         public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements)
@@ -146,7 +154,7 @@ namespace Services.Broadcast.Clients
 
         protected virtual List<GuideApiResponseElementDto> _PostAndGet(string url, List<GuideApiRequestElementDto> data)
         {
-            var timeoutTime = DateTime.Now.AddSeconds(_TimeoutSeconds);
+            var timeoutTime = DateTime.Now.AddSeconds(_TimeoutSeconds.Value);
             var token = _GetToken();
 
             string queryId;
@@ -215,13 +223,13 @@ namespace Services.Broadcast.Clients
 
         private AwsToken _GetToken()
         {
-            return _TokenClient.GetToken(new AwsTokenRequest { TokenUrl = _TokenUrl, ClientId = _ClientId, ClientSecret = _ClientSecret });
+            return _TokenClient.GetToken(new AwsTokenRequest { TokenUrl = _TokenUrl, ClientId = _ClientId.Value, ClientSecret = _ClientSecret.Value });
         }
 
         private void _ValidateSettings()
         {
-            _ValidateSetting("ProgramGuideClientId", _ClientId);
-            _ValidateSetting("ProgramGuideEncryptedSecret", _ClientSecret);
+            _ValidateSetting("ProgramGuideClientId", _ClientId.Value);
+            _ValidateSetting("ProgramGuideEncryptedSecret", _ClientSecret.Value);
             _ValidateSetting("ProgramGuideTokenUrl", _TokenUrl);
             _ValidateSetting("ProgramGuideUrl", _ProgramGuideUrl);
         }
@@ -236,9 +244,9 @@ namespace Services.Broadcast.Clients
 
         private void _ValidateRequests(List<GuideRequestElementDto> requestElements)
         {
-            if (requestElements.Count > RequestElementMaxCount)
+            if (requestElements.Count > RequestElementMaxCount.Value)
             {
-                throw new InvalidOperationException($"The request element count of {requestElements.Count} exceeds the max acceptable count of {RequestElementMaxCount}.");
+                throw new InvalidOperationException($"The request element count of {requestElements.Count} exceeds the max acceptable count of {RequestElementMaxCount.Value}.");
             }
 
             requestElements.ForEach(_ValidateRequest);
@@ -254,6 +262,26 @@ namespace Services.Broadcast.Clients
             {
                 throw new InvalidOperationException($"Bad Request.  Request '{requestElement.Id}' requires StationCallLetters.");
             }
+        }
+        private string _GetClientId()
+        {
+            var clientId = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDECLIENTID_KEY, "5e9kdecif9k6r7ttetgd4e500t") : BroadcastServiceSystemParameter.ProgramGuideClientId;
+            return clientId;
+        }
+        private string _GetProgramGuideEncryptedSecret()
+        {
+            var programGuideEncyptedSecret = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDEENCRYPTEDSECRET_KEY, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=" ) : BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
+            return programGuideEncyptedSecret;
+        }
+        private int _GetRequestElementMaxCount()
+        {
+            var requestElementMaxCount = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDEREQUESTELEMENTMAXCOUNT_KEY, 10) : BroadcastServiceSystemParameter.ProgramGuideRequestElementMaxCount;
+            return requestElementMaxCount;
+        }
+        private int _GetTimeoutSeconds()
+        {
+            var getTimeoutSeconds = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDETIMEOUTSECONDS_KEY, 1200) : BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
+            return getTimeoutSeconds;
         }
     }
 }

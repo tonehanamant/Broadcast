@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.ProgramGuide;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using Tam.Maestro.Common.Clients;
@@ -14,10 +15,14 @@ namespace Services.Broadcast.IntegrationTests.Stubs
     public class ProgramGuideApiClientStub : ProgramGuideApiClient
     {
         public static Exception ThrownOnPostAndGet { get; set; }
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        public ProgramGuideApiClientStub(IAwsCognitoClient tokenClient)
-            : base (tokenClient)
+        public ProgramGuideApiClientStub(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base (tokenClient,featureToggleHelper,configurationSettingsHelper)
         {
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
         }
         
         protected override List<GuideApiResponseElementDto> _PostAndGet(string url, List<GuideApiRequestElementDto> data)

@@ -16,27 +16,34 @@ namespace Services.Broadcast.Clients
 
     public class PricingRequestLogClientAmazonS3 : IPricingRequestLogClient
     {
-        private readonly string _BucketName;
+        private Lazy<string> _BucketName;
         private readonly ILogToAmazonS3 _LogToAmazonS3;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public PricingRequestLogClientAmazonS3(ILogToAmazonS3 requestLogClientAmazonS3)
+        public PricingRequestLogClientAmazonS3(ILogToAmazonS3 requestLogClientAmazonS3, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
-            _BucketName = BroadcastServiceSystemParameter.PricingRequestLogBucket;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _BucketName = new Lazy<string>(_GetBucketName);
             _LogToAmazonS3 = requestLogClientAmazonS3;
+
         }
 
         public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto planPricingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             var fileName = _GetFileName(planId, jobId, apiVersion, spotAllocationModelMode);
             var keyName = _GetKeyName(fileName);
-            _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planPricingApiRequestDto);
+            _LogToAmazonS3.SaveRequest(_BucketName.Value, keyName, fileName, planPricingApiRequestDto);
         }
 
         public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             var fileName = _GetFileName(planId, jobId, apiVersion, spotAllocationModelMode);
             var keyName = _GetKeyName(fileName);
-            _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planPricingApiRequestDto);
+            _LogToAmazonS3.SaveRequest(_BucketName.Value, keyName, fileName, planPricingApiRequestDto);
         }
 
         private string _GetFileName(int planId, int jobId, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
@@ -51,6 +58,11 @@ namespace Services.Broadcast.Clients
         {
             const string keyNamePrefix = "broadcast_pricing_allocations";
             return $"{keyNamePrefix}/{fileName}.zip";
+        }
+        private string _GetBucketName()
+        {
+            var bucketName = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGBUCKET_KEY, "ds-api-logs") : BroadcastServiceSystemParameter.PricingRequestLogBucket;
+            return bucketName;
         }
     }
 }

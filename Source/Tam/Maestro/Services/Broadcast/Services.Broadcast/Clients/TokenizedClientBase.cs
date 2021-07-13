@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Helpers;
+using System;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Clients;
 
@@ -11,6 +12,7 @@ namespace Services.Broadcast.Clients
         private string _TokenUrl;
         private string _ClientId;
         private string _ClientSecret;
+        
 
         public TokenizedClientBase(IAwsCognitoClient tokenClient)
         {

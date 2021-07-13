@@ -2,6 +2,7 @@
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using Common.Services.ApplicationServices;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,22 +22,28 @@ namespace Services.Broadcast.Clients
 
     public class LogToAmazonS3 : ILogToAmazonS3
     {
-        private readonly string _AccessKeyId;
-        private readonly string _SecretAccessKey;
-        private readonly RegionEndpoint _BucketRegion;
+        private Lazy<string> _AccessKeyId;
+        private Lazy<string> _SecretAccessKey;
+        private Lazy<RegionEndpoint> _BucketRegion;       
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public LogToAmazonS3()
+        public LogToAmazonS3(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
-            _AccessKeyId = BroadcastServiceSystemParameter.PricingRequestLogAccessKeyId;
-            _SecretAccessKey = EncryptionHelper.DecryptString(BroadcastServiceSystemParameter.PricingRequestLogEncryptedAccessKey, EncryptionHelper.EncryptionKey);
-            _BucketRegion = RegionEndpoint.GetBySystemName(BroadcastServiceSystemParameter.PricingRequestLogBucketRegion);
+            _AccessKeyId = new Lazy<string>(_GetAccessKeyId);
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));         
+            _SecretAccessKey = new Lazy<string>(()=>EncryptionHelper.DecryptString(_GetSecretAccessKey(), EncryptionHelper.EncryptionKey));
+            _BucketRegion = new Lazy<RegionEndpoint>(()=>RegionEndpoint.GetBySystemName(_GetBucketRegion()));
         }
 
         public async void SaveRequest<T>(string bucketName, string keyName, string fileName, T data) where T: class
         {
             _ValidateParameters(bucketName);
 
-            using (var client = new AmazonS3Client(_AccessKeyId, _SecretAccessKey, _BucketRegion))
+            using (var client = new AmazonS3Client(_AccessKeyId.Value, _SecretAccessKey.Value, _BucketRegion.Value))
             {
                 using (var apiRequestMemoryStream = Helpers.BroadcastStreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(data)))
                 {
@@ -63,12 +70,27 @@ namespace Services.Broadcast.Clients
         private void _ValidateParameters(string bucketName)
         {
             if (string.IsNullOrEmpty(bucketName) ||
-                string.IsNullOrEmpty(_AccessKeyId) ||
-                string.IsNullOrEmpty(_SecretAccessKey) ||
+                string.IsNullOrEmpty(_AccessKeyId.Value) ||
+                string.IsNullOrEmpty(_SecretAccessKey.Value) ||
                 _BucketRegion == null)
             {
                 throw new Exception("Invalid Amazon parameters for request serialization.");
             }
+        }
+        private string _GetAccessKeyId()
+        {
+            var accessKeyId = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGACCESSKEYID_KEY, "AKIAQJ5IV4IZZV35MPAM") : BroadcastServiceSystemParameter.PricingRequestLogAccessKeyId;
+            return accessKeyId;
+        }
+        private string _GetBucketRegion()
+        {
+            var bucketRegion = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGBUCKETREGION_KEY, "us-east-1") : BroadcastServiceSystemParameter.PricingRequestLogBucketRegion;
+            return "bucketRegion";
+        }
+        private string _GetSecretAccessKey()
+        {
+            var secretAccessKey = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGENCRYPTEDACCESSKEY_KEY, "8WBxyR8JMnMGgdIk6I2aJkurXbm2Hgkwz1SV/hTsOoUtZ6UYnfBGQvCMaqNnrxjh") : BroadcastServiceSystemParameter.PricingRequestLogEncryptedAccessKey;
+            return secretAccessKey;
         }
 
     }

@@ -1264,7 +1264,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual int _GetRequestElementMaxCount()
         {
-            return ProgramGuideApiClient.RequestElementMaxCount;
+            return ProgramGuideApiClient.RequestElementMaxCount.Value;
         }
 
         protected virtual bool _GetParallelApiCallsEnabled()

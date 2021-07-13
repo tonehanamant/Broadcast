@@ -223,7 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void GetProgramsForGuide_ManyElements()
         {
-            int maxChunkSize = ProgramGuideApiClient.RequestElementMaxCount;
+            int maxChunkSize = ProgramGuideApiClient.RequestElementMaxCount.Value;
             const int addDaysStartDate = 30;
             const int addDaysEndDate = addDaysStartDate + 7;
 
@@ -264,7 +264,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetProgramsForGuide_FailValidation_RequestElementCount()
         {
-            int maxChunkSize = ProgramGuideApiClient.RequestElementMaxCount + 1;
+            int maxChunkSize = ProgramGuideApiClient.RequestElementMaxCount.Value + 1;
             const int addDaysStartDate = 30;
             const int addDaysEndDate = addDaysStartDate + 7;
 

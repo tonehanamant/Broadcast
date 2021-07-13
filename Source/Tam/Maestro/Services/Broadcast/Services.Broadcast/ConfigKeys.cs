@@ -36,6 +36,19 @@ namespace Services.Broadcast
 		public static readonly string FLOORMODELCPMGOAL_KEY = "FloorModelCpmGoal";
 		public static readonly string INVENTORYPROCESSINGGROUPMONITORPAUSESECONDS_KEY = "InventoryProcessingGroupMonitorPauseSeconds";
 		public static readonly string INVENTORYPROCESSINGGROUPTIMEOUTHOURS_KEY = "InventoryProcessingGroupTimeoutHours";
+		public static readonly string PLANPRICINGFLOORPRICINGURL_KEY = "PlanPricingFloorPricingUrl";
+		public static readonly string INVENTORYRATINGSPARALLELJOBS_KEY = "InventoryRatingsParallelJobs";
+		public static readonly string PRICINGREQUESTLOGACCESSKEYID_KEY = "PricingRequestLogAccessKeyId";
+		public static readonly string PRICINGREQUESTLOGBUCKET_KEY = "PricingRequestLogBucket";
+		public static readonly string PRICINGREQUESTLOGBUCKETREGION_KEY = "PricingRequestLogBucketRegion";
+		public static readonly string PRICINGREQUESTLOGENCRYPTEDACCESSKEY_KEY = "PricingRequestLogEncryptedAccessKey";
+		public static readonly string PROGRAMGUIDECLIENTID_KEY = "ProgramGuideClientId";
+		public static readonly string PROGRAMGUIDEENCRYPTEDSECRET_KEY = "ProgramGuideEncryptedSecret";
+		public static readonly string PROGRAMGUIDEREQUESTELEMENTMAXCOUNT_KEY = "ProgramGuideRequestElementMaxCount";
+		public static readonly string PROGRAMGUIDETIMEOUTSECONDS_KEY = "ProgramGuideTimeoutSeconds";
+		public static readonly string PROGRAMSSEARCHCLIENTID_KEY = "ProgramsSearchClientId";
+		public static readonly string PROGRAMSSEARCHENCRYPTEDSECRET_KEY = "ProgramsSearchEncryptedSecret";
+		
 	}
 }
 
