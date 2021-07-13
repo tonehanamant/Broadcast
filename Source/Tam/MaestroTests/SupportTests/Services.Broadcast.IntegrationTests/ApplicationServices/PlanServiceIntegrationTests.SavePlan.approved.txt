@@ -256,6 +256,7 @@
     "2019-01-04T00:00:00"
   ],
   "FlightNotes": "Changed the flight notes",
+  "FlightNotesInternal": "Changed the internal flight notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 0.7850,

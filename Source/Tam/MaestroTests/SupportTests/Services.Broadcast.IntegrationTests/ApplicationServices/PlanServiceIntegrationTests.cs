@@ -828,6 +828,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.ProductId = 2;
                 // modify the flight.
                 testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightNotesInternal = "Changed the internal flight notes";
                 testPlan.FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2019, 1, 28),
@@ -965,6 +966,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.ProductId = 2;
                 // modify the flight.
                 testPlan.FlightNotes = "Changed the flight notes";
+                testPlan.FlightNotesInternal = "Changed the internal flight notes";
                 testPlan.FlightHiatusDays = new List<DateTime>();
 
                 var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
@@ -986,6 +988,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.FlightStartDate = null;
                 testPlan.FlightEndDate = null;
                 testPlan.FlightNotes = null;
+                testPlan.FlightNotesInternal = null;
                 testPlan.FlightHiatusDays.Clear();
 
                 Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test",
@@ -2820,6 +2823,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 1, 31),
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightNotes = "Sample notes",
+                FlightNotesInternal = "Sample internal notes",
                 FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2019,1,20),

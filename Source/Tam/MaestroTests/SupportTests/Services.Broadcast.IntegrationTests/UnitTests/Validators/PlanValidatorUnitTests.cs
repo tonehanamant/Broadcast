@@ -1042,6 +1042,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_InternalFlightNotesLongerThan1024()
+        {
+            _ConfigureMocksToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.FlightNotesInternal = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor tellus at ante tempus vehicula ac at sapien. Pellentesque lorem velit, sodales in ex quis, laoreet dictum risus. Quisque odio sapien, dignissim a lacus et, dignissim auctor urna. Vestibulum tempus dui tortor, nec fermentum massa pharetra sit amet. Morbi fermentum ornare scelerisque. Proin ut lectus in nisl vulputate mattis in in ex. Nam erat sem, convallis condimentum velit blandit, scelerisque condimentum dolor. Maecenas fermentum feugiat lectus. Phasellus et sem in velit hendrerit sodales. Suspendisse porta nec felis ac blandit. In eu nisi ut dui tristique mattis. Vivamus vulputate, elit sit amet porta molestie, justo mauris cursus ipsum, et rhoncus arcu odio id enim. Pellentesque elementum posuere nibh ac rutrum. Donec eget erat nec lorem feugiat ornare vel congue nibh. Nulla cursus bibendum sollicitudin. Quisque viverra ante massa, sed molestie augue rutrum sed. Aenean tempus vitae purus sed lobortis. Sed cursus tempor erat ac pulvinar.";
+
+            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("Internal flight notes cannot be longer than 1024 characters."));
+        }
+
+        [Test]
         public void ValidateWeeklyBreakdown_RequestNull()
         {
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(null),
@@ -1566,6 +1577,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 FlightStartDate = new DateTime(2019, 08, 01),
                 FlightEndDate = new DateTime(2019, 09, 01),
                 FlightNotes = "Notes for this flight.",
+                FlightNotesInternal = "Internal Notes for this flight.",
                 AudienceType = AudienceTypeEnum.Nielsen,
                 PostingType = PostingTypeEnum.NSI,
                 AudienceId = 31,

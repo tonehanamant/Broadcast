@@ -2152,6 +2152,7 @@
   "FlightEndDate": "2020-03-29T23:59:59",
   "FlightHiatusDays": [],
   "FlightNotes": null,
+  "FlightNotesInternal": null,
   "FlightStartDate": "2019-12-30T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 28.4500,

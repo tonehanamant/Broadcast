@@ -124,6 +124,7 @@
       "FlightEndDate": "2005-12-18T00:00:00",
       "FlightHiatusDays": [],
       "FlightNotes": null,
+      "FlightNotesInternal": null,
       "FlightStartDate": "2005-11-21T00:00:00",
       "GoalBreakdownType": 0,
       "HHCPM": 0.0,

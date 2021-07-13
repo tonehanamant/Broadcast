@@ -27,6 +27,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "Name"),
             new ComparisonMinorProperty(typeof(PlanDto), "ProductId"),
             new ComparisonMinorProperty(typeof(PlanDto), "FlightNotes"),
+            new ComparisonMinorProperty(typeof(PlanDto), "FlightNotesInternal"),
             new ComparisonMinorProperty(typeof(PlanDto), "Status"),
             new ComparisonMinorProperty(typeof(PlanDto), "GoalBreakdownType"),
             // ignored - out of scope for this compare

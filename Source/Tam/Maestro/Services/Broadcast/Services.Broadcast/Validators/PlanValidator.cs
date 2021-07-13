@@ -84,6 +84,7 @@ namespace Services.Broadcast.Validators
         public const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
         public const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
         const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
+        const string INVALID_INTERNAL_FLIGHT_NOTES = "Internal flight notes cannot be longer than 1024 characters.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
         const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
         const string INVALID_DAYPART_DUPLICATE_DAYPART = "Invalid dayparts.  Each daypart can be entered only once.";
@@ -255,6 +256,9 @@ namespace Services.Broadcast.Validators
 
             if (!string.IsNullOrEmpty(plan.FlightNotes) && plan.FlightNotes.Length > 1024)
                 throw new Exception(INVALID_FLIGHT_NOTES);
+
+            if (!string.IsNullOrEmpty(plan.FlightNotesInternal) && plan.FlightNotesInternal.Length > 1024)
+                throw new Exception(INVALID_INTERNAL_FLIGHT_NOTES);
 
             var planFlightStartDateDayofWeek = (int)plan.FlightStartDate.Value.GetBroadcastDayOfWeek();
             var planFlightEndDateDayofWeek = (int)plan.FlightEndDate.Value.GetBroadcastDayOfWeek();

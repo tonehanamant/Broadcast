@@ -74,6 +74,7 @@
     "2019-04-15T00:00:00"
   ],
   "FlightNotes": "Sample notes",
+  "FlightNotesInternal": "Internal sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 0.0,

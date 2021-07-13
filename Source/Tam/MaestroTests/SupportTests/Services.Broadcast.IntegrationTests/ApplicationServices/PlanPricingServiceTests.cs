@@ -1639,6 +1639,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2018, 10, 31),
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightNotes = "Sample notes",
+                FlightNotesInternal = "Internal sample notes",
                 FlightHiatusDays = new List<DateTime>(),
                 AudienceId = AudienceID,       //HH
                 AudienceType = AudienceTypeEnum.Nielsen,

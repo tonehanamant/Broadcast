@@ -571,6 +571,7 @@ namespace Services.Broadcast.Repositories
                 FlightStartDate = planVersion.flight_start_date,
                 FlightEndDate = planVersion.flight_end_date,
                 FlightNotes = planVersion.flight_notes,
+                FlightNotesInternal = planVersion.flight_notes_internal,
                 AudienceId = planVersion.target_audience_id,
                 AudienceType = EnumHelper.GetEnum<AudienceTypeEnum>(planVersion.audience_type),
                 HUTBookId = planVersion.hut_book_id,
@@ -743,6 +744,7 @@ namespace Services.Broadcast.Repositories
             version.flight_start_date = planDto.FlightStartDate.Value;
             version.flight_end_date = planDto.FlightEndDate.Value;
             version.flight_notes = planDto.FlightNotes;
+            version.flight_notes_internal = planDto.FlightNotesInternal;
             version.coverage_goal_percent = planDto.CoverageGoalPercent.Value;
             version.goal_breakdown_type = (int)planDto.GoalBreakdownType;
             version.target_vpvh = planDto.Vpvh;

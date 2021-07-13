@@ -100,6 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
                 FlightStartDate = new DateTime(2019, 1, 1),
                 FlightEndDate = new DateTime(2019, 7, 31),
                 FlightNotes = "Sample notes",
+                FlightNotesInternal = "Internal sample notes",
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightHiatusDays = new List<DateTime>
                 {

@@ -699,6 +699,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FlightStartDate = plan.FlightStartDate,
                 FlightEndDate = plan.FlightEndDate,
                 FlightNotes = plan.FlightNotes,
+                FlightNotesInternal = plan.FlightNotesInternal,
                 AudienceId = plan.AudienceId,
                 AudienceType = plan.AudienceType,
                 HUTBookId = plan.HUTBookId,

@@ -110,12 +110,20 @@ namespace Services.Broadcast.Entities.Plan
         public DateTime? FlightEndDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the flight notes.
+        /// Gets or sets the external flight notes.
         /// </summary>
         /// <value>
-        /// The flight notes.
+        /// The external flight notes.
         /// </value>
         public string FlightNotes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the internal flight notes.
+        /// </summary>
+        /// <value>
+        /// The internal flight notes.
+        /// </value>
+        public string FlightNotesInternal { get; set; }
 
         /// <summary>
         /// Gets or sets the flight hiatus days.

@@ -303,6 +303,7 @@
     "2019-01-24T00:00:00"
   ],
   "FlightNotes": "Sample notes",
+  "FlightNotesInternal": "Sample internal notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 0.8005,
