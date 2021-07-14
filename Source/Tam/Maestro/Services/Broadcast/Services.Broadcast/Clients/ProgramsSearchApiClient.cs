@@ -15,28 +15,30 @@ namespace Services.Broadcast.Clients
 
     public class ProgramsSearchApiClient : TokenizedClientBase, IProgramsSearchApiClient
     {
-        private readonly string _ProgramsSearchUrl;
+        private readonly Lazy<string> _ProgramsSearchUrl;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private Lazy<string> _ProgramsSearchClientId;
         private Lazy<string> _ProgramsSearchEncryptedSecret;
+        private readonly Lazy<string> _ProgramsSearchTokenUrl;
 
         public ProgramsSearchApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(tokenClient)
         {
-            
-            _ProgramsSearchUrl = BroadcastServiceSystemParameter.ProgramsSearchUrl;
+
+            _ProgramsSearchUrl = new Lazy<string>(_GetProgramSearchUrl);
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _FeatureToggleHelper = featureToggleHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _ProgramsSearchClientId = new Lazy<string>(_GetProgramsSearchClientId);
             _ProgramsSearchEncryptedSecret = new Lazy<string>(GetProgramsSearchEncryptedSecret);
-           
+            _ProgramsSearchTokenUrl = new Lazy<string>(_GetProgramsSearchTokenUrl);
+
         }
         
         public List<SearchProgramDativaResponseDto> GetPrograms(SearchRequestProgramDto searchRequest)
         {
-            _ConfigureTokenizedClient(BroadcastServiceSystemParameter.ProgramsSearchTokenUrl,
+            _ConfigureTokenizedClient(_ProgramsSearchTokenUrl.Value,
                _ProgramsSearchClientId.Value,
                _ProgramsSearchEncryptedSecret.Value);
             var token = _GetToken();
@@ -51,7 +53,7 @@ namespace Services.Broadcast.Clients
             {
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.AccessToken}");
 
-                var serviceResponse = client.PostAsJsonAsync(_ProgramsSearchUrl, body).Result;
+                var serviceResponse = client.PostAsJsonAsync(_ProgramsSearchUrl.Value, body).Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     throw new Exception($"Error connecting to the ProgramSearch API: {serviceResponse}");
@@ -74,6 +76,14 @@ namespace Services.Broadcast.Clients
         private string GetProgramsSearchEncryptedSecret()
         {
             return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHENCRYPTEDSECRET_KEY, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=") : BroadcastServiceSystemParameter.ProgramsSearchEncryptedSecret;
+        }
+        private string _GetProgramSearchUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHURL_KEY, "https://pemonp3we9.execute-api.us-east-1.amazonaws.com/staging/v1/programs/search") : BroadcastServiceSystemParameter.ProgramsSearchUrl;
+        }
+        private string _GetProgramsSearchTokenUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHTOKENURL_KEY, "https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token") : BroadcastServiceSystemParameter.ProgramsSearchTokenUrl;
         }
     }
 }

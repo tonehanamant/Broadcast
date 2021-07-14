@@ -1,5 +1,7 @@
 ﻿using System;
+using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -7,6 +9,9 @@ namespace WWTVData.Service
 {
     public class WWTVOutboundService : ScheduledServiceMethod
     {
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         public WWTVOutboundService() : base(null)
         {
         }
@@ -25,7 +30,7 @@ namespace WWTVData.Service
         {
             get
             {
-                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles);
+                _RunWhen = _EnsureRunWeeklyWhen(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.WWTV_WHENTOCHECKDATAFILES_KEY, "") : BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles);
 
                 return _RunWhen;
             }

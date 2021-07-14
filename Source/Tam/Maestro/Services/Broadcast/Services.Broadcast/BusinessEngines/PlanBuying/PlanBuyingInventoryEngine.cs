@@ -52,7 +52,7 @@ namespace Services.Broadcast.BusinessEngines
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<int> _NumberOfFallbackQuarters;
         protected Lazy<bool> _IsMultiSpotLengthEnabled;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;        
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         private Lazy<List<Day>> _CadentDayDefinitions;
         protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
@@ -84,7 +84,7 @@ namespace Services.Broadcast.BusinessEngines
 
             // register lazy delegates - settings
             _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
-            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
+            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(_GetThresholdInSecondsForProgramIntersectInPricing);
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
             _NumberOfFallbackQuarters = new Lazy<int>(_GetNumberOfFallbackQuarters);
             _IsMultiSpotLengthEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS));
@@ -1113,6 +1113,10 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.NumberOfFallbackQuartersForPricing, 8) : BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
             return result;
+        }
+        private int _GetThresholdInSecondsForProgramIntersectInPricing()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHTOKENURL_KEY, 1800) : BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
         }
     }
 }

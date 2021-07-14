@@ -48,7 +48,16 @@ namespace Services.Broadcast
 		public static readonly string PROGRAMGUIDETIMEOUTSECONDS_KEY = "ProgramGuideTimeoutSeconds";
 		public static readonly string PROGRAMSSEARCHCLIENTID_KEY = "ProgramsSearchClientId";
 		public static readonly string PROGRAMSSEARCHENCRYPTEDSECRET_KEY = "ProgramsSearchEncryptedSecret";
-		
+		public static readonly string PROGRAMSSEARCHTOKENURL_KEY = "ProgramsSearchTokenUrl";
+		public static readonly string PROGRAMSSEARCHURL_KEY = "ProgramsSearchUrl";
+		public static readonly string RELATIVEPATHTOMARKETCOVERAGESFILE_KEY = "RelativePathToMarketCoveragesFile";
+		public static readonly string RUNLONGRUNNINGJOBSINWEBSERVICEENABLED_KEY = "RunLongRunningJobsInWebServiceEnabled";
+		public static readonly string SCXGENERATIONJOBINTERVALSECONDS_KEY = "SCXGenerationJobIntervalSeconds";
+		public static readonly string SCXGENERATIONPARALLELJOBS_KEY = "SCXGenerationParallelJobs";
+		public static readonly string THRESHOLDINSECONDSFORPROGRAMINTERSECTINPRICING_KEY = "ThresholdInSecondsForProgramIntersectInPricing";
+		public static readonly string USEMAESTRODAYPARTREPO_KEY = "UseMaestroDayPartRepo";
+		public static readonly string WWTV_WHENTOCHECKDATAFILES_KEY = "WWTV_WhenTocheckDataFiles";
+		public static readonly string WWTV_WHENTOCHECKERRORFILES_KEY = "WWTV_WhenTocheckErrorFiles";
 	}
 }
 

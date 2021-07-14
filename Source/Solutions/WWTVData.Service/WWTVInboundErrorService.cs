@@ -1,5 +1,7 @@
 ﻿using System;
+using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -8,6 +10,9 @@ namespace WWTVData.Service
 
     public class WWTVInboundErrorService :  ScheduledServiceMethod
     {
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         public WWTVInboundErrorService() : base(null)
         {
         }
@@ -25,7 +30,7 @@ namespace WWTVData.Service
         {
             get
             {
-                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles);
+                _RunWhen = _EnsureRunWeeklyWhen(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.WWTV_WHENTOCHECKERRORFILES_KEY, "") : BroadcastServiceSystemParameter.WWTV_WhenToCheckErrorFiles);
 
                 return _RunWhen;
             }

@@ -93,7 +93,7 @@ namespace Services.Broadcast.BusinessEngines
             _ConfigurationSettingsHelper = configurationSettingsHelper;
 
             // register lazy delegates - settings
-            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
+            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(_GetThresholdInSecondsForProgramIntersectInPricing);
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _NumberOfFallbackQuartersForPricing = new Lazy<int>(_GetNumberOfFallbackQuartersForPricing);
             _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
@@ -1267,6 +1267,10 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.NumberOfFallbackQuartersForPricing, 8) : BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
             return result;  
+        }
+        private int _GetThresholdInSecondsForProgramIntersectInPricing()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.THRESHOLDINSECONDSFORPROGRAMINTERSECTINPRICING_KEY, 1800) : BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
         }
     }
 }

@@ -3,7 +3,10 @@ using BroadcastJobScheduler;
 using BroadcastJobScheduler.JobQueueMonitors;
 using Hangfire;
 using Owin;
+using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Helpers;
+using System;
 using System.Linq;
 using System.Web.Configuration;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -16,6 +19,9 @@ namespace BroadcastComposerWeb
     /// </summary>
     public partial class Startup
     {
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         /// <summary>
         /// Configure Hangfire job scheduler.
         /// </summary>
@@ -82,7 +88,7 @@ namespace BroadcastComposerWeb
 
         private bool _GetRunLongRunningJobsInWebServiceEnabled()
         {
-            return BroadcastServiceSystemParameter.RunLongRunningJobsInWebServiceEnabled;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.RUNLONGRUNNINGJOBSINWEBSERVICEENABLED_KEY, false) : BroadcastServiceSystemParameter.RunLongRunningJobsInWebServiceEnabled;
         }
     }
 }
