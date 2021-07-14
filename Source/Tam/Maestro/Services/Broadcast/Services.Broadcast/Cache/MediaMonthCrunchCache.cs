@@ -59,7 +59,7 @@ namespace Common.Services
             try
             {
                 _CacheTimeoutInSeconds =
-                    _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.MediaMonthCruchCacheSlidingExpirationSeconds, 7200) : Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
+                    _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.MediaMonthCrunchCacheSlidingExpirationSeconds, 7200) : Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
                 if (_CacheTimeoutInSeconds <= 0)
                     _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
             }

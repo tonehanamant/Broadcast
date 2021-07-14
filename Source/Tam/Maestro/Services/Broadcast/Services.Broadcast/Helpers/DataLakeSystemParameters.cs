@@ -34,7 +34,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsPipelineVariablesEnabled.Value)
             {
-                var dataLake_SharedFolder_UserName = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DATALAKE_SHAREDFOLDER_USERNAME_KEY);
+                var dataLake_SharedFolder_UserName = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLakeSharedFolderUserName);
                 return dataLake_SharedFolder_UserName;
             }
             else
@@ -47,7 +47,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsPipelineVariablesEnabled.Value)
             {
-                var dataLake_SharedFolder_Password = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DATALAKE_SHAREDFOLDER_PASSWORD_KEY);
+                var dataLake_SharedFolder_Password = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLakeSharedFolderPassword);
                 return dataLake_SharedFolder_Password;
             }
             else

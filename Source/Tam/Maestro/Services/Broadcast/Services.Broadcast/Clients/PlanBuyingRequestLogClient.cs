@@ -62,7 +62,7 @@ namespace Services.Broadcast.Clients
         }
         private string _GetBucketName()
         {
-            var bucketName = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGBUCKET_KEY, "ds-api-logs") : BroadcastServiceSystemParameter.PricingRequestLogBucket;
+            var bucketName = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogBucket, "ds-api-logs") : BroadcastServiceSystemParameter.PricingRequestLogBucket;
             return bucketName;
         }
     }

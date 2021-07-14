@@ -1270,7 +1270,7 @@ namespace Services.Broadcast.BusinessEngines
         }
         private int _GetThresholdInSecondsForProgramIntersectInPricing()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.THRESHOLDINSECONDSFORPROGRAMINTERSECTINPRICING_KEY, 1800) : BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ThresholdInSecondsForProgramIntersectInPricing, 1800) : BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
         }
     }
 }

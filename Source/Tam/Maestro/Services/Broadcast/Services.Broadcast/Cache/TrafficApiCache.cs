@@ -160,7 +160,7 @@ namespace Services.Broadcast.Cache
             var log = LogManager.GetLogger(GetType());
             if (_IsPipelineVariablesEnabled.Value)
             {
-                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCACHEEXPIRATIONSECONDS_KEY, 300);
+                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds, 300);
                 if (AABCacheExpirationSeconds < 0)
                 {
                     var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage("Parameter AABCacheExpirationSeconds does not have a value"

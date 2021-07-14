@@ -536,7 +536,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     if(_IsPipelineVariablesEnabled.Value)
                     {
-                        var defaultNtiConversionFactor = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DEFAULTNTICONVERSIONFACTOR_KEY, 0.2);
+                        var defaultNtiConversionFactor = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DefaultNtiConversionFactor, 0.2);
                         //set default value for NTI Conversion factor
                         detail.NtiConversionFactor = detail.NtiConversionFactor == null
                             ? defaultNtiConversionFactor
@@ -1118,7 +1118,7 @@ namespace Services.Broadcast.ApplicationServices
             var proposalQuarterDto = _GetProposalQuarterDtos(proposalMediaWeeks);
 
             var defaultNtiConversionFactor = _IsPipelineVariablesEnabled.Value 
-                                             ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DEFAULTNTICONVERSIONFACTOR_KEY, 0.2)
+                                             ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DefaultNtiConversionFactor, 0.2)
                                              : BroadcastServiceSystemParameter.DefaultNtiConversionFactor;
             var proposalDetail = new ProposalDetailDto
             {
@@ -1239,7 +1239,7 @@ namespace Services.Broadcast.ApplicationServices
                 Markets = _BroadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>().GetMarketDtos()
                     .OrderBy(m => m.Display).ToList(),
                 
-                DefaultMarketCoverage = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DEFAULTMARKETCOVERAGE_KEY, 0.8) : BroadcastServiceSystemParameter.DefaultMarketCoverage,
+                DefaultMarketCoverage = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.DefaultMarketCoverage, 0.8) : BroadcastServiceSystemParameter.DefaultMarketCoverage,
                 ProprietaryPricingInventorySources = EnumHelper.GetProprietaryInventorySources().Select(p => new LookupDto
                 {
                     Id = (int)p,

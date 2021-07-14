@@ -265,22 +265,22 @@ namespace Services.Broadcast.Clients
         }
         private string _GetClientId()
         {
-            var clientId = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDECLIENTID_KEY, "5e9kdecif9k6r7ttetgd4e500t") : BroadcastServiceSystemParameter.ProgramGuideClientId;
+            var clientId = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideClientId, "5e9kdecif9k6r7ttetgd4e500t") : BroadcastServiceSystemParameter.ProgramGuideClientId;
             return clientId;
         }
         private string _GetProgramGuideEncryptedSecret()
         {
-            var programGuideEncyptedSecret = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDEENCRYPTEDSECRET_KEY, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=" ) : BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
+            var programGuideEncyptedSecret = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideEncryptedSecret, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=" ) : BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
             return programGuideEncyptedSecret;
         }
         private int _GetRequestElementMaxCount()
         {
-            var requestElementMaxCount = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDEREQUESTELEMENTMAXCOUNT_KEY, 10) : BroadcastServiceSystemParameter.ProgramGuideRequestElementMaxCount;
+            var requestElementMaxCount = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideRequestElementMaxCount, 10) : BroadcastServiceSystemParameter.ProgramGuideRequestElementMaxCount;
             return requestElementMaxCount;
         }
         private int _GetTimeoutSeconds()
         {
-            var getTimeoutSeconds = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMGUIDETIMEOUTSECONDS_KEY, 1200) : BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
+            var getTimeoutSeconds = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideTimeoutSeconds, 1200) : BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
             return getTimeoutSeconds;
         }
     }

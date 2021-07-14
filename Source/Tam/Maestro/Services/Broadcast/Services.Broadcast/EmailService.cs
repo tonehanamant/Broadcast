@@ -63,7 +63,7 @@ namespace Common.Services
 
                 using (SmtpClient lSmtpClient = new SmtpClient())
                 {
-                    lSmtpClient.Host= _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EMAILHOST_KEY, "smtp.office365.com") : BroadcastServiceSystemParameter.EmailHost;                                      
+                    lSmtpClient.Host= _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailHost, "smtp.office365.com") : BroadcastServiceSystemParameter.EmailHost;                                      
                     lSmtpClient.EnableSsl = true;
                     lSmtpClient.Port = 587;
                     lSmtpClient.Credentials = GetSMTPNetworkCredential();
@@ -145,8 +145,8 @@ namespace Common.Services
 
         public NetworkCredential GetSMTPNetworkCredential()
         {
-            var pwd = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EMAILPASSWORD_KEY, "7TUCE+HAp3LDexQ6JIvaEA==") : BroadcastServiceSystemParameter.EmailPassword;
-            var usr = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EMAILUSERNAME_KEY, "broadcastsmtp@crossmw.com") : BroadcastServiceSystemParameter.EmailUsername;
+            var pwd = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailPassword, "7TUCE+HAp3LDexQ6JIvaEA==") : BroadcastServiceSystemParameter.EmailPassword;
+            var usr = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailUsername, "broadcastsmtp@crossmw.com") : BroadcastServiceSystemParameter.EmailUsername;
 
             if (!string.IsNullOrEmpty(pwd))
                 pwd = EncryptionHelper.DecryptString(pwd, BroadcastConstants.EMAIL_PROFILE_SEED).Replace("\n", "\\n");

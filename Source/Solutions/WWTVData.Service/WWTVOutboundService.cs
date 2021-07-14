@@ -30,7 +30,7 @@ namespace WWTVData.Service
         {
             get
             {
-                _RunWhen = _EnsureRunWeeklyWhen(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.WWTV_WHENTOCHECKDATAFILES_KEY, "") : BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles);
+                _RunWhen = _EnsureRunWeeklyWhen(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.WWTV_WhenTocheckDataFiles, "") : BroadcastServiceSystemParameter.WWTV_WhenToCheckDataFiles);
 
                 return _RunWhen;
             }

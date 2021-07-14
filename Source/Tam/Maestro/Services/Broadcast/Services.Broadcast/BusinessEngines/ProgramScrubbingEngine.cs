@@ -170,7 +170,7 @@ namespace Services.Broadcast.BusinessEngines
         }
         private int _GetBroadcastMatchingBuffer()
         {
-            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BROADCASTMATCHINGBUFFER_KEY, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
             return broadcastMatchingBuffer;
 
         }

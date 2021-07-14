@@ -71,19 +71,19 @@ namespace Services.Broadcast.Clients
         }
         private string _GetProgramsSearchClientId()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHCLIENTID_KEY, "5e9kdecif9k6r7ttetgd4e500t") : BroadcastServiceSystemParameter.ProgramsSearchClientId;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramsSearchClientId, "5e9kdecif9k6r7ttetgd4e500t") : BroadcastServiceSystemParameter.ProgramsSearchClientId;
         }
         private string GetProgramsSearchEncryptedSecret()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHENCRYPTEDSECRET_KEY, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=") : BroadcastServiceSystemParameter.ProgramsSearchEncryptedSecret;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramsSearchEncryptedSecret, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=") : BroadcastServiceSystemParameter.ProgramsSearchEncryptedSecret;
         }
         private string _GetProgramSearchUrl()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHURL_KEY, "https://pemonp3we9.execute-api.us-east-1.amazonaws.com/staging/v1/programs/search") : BroadcastServiceSystemParameter.ProgramsSearchUrl;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramsSearchUrl, "https://pemonp3we9.execute-api.us-east-1.amazonaws.com/staging/v1/programs/search") : BroadcastServiceSystemParameter.ProgramsSearchUrl;
         }
         private string _GetProgramsSearchTokenUrl()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PROGRAMSSEARCHTOKENURL_KEY, "https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token") : BroadcastServiceSystemParameter.ProgramsSearchTokenUrl;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramsSearchTokenUrl, "https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token") : BroadcastServiceSystemParameter.ProgramsSearchTokenUrl;
         }
     }
 }

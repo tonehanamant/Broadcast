@@ -79,17 +79,17 @@ namespace Services.Broadcast.Clients
         }
         private string _GetAccessKeyId()
         {
-            var accessKeyId = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGACCESSKEYID_KEY, "AKIAQJ5IV4IZZV35MPAM") : BroadcastServiceSystemParameter.PricingRequestLogAccessKeyId;
+            var accessKeyId = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogAccessKeyId, "AKIAQJ5IV4IZZV35MPAM") : BroadcastServiceSystemParameter.PricingRequestLogAccessKeyId;
             return accessKeyId;
         }
         private string _GetBucketRegion()
         {
-            var bucketRegion = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGBUCKETREGION_KEY, "us-east-1") : BroadcastServiceSystemParameter.PricingRequestLogBucketRegion;
+            var bucketRegion = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogBucketRegion, "us-east-1") : BroadcastServiceSystemParameter.PricingRequestLogBucketRegion;
             return "bucketRegion";
         }
         private string _GetSecretAccessKey()
         {
-            var secretAccessKey = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PRICINGREQUESTLOGENCRYPTEDACCESSKEY_KEY, "8WBxyR8JMnMGgdIk6I2aJkurXbm2Hgkwz1SV/hTsOoUtZ6UYnfBGQvCMaqNnrxjh") : BroadcastServiceSystemParameter.PricingRequestLogEncryptedAccessKey;
+            var secretAccessKey = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogEncryptedAccessKey, "8WBxyR8JMnMGgdIk6I2aJkurXbm2Hgkwz1SV/hTsOoUtZ6UYnfBGQvCMaqNnrxjh") : BroadcastServiceSystemParameter.PricingRequestLogEncryptedAccessKey;
             return secretAccessKey;
         }
 

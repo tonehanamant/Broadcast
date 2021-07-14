@@ -115,7 +115,7 @@ namespace Services.Broadcast.Cache
         {        
            if (_IsPipelineVariablesEnabled.Value)
             {
-                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCACHEEXPIRATIONSECONDS_KEY,300);
+                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds,300);
                 var result =AABCacheExpirationSeconds < 0
                ? 300 //default to 5 minutes
                : AABCacheExpirationSeconds;
