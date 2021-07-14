@@ -453,6 +453,16 @@
                     <input class="button" type="submit" value="Generate" id="submit" />
                 </div>
             }
+
+            @using (Html.BeginForm("TestPricingRequestLogBucket", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Test Pricing Request Log Process (S3 Access)</h4>
+                    This triggers an aysnc thread that places a file in the bucket as ApiVersion = 789.
+                    <br />Errors will not be reported to this screen.
+                    <input class="button" type="submit" value="Trigger Test" id="submit" />
+                </div>
+            }
         </div>
 
         <div id="posting" class="tabcontent">

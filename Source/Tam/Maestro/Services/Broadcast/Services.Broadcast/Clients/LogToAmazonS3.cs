@@ -72,7 +72,7 @@ namespace Services.Broadcast.Clients
             if (string.IsNullOrEmpty(bucketName) ||
                 string.IsNullOrEmpty(_AccessKeyId.Value) ||
                 string.IsNullOrEmpty(_SecretAccessKey.Value) ||
-                _BucketRegion == null)
+                _BucketRegion.Value == null)
             {
                 throw new Exception("Invalid Amazon parameters for request serialization.");
             }
@@ -85,13 +85,12 @@ namespace Services.Broadcast.Clients
         private string _GetBucketRegion()
         {
             var bucketRegion = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogBucketRegion, "us-east-1") : BroadcastServiceSystemParameter.PricingRequestLogBucketRegion;
-            return "bucketRegion";
+            return bucketRegion;
         }
         private string _GetSecretAccessKey()
         {
             var secretAccessKey = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogEncryptedAccessKey, "8WBxyR8JMnMGgdIk6I2aJkurXbm2Hgkwz1SV/hTsOoUtZ6UYnfBGQvCMaqNnrxjh") : BroadcastServiceSystemParameter.PricingRequestLogEncryptedAccessKey;
             return secretAccessKey;
         }
-
     }
 }

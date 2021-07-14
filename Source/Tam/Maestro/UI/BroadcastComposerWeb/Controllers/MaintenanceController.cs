@@ -15,8 +15,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -932,8 +935,34 @@ namespace BroadcastComposerWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            TempData["Message"] = "Upload sucessful!";
+            TempData["Message"] = "Upload successful!";
 
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult TestPricingRequestLogBucket()
+        {
+            try
+            {
+                var planId = 1;
+                var jobId = 1;
+                var pricingApiRequest = new PlanPricingApiRequestDto();
+                var apiVersion = "789";
+                var spotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+                Task.Run(() => service.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion, spotAllocationModelMode));
+
+                var nowStr = DateTime.Now.ToString();
+                TempData["Message"] = $"Save triggered {nowStr}";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            TempData["TabId"] = "planning";
             return RedirectToAction("Index");
         }
 
