@@ -482,13 +482,18 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc/>
         public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, string templatesFilePath)
         {
+            _LogInfo($"Generating the file...");
             var campaignReportData = GetAndValidateCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(campaignReportData);
 
-            return _SharedFolderService.SaveFile(new SharedFolderFile
+            var folderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.CAMPAIGN_EXPORT_REPORTS);
+
+            _LogInfo($"Saving generated file '{report.Filename}' to folder '{folderPath}'");
+
+            var savedFileGuid = _SharedFolderService.SaveFile(new SharedFolderFile
             {
-                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.CAMPAIGN_EXPORT_REPORTS),
+                FolderPath = folderPath,
                 FileNameWithExtension = report.Filename,
                 FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 FileUsage = SharedFolderFileUsage.CampaignExport,
@@ -496,6 +501,8 @@ namespace Services.Broadcast.ApplicationServices
                 CreatedBy = userName,
                 FileContent = report.Stream
             });
+
+            return savedFileGuid;
         }
 
         /// <inheritdoc/>
