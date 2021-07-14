@@ -1,46 +1,630 @@
-﻿using NUnit.Framework;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Moq;
+using NUnit.Framework;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.IntegrationTests.TestData;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Services.Broadcast.Entities.Campaign.CampaignReportData;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
 {
     [TestFixture]
+    [UseReporter(typeof(DiffReporter))]
     public class CampaignReportDataUnitTest
     {
         [Test]       
         public void ProjectGuaranteedAudienceDataByWeek_VPVH_WithoutRunPricing()
         {
+            // Arrange
             PlanDto plan = _GetNewPlan();
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
-            PlanProjectionForCampaignExport projection = _GetPlanProjectionForCampaignExport();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = null;
-            CampaignReportData._IsVPVHDemoEnabled= new Lazy<bool>(() => true);
-            _ProjectGuaranteedAudienceDataByWeek(plan, planWeek, projection, planPricingResultsDayparts);
+            var testClass = new CampaignReportData
+            {
+                _IsVPVHDemoEnabled = new Lazy<bool>(() => true)
+            };
+            var projection = _GetPlanProjectionForCampaignExport();
+
+            // Action
+            testClass._ProjectGuaranteedAudienceDataByWeek(plan, planWeek, projection, planPricingResultsDayparts);
+
+            // Assert
             Assert.AreEqual(0, projection.GuaranteedAudience.VPVH);
         }
 
         [Test]
         public void ProjectGuaranteedAudienceDataByWeek_VPVH_WithRunPricing()
         {
+            // Arrange
             PlanDto plan = _GetNewPlan();
             plan.Id = 1;
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
-            PlanProjectionForCampaignExport projection = _GetPlanProjectionForCampaignExport();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = _GetPlanPricingResultsDayparts();
-            CampaignReportData._IsVPVHDemoEnabled = new Lazy<bool>(() => true);
-            _ProjectGuaranteedAudienceDataByWeek(plan, planWeek, projection, planPricingResultsDayparts);
+            var testClass = new CampaignReportData
+            {
+                _IsVPVHDemoEnabled = new Lazy<bool>(() => true)
+            };
+            var projection = _GetPlanProjectionForCampaignExport();
+
+            // Action
+            testClass._ProjectGuaranteedAudienceDataByWeek(plan, planWeek, projection, planPricingResultsDayparts);
+
+            // Assert
             Assert.AreEqual(0.546, projection.GuaranteedAudience.VPVH);
         }
+
+        [Test]
+        public void PopulateTotalAdusForFlowchartAduTable_AduFlagEnabled()
+        {
+            // Arrange
+            var tableData = new FlowChartQuarterTableData
+            {
+                UnitsValues = new List<object> {"ADU"}
+            };
+
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+
+            // Action
+            testClass._PopulateTotalAdusForFlowchartAduTable(tableData);
+
+            // Assert
+            var toVerify = new
+            {
+                tableData.DistributionPercentages,
+                tableData.UnitsValues,
+                tableData.ImpressionsValues,
+                tableData.CostValues,
+                tableData.CPMValues
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void PopulateTotalAdusForFlowchartAduTable_WithoutAdu(bool isAduFlagEnabled)
+        {
+            // Arrange
+            var tableData = new FlowChartQuarterTableData();
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => isAduFlagEnabled)
+            };
+
+            // Action
+            testClass._PopulateTotalAdusForFlowchartAduTable(tableData);
+
+            // Assert
+            Assert.AreEqual(0, tableData.DistributionPercentages.Count);
+            Assert.AreEqual(0, tableData.UnitsValues.Count);
+            Assert.AreEqual(0, tableData.ImpressionsValues.Count);
+            Assert.AreEqual(0, tableData.CostValues.Count);
+            Assert.AreEqual(0, tableData.CPMValues.Count);
+        }
+
+        [Test]
+        public void PopulateTotalAdusForFlowchartAduTable_AduFlagDisabled()
+        {
+            // Arrange
+            var tableData = new FlowChartQuarterTableData
+            {
+                UnitsValues = new List<object> { 2.5 }
+            };
+
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+            };
+
+            // Action
+            testClass._PopulateTotalAdusForFlowchartAduTable(tableData);
+
+            // Assert
+            var toVerify = new
+            {
+                tableData.DistributionPercentages,
+                tableData.UnitsValues,
+                tableData.ImpressionsValues,
+                tableData.CostValues,
+                tableData.CPMValues
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        public void PopulateFlowchartAduTableData_AduFlagEnabled()
+        {
+            // Arrange
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+
+            var startDate = new DateTime();
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    { 
+                        new WeeklyBreakdownWeek{ },
+                        new WeeklyBreakdownWeek{ },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 5 },
+                        new WeeklyBreakdownWeek{ },
+                    }
+                }
+            };
+            FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
+            FlowChartQuarterTableData firstTable = new FlowChartQuarterTableData
+            { 
+                WeeksStartDate = new List<object>{ null, null, startDate, null }
+            };
+
+            int weekIndex = 2;
+
+            // Act
+            testClass._PopulateFlowchartAduTableData(plans, tableData, firstTable, weekIndex);
+
+            // Assert
+            var toVerify = new
+            {
+                tableData.DistributionPercentages,
+                tableData.UnitsValues,
+                tableData.ImpressionsValues,
+                tableData.CostValues,
+                tableData.CPMValues
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        public void PopulateFlowchartAduTableData_WithoutAdu_AduFlagEnabled()
+        {
+            // Arrange
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+            var startDate = new DateTime();
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ },
+                        new WeeklyBreakdownWeek{ },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0 },
+                        new WeeklyBreakdownWeek{ },
+                    }
+                }
+            };
+            FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
+            FlowChartQuarterTableData firstTable = new FlowChartQuarterTableData
+            {
+                WeeksStartDate = new List<object> { null, null, startDate, null }
+            };
+
+            int weekIndex = 2;
+
+            // Act
+            testClass._PopulateFlowchartAduTableData(plans, tableData, firstTable, weekIndex);
+
+            // Assert
+            var toVerify = new
+            {
+                tableData.DistributionPercentages,
+                tableData.UnitsValues,
+                tableData.ImpressionsValues,
+                tableData.CostValues,
+                tableData.CPMValues
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        public void PopulateFlowchartAduTableData_AduFlagDisabled()
+        {
+            // Arrange
+            const double calculatedAdu = 1.21;
+            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
+            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
+                .Returns(calculatedAdu);
+
+            var testClass = new CampaignReportData
+            {
+                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
+                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+            };
+
+            var startDate = new DateTime(2021,7,12);
+            var spotLengthId = 2;
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = spotLengthId
+                        }
+                    },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 5, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                    }
+                }
+            };
+            FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
+            FlowChartQuarterTableData firstTable = new FlowChartQuarterTableData
+            {
+                WeeksStartDate = new List<object> { null, null, startDate, null }
+            };
+
+            int weekIndex = 2;
+
+            // Act
+            testClass._PopulateFlowchartAduTableData(plans, tableData, firstTable, weekIndex);
+
+            // Assert
+            var toVerify = new
+            {
+                tableData.DistributionPercentages,
+                tableData.UnitsValues,
+                tableData.ImpressionsValues,
+                tableData.CostValues,
+                tableData.CPMValues
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        public void PopulateFlowchartAduTableData_WithoutAdu_AduFlagDisabled()
+        {
+            // Arrange
+            const double calculatedAdu = 1.21;
+            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
+            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
+                .Returns(calculatedAdu);
+            
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => false),
+                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
+            };
+
+            var startDate = new DateTime(2021, 7, 12);
+            var spotLengthId = 2;
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = spotLengthId
+                        }
+                    },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                    }
+                }
+            };
+            FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
+            FlowChartQuarterTableData firstTable = new FlowChartQuarterTableData
+            {
+                WeeksStartDate = new List<object> { null, null, startDate, null }
+            };
+
+            int weekIndex = 2;
+
+            // Act
+            testClass._PopulateFlowchartAduTableData(plans, tableData, firstTable, weekIndex);
+
+            // Assert
+            var toVerify = new
+            {
+                tableData.DistributionPercentages,
+                tableData.UnitsValues,
+                tableData.ImpressionsValues,
+                tableData.CostValues,
+                tableData.CPMValues
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        public void PopulateContractAduTable_AduFlagEnabled()
+        {
+            // Arrange
+            var testClass = new CampaignReportData
+            {
+                _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+
+            var startDate = new DateTime(2021, 7, 12);
+            var spotLengthId = 2;
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 2.5, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                    }
+                }
+            };
+            var table = new ContractQuarterTableData();
+
+            // Act
+            testClass._PopulateContractAduTable(table, plans, spotLengthId, startDate);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(table.Rows));
+        }
+
+        [Test]
+        public void PopulateContractAduTable_WithoutAdu_AduFlagEnabled()
+        {
+            // Arrange
+            var testClass = new CampaignReportData
+            {
+                _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+
+            var startDate = new DateTime(2021, 7, 12);
+            var spotLengthId = 2;
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                    }
+                }
+            };
+            var table = new ContractQuarterTableData();
+
+            // Act
+            testClass._PopulateContractAduTable(table, plans, spotLengthId, startDate);
+
+            // Assert
+            Assert.AreEqual(0, table.Rows.Count);
+        }
+
+        [Test]
+        public void PopulateContractAduTable_AduFlagDisabled()
+        {
+            // Arrange
+            const double calculatedAdu = 1.21;
+            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
+            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
+                .Returns(calculatedAdu);
+
+            var testClass = new CampaignReportData
+            {
+                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
+                _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
+                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+            };
+
+            var startDate = new DateTime(2021, 7, 12);
+            var spotLengthId = 2;
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = spotLengthId
+                        }
+                    },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 2.5, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                    }
+                }
+            };
+            var table = new ContractQuarterTableData();
+
+            // Act
+            testClass._PopulateContractAduTable(table, plans, spotLengthId, startDate);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(table.Rows));
+        }
+
+        [Test]
+        public void PopulateContractAduTable_WithoutAdu_AduFlagDisabled()
+        {
+            // Arrange
+            const double calculatedAdu = 0;
+            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
+            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
+                .Returns(calculatedAdu);
+
+            var testClass = new CampaignReportData
+            {
+                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
+                _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
+                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+            };
+
+            var startDate = new DateTime(2021, 7, 12);
+            var spotLengthId = 2;
+
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = spotLengthId
+                        }
+                    },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
+                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
+                    }
+                }
+            };
+            var table = new ContractQuarterTableData();
+
+            // Act
+            testClass._PopulateContractAduTable(table, plans, spotLengthId, startDate);
+
+            // Assert
+            Assert.AreEqual(0, table.Rows.Count);
+        }
+
+        [Test]
+        public void CalculateTotalsForContractADUTable_AduFlagEnabled()
+        {
+            // Arrange
+            const string quarterLabel = "ThisQuarterIsTHEQuarter";
+
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+
+            //units are the third value in the row
+            var rows = new List<List<object>>
+            {
+                new List<object> { null, null, "ADU", null }
+            };
+
+            var quarterTable = new ContractQuarterTableData { Rows = rows };
+
+            // Act
+            testClass._CalculateTotalsForContractADUTable(quarterTable, quarterLabel);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarterTable.TotalRow));
+        }
+
+        [Test]
+        public void CalculateTotalsForContractADUTable_WithoutAdu_AduFlagEnabled()
+        {
+            // Arrange
+            const string quarterLabel = "ThisQuarterIsTHEQuarter";
+
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => true)
+            };
+
+            //units are the third value in the row
+            var rows = new List<List<object>>
+            {
+                new List<object> { null, null, null, null }
+            };
+
+            var quarterTable = new ContractQuarterTableData{Rows = rows};
+
+            // Act
+            testClass._CalculateTotalsForContractADUTable(quarterTable, quarterLabel);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarterTable.TotalRow));
+        }
+
+        [Test]
+        public void CalculateTotalsForContractADUTable_AduFlagDisabled()
+        {
+            // Arrange
+            const string quarterLabel = "ThisQuarterIsTHEQuarter";
+
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+            };
+
+            //units are the third value in the row
+            var rows = new List<List<object>>
+            {
+                new List<object> { null, null, 2.5, null }
+            };
+
+            var quarterTable = new ContractQuarterTableData { Rows = rows };
+
+            // Act
+            testClass._CalculateTotalsForContractADUTable(quarterTable, quarterLabel);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarterTable.TotalRow));
+        }
+
+        [Test]
+        public void CalculateTotalsForContractADUTable_WithoutAdu_AduFlagDisabled()
+        {
+            // Arrange
+            const string quarterLabel = "ThisQuarterIsTHEQuarter";
+
+            var testClass = new CampaignReportData
+            {
+                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+            };
+
+            //units are the third value in the row
+            var rows = new List<List<object>>
+            {
+                new List<object> { null, null, null, null }
+            };
+
+            var quarterTable = new ContractQuarterTableData { Rows = rows };
+
+            // Act
+            testClass._CalculateTotalsForContractADUTable(quarterTable, quarterLabel);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarterTable.TotalRow));
+        }        
 
         private static PlanDto _GetNewPlan()
         {
@@ -157,9 +741,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                 WeeklyRatings = 50
             };
         }
-        private static PlanProjectionForCampaignExport _GetPlanProjectionForCampaignExport()
+        private static CampaignReportData.PlanProjectionForCampaignExport _GetPlanProjectionForCampaignExport()
         {
-            return new PlanProjectionForCampaignExport()
+            return new CampaignReportData.PlanProjectionForCampaignExport()
             {
                 DaypartCodeId = 15
             };

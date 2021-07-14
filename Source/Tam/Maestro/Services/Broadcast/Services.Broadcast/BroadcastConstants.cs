@@ -66,5 +66,6 @@
         public static string PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = "broadcast-pricing-model-proprietary-o-and-o-inventory";
         public static string INTERNAL_PROGRAM_SEARCH = "broadcast-internal-program-search";
         public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";
+        public static string ADU_FLAG = "broadcast-enabled-adu-flag";
     }
 }

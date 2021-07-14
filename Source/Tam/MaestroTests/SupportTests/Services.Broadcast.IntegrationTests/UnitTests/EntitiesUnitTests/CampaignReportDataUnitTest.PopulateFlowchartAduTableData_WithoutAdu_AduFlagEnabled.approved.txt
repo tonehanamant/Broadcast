@@ -1,0 +1,17 @@
+{
+  "CostValues": [
+    null
+  ],
+  "CPMValues": [
+    null
+  ],
+  "DistributionPercentages": [
+    null
+  ],
+  "ImpressionsValues": [
+    null
+  ],
+  "UnitsValues": [
+    null
+  ]
+}
