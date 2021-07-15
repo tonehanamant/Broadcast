@@ -208,8 +208,9 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
             unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();
+            unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();
 
-			unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
+            unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
 			unityContainer.RegisterType<IInventoryProprietarySummaryService, InventoryProprietarySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
             unityContainer.RegisterType<IInventoryExportEngine, InventoryExportEngine>();
@@ -319,7 +320,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
-
+           
             MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>(), unityContainer.Resolve<IFeatureToggleHelper>(), unityContainer.Resolve<IConfigurationSettingsHelper>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }

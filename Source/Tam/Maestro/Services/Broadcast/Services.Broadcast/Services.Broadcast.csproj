@@ -484,6 +484,7 @@
     <Compile Include="ApplicationServices\Inventory\ProgramMapping\Engines\ProgramMappingCleanupEngine.cs" />
     <Compile Include="ApplicationServices\InventoryProprietarySummaryService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanIsciService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\AabEngine.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
@@ -506,6 +507,10 @@
     <Compile Include="Entities\Aab\aab_product.cs" />
     <Compile Include="Entities\Enums\SpotAllocationModelMode.cs" />
     <Compile Include="Entities\BroadcastLockResponse.cs" />
+    <Compile Include="Entities\Isci\IsciAdvertiserDto.cs" />
+    <Compile Include="Entities\Isci\IsciDto.cs" />
+    <Compile Include="Entities\Isci\IsciListItemDto.cs" />
+    <Compile Include="Entities\Isci\IsciSearchDto.cs" />
     <Compile Include="Entities\Plan\Buying\CurrentBuyingExecutions.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
@@ -911,6 +916,7 @@
     <Compile Include="Repositories\NtiToNsiConversionRepository.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />
     <Compile Include="Repositories\PlanBuyingRepository.cs" />
+    <Compile Include="Repositories\PlanIsciRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />
     <Compile Include="Repositories\ProgramMappingRepository.cs" />

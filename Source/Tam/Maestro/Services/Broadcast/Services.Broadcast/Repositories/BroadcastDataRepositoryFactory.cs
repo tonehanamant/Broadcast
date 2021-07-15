@@ -113,6 +113,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IInventoryProprietaryDaypartRepository, InventoryProprietaryDaypartRepository>();
             instance.RegisterType<IAabDataMigrationRepository, AabDataMigrationRepository>();
             instance.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
+            instance.RegisterType<IPlanIsciRepository, PlanIsciRepository>();
             WasRegistered = true;
         }
     }

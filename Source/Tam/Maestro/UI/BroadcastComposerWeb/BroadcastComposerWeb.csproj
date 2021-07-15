@@ -357,6 +357,7 @@
     <Compile Include="Controllers\CampaignApiController.cs" />
     <Compile Include="Controllers\ContainTypeApiController.cs" />
     <Compile Include="Controllers\LockTestApiController.cs" />
+    <Compile Include="Controllers\PlanIsciApiController.cs" />
     <Compile Include="Controllers\StandardDaypartApiController.cs" />
     <Compile Include="Controllers\DaypartCleanupApiController.cs" />
     <Compile Include="Controllers\DaypartTypeApiController.cs" />
