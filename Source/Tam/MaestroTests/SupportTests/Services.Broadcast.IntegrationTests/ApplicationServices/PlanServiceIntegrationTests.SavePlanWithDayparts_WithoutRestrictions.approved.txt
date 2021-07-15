@@ -274,7 +274,7 @@
     "UnitCapsType": 1
   },
   "ProductId": 1,
-  "ProductMasterId": null,
+  "ProductMasterId": "6bef080e-01ed-4d42-be54-927110457907",
   "SecondaryAudiences": [],
   "ShareBookId": 437,
   "SpotAllocationModelMode": 1,

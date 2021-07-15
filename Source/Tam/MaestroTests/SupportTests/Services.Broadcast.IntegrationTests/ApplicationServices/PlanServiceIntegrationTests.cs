@@ -761,7 +761,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CreatePlan_NotExistingProduct()
         {
-            const int notExistingProductId = 666;          
+            Guid notExistingProductId = new Guid();          
             using (new TransactionScopeWrapper())
             {
                 var stubTrafficClient = new TrafficApiClientStub();
@@ -772,8 +772,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(actualTrafficCache);
                 var planService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
 
-                PlanDto newPlan = _GetNewPlan();
-                newPlan.ProductId = notExistingProductId;
+                PlanDto newPlan = _GetNewPlan();                
+                newPlan.ProductMasterId = notExistingProductId;
 
                 Assert.That(() => planService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
                     Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
@@ -2814,6 +2814,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
+                ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
                 CreativeLengths = new List<CreativeLength> {
                     new CreativeLength { SpotLengthId = 1, Weight = 50},
                     new CreativeLength{ SpotLengthId = 2}
@@ -3068,8 +3069,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new SaveCampaignDto
             {
                 Name = "Campaign1",
-                AdvertiserId = 1,
-                AgencyId = 1,
+                AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                AgencyMasterId = new Guid("A8B10A69-FBD6-43FE-B143-156B7297B62D"),
                 Notes = "Notes for CampaignOne."
             };
         }

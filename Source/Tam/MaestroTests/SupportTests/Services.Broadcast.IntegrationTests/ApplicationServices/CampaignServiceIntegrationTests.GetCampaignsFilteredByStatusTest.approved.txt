@@ -2,15 +2,15 @@
   {
     "Advertiser": {
       "AgencyId": 1,
-      "AgencyMasterId": null,
+      "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
       "Id": 1,
-      "MasterId": null,
-      "Name": "Stub Advertiser"
+      "MasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+      "Name": "Advertiser1"
     },
     "Agency": {
       "Id": 1,
-      "MasterId": null,
-      "Name": "Stub Agency"
+      "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Name": "Agency1"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -623,15 +623,15 @@
   {
     "Advertiser": {
       "AgencyId": 1,
-      "AgencyMasterId": null,
-      "Id": 4,
-      "MasterId": null,
-      "Name": "Stub Advertiser"
+      "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Id": 1,
+      "MasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+      "Name": "Advertiser1"
     },
     "Agency": {
       "Id": 1,
-      "MasterId": null,
-      "Name": "Stub Agency"
+      "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Name": "Agency1"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -671,15 +671,15 @@
   {
     "Advertiser": {
       "AgencyId": 1,
-      "AgencyMasterId": null,
-      "Id": 2,
-      "MasterId": null,
-      "Name": "Stub Advertiser"
+      "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Id": 1,
+      "MasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+      "Name": "Advertiser1"
     },
     "Agency": {
       "Id": 1,
-      "MasterId": null,
-      "Name": "Stub Agency"
+      "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Name": "Agency1"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,
@@ -771,15 +771,15 @@
   {
     "Advertiser": {
       "AgencyId": 1,
-      "AgencyMasterId": null,
-      "Id": 3,
-      "MasterId": null,
-      "Name": "Stub Advertiser"
+      "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Id": 1,
+      "MasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+      "Name": "Advertiser1"
     },
     "Agency": {
       "Id": 1,
-      "MasterId": null,
-      "Name": "Stub Agency"
+      "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Name": "Agency1"
     },
     "Budget": 1500.0,
     "CampaignStatus": 4,

@@ -115,7 +115,7 @@ namespace Services.Broadcast.Validators
                 .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
                 .Select(m => m.MediaMonth)
                 .ToList();
-            
+
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
 
             _AabEngine = aabEngine;
@@ -135,10 +135,8 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_DRAFT_ON_NEW_PLAN);
             }
 
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
-
             _CreativeLengthEngine.ValidateCreativeLengthsForPlanSave(plan.CreativeLengths);
-            _ValidateProduct(plan, isAabEnabled);
+            _ValidateProduct(plan);
             _ValidateFlightAndHiatus(plan);
             _ValidateDayparts(plan);
             _ValidatePrimaryAudience(plan);
@@ -353,7 +351,7 @@ namespace Services.Broadcast.Validators
                     throw new Exception("Weekdays weighting and weekend weighting must be either both set or both must be nulls");
                 }
 
-                if (daypart.WeekdaysWeighting.HasValue && 
+                if (daypart.WeekdaysWeighting.HasValue &&
                     daypart.WeekendWeighting.HasValue &&
                     (daypart.WeekdaysWeighting.Value + daypart.WeekendWeighting.Value) != 100)
                 {
@@ -544,19 +542,12 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateProduct(PlanDto plan, bool isAabEnabled)
+        private void _ValidateProduct(PlanDto plan)
         {
             try
             {
-                if (isAabEnabled)
-                {
-                    var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
-                    _AabEngine.GetAdvertiserProduct(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
-                }
-                else
-                {
-                    _AabEngine.GetProduct(plan.ProductId.Value);
-                }
+                var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
+                _AabEngine.GetAdvertiserProduct(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
             }
             catch (Exception ex)
             {

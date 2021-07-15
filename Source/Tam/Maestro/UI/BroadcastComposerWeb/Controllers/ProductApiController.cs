@@ -17,17 +17,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Returns products for a specific advertiser
-        /// </summary>
-        /// <param name="advertiserId">Advertiser id</param>
-        [HttpGet]
-        [Route("")]
-        public BaseResponse<List<ProductDto>> GetProductsByAdvertiserId(int advertiserId)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IProductService>().GetProductsByAdvertiserId(advertiserId));
-        }
-
-        /// <summary>
         /// Gets the advertiser products.
         /// </summary>
         /// <param name="advertiserMasterId">The advertiser master identifier.</param>

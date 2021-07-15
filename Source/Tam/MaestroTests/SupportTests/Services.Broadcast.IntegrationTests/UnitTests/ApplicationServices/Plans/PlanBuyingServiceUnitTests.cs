@@ -3104,8 +3104,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int firstPlanId = 1;
             const int secondPlanId = 2;
             const int campaignId = 3;
-            const int agencyId = 4;
-            const int advertiserId = 5;
+            Guid agencyId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            Guid advertiserId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907");
             const int audienceId = 6;
 
             var request = new ProgramLineupReportRequest
@@ -3139,8 +3139,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
-                    AgencyId = agencyId,
-                    AdvertiserId = advertiserId
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
                 });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -3191,8 +3191,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int firstPlanId = 1;
             const int secondPlanId = 2;
             const int campaignId = 3;
-            const int agencyId = 4;
-            const int advertiserId = 5;
+            Guid agencyId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            Guid advertiserId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907");
             const int audienceId = 6;
 
             var request = new ProgramLineupReportRequest
@@ -3231,8 +3231,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
-                    AgencyId = agencyId,
-                    AdvertiserId = advertiserId
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
                 });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -3322,8 +3322,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
-                    AgencyId = agencyId,
-                    AdvertiserId = advertiserId
+                    AgencyMasterId = new Guid("8987F27B-AE14-4D7F-99C4-81AA7505EDE2"),
+                    AdvertiserMasterId = new Guid("F1D648C8-8152-4932-8C4F-EC8B29445889")
                 });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -3363,8 +3363,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int firstPlanId = 1;
             const int secondPlanId = 2;
             const int campaignId = 3;
-            const int agencyId = 4;
-            const int advertiserId = 5;
+            Guid agencyId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            Guid advertiserId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907");
             const int audienceId = 6;
 
             var request = new ProgramLineupReportRequest
@@ -3398,8 +3398,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
-                    AgencyId = agencyId,
-                    AdvertiserId = advertiserId
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
                 });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -3450,8 +3450,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int firstPlanId = 1;
             const int secondPlanId = 2;
             const int campaignId = 3;
-            const int agencyId = 4;
-            const int advertiserId = 5;
+            Guid agencyId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            Guid advertiserId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907");
             const int audienceId = 6;
 
             var request = new ProgramLineupReportRequest
@@ -3485,8 +3485,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
-                    AgencyId = agencyId,
-                    AdvertiserId = advertiserId
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
                 });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -3537,8 +3537,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int firstPlanId = 1;
             const int secondPlanId = 2;
             const int campaignId = 3;
-            const int agencyId = 4;
-            const int advertiserId = 5;
+            Guid agencyId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            Guid advertiserId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907");
             const int audienceId = 6;
 
             var request = new ProgramLineupReportRequest
@@ -3598,8 +3598,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
-                    AgencyId = agencyId,
-                    AdvertiserId = advertiserId
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
                 });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -3741,14 +3741,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetStationInventoryManifests());
 
             _AabEngine
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Setup(x => x.GetAgency(It.IsAny<Guid>()))
                 .Returns(new AgencyDto
                 {
                     Name = "1st Image Marketing"
                 });
 
             _AabEngine
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns(new AdvertiserDto
                 {
                     Name = "PetMed Express, Inc"
@@ -3822,14 +3822,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetStationInventoryManifestsForRollup());
 
             _AabEngine
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Setup(x => x.GetAgency(It.IsAny<Guid>()))
                 .Returns(new AgencyDto
                 {
                     Name = "1st Image Marketing"
                 });
 
             _AabEngine
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns(new AdvertiserDto
                 {
                     Name = "PetMed Express, Inc"

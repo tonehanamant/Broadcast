@@ -26,15 +26,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             var expectedReturnCount = advertiserProducts.Count;
 
-            aabEngine.Setup(s => s.GetAdvertiserProducts(It.IsAny<int>())).Returns(advertiserProducts);
+            aabEngine.Setup(s => s.GetAdvertiserProducts(It.IsAny<Guid>())).Returns(advertiserProducts);
 
             var tc = new ProductService(aabEngine.Object);
 
+            var advertiserId = new Guid("1806450a-e0a3-416d-b38d-913fb5cf3879");
+
             // Act
-            var result = tc.GetProductsByAdvertiserId(advertiserId: 1);
+            var result = tc.GetAdvertiserProducts(advertiserId);
 
             // Assert
-            aabEngine.Verify(x => x.GetAdvertiserProducts(1), Times.Once);
+            aabEngine.Verify(x => x.GetAdvertiserProducts(advertiserId), Times.Once);
             Assert.AreEqual(expectedReturnCount, result.Count);
         }
 
@@ -72,13 +74,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var aabEngine = new Mock<IAabEngine>();
 
             aabEngine
-                .Setup(s => s.GetAdvertiserProducts(It.IsAny<int>()))
+                .Setup(s => s.GetAdvertiserProducts(It.IsAny<Guid>()))
                 .Callback(() => throw new Exception(expectedMessage));
 
             var tc = new ProductService(aabEngine.Object);
-
+            var advertiserId = new Guid("1806450a-e0a3-416d-b38d-913fb5cf3879");
             // Act
-            var caught = Assert.Throws<Exception>(() => tc.GetProductsByAdvertiserId(advertiserId: 1));
+            var caught = Assert.Throws<Exception>(() => tc.GetAdvertiserProducts(advertiserId));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);

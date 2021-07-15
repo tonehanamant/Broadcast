@@ -2,7 +2,6 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -10,11 +9,9 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq.Expressions;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.IntegrationTests.Stubs;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
@@ -85,7 +82,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             var tc = GetEmptyTestClass();
             var plan = new PlanDto
             {
-                FlightStartDate = new DateTime(2019,01, 01),
+                FlightStartDate = new DateTime(2019, 01, 01),
                 FlightEndDate = new DateTime(2019, 01, 20)
             };
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 10));
@@ -188,7 +185,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
             tc.AggregateQuarters(plan, summary);
 
-            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()),Times.Once, "Invalid GetAllQuartersBetweenDatesCalledCount");
+            quarterCalculationEngine.Verify(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once, "Invalid GetAllQuartersBetweenDatesCalledCount");
             Assert.AreEqual(1, summary.PlanSummaryQuarters.Count, "Invalid summary quarters count.");
             Assert.AreEqual(1, summary.PlanSummaryQuarters[0].Quarter, "Invalid quarter.");
             Assert.AreEqual(2019, summary.PlanSummaryQuarters[0].Year, "Invalid quarter year.");
@@ -268,7 +265,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         {
             var testQuarters = new List<QuarterDetailDto>();
             var tc = GetTestClassSetupForQuarters(testQuarters, out var quarterCalculationEngine);
-            var plan = new PlanDto {FlightStartDate = new DateTime()};
+            var plan = new PlanDto { FlightStartDate = new DateTime() };
             var summary = new PlanSummaryDto();
 
             tc.AggregateQuarters(plan, summary);
@@ -278,19 +275,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void AggregateProductName(bool isAabEnabled)
+        public void AggregateProductName()
         {
             // Arrange
             const string productName = "Product2";
-            var tc = GetTestClassSetupForProducts(isAabEnabled, out var aabEngine);
-            var plan = new PlanDto { ProductId = 2, ProductMasterId = Guid.NewGuid()};
+            var tc = GetTestClassSetupForProducts(out var aabEngine);
+            var plan = new PlanDto { ProductId = 2, ProductMasterId = Guid.NewGuid() };
             var summary = new PlanSummaryDto();
 
             aabEngine.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
-                .Returns(new ProductDto { Name = productName });
-            aabEngine.Setup(s => s.GetProduct(It.IsAny<int>()))
                 .Returns(new ProductDto { Name = productName });
 
             // Act
@@ -298,24 +291,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
             // Assert
             Assert.AreEqual(productName, summary.ProductName, "Invalid ProductName");
-            if (isAabEnabled)
-            {
-                aabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
-                aabEngine.Verify(s => s.GetProduct(It.IsAny<int>()), Times.Never);
-            }
-            else
-            {
-                aabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
-                aabEngine.Verify(s => s.GetProduct(It.IsAny<int>()), Times.Once);
-            }
+            aabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void AggregateProductName_WithoutValue(bool isAabEnabled)
+        public void AggregateProductName_WithoutValue()
         {
-            var tc = GetTestClassSetupForProducts(isAabEnabled, out var aabEngine);
+            var tc = GetTestClassSetupForProducts(out var aabEngine);
             var plan = new PlanDto();
             var summary = new PlanSummaryDto();
 
@@ -362,17 +344,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<ICampaignRepository>())
                 .Returns(campaignRepository.Object);
 
-            var isAabEnabled = true;
             const string productName = "Product2";
             var aabEngine = new Mock<IAabEngine>();
             aabEngine.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
                 .Returns(new ProductDto { Name = productName });
-            aabEngine.Setup(s => s.GetProduct(It.IsAny<int>()))
-                .Returns(new ProductDto { Name = productName });
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(isAabEnabled);
 
             var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
@@ -420,22 +397,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             return tc;
         }
 
-        private PlanAggregator GetTestClassSetupForProducts(bool isAabEnabled, out Mock<IAabEngine> aabEngine)
+        private PlanAggregator GetTestClassSetupForProducts(out Mock<IAabEngine> aabEngine)
         {
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
 
             var campaignRepository = new Mock<ICampaignRepository>();
             campaignRepository.Setup(s => s.GetCampaign(It.IsAny<int>()))
-                .Returns(new CampaignDto{ AdvertiserMasterId = Guid.NewGuid()});
+                .Returns(new CampaignDto { AdvertiserMasterId = Guid.NewGuid() });
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<ICampaignRepository>())
                 .Returns(campaignRepository.Object);
 
             aabEngine = new Mock<IAabEngine>();
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(isAabEnabled);
 
             var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object

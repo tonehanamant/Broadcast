@@ -78,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             _CampaignRepository = new Mock<ICampaignRepository>();
             _CampaignRepository.Setup(s => s.GetCampaign(It.IsAny<int>()))
-                .Returns(new CampaignDto{AdvertiserId = 12, AdvertiserMasterId = Guid.NewGuid()});
+                .Returns(new CampaignDto { AdvertiserId = 12, AdvertiserMasterId = Guid.NewGuid() });
 
             _broadcastDataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _broadcastDataRepositoryFactoryMock.Setup(f => f.GetDataRepository<ICampaignRepository>())
@@ -129,9 +129,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ValidatePlan_InvalidProductId(bool isAabEnabled)
+        public void ValidatePlan_InvalidProductId()
         {
             // Arrange
             _ConfigureMocksToReturnTrue();
@@ -140,11 +138,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.ProductId = 666;
             plan.ProductMasterId = Guid.NewGuid();
 
-            _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(isAabEnabled);
-
-            _AabEngine.Setup(s => s.GetProduct(It.IsAny<int>()))
-                .Throws<Exception>();
             _AabEngine.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
                 .Throws<Exception>();
 
@@ -152,16 +145,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
 
-            if (isAabEnabled)
-            {
-                _AabEngine.Verify(s => s.GetProduct(It.IsAny<int>()), Times.Never);
-                _AabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
-            }
-            else
-            {
-                _AabEngine.Verify(s => s.GetProduct(It.IsAny<int>()), Times.Once);
-                _AabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
-            }
+            _AabEngine.Verify(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
+
         }
 
         [Test]
@@ -1524,7 +1509,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             new PlanDto
             {
                 Name = "Lorem ipsum",
-                ProductId = 20,
+                ProductMasterId = new Guid("81B83FEF-9785-4C51-8419-9CC963EFB8EA"),
                 Dayparts = new List<PlanDaypartDto>
                 {
                     new PlanDaypartDto

@@ -29,12 +29,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(isAabEnabled);
 
             var aabEngine = new Mock<IAabEngine>();
-            aabEngine.Setup(s => s.GetAgency(It.IsAny<int>()))
-                .Throws<Exception>();
             aabEngine.Setup(s => s.GetAgency(It.IsAny<Guid>()))
                 .Throws<Exception>();
 
@@ -44,17 +40,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
             // Assert
-            if (isAabEnabled)
-            {
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Never);
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
-            }
-            else
-            {
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Once);
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Never);
-            }
-            
+            aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
+
+
             Assert.AreEqual(CampaignValidator.InvalidAgencyErrorMessage, caughtException.Message);
         }
 
@@ -74,12 +62,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(isAabEnabled);
 
             var aabEngine = new Mock<IAabEngine>();
-            aabEngine.Setup(s => s.GetAdvertiser(It.IsAny<int>()))
-                .Throws<Exception>();
             aabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
                 .Throws<Exception>();
 
@@ -89,17 +73,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
             // Assert
-            if (isAabEnabled)
-            {
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Never);
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
-            }
-            else
-            {
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Once);
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Never);
-            }
-            
+            aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
+
             Assert.AreEqual(CampaignValidator.InvalidAdvertiserErrorMessage, caughtException.Message);
         }
 
@@ -119,24 +94,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(isAabEnabled);
 
             var aabEngine = new Mock<IAabEngine>();
 
-            int? agencyId = null;
-            aabEngine.Setup(s => s.GetAgency(It.IsAny<int>()))
-                .Callback<int>((i) => agencyId = i)
-                .Returns(new AgencyDto());
             Guid? agencyMasterId = null;
             aabEngine.Setup(s => s.GetAgency(It.IsAny<Guid>()))
                 .Callback<Guid>((i) => agencyMasterId = i)
                 .Returns(new AgencyDto());
-            
-            int? advertiserId = null;
-            aabEngine.Setup(s => s.GetAdvertiser(It.IsAny<int>()))
-                .Callback<int>((i) => advertiserId = i)
-                .Returns(new AdvertiserDto());
+
             Guid? advertiserMasterId = null;
             aabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
                 .Callback<Guid>((i) => advertiserMasterId = i)
@@ -148,35 +113,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             tc.Validate(item);
 
             // Assert
-            if (isAabEnabled)
-            {
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Never);
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
+            aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
 
-                Assert.IsFalse(agencyId.HasValue);
-                Assert.IsTrue(agencyMasterId.HasValue);
+            Assert.IsTrue(agencyMasterId.HasValue);
 
-                aabEngine.Verify(s => s.GetAdvertiser(It.IsAny<int>()), Times.Never);
-                aabEngine.Verify(s => s.GetAdvertiser(It.IsAny<Guid>()), Times.Once);
+            aabEngine.Verify(s => s.GetAdvertiser(It.IsAny<Guid>()), Times.Once);
 
-                Assert.IsFalse(advertiserId.HasValue);
-                Assert.IsTrue(advertiserMasterId.HasValue);
+            Assert.IsTrue(advertiserMasterId.HasValue);
 
-            }
-            else
-            {
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<int>()), Times.Once);
-                aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Never);
 
-                Assert.IsTrue(agencyId.HasValue);
-                Assert.IsFalse(agencyMasterId.HasValue);
-
-                aabEngine.Verify(s => s.GetAdvertiser(It.IsAny<int>()), Times.Once);
-                aabEngine.Verify(s => s.GetAdvertiser(It.IsAny<Guid>()), Times.Never);
-
-                Assert.IsTrue(advertiserId.HasValue);
-                Assert.IsFalse(advertiserMasterId.HasValue);
-            }
         }
 
         [Test]
@@ -197,8 +142,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(false);
 
             var aabEngine = new Mock<IAabEngine>();
             var tc = new CampaignValidator(aabEngine.Object, featureToggleHelper.Object);
@@ -235,8 +178,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION))
-                .Returns(false);
 
             var aabEngine = new Mock<IAabEngine>();
             var tc = new CampaignValidator(aabEngine.Object, featureToggleHelper.Object);

@@ -1630,6 +1630,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Equivalized = true,
                 Name = "Plan with Draft Test",
                 ProductId = 1,
+                ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                 CreativeLengths = new List<CreativeLength> {
                     new CreativeLength { SpotLengthId = 1, Weight = 50},
                     new CreativeLength{ SpotLengthId = 2}

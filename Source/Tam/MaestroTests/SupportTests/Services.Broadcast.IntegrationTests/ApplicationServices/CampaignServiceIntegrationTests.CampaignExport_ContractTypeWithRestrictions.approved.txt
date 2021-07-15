@@ -1,11 +1,11 @@
 ﻿{
-  "AgencyName": "Stub Agency",
+  "AgencyName": "Agency1",
   "CampaignEndQuarter": "Q2'20",
   "CampaignFlightEndDate": "06/28/20",
   "CampaignFlightStartDate": "12/30/19",
   "CampaignName": "Campaign with all types of plans",
   "CampaignStartQuarter": "Q1'20",
-  "ClientName": "Stub Advertiser",
+  "ClientName": "Advertiser1",
   "ContractQuarterTables": [
     {
       "IsAduTable": false,

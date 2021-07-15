@@ -239,7 +239,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingScxDataConverter _PlanBuyingScxDataConverter;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IAabEngine _AabEngine;
-        private readonly Lazy<bool> _IsAabEnabled;
         private readonly IAudienceService _AudienceService;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDaypartCache _DaypartCache;
@@ -304,7 +303,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingScxDataConverter = planBuyingScxDataConverter;
             _FeatureToggleHelper = featureToggleHelper;
             _AabEngine = aabEngine;
-            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
             _AudienceService = audienceService;
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _DaypartCache = daypartCache;
@@ -2696,18 +2694,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private AgencyDto _GetAgency(CampaignDto campaign)
         {
-            var result = _IsAabEnabled.Value
-                ? _AabEngine.GetAgency(campaign.AgencyMasterId.Value)
-                : _AabEngine.GetAgency(campaign.AgencyId.Value);
+            var result = _AabEngine.GetAgency(campaign.AgencyMasterId.Value);
 
             return result;
         }
 
         private AdvertiserDto _GetAdvertiser(CampaignDto campaign)
         {
-            var result = _IsAabEnabled.Value
-                ? _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value)
-                : _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
+            var result = _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value);
 
             return result;
         }

@@ -82,8 +82,6 @@ namespace Services.Broadcast.ApplicationServices
                 DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_CAMPAIGN_LINK),
                 DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
                 AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS),           
-                EnableExportPreBuy = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_EXPORT_PRE_BUY),               
-                EnableAabNavigation = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION),
             };
             
             return environmentInfo;

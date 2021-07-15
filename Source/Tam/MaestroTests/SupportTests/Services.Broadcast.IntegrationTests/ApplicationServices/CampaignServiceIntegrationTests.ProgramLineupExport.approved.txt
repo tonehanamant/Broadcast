@@ -1,6 +1,6 @@
 ﻿{
   "AccountExecutive": "",
-  "Agency": "Stub Agency",
+  "Agency": "Agency1",
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "MDN",
@@ -33,7 +33,7 @@
       "Weight": 1.0
     }
   ],
-  "Client": "Stub Advertiser",
+  "Client": "Advertiser1",
   "ClientContact": "",
   "DefaultViewRows": [
     {

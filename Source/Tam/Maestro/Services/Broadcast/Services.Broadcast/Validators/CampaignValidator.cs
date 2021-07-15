@@ -36,7 +36,7 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="aabEngine">The aab engine.</param>
         /// <param name="featureToggleHelper">The feature toggle helper.</param>
-        public CampaignValidator(IAabEngine aabEngine, 
+        public CampaignValidator(IAabEngine aabEngine,
             IFeatureToggleHelper featureToggleHelper)
         {
             _AabEngine = aabEngine;
@@ -46,10 +46,9 @@ namespace Services.Broadcast.Validators
         /// <inheritdoc />
         public void Validate(SaveCampaignDto campaign)
         {
-            var isAabEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION);
             _ValidateCampaignName(campaign);
-            _ValidateAgency(campaign, isAabEnabled);
-            _ValidateAdvertiser(campaign, isAabEnabled);
+            _ValidateAgency(campaign);
+            _ValidateAdvertiser(campaign);
             _ValidateNotes(campaign);
         }
 
@@ -67,18 +66,11 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateAdvertiser(SaveCampaignDto campaign, bool isAabEnabled)
+        private void _ValidateAdvertiser(SaveCampaignDto campaign)
         {
             try
             {
-                if (isAabEnabled)
-                {
-                    _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value);
-                }
-                else
-                {
-                    _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
-                }
+                _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value);
             }
             catch (Exception ex)
             {
@@ -86,18 +78,11 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateAgency(SaveCampaignDto campaign, bool isAabEnabled)
+        private void _ValidateAgency(SaveCampaignDto campaign)
         {
             try
             {
-                if (isAabEnabled)
-                {
-                    _AabEngine.GetAgency(campaign.AgencyMasterId.Value);
-                }
-                else
-                {
-                    _AabEngine.GetAgency(campaign.AgencyId.Value);
-                }
+                _AabEngine.GetAgency(campaign.AgencyMasterId.Value);
             }
             catch (Exception ex)
             {

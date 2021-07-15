@@ -152,7 +152,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDaypartCache _DaypartCache;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IAabEngine _AabEngine;
-        private readonly Lazy<bool> _IsAabEnabled;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -192,7 +191,6 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCache = daypartCache;
             _FeatureToggleHelper = featureToggleHelper;
             _AabEngine = aabEngine;
-            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION)); 
         }
 
         /// <inheritdoc />
@@ -810,37 +808,38 @@ namespace Services.Broadcast.ApplicationServices
 
 
         private AgencyDto _GetAgency(CampaignDto campaign)
-        {            
-            var result = _IsAabEnabled.Value
-                ? _AabEngine.GetAgency(campaign.AgencyMasterId.Value)
-                : _AabEngine.GetAgency(campaign.AgencyId.Value);
+        {
+            if (campaign == null || !campaign.AgencyMasterId.HasValue) return null;
+
+            var result = _AabEngine.GetAgency(campaign.AgencyMasterId.Value);
 
             return result;
         }
 
         private AdvertiserDto _GetAdvertiser(CampaignDto campaign)
         {
-            var result = _IsAabEnabled.Value
-                ? _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value)
-                : _AabEngine.GetAdvertiser(campaign.AdvertiserId.Value);
+            if (campaign == null || !campaign.AdvertiserMasterId.HasValue) return null;
+
+            var result = _AabEngine.GetAdvertiser(campaign.AdvertiserMasterId.Value);
 
             return result;
         }
 
         private AgencyDto _GetAgency(CampaignListItemDto campaign)
         {
-            var result = _IsAabEnabled.Value
-                ? _AabEngine.GetAgency(campaign.Agency.MasterId.Value)
-                : _AabEngine.GetAgency(campaign.Agency.Id.Value);
+            if (campaign?.Agency == null || !campaign.Agency.MasterId.HasValue) return null;
+
+            var result = _AabEngine.GetAgency(campaign.Agency.MasterId.Value);
+
 
             return result;
         }
 
         private AdvertiserDto _GetAdvertiser(CampaignListItemDto campaign)
         {
-            var result = _IsAabEnabled.Value
-                ? _AabEngine.GetAdvertiser(campaign.Advertiser.MasterId.Value)
-                : _AabEngine.GetAdvertiser(campaign.Advertiser.Id.Value);
+            if (campaign?.Advertiser == null || !campaign.Advertiser.MasterId.HasValue) return null;
+
+            var result = _AabEngine.GetAdvertiser(campaign.Advertiser.MasterId.Value);
 
             return result;
         }

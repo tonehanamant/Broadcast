@@ -1,11 +1,11 @@
 {
-  "AgencyName": "Stub Agency",
+  "AgencyName": "Agency1",
   "CampaignEndQuarter": "Q4'23",
   "CampaignFlightEndDate": "12/14/23",
   "CampaignFlightStartDate": "03/30/20",
   "CampaignName": "Campaign with all types of plans",
   "CampaignStartQuarter": "Q2'20",
-  "ClientName": "Stub Advertiser",
+  "ClientName": "Advertiser1",
   "ContractQuarterTables": [],
   "ContractTotals": [],
   "DaypartsData": [

@@ -18,6 +18,7 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
+                ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                 CreativeLengths = new List<CreativeLength> {
                     new CreativeLength { SpotLengthId = 2 }
                 },
@@ -164,10 +165,10 @@ namespace Services.Broadcast.IntegrationTests.TestData
         {
             var planDto = new PlanDto
             {
-                CampaignId = 1,
+                CampaignId = 1,               
                 Equivalized = true,
                 Name = "New Plan",
-                ProductId = 1,
+                ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                 CreativeLengths = new List<CreativeLength> {
                     new CreativeLength { SpotLengthId = 1, Weight = 50 },
                     new CreativeLength { SpotLengthId = 2 }

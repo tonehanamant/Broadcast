@@ -9,11 +9,6 @@ namespace Services.Broadcast.ApplicationServices
     public interface IProductService : IApplicationService
     {
         /// <summary>
-        /// Returns products for a specific advertiser
-        /// </summary>
-        List<ProductDto> GetProductsByAdvertiserId(int advertiserId);
-
-        /// <summary>
         /// Gets the advertiser products.
         /// </summary>
         /// <param name="advertiserMasterId">The advertiser master identifier.</param>
@@ -28,12 +23,6 @@ namespace Services.Broadcast.ApplicationServices
         public ProductService(IAabEngine aabEngine)
         {
             _AabEngine = aabEngine;
-        }
-
-        /// <inheritdoc />
-        public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
-        {
-            return _AabEngine.GetAdvertiserProducts(advertiserId);
         }
 
         /// <inheritdoc />

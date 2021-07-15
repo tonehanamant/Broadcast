@@ -16,6 +16,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 new AgencyDto{ Id = 2, MasterId = new Guid("D93EE3E1-EE03-4415-A0A9-BBDAD120B35A"), Name = "Agency2"},
                 new AgencyDto{ Id = 3, MasterId = new Guid("39F32E95-700C-48CA-B079-B7398F18BAC2"), Name = "Agency3"},
                 new AgencyDto{ Id = 4, MasterId = new Guid("CF40997F-F314-4FE7-BE6B-EBF027C14247"), Name = "Agency4"},
+                new AgencyDto{ Id = 5, MasterId = new Guid("89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b"), Name = "Agency5"}
             };
             return agencies;
         }
@@ -29,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 new AdvertiserDto{ Id = 2, MasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"), Name ="Advertiser2", AgencyId = agencies[0].Id, AgencyMasterId = agencies[0].MasterId},
                 new AdvertiserDto{ Id = 3, MasterId = new Guid("E58028B0-03E8-4411-AE19-C0A51C75DFF5"), Name ="Advertiser3", AgencyId = agencies[1].Id, AgencyMasterId = agencies[1].MasterId},
                 new AdvertiserDto{ Id = 4, MasterId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F"), Name ="Advertiser4", AgencyId = agencies[1].Id, AgencyMasterId = agencies[1].MasterId},
+                 new AdvertiserDto{ Id = 5, MasterId = new Guid("1806450a-e0a3-416d-b38d-913fb5cf3879"), Name ="Advertiser5", AgencyId = agencies[1].Id, AgencyMasterId = agencies[1].MasterId},
             };
             return advertisers;
         }

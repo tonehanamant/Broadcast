@@ -21,12 +21,6 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Gets the agency.
         /// </summary>
-        /// <param name="agencyId">The identifier used by the Aab Traffic Api.</param>
-        AgencyDto GetAgency(int agencyId);
-
-        /// <summary>
-        /// Gets the agency.
-        /// </summary>
         /// <param name="agencyMasterId">The identifier used by the Aab Api.</param>
         AgencyDto GetAgency(Guid agencyMasterId);
 
@@ -38,20 +32,8 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Gets the advertiser.
         /// </summary>
-        /// <param name="advertiserId">The advertiser Id.</param>
-        AdvertiserDto GetAdvertiser(int advertiserId);
-
-        /// <summary>
-        /// Gets the advertiser.
-        /// </summary>
         /// <param name="advertiserMasterId">The identifier used by the Aab Api.</param>
         AdvertiserDto GetAdvertiser(Guid advertiserMasterId);
-
-        /// <summary>
-        /// Gets the advertiser products.
-        /// </summary>
-        /// <param name="advertiserId">The advertiser id.</param>
-        List<ProductDto> GetAdvertiserProducts(int advertiserId);
 
         /// <summary>
         /// Gets the advertiser products.
@@ -65,12 +47,6 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="advertiserMasterId">The advertiser master identifier used by the Aab Api.</param>
         /// <param name="productMasterId">The product master identifier used by the Aab Api.</param>
         ProductDto GetAdvertiserProduct(Guid advertiserMasterId, Guid productMasterId);
-
-        /// <summary>
-        /// Gets the product.
-        /// </summary>
-        /// <param name="productId">The identifier used by the Aab Traffic Api.</param>
-        ProductDto GetProduct(int productId);
 
         /// <summary>
         /// Clears the agencies cache.
@@ -91,50 +67,23 @@ namespace Services.Broadcast.BusinessEngines
     public class AabEngine : IAabEngine
     {
         private IAabCache _AabApiCache;
-        private ITrafficApiCache _TrafficApiCache;
-        private IFeatureToggleHelper _FeatureToggleHelper;
-        private Lazy<bool> _IsAabEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AabEngine"/> class.
         /// </summary>
         /// <param name="aabApiCache">The aab API cache.</param>
-        /// <param name="trafficApiCache">The traffic API cache.</param>
         /// <param name="featureToggleHelper">The feature toggle helper.</param>
         public AabEngine(IAabCache aabApiCache,
-            ITrafficApiCache trafficApiCache,
             IFeatureToggleHelper featureToggleHelper)
         {
             _AabApiCache = aabApiCache;
-            _TrafficApiCache = trafficApiCache;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
         }
 
         /// <inheritdoc />
         public List<AgencyDto> GetAgencies()
         {
 
-            var result = _IsAabEnabled.Value
-                ? _AabApiCache.GetAgencies()
-                : _TrafficApiCache.GetAgencies();
-            return result;
-        }
-
-        /// <inheritdoc />
-        public AgencyDto GetAgency(int agencyId)
-        {
-
-            AgencyDto result;
-            if (_IsAabEnabled.Value)
-            {
-                var items = _AabApiCache.GetAgencies();
-                result = items.Single(i => i.Id == agencyId, $"Agency with id {agencyId} not found.");
-            }
-            else
-            {
-                result = _TrafficApiCache.GetAgency(agencyId);
-            }
+            var result = _AabApiCache.GetAgencies();
             return result;
         }
 
@@ -151,28 +100,7 @@ namespace Services.Broadcast.BusinessEngines
         public List<AdvertiserDto> GetAdvertisers()
         {
 
-            var result = _IsAabEnabled.Value
-                ? _AabApiCache.GetAdvertisers()
-                : _TrafficApiCache.GetAdvertisers();
-            return result;
-        }
-
-        /// <inheritdoc />
-        public AdvertiserDto GetAdvertiser(int advertiserId)
-        {
-
-            AdvertiserDto result;
-
-            if (_IsAabEnabled.Value)
-            {
-                var items = _AabApiCache.GetAdvertisers();
-                result = items.Single(i => i.Id == advertiserId, $"Advertiser with id {advertiserId} not found.");
-            }
-            else
-            {
-                result = _TrafficApiCache.GetAdvertiser(advertiserId);
-            }
-
+            var result = _AabApiCache.GetAdvertisers();
             return result;
         }
 
@@ -183,25 +111,6 @@ namespace Services.Broadcast.BusinessEngines
             var items = _AabApiCache.GetAdvertisers();
             var item = items.Single(i => i.MasterId == advertiserMasterId, $"Advertiser with master id {advertiserMasterId} not found.");
             return item;
-        }
-
-        /// <inheritdoc />
-        public List<ProductDto> GetAdvertiserProducts(int advertiserId)
-        {
-
-            List<ProductDto> results;
-
-            if (_IsAabEnabled.Value)
-            {
-                var advertiser = GetAdvertiser(advertiserId);
-                results = _AabApiCache.GetAdvertiserProducts(advertiser.MasterId.Value);
-            }
-            else
-            {
-                results = _TrafficApiCache.GetProductsByAdvertiserId(advertiserId);
-            }
-
-            return results;
         }
 
         /// <inheritdoc />
@@ -221,43 +130,14 @@ namespace Services.Broadcast.BusinessEngines
             return product;
         }
 
-        /// <inheritdoc />
-        public ProductDto GetProduct(int productId)
-        {
-            // must check the toggle and fail since products have integer ids from both sources.
-
-            if (_IsAabEnabled.Value)
-            {
-                throw new InvalidOperationException("Disable the AAb Navigation Feature to retrieve a product by an integer id.  Otherwise use method GetAdvertiserProduct.");
-            }
-            var product = _TrafficApiCache.GetProduct(productId);
-            return product;
-        }
-
         public void ClearAgenciesCache()
         {
-
-            if (_IsAabEnabled.Value)
-            {
-                _AabApiCache.ClearAgenciesCache();
-            }
-            else
-            {
-                _TrafficApiCache.ClearAgenciesCache();
-            }
+            _AabApiCache.ClearAgenciesCache();
         }
 
         public void ClearAdvertisersCache()
         {
-
-            if (_IsAabEnabled.Value)
-            {
-                _AabApiCache.ClearAdvertisersCache();
-            }
-            else
-            {
-                _TrafficApiCache.ClearAdvertisersCache();
-            }
+            _AabApiCache.ClearAdvertisersCache();
         }
     }
 }

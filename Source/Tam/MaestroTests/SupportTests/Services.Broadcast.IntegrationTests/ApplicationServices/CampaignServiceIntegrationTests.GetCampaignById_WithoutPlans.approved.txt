@@ -1,8 +1,8 @@
 ﻿{
   "AdvertiserId": 37444,
-  "AdvertiserMasterId": null,
+  "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
   "AgencyId": 5,
-  "AgencyMasterId": null,
+  "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
   "Budget": null,
   "CampaignStatus": null,
   "FlightActiveDays": null,

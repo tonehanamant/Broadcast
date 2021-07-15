@@ -30,7 +30,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsAabEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanAggregator"/> class.
@@ -49,8 +48,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
-            _IsAabEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION));
-
         }
 
         /// <inheritdoc/>
@@ -111,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return;
             }
-            
+
             var totalHiatusDays = plan.FlightHiatusDays.Count;
             var totalFlightDays = Convert.ToInt32(plan.FlightEndDate.Value.Subtract(plan.FlightStartDate.Value).TotalDays) + 1;
             var totalActiveDays = totalFlightDays - totalHiatusDays;
@@ -160,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var coveredQuarters = _QuarterCalculationEngine
                 .GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value)
                 .OrderBy(s => s.Year).ThenBy(s => s.Quarter)
-                .Select(q => new PlanSummaryQuarterDto { Quarter = q.Quarter, Year = q.Year})
+                .Select(q => new PlanSummaryQuarterDto { Quarter = q.Quarter, Year = q.Year })
                 .ToList();
 
             summary.PlanSummaryQuarters = coveredQuarters;
@@ -169,23 +166,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         internal void AggregateProduct(PlanDto plan, PlanSummaryDto summary)
         {
             ProductDto product = null;
-            if (_IsAabEnabled.Value)
+
+            if (!plan.ProductMasterId.HasValue)
             {
-                if (!plan.ProductMasterId.HasValue)
-                {
-                    return;
-                }
-                var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
-                product = _AabEngine.GetAdvertiserProduct(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
+                return;
             }
-            else
-            {
-                if (!plan.ProductId.HasValue)
-                {
-                    return;
-                }
-                product = _AabEngine.GetProduct(plan.ProductId.Value);
-            }
+            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
+            product = _AabEngine.GetAdvertiserProduct(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
+
 
             summary.ProductName = product.Name;
         }

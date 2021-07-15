@@ -51,8 +51,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SetUpCampaignServiceIntegrationTests()
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_AAB_NAVIGATION, false);
-
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
@@ -250,9 +248,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaignToSave = new SaveCampaignDto
                 {
                     Id = foundCampaign.Id,
-                    Name = foundCampaign.Name,
-                    AgencyId = foundCampaign.AgencyId,
-                    AdvertiserId = foundCampaign.AdvertiserId,
+                    Name = foundCampaign.Name,                   
+                    AgencyMasterId = foundCampaign.AgencyMasterId,
+                    AdvertiserMasterId = foundCampaign.AdvertiserMasterId,
                     Notes = foundCampaign.Notes,
                     ModifiedBy = foundCampaign.ModifiedBy,
                     ModifiedDate = foundCampaign.ModifiedDate
@@ -305,7 +303,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _GetValidCampaignForSave();
 
                 // Invalid advertiser id.
-                campaign.AdvertiserId = -1;
+                campaign.AdvertiserMasterId = new Guid();
 
                 var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
@@ -494,8 +492,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new SaveCampaignDto
             {
                 Name = "Campaign1",
-                AdvertiserId = 1,
-                AgencyId = 1,
+                AdvertiserMasterId = new Guid("1806450a-e0a3-416d-b38d-913fb5cf3879"),
+                AgencyMasterId = new Guid("89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b"),
                 Notes = "Notes for CampaignOne."
             };
         }
