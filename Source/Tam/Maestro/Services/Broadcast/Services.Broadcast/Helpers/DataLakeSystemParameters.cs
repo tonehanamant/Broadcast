@@ -27,7 +27,7 @@ namespace Services.Broadcast.ApplicationServices
         }
         public string GetSharedFolder()
         {
-            return BroadcastServiceSystemParameter.DataLake_SharedFolder;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) :BroadcastServiceSystemParameter.DataLake_SharedFolder;
         }
 
         public string GetUserName()
@@ -58,7 +58,7 @@ namespace Services.Broadcast.ApplicationServices
         }
         public string GetNotificationEmail()
         {
-            return BroadcastServiceSystemParameter.DataLake_NotificationEmail;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_NotificationEmail) :BroadcastServiceSystemParameter.DataLake_NotificationEmail;
         }
     }
 }

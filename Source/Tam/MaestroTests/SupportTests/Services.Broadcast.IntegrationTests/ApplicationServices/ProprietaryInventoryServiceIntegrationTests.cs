@@ -5,10 +5,12 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -29,10 +31,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRepository _IInventoryRepository;
         private IProprietaryRepository _ProprietaryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);           
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
@@ -444,7 +450,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
-                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) :BroadcastServiceSystemParameter.DataLake_SharedFolder;
                 var filePath = Path.Combine(dataLakeFolder, fileName);
                 var proprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
 

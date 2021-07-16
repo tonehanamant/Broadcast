@@ -7,9 +7,10 @@ namespace WWTVData.Service
 {
 
     public class WWTVInboundService :  ScheduledServiceMethod
-    {
+    {  
         public WWTVInboundService () : base(null)
         {
+            
         }
         
         public override string ServiceName
@@ -25,7 +26,7 @@ namespace WWTVData.Service
         {
             get
             {
-                _RunWhen = _EnsureRunWeeklyWhen(BroadcastServiceSystemParameter.WWTV_WhenToCheckWWTV);
+                _RunWhen = _EnsureRunWeeklyWhen("");
 
                 return _RunWhen;
             }
@@ -35,7 +36,7 @@ namespace WWTVData.Service
         {
             get
             {
-                return  BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
+                return  0;
             }
         }
         

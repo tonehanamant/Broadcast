@@ -24,6 +24,7 @@ using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
+using Services.Broadcast.Helpers;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -32,12 +33,18 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public MaintenanceController(
-            BroadcastApplicationServiceFactory applicationServiceFactory)
+            BroadcastApplicationServiceFactory applicationServiceFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
             _BroadcastDataRepositoryFactory = BroadcastApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>();
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         protected string _GetCurrentUserFullName() =>
@@ -912,7 +919,7 @@ namespace BroadcastComposerWeb.Controllers
                 {
                     var service = _ApplicationServiceFactory.GetApplicationService<IFileService>();
                     const string dirName = "ProgramMappingMasterList";
-                    var appFolderPath = BroadcastServiceSystemParameter.BroadcastAppFolder;;
+                    var appFolderPath = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder) : BroadcastServiceSystemParameter.BroadcastAppFolder;
                     var completePath = Path.Combine(appFolderPath, dirName);
                     if (!service.DirectoryExists(completePath))
                         service.CreateDirectory(completePath);

@@ -37,10 +37,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryFileRepository _InventoryFileRepository;
         private static InventorySource _openMarketInventorySource;
         private InventoryFileTestHelper _InventoryFileTestHelper;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
@@ -1830,8 +1834,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
-			
-                string errorsFilePath = $@"{BroadcastServiceSystemParameter.BroadcastAppFolder}\{result.FileId}_{fileName}.txt";
+
+                var broadcastAppFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder) : BroadcastServiceSystemParameter.BroadcastAppFolder;
+                string errorsFilePath = $@"{broadcastAppFolder}\{result.FileId}_{fileName}.txt";
 
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 Assert.IsTrue(fileService.Exists(errorsFilePath));

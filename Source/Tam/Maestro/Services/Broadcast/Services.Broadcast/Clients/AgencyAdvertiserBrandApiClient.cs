@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities.Aab;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,22 +40,28 @@ namespace Services.Broadcast.Clients
     /// </summary>
     public class AgencyAdvertiserBrandApiClient : IAgencyAdvertiserBrandApiClient
     {
-        private readonly string _AABApiUrl;
+        private readonly Lazy<string> _AABApiUrl;
         private readonly HttpClient _HttpClient;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgencyAdvertiserBrandApiClient"/> class.
         /// </summary>
-        public AgencyAdvertiserBrandApiClient()
-        {
-            _AABApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl}";
-            _HttpClient = new HttpClient();
+        public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        {              
+            _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
+             _HttpClient = new HttpClient();
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         /// <inheritdoc/>
         public List<AgencyDto> GetAgencies()
         {
-            var url = $"{_AABApiUrl}/agencies";
+            var url = $"{_AABApiUrl.Value}/agencies";
 
             try
             {
@@ -76,7 +83,7 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc/>
         public List<AdvertiserDto> GetAdvertisers()
         {
-            var url = $"{_AABApiUrl}/advertisers";
+            var url = $"{_AABApiUrl.Value}/advertisers";
 
             try
             {
@@ -98,7 +105,7 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
-            var url = $"{_AABApiUrl}/advertisers/getadvertiserbyid/{advertiserMasterId}";
+            var url = $"{_AABApiUrl.Value}/advertisers/getadvertiserbyid/{advertiserMasterId}";
 
             try
             {
@@ -118,6 +125,10 @@ namespace Services.Broadcast.Clients
             {
                 throw new Exception($"Cannot fetch products data for advertiser {advertiserMasterId}.", ex);
             }
+        }
+        private string _GetAgencyAdvertiserBrandApiUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl) : BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl;
         }
     }
 }

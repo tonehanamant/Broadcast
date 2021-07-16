@@ -57,6 +57,16 @@ namespace Services.Broadcast
 		public static readonly string UseMaestroDayPartRepo = "UseMaestroDayPartRepo";
 		public static readonly string WWTV_WhenTocheckDataFiles = "WWTV_WhenTocheckDataFiles";
 		public static readonly string WWTV_WhenTocheckErrorFiles = "WWTV_WhenTocheckErrorFiles";
+		public static readonly string WWTV_WhenToCheckWWTV = "WWTV_WhenToCheckWWTV";
+		public static readonly string AffidavitUploadUrl = "AffidavitUploadUrl";
+		public static readonly string AgencyAdvertiserBrandApiUrl = "AgencyAdvertiserBrandApiUrl";
+		public static readonly string AgencyAdvertiserBrandTrafficApiUrl = "AgencyAdvertiserBrandTrafficApiUrl";
+		public static readonly string BroadcastAppFolder = "BroadcastAppFolder";
+		public static readonly string BroadcastNTIUploadApiUrl= "BroadcastNTIUploadApiUrl";
+		public static readonly string BroadcastSharedFolder = "BroadcastSharedFolder";
+		public static readonly string DataLake_NotificationEmail = "DataLake_NotificationEmail";
+		public static readonly string DataLake_SharedFolder = "DataLake_SharedFolder";
+		public static readonly string EmailFrom = "EmailFrom";
 	}
 }
 

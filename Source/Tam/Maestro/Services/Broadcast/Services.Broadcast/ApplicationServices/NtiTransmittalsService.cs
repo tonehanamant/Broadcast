@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Nti;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -42,13 +43,21 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalRepository _ProposalRepository;
         private readonly INsiComponentAudienceRepository _NsiComponentAudienceRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private Lazy<string> _BroadcastNTIUploadApiUrl;
 
-        public NtiTransmittalsService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public NtiTransmittalsService(IDataRepositoryFactory broadcastDataRepositoryFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _NtiTransmittalsRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiTransmittalsRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _ProposalRepository = broadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _NsiComponentAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _BroadcastNTIUploadApiUrl = new Lazy<string>(_GetBroadcastNTIUploadApiUrl);
         }
 
         /// <summary>
@@ -291,10 +300,14 @@ namespace Services.Broadcast.ApplicationServices
             using (var webClient = new WebClient())
             {
                 webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                var jsonResult = webClient.UploadString(BroadcastServiceSystemParameter.BroadcastNTIUploadApiUrl, jsonRequest);
+                var jsonResult = webClient.UploadString(_BroadcastNTIUploadApiUrl.Value, jsonRequest);
                 var result = JsonConvert.DeserializeObject<BaseResponse<List<NtiRatingDocumentDto>>>(jsonResult);
                 return result;
             }
+        }
+        private string _GetBroadcastNTIUploadApiUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastNTIUploadApiUrl) : BroadcastServiceSystemParameter.BroadcastNTIUploadApiUrl;
         }
     }
 }

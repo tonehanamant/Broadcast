@@ -8,6 +8,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
@@ -29,18 +30,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IAffidavitPostProcessingService _AffidavitPostProcessingService;
         private readonly IAffidavitRepository _AffidavitRepository;
         private const string _UserName = "Test User";
-
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
 
         public AffPPServiceIntegrationTests()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
 
             _AudiencesCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IBroadcastAudiencesCache>();
             _AffidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
-            _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
+            _AffidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();            
         }
         
         [Test]
@@ -507,7 +511,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var affidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 
-                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) : BroadcastServiceSystemParameter.DataLake_SharedFolder;
                 string filePath = Path.Combine(dataLakeFolder, filename);
                 if (fileService.Exists(filePath))
                 {

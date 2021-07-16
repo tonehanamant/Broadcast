@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -31,18 +32,24 @@ namespace Services.Broadcast.Clients
 
     public class TrafficApiClient : ITrafficApiClient
     {
-        private readonly string _AABApiUrl;
+        private readonly Lazy<string> _AABApiUrl;
         private readonly HttpClient _HttpClient;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public TrafficApiClient()
+        public TrafficApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
-            _AABApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandTrafficApiUrl}";
+            _AABApiUrl = new Lazy<string>(()=>$"{_GetAgencyAdvertiserBrandTrafficApiUrl()}");
             _HttpClient = new HttpClient();
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public List<AgencyDto> GetFilteredAgencies(string filter)
         {
-            var url = $"{_AABApiUrl}/agency?filter={Uri.EscapeDataString(filter)}";
+            var url = $"{_AABApiUrl.Value}/agency?filter={Uri.EscapeDataString(filter)}";
 
             try
             {
@@ -57,7 +64,7 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc/>
         public List<AgencyDto> GetAgencies()
         {
-            var url = $"{_AABApiUrl}/agency/nolimit";
+            var url = $"{_AABApiUrl.Value}/agency/nolimit";
 
             try
             {
@@ -72,7 +79,7 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc/>
         public List<AdvertiserDto> GetAdvertisers()
         {
-            var url = $"{_AABApiUrl}/advertiser/nolimit";
+            var url = $"{_AABApiUrl.Value}/advertiser/nolimit";
 
             try
             {
@@ -88,7 +95,7 @@ namespace Services.Broadcast.Clients
 
         public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
         {
-            var url = $"{_AABApiUrl}/advertiser/{advertiserId}/products";
+            var url = $"{_AABApiUrl.Value}/advertiser/{advertiserId}/products";
 
             try
             {
@@ -104,7 +111,7 @@ namespace Services.Broadcast.Clients
 
         public ProductDto GetProduct(int productId)
         {
-            var url = $"{_AABApiUrl}/product/{productId}";
+            var url = $"{_AABApiUrl.Value}/product/{productId}";
 
             try
             {
@@ -120,7 +127,7 @@ namespace Services.Broadcast.Clients
 
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            var url = $"{_AABApiUrl}/advertiser/{advertiserId}";
+            var url = $"{_AABApiUrl.Value}/advertiser/{advertiserId}";
 
             try
             {
@@ -132,6 +139,10 @@ namespace Services.Broadcast.Clients
             {
                 throw new Exception($"Cannot fetch data of the advertiser {advertiserId}", ex);
             }
+        }
+        private string _GetAgencyAdvertiserBrandTrafficApiUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandTrafficApiUrl) : BroadcastServiceSystemParameter.AgencyAdvertiserBrandTrafficApiUrl;
         }
     }
 }

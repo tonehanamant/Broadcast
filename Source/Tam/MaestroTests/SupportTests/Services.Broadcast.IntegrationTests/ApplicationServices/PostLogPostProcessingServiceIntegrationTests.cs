@@ -5,8 +5,10 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
@@ -25,9 +27,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IPostLogPostProcessingService _PostLogPostProcessingService;
         private readonly IPostLogService _PostLogService;
         private const string _UserName = "PostLog Post Processing Test User";
-        
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
+
         public PostLogPostProcessingServiceIntegrationTests()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);          
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
@@ -154,7 +160,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var postLogPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
-                var dataLakeFolder = BroadcastServiceSystemParameter.DataLake_SharedFolder;
+                var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder):BroadcastServiceSystemParameter.DataLake_SharedFolder;
                 string filePath = Path.Combine(dataLakeFolder, filename);
                 if (fileService.Exists(filePath))
                 {

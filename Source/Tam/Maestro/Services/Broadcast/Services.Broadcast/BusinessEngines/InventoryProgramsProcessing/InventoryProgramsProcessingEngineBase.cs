@@ -1360,7 +1360,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual string _GetBroadcastSharedDirectoryPath()
         {
-            return BroadcastServiceSystemParameter.BroadcastSharedFolder;
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastSharedFolder) : BroadcastServiceSystemParameter.BroadcastSharedFolder;
         }
 
         protected virtual string[] _GetProcessingBySourceResultReportToEmails()
