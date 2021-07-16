@@ -37,15 +37,16 @@ namespace BroadcastComposerWeb.Controllers
             _LogInfo("Starting to resolve user info.");
 
             var ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
-            _LogInfo($"Discovered ssid from http context : '{ssid}'.  Reaching out to SMS...");
+            var ssidForLog = $"{ssid.Substring(0, 4)}...";
+            _LogInfo($"Discovered ssid from http context : '{ssidForLog}'.  Reaching out to SMS...");
 
             var employee = SMSClient.Handler.GetEmployee(ssid, false);
             if (employee == null)
             {
-                _LogError($"SMS did not return user info for ssid '{ssid}'.", null);
+                _LogError($"SMS did not return user info for ssid '{ssidForLog}'.", null);
                 return null;
             }
-            _LogInfo($"SMS returns user '{employee.Employee.FullName}' with email '{employee.Employee.Email}' for SSID '{ssid}'.  Reaching out to Launch Darkly to resolve the client hash.");
+            _LogInfo($"SMS returns user '{employee.Employee.FullName}' with email '{employee.Employee.Email}' for SSID '{ssidForLog}'.  Reaching out to Launch Darkly to resolve the client hash.");
             var broadcastEmployee = new BroadcastEmployeeDto(employee.Employee);
             broadcastEmployee.LaunchDarklyClientHash = _ResolveLaunchDarklyCredentials(broadcastEmployee.Email);
 

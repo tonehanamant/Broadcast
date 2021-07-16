@@ -480,9 +480,10 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc/>
         public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, string templatesFilePath)
         {
-            _LogInfo($"Generating the file...");
+            _LogInfo($"Gathering the report data...");
             var campaignReportData = GetAndValidateCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator(templatesFilePath);
+            _LogInfo($"Preparing to generate the file.  templatesFilePath='{templatesFilePath}'");
             var report = reportGenerator.Generate(campaignReportData);
 
             var folderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.CAMPAIGN_EXPORT_REPORTS);
