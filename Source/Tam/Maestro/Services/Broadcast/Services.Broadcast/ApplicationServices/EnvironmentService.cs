@@ -1,6 +1,8 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.ReelRosterIscis;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -25,18 +27,24 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="username">The username to authenticate.</param>
         /// <returns>A client hash for the client to then use as the authenticated token when communicating with the Launch Darkly application directly.</returns>
         string AuthenticateUserAgainstLaunchDarkly(string username);
+
+        List<ReelRosterIsciDto> TestReelIsciApiClient(DateTime startDate, int numDays);
     }
     public class EnvironmentService: BroadcastBaseClass, IEnvironmentService
     {
         private readonly IRatingsRepository _RatingsRepo;
         private readonly IInventoryFileRepository _InventoryFileRepo;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigSettingsHelper;
 
-        public EnvironmentService(IDataRepositoryFactory broadcastDataRepositoryFactory, IFeatureToggleHelper featureToggleHelper)
+        public EnvironmentService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
+            IFeatureToggleHelper featureToggleHelper, 
+            IConfigurationSettingsHelper configSettingsHelper)
         {
             _RatingsRepo = broadcastDataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _InventoryFileRepo = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _FeatureToggleHelper = featureToggleHelper;
+            _ConfigSettingsHelper = configSettingsHelper;
         }
 
         public Dictionary<string, string> GetDbInfo()
@@ -85,6 +93,14 @@ namespace Services.Broadcast.ApplicationServices
             };
             
             return environmentInfo;
+        }
+
+        public List<ReelRosterIsciDto> TestReelIsciApiClient(DateTime startDate, int numDays)
+        {
+            var apiClientConfig = new ReelIsciApiClientConfig(_ConfigSettingsHelper);
+            var apiClient = new ReelIsciApiClient(apiClientConfig);
+            var result = apiClient.GetReelRosterIscis(startDate, numDays);
+            return result;
         }
     }
 }

@@ -296,6 +296,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingScxDataConverter, PlanBuyingScxDataConverter>();
 
             unityContainer.RegisterType<IPlanMarketSovCalculator, PlanMarketSovCalculator>();
+            unityContainer.RegisterType<IReelIsciApiClient, ReelIsciApiClient>();
 
             // Aab Related
             unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
@@ -306,7 +307,7 @@ namespace Services.Broadcast.ApplicationServices
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
-           
+
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();

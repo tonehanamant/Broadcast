@@ -496,6 +496,9 @@
     <Compile Include="BusinessEngines\PlanMarketSovCalculator.cs" />
     <Compile Include="Cache\AabCache.cs" />
     <Compile Include="Clients\AgencyAdvertiserBrandApiClient.cs" />
+    <Compile Include="Clients\ReelIsciApiClient.cs" />
+    <Compile Include="Clients\ReelIsciApiClientConfig.cs" />
+    <Compile Include="Clients\ReelIsciApiClientConfigKeys.cs" />
     <Compile Include="ConfigurationSettingsHelper.cs" />
     <Compile Include="ConnectionStringConfigKeys.cs" />
     <Compile Include="Converters\RateImport\InventoryImportManifestDuplicateHandler.cs" />
@@ -511,6 +514,9 @@
     <Compile Include="Entities\Isci\IsciDto.cs" />
     <Compile Include="Entities\Isci\IsciListItemDto.cs" />
     <Compile Include="Entities\Isci\IsciSearchDto.cs" />
+    <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciDto.cs" />
+    <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciEntity.cs" />
+    <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciResponseEntity.cs" />
     <Compile Include="Entities\Plan\Buying\CurrentBuyingExecutions.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingScxExportRequest.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />

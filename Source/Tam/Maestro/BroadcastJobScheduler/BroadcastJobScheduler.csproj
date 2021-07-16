@@ -209,6 +209,7 @@
     <Error Condition="!Exists('..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>Copy /Y "$(TargetDir)appsettings.json" "$(TargetDir)..\appsettings.json"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -1,9 +1,13 @@
 ﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.ReelRosterIscis;
+using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
+using Services.Broadcast;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
@@ -114,5 +118,16 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().GetDbInfo());
         }
 
+        /// <summary>
+        /// Tests the reel isci API client.
+        /// </summary>
+        [HttpGet]
+        [Route("test-reel-isci-api-client")]
+        public BaseResponse<List<ReelRosterIsciDto>> TestReelISciApiClient()
+        {
+            var numDays = 6;
+            var startDate = new DateTime(2021, 1, 11);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().TestReelIsciApiClient(startDate, numDays));
+        }
     }
 }
