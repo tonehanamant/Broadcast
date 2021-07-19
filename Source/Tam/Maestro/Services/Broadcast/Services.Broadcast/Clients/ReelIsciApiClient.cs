@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Clients
 {
@@ -13,16 +14,20 @@ namespace Services.Broadcast.Clients
 
     public class ReelIsciApiClient : IReelIsciApiClient
     {
-        private const string dateStringFormat = "yyyy-MM-dd";
+        public const string ReelIsciApiDateFormat = "yyyy-MM-dd";
         private const string headerKey_ApiKey = "x-api-key";
 
-        private readonly string _ApiUrl;
-        private readonly string _ApiKey;
+        private Lazy<string> _ApiUrl;
+        private Lazy<string> _ApiKey;
 
-        public ReelIsciApiClient(ReelIsciApiClientConfig clientConfig)
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+
+        public ReelIsciApiClient(IConfigurationSettingsHelper configurationSettingsHelper)
         {
-            _ApiUrl = clientConfig.ApiUrl;
-            _ApiKey = clientConfig.ApiKey;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+
+            _ApiUrl = new Lazy<string>(_GetApiUrl);
+            _ApiKey = new Lazy<string>(_GetApiKey);
         }
 
         public List<ReelRosterIsciDto> GetReelRosterIscis(DateTime startDate, int numberOfDays)
@@ -32,12 +37,12 @@ namespace Services.Broadcast.Clients
             {
                 numberOfDays = 1;
             }
-            var startDateString = startDate.ToString(dateStringFormat);
+            var startDateString = startDate.ToString(ReelIsciApiDateFormat);
             var paramString = $"?num_days={numberOfDays}&start_date={startDateString}";
             
-            var queryUrl = $"{_ApiUrl}{apiOperation}{paramString}";
+            var queryUrl = $"{_ApiUrl.Value}{apiOperation}{paramString}";
 
-            var apiReturnRaw = _PostAndGet(queryUrl, _ApiKey);
+            var apiReturnRaw = _PostAndGet(queryUrl, _ApiKey.Value);
 
             var result = apiReturnRaw.Select(r =>
                 new ReelRosterIsciDto
@@ -82,6 +87,19 @@ namespace Services.Broadcast.Clients
                 }
             }
             return result;
+        }
+
+        private string _GetApiUrl()
+        {
+            var apiUrl = _ConfigurationSettingsHelper.GetConfigValue<string>(ReelIsciApiClientConfigKeys.ApiUrlBase);
+            return apiUrl;
+        }
+
+        private string _GetApiKey()
+        {
+            var encryptedDevApiKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ReelIsciApiClientConfigKeys.EncryptedApiKey);
+            var apiKey = EncryptionHelper.DecryptString(encryptedDevApiKey, EncryptionHelper.EncryptionKey); ;
+            return apiKey;
         }
     }
 }

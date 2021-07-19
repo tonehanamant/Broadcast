@@ -296,6 +296,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingScxDataConverter, PlanBuyingScxDataConverter>();
 
             unityContainer.RegisterType<IPlanMarketSovCalculator, PlanMarketSovCalculator>();
+            
+            unityContainer.RegisterType<IReelIsciIngestService, ReelIsciIngestService>();
             unityContainer.RegisterType<IReelIsciApiClient, ReelIsciApiClient>();
 
             // Aab Related

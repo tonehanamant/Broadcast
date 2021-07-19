@@ -128,7 +128,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var numDays = 6;
             var startDate = new DateTime(2021, 1, 11);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().TestReelIsciApiClient(startDate, numDays));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IReelIsciIngestService>().TestReelISciApiClient(startDate, numDays));
         }
     }
 }

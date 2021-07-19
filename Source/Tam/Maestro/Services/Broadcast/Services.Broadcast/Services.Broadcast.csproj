@@ -472,6 +472,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\AabMigrationService.cs" />
+    <Compile Include="ApplicationServices\ReelIsciIngestService.cs" />
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AffiliateService.cs" />
     <Compile Include="ApplicationServices\AgencyService.cs" />
@@ -497,7 +498,6 @@
     <Compile Include="Cache\AabCache.cs" />
     <Compile Include="Clients\AgencyAdvertiserBrandApiClient.cs" />
     <Compile Include="Clients\ReelIsciApiClient.cs" />
-    <Compile Include="Clients\ReelIsciApiClientConfig.cs" />
     <Compile Include="Clients\ReelIsciApiClientConfigKeys.cs" />
     <Compile Include="ConfigurationSettingsHelper.cs" />
     <Compile Include="ConnectionStringConfigKeys.cs" />
