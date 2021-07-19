@@ -17,8 +17,9 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// list of Iscis based on search key.
         /// </summary>
-        /// <param name="isciSearch">Isci search input</param>       
-        List<IsciAdvertiserDto> GetAvailableIscis(IsciSearchDto isciSearch);
+        /// <param name="month">Isci search month input</param> 
+        /// <param name="year">Isci search year input</param> 
+        List<IsciAdvertiserDto> GetAvailableIscis(int month, int year);
     }
     /// <summary>
     /// Data operations for the PlanIsci Repository.
@@ -39,22 +40,16 @@ namespace Services.Broadcast.Repositories
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
-        public List<IsciAdvertiserDto> GetAvailableIscis(IsciSearchDto isciSearch)
+        public List<IsciAdvertiserDto> GetAvailableIscis(int month, int year)
         {
-            List<IsciAdvertiserDto> result = null;
             return _InReadUncommitedTransaction(context =>
             {
-                if (isciSearch.WithoutPlansOnly)
-                {
-                    result = (from isci in context.reel_iscis
+                var result = (from isci in context.reel_iscis
                               join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
                               join pro in context.reel_isci_products on isci.isci equals pro.isci
                               join sl in context.spot_lengths on isci.spot_length_id equals sl.id
-                              join plan_iscis in context.plan_iscis on isci.isci equals plan_iscis.isci into ps
-                              from plan_iscis in ps.DefaultIfEmpty()
-                              where isci.active_start_date.Month <= isciSearch.MediaMonth.Month && isci.active_start_date.Year <= isciSearch.MediaMonth.Year &&
-                                    isci.active_end_date.Month >= isciSearch.MediaMonth.Month && isci.active_end_date.Year >= isciSearch.MediaMonth.Year
-                                    && plan_iscis.isci != null
+                              where isci.active_start_date.Month <= month && isci.active_start_date.Year <= year &&
+                                    isci.active_end_date.Month >= month && isci.active_end_date.Year >= year
                               select new IsciAdvertiserDto
                               {
                                   AdvertiserName = isci_adr.advertiser_name_reference,
@@ -63,29 +58,8 @@ namespace Services.Broadcast.Repositories
                                   ProductName = pro.product_name,
                                   Isci = isci.isci
                               }).ToList();
-                }
-                else
-                {
-                    result = (from isci in context.reel_iscis
-                              join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
-                              join pro in context.reel_isci_products on isci.isci equals pro.isci
-                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id
-                              where isci.active_start_date.Month <= isciSearch.MediaMonth.Month && isci.active_start_date.Year <= isciSearch.MediaMonth.Year &&
-                                    isci.active_end_date.Month >= isciSearch.MediaMonth.Month && isci.active_end_date.Year >= isciSearch.MediaMonth.Year
-                              select new IsciAdvertiserDto
-                              {
-                                  AdvertiserName = isci_adr.advertiser_name_reference,
-                                  id = isci.id,
-                                  SpotLengthsString = sl.length,
-                                  ProductName = pro.product_name,
-                                  Isci = isci.isci
-                              }).ToList();
-                }
-
                 return result;
-
             });
         }
-
     }
 }

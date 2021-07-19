@@ -1,0 +1,68 @@
+[
+  {
+    "AdvertiserName": "ATLT0063000HU",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "OKWF1701H",
+        "ProductName": "Product3",
+        "SpotLengthsString": "23"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "Colgate EM",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "CUSA1813000H",
+        "ProductName": null,
+        "SpotLengthsString": "30"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "Invisaling (Adult)",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "CLDC6513000H",
+        "ProductName": "Product4",
+        "SpotLengthsString": "24"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "Nature's Bounty",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "ATLT0063000HU",
+        "ProductName": null,
+        "SpotLengthsString": "28"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "O'Keeffes",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "OKWF1701H",
+        "ProductName": "Product6",
+        "SpotLengthsString": "26"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "USAA",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "OKWL1702H",
+        "ProductName": "Product7",
+        "SpotLengthsString": "27"
+      }
+    ]
+  }
+]

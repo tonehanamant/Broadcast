@@ -44,27 +44,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <inheritdoc />
         public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
         {
-
             List<IsciListItemDto> isciListDto = new List<IsciListItemDto>();
-            IsciListItemDto isciListItemDto = new IsciListItemDto();
-            IsciDto IsciItemDto = new IsciDto();
-            var result = _PlanIsciRepository.GetAvailableIscis(isciSearch);
-            var resultlamba = result.GroupBy(stu => stu.AdvertiserName).OrderBy(stu => stu.Key);
-            foreach (var group in resultlamba)
-            {
-                isciListItemDto.AdvertiserName = group.Key;
-                foreach (var item in group)
-                {
-                    IsciItemDto.Isci = item.Isci;
-                    IsciItemDto.SpotLengthsString = Convert.ToString(item.SpotLengthsString);
-                    IsciItemDto.ProductName = item.ProductName;
-                    isciListItemDto.Iscis.Add(IsciItemDto);
 
+            var result = _PlanIsciRepository.GetAvailableIscis(isciSearch.MediaMonth.Month, isciSearch.MediaMonth.Year);
+            if (result?.Any() ?? false)
+            {
+                var resultlamba = result.GroupBy(stu => stu.AdvertiserName).OrderBy(stu => stu.Key);
+                foreach (var group in resultlamba)
+                {
+                    IsciListItemDto isciListItemDto = new IsciListItemDto();
+                    isciListItemDto.AdvertiserName = group.Key;
+                    foreach (var item in group)
+                    {
+                        isciListItemDto.Iscis = new List<IsciDto>();
+                        IsciDto isciItemDto = new IsciDto();
+                        isciItemDto.Isci = item.Isci;
+                        isciItemDto.SpotLengthsString = Convert.ToString(item.SpotLengthsString);
+                        isciItemDto.ProductName = item.ProductName;
+                        isciListItemDto.Iscis.Add(isciItemDto);
+                    }
+                    isciListDto.Add(isciListItemDto);
                 }
-                isciListDto.Add(isciListItemDto);
             }
             return isciListDto;
-
         }
 
         /// <inheritdoc />
