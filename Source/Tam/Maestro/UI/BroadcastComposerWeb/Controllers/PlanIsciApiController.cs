@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -27,6 +28,17 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIscis(isciSearch));
+        }
+
+        /// <summary>
+        /// Gets media months
+        /// </summary>
+        /// <returns>List of MediaMonthDto object</returns>
+        [HttpGet]
+        [Route("media-months")]
+        public BaseResponse<List<MediaMonthDto>> GetMediaMonths()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetMediaMonths());
         }
     }
 

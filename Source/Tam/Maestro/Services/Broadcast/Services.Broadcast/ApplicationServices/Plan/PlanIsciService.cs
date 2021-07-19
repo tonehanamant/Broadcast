@@ -1,10 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -15,6 +18,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="isciSearch">Isci search input</param>       
         List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch);
+
+        /// <summary>
+        /// Gets media months
+        /// </summary>
+        /// <returns>List of MediaMonthDto object</returns>
+        List<MediaMonthDto> GetMediaMonths();
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -24,10 +33,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
     {
 
         private readonly IPlanIsciRepository _PlanIsciRepository;
-        public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory)
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IDateTimeEngine _DateTimeEngine;
+        public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IDateTimeEngine dateTimeEngine)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _DateTimeEngine = dateTimeEngine;
         }
         /// <inheritdoc />
         public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
@@ -53,7 +65,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             return isciListDto;
 
+        }
 
+        /// <inheritdoc />
+        public List<MediaMonthDto> GetMediaMonths()
+        {
+            var endDate = _DateTimeEngine.GetCurrentMoment();
+            var startDate = endDate.AddMonths(-12);
+            var mediaMonthsBetweenDatesInclusive = _MediaMonthAndWeekAggregateCache.GetMediaMonthsBetweenDatesInclusive(startDate, endDate);
+            var last12MediaMonths = mediaMonthsBetweenDatesInclusive.OrderByDescending(x => x.EndDate).Take(12).Select(_ToMediaMonthDto).ToList();
+            return last12MediaMonths;
+        }
+
+        private MediaMonthDto _ToMediaMonthDto(MediaMonth mediaMonth)
+        {
+            return new MediaMonthDto
+            {
+                Id = mediaMonth.Id,
+                Year = mediaMonth.Year,
+                Month = mediaMonth.Month
+            };
         }
     }
 
