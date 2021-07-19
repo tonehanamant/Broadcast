@@ -25,19 +25,26 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="username">The username to authenticate.</param>
         /// <returns>A client hash for the client to then use as the authenticated token when communicating with the Launch Darkly application directly.</returns>
         string AuthenticateUserAgainstLaunchDarkly(string username);
+
+        string GetBroadcastAppFolderPath();
     }
     public class EnvironmentService: BroadcastBaseClass, IEnvironmentService
     {
         private readonly IRatingsRepository _RatingsRepo;
         private readonly IInventoryFileRepository _InventoryFileRepo;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public EnvironmentService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IFeatureToggleHelper featureToggleHelper)
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _RatingsRepo = broadcastDataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _InventoryFileRepo = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public Dictionary<string, string> GetDbInfo()
@@ -86,6 +93,14 @@ namespace Services.Broadcast.ApplicationServices
             };
             
             return environmentInfo;
+        }
+
+        public string GetBroadcastAppFolderPath()
+        {
+            var appFolderPath = _IsPipelineVariablesEnabled.Value 
+                ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder) 
+                : base._GetBroadcastAppFolder();
+            return appFolderPath;
         }
     }
 }

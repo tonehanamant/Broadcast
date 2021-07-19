@@ -33,18 +33,12 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public MaintenanceController(
-            BroadcastApplicationServiceFactory applicationServiceFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            BroadcastApplicationServiceFactory applicationServiceFactory)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
             _BroadcastDataRepositoryFactory = BroadcastApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>();
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         protected string _GetCurrentUserFullName() =>
@@ -917,16 +911,18 @@ namespace BroadcastComposerWeb.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 try
                 {
-                    var service = _ApplicationServiceFactory.GetApplicationService<IFileService>();
+                    var environmentService = _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>();
+                    var appFolderPath = environmentService.GetBroadcastAppFolderPath();
+                    var fileService = _ApplicationServiceFactory.GetApplicationService<IFileService>();
                     const string dirName = "ProgramMappingMasterList";
-                    var appFolderPath = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder) : BroadcastServiceSystemParameter.BroadcastAppFolder;
+                    
                     var completePath = Path.Combine(appFolderPath, dirName);
-                    if (!service.DirectoryExists(completePath))
-                        service.CreateDirectory(completePath);
+                    if (!fileService.DirectoryExists(completePath))
+                        fileService.CreateDirectory(completePath);
                     var pathWithFile = Path.Combine(completePath, fileName);
-                    if (service.Exists(pathWithFile))
-                        service.Delete(pathWithFile);
-                    service.Create(pathWithFile, file.InputStream);
+                    if (fileService.Exists(pathWithFile))
+                        fileService.Delete(pathWithFile);
+                    fileService.Create(pathWithFile, file.InputStream);
                 }
                 catch (Exception exception)
                 {
