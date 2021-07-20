@@ -301,10 +301,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IReelIsciApiClient, ReelIsciApiClient>();
 
             // Aab Related
-            unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
             unityContainer.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClient>();
             unityContainer.RegisterType<IAabEngine, AabEngine>();
-            unityContainer.RegisterType<IAabMigrationService, AabMigrationService>();
 
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
@@ -317,7 +315,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);            
 
             // singletons
-            unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IAabCache, AabCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());

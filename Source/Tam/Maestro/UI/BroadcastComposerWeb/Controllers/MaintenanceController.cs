@@ -1005,57 +1005,6 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public ActionResult ValidateAndReportCanMigrateToAabApi()
-        {
-            TempData["TabId"] = "aab_maintenance";
-            try
-            {
-                var service = _ApplicationServiceFactory.GetApplicationService<IAabMigrationService>();
-                var result = service.ValidateAndReportCanMigrateToAabApi();
-                TempData["TextareaMessage"] = result.Data;
-            }
-            catch (Exception ex)
-            {
-                TempData["TextareaMessage"] = ex.Message;
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult MigrateAabToAabApi()
-        {
-            TempData["TabId"] = "aab_maintenance";
-            try
-            {
-                var service = _ApplicationServiceFactory.GetApplicationService<IAabMigrationService>();
-                var result = service.MigrateAabToAabApi();
-                TempData["TextareaMessage"] = result.Message;
-            }
-            catch (Exception ex)
-            {
-                TempData["TextareaMessage"] = ex.Message;
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult MigrateAabToTrafficApi()
-        {
-            TempData["TabId"] = "aab_maintenance";
-            try
-            {
-                var service = _ApplicationServiceFactory.GetApplicationService<IAabMigrationService>();
-                var result = service.MigrateAabToTrafficApi();
-                TempData["TextareaMessage"] = $"{result.Message}";
-            }
-            catch (Exception ex)
-            {
-                TempData["TextareaMessage"] = ex.Message;
-            }
-            return RedirectToAction("Index");
-        }
-
         #endregion // #region Aab Utilities
     }
 }

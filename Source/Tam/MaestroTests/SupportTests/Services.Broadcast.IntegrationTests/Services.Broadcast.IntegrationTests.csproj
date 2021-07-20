@@ -481,8 +481,6 @@
     <Compile Include="Stubs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
-    <Compile Include="Stubs\TrafficApiCacheStub.cs" />
-    <Compile Include="Stubs\TrafficApiClientStub.cs" />
     <Compile Include="TestData\AudienceTestData.cs" />
     <Compile Include="TestData\ConversionTestData.cs" />
     <Compile Include="TestData\DaypartsTestData.cs" />
@@ -583,7 +581,6 @@
     <Compile Include="UnitTests\ReportGenerator\ProgramLineupReportDataTests.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTest.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTestClass.cs" />
-    <Compile Include="UnitTests\Cache\TrafficApiCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AgencyServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProductServiceUnitTests.cs" />

@@ -1,7 +1,0 @@
-﻿{
-  "AdvertiserId": 1,
-  "AdvertiserMasterId": "134a6780-734e-4ac0-9f83-091f984f66e4",
-  "Id": 2,
-  "MasterId": "7e41b3f5-0375-4e1a-b06f-4c6069cde16c",
-  "Name": "Product2"
-}

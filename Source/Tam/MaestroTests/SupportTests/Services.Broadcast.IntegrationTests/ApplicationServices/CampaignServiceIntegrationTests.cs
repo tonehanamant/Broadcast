@@ -51,7 +51,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SetUpCampaignServiceIntegrationTests()
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();

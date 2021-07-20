@@ -1,7 +1,0 @@
-﻿{
-  "AgencyId": 1,
-  "AgencyMasterId": "2813cf6f-7530-42e0-9f06-3dee97f7a670",
-  "Id": 3,
-  "MasterId": "3476883d-0f76-483b-bab0-17a55e662b29",
-  "Name": "Name3"
-}

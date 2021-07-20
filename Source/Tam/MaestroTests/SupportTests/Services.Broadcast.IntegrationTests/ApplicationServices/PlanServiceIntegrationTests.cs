@@ -662,7 +662,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
 
                 SaveCampaignDto newCampaign = _GetNewCampaign();
@@ -764,12 +763,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Guid notExistingProductId = new Guid();          
             using (new TransactionScopeWrapper())
             {
-                var stubTrafficClient = new TrafficApiClientStub();
                 var configurationSettingsHelper = new ConfigurationSettingsHelper();
                 var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
-                var actualTrafficCache = new TrafficApiCache(stubTrafficClient,featureToggleHelper,configurationSettingsHelper);
 
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(actualTrafficCache);
                 var planService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
 
                 PlanDto newPlan = _GetNewPlan();                

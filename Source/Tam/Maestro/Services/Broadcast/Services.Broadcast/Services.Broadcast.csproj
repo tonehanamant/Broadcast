@@ -471,7 +471,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationServices\AabMigrationService.cs" />
     <Compile Include="ApplicationServices\ReelIsciIngestService.cs" />
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AffiliateService.cs" />
@@ -585,7 +584,6 @@
     <Compile Include="Entities\Campaign\CampaignReportData.cs" />
     <Compile Include="Entities\Campaign\CampaignReportRequest.cs" />
     <Compile Include="Entities\Campaign\CampaignWithSummary.cs" />
-    <Compile Include="Cache\TrafficApiCache.cs" />
     <Compile Include="Entities\CampaignDefaultsDto.cs" />
     <Compile Include="Entities\CampaignSummaryDto.cs" />
     <Compile Include="Attributes\DisableConcurrentExecutionAttribute.cs" />
@@ -601,7 +599,6 @@
     <Compile Include="ApplicationServices\PostingTypeService.cs" />
     <Compile Include="ApplicationServices\ProductService.cs" />
     <Compile Include="BusinessEngines\PlanBudgetDeliveryCalculator.cs" />
-    <Compile Include="Clients\TrafficApiClient.cs" />
     <Compile Include="Entities\AdvertiserDto.cs" />
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
@@ -917,7 +914,6 @@
     <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />
     <Compile Include="Repositories\Inventory\InventoryExportRepository.cs" />
-    <Compile Include="Repositories\AabDataMigrationRepository.cs" />
     <Compile Include="Repositories\NsiStationRepository.cs" />
     <Compile Include="Repositories\NtiToNsiConversionRepository.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />

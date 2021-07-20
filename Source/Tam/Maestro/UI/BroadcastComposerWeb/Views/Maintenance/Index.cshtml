@@ -754,38 +754,7 @@
                     <input class="button" type="submit" value="Clear Advertisers Cache" id="txtClearAdvertisersCache" />
                 </div>
             }
-        </div>
-        <h1 class="heading">Aab Source Migration</h1>
-        <div class="form">
-            <h2 class="heading">Step 1) Validate</h2>
-            <label>Check if requirements are met and it's safe to migrate to the new Aab Api.</label>
-            <label>Get a report on the migration effort.</label>
-            @using (Html.BeginForm("ValidateAndReportCanMigrateToAabApi", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Validate it's safe to Migrate and Report" id="txtValidateAndReportCanMigrateToAabApi" />
-                </div>
-            }
-
-            <h2 class="heading">Step 2) Migrate</h2>
-            <label>Re-"Source" the data per the current Feature Toggle Value : "Broadcast - Enabled Aab Navigation</label>
-            <label>- When Enabled then the source should be the AabApi.</label>
-            <label>- When Disabled then the source should be the TrafficApi.</label>
-            @using (Html.BeginForm("MigrateAabToAabApi", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Migrate from TrafficApi to AabApi - (Aab Navigation Enabled)" id="txtMigrateAabToAabApi" />
-                </div>
-            }
-            <h2 class="heading">Switch Back (optional)</h2>
-            @using (Html.BeginForm("MigrateAabToTrafficApi", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Migrate back from AabApi to TrafficApi - (Aab Navigation Disabled)" id="txtMigrateAabToTrafficApi" />
-                </div>
-            }
-            <textarea class="input" rows="20" id="divJSON">@ViewBag.TextareaMessage</textarea>
-        </div>
+        </div>       
     </div>
     </content>
     <script>
