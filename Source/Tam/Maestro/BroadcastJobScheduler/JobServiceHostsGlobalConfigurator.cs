@@ -76,12 +76,12 @@ namespace BroadcastJobScheduler
 
         protected virtual int _GetDefaultRetryCount()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("HangfireDefaultRetryCount", 2);
+            return AppSettingHelper.GetConfigSetting("HangfireDefaultRetryCount", 2);
         }
 
         protected virtual int _GetQueuePollingIntervalMilliseconds()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("HangfirePollingInterval", 1000);
+            return AppSettingHelper.GetConfigSetting("HangfirePollingInterval", 1000);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
 
         private double _GetLongRunWorkerCountPerProcessor()
         {
-            var result = ConfigurationSettingHelper.GetConfigSetting("HangfireLongWorkerCountPerProcessor", 1.0);
+            var result = AppSettingHelper.GetConfigSetting("HangfireLongWorkerCountPerProcessor", 1.0);
             return result;
         }
     }

@@ -86,22 +86,22 @@ namespace BroadcastJobScheduler
 
         private bool _GetEnableProgramEnrichmentJobs()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("EnableProgramEnrichmentJobs", false);
+            return AppSettingHelper.GetConfigSetting("EnableProgramEnrichmentJobs", false);
         }
 
         private int _GetInventoryProgramsProcessingForWeeksJobRunHour()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("InventoryProgramsProcessingForWeeksJobRunHour", 0);
+            return AppSettingHelper.GetConfigSetting("InventoryProgramsProcessingForWeeksJobRunHour", 0);
         }
 
         private int _StationsUpdateJobRunHour()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("StationImportJobRunHour", 0);
+            return AppSettingHelper.GetConfigSetting("StationImportJobRunHour", 0);
         }
 
         private int _ProgramEnrichedInventoryFilesJobRunHour()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("ProgramEnrichedInventoryFilesJobRunHour", 12);
+            return AppSettingHelper.GetConfigSetting("ProgramEnrichedInventoryFilesJobRunHour", 12);
         }
     }
 }

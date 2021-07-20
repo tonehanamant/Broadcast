@@ -43,7 +43,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
 
         protected virtual double _GetWorkerCountPerProcessor()
         {
-            var result = ConfigurationSettingHelper.GetConfigSetting("HangfireQuickWorkerCountPerProcessor", 1.0);
+            var result = AppSettingHelper.GetConfigSetting("HangfireQuickWorkerCountPerProcessor", 1.0);
             return result;
         }
     }

@@ -56,7 +56,7 @@ namespace BroadcastJobScheduler
 
         private int _GetPlanAutomaticStatusTransitionJobRunHour()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("PlanAutomaticStatusTransitionJobRunHour", 0);
+            return AppSettingHelper.GetConfigSetting("PlanAutomaticStatusTransitionJobRunHour", 0);
         }
     }
 }

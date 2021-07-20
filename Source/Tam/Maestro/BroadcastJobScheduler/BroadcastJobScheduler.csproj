@@ -166,7 +166,7 @@
     <Compile Include="BroadcastJobSchedulerBaseClass.cs" />
     <Compile Include="JobQueueMonitors\InventoryAggregationQueueMonitor.cs" />
     <Compile Include="JobServiceHostsGlobalConfigurator.cs" />
-    <Compile Include="ConfigurationSettingHelper.cs" />
+    <Compile Include="AppSettingHelper.cs" />
     <Compile Include="HangfireJobActivator.cs" />
     <Compile Include="JobQueueMonitors\JobQueueMonitorServiceBase.cs" />
     <Compile Include="JobQueueMonitors\LongRunQueueMonitors.cs" />

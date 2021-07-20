@@ -7,7 +7,7 @@ namespace BroadcastJobScheduler
     /// <summary>
     /// Helps you get your appSetting driven configuration settings.
     /// </summary>
-    public static class ConfigurationSettingHelper
+    public static class AppSettingHelper
     {
         /// <summary>
         /// Gets the configuration setting.  Falls back to the given default value.
