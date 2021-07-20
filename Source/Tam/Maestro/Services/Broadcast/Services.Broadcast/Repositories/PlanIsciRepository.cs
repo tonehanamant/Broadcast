@@ -4,7 +4,6 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
@@ -53,8 +52,8 @@ namespace Services.Broadcast.Repositories
                               select new IsciAdvertiserDto
                               {
                                   AdvertiserName = isci_adr.advertiser_name_reference,
-                                  id = isci.id,
-                                  SpotLengthsString = sl.length,
+                                  Id = isci.id,
+                                  SpotLengthDuration = sl.length,
                                   ProductName = pro.product_name,
                                   Isci = isci.isci
                               }).ToList();

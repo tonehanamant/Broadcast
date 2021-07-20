@@ -55,6 +55,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
         [Test]
         public void GetAvailableIscis()
         {
@@ -74,6 +75,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
         [Test]
         public void GetUnAvailableIscis()
         {
@@ -95,6 +97,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Equals(result.Count, 0);
         }
+
         [Test]
         public void GetAvailableIscisNullProduct()
         {
@@ -113,16 +116,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new IsciAdvertiserDto()
                                 {
                                 AdvertiserName = "O'Keeffes",
-                                id = 1,
-                                SpotLengthsString = 21,
+                                Id = 1,
+                                SpotLengthDuration = 21,
                                 ProductName = null,
                                 Isci = "OKWF1701H"
                                 },
                                  new IsciAdvertiserDto()
                                 {
                                 AdvertiserName = "O'Keeffes1",
-                                id = 2,
-                                SpotLengthsString = 22,
+                                Id = 2,
+                                SpotLengthDuration = 22,
                                 ProductName = null,
                                 Isci = "OKWL1702H"
                              }
@@ -134,6 +137,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.IsNull(result[0].Iscis[0].ProductName);
         }
+
         [Test]
         public void GetUnAvailableIscisThrowsException()
         {
@@ -163,80 +167,80 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciAdvertiserDto()
                 {
                 AdvertiserName = "O'Keeffes",
-                id = 1,
-                SpotLengthsString = 21,
+                Id = 1,
+                SpotLengthDuration = 21,
                 ProductName = "Product1",
                 Isci = "OKWF1701H"
                 },
                  new IsciAdvertiserDto()
                 {
                 AdvertiserName = "O'Keeffes",
-                id = 2,
-                SpotLengthsString = 22,
+                Id = 2,
+                SpotLengthDuration = 22,
                 ProductName = "Product2",
                 Isci = "OKWL1702H"
                 },
                 new IsciAdvertiserDto()
                 {
                 AdvertiserName = "ATLT0063000HU",
-                id = 3,
-                SpotLengthsString = 23,
+                Id = 3,
+                SpotLengthDuration = 23,
                 ProductName = "Product3",
                 Isci = "OKWF1701H"
                 },
                    new IsciAdvertiserDto()
                 {
                 AdvertiserName = "Invisaling (Adult)",
-                id = 4,
-                SpotLengthsString = 24,
+                Id = 4,
+                SpotLengthDuration = 24,
                 ProductName = "Product4",
                 Isci = "CLDC6513000H"
                 },
                 new IsciAdvertiserDto()
                 {
                 AdvertiserName = "Colgate EM",
-                id = 5,
-                SpotLengthsString = 25,
+                Id = 5,
+                SpotLengthDuration = 25,
                 ProductName = "Product5",
                 Isci = "CUSA1813000H"
                 },
                new IsciAdvertiserDto()
                 {
                 AdvertiserName = "O'Keeffes",
-                id = 6,
-                SpotLengthsString = 26,
+                Id = 6,
+                SpotLengthDuration = 26,
                 ProductName = "Product6",
                 Isci = "OKWF1701H"
                 },
                new IsciAdvertiserDto()
                 {
                 AdvertiserName = "USAA",
-                id = 7,
-                SpotLengthsString = 27,
+                Id = 7,
+                SpotLengthDuration = 27,
                 ProductName = "Product7",
                 Isci = "OKWL1702H"
                 },
                new IsciAdvertiserDto()
                 {
                 AdvertiserName = "Nature's Bounty",
-                id = 8,
-                SpotLengthsString = 28,
+                Id = 8,
+                SpotLengthDuration = 28,
                 ProductName = null,
                 Isci = "ATLT0063000HU"
                 },
                 new IsciAdvertiserDto()
                 {
                 AdvertiserName = "Colgate EM",
-                id = 9,
-                SpotLengthsString = 29,
+                Id = 9,
+                SpotLengthDuration = 29,
                 ProductName = null,
                 Isci = "CLDC6513000H"
                 },
                 new IsciAdvertiserDto()
                 {
                 AdvertiserName = "Colgate EM",
-                id = 30,
-                SpotLengthsString = 30,
+                Id = 30,
+                SpotLengthDuration = 30,
                 ProductName = null,
                 Isci = "CUSA1813000H"
                 }

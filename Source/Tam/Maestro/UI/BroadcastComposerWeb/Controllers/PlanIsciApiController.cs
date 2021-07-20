@@ -17,8 +17,9 @@ namespace BroadcastComposerWeb.Controllers
             base(new ControllerNameRetriever(typeof(PlanIsciApiController).Name), applicationServiceFactory)
         {
         }
+
         /// <summary>
-        /// Endpoint for listing iScis based on search key in the system.
+        /// Endpoint for listing iscis based on search key in the system.
         /// </summary>
         /// <returns>List of iscis</returns>
         [HttpPost]
@@ -28,6 +29,19 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIscis(isciSearch));
+        }
+
+        /// <summary>
+        /// Mocked data endpoint for GetAvailableIscis
+        /// </summary>
+        /// <returns>Mocked List of iscis</returns>
+        [HttpPost]
+        [Route("available-isci-mock")]
+        public BaseResponse<List<IsciListItemDto>> GetAvailableIscisMock(IsciSearchDto isciSearch)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIscisMock(isciSearch));
         }
 
         /// <summary>
@@ -41,5 +55,4 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetMediaMonths());
         }
     }
-
 }

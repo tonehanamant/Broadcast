@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Isci
 {
@@ -10,6 +6,5 @@ namespace Services.Broadcast.Entities.Isci
     {
         public string AdvertiserName { get; set; }
         public List<IsciDto> Iscis { get; set; }
-       
     }
 }

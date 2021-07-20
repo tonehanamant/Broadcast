@@ -4,7 +4,6 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
@@ -24,6 +23,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <returns>List of MediaMonthDto object</returns>
         List<MediaMonthDto> GetMediaMonths();
+
+        /// <summary>
+        /// A data mock of the return from GetAvailableIscis
+        /// </summary>
+        /// <param name="isciSearch">The isci search.</param>
+        List<IsciListItemDto> GetAvailableIscisMock(IsciSearchDto isciSearch);
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -31,16 +36,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
     /// <seealso cref="IPlanIsciService" />
     public class PlanIsciService : BroadcastBaseClass, IPlanIsciService
     {
-
         private readonly IPlanIsciRepository _PlanIsciRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDateTimeEngine _DateTimeEngine;
-        public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, IDateTimeEngine dateTimeEngine)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
+        /// </summary>
+        /// <param name="dataRepositoryFactory">The data repository factory.</param>
+        /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
+        /// <param name="dateTimeEngine">The date time engine.</param>
+        public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory, 
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
+            IDateTimeEngine dateTimeEngine)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DateTimeEngine = dateTimeEngine;
         }
+
         /// <inheritdoc />
         public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
         {
@@ -59,13 +73,110 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         isciListItemDto.Iscis = new List<IsciDto>();
                         IsciDto isciItemDto = new IsciDto();
                         isciItemDto.Isci = item.Isci;
-                        isciItemDto.SpotLengthsString = Convert.ToString(item.SpotLengthsString);
+                        isciItemDto.SpotLengthsString = $":{item.SpotLengthDuration}";
                         isciItemDto.ProductName = item.ProductName;
                         isciListItemDto.Iscis.Add(isciItemDto);
                     }
                     isciListDto.Add(isciListItemDto);
                 }
             }
+            return isciListDto;
+        }
+
+        /// <inheritdoc />
+        public List<IsciListItemDto> GetAvailableIscisMock(IsciSearchDto isciSearch)
+        {
+            var isciListDto = new List<IsciListItemDto>
+            {
+                new IsciListItemDto
+                {
+                    AdvertiserName = "Advertiser1",
+                    Iscis = new List<IsciDto>
+                    {
+                        new IsciDto
+                        {
+                            Id = 1,
+                            Isci = "ABC123",
+                            SpotLengthsString = ":15",
+                            ProductName = "Product123"
+                        }
+                    }
+                },
+                // One advertiser with multiple iscis
+                new IsciListItemDto
+                {
+                    AdvertiserName = "Advertiser2",
+                    Iscis = new List<IsciDto>
+                    {
+                        new IsciDto
+                        {
+                            Id = 2,
+                            Isci = "BC123",
+                            SpotLengthsString = ":15",
+                            ProductName = "Product124"
+                        },
+                        new IsciDto
+                        {
+                            Id = 3,
+                            Isci = "BC126",
+                            SpotLengthsString = ":30",
+                            ProductName = "Product125"
+                        }
+                    }
+                },
+                // same Isci, different advertisers
+                new IsciListItemDto
+                {
+                    AdvertiserName = "Advertiser3",
+                    Iscis = new List<IsciDto>
+                    {
+                        new IsciDto
+                        {
+                            Id = 1,
+                            Isci = "ABC123",
+                            SpotLengthsString = ":15",
+                            ProductName = "Product123"
+                        }
+                    }
+                },
+                // With and Without Products
+                new IsciListItemDto
+                {
+                    AdvertiserName = "Advertiser4",
+                    Iscis = new List<IsciDto>
+                    {
+                        new IsciDto
+                        {
+                            Id = 4,
+                            Isci = "DTO5323",
+                            SpotLengthsString = ":30",
+                            ProductName = "Product666"
+                        },
+                        new IsciDto
+                        {
+                            Id = 5,
+                            Isci = "DTO6868",
+                            SpotLengthsString = ":15",
+                            ProductName = null
+                        },
+                        new IsciDto
+                        {
+                            Id = 6,
+                            Isci = "DTO8868",
+                            SpotLengthsString = ":30",
+                            ProductName = null
+                        },
+                        new IsciDto
+                        {
+                            Id = 7,
+                            Isci = "DFR9865",
+                            SpotLengthsString = ":30",
+                            ProductName = null
+                        }
+                    }
+                },
+            };
+
             return isciListDto;
         }
 
@@ -89,5 +200,4 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
     }
-
 }

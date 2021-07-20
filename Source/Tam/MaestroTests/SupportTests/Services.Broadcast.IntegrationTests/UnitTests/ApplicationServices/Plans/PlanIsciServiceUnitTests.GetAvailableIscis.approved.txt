@@ -6,7 +6,7 @@
         "Id": 0,
         "Isci": "OKWF1701H",
         "ProductName": "Product3",
-        "SpotLengthsString": "23"
+        "SpotLengthsString": ":23"
       }
     ]
   },
@@ -17,7 +17,7 @@
         "Id": 0,
         "Isci": "CUSA1813000H",
         "ProductName": null,
-        "SpotLengthsString": "30"
+        "SpotLengthsString": ":30"
       }
     ]
   },
@@ -28,7 +28,7 @@
         "Id": 0,
         "Isci": "CLDC6513000H",
         "ProductName": "Product4",
-        "SpotLengthsString": "24"
+        "SpotLengthsString": ":24"
       }
     ]
   },
@@ -39,7 +39,7 @@
         "Id": 0,
         "Isci": "ATLT0063000HU",
         "ProductName": null,
-        "SpotLengthsString": "28"
+        "SpotLengthsString": ":28"
       }
     ]
   },
@@ -50,7 +50,7 @@
         "Id": 0,
         "Isci": "OKWF1701H",
         "ProductName": "Product6",
-        "SpotLengthsString": "26"
+        "SpotLengthsString": ":26"
       }
     ]
   },
@@ -61,7 +61,7 @@
         "Id": 0,
         "Isci": "OKWL1702H",
         "ProductName": "Product7",
-        "SpotLengthsString": "27"
+        "SpotLengthsString": ":27"
       }
     ]
   }
