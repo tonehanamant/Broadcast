@@ -5,6 +5,7 @@ using Hangfire;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -84,13 +85,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryProgramsRepairEngine _InventoryProgramsRepairEngine;
 
         private readonly IInventoryProgramsProcessorFactory _InventoryProgramsProcessorFactory;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public InventoryProgramsProcessingService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
             IEmailerService emailerService,
             IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory,
-            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine)
+            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _BackgroundJobClient = backgroundJobClient;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -100,6 +104,9 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _InventoryProgramsProcessorFactory = inventoryProgramsProcessorFactory;
             _InventoryProgramsRepairEngine = inventoryProgramsRepairEngine;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJob(int fileId, string username)
@@ -440,7 +447,7 @@ namespace Services.Broadcast.ApplicationServices
 
         protected virtual string[] _GetProcessingBySourceResultReportToEmails()
         {
-            var raw = BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
+            var raw = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.InventoryProcessingNotificationEmails): BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
             var split = raw.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
             return split;
         }

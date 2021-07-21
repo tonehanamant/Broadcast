@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -15,9 +16,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IBackgroundJobClient backgroundJobClient,
             IEmailerService emailerService,
             IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory,
-            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine)
+            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         : base(broadcastDataRepositoryFactory, backgroundJobClient, emailerService, 
-            inventoryProgramsProcessorFactory, inventoryProgramsRepairEngine)
+            inventoryProgramsProcessorFactory, inventoryProgramsRepairEngine,featureToggleHelper,configurationSettingsHelper)
         {
         }
 

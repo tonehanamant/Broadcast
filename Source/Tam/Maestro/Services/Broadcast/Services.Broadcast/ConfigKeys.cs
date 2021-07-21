@@ -67,6 +67,16 @@ namespace Services.Broadcast
 		public static readonly string DataLake_NotificationEmail = "DataLake_NotificationEmail";
 		public static readonly string DataLake_SharedFolder = "DataLake_SharedFolder";
 		public static readonly string EmailFrom = "EmailFrom";
+		public static readonly string EmailWhiteList = "EmailWhiteList";
+		public static readonly string InventoryProcessingNotificationEmails = "InventoryProcessingNotificationEmails";
+		public static readonly string InventoryRatingsJobIntervalSeconds = "InventoryRatingsJobIntervalSeconds";
+		public static readonly string PlanPricingAllocationsEfficiencyModelUrl = "PlanPricingAllocationsEfficiencyModelUrl";
+		public static readonly string PlanPricingAllocationsUrl = "PlanPricingAllocationsUrl";
+		public static readonly string ProgramGuideTokenUrl = "ProgramGuideTokenUrl";
+		public static readonly string ProgramGuideUrl = "ProgramGuideUrl";
+		public static readonly string ProgramSearchApiUrl = "ProgramSearchApiUrl";
+		public static readonly string ScxGenerationFolder = "ScxGenerationFolder";
+		public static readonly string WWTV_FailedFolder = "WWTV_FailedFolder";
 	}
 }
 

@@ -1456,7 +1456,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                searchUrl = BroadcastServiceSystemParameter.ProgramSearchApiUrl;
+                searchUrl = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.ProgramSearchApiUrl) : BroadcastServiceSystemParameter.ProgramSearchApiUrl;
             }
 
             var jsonRequest = JsonConvert.SerializeObject(request);

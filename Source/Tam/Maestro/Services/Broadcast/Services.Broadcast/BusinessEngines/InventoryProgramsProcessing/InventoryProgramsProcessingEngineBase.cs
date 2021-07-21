@@ -1365,7 +1365,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual string[] _GetProcessingBySourceResultReportToEmails()
         {
-            var raw = BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
+            var raw = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.InventoryProcessingNotificationEmails) : BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
             var split = raw.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             return split;
         }

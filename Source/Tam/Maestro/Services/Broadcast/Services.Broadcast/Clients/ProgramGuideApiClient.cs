@@ -23,8 +23,8 @@ namespace Services.Broadcast.Clients
         private const int RESPONSE_NOT_READY_PAUSE_MS = 15000;
 
         private readonly IAwsCognitoClient _TokenClient;
-        private readonly string _ProgramGuideUrl;
-        private readonly string _TokenUrl;
+        private readonly Lazy<string> _ProgramGuideUrl;
+        private readonly Lazy<string> _TokenUrl;
         private Lazy<string> _ClientId;
         private Lazy<string> _ClientSecret;
         private Lazy<int> _TimeoutSeconds;
@@ -43,8 +43,8 @@ namespace Services.Broadcast.Clients
              encryptedSecret = new Lazy<string>( _GetProgramGuideEncryptedSecret);
             _ClientSecret = new Lazy<string>(()=> EncryptionHelper.DecryptString(encryptedSecret.Value, EncryptionHelper.EncryptionKey));
             _ClientId = new Lazy<string>(_GetClientId);
-            _TokenUrl = BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
-            _ProgramGuideUrl = BroadcastServiceSystemParameter.ProgramGuideUrl;
+            _TokenUrl = new Lazy<string>(_GetProgramGuideTokenUrl);
+            _ProgramGuideUrl = new Lazy<string>(_GetProgramGuideUrl);
             _TimeoutSeconds = new Lazy<int>(_GetTimeoutSeconds);           
             RequestElementMaxCount = new Lazy<int>(_GetRequestElementMaxCount);
 
@@ -56,7 +56,7 @@ namespace Services.Broadcast.Clients
             _ValidateRequests(requestElements);
 
             var apiRequests = requestElements.Select(_MapRequest).ToList();
-            var apiResult = _PostAndGet($"{_ProgramGuideUrl}", apiRequests);
+            var apiResult = _PostAndGet($"{_ProgramGuideUrl.Value}", apiRequests);
             var result = apiResult.Select(_MapResponse).ToList();
 
             return result;
@@ -223,15 +223,15 @@ namespace Services.Broadcast.Clients
 
         private AwsToken _GetToken()
         {
-            return _TokenClient.GetToken(new AwsTokenRequest { TokenUrl = _TokenUrl, ClientId = _ClientId.Value, ClientSecret = _ClientSecret.Value });
+            return _TokenClient.GetToken(new AwsTokenRequest { TokenUrl = _TokenUrl.Value, ClientId = _ClientId.Value, ClientSecret = _ClientSecret.Value });
         }
 
         private void _ValidateSettings()
         {
             _ValidateSetting("ProgramGuideClientId", _ClientId.Value);
             _ValidateSetting("ProgramGuideEncryptedSecret", _ClientSecret.Value);
-            _ValidateSetting("ProgramGuideTokenUrl", _TokenUrl);
-            _ValidateSetting("ProgramGuideUrl", _ProgramGuideUrl);
+            _ValidateSetting("ProgramGuideTokenUrl", _TokenUrl.Value);
+            _ValidateSetting("ProgramGuideUrl", _ProgramGuideUrl.Value);
         }
 
         private void _ValidateSetting(string key, string value)
@@ -282,6 +282,14 @@ namespace Services.Broadcast.Clients
         {
             var getTimeoutSeconds = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideTimeoutSeconds, 1200) : BroadcastServiceSystemParameter.ProgramGuideTimeoutSeconds;
             return getTimeoutSeconds;
+        }
+        private string _GetProgramGuideTokenUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.ProgramGuideTokenUrl) : BroadcastServiceSystemParameter.ProgramGuideTokenUrl;
+        }
+        private string _GetProgramGuideUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.ProgramGuideUrl) : BroadcastServiceSystemParameter.ProgramGuideUrl;
         }
     }
 }

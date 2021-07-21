@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,24 +16,30 @@ namespace Services.Broadcast.Clients
 
     public class PlanBuyingApiClient : IPlanBuyingApiClient
     {
-        private readonly string _OpenMarketSpotsAllocationUrl;
-        private readonly string _PlanPricingAllocationsEfficiencyModelUrl;
+        private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
+        private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public PlanBuyingApiClient()
+        public PlanBuyingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
-            _OpenMarketSpotsAllocationUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
-            _PlanPricingAllocationsEfficiencyModelUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsEfficiencyModelUrl;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
+            _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
         }          
 
         public PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request)
         {
-            var url = $"{_OpenMarketSpotsAllocationUrl}";
+            var url = $"{_OpenMarketSpotsAllocationUrl.Value}";
             return _Post<PlanBuyingApiSpotsResponseDto>(url, request);
         }
 
         public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)
         {
-            var url = $"{_PlanPricingAllocationsEfficiencyModelUrl}";
+            var url = $"{_PlanPricingAllocationsEfficiencyModelUrl.Value}";
             return _Post<PlanBuyingApiSpotsResponseDto_v3>(url, request);
         }
 
@@ -68,6 +75,14 @@ namespace Services.Broadcast.Clients
             }
 
             return output;
+        }
+        private string _GetPlanPricingAllocationsEfficiencyModelUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsEfficiencyModelUrl) : BroadcastServiceSystemParameter.PlanPricingAllocationsEfficiencyModelUrl;
+        }
+        private string _GetOpenMarketSpotsAllocationUrl()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsUrl) : BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
         }
     }
 

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<IInventoryProgramsRepairEngine> _InventoryProgramsRepairEngine = new Mock<IInventoryProgramsRepairEngine>();
 
         private readonly Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
+        private readonly Mock<IFeatureToggleHelper> _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
+        private readonly Mock<IConfigurationSettingsHelper> _IConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
         [Test]
         public void QueueProcessInventoryProgramsByFileJob()
@@ -601,7 +604,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _BackgroundJobClient.Object,
                 _EmailerService.Object,
                 engineFactory.Object,
-                _InventoryProgramsRepairEngine.Object);
+                _InventoryProgramsRepairEngine.Object, _FeatureToggleHelper.Object, _IConfigurationSettingsHelper.Object);
 
             return service;
         }

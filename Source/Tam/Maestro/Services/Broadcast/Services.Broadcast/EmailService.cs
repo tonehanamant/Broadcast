@@ -70,7 +70,7 @@ namespace Common.Services
 
                     var lMessage = BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, fromEmail, pTos, attachFileNames);
 
-                    var whiteList = BroadcastServiceSystemParameter.EmailWhiteList;
+                    var whiteList = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.EmailWhiteList) : BroadcastServiceSystemParameter.EmailWhiteList;
                     if (string.IsNullOrEmpty(whiteList))
                     {
                         lSmtpClient.Send(lMessage);
