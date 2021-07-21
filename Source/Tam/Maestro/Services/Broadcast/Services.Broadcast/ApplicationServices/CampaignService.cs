@@ -715,13 +715,17 @@ namespace Services.Broadcast.ApplicationServices
             _ValidatePlanLocking(planId);
             var pricingJob = _GetLatestPricingJob(planId);
             var plan = _PlanRepository.GetPlan(planId);
+
+            var postingType = request.PostingType ?? plan.PostingType;
+            var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Quality;
+
             _ValidateCampaignLocking(plan.CampaignId);
             var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
             var agency = _GetAgency(campaign);
             var advertiser = _GetAdvertiser(campaign);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
-            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId, request.PostingType,request.SpotAllocationModelMode);
+            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId, postingType, spotAllocationModelMode);
             var proprietaryInventory = _PlanRepository
                 .GetProprietaryInventoryForProgramLineup(plan.PricingParameters.JobId.Value);
             _SetSpotLengthIdAndCalculateImpressions(plan, proprietaryInventory, spotLengths);
@@ -733,9 +737,7 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
             var manifestDaypartIds = manifestsOpenMarket.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
-
-            var postingType = request.PostingType ?? plan.PostingType;
-            var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Quality;
+            
             var result= new ProgramLineupReportData(
                 plan,
                 pricingJob,

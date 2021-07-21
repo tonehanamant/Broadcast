@@ -143,7 +143,7 @@ namespace Services.Broadcast.Repositories
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId,
-            PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
 
@@ -2402,29 +2402,40 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var plan = context.plans.Single(x => x.id == planId);
                 var planVersionId = plan.latest_version_id;
 
-                var apiResult = (from job in context.plan_version_pricing_job
-                                 from apiResults in job.plan_version_pricing_api_results
-                                 where job.plan_version_id == planVersionId
-                                    && (!postingType.HasValue || apiResults.posting_type == (int)postingType.Value)
-                                    && (!spotAllocationModelMode.HasValue || apiResults.spot_allocation_model_mode == (int)spotAllocationModelMode.Value)
-                                 select apiResults)
-
-                    .Include(x => x.plan_version_pricing_api_result_spots)
-                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
-                    .OrderByDescending(p => p.id)
+                // get the latest Job
+                var jobEntity = context.plan_version_pricing_job
+                    .Where(j => j.plan_version_id == planVersionId)
+                    .OrderByDescending(j => j.id)
                     .FirstOrDefault();
+
+                if (jobEntity == null)
+                {
+                    throw new InvalidOperationException($"No pricing runs were found for the plan {planId}.");
+                }
+
+                plan_version_pricing_api_results apiResult = null;
+
+                apiResult = context.plan_version_pricing_api_results
+                        .Include(x => x.plan_version_pricing_api_result_spots)
+                        .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
+                        .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.plan_version_pricing_api_result_spot_frequencies))
+                        .SingleOrDefault(r => r.plan_version_pricing_job_id == jobEntity.id
+                            && r.posting_type == (int)postingType
+                            && r.spot_allocation_model_mode == (int)spotAllocationModelMode);
 
                 if (apiResult == null)
                     throw new Exception($"No pricing runs were found for the plan {planId} for posting type {postingType}");
 
-                return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
+                var results = apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
+
+                return results;
             });
         }
 
@@ -2437,7 +2448,7 @@ namespace Services.Broadcast.Repositories
                                  where job.plan_version_id == planVersionId
                                  select apiResults)
                     .Include(x => x.plan_version_pricing_api_result_spots)
-                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))                    
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 

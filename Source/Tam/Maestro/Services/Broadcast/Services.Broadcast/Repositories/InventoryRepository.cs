@@ -1498,11 +1498,14 @@ namespace Services.Broadcast.Repositories
                         {
                             return context.station_inventory_manifest
                                 .Include(x => x.station_inventory_manifest_audiences)
+                                .Include(x => x.station_inventory_manifest_audiences.Select(a => a.audience))
                                 .Include(x => x.station_inventory_manifest_weeks)
+                                .Include(x => x.station_inventory_manifest_weeks.Select(w => w.media_weeks))
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
                                 .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.standard_dayparts))
                                 .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.standard_dayparts.daypart))
+                                .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.station_inventory_manifest_daypart_programs))
                                 .Include(x => x.station)
                                 .Where(x => chunk.Contains(x.id))
                                 .ToList()
