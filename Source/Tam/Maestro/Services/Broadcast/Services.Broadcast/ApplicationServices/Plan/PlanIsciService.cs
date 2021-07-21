@@ -86,7 +86,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <inheritdoc />
         public List<IsciListItemDto> GetAvailableIscisMock(IsciSearchDto isciSearch)
         {
-            var isciListDto = new List<IsciListItemDto>
+            var isciListDtos = new List<IsciListItemDto>
             {
                 new IsciListItemDto
                 {
@@ -177,7 +177,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 },
             };
 
-            return isciListDto;
+            if (isciSearch.WithoutPlansOnly)
+            {
+                isciListDtos.ForEach(s =>
+                {
+                    var withoutProduct = s.Iscis.Where(l => string.IsNullOrWhiteSpace(l.ProductName)).ToList();
+                    s.Iscis = withoutProduct;
+                });
+                var stillHasIscis = isciListDtos.Where(s => s.Iscis.Any()).ToList();
+                isciListDtos = stillHasIscis;
+            }
+
+            return isciListDtos;
         }
 
         /// <inheritdoc />
