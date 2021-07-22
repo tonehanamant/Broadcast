@@ -36,7 +36,8 @@ namespace Services.Broadcast.Repositories
                              select x).ToList();
                 var mediaWeeks = weeks.Select(_ToMediaWeek).ToList();
 
-                return new MediaMonthAndWeekAggregate(mediaMonthEntities, mediaWeeks);
+                var result = new MediaMonthAndWeekAggregate(mediaMonthEntities, mediaWeeks);
+                return result;
             });
         }
 

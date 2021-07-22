@@ -50,9 +50,9 @@ namespace Services.Broadcast
         {
             return _MediaMonthAndWeekAggregate.Value.GetMediaMonthById(id);
         }
-        public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate,List<MediaWeek> mediaWeeksToUse)
+        public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate, List<MediaWeek> mediaWeeksToUse)
         {
-            return _MediaMonthAndWeekAggregate.Value.GetDisplayMediaWeekByFlight(startDate, endDate,mediaWeeksToUse);
+            return _MediaMonthAndWeekAggregate.Value.GetDisplayMediaWeekByFlight(startDate, endDate, mediaWeeksToUse);
         }
 
         public List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate)

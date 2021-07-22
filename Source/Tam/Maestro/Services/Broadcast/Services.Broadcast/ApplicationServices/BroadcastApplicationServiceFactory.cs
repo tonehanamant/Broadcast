@@ -101,10 +101,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDetectionConverter, DetectionConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
-            unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
-            unityContainer.RegisterType<IInventorySummaryCache, InventorySummaryCache>(new ContainerControlledLifetimeManager()); // singleton
-            unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
-            unityContainer.RegisterType<IMarketCoverageCache, MarketCoverageCache>();
+            unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();            
             unityContainer.RegisterType<IInventoryService, InventoryService>();
             unityContainer.RegisterType<IInventoryExportService, InventoryExportService>();
 			unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
@@ -130,9 +127,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalCalculationEngine, ProposalCalculationEngine>();
             unityContainer.RegisterType<IQuarterCalculationEngine, QuarterCalculationEngine>();
             unityContainer.RegisterType<INsiUniverseService, NsiUniverseService>(new ContainerControlledLifetimeManager()); // singleton
-            unityContainer.RegisterType<INtiUniverseService, NtiUniverseService>();
-
-            unityContainer.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
+            unityContainer.RegisterType<INtiUniverseService, NtiUniverseService>();            
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
 
             //unityContainer.RegisterType<fill, fill>();
@@ -196,8 +191,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
             unityContainer.RegisterType<IExcelHelper, ExcelHelper>();
 
-            unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
-            unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>();
+            unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();            
             unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
             unityContainer.RegisterType<ILockingEngine, LockingEngine>();
             unityContainer.RegisterType<IInventoryRatingsProcessingService, InventoryRatingsProcessingService>();
@@ -312,15 +306,20 @@ namespace Services.Broadcast.ApplicationServices
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
             var daypartRepo = repoFactory.GetDataRepository<IDisplayDaypartRepository>();
             DaypartCache.DaypartCacheInstance = new DaypartCache(daypartRepo);
-            unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);            
+            unityContainer.RegisterInstance<IDaypartCache>(DaypartCache.Instance);
 
             // singletons
+            unityContainer.RegisterType<IInventorySummaryCache, InventorySummaryCache>(new ContainerControlledLifetimeManager()); // singleton
+            unityContainer.RegisterType<IMarketCoverageCache, MarketCoverageCache>(TypeLifetime.Singleton);
+            unityContainer.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>(TypeLifetime.Singleton);
+            unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>(TypeLifetime.Singleton);
             unityContainer.RegisterType<IAabCache, AabCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
-           
+            unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>(TypeLifetime.Singleton);
+
             MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>(), unityContainer.Resolve<IFeatureToggleHelper>(), unityContainer.Resolve<IConfigurationSettingsHelper>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }
