@@ -2,6 +2,7 @@
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using log4net.Core;
 using Microsoft.EntityFrameworkCore.Design;
 using OfficeOpenXml;
 using OfficeOpenXml.FormulaParsing.Utilities;
@@ -115,6 +116,11 @@ namespace Services.Broadcast.ApplicationServices
 
                     return id;
                 }
+            }
+            catch (Exception ex)
+            {
+                _LogError($"Exception caught processing the file : {ex.Message}", ex);
+                throw ex;
             }
             finally
             {

@@ -13,7 +13,7 @@ namespace Services.Broadcast.Converters.Post
         List<post_file_details> Parse(ExcelPackage package);
     }
 
-    public abstract class BasePostFileParser : IPostFileParser
+    public abstract class BasePostFileParser : BroadcastBaseClass, IPostFileParser
     {
         public static readonly string ColumnRequiredErrorMessage = "\t'{0}' column is required\n";
         public static readonly string InvalidDateErrorMessage = "\t'{0}' column is not a valid date\n";
