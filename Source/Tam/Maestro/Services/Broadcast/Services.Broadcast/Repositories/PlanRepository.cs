@@ -2426,6 +2426,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.plan_version_pricing_api_result_spots)
                         .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
                         .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.plan_version_pricing_api_result_spot_frequencies))
+                        .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.standard_dayparts))
                         .SingleOrDefault(r => r.plan_version_pricing_job_id == jobEntity.id
                             && r.posting_type == (int)postingType
                             && r.spot_allocation_model_mode == (int)spotAllocationModelMode);
@@ -2448,7 +2449,9 @@ namespace Services.Broadcast.Repositories
                                  where job.plan_version_id == planVersionId
                                  select apiResults)
                     .Include(x => x.plan_version_pricing_api_result_spots)
-                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))                    
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.plan_version_pricing_api_result_spot_frequencies))
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.standard_dayparts))
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
