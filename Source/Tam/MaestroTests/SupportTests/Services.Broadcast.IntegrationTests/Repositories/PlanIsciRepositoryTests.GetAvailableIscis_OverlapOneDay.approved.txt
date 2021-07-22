@@ -1,0 +1,9 @@
+[
+  {
+    "AdvertiserName": "ReckittBenckiser",
+    "Id": 1,
+    "Isci": "AB82TXT2",
+    "ProductName": "Product1",
+    "SpotLengthDuration": 30
+  }
+]

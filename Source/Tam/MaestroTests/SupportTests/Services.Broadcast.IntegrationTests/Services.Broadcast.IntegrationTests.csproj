@@ -450,6 +450,7 @@
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
     <Compile Include="Repositories\MarketCoverageRepositoryTests.cs" />
     <Compile Include="Repositories\PlanBuyingRepositoryTests.cs" />
+    <Compile Include="Repositories\PlanIsciRepositoryTests.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
     <Compile Include="Repositories\ProgramMappingRepositoryTests.cs" />
     <Compile Include="Repositories\ProgramNameExceptionsRepositoryTest.cs" />

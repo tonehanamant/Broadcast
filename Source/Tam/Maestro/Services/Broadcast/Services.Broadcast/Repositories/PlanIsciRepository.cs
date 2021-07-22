@@ -1,4 +1,5 @@
-﻿using Common.Services.Extensions;
+﻿using System;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
@@ -16,9 +17,9 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// list of Iscis based on search key.
         /// </summary>
-        /// <param name="month">Isci search month input</param> 
-        /// <param name="year">Isci search year input</param> 
-        List<IsciAdvertiserDto> GetAvailableIscis(int month, int year);
+        /// <param name="startDate">Isci search start date input</param> 
+        /// <param name="endDate">Isci search end date input</param> 
+        List<IsciAdvertiserDto> GetAvailableIscis(DateTime startDate, DateTime endDate);
     }
     /// <summary>
     /// Data operations for the PlanIsci Repository.
@@ -39,17 +40,19 @@ namespace Services.Broadcast.Repositories
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
-        public List<IsciAdvertiserDto> GetAvailableIscis(int month, int year)
+        public List<IsciAdvertiserDto> GetAvailableIscis(DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from isci in context.reel_iscis
-                              join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
-                              join pro in context.reel_isci_products on isci.isci equals pro.isci
-                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id
-                              where isci.active_start_date.Month <= month && isci.active_start_date.Year <= year &&
-                                    isci.active_end_date.Month >= month && isci.active_end_date.Year >= year
-                              select new IsciAdvertiserDto
+              var result = (from isci in context.reel_iscis
+                            join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
+                            join pro in context.reel_isci_products on isci.isci equals pro.isci into ps
+                            from pro in ps.DefaultIfEmpty()
+                            join sl in context.spot_lengths on isci.spot_length_id equals sl.id
+                            where ( isci.active_start_date <=startDate &&  isci.active_end_date>=endDate)
+                            ||(isci.active_start_date>=startDate && isci.active_start_date <= endDate)
+                            || (isci.active_end_date >= startDate && isci.active_end_date <= endDate)
+                            select new IsciAdvertiserDto
                               {
                                   AdvertiserName = isci_adr.advertiser_name_reference,
                                   Id = isci.id,

@@ -59,8 +59,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
         {
             List<IsciListItemDto> isciListDto = new List<IsciListItemDto>();
-
-            var result = _PlanIsciRepository.GetAvailableIscis(isciSearch.MediaMonth.Month, isciSearch.MediaMonth.Year);
+            var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
+            var result = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);
             if (result?.Any() ?? false)
             {
                 var resultlamba = result.GroupBy(stu => stu.AdvertiserName).OrderBy(stu => stu.Key);

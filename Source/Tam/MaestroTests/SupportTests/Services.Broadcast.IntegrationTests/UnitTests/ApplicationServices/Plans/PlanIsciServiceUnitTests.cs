@@ -11,6 +11,7 @@ using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -23,6 +24,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
+        private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCache;
 
         [SetUp]
         public void SetUp()
@@ -35,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
                 .Returns(_PlanIsciRepositoryMock.Object);
+
             _PlanIsciService = new PlanIsciService(_DataRepositoryFactoryMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object, _DateTimeEngineMock.Object);
         }
 
@@ -62,12 +65,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Month = 5, Year = 2021 },
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
                 WithoutPlansOnly = true,
 
             };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns(
+                new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+                );
+
             _PlanIsciRepositoryMock
-                .Setup(x => x.GetAvailableIscis(It.IsAny<int>(), It.IsAny<int>()))
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetAvailableIscis());
 
             // Act
@@ -83,12 +91,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             List<IsciAdvertiserDto> availableIscis = null;
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Month = 5, Year = 2021 },
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
                 WithoutPlansOnly = true,
 
             };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+              .Returns(
+              new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+              );
             _PlanIsciRepositoryMock
-                .Setup(x => x.GetAvailableIscis(It.IsAny<int>(), It.IsAny<int>()))
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(availableIscis);
 
             // Act
@@ -104,12 +116,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange           
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Month = 5, Year = 2021 },
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
                 WithoutPlansOnly = true,
 
             };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+              .Returns(
+              new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+              );
             _PlanIsciRepositoryMock
-                .Setup(x => x.GetAvailableIscis(It.IsAny<int>(), It.IsAny<int>()))
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(
                           new List<IsciAdvertiserDto>()
                             {
@@ -137,19 +153,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.IsNull(result[0].Iscis[0].ProductName);
         }
-
         [Test]
         public void GetUnAvailableIscisThrowsException()
         {
             // Arrange           
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Month = 5, Year = 2021 },
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
                 WithoutPlansOnly = true,
 
             };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+             .Returns(
+             new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+             );
             _PlanIsciRepositoryMock
-               .Setup(x => x.GetAvailableIscis(It.IsAny<int>(), It.IsAny<int>()))
+               .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new Exception("Throwing a test exception.");
