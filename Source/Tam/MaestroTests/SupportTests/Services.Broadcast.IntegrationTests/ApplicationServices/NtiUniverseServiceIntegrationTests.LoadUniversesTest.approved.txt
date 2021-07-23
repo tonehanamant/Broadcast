@@ -1,6 +1,6 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
-  "CreatedDate": "2022-05-14T00:00:00",
+  "CreatedDate": "2022-05-15T00:00:00",
   "Month": 12,
   "NtiUniverseDetails": [
     {
@@ -299,6 +299,20 @@
         "IsDirty": true
       },
       "Universe": 116820000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A21-54",
+        "_Custom": true,
+        "_Id": 429,
+        "_Name": "Adults 21-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 137140000.0
     },
     {
       "Audience": {
@@ -667,6 +681,20 @@
     {
       "Audience": {
         "_CategoryCode": 0,
+        "_Code": "M21-54",
+        "_Custom": true,
+        "_Id": 430,
+        "_Name": "Men 21-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 67880000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
         "_Code": "M25+",
         "_Custom": true,
         "_Id": 288,
@@ -1027,6 +1055,20 @@
         "IsDirty": true
       },
       "Universe": 58840000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W21-54",
+        "_Custom": true,
+        "_Id": 431,
+        "_Name": "Women 21-54",
+        "_RangeEnd": 54,
+        "_RangeStart": 21,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 69260000.0
     },
     {
       "Audience": {

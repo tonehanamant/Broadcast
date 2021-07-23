@@ -700,6 +700,74 @@ GO
 
 /*************************************** END BP-2741 *****************************************************/
 
+
+/*************************************** START BP-2783 *****************************************************/
+
+DECLARE @AudienceId_A21_54 INT,
+		@AudienceId_W21_54 INT,
+		@AudienceId_M21_54 INT
+
+SELECT @AudienceId_A21_54 = id FROM audiences WHERE name = 'Adults 21-54'
+SELECT @AudienceId_W21_54 = id FROM audiences WHERE name = 'Women 21-54'
+SELECT @AudienceId_M21_54 = id FROM audiences WHERE name = 'Men 21-54'
+
+DECLARE @new_mappings TABLE
+(
+	b_audience_id INT,
+	nti_audience_code VARCHAR(30),
+	nti_universe_audience_mappings_id INT
+)
+
+INSERT INTO @new_mappings (b_audience_id, nti_audience_code) VALUES
+	/* Adults */
+	(@AudienceId_A21_54, 'F21-24')
+	,(@AudienceId_A21_54, 'F25-29')
+	,(@AudienceId_A21_54, 'F30-34')
+	,(@AudienceId_A21_54, 'F35-39')
+	,(@AudienceId_A21_54, 'F40-44')
+	,(@AudienceId_A21_54, 'F45-49')
+	,(@AudienceId_A21_54, 'F50-54')
+	,(@AudienceId_A21_54, 'M21-24')
+	,(@AudienceId_A21_54, 'M25-29')
+	,(@AudienceId_A21_54, 'M30-34')
+	,(@AudienceId_A21_54, 'M35-39')
+	,(@AudienceId_A21_54, 'M40-44')
+	,(@AudienceId_A21_54, 'M45-49')
+	,(@AudienceId_A21_54, 'M50-54')
+	/* Men */
+	,(@AudienceId_M21_54, 'M21-24')
+	,(@AudienceId_M21_54, 'M25-29')
+	,(@AudienceId_M21_54, 'M30-34')
+	,(@AudienceId_M21_54, 'M35-39')
+	,(@AudienceId_M21_54, 'M40-44')
+	,(@AudienceId_M21_54, 'M45-49')
+	,(@AudienceId_M21_54, 'M50-54')
+	/* Women */
+	,(@AudienceId_W21_54, 'F21-24')
+	,(@AudienceId_W21_54, 'F25-29')
+	,(@AudienceId_W21_54, 'F30-34')
+	,(@AudienceId_W21_54, 'F35-39')
+	,(@AudienceId_W21_54, 'F40-44')
+	,(@AudienceId_W21_54, 'F45-49')
+	,(@AudienceId_W21_54, 'F50-54')
+
+UPDATE n SET
+	nti_universe_audience_mappings_id = id
+FROM @new_mappings n
+JOIN nti_universe_audience_mappings m
+	ON n.b_audience_id = m.audience_id
+	AND n.nti_audience_code = m.nti_audience_code
+
+INSERT INTO nti_universe_audience_mappings (audience_id, nti_audience_code)
+	SELECT b_audience_id, nti_audience_code
+	FROM @new_mappings
+	WHERE nti_universe_audience_mappings_id IS NULL
+
+GO
+
+/*************************************** END BP-2783 *****************************************************/
+
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '21.02.2' -- Current release version
