@@ -1,0 +1,81 @@
+[
+  {
+    "AdvertiserName": "Advertiser1",
+    "IsciPlans": [
+      {
+        "DaypartsString": "EN",
+        "DemoString": "HH",
+        "FlightString": "07/15-08/22/2021",
+        "Id": 221,
+        "Iscis": [
+          {
+            "Id": 5,
+            "Isci": "CLDC6513000H",
+            "ProductName": "Product5",
+            "SpotLengthsString": ":45"
+          },
+          {
+            "Id": 6,
+            "Isci": "CUSA1813000H",
+            "ProductName": null,
+            "SpotLengthsString": ":30"
+          }
+        ],
+        "ProductName": "1-800-Contacts",
+        "SpotLengthsString": ":30",
+        "Title": "Colgate Early Morning Upfront"
+      },
+      {
+        "DaypartsString": "EN",
+        "DemoString": "HH",
+        "FlightString": "08/20-08/28/2021",
+        "Id": 220,
+        "Iscis": [
+          {
+            "Id": 3,
+            "Isci": "OKWF1701H",
+            "ProductName": "Product3",
+            "SpotLengthsString": ":15"
+          },
+          {
+            "Id": 4,
+            "Isci": "OKWL1702H",
+            "ProductName": "Product4",
+            "SpotLengthsString": ":30"
+          }
+        ],
+        "ProductName": "1-800-Contacts",
+        "SpotLengthsString": ":15",
+        "Title": "Colgate Daytime Upfront"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "Advertiser2",
+    "IsciPlans": [
+      {
+        "DaypartsString": "EN, PMN, LN",
+        "DemoString": "HH",
+        "FlightString": "08/29-08/31/2021",
+        "Id": 219,
+        "Iscis": [
+          {
+            "Id": 1,
+            "Isci": "OKWF1701H",
+            "ProductName": "Product1",
+            "SpotLengthsString": ":15"
+          },
+          {
+            "Id": 2,
+            "Isci": "OKWL1702H",
+            "ProductName": null,
+            "SpotLengthsString": ":30"
+          }
+        ],
+        "ProductName": "Sample - 2Q09",
+        "SpotLengthsString": ":15, :30",
+        "Title": "Wellcare CBS Shows"
+      }
+    ]
+  }
+]

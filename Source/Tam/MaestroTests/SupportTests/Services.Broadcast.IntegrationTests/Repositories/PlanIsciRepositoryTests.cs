@@ -65,5 +65,65 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+        
+        [Test]
+        public void GetAvailableIsciPlans_Plan_DoesNotExist()
+        {
+            // Arrange
+            DateTime mediaMonthStartDate = new DateTime(2015, 02, 23);
+            DateTime mediaMonthEndDate = new DateTime(2015, 03, 29);
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+
+            // Act
+            var result = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlanWithIsci_Exists_OverlapStartDateEndDate()
+        {
+            // Arrange
+            DateTime mediaMonthStartDate = new DateTime(2019, 08, 26);
+            DateTime mediaMonthEndDate = new DateTime(2019, 09, 29);
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+
+            // Act
+            var result = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlanWithIsci_Exists_OverlapStartDate()
+        {
+            // Arrange
+            DateTime mediaMonthStartDate = new DateTime(2019, 07, 29);
+            DateTime mediaMonthEndDate = new DateTime(2019, 08, 25);
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+
+            // Act
+            var result = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlansWithoutIsci_Exist_OverlapEndDate()
+        {
+            // Arrange
+            DateTime mediaMonthStartDate = new DateTime(2020, 03, 30);
+            DateTime mediaMonthEndDate = new DateTime(2020, 04, 26);
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+
+            // Act
+            var result = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }

@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
@@ -24,7 +25,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
-        private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCache;
+        private Mock<IAabEngine> _AabEngineMock;
+        private AgencyAdvertiserBrandApiClientStub _AgencyAdvertiserBrandApiClientStub;
 
         [SetUp]
         public void SetUp()
@@ -33,12 +35,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
+            _AabEngineMock = new Mock<IAabEngine>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
                 .Returns(_PlanIsciRepositoryMock.Object);
 
-            _PlanIsciService = new PlanIsciService(_DataRepositoryFactoryMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object, _DateTimeEngineMock.Object);
+            _AgencyAdvertiserBrandApiClientStub = new AgencyAdvertiserBrandApiClientStub();
+
+            _PlanIsciService = new PlanIsciService(_DataRepositoryFactoryMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object, _DateTimeEngineMock.Object, _AabEngineMock.Object);
         }
 
         [Test]
@@ -264,6 +269,243 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Isci = "CUSA1813000H"
                 }
             };
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_Plan_DoesNotExist()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciPlanSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<IsciPlanDetailDto>());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlansWithIsci_Exist()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciPlanSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<IsciPlanDetailDto>()
+                {
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 219,
+                        Title = "Wellcare CBS Shows",
+                        AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        SpotLengthValues = new List<int>(){ 15, 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN", "PMN", "LN" },
+                        FlightStartDate = new DateTime(2021,08,29),
+                        FlightEndDate = new DateTime(2021, 08, 31),
+                        ProductName = "Sample - 2Q09",
+                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        {
+                            new IsciAdvertiserDto()
+                            {
+                                Id = 1,
+                                SpotLengthDuration = 15,
+                                ProductName = "Product1",
+                                Isci = "OKWF1701H"
+                            },
+                             new IsciAdvertiserDto()
+                            {
+                                Id = 2,
+                                SpotLengthDuration = 30,
+                                ProductName = null,
+                                Isci = "OKWL1702H"
+                            }
+                        }
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 220,
+                        Title = "Colgate Daytime Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 15},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,08,20),
+                        FlightEndDate = new DateTime(2021, 08, 28),
+                        ProductName = "1-800-Contacts",
+                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        {
+                            new IsciAdvertiserDto()
+                            {
+                                Id = 3,
+                                SpotLengthDuration = 15,
+                                ProductName = "Product3",
+                                Isci = "OKWF1701H"
+                            },
+                             new IsciAdvertiserDto()
+                            {
+                                Id = 4,
+                                SpotLengthDuration = 30,
+                                ProductName = "Product4",
+                                Isci = "OKWL1702H"
+                            }
+                        }
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 221,
+                        Title = "Colgate Early Morning Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,07,15),
+                        FlightEndDate = new DateTime(2021, 08, 22),
+                        ProductName = "1-800-Contacts",
+                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        {
+                            new IsciAdvertiserDto()
+                            {
+                                Id = 5,
+                                SpotLengthDuration = 45,
+                                ProductName = "Product5",
+                                Isci = "CLDC6513000H"
+                            },
+                             new IsciAdvertiserDto()
+                            {
+                                Id = 6,
+                                SpotLengthDuration = 30,
+                                ProductName = null,
+                                Isci = "CUSA1813000H"
+                            }
+                        }
+                    }
+                });
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertisers())
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlansWithoutIsci_Exist()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciPlanSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<IsciPlanDetailDto>()
+                {
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 219,
+                        Title = "Wellcare CBS Shows",
+                        AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        SpotLengthValues = new List<int>(){ 15, 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN", "PMN", "LN" },
+                        FlightStartDate = new DateTime(2021,08,29),
+                        FlightEndDate = new DateTime(2021, 08, 31),
+                        ProductName = "Sample - 2Q09",
+                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 220,
+                        Title = "Colgate Daytime Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 15},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,08,20),
+                        FlightEndDate = new DateTime(2021, 08, 28),
+                        ProductName = "1-800-Contacts",
+                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 221,
+                        Title = "Colgate Early Morning Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,07,15),
+                        FlightEndDate = new DateTime(2021, 08, 22),
+                        ProductName = "1-800-Contacts",
+                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                    }
+                });
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertisers())
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_ThrowsException()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciPlanSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }

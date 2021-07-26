@@ -512,6 +512,10 @@
     <Compile Include="Entities\Isci\IsciAdvertiserDto.cs" />
     <Compile Include="Entities\Isci\IsciDto.cs" />
     <Compile Include="Entities\Isci\IsciListItemDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanResultDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanSearchDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanDetailDto.cs" />
     <Compile Include="Entities\Isci\IsciSearchDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciEntity.cs" />

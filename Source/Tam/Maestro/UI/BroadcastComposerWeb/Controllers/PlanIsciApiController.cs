@@ -54,5 +54,17 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetMediaMonths());
         }
+
+        /// <summary>
+        /// Gets the available plans for Isci mapping
+        /// </summary>
+        /// <param name="isciPlanSearch">The object which contains search parameters</param>
+        /// <returns>List of IsciPlanResultDto object</returns>
+        [HttpPost]
+        [Route("available-plans")]
+        public BaseResponse<List<IsciPlanResultDto>> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIsciPlans(isciPlanSearch));
+        }
     }
 }

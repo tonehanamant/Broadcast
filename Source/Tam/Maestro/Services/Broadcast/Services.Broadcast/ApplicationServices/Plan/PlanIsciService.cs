@@ -29,6 +29,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="isciSearch">The isci search.</param>
         List<IsciListItemDto> GetAvailableIscisMock(IsciSearchDto isciSearch);
+
+        /// <summary>
+        /// Gets the available plans for Isci mapping
+        /// </summary>
+        /// <param name="isciPlanSearch">The object which contains search parameters</param>
+        /// <returns>List of IsciPlanResultDto object</returns>
+        List<IsciPlanResultDto> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch);
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -39,6 +46,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanIsciRepository _PlanIsciRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IAabEngine _AabEngine;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
@@ -46,13 +54,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="dataRepositoryFactory">The data repository factory.</param>
         /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
         /// <param name="dateTimeEngine">The date time engine.</param>
+        /// <param name="aabEngine">The Aab engine.</param>
         public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory, 
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
-            IDateTimeEngine dateTimeEngine)
+            IDateTimeEngine dateTimeEngine,
+            IAabEngine aabEngine)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DateTimeEngine = dateTimeEngine;
+            _AabEngine = aabEngine;
         }
 
         /// <inheritdoc />
@@ -209,6 +220,65 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Year = mediaMonth.Year,
                 Month = mediaMonth.Month
             };
+        }
+
+        /// <inheritdoc />
+        public List<IsciPlanResultDto> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch)
+        {
+            var isciPlanResults = new List<IsciPlanResultDto>();
+            const string flightStartDateFormat = "MM/dd";
+            const string flightEndDateFormat = "MM/dd/yyyy";
+
+            var searchedMediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciPlanSearch.MediaMonth.Id);
+            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(searchedMediaMonth.StartDate, searchedMediaMonth.EndDate);
+            if (isciPlans?.Any() ?? false)
+            {
+                _SetIsciPlanAdvertiser(isciPlans);
+
+                var isciPlansGroupedByAdvertiser = isciPlans.GroupBy(x => x.AdvertiserName).OrderBy(x => x.Key);
+                foreach (var isciPlanItem in isciPlansGroupedByAdvertiser)
+                {
+                    var isciPlanResult = new IsciPlanResultDto()
+                    {
+                        AdvertiserName = isciPlanItem.Key,
+                        IsciPlans = isciPlanItem.OrderBy(x => x.FlightStartDate).Select(isciPlanDetail =>
+                        {
+                            var isciPlan = new IsciPlanDto()
+                            {
+                                Id = isciPlanDetail.Id,
+                                SpotLengthsString = string.Join(", ", isciPlanDetail.SpotLengthValues.Select(x => $":{x}")),
+                                DemoString = isciPlanDetail.AudienceCode,
+                                Title = isciPlanDetail.Title,
+                                DaypartsString = string.Join(", ", isciPlanDetail.Dayparts),
+                                ProductName = isciPlanDetail.ProductName,
+                                FlightString = $"{isciPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{isciPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
+                                Iscis = isciPlanDetail.IsciAdvertisers.Select(_MapToIsciDto).ToList()
+                            };
+                            return isciPlan;
+                        }).ToList()
+                    };
+                    isciPlanResults.Add(isciPlanResult);
+                }
+            }
+            return isciPlanResults;
+        }
+
+        private void _SetIsciPlanAdvertiser(List<IsciPlanDetailDto> isciPlanSummaries)
+        {
+            var advertisers = _AabEngine.GetAdvertisers();
+            isciPlanSummaries.ForEach(x => x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
+        }
+
+        private IsciDto _MapToIsciDto(IsciAdvertiserDto isciAdvertiser)
+        {
+            var isci = new IsciDto()
+            {
+                Id = isciAdvertiser.Id,
+                Isci = isciAdvertiser.Isci,
+                SpotLengthsString = $":{isciAdvertiser.SpotLengthDuration}",
+                ProductName = isciAdvertiser.ProductName
+            };
+            return isci;
         }
     }
 }

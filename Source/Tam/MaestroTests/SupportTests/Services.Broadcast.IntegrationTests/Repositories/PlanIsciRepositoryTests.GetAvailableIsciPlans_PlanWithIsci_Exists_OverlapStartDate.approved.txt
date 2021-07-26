@@ -1,0 +1,36 @@
+[
+  {
+    "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+    "AdvertiserName": null,
+    "AudienceCode": "A18-34",
+    "Dayparts": [
+      "EM",
+      "ENLN",
+      "SYN"
+    ],
+    "FlightEndDate": "2019-10-13T00:00:00",
+    "FlightStartDate": "2019-07-31T00:00:00",
+    "Id": 1540,
+    "IsciAdvertisers": [
+      {
+        "AdvertiserName": null,
+        "Id": 1,
+        "Isci": "AB82TXT2H",
+        "ProductName": "Product2",
+        "SpotLengthDuration": 30
+      },
+      {
+        "AdvertiserName": null,
+        "Id": 2,
+        "Isci": "AB82VR58",
+        "ProductName": "Product3",
+        "SpotLengthDuration": 30
+      }
+    ],
+    "ProductName": "PetMed Express",
+    "SpotLengthValues": [
+      45
+    ],
+    "Title": "Second plan"
+  }
+]
