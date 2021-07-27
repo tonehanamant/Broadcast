@@ -15,6 +15,6 @@ namespace Services.Broadcast.Entities.Isci
         public string DaypartsString { get; set; }
         public string ProductName { get; set; }
         public string FlightString { get; set; }
-        public List<IsciDto> Iscis { get; set; }
+        public List<string> Iscis { get; set; }
     }
 }

@@ -18,6 +18,6 @@ namespace Services.Broadcast.Entities.Isci
         public string ProductName { get; set; }
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
-        public List<IsciAdvertiserDto> IsciAdvertisers { get; set; }
+        public List<string> Iscis { get; set; }
     }
 }

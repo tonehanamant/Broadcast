@@ -11,33 +11,12 @@
     "FlightEndDate": "2020-04-12T00:00:00",
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 1852,
-    "IsciAdvertisers": [],
+    "Iscis": [],
     "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       45
     ],
     "Title": "Plan in contracted"
-  },
-  {
-    "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
-    "AdvertiserName": null,
-    "AudienceCode": "A18+",
-    "Dayparts": [
-      "EF",
-      "EM",
-      "MDN"
-    ],
-    "FlightEndDate": "2020-04-12T00:00:00",
-    "FlightStartDate": "2020-03-14T00:00:00",
-    "Id": 1853,
-    "IsciAdvertisers": [],
-    "ProductName": "Veggie Tales",
-    "SpotLengthValues": [
-      15,
-      30,
-      60
-    ],
-    "Title": "Plan in live"
   },
   {
     "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
@@ -51,7 +30,7 @@
     "FlightEndDate": "2020-04-12T00:00:00",
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 1854,
-    "IsciAdvertisers": [],
+    "Iscis": [],
     "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       30
@@ -70,11 +49,32 @@
     "FlightEndDate": "2020-04-12T00:00:00",
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 2233,
-    "IsciAdvertisers": [],
+    "Iscis": [],
     "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       45
     ],
     "Title": "Plan in contracted 45 uneq"
+  },
+  {
+    "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+    "AdvertiserName": null,
+    "AudienceCode": "A18+",
+    "Dayparts": [
+      "EF",
+      "EM",
+      "MDN"
+    ],
+    "FlightEndDate": "2020-04-12T00:00:00",
+    "FlightStartDate": "2020-03-14T00:00:00",
+    "Id": 1853,
+    "Iscis": [],
+    "ProductName": "Veggie Tales",
+    "SpotLengthValues": [
+      15,
+      30,
+      60
+    ],
+    "Title": "Plan in live"
   }
 ]

@@ -323,22 +323,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
                         ProductName = "Sample - 2Q09",
-                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        Iscis = new List<string>()
                         {
-                            new IsciAdvertiserDto()
-                            {
-                                Id = 1,
-                                SpotLengthDuration = 15,
-                                ProductName = "Product1",
-                                Isci = "OKWF1701H"
-                            },
-                             new IsciAdvertiserDto()
-                            {
-                                Id = 2,
-                                SpotLengthDuration = 30,
-                                ProductName = null,
-                                Isci = "OKWL1702H"
-                            }
+                            "OKWF1701H",
+                            "OKWL1702H"
                         }
                     },
                     new IsciPlanDetailDto()
@@ -352,22 +340,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
                         ProductName = "1-800-Contacts",
-                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        Iscis = new List<string>()
                         {
-                            new IsciAdvertiserDto()
-                            {
-                                Id = 3,
-                                SpotLengthDuration = 15,
-                                ProductName = "Product3",
-                                Isci = "OKWF1701H"
-                            },
-                             new IsciAdvertiserDto()
-                            {
-                                Id = 4,
-                                SpotLengthDuration = 30,
-                                ProductName = "Product4",
-                                Isci = "OKWL1702H"
-                            }
+                            "OKWF1703H",
+                            "OKWL1704H"
                         }
                     },
                     new IsciPlanDetailDto()
@@ -381,23 +357,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
                         ProductName = "1-800-Contacts",
-                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        Iscis = new List<string>()
                         {
-                            new IsciAdvertiserDto()
-                            {
-                                Id = 5,
-                                SpotLengthDuration = 45,
-                                ProductName = "Product5",
-                                Isci = "CLDC6513000H"
-                            },
-                             new IsciAdvertiserDto()
-                            {
-                                Id = 6,
-                                SpotLengthDuration = 30,
-                                ProductName = null,
-                                Isci = "CUSA1813000H"
-                            }
-                        }
+                            "CLDC6513000H",
+                            "CUSA1813000H"
+                        }                        
                     }
                 });
 
@@ -440,7 +404,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
                         ProductName = "Sample - 2Q09",
-                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        Iscis = new List<string>()
                     },
                     new IsciPlanDetailDto()
                     {
@@ -453,7 +417,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
                         ProductName = "1-800-Contacts",
-                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        Iscis = new List<string>()
                     },
                     new IsciPlanDetailDto()
                     {
@@ -466,7 +430,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
                         ProductName = "1-800-Contacts",
-                        IsciAdvertisers = new List<IsciAdvertiserDto>()
+                        Iscis = new List<string>()
                     }
                 });
 

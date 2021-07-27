@@ -10,6 +10,7 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Services.Broadcast.Entities.Enums;
+using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
@@ -86,7 +87,17 @@ namespace Services.Broadcast.Repositories
                                           && (plan_versions.status == (int)PlanStatusEnum.Contracted
                                               || plan_versions.status == (int)PlanStatusEnum.Live
                                               || plan_versions.status == (int)PlanStatusEnum.Complete)
-                                    select plans).ToList();
+                                    select plans)
+                                    .Include(x => x.campaign)
+                                    .Include(x => x.plan_versions)
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_creative_lengths))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_creative_lengths.Select(y => y.spot_lengths)))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(y => y.standard_dayparts)))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
+                                    .Include(p => p.plan_versions.Select(x => x.audience))
+                                    .Include(x => x.plan_iscis)
+                                    .ToList();
 
                 var result = planEntities.Select(plan =>
                 {
@@ -103,35 +114,12 @@ namespace Services.Broadcast.Repositories
                         FlightStartDate = planVersion.flight_start_date,
                         FlightEndDate = planVersion.flight_end_date,
                         ProductName = planVersionSummary.product_name,
-                        IsciAdvertisers = plan.plan_iscis.Where(x => x.deleted_at == null).Select(x => _MapToIsciAdvertiserDto(x, context)).ToList()
+                        Iscis = plan.plan_iscis.Where(x => x.deleted_at == null).Select(x => x.isci).ToList()
                     };
                     return isciPlanDetail;
                 }).ToList();
                 return result;
             });
-        }
-
-        private IsciAdvertiserDto _MapToIsciAdvertiserDto(plan_iscis planIscis, QueryHintBroadcastContext context)
-        {
-            var isciEntities = (from reel_iscis in context.reel_iscis
-                               join spot_lengths in context.spot_lengths on reel_iscis.spot_length_id equals spot_lengths.id
-                               join rip in context.reel_isci_products on reel_iscis.isci equals rip.isci into reel_isci_products_group
-                               from reel_isci_products in reel_isci_products_group.DefaultIfEmpty()
-                               where reel_iscis.isci == planIscis.isci
-                               select new
-                               {
-                                   SpotLengthDuration = spot_lengths.length,
-                                   ProductName = reel_isci_products.product_name
-                               }).SingleOrDefault();
-
-            var isciAdvertiser = new IsciAdvertiserDto()
-            {
-                Id = planIscis.id,
-                Isci = planIscis.isci,
-                SpotLengthDuration = isciEntities?.SpotLengthDuration ?? 0,
-                ProductName = isciEntities?.ProductName
-            };
-            return isciAdvertiser;
-        }
+        }        
     }
 }

@@ -252,7 +252,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                 DaypartsString = string.Join(", ", isciPlanDetail.Dayparts),
                                 ProductName = isciPlanDetail.ProductName,
                                 FlightString = $"{isciPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{isciPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
-                                Iscis = isciPlanDetail.IsciAdvertisers.Select(_MapToIsciDto).ToList()
+                                Iscis = isciPlanDetail.Iscis
                             };
                             return isciPlan;
                         }).ToList()
@@ -267,18 +267,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var advertisers = _AabEngine.GetAdvertisers();
             isciPlanSummaries.ForEach(x => x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
-        }
-
-        private IsciDto _MapToIsciDto(IsciAdvertiserDto isciAdvertiser)
-        {
-            var isci = new IsciDto()
-            {
-                Id = isciAdvertiser.Id,
-                Isci = isciAdvertiser.Isci,
-                SpotLengthsString = $":{isciAdvertiser.SpotLengthDuration}",
-                ProductName = isciAdvertiser.ProductName
-            };
-            return isci;
-        }
+        }        
     }
 }
