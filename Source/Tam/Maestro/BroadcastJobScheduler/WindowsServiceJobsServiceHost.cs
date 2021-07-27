@@ -22,7 +22,8 @@ namespace BroadcastJobScheduler
             ILongRunQueueMonitors longRunQueueMonitors,
             IInventoryAggregationQueueMonitor inventoryAggregationQueueMonitor,
             IInventoryProgramsProcessingService inventoryProgramsProcessingService,
-            IStationService stationService)
+            IStationService stationService,
+            IReelIsciIngestService isciIngestService)
             : base(recurringJobManager)
         {
             _LongRunQueueMonitors = longRunQueueMonitors;
@@ -30,6 +31,7 @@ namespace BroadcastJobScheduler
 
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _StationService = stationService;
+            _IsciIngestService = isciIngestService;
         }
 
         protected override void OnStart()
