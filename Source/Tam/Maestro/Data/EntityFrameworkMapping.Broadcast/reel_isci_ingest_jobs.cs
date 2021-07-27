@@ -12,7 +12,7 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class real_isci_ingest_jobs
+    public partial class reel_isci_ingest_jobs
     {
         public int id { get; set; }
         public int status { get; set; }

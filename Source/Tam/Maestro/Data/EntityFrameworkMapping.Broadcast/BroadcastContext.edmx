@@ -2004,7 +2004,15 @@
           <Property Name="annual_adjustment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="nti_adjustment" Type="decimal" Precision="5" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="real_isci_ingest_jobs">
+        <EntityType Name="reel_isci_advertiser_name_references">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reel_isci_id" Type="int" Nullable="false" />
+          <Property Name="advertiser_name_reference" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reel_isci_ingest_jobs">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -2014,14 +2022,6 @@
           <Property Name="queued_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="completed_at" Type="datetime2" Precision="7" />
           <Property Name="error_message" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="reel_isci_advertiser_name_references">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="reel_isci_id" Type="int" Nullable="false" />
-          <Property Name="advertiser_name_reference" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="reel_isci_products">
           <Key>
@@ -6745,8 +6745,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="proposal_versions" EntityType="Self.proposal_versions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proposals" EntityType="Self.proposals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rating_adjustments" EntityType="Self.rating_adjustments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="real_isci_ingest_jobs" EntityType="Self.real_isci_ingest_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reel_isci_advertiser_name_references" EntityType="Self.reel_isci_advertiser_name_references" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reel_isci_ingest_jobs" EntityType="Self.reel_isci_ingest_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reel_isci_products" EntityType="Self.reel_isci_products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reel_iscis" EntityType="Self.reel_iscis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rep_firms" EntityType="Self.rep_firms" Schema="dbo" store:Type="Tables" />
@@ -9483,7 +9483,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="reel_iscis" EntitySet="reel_iscis" />
           </AssociationSet>
           <EntitySet Name="export_unmapped_program_names_jobs" EntityType="BroadcastModel.export_unmapped_program_names_jobs" />
-          <EntitySet Name="real_isci_ingest_jobs" EntityType="BroadcastModel.real_isci_ingest_jobs" />
+          <EntitySet Name="reel_isci_ingest_jobs" EntityType="BroadcastModel.reel_isci_ingest_jobs" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -16587,7 +16587,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="completed_at" Type="DateTime" Precision="7" />
           <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="real_isci_ingest_jobs">
+        <EntityType Name="reel_isci_ingest_jobs">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -19409,9 +19409,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="real_isci_ingest_jobs">
-            <EntityTypeMapping TypeName="BroadcastModel.real_isci_ingest_jobs">
-              <MappingFragment StoreEntitySet="real_isci_ingest_jobs">
+          <EntitySetMapping Name="reel_isci_ingest_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.reel_isci_ingest_jobs">
+              <MappingFragment StoreEntitySet="reel_isci_ingest_jobs">
                 <ScalarProperty Name="error_message" ColumnName="error_message" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />
                 <ScalarProperty Name="queued_by" ColumnName="queued_by" />

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[real_isci_ingest_jobs]
+﻿CREATE TABLE [dbo].[reel_isci_ingest_jobs]
 (
 	[id] INT NOT NULL PRIMARY KEY IDENTITY (1,1),
 	[status] INT NOT NULL,

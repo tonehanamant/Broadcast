@@ -1,4 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
+using Hangfire;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.ReelRosterIscis;
 using System;
@@ -12,6 +13,11 @@ namespace Services.Broadcast.ApplicationServices
         /// Allows to test the reel isci client.
         /// </summary>
         List<ReelRosterIsciDto> TestReelISciApiClient(DateTime startDate, int numberOfDays);
+        /// <summary>
+        /// Perform reel isci ingest.
+        /// </summary>
+        [Queue("reelisciingest")]
+        void PerformReelIsciIngest(string userName);
     }
 
     public class ReelIsciIngestService : BroadcastBaseClass, IReelIsciIngestService
@@ -32,6 +38,11 @@ namespace Services.Broadcast.ApplicationServices
 
             _LogInfo($"Received a response containing '{result.Count}' records.");
             return result;
+        }
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public void PerformReelIsciIngest(string userName)
+        {
+            _LogInfo($"executing...... .", userName);
         }
     }
 }

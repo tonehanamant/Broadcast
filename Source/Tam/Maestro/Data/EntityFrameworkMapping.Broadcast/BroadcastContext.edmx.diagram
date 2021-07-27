@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="30">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
@@ -518,7 +518,7 @@
         <AssociationConnector Association="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis" />
         <AssociationConnector Association="BroadcastModel.FK_reel_iscis_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.export_unmapped_program_names_jobs" Width="1.5" PointX="36.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BroadcastModel.real_isci_ingest_jobs" Width="1.5" PointX="36.375" PointY="3.75" />
+        <EntityTypeShape EntityType="BroadcastModel.reel_isci_ingest_jobs" Width="1.5" PointX="36.375" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

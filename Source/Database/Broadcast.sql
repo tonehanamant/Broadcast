@@ -592,16 +592,13 @@ GO
 /*************************************** END BP-2642 *****************************************************/
 
 /*************************************** START BP-2645 *****************************************************/
-
-IF (NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'real_isci_ingest_jobs' AND COLUMN_NAME= 'queued_by')
-	AND OBJECT_ID('real_isci_ingest_jobs') IS NOT NULL)
-BEGIN	
-	DROP TABLE real_isci_ingest_jobs
-END
-
-IF OBJECT_ID('real_isci_ingest_jobs') IS NULL
+IF OBJECT_ID('real_isci_ingest_jobs') IS NOT NULL
 BEGIN
-	CREATE TABLE [dbo].[real_isci_ingest_jobs]
+    DROP TABLE real_isci_ingest_jobs
+END
+IF OBJECT_ID('reel_isci_ingest_jobs') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[reel_isci_ingest_jobs]
 	(
 		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
 		[status] INT NOT NULL,

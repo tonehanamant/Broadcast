@@ -16,6 +16,7 @@ namespace BroadcastJobScheduler
 
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IStationService _StationService;
+        private readonly IReelIsciIngestService _IsciIngestService;
 
         public WindowsServiceJobsServiceHost(IRecurringJobManager recurringJobManager,
             ILongRunQueueMonitors longRunQueueMonitors,
@@ -52,6 +53,13 @@ namespace BroadcastJobScheduler
                 Cron.Daily(_StationsUpdateJobRunHour()),
                 TimeZoneInfo.Local,
                 queue: "stationsupdate");
+
+            _RecurringJobManager.AddOrUpdate(
+               "reel-isci-ingest",
+               () => _IsciIngestService.PerformReelIsciIngest(RECURRING_JOBS_USERNAME),
+               Cron.Daily(_ReelIsciiUpdateJobRunHour()),
+               TimeZoneInfo.Local,
+               queue: "reelisciingest");
 
             if (_GetEnableProgramEnrichmentJobs())
             {
@@ -97,6 +105,10 @@ namespace BroadcastJobScheduler
         private int _StationsUpdateJobRunHour()
         {
             return AppSettingHelper.GetConfigSetting("StationImportJobRunHour", 0);
+        }
+        private int _ReelIsciiUpdateJobRunHour()
+        {
+            return AppSettingHelper.GetConfigSetting("ReelIsciiImportJobRunHour", 1);
         }
 
         private int _ProgramEnrichedInventoryFilesJobRunHour()
