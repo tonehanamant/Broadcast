@@ -517,6 +517,7 @@
     <Compile Include="Entities\Isci\IsciPlanSearchDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanDetailDto.cs" />
     <Compile Include="Entities\Isci\IsciSearchDto.cs" />
+    <Compile Include="Entities\Isci\ReelIsciIngestJobDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciEntity.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciResponseEntity.cs" />
@@ -928,6 +929,7 @@
     <Compile Include="Repositories\ProgramMappingRepository.cs" />
     <Compile Include="Repositories\ProgramNameExceptionsRepository.cs" />
     <Compile Include="Repositories\ProgramNameMappingKeywordRepository.cs" />
+    <Compile Include="Repositories\ReelIsciIngestJobsRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
