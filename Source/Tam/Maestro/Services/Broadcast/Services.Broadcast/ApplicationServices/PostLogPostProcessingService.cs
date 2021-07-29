@@ -49,6 +49,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public PostLogPostProcessingService(IWWTVFtpHelper wwtvFtpHelper
             , IWWTVEmailProcessorService emailService
@@ -70,6 +71,7 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _FeatureToggleHelper = featureToggleHelper;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         ///<inheritdoc/>
@@ -158,8 +160,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             _WWTVSharedNetworkHelper.Impersonate(delegate
             {
-                var files = _WWTVFtpHelper.GetFtpErrorFileList(BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFtpFolder);
-                var remoteFTPPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFtpFolder);
+                var wWTV_KeepingTracErrorFtpFolder = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_KeepingTracErrorFtpFolder) : BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFtpFolder;
+                var files = _WWTVFtpHelper.GetFtpErrorFileList(wWTV_KeepingTracErrorFtpFolder);
+                var remoteFTPPath = _WWTVFtpHelper.GetRemoteFullPath(wWTV_KeepingTracErrorFtpFolder);
 
                 var localPaths = DownloadFTPFiles(files, remoteFTPPath);
                 EmailFTPErrorFiles(localPaths);

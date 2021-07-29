@@ -42,6 +42,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -66,6 +67,7 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _FeatureToggleHelper = featureToggleHelper;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
         
         /// <summary>
@@ -75,7 +77,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime)
         {
-            var inboundFile  = BroadcastServiceSystemParameter.WWTV_FtpInboundFolder;
+            var inboundFile  = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_FtpInboundFolder) : BroadcastServiceSystemParameter.WWTV_FtpInboundFolder;
             if (!inboundFile.EndsWith("/"))
                 inboundFile += "/";
 
@@ -162,8 +164,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             _WWTVSharedNetworkHelper.Impersonate(delegate
             {
-                var files = _WWTVFtpHelper.GetFtpErrorFileList(BroadcastServiceSystemParameter.WWTV_FtpErrorFolder);
-                var remoteFTPPath = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_FtpErrorFolder);
+
+                var wwtv_ftpErrorFolder = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_FtpErrorFolder) : BroadcastServiceSystemParameter.WWTV_FtpErrorFolder;
+                var files = _WWTVFtpHelper.GetFtpErrorFileList(wwtv_ftpErrorFolder);
+                var remoteFTPPath = _WWTVFtpHelper.GetRemoteFullPath(wwtv_ftpErrorFolder);
                 
                 var localPaths = DownloadFTPFiles(files, remoteFTPPath);
                 EmailFTPErrorFiles(localPaths);

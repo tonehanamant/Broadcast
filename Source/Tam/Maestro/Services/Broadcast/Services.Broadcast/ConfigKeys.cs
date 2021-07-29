@@ -77,6 +77,16 @@ namespace Services.Broadcast
 		public static readonly string ProgramSearchApiUrl = "ProgramSearchApiUrl";
 		public static readonly string ScxGenerationFolder = "ScxGenerationFolder";
 		public static readonly string WWTV_FailedFolder = "WWTV_FailedFolder";
+		public static readonly string LaunchDarklySdkKey = "LaunchDarklySdkKey";
+		public static readonly string WWTV_FtpErrorFolder = "WWTV_FtpErrorFolder";
+		public static readonly string WWTV_FtpHost = "WWTV_FtpHost";
+		public static readonly string WWTV_FtpInboundFolder = "WWTV_FtpInboundFolder";
+		public static readonly string WWTV_FtpOutboundFolder = "WWTV_FtpOutboundFolder";
+		public static readonly string WWTV_FtpPassword = "WWTV_FtpPassword";
+		public static readonly string WWTV_FtpUsername = "WWTV_FtpUsername";
+		public static readonly string WWTV_KeepingTracDropFolder = "WWTV_KeepingTracDropFolder";
+		public static readonly string WWTV_KeepingTracErrorFolder = "WWTV_KeepingTracErrorFolder";
+		public static readonly string WWTV_KeepingTracErrorFtpFolder = "WWTV_KeepingTracErrorFtpFolder";
 	}
 }
 

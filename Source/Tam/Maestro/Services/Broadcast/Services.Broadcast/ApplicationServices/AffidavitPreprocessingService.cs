@@ -48,6 +48,9 @@ namespace Services.Broadcast.ApplicationServices
 
         private const string _ValidStrataTabName = "PostAnalRep_ExportDetail";
         private const string _ValidKeepingTracTabName = "KeepingTrac.csv";
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public AffidavitPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory
                                                 , IWWTVEmailProcessorService affidavitEmailProcessorService
@@ -56,7 +59,7 @@ namespace Services.Broadcast.ApplicationServices
                                                 , IEmailerService emailerService
                                                 , IFileService fileService
                                                 , IExcelHelper excelHelper
-                                                , ICsvHelper csvHelper)
+                                                , ICsvHelper csvHelper, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _AffidavitRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>();
@@ -67,6 +70,9 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _ExcelHelper = excelHelper;
             _CsvHelper = csvHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         /// <summary>
@@ -136,7 +142,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_FileService.Exists(zipFileName))
             {
-                var sharedFolder = _WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder);
+                var wWTV_FtpOutboundFolder = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_FtpOutboundFolder) : BroadcastServiceSystemParameter.WWTV_FtpOutboundFolder;
+                var sharedFolder = _WWTVFtpHelper.GetRemoteFullPath(wWTV_FtpOutboundFolder);
                 var uploadUrl = $"{sharedFolder}/{Path.GetFileName(zipFileName)}";
                 _WWTVFtpHelper.UploadFile(zipFileName, uploadUrl, File.Delete);
                 _FileService.Delete(zipFileName);

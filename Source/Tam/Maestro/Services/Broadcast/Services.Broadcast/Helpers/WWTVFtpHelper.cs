@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Common.Services;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 
@@ -71,27 +72,33 @@ namespace Services.Broadcast.ApplicationServices.Helpers
 
         private IFtpService _FtpService;
         private string _Environment;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         public string Host
         {
             get
             {
                 // uncomment if debugging locally (don't forget to recomment when checking in)
                 //return "localhost";
-                return BroadcastServiceSystemParameter.WWTV_FtpHost;
+                return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_FtpHost) : BroadcastServiceSystemParameter.WWTV_FtpHost;
             }
         }
 
-        public WWTVFtpHelper(IFtpService ftpService)
+        public WWTVFtpHelper(IFtpService ftpService, IConfigurationSettingsHelper configurationSettingsHelper, IFeatureToggleHelper featureToggleHelper)
         {
             _FtpService = ftpService;
             _Environment = new AppSettings().Environment.ToString();
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         ///<inheritdoc/>
         public NetworkCredential GetClientCredentials()
         {
-            return new NetworkCredential(BroadcastServiceSystemParameter.WWTV_FtpUsername,
-                BroadcastServiceSystemParameter.WWTV_FtpPassword);
+            return new NetworkCredential(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_FtpUsername): BroadcastServiceSystemParameter.WWTV_FtpUsername,
+                _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_FtpPassword) : BroadcastServiceSystemParameter.WWTV_FtpPassword);
         }
 
 

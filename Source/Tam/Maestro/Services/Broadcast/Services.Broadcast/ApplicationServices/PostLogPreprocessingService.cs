@@ -36,6 +36,10 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly string _CsvFileExtension = ".csv";
         private readonly string _ExcelFileExtension = ".xlsx";
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly Lazy<string> _WWTV_KeepingTracErrorFolder;
 
         public PostLogPreprocessingService(IDataRepositoryFactory broadcastDataRepositoryFactory
                                            , IWWTVSharedNetworkHelper WWTVSharedNetworkHelper
@@ -44,7 +48,7 @@ namespace Services.Broadcast.ApplicationServices
                                            , IWWTVFtpHelper ftpHelper
                                            , ISigmaConverter sigmaConverter
                                            , IFileTransferEmailHelper emailHelper
-                                           , IExcelHelper excelHelper)
+                                           , IExcelHelper excelHelper, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _DataRepositoryFactory = broadcastDataRepositoryFactory;
             _WWTVSharedNetworkHelper = WWTVSharedNetworkHelper;
@@ -55,6 +59,10 @@ namespace Services.Broadcast.ApplicationServices
             _EmailHelper = emailHelper;
             _ExcelHelper = excelHelper;
             _PostLogRepository = _DataRepositoryFactory.GetDataRepository<IPostLogRepository>();
+            _WWTV_KeepingTracErrorFolder = new Lazy<string>(_GetWWTV_KeepingTracErrorFolder);
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public void ProcessFiles(string username)
@@ -65,7 +73,8 @@ namespace Services.Broadcast.ApplicationServices
                 var validationResults = ValidateFiles(dropFilePathList, username, DeliveryFileSourceEnum.Sigma);
                 _SaveAndUploadToWWTV(validationResults, DeliveryFileSourceEnum.Sigma);
 
-                var ktDropFilePathList = _FileService.GetFiles(BroadcastServiceSystemParameter.WWTV_KeepingTracDropFolder);
+                var wWTV_KeepingTracDropFolder = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_KeepingTracDropFolder) : BroadcastServiceSystemParameter.WWTV_KeepingTracDropFolder;
+                var ktDropFilePathList = _FileService.GetFiles(wWTV_KeepingTracDropFolder);
                 var ktValidationResults = ValidateFiles(ktDropFilePathList, username, DeliveryFileSourceEnum.KeepingTrac);
                 _SaveAndUploadToWWTV(ktValidationResults, DeliveryFileSourceEnum.KeepingTrac);
             });
@@ -166,7 +175,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var invalidFile in invalidFileList)
             {
                 var invalidFilePath = _FileService.Move(invalidFile.FilePath,
-                    source.Equals(DeliveryFileSourceEnum.KeepingTrac) ? BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder : BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
+                    source.Equals(DeliveryFileSourceEnum.KeepingTrac) ? _WWTV_KeepingTracErrorFolder.Value : BroadcastServiceSystemParameter.WWTV_PostLogErrorFolder);
 
                 var emailBody = _EmailHelper.CreateInvalidDataFileEmailBody(invalidFile.ErrorMessages, invalidFilePath, invalidFile.FileName);
 
@@ -176,7 +185,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _CreateAndUploadZipArchiveToWWTV(List<string> filePaths)
         {
-            string zipFileName = BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder;
+            string zipFileName = _WWTV_KeepingTracErrorFolder.Value;
             if (!zipFileName.EndsWith("\\"))
                 zipFileName += "\\";
             zipFileName += "PostLog_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
@@ -186,6 +195,10 @@ namespace Services.Broadcast.ApplicationServices
                 _WWTVFtpHelper.UploadFile(zipFileName, $"{_WWTVFtpHelper.GetRemoteFullPath(BroadcastServiceSystemParameter.WWTV_KeepingTracFtpOutboundFolder)}/{Path.GetFileName(zipFileName)}", File.Delete);
                 _FileService.Delete(zipFileName);
             }
+        }
+        private string _GetWWTV_KeepingTracErrorFolder()
+        {
+            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_KeepingTracErrorFolder) : BroadcastServiceSystemParameter.WWTV_KeepingTracErrorFolder;
         }
     }
 }

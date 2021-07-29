@@ -25,6 +25,7 @@ using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Clients;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -303,9 +304,12 @@ namespace BroadcastComposerWeb.Controllers
         public ActionResult TestFtpAccess()
         {
             FtpService srv = new FtpService();
-            WWTVFtpHelper helper = new WWTVFtpHelper(srv);
+            ConfigurationSettingsHelper configurationSettingsHelper = new ConfigurationSettingsHelper();
+            LaunchDarklyClient launchDarklyClient = new LaunchDarklyClient();
+            FeatureToggleHelper featureToggleHelper = new FeatureToggleHelper(launchDarklyClient);
+            WWTVFtpHelper helper = new WWTVFtpHelper(srv,configurationSettingsHelper, featureToggleHelper);
             NetworkCredential creds = helper.GetClientCredentials();
-            var site = "ftp://" + helper.Host;
+            var site = "ftp://" + helper.Host; 
             var list = srv.GetFileList(creds, site);
 
             TempData["Message"] = "Get file worked w/o error!\r\n";
