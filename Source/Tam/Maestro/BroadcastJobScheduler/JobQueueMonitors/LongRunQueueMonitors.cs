@@ -48,6 +48,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "savepricingrequest",
                 "planbuying",
                 "savebuyingrequest",
+                "reelisciingest",
                 "default"
             };
         }
