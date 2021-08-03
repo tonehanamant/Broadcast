@@ -16,8 +16,30 @@
       {
         "Id": 0,
         "Isci": "CUSA1813000H",
+        "ProductName": "Product5",
+        "SpotLengthsString": ":25"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "Colgate EM10",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "CUSA1813000H",
         "ProductName": null,
         "SpotLengthsString": ":30"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "Colgate EM9",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "CLDC6513000H",
+        "ProductName": null,
+        "SpotLengthsString": ":29"
       }
     ]
   },
@@ -45,6 +67,17 @@
   },
   {
     "AdvertiserName": "O'Keeffes",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "OKWL1702H",
+        "ProductName": "Product2",
+        "SpotLengthsString": ":22"
+      }
+    ]
+  },
+  {
+    "AdvertiserName": "O'Keeffes6",
     "Iscis": [
       {
         "Id": 0,

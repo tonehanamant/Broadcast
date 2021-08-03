@@ -55,8 +55,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
         /// <param name="dateTimeEngine">The date time engine.</param>
         /// <param name="aabEngine">The Aab engine.</param>
-        public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory, 
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
+        public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IDateTimeEngine dateTimeEngine,
             IAabEngine aabEngine)
         {
@@ -70,25 +70,35 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
         {
             List<IsciListItemDto> isciListDto = new List<IsciListItemDto>();
+            List<IsciAdvertiserDto> isciAdvertiserListDto = new List<IsciAdvertiserDto>();
             var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
-            var result = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);
-            if (result?.Any() ?? false)
+            isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);            
+            if (isciAdvertiserListDto?.Any() ?? false)
             {
-                var resultlamba = result.GroupBy(stu => stu.AdvertiserName).OrderBy(stu => stu.Key);
-                foreach (var group in resultlamba)
+                if (isciSearch.WithoutPlansOnly)
                 {
-                    IsciListItemDto isciListItemDto = new IsciListItemDto();
-                    isciListItemDto.AdvertiserName = group.Key;
-                    foreach (var item in group)
+                   var isciAdvertiserListDtoWithoutPlan = isciAdvertiserListDto.Where(x => x.PlanIsci == null).ToList();
+                   isciAdvertiserListDto = isciAdvertiserListDtoWithoutPlan;
+                }
+                if (isciAdvertiserListDto?.Any() ?? false)
+                {
+                    var resultlamba = isciAdvertiserListDto.GroupBy(stu => stu.AdvertiserName).OrderBy(stu => stu.Key);
+
+                    foreach (var group in resultlamba)
                     {
-                        isciListItemDto.Iscis = new List<IsciDto>();
-                        IsciDto isciItemDto = new IsciDto();
-                        isciItemDto.Isci = item.Isci;
-                        isciItemDto.SpotLengthsString = $":{item.SpotLengthDuration}";
-                        isciItemDto.ProductName = item.ProductName;
-                        isciListItemDto.Iscis.Add(isciItemDto);
+                        IsciListItemDto isciListItemDto = new IsciListItemDto();
+                        isciListItemDto.AdvertiserName = group.Key;
+                        foreach (var item in group)
+                        {
+                            isciListItemDto.Iscis = new List<IsciDto>();
+                            IsciDto isciItemDto = new IsciDto();
+                            isciItemDto.Isci = item.Isci;
+                            isciItemDto.SpotLengthsString = $":{item.SpotLengthDuration}";
+                            isciItemDto.ProductName = item.ProductName;
+                            isciListItemDto.Iscis.Add(isciItemDto);
+                        }
+                        isciListDto.Add(isciListItemDto);
                     }
-                    isciListDto.Add(isciListItemDto);
                 }
             }
             return isciListDto;
@@ -267,6 +277,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var advertisers = _AabEngine.GetAdvertisers();
             isciPlanSummaries.ForEach(x => x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
-        }        
+        }
     }
 }

@@ -7,5 +7,6 @@
         public string Isci { get; set; }
         public int SpotLengthDuration { get; set; }
         public string ProductName { get; set; }
+        public string PlanIsci { get; set; }
     }
 }

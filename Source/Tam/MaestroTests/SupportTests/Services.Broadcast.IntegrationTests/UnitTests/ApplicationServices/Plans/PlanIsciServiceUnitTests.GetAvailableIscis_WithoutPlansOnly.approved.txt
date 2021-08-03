@@ -1,0 +1,13 @@
+[
+  {
+    "AdvertiserName": "Colgate EM10",
+    "Iscis": [
+      {
+        "Id": 0,
+        "Isci": "CUSA1813000H",
+        "ProductName": null,
+        "SpotLengthsString": ":30"
+      }
+    ]
+  }
+]

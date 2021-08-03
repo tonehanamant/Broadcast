@@ -71,6 +71,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WithoutPlansOnly = false,
+
+            };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns(
+                new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+                );
+
+            _PlanIsciRepositoryMock
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetAvailableIscis());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIscis(isciSearch);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        [Test]
+        public void GetAvailableIscis_WithoutPlansOnly()
+        {
+            // Arrange
+            IsciSearchDto isciSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
                 WithoutPlansOnly = true,
 
             };
@@ -88,7 +112,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-
         [Test]
         public void GetUnAvailableIscis()
         {
@@ -97,7 +120,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = true,
+                WithoutPlansOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -114,7 +137,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Equals(result.Count, 0);
         }
-
+        
         [Test]
         public void GetAvailableIscisNullProduct()
         {
@@ -122,7 +145,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = true,
+                WithoutPlansOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -159,13 +182,58 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsNull(result[0].Iscis[0].ProductName);
         }
         [Test]
-        public void GetUnAvailableIscisThrowsException()
+        public void GetAvailableIscis_NullPlanIsci()
         {
             // Arrange           
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
                 WithoutPlansOnly = true,
+
+            };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+              .Returns(
+              new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+              );
+            _PlanIsciRepositoryMock
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(
+                          new List<IsciAdvertiserDto>()
+                            {
+                                new IsciAdvertiserDto()
+                                {
+                                AdvertiserName = "O'Keeffes",
+                                Id = 1,
+                                SpotLengthDuration = 21,
+                                ProductName = null,
+                                Isci = "OKWF1701H",
+                                PlanIsci="OKWL1702H"
+                                },
+                                 new IsciAdvertiserDto()
+                                {
+                                AdvertiserName = "O'Keeffes1",
+                                Id = 2,
+                                SpotLengthDuration = 22,
+                                ProductName = null,
+                                Isci = "OKWL1702H",
+                                PlanIsci="OKWL1702H"
+                             }
+                 });
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIscis(isciSearch);
+
+            // Assert
+            Assert.AreEqual(result.Count,0);
+        }
+        [Test]
+        public void GetUnAvailableIscisThrowsException()
+        {
+            // Arrange           
+            IsciSearchDto isciSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WithoutPlansOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -194,7 +262,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 1,
                 SpotLengthDuration = 21,
                 ProductName = "Product1",
-                Isci = "OKWF1701H"
+                Isci = "OKWF1701H",
+                PlanIsci="OKWF1701H"
                 },
                  new IsciAdvertiserDto()
                 {
@@ -202,7 +271,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 2,
                 SpotLengthDuration = 22,
                 ProductName = "Product2",
-                Isci = "OKWL1702H"
+                Isci = "OKWL1702H",
+                PlanIsci="OKWF1701H"
                 },
                 new IsciAdvertiserDto()
                 {
@@ -210,7 +280,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 3,
                 SpotLengthDuration = 23,
                 ProductName = "Product3",
-                Isci = "OKWF1701H"
+                Isci = "OKWF1701H",
+                PlanIsci="OKWF1701H"
                 },
                    new IsciAdvertiserDto()
                 {
@@ -218,7 +289,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 4,
                 SpotLengthDuration = 24,
                 ProductName = "Product4",
-                Isci = "CLDC6513000H"
+                Isci = "CLDC6513000H",
+                PlanIsci="OKWF1701H"
                 },
                 new IsciAdvertiserDto()
                 {
@@ -226,15 +298,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 5,
                 SpotLengthDuration = 25,
                 ProductName = "Product5",
-                Isci = "CUSA1813000H"
+                Isci = "CUSA1813000H",
+                PlanIsci="OKWF1701H"
                 },
                new IsciAdvertiserDto()
                 {
-                AdvertiserName = "O'Keeffes",
+                AdvertiserName = "O'Keeffes6",
                 Id = 6,
                 SpotLengthDuration = 26,
                 ProductName = "Product6",
-                Isci = "OKWF1701H"
+                Isci = "OKWF1701H",
+                PlanIsci="OKWF1701H"
                 },
                new IsciAdvertiserDto()
                 {
@@ -242,7 +316,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 7,
                 SpotLengthDuration = 27,
                 ProductName = "Product7",
-                Isci = "OKWL1702H"
+                Isci = "OKWL1702H",
+                PlanIsci="OKWF1701H"
                 },
                new IsciAdvertiserDto()
                 {
@@ -250,23 +325,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Id = 8,
                 SpotLengthDuration = 28,
                 ProductName = null,
-                Isci = "ATLT0063000HU"
+                Isci = "ATLT0063000HU",
+                PlanIsci="OKWF1701H"
                 },
                 new IsciAdvertiserDto()
                 {
-                AdvertiserName = "Colgate EM",
+                AdvertiserName = "Colgate EM9",
                 Id = 9,
                 SpotLengthDuration = 29,
                 ProductName = null,
-                Isci = "CLDC6513000H"
+                Isci = "CLDC6513000H",
+                PlanIsci="OKWF1701H"
                 },
                 new IsciAdvertiserDto()
                 {
-                AdvertiserName = "Colgate EM",
-                Id = 30,
+                AdvertiserName = "Colgate EM10",
+                Id = 10,
                 SpotLengthDuration = 30,
                 ProductName = null,
-                Isci = "CUSA1813000H"
+                Isci = "CUSA1813000H",
+                PlanIsci=null
                 }
             };
         }
