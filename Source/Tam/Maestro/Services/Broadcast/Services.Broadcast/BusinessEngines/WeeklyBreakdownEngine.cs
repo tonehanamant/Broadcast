@@ -1,16 +1,16 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
+using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Services.Repositories;
-using Services.Broadcast.Helpers;
-using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines
@@ -75,7 +75,10 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IPlanValidator _PlanValidator;
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
-        private readonly Dictionary<int, double> _SpotLengthMultiplier;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
+
+        private readonly Lazy<Dictionary<int, double>> _SpotLengthDeliveryMultipliers;
+        private readonly Lazy<Dictionary<int, decimal>> _SpotLengthCostMultipliers;
 
         //TODO: this needs to be removed after all plans in production have a modified version greater then 20.07 release date
         private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
@@ -92,8 +95,23 @@ namespace Services.Broadcast.BusinessEngines
             _PlanValidator = planValidator;
             _MediaWeekCache = mediaWeekCache;
             _CreativeLengthEngine = creativeLengthEngine;
-            _SpotLengthMultiplier = spotLengthEngine.GetDeliveryMultipliers();
+            _SpotLengthEngine = spotLengthEngine;
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
+
+            _SpotLengthDeliveryMultipliers = new Lazy<Dictionary<int, double>>(_GetSpotDeliveryMultipliers);
+            _SpotLengthCostMultipliers = new Lazy<Dictionary<int,decimal>>(_GetSpotCostMultipliers);
+        }
+
+        private Dictionary<int, double> _GetSpotDeliveryMultipliers()
+        {
+            var result = _SpotLengthEngine.GetDeliveryMultipliers();
+            return result;
+        }
+
+        private Dictionary<int, decimal> _GetSpotCostMultipliers()
+        {
+            var result = _SpotLengthEngine.GetCostMultipliers();
+            return result;
         }
 
         public List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(
@@ -498,11 +516,34 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             _CalculateUnits(response.Weeks, request);
+            _AdjustSpotLengthBudget(response.Weeks, request);
             _CalculateWeeklyGoalBreakdownTotals(response, request);
             _OrderWeeks(request, response);
             SetWeekNumber(response.Weeks);
 
             return response;
+        }
+
+        private void _AdjustSpotLengthBudget(List<WeeklyBreakdownWeek> weeks, WeeklyBreakdownRequest request)
+        {
+            if (request.DeliveryType != PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
+            {
+                return;
+            }
+
+            if (request.Equivalized)
+            {
+                return;
+            }
+
+            var spotCostMultipliers = _SpotLengthCostMultipliers.Value;
+            var baseCostDenom = weeks.Sum(w => Convert.ToDecimal(w.WeeklyUnits) * spotCostMultipliers[w.SpotLengthId.Value]);
+            var baseCost = request.TotalBudget / (baseCostDenom);
+            foreach (var week in weeks)
+            {
+                var costPerUnit = baseCost * spotCostMultipliers[week.SpotLengthId.Value];
+                week.WeeklyBudget = Convert.ToDecimal(week.WeeklyUnits) * costPerUnit;
+            }
         }
 
         private List<DateTime> _GetDaysOutsideOfTheFlight(DateTime flightStartDate, DateTime flightEndDate, List<DisplayMediaWeek> weeks)
@@ -1288,7 +1329,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private double _CalculateEquivalizedImpressionsPerUnit(double impressionPerUnit, int spotLengthId)
-            => impressionPerUnit * _SpotLengthMultiplier[spotLengthId];
+            => impressionPerUnit * _SpotLengthDeliveryMultipliers.Value[spotLengthId];
 
         private double _CalculateUnitImpressionsForSingleSpotLength(double impressionPerUnit, double units, int spotLengthId)
             => units * _CalculateEquivalizedImpressionsPerUnit(impressionPerUnit, spotLengthId);

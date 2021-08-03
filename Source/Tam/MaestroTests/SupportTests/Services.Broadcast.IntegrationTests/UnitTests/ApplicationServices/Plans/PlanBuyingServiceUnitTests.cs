@@ -169,7 +169,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SpotLengthEngineMock.Setup(s => s.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
             _SpotLengthEngineMock.Setup(s => s.GetCostMultipliers())
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId);
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId());
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanBuyingRepository>())

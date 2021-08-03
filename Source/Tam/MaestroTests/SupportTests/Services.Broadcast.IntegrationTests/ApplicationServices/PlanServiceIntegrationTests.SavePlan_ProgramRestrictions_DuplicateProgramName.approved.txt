@@ -89,16 +89,16 @@
             {
               "ContentRating": "PG-13",
               "Genre": {
-                "Display": "Comedy",
-                "Id": 9
+                "Display": "Horror",
+                "Id": 25
               },
               "Name": "Young Sheldon"
             },
             {
               "ContentRating": "PG-13",
               "Genre": {
-                "Display": "Horror",
-                "Id": 25
+                "Display": "Comedy",
+                "Id": 9
               },
               "Name": "Young Sheldon"
             }

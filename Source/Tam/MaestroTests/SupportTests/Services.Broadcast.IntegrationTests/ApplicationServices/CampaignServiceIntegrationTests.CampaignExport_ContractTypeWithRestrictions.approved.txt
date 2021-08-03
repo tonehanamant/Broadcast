@@ -1586,11 +1586,11 @@
           "ContainType": 1,
           "PlanId": 1853,
           "Restrictions": [
+            "EARLY & LATE FRINGE ROTATOR",
             "CRIME DAYTIME ROTATOR",
             "CRIME EARLY FRINGE ROTATOR",
             "CRIME LATE FRINGE ROTATOR",
             "CRIME ROTATOR",
-            "EARLY & LATE FRINGE ROTATOR",
             "WEEKEND EARLY FRINGE & ACCESS ROTATOR"
           ]
         }

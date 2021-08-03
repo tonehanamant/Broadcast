@@ -67,13 +67,13 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return deliveryMultipliersBySpotLengthId;
         }
 
-        public static Dictionary<int, decimal> GetCostMultipliersBySpotLengthId()
+        public static Dictionary<int, decimal> GetCostMultipliersBySpotLengthId(bool applyInventoryPremium = true)
         {
             var deliveryMultipliersBySpotLengthId = new Dictionary<int, decimal>
             {
                 {1,1},
                 {2,2},
-                {3,0.65m},
+                {3,  (.5m + (applyInventoryPremium ? 0.15m : 0m))},
                 {4,4},
                 {7,3},
                 {8,1.5m},

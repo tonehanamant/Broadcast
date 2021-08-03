@@ -81,7 +81,7 @@
   },
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "AduImpressions": 72.0,
+    "AduImpressions": 12.0,
     "DaypartCodeId": 2,
     "EndDate": "2020-05-17T00:00:00",
     "IsUpdated": false,
@@ -101,7 +101,7 @@
   },
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "AduImpressions": 48.0,
+    "AduImpressions": 8.0,
     "DaypartCodeId": 11,
     "EndDate": "2020-05-17T00:00:00",
     "IsUpdated": false,

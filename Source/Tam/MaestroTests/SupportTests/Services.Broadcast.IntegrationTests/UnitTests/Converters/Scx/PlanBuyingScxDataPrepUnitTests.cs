@@ -1,12 +1,14 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
+using FizzWare.NBuilder;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
@@ -16,9 +18,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities;
-using FizzWare.NBuilder;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
@@ -53,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             _SpotLengthEngine.Setup(s => s.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
             _SpotLengthEngine.Setup(s => s.GetCostMultipliers())
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId);
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId());
             _SpotLengthEngine.Setup(s => s.GetSpotLengthValueById(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
 

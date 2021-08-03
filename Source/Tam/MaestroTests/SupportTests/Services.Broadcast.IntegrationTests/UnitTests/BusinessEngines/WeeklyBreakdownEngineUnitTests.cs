@@ -1,21 +1,19 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.IntegrationTests.TestData;
+using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Configuration;
-using Castle.Components.DictionaryAdapter;
-using Common.Services.Repositories;
-using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Services.Broadcast.Repositories;
+using CreativeLength = Services.Broadcast.Entities.CreativeLength;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 {
@@ -23,11 +21,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
     [Category("short_running")]
     public class WeeklyBreakdownEngineUnitTests
     {
-        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
-        private readonly Mock<IPlanValidator> _PlanValidatorMock;
-        private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
-        private readonly Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
-        private readonly Mock<ISpotLengthEngine> _SpotLengthEngineMock;
+        private IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
+        private Mock<IPlanValidator> _PlanValidatorMock;
+        private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
+        private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
+        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
 
         public WeeklyBreakdownEngineUnitTests()
         {
@@ -41,7 +39,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Returns(_GetMockStandardDaypartRepository().Object);
 
             _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliers())
-                .Returns(_SpotLengthMultiplier);
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+
+            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers())
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId());
 
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -896,6 +897,315 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
+        #region AdLengthTests
+
+        private IWeeklyBreakdownEngine GetWeeklyBreakdownEngineForAdLengthTests(List<CreativeLength> creativeLengths, DateTime flightStartDate, DateTime flightEndDate)
+        {
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
+
+            _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliers())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+
+            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers())
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium:false));
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<DisplayMediaWeek> {new DisplayMediaWeek { WeekStartDate = flightStartDate, WeekEndDate = flightEndDate }});
+
+            _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<IEnumerable<CreativeLength>>()))
+                .Returns(creativeLengths);
+
+            var testClass = new WeeklyBreakdownEngine(
+                _PlanValidatorMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _CreativeLengthEngineMock.Object,
+                _SpotLengthEngineMock.Object,
+                dataRepositoryFactory.Object);
+
+            return testClass;
+        }
+
+        private WeeklyBreakdownRequest GetBreakdownRequestForAdLengthTests(
+            bool equivalized, List<CreativeLength> creativeLengths,
+            DateTime flightStartDate, DateTime flightEndDate)
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                Equivalized = equivalized,
+                CreativeLengths = creativeLengths,
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                TotalBudget = 500000,
+                TotalImpressions = 20000,
+                ImpressionsPerUnit = 10,
+                TotalRatings = 16.6,
+                FlightStartDate = flightStartDate,
+                FlightEndDate = flightEndDate,
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightHiatusDays = new List<DateTime>(),
+                Weeks = new List<WeeklyBreakdownWeek>(),
+                Dayparts = new List<PlanDaypartDto>(),
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+            };
+            return request;
+        }
+
+        [Test]
+        public void CalculateBreakdown_ByAdLength_TwoEq()
+        {
+            // Arrange
+            var equivalized = true;
+            var thirtySpotWeight = 40;
+            var fifteenSpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var thirtySpotId = spotLengthsDict[30];
+            var fifteenSpotId = spotLengthsDict[15];
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = thirtySpotId, Weight = thirtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+            };
+
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+
+            var request = GetBreakdownRequestForAdLengthTests(equivalized, creativeLengths, flightStartDate, flightEndDate);
+            var testClass = GetWeeklyBreakdownEngineForAdLengthTests(creativeLengths, flightStartDate, flightEndDate);
+
+            // Act
+            var result = testClass.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.AreEqual(2, result.Weeks.Count);
+            var thirtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == thirtySpotId);
+            Assert.AreEqual(8000, thirtyRow.WeeklyImpressions);
+            Assert.AreEqual(800, thirtyRow.WeeklyUnits);
+            Assert.AreEqual(200000, thirtyRow.WeeklyBudget);
+
+            var fifteenRow = result.Weeks.Single(w => w.SpotLengthId.Value == fifteenSpotId);
+            Assert.AreEqual(12000, fifteenRow.WeeklyImpressions);
+            Assert.AreEqual(2400, fifteenRow.WeeklyUnits);
+            Assert.AreEqual(300000, fifteenRow.WeeklyBudget);
+        }
+
+        [Test]
+        public void CalculateBreakdown_ByAdLength_TwoEqNo30()
+        {
+            // Arrange
+            var equivalized = true;
+            var sixtySpotWeight = 40;
+            var fifteenSpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var sixtySpotId = spotLengthsDict[60];
+            var fifteenSpotId = spotLengthsDict[15];
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = sixtySpotId, Weight = sixtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+            };
+
+            var request = GetBreakdownRequestForAdLengthTests(equivalized, creativeLengths, flightStartDate, flightEndDate);
+            var testClass = GetWeeklyBreakdownEngineForAdLengthTests(creativeLengths, flightStartDate, flightEndDate);
+
+            // Act
+            var result = testClass.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.AreEqual(2, result.Weeks.Count);
+            var sixtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == sixtySpotId);
+            Assert.AreEqual(8000, sixtyRow.WeeklyImpressions);
+            Assert.AreEqual(400, sixtyRow.WeeklyUnits);
+            Assert.AreEqual(200000, sixtyRow.WeeklyBudget);
+
+            var fifteenRow = result.Weeks.Single(w => w.SpotLengthId.Value == fifteenSpotId);
+            Assert.AreEqual(12000, fifteenRow.WeeklyImpressions);
+            Assert.AreEqual(2400, fifteenRow.WeeklyUnits);
+            Assert.AreEqual(300000, fifteenRow.WeeklyBudget);
+        }
+
+        [Test]
+        public void CalculateBreakdown_ByAdLength_ThreeEq()
+        {
+            // Arrange
+            var equivalized = true;
+            var thirtySpotWeight = 20;
+            var fifteenSpotWeight = 20;
+            var sixtySpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var thirtySpotId = spotLengthsDict[30];
+            var fifteenSpotId = spotLengthsDict[15];
+            var sixtySpotId = spotLengthsDict[60];
+            
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = thirtySpotId, Weight = thirtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+                new CreativeLength {SpotLengthId = sixtySpotId, Weight = sixtySpotWeight},
+            };
+
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+
+            var request = GetBreakdownRequestForAdLengthTests(equivalized, creativeLengths, flightStartDate, flightEndDate);
+            var testClass = GetWeeklyBreakdownEngineForAdLengthTests(creativeLengths, flightStartDate, flightEndDate);
+
+            // Act
+            var result = testClass.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.AreEqual(3, result.Weeks.Count);
+
+            var thirtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == thirtySpotId);
+            Assert.AreEqual(4000, thirtyRow.WeeklyImpressions);
+            Assert.AreEqual(400, thirtyRow.WeeklyUnits);
+            Assert.AreEqual(100000, thirtyRow.WeeklyBudget);
+
+            var fifteenRow = result.Weeks.Single(w => w.SpotLengthId.Value == fifteenSpotId);
+            Assert.AreEqual(4000, fifteenRow.WeeklyImpressions);
+            Assert.AreEqual(800, fifteenRow.WeeklyUnits);
+            Assert.AreEqual(100000, fifteenRow.WeeklyBudget);
+
+            var sixtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == sixtySpotId);
+            Assert.AreEqual(12000, sixtyRow.WeeklyImpressions);
+            Assert.AreEqual(600, sixtyRow.WeeklyUnits);
+            Assert.AreEqual(300000, sixtyRow.WeeklyBudget);
+        }
+
+        [Test]
+        public void CalculateBreakdown_ByAdLength_TwoUnEq()
+        {
+            // Arrange
+            var equivalized = false;
+            var thirtySpotWeight = 40;
+            var fifteenSpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var thirtySpotId = spotLengthsDict[30];
+            var fifteenSpotId = spotLengthsDict[15];
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = thirtySpotId, Weight = thirtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+            };
+
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+
+            var request = GetBreakdownRequestForAdLengthTests(equivalized, creativeLengths, flightStartDate, flightEndDate);
+            var testClass = GetWeeklyBreakdownEngineForAdLengthTests(creativeLengths, flightStartDate, flightEndDate);
+
+            // Act
+            var result = testClass.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.AreEqual(2, result.Weeks.Count);
+            var thirtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == thirtySpotId);
+            Assert.AreEqual(8000, thirtyRow.WeeklyImpressions);
+            Assert.AreEqual(800, thirtyRow.WeeklyUnits);
+            Assert.AreEqual(285714.29, Math.Round(thirtyRow.WeeklyBudget, 2));
+
+            var fifteenRow = result.Weeks.Single(w => w.SpotLengthId.Value == fifteenSpotId);
+            Assert.AreEqual(12000, fifteenRow.WeeklyImpressions);
+            Assert.AreEqual(1200, fifteenRow.WeeklyUnits);
+            Assert.AreEqual(214285.71, Math.Round(fifteenRow.WeeklyBudget, 2));
+        }
+
+        [Test]
+        public void CalculateBreakdown_ByAdLength_TwoUnEqNo30()
+        {
+            // Arrange
+            var equivalized = false;
+            var sixtySpotWeight = 40;
+            var fifteenSpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var sixtySpotId = spotLengthsDict[60];
+            var fifteenSpotId = spotLengthsDict[15];
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = sixtySpotId, Weight = sixtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+            };
+
+            var request = GetBreakdownRequestForAdLengthTests(equivalized, creativeLengths, flightStartDate, flightEndDate);
+            var testClass = GetWeeklyBreakdownEngineForAdLengthTests(creativeLengths, flightStartDate, flightEndDate);
+
+            // Act
+            var result = testClass.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.AreEqual(2, result.Weeks.Count);
+            var sixtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == sixtySpotId);
+            Assert.AreEqual(8000, sixtyRow.WeeklyImpressions);
+            Assert.AreEqual(800, sixtyRow.WeeklyUnits);
+            Assert.AreEqual(363636.36, Math.Round(sixtyRow.WeeklyBudget, 2));
+
+            var fifteenRow = result.Weeks.Single(w => w.SpotLengthId.Value == fifteenSpotId);
+            Assert.AreEqual(12000, fifteenRow.WeeklyImpressions);
+            Assert.AreEqual(1200, fifteenRow.WeeklyUnits);
+            Assert.AreEqual(136363.64, Math.Round(fifteenRow.WeeklyBudget, 2));
+        }
+
+        [Test]
+        public void CalculateBreakdown_ByAdLength_ThreeUnEq()
+        {
+            // Arrange
+            var equivalized = false;
+            var thirtySpotWeight = 20;
+            var fifteenSpotWeight = 20;
+            var sixtySpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var thirtySpotId = spotLengthsDict[30];
+            var fifteenSpotId = spotLengthsDict[15];
+            var sixtySpotId = spotLengthsDict[60];
+
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = thirtySpotId, Weight = thirtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+                new CreativeLength {SpotLengthId = sixtySpotId, Weight = sixtySpotWeight},
+            };
+
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+
+            var request = GetBreakdownRequestForAdLengthTests(equivalized, creativeLengths, flightStartDate, flightEndDate);
+            var testClass = GetWeeklyBreakdownEngineForAdLengthTests(creativeLengths, flightStartDate, flightEndDate);
+
+            // Act
+            var result = testClass.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.AreEqual(3, result.Weeks.Count);
+
+            var thirtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == thirtySpotId);
+            Assert.AreEqual(4000, thirtyRow.WeeklyImpressions);
+            Assert.AreEqual(400, thirtyRow.WeeklyUnits);
+            Assert.AreEqual(66666.67, Math.Round(thirtyRow.WeeklyBudget, 2));
+
+            var fifteenRow = result.Weeks.Single(w => w.SpotLengthId.Value == fifteenSpotId);
+            Assert.AreEqual(4000, fifteenRow.WeeklyImpressions);
+            Assert.AreEqual(400, fifteenRow.WeeklyUnits);
+            Assert.AreEqual(33333.33, Math.Round(fifteenRow.WeeklyBudget, 2));
+
+            var sixtyRow = result.Weeks.Single(w => w.SpotLengthId.Value == sixtySpotId);
+            Assert.AreEqual(12000, sixtyRow.WeeklyImpressions);
+            Assert.AreEqual(1200, sixtyRow.WeeklyUnits);
+            Assert.AreEqual(400000.00, Math.Round(sixtyRow.WeeklyBudget, 2));
+        }
+
+        #endregion AdLengthTests
+
         private static List<WeeklyBreakdownWeek> _GetWeeklyBreakdownWeeks()
         {
             List<WeeklyBreakdownWeek> result = new List<WeeklyBreakdownWeek>
@@ -1658,6 +1968,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         private WeeklyBreakdownRequest _GetWeeklyBreakDownRequest()
         {
+            // spotLengthId should be null as this is not for ByAdLengthDeliveryType
             return new WeeklyBreakdownRequest
             {
                 FlightStartDate = new DateTime(2020, 2, 24),
