@@ -110,7 +110,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private Dictionary<int, decimal> _GetSpotCostMultipliers()
         {
-            var result = _SpotLengthEngine.GetCostMultipliers();
+            var result = _SpotLengthEngine.GetCostMultipliers(applyInventoryPremium: false);
             return result;
         }
 

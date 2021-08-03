@@ -52,8 +52,9 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Gets the spot length cost multipliers.
         /// </summary>
+        /// <param name="applyInventoryPremium">True to include the 'inventory premium' cost in the returned multipliers.</param>
         /// <returns>Dictionary of spot length id and spot multiplier</returns>
-        Dictionary<int, decimal> GetCostMultipliers();
+        Dictionary<int, decimal> GetCostMultipliers(bool applyInventoryPremium);
 
         double GetDeliveryMultiplierBySpotLengthId(int spotLengthId);
 
@@ -65,16 +66,17 @@ namespace Services.Broadcast.BusinessEngines
         private readonly Dictionary<int, int> _SpotLengthIdByValue;
         private readonly Dictionary<int, int> _SpotLengthValueById;
         private readonly Dictionary<int, double> _DeliveryMultipliersBySpotLengthId;
-        private readonly Dictionary<int, decimal> _SpotCostMultipliersBySpotLengthId;
-
-        /// <inheritdoc/>
+        private readonly Dictionary<int, decimal> _SpotCostInvPremMultipliersBySpotLengthId; // these have the 'inventory premium' applied.
+        private readonly Dictionary<int, decimal> _SpotCostMultipliersBySpotLengthId; 
+        
         public SpotLengthEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             var spotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _SpotLengthIdByValue = spotLengthRepository.GetSpotLengthIdsByDuration();
             _SpotLengthValueById = _SpotLengthIdByValue.ToDictionary(x => x.Value, x => x.Key);
             _DeliveryMultipliersBySpotLengthId = spotLengthRepository.GetDeliveryMultipliersBySpotLengthId();
-            _SpotCostMultipliersBySpotLengthId = spotLengthRepository.GetSpotLengthIdsAndCostMultipliers(true);
+            _SpotCostInvPremMultipliersBySpotLengthId = spotLengthRepository.GetSpotLengthIdsAndCostMultipliers(addInventoryCostPremium:true);
+            _SpotCostMultipliersBySpotLengthId = spotLengthRepository.GetSpotLengthIdsAndCostMultipliers(addInventoryCostPremium:false);
         }
 
         /// <inheritdoc/>
@@ -90,9 +92,16 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc/>
-        public Dictionary<int, decimal> GetCostMultipliers()
+        public Dictionary<int, decimal> GetCostMultipliers(bool applyInventoryPremium)
         {
-            return _SpotCostMultipliersBySpotLengthId;
+            if (applyInventoryPremium)
+            {
+                return _SpotCostInvPremMultipliersBySpotLengthId;
+            }
+            else
+            {
+                return _SpotCostMultipliersBySpotLengthId;
+            }
         }
 
         public double GetDeliveryMultiplierBySpotLengthId(int spotLengthId)
@@ -107,7 +116,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public decimal GetSpotCostMultiplierBySpotLengthId(int spotLengthId)
         {
-            if (_SpotCostMultipliersBySpotLengthId.TryGetValue(spotLengthId, out var spotCostMultiplier))
+            if (_SpotCostInvPremMultipliersBySpotLengthId.TryGetValue(spotLengthId, out var spotCostMultiplier))
             {
                 return spotCostMultiplier;
             }

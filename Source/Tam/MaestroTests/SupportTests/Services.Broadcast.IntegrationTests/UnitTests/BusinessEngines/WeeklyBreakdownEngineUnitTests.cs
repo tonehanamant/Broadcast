@@ -41,8 +41,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
-            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers())
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId());
+            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(true))
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium:true));
 
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -908,7 +908,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
-            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers())
+            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(false))
                 .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium:false));
 
             _MediaMonthAndWeekAggregateCacheMock

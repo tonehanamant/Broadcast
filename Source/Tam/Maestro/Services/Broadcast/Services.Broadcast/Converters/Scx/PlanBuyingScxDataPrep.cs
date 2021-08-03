@@ -308,7 +308,7 @@ namespace Services.Broadcast.Converters.Scx
             var maxCpm = goalCpm + tolerance;
             var minCpm = goalCpm - tolerance;
             var deliveryMultipliers = _SpotLengthEngine.GetDeliveryMultipliers();
-            var costMultipliers = _SpotLengthEngine.GetCostMultipliers();
+            var costMultipliers = _SpotLengthEngine.GetCostMultipliers(applyInventoryPremium:true);
 
             spots.ForEach(s =>
             {

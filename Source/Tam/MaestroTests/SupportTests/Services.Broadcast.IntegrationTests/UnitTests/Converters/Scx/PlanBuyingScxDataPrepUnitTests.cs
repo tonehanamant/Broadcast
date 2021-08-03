@@ -52,8 +52,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             _SpotLengthEngine = new Mock<ISpotLengthEngine>();
             _SpotLengthEngine.Setup(s => s.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
-            _SpotLengthEngine.Setup(s => s.GetCostMultipliers())
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId());
+            _SpotLengthEngine.Setup(s => s.GetCostMultipliers(true))
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium:true));
             _SpotLengthEngine.Setup(s => s.GetSpotLengthValueById(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
 
