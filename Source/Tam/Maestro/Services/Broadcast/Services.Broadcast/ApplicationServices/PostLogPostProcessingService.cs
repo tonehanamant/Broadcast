@@ -77,7 +77,7 @@ namespace Services.Broadcast.ApplicationServices
         ///<inheritdoc/>
         public DownloadAndProcessWWTVFilesResponse DownloadAndProcessWWTVFiles(string userName, DateTime currentDateTime)
         {
-            var inboundFile = BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
+            var inboundFile = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_KeepingTracFtpInboundFolder) :BroadcastServiceSystemParameter.WWTV_KeepingTracFtpInboundFolder;
             if (!inboundFile.EndsWith("/"))
                 inboundFile += "/";
 

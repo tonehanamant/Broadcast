@@ -121,7 +121,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var body = string.Format("{0}", Path.GetFileName(filePath));
                 var subject = "Error files from WWTV";
-                var Tos = new string[] { BroadcastServiceSystemParameter.WWTV_NotificationEmail };
+                var Tos = new string[] { _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_NotificationEmail): BroadcastServiceSystemParameter.WWTV_NotificationEmail };
                 _EmailerService.QuickSend(true, body, subject, MailPriority.Normal, Tos, new List<string>() { filePath });
             });
         }

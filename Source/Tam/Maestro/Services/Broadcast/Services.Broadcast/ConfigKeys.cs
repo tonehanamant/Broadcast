@@ -87,6 +87,17 @@ namespace Services.Broadcast
 		public static readonly string WWTV_KeepingTracDropFolder = "WWTV_KeepingTracDropFolder";
 		public static readonly string WWTV_KeepingTracErrorFolder = "WWTV_KeepingTracErrorFolder";
 		public static readonly string WWTV_KeepingTracErrorFtpFolder = "WWTV_KeepingTracErrorFtpFolder";
+		public static readonly string WWTV_KeepingTracFtpInboundFolder = "WWTV_KeepingTracFtpInboundFolder";
+		public static readonly string WWTV_KeepingTracFtpOutboundFolder = "WWTV_KeepingTracFtpOutboundFolder";
+		public static readonly string WWTV_LocalFtpErrorFolder = "WWTV_LocalFtpErrorFolder";
+		public static readonly string WWTV_NotificationEmail = "WWTV_NotificationEmail";
+		public static readonly string WWTV_PostLogDropFolder = "WWTV_PostLogDropFolder";
+		public static readonly string WWTV_PostLogErrorFolder = "WWTV_PostLogErrorFolder";
+		public static readonly string WWTV_PostLogFtpOutboundFolder = "WWTV_PostLogFtpOutboundFolder";
+		public static readonly string WWTV_SecondsBetweenRuns = "WWTV_SecondsBetweenRuns";
+		public static readonly string WWTV_SharedFolder = "WWTV_SharedFolder";
+		public static readonly string WWTV_SharedFolder_Password = "WWTV_SharedFolder_Password";
+		public static readonly string WWTV_SharedFolder_UserName = "WWTV_SharedFolder_UserName";
 	}
 }
 

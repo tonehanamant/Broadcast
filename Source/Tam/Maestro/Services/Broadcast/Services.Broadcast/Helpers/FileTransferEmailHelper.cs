@@ -33,11 +33,13 @@ namespace Services.Broadcast.Helpers
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
-        public FileTransferEmailHelper(IEmailerService emailerService, IFeatureToggleHelper featureToggleHelper)
+        public FileTransferEmailHelper(IEmailerService emailerService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _EmailerService = emailerService;
             _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
@@ -75,7 +77,7 @@ namespace Services.Broadcast.Helpers
             if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return;
 
-            var to = new List<MailAddress>() { new MailAddress(BroadcastServiceSystemParameter.WWTV_NotificationEmail) };
+            var to = new List<MailAddress>() { new MailAddress(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_NotificationEmail) :BroadcastServiceSystemParameter.WWTV_NotificationEmail) };
             _EmailerService.QuickSend(false, emailBody, subject, MailPriority.Normal, to);
         }
 

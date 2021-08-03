@@ -39,7 +39,7 @@ namespace WWTVData.Service
 
         public override int SecondsBetweenRuns
         {
-            get { return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns; }
+            get { return 3600; }
         }
 
         public override bool RunService(DateTime timeSignaled)

@@ -10,9 +10,8 @@ namespace Services.Broadcast.Services
     {
         protected DateTime? _LastRun;
 
-        public WindowsServiceBase BaseWindowsService { get; set; }
+        public WindowsServiceBase BaseWindowsService { get; set; }       
 
-        
         public ScheduledServiceMethod(WindowsServiceBase windowsServiceBase)
         {
             BaseWindowsService = windowsServiceBase;
@@ -25,7 +24,7 @@ namespace Services.Broadcast.Services
         {
             get
             {
-                return BroadcastServiceSystemParameter.WWTV_SecondsBetweenRuns;
+                return 3600;
             }
         }
 
