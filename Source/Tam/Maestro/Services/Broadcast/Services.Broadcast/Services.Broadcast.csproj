@@ -517,6 +517,8 @@
     <Compile Include="Entities\Isci\IsciPlanSearchDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanDetailDto.cs" />
     <Compile Include="Entities\Isci\IsciSearchDto.cs" />
+    <Compile Include="Entities\Isci\ReelIsciAdvertiserNameReferenceDto.cs" />
+    <Compile Include="Entities\Isci\ReelIsciDto.cs" />
     <Compile Include="Entities\Isci\ReelIsciIngestJobDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciEntity.cs" />

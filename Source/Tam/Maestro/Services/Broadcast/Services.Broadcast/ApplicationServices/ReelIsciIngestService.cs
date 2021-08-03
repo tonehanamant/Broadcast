@@ -9,6 +9,7 @@ using Services.Broadcast.Entities.ReelRosterIscis;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -30,12 +31,14 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IReelIsciApiClient _ReelIsciApiClient;
         private readonly IReelIsciIngestJobsRepository _ReelIsciIngestJobsRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly ISpotLengthRepository _SpotLengthRepository;
 
         public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine)
         {
             _ReelIsciApiClient = reelIsciApiClient;
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
             _DateTimeEngine = dateTimeEngine;
+            _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
         }
 
         /// <inheritdoc />
@@ -64,6 +67,10 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
 
+                int numberOfDays = 21;
+                DateTime startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);                
+                PerformReelIsciIngestBetweenRange(startDate, numberOfDays);
+
                 var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
                 {
                     Id = jobId,
@@ -90,6 +97,49 @@ namespace Services.Broadcast.ApplicationServices
 
             _LogInfo($"Completed.....");
 
+        }
+
+        /// <inheritdoc />
+        internal void PerformReelIsciIngestBetweenRange(DateTime startDate, int numberOfDays)
+        {
+            _LogInfo($"Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
+            var reelRosterIscis = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
+            _LogInfo($"Received a response containing '{reelRosterIscis.Count}' records.");
+
+            var endDate = startDate.AddDays(numberOfDays);
+            var deletedCount = _DeleteReelIscisBetweenRange(startDate, endDate);
+            _LogInfo($"Deleted {deletedCount} reel iscis.");
+
+            var addedCount = 0;
+            if (reelRosterIscis?.Any() ?? false)
+            {
+                addedCount = _AddReelIscis(reelRosterIscis);
+            }
+            _LogInfo($"Added {addedCount} reel iscis");
+        }
+
+        private int _DeleteReelIscisBetweenRange(DateTime startDate, DateTime endDate)
+        {
+            return _ReelIsciIngestJobsRepository.DeleteReelIscisBetweenRange(startDate, endDate);
+        }
+
+        private int _AddReelIscis(List<ReelRosterIsciDto> reelRosterIscis)
+        {
+            var spotLengths = _SpotLengthRepository.GetSpotLengths();
+
+            var reelIscis = reelRosterIscis.Select(reelRosterIsci => new ReelIsciDto()
+            {
+                Isci = reelRosterIsci.Isci,
+                SpotLengthId = spotLengths.Single(x => x.Display.Equals(reelRosterIsci.SpotLengthDuration.ToString())).Id,
+                ActiveStartDate = reelRosterIsci.StartDate,
+                ActiveEndDate = reelRosterIsci.EndDate,
+                ReelIsciAdvertiserNameReferences = reelRosterIsci.AdvertiserNames.Select(x => new ReelIsciAdvertiserNameReferenceDto()
+                {
+                    AdvertiserNameReference = x
+                }).ToList(),
+                IngestedAt = _DateTimeEngine.GetCurrentMoment()
+            }).ToList();
+            return _ReelIsciIngestJobsRepository.AddReelIscis(reelIscis);
         }
     }
 }

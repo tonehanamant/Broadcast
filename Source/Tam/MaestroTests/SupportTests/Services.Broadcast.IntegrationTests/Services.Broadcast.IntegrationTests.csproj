@@ -457,6 +457,7 @@
     <Compile Include="Repositories\ProgramNameRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Repositories\ReelIsciIngestJobsRepositoryTests.cs" />
     <Compile Include="Repositories\StationMappingRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\AgencyAdvertiserBrandApiClientStub.cs" />
@@ -476,7 +477,7 @@
     <Compile Include="Stubs\Plan\PlanBuyingApiClientStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
     <Compile Include="Stubs\ProgramGuideApiClientStub.cs" />
-    <Compile Include="Stubs\ProgramsSearchApiClientStub.cs" />
+    <Compile Include="Stubs\ProgramsSearchApiClientStub.cs" />    
     <Compile Include="Stubs\ShowTypeCacheStub.cs" />
     <Compile Include="Stubs\StubbedConfigurationWebApiClient.cs" />
     <Compile Include="Stubs\StubbedSMSClient.cs" />
@@ -513,6 +514,7 @@
     <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\ReelIsciIngestServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\VpvhServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\AabEngineUnitTests.cs" />
