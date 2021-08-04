@@ -58,7 +58,7 @@ namespace Services.Broadcast.Entities.Campaign
         internal Lazy<bool> _IsVPVHDemoEnabled;
         internal Lazy<bool> _IsAduFlagEnabled;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-                
+        internal Lazy<bool> _IsExternalNoteExportEnabled;
 
         /// <summary>
         /// DO NOT CONSUME outside of Unit Tests.
@@ -92,6 +92,7 @@ namespace Services.Broadcast.Entities.Campaign
             _FeatureToggleHelper = featureToggleHelper;
             _IsVPVHDemoEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.VPVH_DEMO));
             _IsAduFlagEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ADU_FLAG));
+            _IsExternalNoteExportEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EXTERNAL_NOTE_EXPORT));
 
             List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans, planPricingResultsDayparts);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
@@ -108,7 +109,7 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateDaypartsData(projectedPlans);
             _PopulateContentRestrictions(plans);
             _PopulateFlightHiatuses(hiatusDays);
-            _PopulateNotes();
+            _PopulateNotes(plans);
 
             //flow chart tab
             var flowChartProjectedPlans = _ProjectPlansForQuarterExport(plans);
@@ -124,9 +125,26 @@ namespace Services.Broadcast.Entities.Campaign
             _SetExportFileName(flowChartProjectedPlans, campaign.ModifiedDate);
         }
 
-        private void _PopulateNotes()
+        internal void _PopulateNotes(List<PlanDto> plans)
         {
-            Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.";
+            if (_IsExternalNoteExportEnabled.Value)
+            {
+                Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n";
+                foreach (var plan in plans)
+                {
+                    var planID = plan.Id;
+                    var externalNotes = plan.FlightNotes;
+                    if (externalNotes != null)
+                    {
+                        string planExternalnotesFormat = $"{externalNotes} (Plan ID {planID}); ";
+                        Notes = string.Concat(Notes, planExternalnotesFormat);
+                    }
+                }
+            }
+            else
+            {
+                Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.";
+            }
         }
 
         private void _PopulateFlightHiatuses(List<DateTime> plansHiatuses)

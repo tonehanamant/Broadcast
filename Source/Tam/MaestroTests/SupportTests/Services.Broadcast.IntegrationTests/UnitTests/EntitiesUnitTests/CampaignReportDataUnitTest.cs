@@ -19,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
     [UseReporter(typeof(DiffReporter))]
     public class CampaignReportDataUnitTest
     {
-        [Test]       
+        [Test]
         public void ProjectGuaranteedAudienceDataByWeek_VPVH_WithoutRunPricing()
         {
             // Arrange
@@ -157,7 +157,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                 new PlanDto
                 {
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                    { 
+                    {
                         new WeeklyBreakdownWeek{ },
                         new WeeklyBreakdownWeek{ },
                         new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 5 },
@@ -167,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             };
             FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
             FlowChartQuarterTableData firstTable = new FlowChartQuarterTableData
-            { 
+            {
                 WeeksStartDate = new List<object>{ null, null, startDate, null }
             };
 
@@ -303,7 +303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
             weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
                 .Returns(calculatedAdu);
-            
+
             var testClass = new CampaignReportData
             {
                 _IsAduFlagEnabled = new Lazy<bool>(() => false),
@@ -624,9 +624,74 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarterTable.TotalRow));
-        }        
+        }
 
-        private static PlanDto _GetNewPlan()
+        [Test]
+        public void ExternalExportNotes_IsExternalNoteExportEnabled()
+        {
+            // Arrange
+            var testClass = new CampaignReportData
+            {
+                _IsExternalNoteExportEnabled = new Lazy<bool>(() => true)
+            };
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    Id = 1,
+                    FlightNotes = "No Family Guy"
+                },
+                new PlanDto
+                {
+                    Id = 2,
+                    FlightNotes = null
+                },
+                new PlanDto
+                {
+                    Id = 3,
+                    FlightNotes =  "News Only"
+                },
+                 new PlanDto
+                {
+                    Id = 3,
+                    FlightNotes = null
+                },
+            };                   
+            // Act
+            testClass._PopulateNotes(plans);
+
+            // Assert
+             Assert.AreEqual("All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\nNo Family Guy (Plan ID 1); News Only (Plan ID 3); ", testClass.Notes);
+        }
+
+        [Test]
+        public void ExternalExportNotes_IsExternalNoteExportDisabled()
+        {
+            // Arrange
+            var testClass = new CampaignReportData
+            {
+                _IsExternalNoteExportEnabled = new Lazy<bool>(() => false)
+            };
+            List<PlanDto> plans = new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    Id = 1,
+                    FlightNotes = "No Family Guy"
+                },
+                new PlanDto
+                {
+                    Id = 2,
+                    FlightNotes = null
+                }
+            };
+            // Act
+            testClass._PopulateNotes(plans);
+
+            // Assert
+            Assert.AreEqual("All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.", testClass.Notes);
+        }
+            private static PlanDto _GetNewPlan()
         {
             return new PlanDto
             {
