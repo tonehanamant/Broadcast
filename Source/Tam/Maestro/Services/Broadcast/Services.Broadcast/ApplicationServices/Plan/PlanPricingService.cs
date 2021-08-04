@@ -32,8 +32,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 {
     public interface IPlanPricingService : IApplicationService
     {
-        PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
-        PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
+        Task<PlanPricingJob> QueuePricingJobAsync(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
+        Task<PlanPricingJob> QueuePricingJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
         CurrentPricingExecution GetCurrentPricingExecution(int planId, int? planVersionId);
         CurrentPricingExecutions GetAllCurrentPricingExecutions(int planId, int? planVersionId);
@@ -52,10 +52,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanPricingResponseDto CancelCurrentPricingExecutionByJobId(int jobId);
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token);
+        Task RunPricingJobAsync(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token);
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunPricingWithoutPlanJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token);
+        Task RunPricingWithoutPlanJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token);
         /// <summary>
         /// For troubleshooting
         /// </summary>
@@ -101,7 +101,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="jobId">The id of the job to rerun.</param>
         /// <returns>The new JobId</returns>
-        int ReRunPricingJob(int jobId);
+        Task<int> ReRunPricingJobAsync(int jobId);
 
         /// <summary>
         /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
@@ -325,7 +325,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _WeeklyBreakdownEngine);
         }
 
-        public PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto
+        public async Task<PlanPricingJob> QueuePricingJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto
             , DateTime currentDate, string username)
         {
             if (pricingParametersWithoutPlanDto.JobId.HasValue && IsPricingModelRunningForJob(pricingParametersWithoutPlanDto.JobId.Value))
@@ -353,7 +353,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 transaction.Complete();
             }
 
-            job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingWithoutPlanJob(pricingParametersWithoutPlanDto, job.Id, CancellationToken.None));
+            job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>( x => x.RunPricingWithoutPlanJobAsync(pricingParametersWithoutPlanDto, job.Id, CancellationToken.None));
 
             _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
 
@@ -421,7 +421,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return plan;
         }
 
-        public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
+        public async Task<PlanPricingJob> QueuePricingJobAsync(PlanPricingParametersDto planPricingParametersDto
             , DateTime currentDate, string username)
         {
             // lock the plan so that two requests for the same plan can not get in this area concurrently
@@ -463,7 +463,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     transaction.Complete();
                 }
 
-                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id, CancellationToken.None));
+                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x =>  x.RunPricingJobAsync(planPricingParametersDto, job.Id, CancellationToken.None));
 
                 _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
 
@@ -1192,7 +1192,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public int ReRunPricingJob(int jobId)
+        public async Task<int> ReRunPricingJobAsync(int jobId)
         {
             var originalJob = _PlanRepository.GetPlanPricingJob(jobId);
             // get the plan params
@@ -1208,12 +1208,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var newJobId = _SavePricingJobAndParameters(newJob, jobParams);
 
             // call the job directly
-            RunPricingJob(jobParams, newJobId, CancellationToken.None);
+            await RunPricingJobAsync(jobParams, newJobId, CancellationToken.None);
 
             return newJobId;
         }
 
-        private List<PlanPricingAllocationResult> _SendPricingRequests(int jobId, PlanDto plan, List<PlanPricingInventoryProgram> inventory,
+        private async Task<List<PlanPricingAllocationResult>> _SendPricingRequestsAsync(int jobId, PlanDto plan, List<PlanPricingInventoryProgram> inventory,
             PlanPricingParametersDto planPricingParametersDto, ProprietaryInventoryData proprietaryInventoryData,
             CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
             PlanPricingJobDiagnostic diagnostic)
@@ -1258,7 +1258,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 foreach (var allocationResult in results)
                 {
-                    _SendPricingRequest(
+                    await _SendPricingRequestAsync(
                         allocationResult,
                         plan,
                         jobId,
@@ -1274,7 +1274,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
-        private void _RunPricingJob(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
+        private async Task _RunPricingJobAsync(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
             // used to tie the logging messages together.
             var processingId = Guid.NewGuid();
@@ -1336,7 +1336,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 token.ThrowIfCancellationRequested();
 
                 //Send it to the DS Model based on the plan posting type, as selected in the plan detail.
-                var modelAllocationResults = _SendPricingRequests(jobId, plan, inventory, planPricingParametersDto, proprietaryInventoryData,
+                var modelAllocationResults = await _SendPricingRequestsAsync(jobId, plan, inventory, planPricingParametersDto, proprietaryInventoryData,
                     token, goalsFulfilledByProprietaryInventory, isPricingEfficiencyModelEnabled, diagnostic);
 
                 token.ThrowIfCancellationRequested();
@@ -1688,7 +1688,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _SendPricingRequest(
+        private async Task _SendPricingRequestAsync(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             int jobId,
@@ -1702,7 +1702,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (isMultiCreativeLengthEnabled)
             {
-                _SendPricingRequest_v3(
+                await _SendPricingRequest_v3Async(
                     allocationResult,
                     plan,
                     jobId,
@@ -1714,19 +1714,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                _SendPricingRequest_v2(
-                    allocationResult,
-                    plan,
-                    jobId,
-                    inventory,
-                    token,
-                    diagnostic,
-                    parameters,
-                    proprietaryInventoryData);
+                await _SendPricingRequest_v2Async(
+                      allocationResult,
+                      plan,
+                      jobId,
+                      inventory,
+                      token,
+                      diagnostic,
+                      parameters,
+                      proprietaryInventoryData);
             }
         }
 
-        private void _SendPricingRequest_v2(
+        private async Task _SendPricingRequest_v2Async(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             int jobId,
@@ -1761,7 +1761,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
-            var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+            var apiAllocationResult = await _PricingApiClient.GetPricingSpotsResultAsync(pricingApiRequest);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
 
             token.ThrowIfCancellationRequested();
@@ -1816,7 +1816,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _SendPricingRequest_v3(
+        private async Task _SendPricingRequest_v3Async(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             int jobId,
@@ -1854,7 +1854,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
-            var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+            var apiAllocationResult = await _PricingApiClient.GetPricingSpotsResultAsync(pricingApiRequest);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
 
             token.ThrowIfCancellationRequested();
@@ -1968,18 +1968,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return pricingModelSpots;
         }
 
-        public void RunPricingWithoutPlanJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token)
+        public async Task RunPricingWithoutPlanJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token)
         {
             var pricingParameters = _ConvertPricingWihtoutPlanParametersToPlanPricingParameters(pricingParametersWithoutPlanDto);
             var plan = _ConvertPricingWihtoutPlanParametersToPlanDto(pricingParametersWithoutPlanDto);
 
-            _RunPricingJob(pricingParameters, plan, jobId, token);
+            await _RunPricingJobAsync(pricingParameters, plan, jobId, token);
         }
 
-        public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
+        public async Task RunPricingJobAsync(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
         {
             var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value, planPricingParametersDto.PlanVersionId);
-            _RunPricingJob(planPricingParametersDto, plan, jobId, token);
+            await _RunPricingJobAsync(planPricingParametersDto, plan, jobId, token);
         }
 
         internal List<PlanPricingApiRequestWeekDto_v3> _GetPricingModelWeeks_v3(

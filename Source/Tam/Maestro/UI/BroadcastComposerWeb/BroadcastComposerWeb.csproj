@@ -69,6 +69,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cadent.Utilities.Collections, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Utilities.Collections.1.0.2\lib\netstandard2.0\Cadent.Utilities.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
       <Private>True</Private>
     </Reference>

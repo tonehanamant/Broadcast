@@ -706,10 +706,10 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult RerunPlanPricingJob(int jobId)
+        public async Task<ActionResult> RerunPlanPricingJob(int jobId)
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
-            var results = service.ReRunPricingJob(jobId);
+            var results = await service.ReRunPricingJobAsync(jobId);
             TempData["Message"] = $"Reprocessed job {jobId} as job {results}";
             TempData["TabId"] = "planning";
             return RedirectToAction("Index");

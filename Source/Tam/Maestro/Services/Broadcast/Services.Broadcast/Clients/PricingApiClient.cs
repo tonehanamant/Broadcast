@@ -1,62 +1,64 @@
-﻿using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Clients
 {
     public interface IPricingApiClient
     {
-        PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request);
+        Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request);
 
-        PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request);
+        Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request);
     }
 
     public class PricingApiClient : IPricingApiClient
     {
-        private const int ASYNC_API_TIMEOUT_SECONDS = 900;
+        private const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
 
         private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
+        private readonly HttpClient _HttpClient;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public PricingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public PricingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _FeatureToggleHelper = featureToggleHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
-            _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl) ;
-            _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl); ;
-        }          
+            _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
+            _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
+            _HttpClient = httpClient;
+        }
 
-        public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        public async Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request)
         {
             var url = $"{_OpenMarketSpotsAllocationUrl.Value}";
-            return _Post<PlanPricingApiSpotsResponseDto>(url, request);
+            return await _PostAsync<PlanPricingApiSpotsResponseDto>(url, request);
         }
 
-        public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
+        public async Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request)
         {
             var url = $"{_PlanPricingAllocationsEfficiencyModelUrl.Value}";
-            return _Post<PlanPricingApiSpotsResponseDto_v3>(url, request);
+            return await _PostAsync<PlanPricingApiSpotsResponseDto_v3>(url, request);
         }
 
-        protected virtual T _Post<T>(string url, object data)
+        protected async virtual Task<T> _PostAsync<T>(string url, object data)
         {
             T output;
+            HttpResponseMessage serviceResponse;
 
-            using (var client = new HttpClient())
+            try
             {
-                client.Timeout = new TimeSpan(0, 0, ASYNC_API_TIMEOUT_SECONDS);
+                serviceResponse = await _HttpClient.PostAsJsonAsync(url, data, new CancellationTokenSource(ASYNC_API_TIMEOUT_MILLISECONDS).Token);
 
-                var rawServiceResponse = client.PostAsJsonAsync(url, data);
-                rawServiceResponse.Wait();
-
-                var serviceResponse = rawServiceResponse.Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     if (serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -66,23 +68,22 @@ namespace Services.Broadcast.Clients
 
                     try
                     {
-                        output = serviceResponse.Content.ReadAsAsync<T>().Result;                                                
+                        output = await serviceResponse.Content.ReadAsAsync<T>();
                     }
                     catch
                     {
                         throw new Exception($"Error connecting to Pricing API for post data. : {serviceResponse}");
                     }
+
                     return output;
                 }
 
-                try
-                {
-                    output = serviceResponse.Content.ReadAsAsync<T>().Result;
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Error calling the Pricing API for post data during post-get.", e);
-                }
+
+                output = await serviceResponse.Content.ReadAsAsync<T>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error calling the Pricing API for post data during post-get.", e);
             }
 
             return output;
@@ -99,7 +100,7 @@ namespace Services.Broadcast.Clients
 
     public class PricingApiMockClient : IPricingApiClient
     {
-        public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        public async Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request)
         {
             var results = new List<PlanPricingApiSpotsResultDto>();
 
@@ -115,14 +116,15 @@ namespace Services.Broadcast.Clients
                 results.Add(result);
             }
 
-            return new PlanPricingApiSpotsResponseDto
-            {
-                RequestId = "djj4j4399fmmf1m212",
-                Results = results
-            };
+            return await Task.FromResult(
+                new PlanPricingApiSpotsResponseDto
+                {
+                    RequestId = "djj4j4399fmmf1m212",
+                    Results = results
+                });
         }
 
-        public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
+        public Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request)
         {
             throw new NotImplementedException();
         }

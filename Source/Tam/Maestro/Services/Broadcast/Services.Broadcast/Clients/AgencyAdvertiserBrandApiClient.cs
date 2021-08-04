@@ -49,10 +49,10 @@ namespace Services.Broadcast.Clients
         /// <summary>
         /// Initializes a new instance of the <see cref="AgencyAdvertiserBrandApiClient"/> class.
         /// </summary>
-        public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
         {              
             _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
-             _HttpClient = new HttpClient();
+             _HttpClient = httpClient;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _FeatureToggleHelper = featureToggleHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));

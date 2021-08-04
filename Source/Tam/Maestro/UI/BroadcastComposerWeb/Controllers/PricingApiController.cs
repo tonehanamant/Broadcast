@@ -2,6 +2,7 @@
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
@@ -24,11 +25,12 @@ namespace BroadcastComposerWeb.Controllers
         /// </param>
         [HttpPost]
         [Route("Queue")]
-        public BaseResponse<PlanPricingJob> Queue(PricingParametersWithoutPlanDto planPricingRequestDto)
+        public async Task<BaseResponse<PlanPricingJob>> Queue(PricingParametersWithoutPlanDto planPricingRequestDto)
         {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
-                    .QueuePricingJob(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
+            var result = await _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
+                    .QueuePricingJobAsync(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName());
+
+            return _ConvertToBaseResponse(() => result);
         }
 
         [HttpPost]

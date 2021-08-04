@@ -4,6 +4,7 @@ using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Tam.Maestro.Common.Clients;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
@@ -18,8 +19,8 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        public ProgramGuideApiClientStub(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base (tokenClient,featureToggleHelper,configurationSettingsHelper)
+        public ProgramGuideApiClientStub(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient )
+            : base (tokenClient,featureToggleHelper,configurationSettingsHelper, httpClient)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _FeatureToggleHelper = featureToggleHelper;

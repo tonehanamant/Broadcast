@@ -26,6 +26,7 @@ using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.IntegrationTests.TestData;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -70,11 +71,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void QueuePricingJobTest()
+        public async Task QueuePricingJobTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
+                var result = await _PlanPricingService.QueuePricingJobAsync(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
                     Margin = 20,
@@ -99,12 +100,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void QueuePricingJob_WithoutPlanTest()
+        public async Task QueuePricingJob_WithoutPlanTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
-                var result = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+                var result = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
@@ -122,11 +123,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetCurrentPricingExecutionTest()
+        public async Task GetCurrentPricingExecutionTest()
         {
             using (new TransactionScopeWrapper())
             {
-                _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
+                await _PlanPricingService.QueuePricingJobAsync(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
                     Budget = 1000,
@@ -152,11 +153,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetCurrentPricingExecutionByJobId()
+        public async Task GetCurrentPricingExecutionByJobId()
         {
             using (new TransactionScopeWrapper())
             {
-                var job = _PlanPricingService.QueuePricingJob(_GetPricingParametersWithoutPlanDto(), new DateTime(2019, 11, 4)
+                var job = await _PlanPricingService.QueuePricingJobAsync(_GetPricingParametersWithoutPlanDto(), new DateTime(2019, 11, 4)
                 , "test user");
 
                 var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
@@ -177,11 +178,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetCurrentPricingExecutionFailedTest()
+        public async Task GetCurrentPricingExecutionFailedTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
+                var result = await _PlanPricingService.QueuePricingJobAsync(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
                     Budget = 1000,
@@ -210,11 +211,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetCurrentPricingExecutionByJobId_JobCancel()
+        public async Task GetCurrentPricingExecutionByJobId_JobCancel()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanPricingService.QueuePricingJob(_GetPricingParametersWithoutPlanDto(), new DateTime(2020, 3, 3)
+                var result = await _PlanPricingService.QueuePricingJobAsync(_GetPricingParametersWithoutPlanDto(), new DateTime(2020, 3, 3)
                 , "test user");
 
                 _PlanPricingService.ForceCompletePlanPricingJob(result.Id, "Test User");
@@ -270,7 +271,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingRequestTest()
+        public async Task GetPricingRequestTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -289,7 +290,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     UnitCapsType = UnitCapEnum.PerDay
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test user");
 
                 var result = _PlanPricingService.GetPricingApiRequestPrograms(1197, new PricingInventoryGetRequestParametersDto());
 
@@ -409,7 +410,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         [Ignore("There is no inventory loaded for this plan in broadcast_integration db")]
-        public void RunPricingJobTwiceOnSamePlanTest()
+        public async Task RunPricingJobTwiceOnSamePlanTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -430,16 +431,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     MarketGroup = MarketGroupEnum.None
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 planPricingRequestDto.Budget = 1200;
                 planPricingRequestDto.UnitCapsType = UnitCapEnum.Per30Min;
 
-                var job2 = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job2 = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job2.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job2.Id, CancellationToken.None);
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(1849);
 
@@ -473,7 +474,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetLastestPlanPricingParametersTest()
+        public async Task  GetLastestPlanPricingParametersTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -498,14 +499,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     PostingType = PostingTypeEnum.NTI
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 planPricingRequestDto.UnitCapsType = UnitCapEnum.PerWeek;
                 planPricingRequestDto.Budget = 1200;
 
-                _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 var result = _PlanService.GetPlan(1849);
 
@@ -548,15 +549,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingBandsTest()
+        public async Task GetPricingBandsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var bands = _PlanPricingService.GetPricingBands(planPricingRequestDto.PlanId.Value);
                 var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId.Value);
@@ -579,15 +580,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingBandsByJobId()
+        public async Task GetPricingBandsByJobId()
         {
             using (new TransactionScopeWrapper())
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
                 var bands = _PlanPricingService.GetPricingBandsByJobId(job.Id);
                 var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
@@ -610,15 +611,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetProgramsTest()
+        public async Task GetProgramsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var programs = _PlanPricingService.GetPrograms(planPricingRequestDto.PlanId.Value);
                 var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId.Value);
@@ -639,15 +640,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetProgramsByJobId()
+        public async Task GetProgramsByJobId()
         {
             using (new TransactionScopeWrapper())
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
                 var programs = _PlanPricingService.GetProgramsByJobId(job.Id);
                 var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
@@ -668,15 +669,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingResultsMarketsTest()
+        public async Task GetPricingResultsMarketsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId.Value);
 
@@ -697,15 +698,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetMarketsByJobId()
+        public async Task GetMarketsByJobId()
         {
             using (new TransactionScopeWrapper())
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
                 var markets = _PlanPricingService.GetMarketsByJobId(job.Id);
 
@@ -726,15 +727,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetStationsByJobId()
+        public async Task GetStationsByJobId()
         {
             using (new TransactionScopeWrapper())
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
                 var stations = _PlanPricingService.GetStationsByJobId(job.Id);
 
@@ -755,19 +756,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingResultsMarketsPricingExecutedTwiceTest()
+        public async Task GetPricingResultsMarketsPricingExecutedTwiceTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var secondJob = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var secondJob = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, secondJob.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, secondJob.Id, CancellationToken.None);
 
                 var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId.Value);
 
@@ -788,7 +789,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingResultsMarketsTest_VerifyMargin()
+        public async Task GetPricingResultsMarketsTest_VerifyMargin()
         {
             using (new TransactionScopeWrapper())
             {
@@ -798,9 +799,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // and verified by eye that the counts are different between the tests.
                 planPricingRequestDto.Margin = null;
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId.Value);
 
@@ -821,7 +822,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePricingRequestTest()
+        public async Task SavePricingRequestTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -842,9 +843,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     MarketGroup = MarketGroupEnum.None
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanRepository.GetPlanPricingRuns(planPricingRequestDto.PlanId.Value);
 
@@ -863,7 +864,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void MarketCoveragesAreSentDividedBy100ToPricingApiTest()
+        public async Task MarketCoveragesAreSentDividedBy100ToPricingApiTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -891,9 +892,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     MarketGroup = MarketGroupEnum.Top25
                 };
 
-                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                planPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await planPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var sentParameters = apiClient.LastSentRequest;
 
@@ -956,7 +957,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void WeeklyValuesAreUpdatedForPricingRequest()
+        public async Task WeeklyValuesAreUpdatedForPricingRequest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -983,9 +984,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
                 };
 
-                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                planPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                await planPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var request = apiClient.LastSentRequest;
 
@@ -1152,7 +1153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
-        private int SetupPlanWithOneVersionAndADraftWithPricingRuns()
+        private async Task<int> SetupPlanWithOneVersionAndADraftWithPricingRunsAsync()
         {
             var plan = _GetNewPlan();
             var currentDate = new DateTime(2019, 01, 01);
@@ -1167,9 +1168,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.Per30Min
             };
-            var job = _PlanPricingService.QueuePricingJob(pricingParameters, currentDate, username);
+            var job = await _PlanPricingService.QueuePricingJobAsync(pricingParameters, currentDate, username);
 
-            _PlanPricingService.RunPricingJob(pricingParameters, job.Id, CancellationToken.None);
+            await _PlanPricingService.RunPricingJobAsync(pricingParameters, job.Id, CancellationToken.None);
 
             var savedPlanAfter = _PlanRepository.GetPlan(planId);
 
@@ -1183,9 +1184,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             pricingParameters.DeliveryImpressions = 2000;
             pricingParameters.PlanVersionId = draftVersionId;
 
-            var draftJob = _PlanPricingService.QueuePricingJob(pricingParameters, currentDate, username);
+            var draftJob = await  _PlanPricingService.QueuePricingJobAsync(pricingParameters, currentDate, username);
 
-            _PlanPricingService.RunPricingJob(pricingParameters, draftJob.Id, CancellationToken.None);
+            await _PlanPricingService.RunPricingJobAsync(pricingParameters, draftJob.Id, CancellationToken.None);
 
             return planId;
         }
@@ -1193,11 +1194,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingBandsWithDraftTest()
+        public async Task GetPricingBandsWithDraftTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var bands = _PlanPricingService.GetPricingBands(planId);
 
@@ -1218,13 +1219,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetMarketsWithDraftTest()
+        public async Task GetMarketsWithDraftTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
-                var markets = _PlanPricingService.GetMarkets(planId);
+                var markets =  _PlanPricingService.GetMarkets(planId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
@@ -1243,11 +1244,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetStationsWithDraftTest()
+        public async Task GetStationsWithDraftTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var stations = _PlanPricingService.GetStations(planId);
 
@@ -1269,11 +1270,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetProgramsWithDraftTest()
+        public async Task GetProgramsWithDraftTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var programs = _PlanPricingService.GetPrograms(planId);
 
@@ -1292,11 +1293,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetProgramsForVersionTest()
+        public async Task GetProgramsForVersionTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var plan = _PlanRepository.GetPlan(planId);
 
@@ -1317,11 +1318,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetMarketsForVersionTest()
+        public async Task GetMarketsForVersionTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var plan = _PlanRepository.GetPlan(planId);
 
@@ -1344,11 +1345,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetStationsForVersionTest()
+        public async Task GetStationsForVersionTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var plan = _PlanRepository.GetPlan(planId);
 
@@ -1372,11 +1373,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingBandsForVersionTest()
+        public async Task GetPricingBandsForVersionTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var plan = _PlanRepository.GetPlan(planId);
 
@@ -1399,11 +1400,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingParametersForDraftTest()
+        public async Task GetPricingParametersForDraftTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
 
                 var plan = _PlanService.GetPlan(planId);
 
@@ -1424,11 +1425,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingParametersForPlanWithVersiontTest()
+        public async Task GetPricingParametersForPlanWithVersiontTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
                 var planVersionId = _PlanService.CheckForDraft(planId);
                 var plan = _PlanService.GetPlan(planId, planVersionId);
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1448,11 +1449,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingExecutionForVersion()
+        public async Task GetPricingExecutionForVersion()
         {
             using (new TransactionScopeWrapper())
             {
-                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planId = await SetupPlanWithOneVersionAndADraftWithPricingRunsAsync();
                 var planVersionId = _PlanService.CheckForDraft(planId);
                 var execution = _PlanPricingService.GetCurrentPricingExecution(planId, planVersionId);
 
@@ -1845,7 +1846,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         #region Allocation Model Versions
 
-        private PlanPricingJob _SavePlanAndRunPricingJob(PlanDto plan)
+        private async Task<PlanPricingJob> _SavePlanAndRunPricingJobAsync(PlanDto plan)
         {
             var savedDate = new DateTime(2019, 11, 4);
             var planId = _PlanService.SavePlan(plan, "testUser", savedDate, true);
@@ -1868,9 +1869,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 MarketGroup = MarketGroupEnum.None
             };
 
-            var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, savedDate, "test user");
+            var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, savedDate, "test user");
 
-            _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+            await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
             return job;
         }
@@ -1900,7 +1901,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePricingResultsTest()
+        public async Task SavePricingResultsTest()
         {
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForPricingResults();
@@ -1908,7 +1909,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunPricingJob(plan);
+                var job = await _SavePlanAndRunPricingJobAsync(plan);
 
                 var result = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
 
@@ -1921,7 +1922,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePricingResultsTestWithMultiLengthAndEfficiency()
+        public async Task SavePricingResultsTestWithMultiLengthAndEfficiency()
         {
             _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
@@ -1932,7 +1933,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunPricingJob(plan);
+                var job = await _SavePlanAndRunPricingJobAsync(plan);
 
                 var resultDefault = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
                 var resultQ = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality);
@@ -1956,7 +1957,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetProgramsForVersion_v2()
+        public async Task GetProgramsForVersion_v2()
         {
             _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
@@ -1967,7 +1968,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunPricingJob(plan);
+                var job = await _SavePlanAndRunPricingJobAsync(plan);
 
                 var resultDefault = _PlanPricingService.GetProgramsForVersion_v2(plan.Id, plan.VersionId);
                 var resultQ = _PlanPricingService.GetProgramsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
@@ -1994,7 +1995,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetStationsForVersion_V2()
+        public async Task GetStationsForVersion_V2()
         {
             _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
@@ -2005,7 +2006,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunPricingJob(plan);
+                var job = await _SavePlanAndRunPricingJobAsync(plan);
 
                 var resultDefault = _PlanPricingService.GetStationsForVersion_v2(plan.Id, plan.VersionId);
                 var resultQ = _PlanPricingService.GetStationsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
@@ -2032,7 +2033,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetMarketsForVersion_v2()
+        public async Task GetMarketsForVersion_v2()
         {
             _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
@@ -2043,7 +2044,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunPricingJob(plan);
+                var job = await _SavePlanAndRunPricingJobAsync(plan);
 
                 var resultDefault = _PlanPricingService.GetMarketsForVersion_v2(plan.Id, plan.VersionId);
                 var resultQ = _PlanPricingService.GetMarketsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);
@@ -2073,7 +2074,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPricingBandsForVersion_v2()
+        public async Task GetPricingBandsForVersion_v2()
         {
             _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
@@ -2084,7 +2085,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunPricingJob(plan);
+                var job = await _SavePlanAndRunPricingJobAsync(plan);
 
                 var resultDefault = _PlanPricingService.GetPricingBandsForVersion_v2(plan.Id, plan.VersionId);
                 var resultQ = _PlanPricingService.GetPricingBandsForVersion_v2(plan.Id, plan.VersionId, SpotAllocationModelMode.Quality);

@@ -1,9 +1,11 @@
-﻿using Services.Broadcast.Entities.ProgramGuide;
+﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Clients;
@@ -30,24 +32,25 @@ namespace Services.Broadcast.Clients
         private Lazy<int> _TimeoutSeconds;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private Lazy<bool> _IsPipelineVariablesEnabled;      
+        private readonly HttpClient _HttpClient;
+        private Lazy<bool> _IsPipelineVariablesEnabled;
         public static Lazy<int> RequestElementMaxCount;
         private Lazy<string> encryptedSecret;
 
-        public ProgramGuideApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public ProgramGuideApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
         {
             _TokenClient = tokenClient;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _FeatureToggleHelper = featureToggleHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
-             encryptedSecret = new Lazy<string>( _GetProgramGuideEncryptedSecret);
-            _ClientSecret = new Lazy<string>(()=> EncryptionHelper.DecryptString(encryptedSecret.Value, EncryptionHelper.EncryptionKey));
+            encryptedSecret = new Lazy<string>(_GetProgramGuideEncryptedSecret);
+            _ClientSecret = new Lazy<string>(() => EncryptionHelper.DecryptString(encryptedSecret.Value, EncryptionHelper.EncryptionKey));
             _ClientId = new Lazy<string>(_GetClientId);
             _TokenUrl = new Lazy<string>(_GetProgramGuideTokenUrl);
             _ProgramGuideUrl = new Lazy<string>(_GetProgramGuideUrl);
-            _TimeoutSeconds = new Lazy<int>(_GetTimeoutSeconds);           
+            _TimeoutSeconds = new Lazy<int>(_GetTimeoutSeconds);
             RequestElementMaxCount = new Lazy<int>(_GetRequestElementMaxCount);
-
+            _HttpClient = httpClient;
         }
 
         public List<GuideResponseElementDto> GetProgramsForGuide(List<GuideRequestElementDto> requestElements)
@@ -61,7 +64,7 @@ namespace Services.Broadcast.Clients
 
             return result;
         }
-        
+
         private GuideApiRequestElementDto _MapRequest(GuideRequestElementDto requestElement)
         {
             var apiRequestElement = new GuideApiRequestElementDto
@@ -158,24 +161,27 @@ namespace Services.Broadcast.Clients
             var token = _GetToken();
 
             string queryId;
-            using (var client = new HttpClient())
+
+            try
             {
-                client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
-                var serviceResponse = client.PostAsJsonAsync(url, data).Result;
+                var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, url);
+                httpRequestMessage.Headers.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
+                httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+                var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
                 }
 
-                try
-                {
-                    queryId = serviceResponse.Content.ReadAsStringAsync().Result;
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Error calling the ProgramGuide for post data during post-get.", e);
-                }
+                queryId = serviceResponse.Content.ReadAsStringAsync().Result;
+
             }
+            catch (Exception e)
+            {
+                throw new Exception("Error calling the ProgramGuide for post data during post-get.", e);
+            }
+
 
             var chompedUrl = url.EndsWith(@"/") ? url.Remove((url.Length - 1), 1) : url;
             var queryUrl = $"{chompedUrl}?query_execution_id={queryId}";
@@ -184,22 +190,19 @@ namespace Services.Broadcast.Clients
             List<GuideApiResponseElementDto> output = null;
             do
             {
-                using (var client = new HttpClient())
+                try
                 {
-                    client.DefaultRequestHeaders.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
-                    var serviceResponse = client.GetAsync(queryUrl).Result;
+                    var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, queryUrl);
+                    httpRequestMessage.Headers.Add(AUTHORIZATION, $"{BEARER} {token.AccessToken}");
+
+                    var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).Result;
                     if (serviceResponse.IsSuccessStatusCode == false)
                     {
                         throw new Exception($"Error connecting to ProgramGuide for post data. : {serviceResponse}");
                     }
-                    try
-                    {
-                        queryResponse = serviceResponse.Content.ReadAsStringAsync().Result;
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Error calling the ProgramGuide for post data during post-get.", e);
-                    }
+
+                    queryResponse = serviceResponse.Content.ReadAsStringAsync().Result;
+
 
                     if (queryResponse.Equals("Query not yet completed")
                         || string.IsNullOrWhiteSpace(queryResponse))
@@ -216,6 +219,11 @@ namespace Services.Broadcast.Clients
                     output = serviceResponse.Content.ReadAsAsync<List<GuideApiResponseElementDto>>().Result;
                     keepGoing = false;
                 }
+                catch (Exception e)
+                {
+                    throw new Exception("Error calling the ProgramGuide for post data during post-get.", e);
+                }
+
             } while (keepGoing);
 
             return output;
@@ -270,7 +278,7 @@ namespace Services.Broadcast.Clients
         }
         private string _GetProgramGuideEncryptedSecret()
         {
-            var programGuideEncyptedSecret = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideEncryptedSecret, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=" ) : BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
+            var programGuideEncyptedSecret = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ProgramGuideEncryptedSecret, "OJE8vVrWiuZrou5oVn/uVdCmMSCRf/7vhlBB9Uz9bG/dQkN8WKjS1gXV01ANViI+UvbDSI8XjCs=") : BroadcastServiceSystemParameter.ProgramGuideEncryptedSecret;
             return programGuideEncyptedSecret;
         }
         private int _GetRequestElementMaxCount()

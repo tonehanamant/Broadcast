@@ -756,7 +756,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
+            var exception = Assert.Throws<Exception>(async () => await service.QueuePricingJobAsync(
                 new PlanPricingParametersDto() { PlanId = 1 }
                 , new DateTime(2019, 10, 23)
                 , "test user"));
@@ -807,7 +807,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ThrowsException_WhenWrongUnitCapType_IsPassed_WhenRunningPricing()
+        public async Task ThrowsException_WhenWrongUnitCapType_IsPassed_WhenRunningPricing()
         {
             // Arrange
             const int jobId = 1;
@@ -1078,7 +1078,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
@@ -1668,7 +1668,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var task = Task.Run(() => service.RunPricingJob(parameters, jobId, cancellationTokenSource.Token));
+            var task = Task.Run(() => service.RunPricingJobAsync(parameters, jobId, cancellationTokenSource.Token));
             cancellationTokenSource.Cancel();
             task.GetAwaiter().GetResult();
 
@@ -1691,12 +1691,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void PassesOnlyChosenInventorySourceTypes_WhenRunningPricingJob()
+        public async Task PassesOnlyChosenInventorySourceTypes_WhenRunningPricingJob()
         {
             // Arrange
             const int jobId = 1;
 
-           
+
             try
             {
                 var parameters = _GetPlanPricingParametersDto();
@@ -1739,7 +1739,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     StubbedConfigurationWebApiClient.RunTimeParameters["EnableProprietaryOAndOInventoryForPricingModel"] = "False";
                 }
                 // Act
-                service.RunPricingJob(parameters, jobId, CancellationToken.None);
+                await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
                 // Assert
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedInventorySourceIds));
@@ -1757,13 +1757,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     StubbedConfigurationWebApiClient.RunTimeParameters["EnableOpenMarketInventoryForPricingModel"] = "True";
                     StubbedConfigurationWebApiClient.RunTimeParameters["EnableBarterInventoryForPricingModel"] = "True";
                     StubbedConfigurationWebApiClient.RunTimeParameters["EnableProprietaryOAndOInventoryForPricingModel"] = "True";
-                }                                
+                }
             }
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void NoInventoryFound_WhenRunningPricingJob()
+        public async Task NoInventoryFound_WhenRunningPricingJob()
         {
             // Arrange
             const int jobId = 1;
@@ -1801,7 +1801,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+             await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -1817,7 +1817,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GoalsFulfilledByProprietaryInventory_WhenRunningPricingJob()
+        public async Task GoalsFulfilledByProprietaryInventory_WhenRunningPricingJob()
         {
             // Arrange
             const int jobId = 1;
@@ -2082,7 +2082,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedAggregationResults));
@@ -2165,7 +2165,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SendsRequestToDSAPI_WhenRunningPricingJob()
+        public async Task SendsRequestToDSAPI_WhenRunningPricingJob()
         {
             // Arrange
             const int jobId = 1;
@@ -2571,13 +2571,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -2585,7 +2585,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void PricingModelRetunedErrors()
+        public async Task PricingModelRetunedErrors()
         {
             // Arrange
             const int jobId = 1;
@@ -2978,18 +2978,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetWeeklyBreakDownWeeks());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
-                {
-                    Error = new PlanPricingApiSpotsErrorDto
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(
+                Task.FromResult(
+                    new PlanPricingApiSpotsResponseDto
                     {
-                        Messages = new List<string>
+                        Error = new PlanPricingApiSpotsErrorDto
+                        {
+                            Messages = new List<string>
                         {
                             "Message 1",
                             "Error 2"
                         }
-                    }
-                });
+                        }
+                    }));
 
             var jobUpdates = new List<PlanPricingJob>();
             _PlanRepositoryMock
@@ -3016,7 +3018,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
@@ -3037,7 +3039,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void PricingModelRetuned_UnknownSpot()
+        public async Task PricingModelRetuned_UnknownSpot()
         {
             // Arrange
             const int jobId = 1;
@@ -3442,8 +3444,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetWeeklyBreakDownWeeks());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(
+                new PlanPricingApiSpotsResponseDto
                 {
                     Results = new List<PlanPricingApiSpotsResultDto>
                     {
@@ -3454,7 +3457,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Frequency = 5
                         }
                     }
-                });
+                }));
 
             var jobUpdates = new List<PlanPricingJob>();
             _PlanRepositoryMock
@@ -3469,7 +3472,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -3484,7 +3487,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void PricingModelRetuned_NoSpots()
+        public async Task PricingModelRetuned_NoSpots()
         {
             // Arrange
             const int jobId = 1;
@@ -3889,12 +3892,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetWeeklyBreakDownWeeks());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(
+                new PlanPricingApiSpotsResponseDto
                 {
                     RequestId = "#q1w2e3",
                     Results = new List<PlanPricingApiSpotsResultDto>()
-                });
+                }));
 
             var jobUpdates = new List<PlanPricingJob>();
             _PlanRepositoryMock
@@ -3909,7 +3913,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
@@ -3929,7 +3933,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesPricingApiResults_WhenRunningPricingJob()
+        public async Task SavesPricingApiResults_WhenRunningPricingJob()
         {
             // Arrange
             const int jobId = 1;
@@ -4344,8 +4348,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Returns(_GetWeeklyBreakDownWeeks());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(
+                new PlanPricingApiSpotsResponseDto
                 {
                     RequestId = "#q1w2e3",
                     Results = new List<PlanPricingApiSpotsResultDto>
@@ -4369,7 +4374,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Frequency = 3
                         }
                     }
-                });
+                }));
 
             _MediaMonthAndWeekAggregateCacheMock
                 .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
@@ -4386,7 +4391,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -4394,7 +4399,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesPricingAggregateResults_WhenRunningPricingJob()
+        public async Task SavesPricingAggregateResults_WhenRunningPricingJob()
         {
             // Arrange
             const int jobId = 1;
@@ -4811,11 +4816,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetLatestMarketCoverages());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
-                {
-                    RequestId = "#q1w2e3",
-                    Results = new List<PlanPricingApiSpotsResultDto>
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(
+                    new PlanPricingApiSpotsResponseDto
+                    {
+                        RequestId = "#q1w2e3",
+                        Results = new List<PlanPricingApiSpotsResultDto>
                     {
                         new PlanPricingApiSpotsResultDto
                         {
@@ -4836,7 +4842,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Frequency = 3
                         }
                     }
-                });
+                    }));
 
             _MediaMonthAndWeekAggregateCacheMock
                 .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
@@ -4924,7 +4930,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -5044,7 +5050,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AddsNewPricingJob_WhenQueuesPricing()
+        public async Task AddsNewPricingJob_WhenQueuesPricing()
         {
             // Arrange
             const string user = "test user";
@@ -5153,7 +5159,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.QueuePricingJob(parameters, now, user);
+            await service.QueuePricingJobAsync(parameters, now, user);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -5161,7 +5167,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesPricingParameters_WhenQueuesPricing()
+        public async Task SavesPricingParameters_WhenQueuesPricing()
         {
             // Arrange
             const string user = "test user";
@@ -5286,7 +5292,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.QueuePricingJob(parameters, now, user);
+            await service.QueuePricingJobAsync(parameters, now, user);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -5299,7 +5305,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(100.0, false)]
         [TestCase(112.0, true)]
         [TestCase(.001, true)]
-        public void SavesPricingParameters_ValidateMargin(double? testMargin, bool expectError)
+        public async Task SavesPricingParameters_ValidateMargin(double? testMargin, bool expectError)
         {
             // Arrange
             const string user = "test user";
@@ -5416,7 +5422,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                service.QueuePricingJob(parameters, now, user);
+                await service.QueuePricingJobAsync(parameters, now, user);
             }
             catch (Exception e)
             {
@@ -5441,7 +5447,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(100.0, false)]
         [TestCase(112.0, true)]
         [TestCase(.001, true)]
-        public void QueuePricingWithoutPlan_ValidateMargin(double? testMargin, bool expectError)
+        public async Task QueuePricingWithoutPlan_ValidateMargin(double? testMargin, bool expectError)
         {
             // Arrange
             const string user = "test user";
@@ -5458,7 +5464,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                service.QueuePricingJob(parameters, now, user);
+                await service.QueuePricingJobAsync(parameters, now, user);
             }
             catch (Exception e)
             {
@@ -5482,7 +5488,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(BackgroundJobProcessingStatus.Canceled, false)]
         [TestCase(BackgroundJobProcessingStatus.Failed, false)]
         [TestCase(BackgroundJobProcessingStatus.Succeeded, false)]
-        public void QueuePricingWithoutPlan_TryRunPricingThatIsRunning(BackgroundJobProcessingStatus jobStatus, bool expectError)
+        public async Task QueuePricingWithoutPlan_TryRunPricingThatIsRunning(BackgroundJobProcessingStatus jobStatus, bool expectError)
         {
             // Arrange
             const string user = "test user";
@@ -5502,7 +5508,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                service.QueuePricingJob(parameters, now, user);
+                await service.QueuePricingJobAsync(parameters, now, user);
             }
             catch (Exception e)
             {
@@ -5600,7 +5606,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void UpdatesCampaignLastModified_WhenQueuesPricing()
+        public async Task UpdatesCampaignLastModified_WhenQueuesPricing()
         {
             // Arrange
             const string user = "test user";
@@ -5715,7 +5721,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.QueuePricingJob(parameters, now, user);
+            await service.QueuePricingJobAsync(parameters, now, user);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -5723,7 +5729,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void QueuesHangfireJob_WhenQueuesPricing()
+        public async Task QueuesHangfireJob_WhenQueuesPricing()
         {
             // Arrange
             const string user = "test user";
@@ -5841,13 +5847,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.QueuePricingJob(parameters, now, user);
+            await service.QueuePricingJobAsync(parameters, now, user);
 
             // Assert
             // Verify these since they're excluded from the json due version increments
             var passedJob = ((dynamic)passedParameters[0]).job;
             Assert.AreEqual("Services.Broadcast.ApplicationServices.Plan.IPlanPricingService", passedJob.Type.FullName);
-            Assert.AreEqual("RunPricingJob", passedJob.Method.Name);
+            Assert.AreEqual("RunPricingJobAsync", passedJob.Method.Name);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(WaitHandle), "Handle");
@@ -8467,7 +8473,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobWithoutMargin()
+        public async Task RunPricingJobWithoutMargin()
         {
             // Arrange
             const int jobId = 1;
@@ -8520,13 +8526,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8534,7 +8540,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobWithMargin()
+        public async Task RunPricingJobWithMargin()
         {
             // Arrange
             const int jobId = 1;
@@ -8587,13 +8593,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8601,7 +8607,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobWithProprietaryInventory()
+        public async Task RunPricingJobWithProprietaryInventory()
         {
             // Arrange
             const int jobId = 1;
@@ -8659,18 +8665,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
-                {
-                    RequestId = "q1w2e3r4",
-                    Results = new List<PlanPricingApiSpotsResultDto>()
-                })
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(
+                    new PlanPricingApiSpotsResponseDto
+                    {
+                        RequestId = "q1w2e3r4",
+                        Results = new List<PlanPricingApiSpotsResultDto>()
+                    }))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8678,7 +8685,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobWithProprietaryInventory_15Only()
+        public async Task RunPricingJobWithProprietaryInventory_15Only()
         {
             // Arrange
             const int jobId = 1;
@@ -8743,18 +8750,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto
-                {
-                    RequestId = "q1w2e3r4",
-                    Results = new List<PlanPricingApiSpotsResultDto>()
-                })
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(
+                    new PlanPricingApiSpotsResponseDto
+                    {
+                        RequestId = "q1w2e3r4",
+                        Results = new List<PlanPricingApiSpotsResultDto>()
+                    }))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8762,7 +8770,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobTop100MarketsTest()
+        public async Task RunPricingJobTop100MarketsTest()
         {
             // Arrange
             const int jobId = 1;
@@ -8815,13 +8823,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8829,7 +8837,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobTop50MarketsTest()
+        public async Task RunPricingJobTop50MarketsTest()
         {
             // Arrange
             const int jobId = 1;
@@ -8882,13 +8890,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8896,7 +8904,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobTop25MarketsTest()
+        public async Task RunPricingJobTop25MarketsTest()
         {
             // Arrange
             const int jobId = 1;
@@ -8949,13 +8957,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -8963,7 +8971,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobAllMarketsTest()
+        public async Task RunPricingJobAllMarketsTest()
         {
             // Arrange
             const int jobId = 1;
@@ -9001,7 +9009,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             _InventoryProprietarySummaryRepositoryMock
@@ -9019,7 +9027,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -9027,7 +9035,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobTieredInventory()
+        public async Task RunPricingJobTieredInventory()
         {
             // Arrange
             const int jobId = 1;
@@ -9080,13 +9088,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -9094,7 +9102,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobTieredInventoryWithAllocations()
+        public async Task RunPricingJobTieredInventoryWithAllocations()
         {
             // Arrange
             const int jobId = 1;
@@ -9146,8 +9154,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Returns(_GetWeeklyBreakDownWeeksTiered());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(_GetTieredAllocations());
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(_GetTieredAllocations()));
 
             var allocations = new List<PlanPricingAllocationResult>();
             _PlanPricingBandCalculationEngineMock
@@ -9166,7 +9174,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations));
@@ -9577,7 +9585,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingJobNoMarketsTest()
+        public async Task RunPricingJobNoMarketsTest()
         {
             // Arrange
             const int jobId = 1;
@@ -9626,13 +9634,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -9640,7 +9648,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingSavePricingRequest()
+        public async Task RunPricingSavePricingRequest()
         {
             // Arrange
             const int jobId = 1;
@@ -9689,13 +9697,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" });
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(Task.FromResult(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" }));
 
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(WaitHandle), "Handle");
@@ -9712,7 +9720,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunPricingSavePricingRequest_v3()
+        public async Task RunPricingSavePricingRequest_v3()
         {
             // Arrange
             var isMultiCreativeLengthAllowed = true;
@@ -9927,13 +9935,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto_v3>()))
-                .Returns(new PlanPricingApiSpotsResponseDto_v3
-                {
-                    Error = null,
-                    RequestId = "qwedw121",
-                    Results = new List<PlanPricingApiSpotsResultDto_v3>()
-                });
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Returns(Task.FromResult(
+                    new PlanPricingApiSpotsResponseDto_v3
+                    {
+                        Error = null,
+                        RequestId = "qwedw121",
+                        Results = new List<PlanPricingApiSpotsResultDto_v3>()
+                    }));
 
             _SpotLengthEngineMock
                 .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
@@ -9942,7 +9951,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService(false, isMultiCreativeLengthAllowed);
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(WaitHandle), "Handle");
@@ -9959,7 +9968,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesPricingApiResults_v3()
+        public async Task SavesPricingApiResults_v3()
         {
             // Arrange
             var isMultiCreativeLengthAllowed = true;
@@ -10174,7 +10183,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns<PlanPricingApiRequestDto_v3>((request) =>
                 {
                     var results = new List<PlanPricingApiSpotsResultDto_v3>();
@@ -10197,11 +10206,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         results.Add(result);
                     }
 
-                    return new PlanPricingApiSpotsResponseDto_v3
-                    {
-                        RequestId = "djj4j4399fmmf1m212",
-                        Results = results
-                    };
+                    return Task.FromResult(
+                        new PlanPricingApiSpotsResponseDto_v3
+                        {
+                            RequestId = "djj4j4399fmmf1m212",
+                            Results = results
+                        });
                 });
 
             _SpotLengthEngineMock
@@ -10219,7 +10229,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService(false, isMultiCreativeLengthAllowed);
 
             // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -12064,7 +12074,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             var avgVPVh = service.GetCalculatedDaypartVPVH(PlanVersionPricingResultId);
             // Assert     
-            Assert.AreEqual(avgVPVh,4);
+            Assert.AreEqual(avgVPVh, 4);
         }
 
         private PlanDto _GetPlan()
@@ -12222,7 +12232,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             var service = _GetService();
-            
+
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = isPipelineVariablesEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = isPricingModelOpenMarketInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = isPricingModelBarterInventoryEnabled;
@@ -12232,7 +12242,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var results = service._GetSupportedInventorySourceTypes();
 
             // Assert            
-            Assert.AreEqual(expectedResult, results.Count());            
+            Assert.AreEqual(expectedResult, results.Count());
         }
     }
 }

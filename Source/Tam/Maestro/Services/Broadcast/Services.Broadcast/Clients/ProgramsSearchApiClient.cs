@@ -1,8 +1,10 @@
-﻿using Services.Broadcast.Entities.DTO.Program;
+﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using Tam.Maestro.Common.Clients;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -21,9 +23,10 @@ namespace Services.Broadcast.Clients
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private Lazy<string> _ProgramsSearchClientId;
         private Lazy<string> _ProgramsSearchEncryptedSecret;
+        private HttpClient _HttpClient;
         private readonly Lazy<string> _ProgramsSearchTokenUrl;
 
-        public ProgramsSearchApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(tokenClient)
+        public ProgramsSearchApiClient(IAwsCognitoClient tokenClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient) : base(tokenClient)
         {
 
             _ProgramsSearchUrl = new Lazy<string>(_GetProgramSearchUrl);
@@ -33,9 +36,10 @@ namespace Services.Broadcast.Clients
             _ProgramsSearchClientId = new Lazy<string>(_GetProgramsSearchClientId);
             _ProgramsSearchEncryptedSecret = new Lazy<string>(GetProgramsSearchEncryptedSecret);
             _ProgramsSearchTokenUrl = new Lazy<string>(_GetProgramsSearchTokenUrl);
+            _HttpClient = httpClient;
 
         }
-        
+
         public List<SearchProgramDativaResponseDto> GetPrograms(SearchRequestProgramDto searchRequest)
         {
             _ConfigureTokenizedClient(_ProgramsSearchTokenUrl.Value,
@@ -49,25 +53,27 @@ namespace Services.Broadcast.Clients
                 Limit = searchRequest.Limit
             };
 
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.AccessToken}");
 
-                var serviceResponse = client.PostAsJsonAsync(_ProgramsSearchUrl.Value, body).Result;
+            try
+            {
+                var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, _ProgramsSearchUrl.Value);
+                httpRequestMessage.Headers.Add("Authorization", $"Bearer {token.AccessToken}");
+                httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+
+                var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     throw new Exception($"Error connecting to the ProgramSearch API: {serviceResponse}");
                 }
 
-                try
-                {
-                    return serviceResponse.Content.ReadAsAsync<List<SearchProgramDativaResponseDto>>().Result;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error reading data from the ProgramSearch API", ex);
-                }
+                return serviceResponse.Content.ReadAsAsync<List<SearchProgramDativaResponseDto>>().Result;
+
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Error requesting data from the ProgramSearch API", ex);
+            }
+
         }
         private string _GetProgramsSearchClientId()
         {

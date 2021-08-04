@@ -21,15 +21,17 @@ namespace Services.Broadcast.Clients
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly HttpClient _HttpClient;
 
-        public PlanBuyingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public PlanBuyingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _FeatureToggleHelper = featureToggleHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
-        }          
+            _HttpClient = httpClient;
+        }
 
         public PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request)
         {
@@ -46,9 +48,10 @@ namespace Services.Broadcast.Clients
         protected virtual T _Post<T>(string url, object data)
         {
             T output;
-            using (var client = new HttpClient())
+
+            try
             {
-                var serviceResponse = client.PostAsJsonAsync(url, data).Result;
+                var serviceResponse = _HttpClient.PostAsJsonAsync(url, data).Result;
 
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
@@ -61,17 +64,14 @@ namespace Services.Broadcast.Clients
                     {
                         throw new Exception($"Error connecting to Buying API for post data. : {serviceResponse}");
                     }
-                    
-                }
 
-                try
-                {
-                    output = serviceResponse.Content.ReadAsAsync<T>().Result;
                 }
-                catch (Exception e)
-                {
-                    throw new Exception("Error calling the Buying API for post data during post-get.", e);
-                }
+                output = serviceResponse.Content.ReadAsAsync<T>().Result;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error calling the Buying API for post data during post-get.", e);
             }
 
             return output;

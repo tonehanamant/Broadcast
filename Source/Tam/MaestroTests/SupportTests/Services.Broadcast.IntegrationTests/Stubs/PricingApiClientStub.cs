@@ -3,6 +3,7 @@ using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
 {
@@ -10,7 +11,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
     {
         public PlanPricingApiRequestDto LastSentRequest;
 
-        public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        public async Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request)
         {
             LastSentRequest = request;
 
@@ -27,15 +28,16 @@ namespace Services.Broadcast.IntegrationTests.Stubs
 
                 results.Add(result);
             }
-            
-            return new PlanPricingApiSpotsResponseDto
-            {
-                RequestId = "djj4j4399fmmf1m212",
-                Results = results
-            };
+
+            return await Task.FromResult(
+                new PlanPricingApiSpotsResponseDto
+                {
+                    RequestId = "djj4j4399fmmf1m212",
+                    Results = results
+                });
         }
 
-        public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
+        public async Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request)
         {
             var results = new List<PlanPricingApiSpotsResultDto_v3>();
 
@@ -46,9 +48,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     ManifestId = spot.Id,
                     MediaWeekId = spot.MediaWeekId,
                     Frequencies = spot.SpotCost
-                        .Select(x => new SpotFrequencyResponse 
-                        { 
-                            SpotLengthId = x.SpotLengthId, 
+                        .Select(x => new SpotFrequencyResponse
+                        {
+                            SpotLengthId = x.SpotLengthId,
                             Frequency = 1
                         })
                         .ToList()
@@ -57,11 +59,13 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 results.Add(result);
             }
 
-            return new PlanPricingApiSpotsResponseDto_v3
-            {
-                RequestId = "djj4j4399fmmf1m212",
-                Results = results
-            };
+
+            return await Task.FromResult(
+                new PlanPricingApiSpotsResponseDto_v3
+                {
+                    RequestId = "djj4j4399fmmf1m212",
+                    Results = results
+                });
         }
     }
 }

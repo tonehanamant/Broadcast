@@ -14,6 +14,7 @@ using Tam.Maestro.Data.Entities;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
+using System.Threading.Tasks;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -33,11 +34,12 @@ namespace BroadcastComposerWeb.Controllers
         /// </param>
         [HttpPost]
         [Route("Queue")]
-        public BaseResponse<PlanPricingJob> Queue(PlanPricingParametersDto planPricingRequestDto)
+        public async Task<BaseResponse<PlanPricingJob>> Queue(PlanPricingParametersDto planPricingRequestDto)
         {
-            return _ConvertToBaseResponse(() => 
-                _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
-                    .QueuePricingJob(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
+            var result = (await _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
+                    .QueuePricingJobAsync(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
+
+            return _ConvertToBaseResponse(() =>  result);
         }
 
         [HttpPost]

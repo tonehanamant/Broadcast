@@ -39,6 +39,8 @@ using Unity.Interception.InterceptionBehaviors;
 using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
 using Unity.Lifetime;
 using Services.Broadcast.Cache;
+using System.Net.Http;
+using System.Threading;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -321,6 +323,10 @@ namespace Services.Broadcast.ApplicationServices
 
             MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>(), unityContainer.Resolve<IFeatureToggleHelper>(), unityContainer.Resolve<IConfigurationSettingsHelper>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
+
+            //RestClient
+            unityContainer.RegisterFactory<HttpClient>(x => new HttpClient() { Timeout = Timeout.InfiniteTimeSpan }, FactoryLifetime.Singleton);
+
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

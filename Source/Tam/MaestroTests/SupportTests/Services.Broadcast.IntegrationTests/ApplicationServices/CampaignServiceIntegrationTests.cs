@@ -32,6 +32,7 @@ using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
 using Unity;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -916,7 +917,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void ProgramLineupExport()
+        public async Task ProgramLineupExport()
         {
             using (new TransactionScopeWrapper())
             {
@@ -939,8 +940,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     UnitCapsType = UnitCapEnum.PerDay
                 };
 
-                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
-                planPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+                var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
+                await planPricingService .RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {
