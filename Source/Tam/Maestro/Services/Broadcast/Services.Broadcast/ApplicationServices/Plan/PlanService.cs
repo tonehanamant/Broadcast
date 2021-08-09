@@ -1551,7 +1551,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // use the service, not the repo, so that transformations happen.
             var beforePlan = GetPlan(planId);          
             var beforePlanVersionId = beforePlan.VersionId;
-
+          
             // get the latest pricing results per the given 
             var jobExecutions = _PlanPricingService.GetAllCurrentPricingExecutions(planId, null);
             if (jobExecutions.Job == null)
@@ -1603,7 +1603,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FlightStartDate = beforePlan.FlightStartDate.Value,
                 FlightEndDate = beforePlan.FlightEndDate.Value,
                 FlightDays = beforePlan.FlightDays,
-                FlightHiatusDays = beforePlan.FlightHiatusDays,
+                FlightHiatusDays = beforePlan.FlightHiatusDays.DeepCloneUsingSerialization(),
                 DeliveryType = beforePlan.GoalBreakdownType,
                 TotalImpressions = beforePlan.TargetImpressions.Value,
                 TotalRatings = beforePlan.TargetRatingPoints.Value,
@@ -1614,11 +1614,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Dayparts = beforePlan.Dayparts,
                 ImpressionsPerUnit = beforePlan.ImpressionsPerUnit,
                 Equivalized = beforePlan.Equivalized
-            };
-            var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);
-            
-            beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;            
-
+            };         
+            var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);            
+            beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;
+          
              /***
              * Finalize and Save
              */

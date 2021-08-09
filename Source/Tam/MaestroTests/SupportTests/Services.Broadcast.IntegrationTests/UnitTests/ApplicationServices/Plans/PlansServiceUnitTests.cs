@@ -2207,8 +2207,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const decimal testOptimalCpm = 123.4m;
             const int testAudienceId = 31;
             const int testExpectedPlanVersionNumber = 11;
-            const int testExpectedPlanVersionId = 666;
-
+            const int testExpectedPlanVersionId = 666;                                    
             var beforePlan = _GetNewPlan();
             beforePlan.PostingType = PostingTypeEnum.NTI;
             beforePlan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
