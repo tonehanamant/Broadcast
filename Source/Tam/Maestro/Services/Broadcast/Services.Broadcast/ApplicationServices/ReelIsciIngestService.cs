@@ -24,6 +24,15 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         [Queue("reelisciingest")]
         void PerformReelIsciIngest(string userName);
+        /// <summary>
+        /// RunQueued reel isci ingest.
+        /// </summary>       
+        [Queue("reelisciingest")]
+        void RunQueued(int jobId, string userName);
+        /// <summary>
+        /// Queued reel isci ingest.
+        /// </summary>       
+       void Queue(string userName);
     }
 
     public class ReelIsciIngestService : BroadcastBaseClass, IReelIsciIngestService
@@ -32,13 +41,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IReelIsciIngestJobsRepository _ReelIsciIngestJobsRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly ISpotLengthRepository _SpotLengthRepository;
+        private readonly IBackgroundJobClient _BackgroundJobClient;
 
-        public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine)
+        public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine, IBackgroundJobClient backgroundJobClient)
         {
             _ReelIsciApiClient = reelIsciApiClient;
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
             _DateTimeEngine = dateTimeEngine;
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
+            _BackgroundJobClient = backgroundJobClient;
         }
 
         /// <inheritdoc />
@@ -51,6 +62,42 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"Received a response containing '{result.Count}' records.");
             return result;
         }
+
+        public void Queue(string userName)
+        {
+            var reelIsciIngestJob = new ReelIsciIngestJobDto
+            {
+                Status = BackgroundJobProcessingStatus.Queued,
+                QueuedBy = userName,
+                QueuedAt = _DateTimeEngine.GetCurrentMoment()
+            };
+            var jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
+           
+            _BackgroundJobClient.Enqueue<IReelIsciIngestService>(x => x.RunQueued(jobId, userName));
+        }
+
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public void RunQueued(int jobId, string userName)
+        {
+            _Run(jobId, userName);
+        }
+
+        protected void _Run(int jobId, string userName)
+        {
+            int numberOfDays = 21;
+            DateTime startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
+            PerformReelIsciIngestBetweenRange(startDate, numberOfDays);
+            var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
+            {
+                Id = jobId,
+                Status = BackgroundJobProcessingStatus.Succeeded,
+                QueuedBy = userName,
+                QueuedAt = _DateTimeEngine.GetCurrentMoment(),
+                CompletedAt = _DateTimeEngine.GetCurrentMoment()
+            };
+            _ReelIsciIngestJobsRepository.UpdateReelIsciIngestJob(reelIsciIngestJobCompleted);
+        }
+
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void PerformReelIsciIngest(string userName)
         {

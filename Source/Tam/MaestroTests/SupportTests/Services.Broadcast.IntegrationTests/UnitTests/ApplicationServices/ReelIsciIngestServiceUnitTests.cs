@@ -1,4 +1,5 @@
 ﻿using Common.Services.Repositories;
+using Hangfire;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -22,6 +23,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IReelIsciIngestJobsRepository> _ReelIsciIngestJobsRepositoryMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
+        private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
 
         [SetUp]
         public void SetUp()
@@ -31,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ReelIsciIngestJobsRepositoryMock = new Mock<IReelIsciIngestJobsRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
+            _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IReelIsciIngestJobsRepository>())
@@ -40,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_SpotLengthRepositoryMock.Object);
 
-            _ReelIsciIngestService = new ReelIsciIngestService(_ReelIsciApiClientMock.Object, _DataRepositoryFactoryMock.Object, _DateTimeEngineMock.Object);
+            _ReelIsciIngestService = new ReelIsciIngestService(_ReelIsciApiClientMock.Object, _DataRepositoryFactoryMock.Object, _DateTimeEngineMock.Object, _BackgroundJobClientMock.Object);
         }
 
         [Test]

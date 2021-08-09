@@ -19,6 +19,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         [Test]
        public void GetAvailableIscis()
         {
+            //This test will cover all 3 scenario: 1. Mapped with plan only 2.Unmapped with plan only and 3. A mix of mapped and unmapped
             // Arrange
             DateTime startDate = new DateTime(2021, 01, 01);
             DateTime endDate = new DateTime(2024, 08, 29);

@@ -798,7 +798,14 @@ namespace BroadcastComposerWeb.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [HttpPost]
+        public ActionResult RunIsciIngestJob()
+        {
+            var username = _GetCurrentUserFullName();
+            var service = _ApplicationServiceFactory.GetApplicationService<IReelIsciIngestService>();
+            service.Queue(username);
+            return RedirectToAction("Index");
+        }
         [HttpGet]
         public ActionResult ExportVpvh()
         {

@@ -680,7 +680,15 @@
                         <label class="label" id="result_vpvh">@ViewBag.Message</label>
                     </div>
                 }
-
+                @using (Html.BeginForm("RunIsciIngestJob", "Maintenance", FormMethod.Post))
+                {
+                    <h1 class="heading">Perform Reel ISCI Ingest</h1>
+                    <input class="button" type="submit" text="Perform Reel ISCI Ingest" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_IsciIngest">@ViewBag.Message</label>
+                    </div>
+                }
             </div>
 
             </div>
