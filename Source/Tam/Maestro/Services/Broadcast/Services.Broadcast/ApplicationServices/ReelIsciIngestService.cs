@@ -39,14 +39,18 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IReelIsciApiClient _ReelIsciApiClient;
         private readonly IReelIsciIngestJobsRepository _ReelIsciIngestJobsRepository;
-        private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IReelIsciRepository _ReelIsciRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
+
+        private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IBackgroundJobClient _BackgroundJobClient;
 
         public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine, IBackgroundJobClient backgroundJobClient)
         {
             _ReelIsciApiClient = reelIsciApiClient;
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
+            _ReelIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
+
             _DateTimeEngine = dateTimeEngine;
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _BackgroundJobClient = backgroundJobClient;
@@ -74,11 +78,16 @@ namespace Services.Broadcast.ApplicationServices
             var jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
            
             _BackgroundJobClient.Enqueue<IReelIsciIngestService>(x => x.RunQueued(jobId, userName));
+
+            _LogInfo($"Queued Reel Isci Ingest job.  JobId : {jobId}");
+
         }
 
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void RunQueued(int jobId, string userName)
         {
+            _LogInfo($"De-queueing a Reel Isci Ingest Job.  JobId : {jobId}");
+
             _Run(jobId, userName);
         }
 
@@ -86,47 +95,57 @@ namespace Services.Broadcast.ApplicationServices
         {
             int numberOfDays = 21;
             DateTime startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
-            PerformReelIsciIngestBetweenRange(startDate, numberOfDays);
-            var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
-            {
-                Id = jobId,
-                Status = BackgroundJobProcessingStatus.Succeeded,
-                QueuedBy = userName,
-                QueuedAt = _DateTimeEngine.GetCurrentMoment(),
-                CompletedAt = _DateTimeEngine.GetCurrentMoment()
-            };
-            _ReelIsciIngestJobsRepository.UpdateReelIsciIngestJob(reelIsciIngestJobCompleted);
+            PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
         }
 
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void PerformReelIsciIngest(string userName)
         {
-            _LogInfo($"executing...... .", userName);
+            var numberOfDays = 21;
+            var startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
+
+            _LogInfo($"Starting the Reel Isci Ingest Job.", userName);
+
             var jobId = 0;
+            var reelIsciIngestJob = new ReelIsciIngestJobDto
+            {
+                Status = BackgroundJobProcessingStatus.Processing,
+                QueuedBy = userName,
+                QueuedAt = _DateTimeEngine.GetCurrentMoment()
+            };
+            jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
+
+            PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+        }
+
+        internal void PerformReelIsciIngestBetweenRange(int jobId, DateTime startDate, int numberOfDays)
+        {
             try
             {
-                _LogInfo("Starting");
-                var reelIsciIngestJob = new ReelIsciIngestJobDto
-                {
-                    Status = BackgroundJobProcessingStatus.Processing,
-                    QueuedBy = userName,
-                    QueuedAt = _DateTimeEngine.GetCurrentMoment()
-                };
-                jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
+                _LogInfo($"Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
+                var reelRosterIscis = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
+                _LogInfo($"Received a response containing '{reelRosterIscis.Count}' records.");
 
-                int numberOfDays = 21;
-                DateTime startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);                
-                PerformReelIsciIngestBetweenRange(startDate, numberOfDays);
+                var endDate = startDate.AddDays(numberOfDays);
+                var deletedCount = _DeleteReelIscisBetweenRange(startDate, endDate);
+                _LogInfo($"Deleted {deletedCount} reel iscis.");
+
+                var addedCount = 0;
+                if (reelRosterIscis?.Any() ?? false)
+                {
+                    addedCount = _AddReelIscis(reelRosterIscis);
+                }
+                _LogInfo($"Added {addedCount} reel iscis");
 
                 var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
                 {
                     Id = jobId,
                     Status = BackgroundJobProcessingStatus.Succeeded,
-                    QueuedBy = userName,
-                    QueuedAt = _DateTimeEngine.GetCurrentMoment(),
                     CompletedAt = _DateTimeEngine.GetCurrentMoment()
                 };
                 _ReelIsciIngestJobsRepository.UpdateReelIsciIngestJob(reelIsciIngestJobCompleted);
+
+                _LogInfo("Job completed.");
             }
             catch (Exception ex)
             {
@@ -135,39 +154,17 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Id = jobId,
                     Status = BackgroundJobProcessingStatus.Failed,
-                    QueuedBy = userName,
-                    QueuedAt = _DateTimeEngine.GetCurrentMoment(),
+                    CompletedAt = _DateTimeEngine.GetCurrentMoment(),
                     ErrorMessage = $"Error Caught : {ex.ToString()}"
                 };
                 _ReelIsciIngestJobsRepository.UpdateReelIsciIngestJob(reelIsciIngestJobFailed);
             }
-
-            _LogInfo($"Completed.....");
-
-        }
-
-        /// <inheritdoc />
-        internal void PerformReelIsciIngestBetweenRange(DateTime startDate, int numberOfDays)
-        {
-            _LogInfo($"Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
-            var reelRosterIscis = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
-            _LogInfo($"Received a response containing '{reelRosterIscis.Count}' records.");
-
-            var endDate = startDate.AddDays(numberOfDays);
-            var deletedCount = _DeleteReelIscisBetweenRange(startDate, endDate);
-            _LogInfo($"Deleted {deletedCount} reel iscis.");
-
-            var addedCount = 0;
-            if (reelRosterIscis?.Any() ?? false)
-            {
-                addedCount = _AddReelIscis(reelRosterIscis);
-            }
-            _LogInfo($"Added {addedCount} reel iscis");
         }
 
         private int _DeleteReelIscisBetweenRange(DateTime startDate, DateTime endDate)
         {
-            return _ReelIsciIngestJobsRepository.DeleteReelIscisBetweenRange(startDate, endDate);
+            var result = _ReelIsciRepository.DeleteReelIscisBetweenRange(startDate, endDate);
+            return result;
         }
 
         private int _AddReelIscis(List<ReelRosterIsciDto> reelRosterIscis)
@@ -186,7 +183,8 @@ namespace Services.Broadcast.ApplicationServices
                 }).ToList(),
                 IngestedAt = _DateTimeEngine.GetCurrentMoment()
             }).ToList();
-            return _ReelIsciIngestJobsRepository.AddReelIscis(reelIscis);
+            var result = _ReelIsciRepository.AddReelIscis(reelIscis);
+            return result;
         }
     }
 }

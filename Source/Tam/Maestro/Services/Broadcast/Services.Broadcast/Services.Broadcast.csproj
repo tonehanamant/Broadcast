@@ -931,6 +931,7 @@
     <Compile Include="Repositories\ProgramMappingRepository.cs" />
     <Compile Include="Repositories\ProgramNameExceptionsRepository.cs" />
     <Compile Include="Repositories\ProgramNameMappingKeywordRepository.cs" />
+    <Compile Include="Repositories\ReelIsciRepository.cs" />
     <Compile Include="Repositories\ReelIsciIngestJobsRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />

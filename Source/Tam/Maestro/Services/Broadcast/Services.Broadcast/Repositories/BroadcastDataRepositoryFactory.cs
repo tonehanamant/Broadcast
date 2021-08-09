@@ -25,7 +25,7 @@ namespace Services.Broadcast.Repositories
                 return;
             }
             
-                instance.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
+            instance.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             instance.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();           
             instance.RegisterType<ITransactionHelper, TransactionHelper>();
             instance.RegisterType<IBroadcastContextFactory, BroadcastContextFactory>();
@@ -114,6 +114,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
             instance.RegisterType<IPlanIsciRepository, PlanIsciRepository>();
             instance.RegisterType<IReelIsciIngestJobsRepository, ReelIsciIngestJobsRepository>();
+            instance.RegisterType<IReelIsciRepository, ReelIsciRepository>();
             WasRegistered = true;
         }
     }

@@ -9,7 +9,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
     [Category("short_running")]
-    public class ReelIsciIngestJobsRepositoryTests
+    public class ReelIsciRepositoryTests
     {
         [Test]
         public void DeleteReelIscisBetweenRange_OverlapStartDateEndDate()
@@ -17,15 +17,15 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var startDate = new DateTime(2018, 12, 01);
             var endDate = new DateTime(2019, 02, 01);
             var expectedDeleteCount = 2;
-            var reelIsciIngestJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
+            var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscis();
             var result = 0;
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                var addedCount = reelIsciIngestJobsRepository.AddReelIscis(reelIscis);
-                result = reelIsciIngestJobsRepository.DeleteReelIscisBetweenRange(startDate, endDate);
+                var addedCount = reelIsciRepo.AddReelIscis(reelIscis);
+                result = reelIsciRepo.DeleteReelIscisBetweenRange(startDate, endDate);
             }
 
             // Assert
@@ -38,15 +38,15 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var startDate = new DateTime(2018, 12, 01);
             var endDate = new DateTime(2019, 01, 05);
             var expectedDeleteCount = 2;
-            var reelIsciIngestJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
+            var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscis();
             var result = 0;
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                var addedCount = reelIsciIngestJobsRepository.AddReelIscis(reelIscis);
-                result = reelIsciIngestJobsRepository.DeleteReelIscisBetweenRange(startDate, endDate);
+                var addedCount = reelIsciRepo.AddReelIscis(reelIscis);
+                result = reelIsciRepo.DeleteReelIscisBetweenRange(startDate, endDate);
             }
 
             // Assert
@@ -59,15 +59,15 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var startDate = new DateTime(2019, 01, 15);
             var endDate = new DateTime(2019, 01, 20);
             var expectedDeleteCount = 2;
-            var reelIsciIngestJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
+            var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscis();
             var result = 0;
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                var addedCount = reelIsciIngestJobsRepository.AddReelIscis(reelIscis);
-                result = reelIsciIngestJobsRepository.DeleteReelIscisBetweenRange(startDate, endDate);
+                var addedCount = reelIsciRepo.AddReelIscis(reelIscis);
+                result = reelIsciRepo.DeleteReelIscisBetweenRange(startDate, endDate);
             }
 
             // Assert
@@ -79,14 +79,14 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             // Arrange
             int expectedAddCount = 3;
-            var reelIsciIngestJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
+            var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscis();
             var result = 0;
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                result = reelIsciIngestJobsRepository.AddReelIscis(reelIscis);
+                result = reelIsciRepo.AddReelIscis(reelIscis);
             }
 
             // Assert
