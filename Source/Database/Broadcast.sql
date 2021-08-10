@@ -79,6 +79,12 @@ GO
 
 /*************************************** Start BP-1551 - settings *****************************************************/
 
+/*
+
+SDE 8/10/2021 
+Domain migrations are changing these urls.
+The Aab feature has been released so we're commenting this out.
+
 DECLARE @envName VARCHAR(50)
 DECLARE @trafficUrlBase VARCHAR(500) = 'http://[MachineName]/traffic/api/company'
 DECLARE @urlBase VARCHAR(500) = 'http://[MachineName]/aabapiinternal/api/v1'
@@ -135,6 +141,9 @@ AND parameter_key = 'AgencyAdvertiserBrandApiUrl'
 AND parameter_value <> @envUrl
 
 GO
+
+*/
+
 /*************************************** End BP-1551 - settings *****************************************************/
 
 /*************************************** Start BP-1551 - schema *****************************************************/
