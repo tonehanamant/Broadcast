@@ -44,6 +44,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(true))
                 .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium:true));
 
+            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(false))
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium: false));
+
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
@@ -644,12 +647,102 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void DistributesGoals_ByWeekByAdLengthDeliveryType_OnPlanSave_UnEquivalized()
+        {
+            // Arrange
+            PlanDto plan = _GetNewPlan();
+            plan.Equivalized = false;
+            plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength;
+            plan.Id = 1;
+            plan.VersionId = 1;
+            plan.IsAduEnabled = true;
+            plan.CreativeLengths.Add(new CreativeLength { SpotLengthId = 2 });
+            plan.CreativeLengths.Add(new CreativeLength { SpotLengthId = 3 });
+            plan.Dayparts[0].WeightingGoalPercent = 60;
+            plan.Dayparts[1].WeightingGoalPercent = null;
+            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
+            {
+                WeekNumber = 1,
+                MediaWeekId = 401,
+                StartDate = new DateTime(2020, 5, 11),
+                EndDate = new DateTime(2020, 5, 17),
+                NumberOfActiveDays = 5,
+                ActiveDays = "M,Tu,W,Th,F",
+                WeeklyImpressions = 50,
+                WeeklyImpressionsPercentage = 50,
+                WeeklyRatings = 25,
+                WeeklyBudget = 50,
+                WeeklyAdu = 2,
+                SpotLengthId = 1,
+                WeeklyUnits = 2.5
+            });
+            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
+            {
+                WeekNumber = 1,
+                MediaWeekId = 401,
+                StartDate = new DateTime(2020, 5, 11),
+                EndDate = new DateTime(2020, 5, 17),
+                NumberOfActiveDays = 5,
+                ActiveDays = "M,Tu,W,Th,F",
+                WeeklyImpressions = 25,
+                WeeklyImpressionsPercentage = 25,
+                WeeklyRatings = 12.5,
+                WeeklyBudget = 25,
+                WeeklyAdu = 2,
+                SpotLengthId = 2,
+                WeeklyUnits = 1.25
+            });
+            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
+            {
+                WeekNumber = 1,
+                MediaWeekId = 401,
+                StartDate = new DateTime(2020, 5, 11),
+                EndDate = new DateTime(2020, 5, 17),
+                NumberOfActiveDays = 5,
+                ActiveDays = "M,Tu,W,Th,F",
+                WeeklyImpressions = 25,
+                WeeklyImpressionsPercentage = 25,
+                WeeklyRatings = 12.5,
+                WeeklyBudget = 25,
+                WeeklyAdu = 2,
+                SpotLengthId = 3,
+                WeeklyUnits = 0
+            });            
+
+            // Act
+            var results = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan, 110, 120);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GroupsWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType()
         {
             // Arrange
             PlanDto plan = _GetNewPlan();
             plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength;
             plan.TargetImpressions *= 1000;
+            plan.WeeklyBreakdownWeeks.AddRange(_GetWeeklyBreakdownWeeks());
+
+            // Act
+            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GroupsWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType_UnEquivalized()
+        {
+            // Arrange
+            PlanDto plan = _GetNewPlan();
+            plan.Equivalized = false;
+            plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength;
+            plan.TargetImpressions *= 1000;
+
             plan.WeeklyBreakdownWeeks.AddRange(_GetWeeklyBreakdownWeeks());
 
             // Act
@@ -1225,7 +1318,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     WeeklyBudget = 30,
                     WeeklyImpressions = 30000,
                     WeeklyImpressionsPercentage = 30,
-                    WeeklyRatings = 15
+                    WeeklyRatings = 15,
+                    WeeklyUnits = 1500,
+                    UnitImpressions = 20
                 },
                 new WeeklyBreakdownWeek
                 {
@@ -1243,6 +1338,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     WeeklyImpressions = 20000,
                     WeeklyImpressionsPercentage = 20,
                     WeeklyRatings = 10,
+                    WeeklyUnits = 1000,
+                    UnitImpressions = 20
                 },
                 new WeeklyBreakdownWeek
                 {
@@ -1260,6 +1357,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     WeeklyImpressions = 15000,
                     WeeklyImpressionsPercentage = 15,
                     WeeklyRatings = 7.5,
+                    WeeklyUnits = 750,
+                    UnitImpressions = 20
                 },
                 new WeeklyBreakdownWeek
                 {
@@ -1277,6 +1376,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     WeeklyImpressions = 10000,
                     WeeklyImpressionsPercentage = 10,
                     WeeklyRatings = 5,
+                    WeeklyUnits = 500,
+                    UnitImpressions = 20
                 },
                 new WeeklyBreakdownWeek
                 {
@@ -1294,6 +1395,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     WeeklyImpressions = 15000,
                     WeeklyImpressionsPercentage = 15,
                     WeeklyRatings = 7.5,
+                    WeeklyUnits = 750,
+                    UnitImpressions = 20
                 },
                 new WeeklyBreakdownWeek
                 {
@@ -1311,6 +1414,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     WeeklyImpressions = 10000,
                     WeeklyImpressionsPercentage = 10,
                     WeeklyRatings = 5,
+                    WeeklyUnits = 500,
+                    UnitImpressions = 20
                 }
             };
             return result;

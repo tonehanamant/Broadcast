@@ -263,6 +263,9 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
 
+            _CalculateUnits(result, plan.Equivalized, plan.ImpressionsPerUnit, plan.CreativeLengths);
+            _AdjustSpotLengthBudget(result, plan.GoalBreakdownType, plan.Equivalized, plan.Budget.Value);
+
             return result;
         }
 
@@ -415,7 +418,8 @@ namespace Services.Broadcast.BusinessEngines
                 result.Add(newWeeklyBreakdownItem);
             }
 
-            RecalculatePercentageOfWeekBasedOnImpressions(result);
+            RecalculatePercentageOfWeekBasedOnImpressions(result);            
+            _AdjustSpotLengthBudget(result, plan.GoalBreakdownType, plan.Equivalized, plan.Budget.Value);
 
             return result;
         }
@@ -515,8 +519,8 @@ namespace Services.Broadcast.BusinessEngines
                 throw new ApplicationException(_UnsupportedDeliveryTypeMessage);
             }
 
-            _CalculateUnits(response.Weeks, request);
-            _AdjustSpotLengthBudget(response.Weeks, request);
+            _CalculateUnits(response.Weeks, request.Equivalized, request.ImpressionsPerUnit, request.CreativeLengths);
+            _AdjustSpotLengthBudget(response.Weeks, request.DeliveryType, request.Equivalized, request.TotalBudget);
             _CalculateWeeklyGoalBreakdownTotals(response, request);
             _OrderWeeks(request, response);
             SetWeekNumber(response.Weeks);
@@ -524,21 +528,22 @@ namespace Services.Broadcast.BusinessEngines
             return response;
         }
 
-        private void _AdjustSpotLengthBudget(List<WeeklyBreakdownWeek> weeks, WeeklyBreakdownRequest request)
+        private void _AdjustSpotLengthBudget(List<WeeklyBreakdownWeek> weeks, PlanGoalBreakdownTypeEnum deliveryType,
+            bool equivalized, decimal totalBudget)
         {
-            if (request.DeliveryType != PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
+            if (deliveryType != PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
             {
                 return;
             }
 
-            if (request.Equivalized)
+            if (equivalized)
             {
                 return;
             }
 
             var spotCostMultipliers = _SpotLengthCostMultipliers.Value;
             var baseCostDenom = weeks.Sum(w => Convert.ToDecimal(w.WeeklyUnits) * spotCostMultipliers[w.SpotLengthId.Value]);
-            var baseCost = request.TotalBudget / (baseCostDenom);
+            var baseCost = totalBudget / (baseCostDenom);
             foreach (var week in weeks)
             {
                 var costPerUnit = baseCost * spotCostMultipliers[week.SpotLengthId.Value];
@@ -1347,29 +1352,29 @@ namespace Services.Broadcast.BusinessEngines
                    .Sum(p => _CalculateUnitsForSingleSpotLength(impressionsPerUnit, impressions, p.SpotLengthId)
                             * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
 
-        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, WeeklyBreakdownRequest request)
+        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, bool equivalized, double impressionsPerUnit, List<CreativeLength> creativeLengths)
         {
             foreach (var week in weeks)
             {
-                if (request.Equivalized)
+                if (equivalized)
                 {
                     if (week.SpotLengthId.HasValue)
                     {
-                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(request.ImpressionsPerUnit, week.WeeklyImpressions, week.SpotLengthId.Value);
+                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(impressionsPerUnit, week.WeeklyImpressions, week.SpotLengthId.Value);
                     }
                     else
                     {
-                        if (request.CreativeLengths.Any(x => !x.Weight.HasValue))
+                        if (creativeLengths.Any(x => !x.Weight.HasValue))
                         {
-                            var creativeLengthsWithDistributedWeight = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
-                            request.CreativeLengths = creativeLengthsWithDistributedWeight;
+                            var creativeLengthsWithDistributedWeight = _CreativeLengthEngine.DistributeWeight(creativeLengths);
+                            creativeLengths = creativeLengthsWithDistributedWeight;
                         }
-                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request.CreativeLengths, request.ImpressionsPerUnit, week.WeeklyImpressions);
+                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, week.WeeklyImpressions);
                     }
                 }
                 else
                 {
-                    week.WeeklyUnits = week.WeeklyImpressions / request.ImpressionsPerUnit;
+                    week.WeeklyUnits = week.WeeklyImpressions / impressionsPerUnit;
                 }
             }
         }
