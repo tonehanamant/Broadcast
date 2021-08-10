@@ -36,6 +36,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="isciPlanSearch">The object which contains search parameters</param>
         /// <returns>List of IsciPlanResultDto object</returns>
         List<IsciPlanResultDto> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch);
+
+        /// <summary>
+        /// Save Isci mapping
+        /// </summary>
+        /// <param name="isciPlanProductMapping">The object which contains save parameters</param>
+        /// /// <param name="createdBy">Created By</param>
+        /// <returns>true or false</returns>
+        bool SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductMapping, string createdBy);
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -72,13 +80,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             List<IsciListItemDto> isciListDto = new List<IsciListItemDto>();
             List<IsciAdvertiserDto> isciAdvertiserListDto = new List<IsciAdvertiserDto>();
             var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
-            isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);            
+            isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);
             if (isciAdvertiserListDto?.Any() ?? false)
             {
                 if (isciSearch.WithoutPlansOnly)
                 {
-                   var isciAdvertiserListDtoWithoutPlan = isciAdvertiserListDto.Where(x => x.PlanIsci == null).ToList();
-                   isciAdvertiserListDto = isciAdvertiserListDtoWithoutPlan;
+                    var isciAdvertiserListDtoWithoutPlan = isciAdvertiserListDto.Where(x => x.PlanIsci == null).ToList();
+                    isciAdvertiserListDto = isciAdvertiserListDtoWithoutPlan;
                 }
                 if (isciAdvertiserListDto?.Any() ?? false)
                 {
@@ -277,6 +285,58 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var advertisers = _AabEngine.GetAdvertisers();
             isciPlanSummaries.ForEach(x => x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
+        }
+
+        public bool SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductMapping, string createdBy)
+        {
+            if (isciPlanProductMapping == null)
+            {
+                _LogWarning($"Called with null parameters.");
+                return false;
+            }
+            var createdAt = _DateTimeEngine.GetCurrentMoment();
+            bool isSave = false;
+            int isciProductMappingCount = 0;
+            int isciPlanMappingCount = 0;
+            if (isciPlanProductMapping.IsciProductMappings.Count > 0)
+            {
+                isciProductMappingCount = _PlanIsciRepository.SaveIsciProductMappings(isciPlanProductMapping.IsciProductMappings, createdBy, createdAt);
+            }
+            _LogInfo($"{isciProductMappingCount } IsciProductMappings are stored into database");
+            var isciPlanMappings = _RemoveDuplicateListItem(isciPlanProductMapping);
+            _LogInfo($"{isciPlanMappingCount } IsciPlanMappings are stored into database");
+            if (isciPlanMappings.Count > 0)
+            {
+                isciPlanMappingCount = _PlanIsciRepository.SaveIsciPlanMappings(isciPlanMappings, createdBy, createdAt);
+                
+                if (isciPlanMappingCount > 0)
+                {
+                    isSave = true;
+                }
+                return isSave;
+            }
+            else
+            {
+                return isSave;
+            }
+        }
+
+        private List<IsciPlanMappingDto> _RemoveDuplicateListItem(IsciPlanProductMappingDto isciPlanProductMapping)
+        {
+            var isciPlanMappingList = isciPlanProductMapping.IsciPlanMappings.Select(item => new { item.PlanId, item.Isci }).Distinct();
+
+            var isciPlanMappings = _PlanIsciRepository.GetPlanIscis();
+
+            var isciPlanMappingUniqueList = isciPlanMappingList.Where(x => !isciPlanMappings.Any(y => y.PlanId == x.PlanId && y.Isci == x.Isci)).ToList();
+
+            List<IsciPlanMappingDto> isciPlanMappingResult = isciPlanMappingUniqueList
+                .Select(x => new IsciPlanMappingDto
+                {
+                    PlanId = x.PlanId,
+                    Isci = x.Isci
+                }).ToList();
+
+            return isciPlanMappingResult;
         }
     }
 }

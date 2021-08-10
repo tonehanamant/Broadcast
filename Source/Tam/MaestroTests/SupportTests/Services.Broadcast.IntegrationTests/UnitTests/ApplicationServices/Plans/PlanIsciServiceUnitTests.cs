@@ -137,7 +137,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Equals(result.Count, 0);
         }
-        
+
         [Test]
         public void GetAvailableIscisNullProduct()
         {
@@ -224,7 +224,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = _PlanIsciService.GetAvailableIscis(isciSearch);
 
             // Assert
-            Assert.AreEqual(result.Count,0);
+            Assert.AreEqual(result.Count, 0);
         }
         [Test]
         public void GetUnAvailableIscisThrowsException()
@@ -439,7 +439,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             "CLDC6513000H",
                             "CUSA1813000H"
-                        }                        
+                        }
                     }
                 });
 
@@ -545,6 +545,180 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var result = Assert.Throws<Exception>(() => _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        public void SaveIsciProductMappings()
+        {
+            //Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            int result = 0;
+            bool actualResult = true;
+            bool expectedData = false;
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE67VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7049,
+                                Isci= "AE67VR14"
+                            }
+                        };
+            var isciProductList = new List<IsciProductMappingDto>
+                        {
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            },
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            }
+                        };
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList,
+                IsciProductMappings = isciProductList
+            };
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(isciPlanList);
+            _PlanIsciRepositoryMock
+               .Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<IsciPlanMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+               .Callback(() =>
+               {
+                   result = 2;
+               })
+               .Returns(result);
+            //Act
+            actualResult = _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            Assert.AreEqual(expectedData, actualResult);
+        }
+        [Test]
+        public void SaveIsciPlanMappings()
+        {
+            //Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            int result = 0;
+            bool actualResult = true;
+            bool expectedData = false;
+            var expectedIsciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR16"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7059,
+                                Isci= "AE87VR14"
+                            }
+                        };
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7049,
+                                Isci= "AE87VR14"
+                            }
+                        };
+            var isciProductList = new List<IsciProductMappingDto>
+                        {
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            },
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            }
+                        };
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList,
+                IsciProductMappings = isciProductList
+            };
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(expectedIsciPlanList);
+            _PlanIsciRepositoryMock
+            .Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<IsciPlanMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            .Callback(() =>
+            {
+                result = 2;
+            })
+            .Returns(result);
+            //Act
+            actualResult = _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            Assert.AreEqual(expectedData, actualResult);
+        }
+
+        [Test]
+        public void SaveIsciPlanMappings_ThrowsException()
+        {
+            // Arrange
+            _PlanIsciRepositoryMock
+                    .Setup(s => s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                    .Callback(() =>
+                    {
+                        throw new Exception("Throwing a test exception.");
+                    });
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE67VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7049,
+                                Isci= "AE67VR14"
+                            }
+                        };
+            var isciProductList = new List<IsciProductMappingDto>
+                        {
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            },
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            }
+                        };
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList,
+                IsciProductMappings = isciProductList
+            };
+            // Act
+            var result = Assert.Throws<Exception>(() => _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, It.IsAny<string>()));
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);

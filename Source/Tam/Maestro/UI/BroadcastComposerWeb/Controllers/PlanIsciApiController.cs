@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
 using System.Collections.Generic;
@@ -65,6 +66,20 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<IsciPlanResultDto>> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIsciPlans(isciPlanSearch));
+        }
+
+        /// <summary>
+        /// Endpoint to save isci Mappings.
+        /// </summary>
+        /// <returns>List of iscis</returns>
+        [HttpPost]
+        [Route("plan-iscis")]
+        public BaseResponse<bool> SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductsMapping)
+        {
+            var createdBy = _GetCurrentUserFullName();
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().SaveIsciMappings(isciPlanProductsMapping, createdBy));
         }
     }
 }

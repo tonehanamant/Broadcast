@@ -30,6 +30,30 @@ namespace Services.Broadcast.Repositories
         /// <param name="mediaMonthEndDate">The media month end date</param>
         /// <returns>List of IsciPlanDetailDto object</returns>
         List<IsciPlanDetailDto> GetAvailableIsciPlans(DateTime mediaMonthStartDate, DateTime mediaMonthEndDate);
+
+        /// <summary>
+        /// Save Plan Isci mapping
+        /// </summary>
+        /// <param name="isciPlanMappings">The List which contains save parameters</param>
+        /// /// <param name="createdBy">Created By</param>
+        /// /// <param name="createdAt">Created At</param>
+        /// <returns>Total number of inserted Plan Mappings</returns>
+        int SaveIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappings, string createdBy, DateTime createdAt);
+
+        /// <summary>
+        /// Save Product Isci mapping
+        /// </summary>
+        /// <param name="isciProductMappings">The List which contains save parameters</param>
+        /// /// <param name="createdBy">Created By</param>
+        /// /// <param name="createdAt">Created At</param>
+        /// <returns>Total number of inserted Product Mappings</returns>
+        int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt);
+
+        /// <summary>
+        /// Get PlanIsci List
+        /// </summary>
+        /// <returns>List of IsciPlanMappingDto</returns>
+        List<IsciPlanMappingDto> GetPlanIscis();
     }
     /// <summary>
     /// Data operations for the PlanIsci Repository.
@@ -54,25 +78,25 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-              var result = (from isci in context.reel_iscis
-                            join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
-                            join pro in context.reel_isci_products on isci.isci equals pro.isci into ps
-                            from pro in ps.DefaultIfEmpty()
-                            join sl in context.spot_lengths on isci.spot_length_id equals sl.id
-                            join plan_iscis in context.plan_iscis on isci.isci equals plan_iscis.isci into pi
-                            from plan_iscis in pi.DefaultIfEmpty()
-                            where ( isci.active_start_date <=startDate &&  isci.active_end_date>=endDate)
-                            ||(isci.active_start_date>=startDate && isci.active_start_date <= endDate)
-                            || (isci.active_end_date >= startDate && isci.active_end_date <= endDate)
-                            select new IsciAdvertiserDto
+                var result = (from isci in context.reel_iscis
+                              join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
+                              join pro in context.reel_isci_products on isci.isci equals pro.isci into ps
+                              from pro in ps.DefaultIfEmpty()
+                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id
+                              join plan_iscis in context.plan_iscis on isci.isci equals plan_iscis.isci into pi
+                              from plan_iscis in pi.DefaultIfEmpty()
+                              where (isci.active_start_date <= startDate && isci.active_end_date >= endDate)
+                              || (isci.active_start_date >= startDate && isci.active_start_date <= endDate)
+                              || (isci.active_end_date >= startDate && isci.active_end_date <= endDate)
+                              select new IsciAdvertiserDto
                               {
                                   AdvertiserName = isci_adr.advertiser_name_reference,
                                   Id = isci.id,
                                   SpotLengthDuration = sl.length,
                                   ProductName = pro.product_name,
                                   Isci = isci.isci,
-                                  PlanIsci= plan_iscis.isci
-                            }).ToList();
+                                  PlanIsci = plan_iscis.isci
+                              }).ToList();
                 return result;
             });
         }
@@ -123,6 +147,54 @@ namespace Services.Broadcast.Repositories
                 }).ToList();
                 return result;
             });
-        }        
+        }
+
+        public int SaveIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappings, string createdBy, DateTime createdAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+                {
+                    var isciPlanMappingsToAdd = isciPlanMappings.Select(isciPlanMapping => new plan_iscis()
+                    {
+                        plan_id = isciPlanMapping.PlanId,
+                        isci = isciPlanMapping.Isci,
+                        created_at = createdAt,
+                        created_by = createdBy
+                    }).ToList();
+
+                   var addedCount = context.plan_iscis.AddRange(isciPlanMappingsToAdd).Count();
+                    context.SaveChanges();
+                    return addedCount;
+                });
+        }
+
+        public int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+              {
+                  var isciProductMappingsToAdd = isciProductMappings.Select(isciProductMapping => new reel_isci_products()
+                  {
+                      product_name = isciProductMapping.ProductName,
+                      isci = isciProductMapping.Isci,
+                      created_at = createdAt,
+                      created_by = createdBy
+                  }).ToList();
+                 var addedCount = context.reel_isci_products.AddRange(isciProductMappingsToAdd).Count();
+                  context.SaveChanges();
+                  return addedCount;
+              });
+        }
+        public List<IsciPlanMappingDto> GetPlanIscis()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = (from planIsci in context.plan_iscis.Where(x=> x.deleted_at != null)
+                              select new IsciPlanMappingDto
+                              {
+                                  PlanId = planIsci.plan_id,
+                                  Isci = planIsci.isci
+                              }).ToList();
+                return result;
+            });
+        }
     }
 }

@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     public class PlanIsciRepositoryTests
     {
         [Test]
-       public void GetAvailableIscis()
+        public void GetAvailableIscis()
         {
             //This test will cover all 3 scenario: 1. Mapped with plan only 2.Unmapped with plan only and 3. A mix of mapped and unmapped
             // Arrange
@@ -39,7 +40,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             //Act
             var result = repo.GetAvailableIscis(startDate, endDate);
             //Assert
-            Assert.IsTrue(result.Count == 0);          
+            Assert.IsTrue(result.Count == 0);
         }
         [Test]
         public void GetAvailableIscis_Overlap()
@@ -52,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Act
             var result = repo.GetAvailableIscis(startDate, endDate);
             // Assert
-           Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
         [Test]
         public void GetAvailableIscis_OverlapOneDay()
@@ -66,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
+
         [Test]
         public void GetAvailableIsciPlans_Plan_DoesNotExist()
         {
@@ -125,6 +126,150 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void SaveIsciProductMappings()
+        {
+            // Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            var isciMappings = _GetIsciMappings();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            int result = 0;
+            List<IsciPlanMappingDto> saveResult;
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                result = planIsciRepository.SaveIsciProductMappings(isciMappings.IsciProductMappings, createdBy, createdAt);
+                saveResult = planIsciRepository.GetPlanIscis();
+            }
+            var savedProductIds = saveResult.Select(s => s.PlanId).Distinct().ToList();
+            var savedProductId = savedProductIds.First();
+            Assert.AreEqual(1, savedProductIds.Count);
+            Assert.IsTrue(savedProductId > 0);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult, jsonSettings));
+        }
+        [Test]
+        public void SaveIsciPlanMappings()
+        {
+            // Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            var isciMappings = _GetIsciMappings();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            int result = 0;
+            List<IsciPlanMappingDto> saveResult;
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                result = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
+                saveResult = planIsciRepository.GetPlanIscis();
+            }
+            var savedPlanIds = saveResult.Select(s => s.PlanId).Distinct().ToList();
+            var savedPlanId = savedPlanIds.First();
+            Assert.AreEqual(1, savedPlanIds.Count);
+            Assert.IsTrue(savedPlanId > 0);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult, jsonSettings));
+        }
+
+        [Test]
+        public void SaveIsciPlanMappings_RemoveDuplicateListItem()
+        {
+            // Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            var isciMappings = _GetIsciMappings_DuplicatePlan();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            int result = 0;
+            int data = 2;
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                result = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
+            }
+
+            // Assert
+            Assert.AreEqual(data, result);
+        }
+        private IsciPlanProductMappingDto _GetIsciMappings()
+        {
+            return new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = new List<IsciPlanMappingDto>
+                    {
+                        new IsciPlanMappingDto()
+                        {
+                            PlanId = 7009,
+                            Isci= "AE67VR14"
+                        }
+                    },
+                IsciProductMappings = new List<IsciProductMappingDto>
+                {
+                    new IsciProductMappingDto()
+                        {
+                            ProductName = "Femoston",
+                            Isci= "AE67VR14"
+                        },
+                        new IsciProductMappingDto()
+                        {
+                            ProductName = "Abbot Labs",
+                            Isci= "AE67VR14"
+                        }
+                }
+            };
+        }
+
+        private IsciPlanProductMappingDto _GetIsciMappings_DuplicatePlan()
+        {
+            return new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = new List<IsciPlanMappingDto>
+                    {
+                        new IsciPlanMappingDto()
+                        {
+                            PlanId = 7009,
+                            Isci= "AE67VR14"
+                        },
+                        new IsciPlanMappingDto()
+                        {
+                            PlanId = 7009,
+                            Isci= "AE67VR14"
+                        }
+                    },
+                IsciProductMappings = new List<IsciProductMappingDto>
+                {
+                    new IsciProductMappingDto()
+                        {
+                            ProductName = "Femoston",
+                            Isci= "AE67VR14"
+                        },
+                        new IsciProductMappingDto()
+                        {
+                            ProductName = "Abbot Labs",
+                            Isci= "AE67VR14"
+                        }
+                }
+            };
         }
     }
 }
