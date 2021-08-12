@@ -267,7 +267,7 @@ namespace Services.Broadcast.Entities.Campaign
                         newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, _SpotLengthDeliveryMultipliers);
 
                         _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts);
-                        _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan);
+                        _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts, _IsVPVHDemoEnabled.Value);
                         _ProjectSecondaryAudiencesData(plan, weekComponent, newProjectedPlan, newProjectedPlan.TotalHHImpressions);
 
                         result.Add(newProjectedPlan);
@@ -278,11 +278,23 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private static void _ProjectHHAudienceData(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport planProjection)
+        internal void _ProjectHHAudienceData(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport planProjection, 
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts, bool isVpvhDemoEnabled)
         {
             var audienceImpressions = planWeek.WeeklyImpressions;
-            var audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartCodeId.Value, plan.AudienceId);
-            planProjection.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh);
+            double? audienceVpvh = null;
+
+            if (isVpvhDemoEnabled)
+            {
+                audienceVpvh = _GetCalculatedVpvh(planWeek.DaypartCodeId.Value, plan.Id, planPricingResultsDayparts);
+            }
+
+            if (!audienceVpvh.HasValue)
+            {
+                audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartCodeId.Value, plan.AudienceId);
+            }
+
+            planProjection.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh.Value);
 
             var factor = planProjection.TotalHHImpressions / plan.HHImpressions;
             planProjection.TotalHHRatingPoints = plan.HHRatingPoints * factor;
@@ -293,6 +305,25 @@ namespace Services.Broadcast.Entities.Campaign
             return plan.Dayparts.Single(x => x.DaypartCodeId == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
         }
 
+        private double? _GetCalculatedVpvh(int daypartCodeId,  int planId, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
+        {
+            //planPricingResultsDayparts is null because pricing hasn't been run for the plan yet
+            var daypartsOfPlan = planPricingResultsDayparts?.Where(x => x.Key == planId).Select(y => y.Value).FirstOrDefault();
+            if (daypartsOfPlan == null)
+            {
+                return null;
+            }
+
+            var pricingResultsDayparts = daypartsOfPlan.Where(x => x.StandardDaypartId == daypartCodeId).FirstOrDefault();
+            if (pricingResultsDayparts == null)
+            {
+                return null;
+            }
+
+            var result = pricingResultsDayparts.CalculatedVpvh;
+            return result;
+        }
+
         internal void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport projection, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
         {
             projection.GuaranteedAudience.IsGuaranteedAudience = true;
@@ -300,18 +331,15 @@ namespace Services.Broadcast.Entities.Campaign
             projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
             projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
             projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
-            //planPricingResultsDayparts is null because pricing hasn't been run for the plan yet
+            
             if (_IsVPVHDemoEnabled.Value)
             {
-                var daypartsOfPlan = planPricingResultsDayparts?.Where(x => x.Key == plan.Id).Select(y => y.Value).FirstOrDefault();
-                if (daypartsOfPlan != null)
+                // calculated results could be null if pricing hasn't been run yet.
+                var calculatedVpvh = _GetCalculatedVpvh(projection.DaypartCodeId, plan.Id, planPricingResultsDayparts);
+                if (calculatedVpvh.HasValue)
                 {
-                    var pricingResultsDayparts = daypartsOfPlan.Where(x => x.StandardDaypartId == projection.DaypartCodeId).FirstOrDefault();
-                    if (pricingResultsDayparts != null)
-                    {
-                        projection.GuaranteedAudience.VPVH = pricingResultsDayparts.CalculatedVpvh;
-                    }
-                }                
+                    projection.GuaranteedAudience.VPVH = calculatedVpvh.Value;
+                }
             }          
         }
 

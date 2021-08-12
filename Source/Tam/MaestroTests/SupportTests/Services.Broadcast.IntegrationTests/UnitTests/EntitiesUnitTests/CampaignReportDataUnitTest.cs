@@ -61,6 +61,60 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ProjectHHAudienceData_WithoutRunPricing(bool vpvhFlagEnabled)
+        {
+            // Arrange
+            const double expectedHhImpressions = 200.0;
+            const double expectedHhRatings = 12.2;
+            PlanDto plan = _GetNewPlan();
+            plan.Id = 1;
+            plan.HHImpressions = 200;
+            plan.HHRatingPoints = 12.2;
+            WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = null;
+            var testClass = new CampaignReportData
+            {
+                _IsVPVHDemoEnabled = new Lazy<bool>(() => vpvhFlagEnabled)
+            };
+            var projection = _GetPlanProjectionForCampaignExport();
+
+            // Action
+            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts, isVpvhDemoEnabled : vpvhFlagEnabled);
+
+            // Assert
+            Assert.AreEqual(expectedHhImpressions, projection.TotalHHImpressions);
+            Assert.AreEqual(expectedHhRatings, projection.TotalHHRatingPoints);
+        }
+
+        [Test]
+        [TestCase(false, 200.0, 12.2)]
+        [TestCase(true, 183.15018315018312, 11.17216117216117)]
+        public void ProjectHHAudienceData_VPVH_WithRunPricing(bool vpvhFlagEnabled, double expectedHhImpressions, double expectedHhRatings)
+        {
+            // Arrange
+            PlanDto plan = _GetNewPlan();
+            plan.Id = 1;
+            plan.HHImpressions = 200;
+            plan.HHRatingPoints = 12.2;
+            WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = _GetPlanPricingResultsDayparts(2);
+            var testClass = new CampaignReportData
+            {
+                _IsVPVHDemoEnabled = new Lazy<bool>(() => vpvhFlagEnabled)
+            };
+            var projection = _GetPlanProjectionForCampaignExport();
+
+            // Action
+            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts, isVpvhDemoEnabled: vpvhFlagEnabled);
+
+            // Assert
+            Assert.AreEqual(expectedHhImpressions, projection.TotalHHImpressions);
+            Assert.AreEqual(expectedHhRatings, projection.TotalHHRatingPoints);
+        }
+
+        [Test]
         public void PopulateTotalAdusForFlowchartAduTable_AduFlagEnabled()
         {
             // Arrange
@@ -803,7 +857,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             return new WeeklyBreakdownWeek()
             {
                 WeeklyImpressions = 100,
-                WeeklyRatings = 50
+                WeeklyRatings = 50,
+                DaypartCodeId = 2
             };
         }
         private static CampaignReportData.PlanProjectionForCampaignExport _GetPlanProjectionForCampaignExport()
@@ -813,7 +868,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                 DaypartCodeId = 15
             };
         }
-        private static Dictionary<int, List<PlanPricingResultsDaypartDto>> _GetPlanPricingResultsDayparts()
+        private static Dictionary<int, List<PlanPricingResultsDaypartDto>> _GetPlanPricingResultsDayparts(int standardDaypartId = 15)
         {
             return new Dictionary<int, List<PlanPricingResultsDaypartDto>>()
             {
@@ -824,7 +879,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                         {
                             Id = 101,
                             PlanVersionPricingResultId = 10,
-                            StandardDaypartId = 15,
+                            StandardDaypartId = standardDaypartId,
                             CalculatedVpvh = 0.546
                         }
                     }
