@@ -1008,6 +1008,19 @@
           <Property Name="budget" Type="money" Nullable="false" />
           <Property Name="impressions_percentage" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_version_buying_result_spot_stations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_result_id" Type="int" Nullable="false" />
+          <Property Name="program_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="genre" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="station" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="budget" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_buying_result_spots">
           <Key>
             <PropertyRef Name="id" />
@@ -4006,6 +4019,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_version_buying_result_spot_stations_plan_version_buying_results">
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1" />
+          <End Role="plan_version_buying_result_spot_stations" Type="Self.plan_version_buying_result_spot_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_result_spot_stations">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_buying_result_spots_plan_version_buying_results">
           <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -6673,6 +6698,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_buying_parameter_inventory_proprietary_summaries" EntityType="Self.plan_version_buying_parameter_inventory_proprietary_summaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_parameters" EntityType="Self.plan_version_buying_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_rep_firm_details" EntityType="Self.plan_version_buying_rep_firm_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_result_spot_stations" EntityType="Self.plan_version_buying_result_spot_stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_result_spots" EntityType="Self.plan_version_buying_result_spots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_results" EntityType="Self.plan_version_buying_results" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_station_details" EntityType="Self.plan_version_buying_station_details" Schema="dbo" store:Type="Tables" />
@@ -7248,6 +7274,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_buying_rep_firm_details_plan_version_buying_results" Association="Self.FK_plan_version_buying_rep_firm_details_plan_version_buying_results">
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
             <End Role="plan_version_buying_rep_firm_details" EntitySet="plan_version_buying_rep_firm_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_result_spot_stations_plan_version_buying_results" Association="Self.FK_plan_version_buying_result_spot_stations_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_result_spot_stations" EntitySet="plan_version_buying_result_spot_stations" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_buying_result_spots_plan_version_buying_results" Association="Self.FK_plan_version_buying_result_spots_plan_version_buying_results">
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
@@ -9484,6 +9514,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="export_unmapped_program_names_jobs" EntityType="BroadcastModel.export_unmapped_program_names_jobs" />
           <EntitySet Name="reel_isci_ingest_jobs" EntityType="BroadcastModel.reel_isci_ingest_jobs" />
+          <EntitySet Name="plan_version_buying_result_spot_stations" EntityType="BroadcastModel.plan_version_buying_result_spot_stations" />
+          <AssociationSet Name="FK_plan_version_buying_result_spot_stations_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_result_spot_stations" EntitySet="plan_version_buying_result_spot_stations" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -15723,6 +15758,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_buying_market_details" Relationship="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_market_details" />
           <Property Name="spot_allocation_model_mode" Type="Int32" Nullable="false" />
           <Property Name="posting_type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_result_spot_stations" Relationship="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_result_spot_stations" />
         </EntityType>
         <Association Name="FK_plan_version_buying_band_details_plan_version_buying_results">
           <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
@@ -16598,6 +16634,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="completed_at" Type="DateTime" Precision="7" />
           <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="plan_version_buying_result_spot_stations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_result_id" Type="Int32" Nullable="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="genre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="budget" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" FromRole="plan_version_buying_result_spot_stations" ToRole="plan_version_buying_results" />
+        </EntityType>
+        <Association Name="FK_plan_version_buying_result_spot_stations_plan_version_buying_results">
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_result_spot_stations" Role="plan_version_buying_result_spot_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_result_spot_stations">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19417,6 +19479,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="queued_by" ColumnName="queued_by" />
                 <ScalarProperty Name="queued_at" ColumnName="queued_at" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_result_spot_stations">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_result_spot_stations">
+              <MappingFragment StoreEntitySet="plan_version_buying_result_spot_stations">
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="station" ColumnName="station" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="plan_version_buying_result_id" ColumnName="plan_version_buying_result_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

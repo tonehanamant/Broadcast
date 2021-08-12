@@ -562,6 +562,9 @@
     <Compile Include="plan_version_buying_result_spots.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_buying_result_spot_stations.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_buying_station_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

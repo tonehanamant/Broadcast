@@ -519,6 +519,8 @@
         <AssociationConnector Association="BroadcastModel.FK_reel_iscis_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.export_unmapped_program_names_jobs" Width="1.5" PointX="36.375" PointY="0.75" />
         <EntityTypeShape EntityType="BroadcastModel.reel_isci_ingest_jobs" Width="1.5" PointX="36.375" PointY="3.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spot_stations" Width="1.5" PointX="19.25" PointY="99.375" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

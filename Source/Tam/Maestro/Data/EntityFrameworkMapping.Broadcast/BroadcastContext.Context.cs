@@ -226,5 +226,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<reel_iscis> reel_iscis { get; set; }
         public virtual DbSet<export_unmapped_program_names_jobs> export_unmapped_program_names_jobs { get; set; }
         public virtual DbSet<reel_isci_ingest_jobs> reel_isci_ingest_jobs { get; set; }
+        public virtual DbSet<plan_version_buying_result_spot_stations> plan_version_buying_result_spot_stations { get; set; }
     }
 }

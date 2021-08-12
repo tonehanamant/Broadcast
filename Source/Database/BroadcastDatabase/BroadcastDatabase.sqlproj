@@ -276,6 +276,7 @@
     <Build Include="dbo\Tables\reel_isci_products.sql" />
     <Build Include="dbo\Tables\plan_iscis.sql" />
     <Build Include="dbo\Tables\export_unmapped_program_names_jobs.sql" />
+    <Build Include="dbo\Tables\plan_version_buying_result_spot_stations.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
