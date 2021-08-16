@@ -293,5 +293,43 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(deletedResult, jsonSettings));
         }
+
+        [Test]
+        public void DeletePlanIscisNotExistInReelIsci()
+        {
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var createdBy = "Test User";
+            var createdAt = DateTime.Now;
+            var deletedAt = DateTime.Now;
+            var deletedBy = "TestUser";
+            var isciMappings = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = new List<IsciPlanMappingDto>
+                {
+                    new IsciPlanMappingDto()
+                    {
+                        PlanId = 7009,
+                        Isci= "UniqueIsci1"
+                    },
+                    new IsciPlanMappingDto()
+                    {
+                        PlanId = 7009,
+                        Isci= "UniqueIsci2"
+                    }
+                }
+            };
+            var result = 0;
+            var expectedDeleteCount = 2;
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                var addedCount = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
+                result = planIsciRepository.DeletePlanIscisNotExistInReelIsci(deletedAt, deletedBy);
+            }
+
+            // Assert
+            Assert.IsTrue(result >= expectedDeleteCount);
+        }
     }
 }

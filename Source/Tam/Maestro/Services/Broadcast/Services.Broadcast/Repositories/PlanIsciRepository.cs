@@ -11,6 +11,7 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Services.Broadcast.Entities.Enums;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace Services.Broadcast.Repositories
 {
@@ -63,6 +64,14 @@ namespace Services.Broadcast.Repositories
         /// /// <param name="deletedAt">Created At</param>
         /// <returns>Total Number Of Deleted Plan ISCI Mappings</returns>
         int DeleteIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappingsDeleted, string deletedBy, DateTime deletedAt);
+
+        /// <summary>
+        /// Deletes plan isci that do not exist in reel isci
+        /// </summary>
+        /// <param name="deletedAt">The time when plan isci deletes</param>
+        /// <param name="deletedBy">The user who deletes plan isci</param>
+        /// <returns>Total number of deleted plan isci</returns>
+        int DeletePlanIscisNotExistInReelIsci(DateTime deletedAt, string deletedBy);
     }
     /// <summary>
     /// Data operations for the PlanIsci Repository.
@@ -230,6 +239,22 @@ namespace Services.Broadcast.Repositories
                     }
                 }
                 context.SaveChanges();
+                return deletedCount;
+            });
+        }
+
+        /// <inheritdoc />
+        public int DeletePlanIscisNotExistInReelIsci(DateTime deletedAt, string deletedBy)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var sql = $@"UPDATE plan_iscis
+                                SET deleted_at = @deletedAt,
+                                    deleted_by = @deletedBy
+                            WHERE deleted_at IS NULL AND isci NOT IN(SELECT isci FROM reel_iscis)";
+                var deletedAtParameter = new SqlParameter("@deletedAt", deletedAt);
+                var deletedByParameter = new SqlParameter("@deletedBy", deletedBy);
+                var deletedCount = context.Database.ExecuteSqlCommand(sql, deletedAtParameter, deletedByParameter);
                 return deletedCount;
             });
         }

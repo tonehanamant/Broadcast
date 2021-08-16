@@ -41,6 +41,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IReelIsciIngestJobsRepository _ReelIsciIngestJobsRepository;
         private readonly IReelIsciRepository _ReelIsciRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
+        private readonly IReelIsciProductRepository _ReelIsciProductRepository;
+        private readonly IPlanIsciRepository _PlanIsciRepository;
 
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IBackgroundJobClient _BackgroundJobClient;
@@ -50,9 +52,11 @@ namespace Services.Broadcast.ApplicationServices
             _ReelIsciApiClient = reelIsciApiClient;
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
             _ReelIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
-
-            _DateTimeEngine = dateTimeEngine;
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
+            _ReelIsciProductRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciProductRepository>();
+            _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+
+            _DateTimeEngine = dateTimeEngine;            
             _BackgroundJobClient = backgroundJobClient;
         }
 
@@ -95,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             int numberOfDays = 21;
             DateTime startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
-            PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+            PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, userName);
         }
 
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -115,10 +119,10 @@ namespace Services.Broadcast.ApplicationServices
             };
             jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
 
-            PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+            PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, userName);
         }
 
-        internal void PerformReelIsciIngestBetweenRange(int jobId, DateTime startDate, int numberOfDays)
+        internal void PerformReelIsciIngestBetweenRange(int jobId, DateTime startDate, int numberOfDays, string userName)
         {
             try
             {
@@ -136,6 +140,13 @@ namespace Services.Broadcast.ApplicationServices
                     addedCount = _AddReelIscis(reelRosterIscis);
                 }
                 _LogInfo($"Added {addedCount} reel iscis");
+
+                var deletedReelIsciProductsCount = _DeleteReelIsciProductsNotExistInReelIsci();
+                _LogInfo($"Deleted {deletedReelIsciProductsCount} reel iscis products.");
+
+                DateTime deletedAt = _DateTimeEngine.GetCurrentMoment();
+                var deletedplanIscisCount = _DeletePlanIscisNotExistInReelIsci(deletedAt, userName);
+                _LogInfo($"Deleted {deletedplanIscisCount} plan iscis.");
 
                 var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
                 {
@@ -184,6 +195,18 @@ namespace Services.Broadcast.ApplicationServices
                 IngestedAt = _DateTimeEngine.GetCurrentMoment()
             }).ToList();
             var result = _ReelIsciRepository.AddReelIscis(reelIscis);
+            return result;
+        }
+
+        private int _DeleteReelIsciProductsNotExistInReelIsci()
+        {
+            var result = _ReelIsciProductRepository.DeleteReelIsciProductsNotExistInReelIsci();
+            return result;
+        }
+
+        private int _DeletePlanIscisNotExistInReelIsci(DateTime deletedAt, string deletedBy)
+        {
+            var result = _PlanIsciRepository.DeletePlanIscisNotExistInReelIsci(deletedAt, deletedBy);
             return result;
         }
     }

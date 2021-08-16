@@ -457,6 +457,7 @@
     <Compile Include="Repositories\ProgramNameRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Repositories\ReelIsciProductRepositoryTests.cs" />
     <Compile Include="Repositories\ReelIsciRepositoryTests.cs" />
     <Compile Include="Repositories\StationMappingRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />

@@ -19,6 +19,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     [TestFixture]    
     public class ReelIsciIngestServiceUnitTests
     {
+        private const string _UserName = "TestUser";
         private ReelIsciIngestService _ReelIsciIngestService;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IReelIsciApiClient> _ReelIsciApiClientMock;
@@ -27,6 +28,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
+        private Mock<IReelIsciProductRepository> _ReelIsciProductRepositoryMock;
+        private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
 
         [SetUp]
         public void SetUp()
@@ -38,6 +41,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
             _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
             _ReelIsciRepository = new Mock<IReelIsciRepository>();
+            _ReelIsciProductRepositoryMock = new Mock<IReelIsciProductRepository>();
+            _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IReelIsciIngestJobsRepository>())
@@ -50,6 +55,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_SpotLengthRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IReelIsciProductRepository>())
+                .Returns(_ReelIsciProductRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
+                .Returns(_PlanIsciRepositoryMock.Object);
 
             _ReelIsciIngestService = new ReelIsciIngestService(_ReelIsciApiClientMock.Object, _DataRepositoryFactoryMock.Object, _DateTimeEngineMock.Object, _BackgroundJobClientMock.Object);
         }
@@ -71,7 +84,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(0);
 
             //Act
-            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
 
             //Assert
             _ReelIsciRepository.Verify(x => x.DeleteReelIscisBetweenRange(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
@@ -101,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(deletedCount);
 
             //Act
-            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
 
             //Assert
             _ReelIsciRepository.Verify(x => x.DeleteReelIscisBetweenRange(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
@@ -152,11 +165,71 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(addedCount);
 
             //Act
-            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
 
             //Assert
             _ReelIsciRepository.Verify(x => x.AddReelIscis(It.IsAny<List<ReelIsciDto>>()), Times.Once);
             Assert.AreEqual(expectedAddCount, addedCount);
+        }
+
+        [Test]
+        public void PerformReelIsciIngestBetweenRange_DeleteReelIsciProducts_NotExistInReelIsci()
+        {
+            //Arrange
+            var startDate = new DateTime(2021, 01, 01);
+            const int numberOfDays = 6;
+            var expectedDeleteCount = 2;
+            var deletedCount = 0;
+            const int jobId = 12;
+
+            _ReelIsciApiClientMock
+                .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
+                .Returns(new List<ReelRosterIsciDto>());
+
+            _ReelIsciProductRepositoryMock
+                .Setup(x => x.DeleteReelIsciProductsNotExistInReelIsci())
+                .Callback(() =>
+                {
+                    deletedCount = 2;
+                })
+                .Returns(deletedCount);
+
+            //Act
+            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
+
+            //Assert
+            _ReelIsciProductRepositoryMock.Verify(x => x.DeleteReelIsciProductsNotExistInReelIsci(), Times.Once);
+            Assert.AreEqual(expectedDeleteCount, deletedCount);
+        }
+
+        [Test]
+        public void PerformReelIsciIngestBetweenRange_DeletePlanIscis_NotExistInReelIsci()
+        {
+            //Arrange
+            var startDate = new DateTime(2021, 01, 01);
+            const int numberOfDays = 6;
+            var expectedDeleteCount = 2;
+            var deletedCount = 0;
+            const int jobId = 12;
+
+            _ReelIsciApiClientMock
+                .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
+                .Returns(new List<ReelRosterIsciDto>());
+
+            _PlanIsciRepositoryMock
+                .Setup(x => x.DeletePlanIscisNotExistInReelIsci(It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback(() =>
+                {
+                    deletedCount = 2;
+                })
+                .Returns(deletedCount);
+
+            //Act
+            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
+
+            //Assert
+            _PlanIsciRepositoryMock.Verify(x => x.DeletePlanIscisNotExistInReelIsci(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+            Assert.AreEqual(expectedDeleteCount, deletedCount);
         }
 
         [Test]
@@ -206,7 +279,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Callback<ReelIsciIngestJobDto>((j) => savedJobs.Add(j));
 
             //Act
-            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays);
+            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
 
             //Assert
             Assert.AreEqual(1, savedJobs.Count);
