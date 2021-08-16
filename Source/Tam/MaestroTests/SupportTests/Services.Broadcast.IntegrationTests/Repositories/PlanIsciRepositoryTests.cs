@@ -271,7 +271,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Arrange
             string deletedBy = "Test User";
             DateTime deletedAt = DateTime.Now;
-            var isciMappings = _GetIsciMappings();
+            var isciMappings = _GetIsciMappingsForDelete();
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             int result = 0;
             List<IsciPlanMappingDto> deletedResult;
@@ -330,6 +330,34 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             // Assert
             Assert.IsTrue(result >= expectedDeleteCount);
+        }
+
+        private IsciPlanProductMappingDto _GetIsciMappingsForDelete()
+        {
+            return new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = new List<IsciPlanMappingDto>
+                    {
+                        new IsciPlanMappingDto()
+                        {
+                            PlanId = 1540,
+                            Isci= "AB82TXT2H"
+                        }
+                    },
+                IsciProductMappings = new List<IsciProductMappingDto>
+                {
+                    new IsciProductMappingDto()
+                        {
+                            ProductName = "Femoston",
+                            Isci= "AE67VR14"
+                        },
+                        new IsciProductMappingDto()
+                        {
+                            ProductName = "Abbot Labs",
+                            Isci= "AE67VR14"
+                        }
+                }
+            };
         }
     }
 }
