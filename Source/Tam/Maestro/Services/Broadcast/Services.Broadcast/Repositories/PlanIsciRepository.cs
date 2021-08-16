@@ -54,6 +54,15 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>List of IsciPlanMappingDto</returns>
         List<IsciPlanMappingDto> GetPlanIscis();
+
+        /// <summary>
+        /// Delete Plan Isci mappings
+        /// </summary>
+        /// <param name="isciPlanMappingsDeleted">The List which contains save parameters</param>
+        /// /// <param name="deletedBy">Created By</param>
+        /// /// <param name="deletedAt">Created At</param>
+        /// <returns>Total Number Of Deleted Plan ISCI Mappings</returns>
+        int DeleteIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappingsDeleted, string deletedBy, DateTime deletedAt);
     }
     /// <summary>
     /// Data operations for the PlanIsci Repository.
@@ -187,13 +196,41 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from planIsci in context.plan_iscis.Where(x=> x.deleted_at != null)
+                var result = (from planIsci in context.plan_iscis.Where(x=> x.deleted_at == null)
                               select new IsciPlanMappingDto
                               {
                                   PlanId = planIsci.plan_id,
                                   Isci = planIsci.isci
                               }).ToList();
                 return result;
+            });
+        }
+
+        public int DeleteIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappingsDeleted, string deletedBy, DateTime deletedAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var deletedCount = 0;
+                if (isciPlanMappingsDeleted == null)
+                {
+                    return deletedCount;
+                }
+                foreach (var item in isciPlanMappingsDeleted)
+                {
+                    var isciPlanMappingDeletedList = context.plan_iscis.Where(x => item.PlanId == x.plan_id && item.Isci == x.isci && x.deleted_at == null);
+                    
+                    if (isciPlanMappingDeletedList != null)
+                    {
+                        foreach (var isciPlanMappingDeletedObj in isciPlanMappingDeletedList)
+                        {
+                            isciPlanMappingDeletedObj.deleted_at = deletedAt;
+                            isciPlanMappingDeletedObj.deleted_by = deletedBy;
+                            deletedCount++;
+                        }
+                    }
+                }
+                context.SaveChanges();
+                return deletedCount;
             });
         }
     }

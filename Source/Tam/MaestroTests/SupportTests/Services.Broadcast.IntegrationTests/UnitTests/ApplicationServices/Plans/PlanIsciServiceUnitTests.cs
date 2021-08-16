@@ -677,6 +677,77 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        public void DeletedIsciPlanMappings()
+        {
+            //Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            int result = 0;
+            bool actualResult = true;
+            bool expectedData = false;
+            var expectedIsciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR16"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7059,
+                                Isci= "AE87VR14"
+                            }
+                        };
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7049,
+                                Isci= "AE87VR14"
+                            }
+                        };
+            var isciProductList = new List<IsciProductMappingDto>
+                        {
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            },
+                            new IsciProductMappingDto()
+                            {
+                                ProductName = "Femoston",
+                                Isci= "AE67VR14"
+                            }
+                        };
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList,
+                IsciProductMappings = isciProductList,
+                IsciPlanMappingsDeleted = isciPlanList
+            };
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(expectedIsciPlanList);
+            _PlanIsciRepositoryMock
+            .Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<IsciPlanMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            .Callback(() =>
+            {
+                result = 2;
+            })
+            .Returns(result);
+            //Act
+            actualResult = _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            Assert.AreEqual(expectedData, actualResult);
+        }
+
+        [Test]
         public void SaveIsciPlanMappings_ThrowsException()
         {
             // Arrange

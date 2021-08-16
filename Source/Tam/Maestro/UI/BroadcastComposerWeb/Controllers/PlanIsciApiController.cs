@@ -71,7 +71,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Endpoint to save isci Mappings.
         /// </summary>
-        /// <returns>List of iscis</returns>
+        /// <returns>True or False</returns>
         [HttpPost]
         [Route("plan-iscis")]
         public BaseResponse<bool> SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductsMapping)

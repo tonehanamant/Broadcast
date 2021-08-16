@@ -295,9 +295,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return false;
             }
             var createdAt = _DateTimeEngine.GetCurrentMoment();
+            var deletedAt = _DateTimeEngine.GetCurrentMoment();
             bool isSave = false;
             int isciProductMappingCount = 0;
             int isciPlanMappingCount = 0;
+            int isciPlanMappingsDeletedCount = 0;
             if (isciPlanProductMapping.IsciProductMappings.Count > 0)
             {
                 isciProductMappingCount = _PlanIsciRepository.SaveIsciProductMappings(isciPlanProductMapping.IsciProductMappings, createdBy, createdAt);
@@ -305,6 +307,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LogInfo($"{isciProductMappingCount } IsciProductMappings are stored into database");
             var isciPlanMappings = _RemoveDuplicateListItem(isciPlanProductMapping);
             _LogInfo($"{isciPlanMappingCount } IsciPlanMappings are stored into database");
+            if (isciPlanProductMapping.IsciPlanMappingsDeleted.Count > 0)
+            {
+                isciPlanMappingsDeletedCount = _PlanIsciRepository.DeleteIsciPlanMappings(isciPlanProductMapping.IsciPlanMappingsDeleted, createdBy, deletedAt);
+            }
+            _LogInfo($"{isciPlanMappingsDeletedCount } IsciPlanMappings are deleted from database");
             if (isciPlanMappings.Count > 0)
             {
                 isciPlanMappingCount = _PlanIsciRepository.SaveIsciPlanMappings(isciPlanMappings, createdBy, createdAt);

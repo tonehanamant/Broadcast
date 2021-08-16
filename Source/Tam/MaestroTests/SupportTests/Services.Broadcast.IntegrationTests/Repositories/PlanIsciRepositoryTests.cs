@@ -144,10 +144,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 result = planIsciRepository.SaveIsciProductMappings(isciMappings.IsciProductMappings, createdBy, createdAt);
                 saveResult = planIsciRepository.GetPlanIscis();
             }
-            var savedProductIds = saveResult.Select(s => s.PlanId).Distinct().ToList();
-            var savedProductId = savedProductIds.First();
-            Assert.AreEqual(1, savedProductIds.Count);
-            Assert.IsTrue(savedProductId > 0);
+            Assert.AreEqual(2, result);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
 
@@ -157,7 +154,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 ContractResolver = jsonResolver
             };
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult, jsonSettings));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult));
         }
         [Test]
         public void SaveIsciPlanMappings()
@@ -175,10 +172,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 result = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
                 saveResult = planIsciRepository.GetPlanIscis();
             }
-            var savedPlanIds = saveResult.Select(s => s.PlanId).Distinct().ToList();
-            var savedPlanId = savedPlanIds.First();
-            Assert.AreEqual(1, savedPlanIds.Count);
-            Assert.IsTrue(savedPlanId > 0);
+            Assert.AreEqual(1, result);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             
@@ -270,6 +264,34 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         }
                 }
             };
+        }
+        [Test]
+        public void DeleteIsciPlanMappings()
+        {
+            // Arrange
+            string deletedBy = "Test User";
+            DateTime deletedAt = DateTime.Now;
+            var isciMappings = _GetIsciMappings();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            int result = 0;
+            List<IsciPlanMappingDto> deletedResult;
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                result = planIsciRepository.DeleteIsciPlanMappings(isciMappings.IsciPlanMappings, deletedBy, deletedAt);
+                deletedResult = planIsciRepository.GetPlanIscis();
+            }
+            Assert.AreEqual(1, result);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(deletedResult, jsonSettings));
         }
     }
 }
