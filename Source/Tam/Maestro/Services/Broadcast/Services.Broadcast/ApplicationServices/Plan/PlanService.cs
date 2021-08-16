@@ -1216,7 +1216,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         // attribute has to be on the class instead of the interface because this is a recurring job.
-        [AutomaticRetry(Attempts = 2, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        [AutomaticRetry(Attempts = 0, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void AutomaticStatusTransitionsJobEntryPoint()
         {
             var transitionDate = DateTime.Today;
