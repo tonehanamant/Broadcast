@@ -35,7 +35,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="isciPlanSearch">The object which contains search parameters</param>
         /// <returns>List of IsciPlanResultDto object</returns>
-        List<IsciPlanResultDto> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch);
+        List<IsciPlanResultDto> GetAvailableIsciPlans(IsciSearchDto isciPlanSearch);
 
         /// <summary>
         /// Save Isci mapping
@@ -83,7 +83,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);
             if (isciAdvertiserListDto?.Any() ?? false)
             {
-                if (isciSearch.WithoutPlansOnly)
+                if (isciSearch.UnmappedOnly)
                 {
                     var isciAdvertiserListDtoWithoutPlan = isciAdvertiserListDto.Where(x => x.PlanIsci == null).ToList();
                     isciAdvertiserListDto = isciAdvertiserListDtoWithoutPlan;
@@ -206,7 +206,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 },
             };
 
-            if (isciSearch.WithoutPlansOnly)
+            if (isciSearch.UnmappedOnly)
             {
                 isciListDtos.ForEach(s =>
                 {
@@ -241,42 +241,47 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public List<IsciPlanResultDto> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch)
+        public List<IsciPlanResultDto> GetAvailableIsciPlans(IsciSearchDto isciPlanSearch)
         {
             var isciPlanResults = new List<IsciPlanResultDto>();
             const string flightStartDateFormat = "MM/dd";
             const string flightEndDateFormat = "MM/dd/yyyy";
 
             var searchedMediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciPlanSearch.MediaMonth.Id);
-            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(searchedMediaMonth.StartDate, searchedMediaMonth.EndDate);
-            if (isciPlans?.Any() ?? false)
-            {
-                _SetIsciPlanAdvertiser(isciPlans);
-
-                var isciPlansGroupedByAdvertiser = isciPlans.GroupBy(x => x.AdvertiserName).OrderBy(x => x.Key);
-                foreach (var isciPlanItem in isciPlansGroupedByAdvertiser)
+            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(searchedMediaMonth.StartDate, searchedMediaMonth.EndDate);           
+                if (isciPlanSearch.UnmappedOnly)
                 {
-                    var isciPlanResult = new IsciPlanResultDto()
-                    {
-                        AdvertiserName = isciPlanItem.Key,
-                        IsciPlans = isciPlanItem.OrderBy(x => x.FlightStartDate).Select(isciPlanDetail =>
-                        {
-                            var isciPlan = new IsciPlanDto()
-                            {
-                                Id = isciPlanDetail.Id,
-                                SpotLengthsString = string.Join(", ", isciPlanDetail.SpotLengthValues.Select(x => $":{x}")),
-                                DemoString = isciPlanDetail.AudienceCode,
-                                Title = isciPlanDetail.Title,
-                                DaypartsString = string.Join(", ", isciPlanDetail.Dayparts),
-                                ProductName = isciPlanDetail.ProductName,
-                                FlightString = $"{isciPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{isciPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
-                                Iscis = isciPlanDetail.Iscis
-                            };
-                            return isciPlan;
-                        }).ToList()
-                    };
-                    isciPlanResults.Add(isciPlanResult);
+                    var IsciPlanDetailsDtoWithoutPlan = isciPlans.Where(x => x.Iscis.Count == 0).ToList();
+                    isciPlans = IsciPlanDetailsDtoWithoutPlan;
                 }
+                if (isciPlans?.Any() ?? false)
+                {
+                    _SetIsciPlanAdvertiser(isciPlans);
+
+                    var isciPlansGroupedByAdvertiser = isciPlans.GroupBy(x => x.AdvertiserName).OrderBy(x => x.Key);
+                    foreach (var isciPlanItem in isciPlansGroupedByAdvertiser)
+                    {
+                        var isciPlanResult = new IsciPlanResultDto()
+                        {
+                            AdvertiserName = isciPlanItem.Key,
+                            IsciPlans = isciPlanItem.OrderBy(x => x.FlightStartDate).Select(isciPlanDetail =>
+                            {
+                                var isciPlan = new IsciPlanDto()
+                                {
+                                    Id = isciPlanDetail.Id,
+                                    SpotLengthsString = string.Join(", ", isciPlanDetail.SpotLengthValues.Select(x => $":{x}")),
+                                    DemoString = isciPlanDetail.AudienceCode,
+                                    Title = isciPlanDetail.Title,
+                                    DaypartsString = string.Join(", ", isciPlanDetail.Dayparts),
+                                    ProductName = isciPlanDetail.ProductName,
+                                    FlightString = $"{isciPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{isciPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
+                                    Iscis = isciPlanDetail.Iscis
+                                };
+                                return isciPlan;
+                            }).ToList()
+                        };
+                        isciPlanResults.Add(isciPlanResult);
+                    }              
             }
             return isciPlanResults;
         }

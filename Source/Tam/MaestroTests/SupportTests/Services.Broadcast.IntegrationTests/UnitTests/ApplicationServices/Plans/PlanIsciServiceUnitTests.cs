@@ -71,7 +71,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = false,
+                UnmappedOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -95,7 +95,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = true,
+                UnmappedOnly = true,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -120,7 +120,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = false,
+                UnmappedOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -145,7 +145,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = false,
+                UnmappedOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -188,7 +188,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = true,
+                UnmappedOnly = true,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -233,7 +233,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WithoutPlansOnly = false,
+                UnmappedOnly = false,
 
             };
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
@@ -353,9 +353,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetAvailableIsciPlans_Plan_DoesNotExist()
         {
             // Arrange
-            var isciPlanSearch = new IsciPlanSearchDto
+            var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                UnmappedOnly = false
             };
 
             _MediaMonthAndWeekAggregateCacheMock
@@ -377,9 +378,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetAvailableIsciPlans_PlansWithIsci_Exist()
         {
             // Arrange
-            var isciPlanSearch = new IsciPlanSearchDto
+            var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                UnmappedOnly = false
             };
 
             _MediaMonthAndWeekAggregateCacheMock
@@ -458,9 +460,80 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetAvailableIsciPlans_PlansWithoutIsci_Exist()
         {
             // Arrange
-            var isciPlanSearch = new IsciPlanSearchDto
+            var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                UnmappedOnly = false
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<IsciPlanDetailDto>()
+                {
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 219,
+                        Title = "Wellcare CBS Shows",
+                        AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        SpotLengthValues = new List<int>(){ 15, 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN", "PMN", "LN" },
+                        FlightStartDate = new DateTime(2021,08,29),
+                        FlightEndDate = new DateTime(2021, 08, 31),
+                        ProductName = "Sample - 2Q09",
+                        Iscis = new List<string>()
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 220,
+                        Title = "Colgate Daytime Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 15},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,08,20),
+                        FlightEndDate = new DateTime(2021, 08, 28),
+                        ProductName = "1-800-Contacts",
+                        Iscis = new List<string>()
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 221,
+                        Title = "Colgate Early Morning Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,07,15),
+                        FlightEndDate = new DateTime(2021, 08, 22),
+                        ProductName = "1-800-Contacts",
+                        Iscis = new List<string>()                        
+                    }
+                });
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertisers())
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlansWithoutIsci_UnmappedOnlyIsTrue()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                UnmappedOnly = true
             };
 
             _MediaMonthAndWeekAggregateCacheMock
@@ -509,6 +582,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightEndDate = new DateTime(2021, 08, 22),
                         ProductName = "1-800-Contacts",
                         Iscis = new List<string>()
+                        {
+                            "CLDC6513000H",
+                            "CUSA1813000H"
+                        }
                     }
                 });
 
@@ -522,14 +599,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-
+        
         [Test]
         public void GetAvailableIsciPlans_ThrowsException()
         {
             // Arrange
-            var isciPlanSearch = new IsciPlanSearchDto
+            var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 }
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                UnmappedOnly = false
             };
 
             _MediaMonthAndWeekAggregateCacheMock

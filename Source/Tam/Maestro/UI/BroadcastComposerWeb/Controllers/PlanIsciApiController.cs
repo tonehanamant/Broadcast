@@ -63,7 +63,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>List of IsciPlanResultDto object</returns>
         [HttpPost]
         [Route("available-plans")]
-        public BaseResponse<List<IsciPlanResultDto>> GetAvailableIsciPlans(IsciPlanSearchDto isciPlanSearch)
+        public BaseResponse<List<IsciPlanResultDto>> GetAvailableIsciPlans(IsciSearchDto isciPlanSearch)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIsciPlans(isciPlanSearch));
         }

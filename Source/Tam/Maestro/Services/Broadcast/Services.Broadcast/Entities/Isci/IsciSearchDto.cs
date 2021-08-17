@@ -3,6 +3,6 @@
     public class IsciSearchDto
     {
         public MediaMonthDto MediaMonth { get; set; }
-        public bool WithoutPlansOnly { get; set; }
+        public bool UnmappedOnly { get; set; }
     }
 }
