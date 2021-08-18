@@ -70,6 +70,12 @@
     "Iscis": [
       {
         "Id": 0,
+        "Isci": "OKWF1701H",
+        "ProductName": "Product1",
+        "SpotLengthsString": ":21"
+      },
+      {
+        "Id": 0,
         "Isci": "OKWL1702H",
         "ProductName": "Product2",
         "SpotLengthsString": ":22"

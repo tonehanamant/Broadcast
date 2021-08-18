@@ -85,7 +85,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 if (isciSearch.UnmappedOnly)
                 {
-                    var isciAdvertiserListDtoWithoutPlan = isciAdvertiserListDto.Where(x => x.PlanIsci == null).ToList();
+                    var isciAdvertiserListDtoWithoutPlan = isciAdvertiserListDto.Where(x => x.PlanIsci == 0).ToList();
                     isciAdvertiserListDto = isciAdvertiserListDtoWithoutPlan;
                 }
                 if (isciAdvertiserListDto?.Any() ?? false)
@@ -97,8 +97,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         IsciListItemDto isciListItemDto = new IsciListItemDto();
                         isciListItemDto.AdvertiserName = group.Key;
                         foreach (var item in group)
-                        {
-                            isciListItemDto.Iscis = new List<IsciDto>();
+                        {                            
                             IsciDto isciItemDto = new IsciDto();
                             isciItemDto.Isci = item.Isci;
                             isciItemDto.SpotLengthsString = $":{item.SpotLengthDuration}";

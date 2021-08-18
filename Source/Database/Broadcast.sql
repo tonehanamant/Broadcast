@@ -793,6 +793,34 @@ CREATE TABLE [dbo].[plan_version_buying_result_spot_stations]
 END
 GO
 /*************************************** END BP-2889 *****************************************************/
+
+/*************************************** START BP-2937 *****************************************************/
+
+update plan_version_pricing_parameters_entity
+    set plan_version_id = latest_version_id
+from (
+    select
+        ROW_NUMBER() OVER(PARTITION BY pv.plan_id ORDER BY pvpp.id desc) RowNumber
+        ,pv.plan_id
+        ,p.latest_version_id
+        ,pvpp.*
+    from plan_version_pricing_parameters pvpp
+            inner join plan_versions pv on pvpp.plan_version_id = pv.id
+            inner join plans p on pv.plan_id = p.id
+    where p.id in (
+					select PP.Id
+					from plans pp
+						join plan_versions v
+						on pp.latest_version_id = v.id 
+						left outer join plan_version_pricing_parameters p
+						on v.id =p.plan_version_id
+					where p.id is null 
+						and v.is_draft = 0 
+					) 
+    ) plan_version_pricing_parameters_entity
+where RowNumber = 1
+GO
+/*************************************** End BP-2937 *****************************************************/
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '21.02.2' -- Current release version

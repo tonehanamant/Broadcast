@@ -207,7 +207,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 SpotLengthDuration = 21,
                                 ProductName = null,
                                 Isci = "OKWF1701H",
-                                PlanIsci="OKWL1702H"
+                                PlanIsci=1
                                 },
                                  new IsciAdvertiserDto()
                                 {
@@ -216,7 +216,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 SpotLengthDuration = 22,
                                 ProductName = null,
                                 Isci = "OKWL1702H",
-                                PlanIsci="OKWL1702H"
+                                PlanIsci=1
                              }
                  });
 
@@ -263,7 +263,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 21,
                 ProductName = "Product1",
                 Isci = "OKWF1701H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                  new IsciAdvertiserDto()
                 {
@@ -272,7 +272,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 22,
                 ProductName = "Product2",
                 Isci = "OKWL1702H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                 new IsciAdvertiserDto()
                 {
@@ -281,7 +281,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 23,
                 ProductName = "Product3",
                 Isci = "OKWF1701H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                    new IsciAdvertiserDto()
                 {
@@ -290,7 +290,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 24,
                 ProductName = "Product4",
                 Isci = "CLDC6513000H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                 new IsciAdvertiserDto()
                 {
@@ -299,7 +299,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 25,
                 ProductName = "Product5",
                 Isci = "CUSA1813000H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                new IsciAdvertiserDto()
                 {
@@ -308,7 +308,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 26,
                 ProductName = "Product6",
                 Isci = "OKWF1701H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                new IsciAdvertiserDto()
                 {
@@ -317,7 +317,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 27,
                 ProductName = "Product7",
                 Isci = "OKWL1702H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                new IsciAdvertiserDto()
                 {
@@ -326,7 +326,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 28,
                 ProductName = null,
                 Isci = "ATLT0063000HU",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                 new IsciAdvertiserDto()
                 {
@@ -335,7 +335,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 29,
                 ProductName = null,
                 Isci = "CLDC6513000H",
-                PlanIsci="OKWF1701H"
+                PlanIsci=1
                 },
                 new IsciAdvertiserDto()
                 {
@@ -344,7 +344,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SpotLengthDuration = 30,
                 ProductName = null,
                 Isci = "CUSA1813000H",
-                PlanIsci=null
+                PlanIsci=0
                 }
             };
         }

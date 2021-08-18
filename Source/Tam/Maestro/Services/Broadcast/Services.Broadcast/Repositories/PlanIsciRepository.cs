@@ -100,9 +100,7 @@ namespace Services.Broadcast.Repositories
                               join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
                               join pro in context.reel_isci_products on isci.isci equals pro.isci into ps
                               from pro in ps.DefaultIfEmpty()
-                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id
-                              join plan_iscis in context.plan_iscis on isci.isci equals plan_iscis.isci into pi
-                              from plan_iscis in pi.DefaultIfEmpty()
+                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id                             
                               where (isci.active_start_date <= startDate && isci.active_end_date >= endDate)
                               || (isci.active_start_date >= startDate && isci.active_start_date <= endDate)
                               || (isci.active_end_date >= startDate && isci.active_end_date <= endDate)
@@ -113,7 +111,7 @@ namespace Services.Broadcast.Repositories
                                   SpotLengthDuration = sl.length,
                                   ProductName = pro.product_name,
                                   Isci = isci.isci,
-                                  PlanIsci = plan_iscis.isci
+                                  PlanIsci = context.plan_iscis.Count(x => x.isci == isci.isci)                                  
                               }).ToList();
                 return result;
             });
