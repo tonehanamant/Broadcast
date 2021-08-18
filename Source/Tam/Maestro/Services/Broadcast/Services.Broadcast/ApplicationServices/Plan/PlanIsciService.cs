@@ -248,7 +248,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const string flightEndDateFormat = "MM/dd/yyyy";
 
             var searchedMediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciPlanSearch.MediaMonth.Id);
-            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(searchedMediaMonth.StartDate, searchedMediaMonth.EndDate);           
+            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(searchedMediaMonth.StartDate, searchedMediaMonth.EndDate);
+            if (isciPlans?.Any() ?? false)
+            {
                 if (isciPlanSearch.UnmappedOnly)
                 {
                     var IsciPlanDetailsDtoWithoutPlan = isciPlans.Where(x => x.Iscis.Count == 0).ToList();
@@ -281,7 +283,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             }).ToList()
                         };
                         isciPlanResults.Add(isciPlanResult);
-                    }              
+                    }
+                }
             }
             return isciPlanResults;
         }
