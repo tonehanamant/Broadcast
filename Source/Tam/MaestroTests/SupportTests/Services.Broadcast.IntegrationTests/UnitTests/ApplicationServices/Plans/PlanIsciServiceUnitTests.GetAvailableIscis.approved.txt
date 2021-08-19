@@ -3,7 +3,7 @@
     "AdvertiserName": "ATLT0063000HU",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 3,
         "Isci": "OKWF1701H",
         "ProductName": "Product3",
         "SpotLengthsString": ":23"
@@ -14,7 +14,7 @@
     "AdvertiserName": "Colgate EM",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 5,
         "Isci": "CUSA1813000H",
         "ProductName": "Product5",
         "SpotLengthsString": ":25"
@@ -25,7 +25,7 @@
     "AdvertiserName": "Colgate EM10",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 10,
         "Isci": "CUSA1813000H",
         "ProductName": null,
         "SpotLengthsString": ":30"
@@ -36,7 +36,7 @@
     "AdvertiserName": "Colgate EM9",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 9,
         "Isci": "CLDC6513000H",
         "ProductName": null,
         "SpotLengthsString": ":29"
@@ -47,7 +47,7 @@
     "AdvertiserName": "Invisaling (Adult)",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 4,
         "Isci": "CLDC6513000H",
         "ProductName": "Product4",
         "SpotLengthsString": ":24"
@@ -58,7 +58,7 @@
     "AdvertiserName": "Nature's Bounty",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 8,
         "Isci": "ATLT0063000HU",
         "ProductName": null,
         "SpotLengthsString": ":28"
@@ -69,13 +69,13 @@
     "AdvertiserName": "O'Keeffes",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 1,
         "Isci": "OKWF1701H",
         "ProductName": "Product1",
         "SpotLengthsString": ":21"
       },
       {
-        "Id": 0,
+        "Id": 2,
         "Isci": "OKWL1702H",
         "ProductName": "Product2",
         "SpotLengthsString": ":22"
@@ -86,7 +86,7 @@
     "AdvertiserName": "O'Keeffes6",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 6,
         "Isci": "OKWF1701H",
         "ProductName": "Product6",
         "SpotLengthsString": ":26"
@@ -97,7 +97,7 @@
     "AdvertiserName": "USAA",
     "Iscis": [
       {
-        "Id": 0,
+        "Id": 7,
         "Isci": "OKWL1702H",
         "ProductName": "Product7",
         "SpotLengthsString": ":27"

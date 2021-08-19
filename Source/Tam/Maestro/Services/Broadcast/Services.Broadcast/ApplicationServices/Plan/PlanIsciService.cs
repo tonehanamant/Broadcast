@@ -99,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         foreach (var item in group)
                         {                            
                             IsciDto isciItemDto = new IsciDto();
+                            isciItemDto.Id = item.Id;
                             isciItemDto.Isci = item.Isci;
                             isciItemDto.SpotLengthsString = $":{item.SpotLengthDuration}";
                             isciItemDto.ProductName = item.ProductName;
