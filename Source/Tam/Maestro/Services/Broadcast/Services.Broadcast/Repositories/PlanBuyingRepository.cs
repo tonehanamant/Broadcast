@@ -183,7 +183,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
         PlanBuyingStationResultDto GetBuyingStationsResultByJobId(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode);
-
+       
         /// <summary>
         /// Gets the goal CPM.
         /// </summary>
@@ -1030,20 +1030,26 @@ namespace Services.Broadcast.Repositories
                         SpotCount = result.total_spots,
                         StationCount = result.total_station_count
                     },
-                    Details = result.plan_version_buying_station_details.Select(d => new PlanBuyingStationDto
-                    {
-                        Budget = d.budget,
-                        Cpm = d.cpm,
-                        Impressions = d.impressions,
-                        ImpressionsPercentage = d.impressions_percentage,
-                        Market = d.market,
-                        Spots = d.spots,
-                        Station = d.station
-                    }).OrderByDescending(p => p.ImpressionsPercentage).ToList()
+                    Details = (from d in result.plan_version_buying_station_details
+                               join st in context.stations
+                               on d.station equals st.legacy_call_letters
+                               select new PlanBuyingStationDto
+                               {
+                                   Budget = d.budget,
+                                   Cpm = d.cpm,
+                                   Impressions = d.impressions,
+                                   ImpressionsPercentage = d.impressions_percentage,
+                                   Market = d.market,
+                                   Spots = d.spots,
+                                   Station = d.station,
+                                   Affiliate = st.affiliation,
+                                   RepFirm = st.rep_firm_name ?? st.legacy_call_letters,
+                                   OwnerName = st.owner_name ?? st.legacy_call_letters
+                               }).OrderByDescending(p => p.ImpressionsPercentage).ToList()
                 };
             });
         }
-
+       
         /// <inheritdoc/>
         public decimal GetGoalCpm(int planVersionId, int jobId)
         {

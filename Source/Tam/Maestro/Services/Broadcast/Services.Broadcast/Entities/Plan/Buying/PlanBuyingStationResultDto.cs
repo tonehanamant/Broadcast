@@ -24,5 +24,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public decimal Cpm { get; set; }
         public decimal Budget { get; set; }
         public double ImpressionsPercentage { get; set; }
+        public string Affiliate { get; set; }
+        public string RepFirm { get; set; }
+        public string OwnerName { get; set; }
     }
 }
