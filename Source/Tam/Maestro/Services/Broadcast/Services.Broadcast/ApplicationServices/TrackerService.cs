@@ -9,6 +9,7 @@ using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -85,7 +86,7 @@ namespace Services.Broadcast.ApplicationServices
             , ISMSClient smsClient
             , IImpressionAdjustmentEngine impressionAdjustmentEngine
             , INsiPostingBookService nsiPostingBookService
-            , IFileService fileService)
+            , IFileService fileService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _DetectionPostingEngine = detectionPostingEngine;

@@ -28,7 +28,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			IProgramMappingCleanupEngine programMappingCleanupEngine,
             IMasterProgramListImporter masterListImporter,
 			IDateTimeEngine dateTimeEngine,
-			IFeatureToggleHelper featureToggleHelper)
+			IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
 			: base(backgroundJobClient,
 				broadcastDataRepositoryFactory,
 				sharedFolderService,
@@ -39,7 +39,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 				programMappingCleanupEngine,
                 masterListImporter,
 				dateTimeEngine,
-				featureToggleHelper)
+				featureToggleHelper, configurationSettingsHelper)
 		{
 		}
         

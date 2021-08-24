@@ -4,6 +4,7 @@ using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 {
@@ -16,9 +17,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             IProprietaryInventoryService proprietaryInventoryService,
             IFileService fileService,
             IQuarterCalculationEngine quarterCalculationEngine,
-            IBackgroundJobClient backgroundJobClient)
+            IBackgroundJobClient backgroundJobClient,IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
             : base(broadcastDataRepositoryFactory, 
-                proprietaryInventoryService, fileService, quarterCalculationEngine, backgroundJobClient)
+                proprietaryInventoryService, fileService, quarterCalculationEngine, backgroundJobClient, featureToggleHelper, configurationSettingsHelper)
         {
         }
 

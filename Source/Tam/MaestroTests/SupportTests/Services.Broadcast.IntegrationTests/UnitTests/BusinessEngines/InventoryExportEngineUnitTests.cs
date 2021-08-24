@@ -25,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void Calculate()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null,null);
             var items = new List<InventoryExportDto>();
             // item 1 - forecasted
             items.Add(_GetInventoryExportDto(1, 1, 1, 1,  10000, 20, "One", "One", ProgramSourceEnum.Master, 33));
@@ -48,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void Calculate_WithoutPrograms()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null,null);
             var items = new List<InventoryExportDto>();
             // item 1 
             items.Add(_GetInventoryExportDto(1, 1, 1, 1, 10000, 20, null, "One", null, null));
@@ -70,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void GetInventoryExportFileName(InventoryExportGenreTypeEnum genreEnum, int year, int quarter, string expectedResult)
         {
             var quarterDetail = new QuarterDetailDto {Year = year, Quarter = quarter};
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
 
             var result = engine.GetInventoryExportFileName(genreEnum, quarterDetail);
 
@@ -81,7 +81,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryTableWeeklyColumnHeaders()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
             var dates = new List<DateTime>
             {
                 new DateTime(2020, 04, 06),
@@ -123,7 +123,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryTableData()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
             var testWeeks = new List<InventoryExportLineWeekDetail>
             {
                 new InventoryExportLineWeekDetail {MediaWeekId = 1, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
@@ -207,7 +207,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryTableData_UnknownStation()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
             var testWeeks = new List<InventoryExportLineWeekDetail>
             {
                 new InventoryExportLineWeekDetail {MediaWeekId = 1, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
@@ -268,7 +268,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryTableData_UnknownDaypart()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
             var testWeeks = new List<InventoryExportLineWeekDetail>
             {
                 new InventoryExportLineWeekDetail {MediaWeekId = 1, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
@@ -325,7 +325,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void GetExportGeneratedTimestamp()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
 
             var result = engine.GetExportGeneratedTimestamp(new DateTime(2020, 3, 5, 13, 20, 30));
 
@@ -336,7 +336,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryTableAudienceColumnHeaders()
         {
-            var engine = new InventoryExportEngine();
+            var engine = new InventoryExportEngine(null, null);
 
             var audiences = new List<LookupDto>() { 
                 new LookupDto(1, "A18+"),

@@ -8,6 +8,7 @@ using Services.Broadcast.Converters.InventorySummary;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace Services.Broadcast.ApplicationServices
                                        IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                        IInventoryGapCalculationEngine inventoryGapCalculationEngine,
                                        IInventorySummaryCache inventorySummaryCache,
-                                       IBackgroundJobClient backgroundJobClient)
+                                       IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;

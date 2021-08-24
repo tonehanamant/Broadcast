@@ -74,7 +74,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IEmailerService emailerService,
             IEnvironmentService environmentService,
             IFeatureToggleHelper featureToggleHelper,
-            IConfigurationSettingsHelper configurationSettingsHelper)
+            IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ProgramGuideApiClient = programGuideApiClient;
             _StationMappingService = stationMappingService;

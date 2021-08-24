@@ -279,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IFeatureToggleHelper featureToggleHelper,
                                   IAabEngine aabEngine,
                                   IAudienceService audienceService,
-                                  IDaypartCache daypartCache)
+                                  IDaypartCache daypartCache, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();

@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,7 +61,7 @@ namespace Services.Broadcast.Converters
         private readonly IGenreCache _GenreCache;
         private readonly IShowTypeCache _ShowTypeCache;
 
-        public MasterProgramListImporter(IGenreCache genreCache, IShowTypeCache showTypeCache)
+        public MasterProgramListImporter(IGenreCache genreCache, IShowTypeCache showTypeCache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _GenreCache = genreCache;
             _ShowTypeCache = showTypeCache;

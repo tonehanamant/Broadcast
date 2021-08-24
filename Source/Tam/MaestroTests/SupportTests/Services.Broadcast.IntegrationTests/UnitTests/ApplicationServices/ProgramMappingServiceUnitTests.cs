@@ -43,9 +43,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IProgramNameMappingKeywordRepository> _ProgramNameMappingKeywordRepositoryMock;
         private Mock<IMasterProgramListImporter> _MasterListImporterMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-
+       
         private Mock<IGenreCache> _GenreCache;
         private IShowTypeCache _ShowTypeCacheStub;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
         private static bool WRITE_FILE_TO_DISK = false;
 
@@ -67,6 +68,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramNameMappingKeywordRepositoryMock = new Mock<IProgramNameMappingKeywordRepository>();
             _MasterListImporterMock = new Mock<IMasterProgramListImporter>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
+            _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             // Setup common mocks
             _DataRepositoryFactoryMock
@@ -132,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _ProgramMappingCleanupEngine.Object,
                 _MasterListImporterMock.Object,
                 _DateTimeEngineMock.Object,
-                null);
+                null, _ConfigurationSettingsHelperMock.Object);
         }
 
         [Test]
@@ -411,7 +413,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null, null);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null, null, _ConfigurationSettingsHelperMock.Object);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);

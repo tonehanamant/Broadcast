@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using Services.Broadcast.Entities.Vpvh;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,10 @@ namespace Services.Broadcast.BusinessEngines
 
     public class VpvhExportEngine : BroadcastBaseClass, IVpvhExportEngine
     {
+        public VpvhExportEngine(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        {
+
+        }
         public ExcelPackage ExportQuarters(List<VpvhQuarter> vpvhQuarters)
         {
             const string amNewsTabName = "AM News";

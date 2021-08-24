@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System.IO;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -77,11 +78,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var emailService = new EmailerServiceStub();
             var fileService = new FileServiceSingleFileStubb();
             var dataLakeSystemParamteres = new Mock<IDataLakeSystemParameters>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             dataLakeSystemParamteres.Setup(r => r.GetSharedFolder()).Returns("C:\\");
             dataLakeSystemParamteres.Setup(r => r.GetNotificationEmail()).Returns("bernardo.botelho@axispoint.com");
             dataLakeSystemParamteres.Setup(r => r.GetUserName()).Returns(string.Empty);
             dataLakeSystemParamteres.Setup(r => r.GetPassword()).Returns(string.Empty);
-            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser, fileService);
+            var dataLakeFileService = new DataLakeFileService(dataLakeSystemParamteres.Object, emailService, impersonateUser, fileService,featureToggle.Object,configurationSettingsHelper.Object);
             var fileName = "KeepingTrac_MissingData.xlsx";
 
             var request = new FileRequest

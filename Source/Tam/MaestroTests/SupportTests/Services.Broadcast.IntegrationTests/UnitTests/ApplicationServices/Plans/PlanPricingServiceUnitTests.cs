@@ -74,6 +74,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IBroadcastAudienceRepository> _BroadcastAudienceRepositoryMock;
         private AsyncTaskHelperStub _AsyncTaskHelperStub;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
         [SetUp]
         public void SetUp()
@@ -106,6 +107,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _BroadcastAudienceRepositoryMock = new Mock<IBroadcastAudienceRepository>();
             _PlanPricingProgramCalculationEngine = new Mock<IPlanPricingProgramCalculationEngine>();
             _AsyncTaskHelperStub = new AsyncTaskHelperStub();
+            _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -1130,7 +1132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _AudienceServiceMock.Object,
                 _CreativeLengthEngineMock.Object,
                 _AsyncTaskHelperStub,
-                featureToggleHelper);
+                featureToggleHelper, _ConfigurationSettingsHelperMock.Object);
         }
 
         private PlanPricingParametersDto _GetPlanPricingParametersDto()

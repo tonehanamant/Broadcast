@@ -72,7 +72,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
             IMarketService marketService,
-            INsiPostingBookService nsiPostingBookService)
+            INsiPostingBookService nsiPostingBookService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _InventoryExportRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
             _InventoryExportJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportJobRepository>();

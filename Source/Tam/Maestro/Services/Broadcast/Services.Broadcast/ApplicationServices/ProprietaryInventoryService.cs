@@ -94,7 +94,7 @@ namespace Services.Broadcast.ApplicationServices
             , IFileService fileService
             , IInventoryScxDataPrepFactory inventoryScxDataPrepFactory
             , IInventoryProgramsProcessingService inventoryProgramsProcessingService
-            , IStationMappingService stationMappingService)
+            , IStationMappingService stationMappingService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();

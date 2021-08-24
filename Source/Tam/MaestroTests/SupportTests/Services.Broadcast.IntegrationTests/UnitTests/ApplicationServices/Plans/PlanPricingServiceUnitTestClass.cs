@@ -33,7 +33,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IAudienceService audienceService, 
                                   ICreativeLengthEngine creativeLengthEngine,
                                   IAsyncTaskHelper asyncTaskHelper,
-                                  IFeatureToggleHelper featureToggleHelper)
+                                  IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -54,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             audienceService,
             creativeLengthEngine,
             asyncTaskHelper,
-            featureToggleHelper)
+            featureToggleHelper, configurationSettingsHelper)
         {
         }
 

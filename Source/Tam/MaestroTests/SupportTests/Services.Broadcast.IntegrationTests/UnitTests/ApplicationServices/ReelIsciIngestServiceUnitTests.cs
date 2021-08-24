@@ -8,6 +8,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Entities.ReelRosterIscis;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
@@ -30,6 +31,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
         private Mock<IReelIsciProductRepository> _ReelIsciProductRepositoryMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
+        private Mock<IFeatureToggleHelper> _featureToggleMock;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
         [SetUp]
         public void SetUp()
@@ -43,6 +46,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ReelIsciRepository = new Mock<IReelIsciRepository>();
             _ReelIsciProductRepositoryMock = new Mock<IReelIsciProductRepository>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
+            _featureToggleMock = new Mock<IFeatureToggleHelper>();
+            _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IReelIsciIngestJobsRepository>())
@@ -64,7 +69,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
                 .Returns(_PlanIsciRepositoryMock.Object);
 
-            _ReelIsciIngestService = new ReelIsciIngestService(_ReelIsciApiClientMock.Object, _DataRepositoryFactoryMock.Object, _DateTimeEngineMock.Object, _BackgroundJobClientMock.Object);
+            _ReelIsciIngestService = new ReelIsciIngestService(_ReelIsciApiClientMock.Object, _DataRepositoryFactoryMock.Object, _DateTimeEngineMock.Object, _BackgroundJobClientMock.Object, _featureToggleMock.Object,_ConfigurationSettingsHelperMock.Object);
         }
 
         [Test]

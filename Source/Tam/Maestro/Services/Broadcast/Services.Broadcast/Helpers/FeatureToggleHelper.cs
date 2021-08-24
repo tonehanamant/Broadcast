@@ -1,6 +1,10 @@
-﻿using Services.Broadcast.Clients;
+﻿using BroadcastLogging;
+using Cadent.Library.Logging.Standard.Common.LoggingModels;
+using Common.Logging;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Extensions;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Services.Broadcast.Helpers
 {
@@ -36,9 +40,10 @@ namespace Services.Broadcast.Helpers
     }
 
     /// <inheritdoc cref="IFeatureToggleHelper" />
-    public class FeatureToggleHelper : BroadcastBaseClass, IFeatureToggleHelper
+    public class FeatureToggleHelper :IFeatureToggleHelper
     {
         private readonly ILaunchDarklyClient _LaunchDarklyClient;
+        private readonly ILog _Log;
 
         /// <summary>
         /// Constructor.
@@ -46,6 +51,7 @@ namespace Services.Broadcast.Helpers
         public FeatureToggleHelper(ILaunchDarklyClient launchDarklyClient)
         {
             _LaunchDarklyClient = launchDarklyClient;
+            _Log = LogManager.GetLogger(GetType());
         }
 
         /// <inheritdoc />
@@ -107,6 +113,18 @@ namespace Services.Broadcast.Helpers
             {
                 throw new InvalidOperationException(emailFormatErrorMessage);
             }
+        }
+        protected virtual void _LogError(string message, Exception ex = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson(), ex);
+            _ConsiderLogDebug(logMessage);
+        }
+        private void _ConsiderLogDebug(LogMessage logMessage)
+        {
+#if DEBUG
+            _Log.Debug(logMessage.ToJson());
+#endif
         }
     }
 }

@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,10 +64,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
         /// <param name="dateTimeEngine">The date time engine.</param>
         /// <param name="aabEngine">The Aab engine.</param>
+        /// <param name="featureToggleHelper"></param>
+        /// <param name="configurationSettingsHelper"></param>
         public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IDateTimeEngine dateTimeEngine,
-            IAabEngine aabEngine)
+            IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;

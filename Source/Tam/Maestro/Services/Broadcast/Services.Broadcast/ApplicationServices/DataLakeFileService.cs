@@ -2,6 +2,7 @@
 using Common.Services.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +40,7 @@ namespace Services.Broadcast.ApplicationServices
         public DataLakeFileService(IDataLakeSystemParameters dataLakeSystemParameter
             , IEmailerService emailerService
             , IImpersonateUser impersonateUser
-            , IFileService fileService)
+            , IFileService fileService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _DataLakeSystemParameter = dataLakeSystemParameter;
             _EmailerService = emailerService;

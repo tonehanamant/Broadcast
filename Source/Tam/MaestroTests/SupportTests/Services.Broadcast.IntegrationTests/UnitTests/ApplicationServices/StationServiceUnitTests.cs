@@ -9,6 +9,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -160,6 +161,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             )
         {
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             dataRepositoryFactory.Setup(s => s.GetDataRepository<INsiStationRepository>())
                 .Returns(nsiStationRepo);
@@ -170,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             dateTimeEngine.Setup(s => s.GetCurrentMoment())
                 .Returns(currentDateTime.HasValue ? currentDateTime.Value : DateTime.Now);
 
-            var service = new StationService(dataRepositoryFactory.Object, stationMappingService, dateTimeEngine.Object);
+            var service = new StationService(dataRepositoryFactory.Object, stationMappingService, dateTimeEngine.Object,featureToggle.Object,configurationSettingsHelper.Object);
             return service;
         }
     }

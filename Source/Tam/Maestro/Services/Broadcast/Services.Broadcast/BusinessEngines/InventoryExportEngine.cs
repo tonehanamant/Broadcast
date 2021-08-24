@@ -64,6 +64,11 @@ namespace Services.Broadcast.BusinessEngines
         private const int COLUMN_INDEX_STATION_CALLSIGN = 3;
         private const int COLUMN_INDEX_DAYPART_TEXT = 5;
 
+        public InventoryExportEngine(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        {
+
+        }
+
         /// <inheritdoc />
         public string GetInventoryExportFileName(InventoryExportGenreTypeEnum genre, QuarterDetailDto quarter)
         {

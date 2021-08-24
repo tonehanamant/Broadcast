@@ -13,8 +13,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			IConfigurationWebApiClient configurationWebApiClient,
 			IProgramsSearchApiClient programsSearchApiClient,
 			IDataRepositoryFactory broadcastDataRepositoryFactory,
-			IFeatureToggleHelper featureToggleHelper)
-			: base(genreCache, configurationWebApiClient, programsSearchApiClient, broadcastDataRepositoryFactory, featureToggleHelper)
+			IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
+			: base(genreCache, configurationWebApiClient, programsSearchApiClient, broadcastDataRepositoryFactory, featureToggleHelper, configurationSettingsHelper)
 		{
 		}
 

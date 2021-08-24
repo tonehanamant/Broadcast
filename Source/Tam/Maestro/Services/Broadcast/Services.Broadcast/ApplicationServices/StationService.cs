@@ -36,8 +36,8 @@ namespace Services.Broadcast.ApplicationServices
         public StationService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IStationMappingService stationMappingService,
-            IDateTimeEngine dateTimeEngine
-            )
+            IDateTimeEngine dateTimeEngine,IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper
+            ) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _NsiStationRepository = broadcastDataRepositoryFactory.GetDataRepository<INsiStationRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();

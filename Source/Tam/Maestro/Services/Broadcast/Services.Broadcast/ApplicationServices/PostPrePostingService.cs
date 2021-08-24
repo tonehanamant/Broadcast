@@ -12,6 +12,7 @@ using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using System;
@@ -54,7 +55,7 @@ namespace Services.Broadcast.ApplicationServices
         internal static readonly string MissingId = "File missing Id.";
         internal static readonly string DuplicateFileErrorMessage = "Could not import file, it has been imported. Delete existing file if needed";
 
-        public PostPrePostingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IPostEngine postEngine, IPostFileParserFactory postFileParserFactoryFactory, IReportGenerator<PostPrePostingFile> postReportGenerator, IRatingForecastService ratingForecastService, IBroadcastAudiencesCache audiencesCache)
+        public PostPrePostingService(IDataRepositoryFactory broadcastDataRepositoryFactory, IPostEngine postEngine, IPostFileParserFactory postFileParserFactoryFactory, IReportGenerator<PostPrePostingFile> postReportGenerator, IRatingForecastService ratingForecastService, IBroadcastAudiencesCache audiencesCache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _PostEngine = postEngine;

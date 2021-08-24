@@ -62,6 +62,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
         private Mock<IAabEngine> _AabEngine;
         private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
 
         [SetUp]
@@ -88,6 +89,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
             _AabEngine = new Mock<IAabEngine>();
             _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
+            _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
@@ -2524,7 +2526,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _WeeklyBreakdownEngineMock.Object,
                 _DaypartCacheMock.Object,
                 _FeatureToggleHelper.Object,
-                _AabEngine.Object
+                _AabEngine.Object,
+                _ConfigurationSettingsHelperMock.Object
                 );
         }
 

@@ -14,6 +14,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -31,7 +32,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 		private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
 		private IInventoryProprietarySummaryService _InventoryProprietarySummaryServiceMock;
 		private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
-
+		private Mock<IFeatureToggleHelper> _FeatureToggleMock;
+		private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
 		[SetUp]
 		public void Init()
@@ -44,7 +46,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				_DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
 				_MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
 				_SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
-				
+				_FeatureToggleMock = new Mock<IFeatureToggleHelper>();
+				_ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
+
 				_DataRepositoryFactoryMock
 					.Setup(x => x.GetDataRepository<IBroadcastAudienceRepository>())
 					.Returns(_BroadcastAudienceRepositoryMock.Object);
@@ -61,7 +65,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					.Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
 				
 				_InventoryProprietarySummaryServiceMock =
-					new InventoryProprietarySummaryService(_DataRepositoryFactoryMock.Object,null );
+					new InventoryProprietarySummaryService(_DataRepositoryFactoryMock.Object,null,_FeatureToggleMock.Object,_ConfigurationSettingsHelperMock.Object);
 
 			}
 			catch (Exception e)

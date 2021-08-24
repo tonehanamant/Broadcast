@@ -57,7 +57,7 @@ namespace Services.Broadcast.ApplicationServices
             IProprietaryInventoryService proprietaryInventoryService, 
             IFileService fileService,
             IQuarterCalculationEngine quarterCalculationEngine,
-            IBackgroundJobClient backgroundJobClient)
+            IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ScxGenerationJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             _ProprietaryInventoryService = proprietaryInventoryService;

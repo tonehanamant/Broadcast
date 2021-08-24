@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using BroadcastLogging;
+using Cadent.Library.Logging.Standard.Common.LoggingModels;
+using Common.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,6 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,13 +32,14 @@ namespace Services.Broadcast
        /// <returns>configuration value against provided key </returns>
         T GetConfigValue<T>(string key);
     }
-    public class ConfigurationSettingsHelper : BroadcastBaseClass, IConfigurationSettingsHelper
+    public class ConfigurationSettingsHelper : IConfigurationSettingsHelper
     {
+        private readonly ILog _Log;
         private readonly Lazy<Dictionary<object, object>> _ConfigDataDictionary;
 
         public ConfigurationSettingsHelper()
         {
-
+            _Log = LogManager.GetLogger(GetType());
             _ConfigDataDictionary = new Lazy<Dictionary<object, object>>(() => _LoadConfigItems(BroadcastConstants.CONFIG_FILE_NAME));
 
         }
@@ -131,6 +136,26 @@ namespace Services.Broadcast
 
             return configData;
         }
+        private void _LogError(string message, Exception ex = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson(), ex);
+            _ConsiderLogDebug(logMessage);
+        }
+        private void _ConsiderLogDebug(LogMessage logMessage)
+        {
+#if DEBUG
+            _Log.Debug(logMessage.ToJson());
+#endif
+        }
+        private void _LogWarning(string message, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Warn(logMessage.ToJson());
+            _ConsiderLogDebug(logMessage);
+        }
+
+
     }
 
 }

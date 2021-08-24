@@ -9,6 +9,7 @@ using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -43,6 +44,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<IInventoryRepository> _InventoryRepositoryMock = new Mock<IInventoryRepository>();
         private readonly Mock<ISpotLengthRepository> _SpotLengthRepository = new Mock<ISpotLengthRepository>();
         private readonly Mock<IInventoryFileRepository> _InventoryFileRepositoryMock = new Mock<IInventoryFileRepository>();
+        private readonly Mock<IFeatureToggleHelper> _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
+        private readonly Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
         [Test]
         [TestCase(FileStatusEnum.Failed, 0, "Validation Error")]
@@ -312,7 +315,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _OpenMarketFileImporterMock.Object,
                 _FileServiceMock.Object,
                 _InventoryRatingsServiceMock.Object,
-                _InventoryProgramsProcessingServiceMock.Object);
+                _InventoryProgramsProcessingServiceMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object);
         }
     }
 }

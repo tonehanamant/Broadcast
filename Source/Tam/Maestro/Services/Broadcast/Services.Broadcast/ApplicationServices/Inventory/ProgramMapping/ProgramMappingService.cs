@@ -118,7 +118,7 @@ namespace Services.Broadcast.ApplicationServices
             IProgramMappingCleanupEngine programMappingCleanupEngine,
             IMasterProgramListImporter masterListImporter,
             IDateTimeEngine dateTimeEngine,
-            IFeatureToggleHelper featureToggleHelper)
+            IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();

@@ -53,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanMarketSovCalculator> _PlanMarketSovCalculator;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepository;
         private Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepository;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
         [SetUp]
         public void CreatePlanService()
@@ -78,6 +79,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _InventoryProprietarySummaryRepositoryMock = new Mock<IInventoryProprietarySummaryRepository>();
             _MarketCoverageRepository = new Mock<IMarketCoverageRepository>();
             _NtiToNsiConversionRepository = new Mock<INtiToNsiConversionRepository>();
+            _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
@@ -197,7 +199,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _WeeklyBreakdownEngineMock.Object,
                     _CreativeLengthEngineMock.Object,
                     featureToggleHelper,
-                    _PlanMarketSovCalculator.Object
+                    _PlanMarketSovCalculator.Object,
+                    _ConfigurationSettingsHelperMock.Object
                 );
         }
 

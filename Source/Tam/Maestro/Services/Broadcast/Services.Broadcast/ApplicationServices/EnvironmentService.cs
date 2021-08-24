@@ -32,19 +32,15 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IRatingsRepository _RatingsRepo;
         private readonly IInventoryFileRepository _InventoryFileRepo;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;   
 
         public EnvironmentService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IFeatureToggleHelper featureToggleHelper,
-            IConfigurationSettingsHelper configurationSettingsHelper)
+            IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _RatingsRepo = broadcastDataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _InventoryFileRepo = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _FeatureToggleHelper = featureToggleHelper;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            _FeatureToggleHelper = featureToggleHelper;                    
         }
 
         public Dictionary<string, string> GetDbInfo()
@@ -96,11 +92,8 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         public string GetBroadcastAppFolderPath()
-        {
-            var appFolderPath = _IsPipelineVariablesEnabled.Value 
-                ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder) 
-                : base._GetBroadcastAppFolder();
-            return appFolderPath;
+        { 
+                return base._GetBroadcastAppFolder();
         }
     }
 }

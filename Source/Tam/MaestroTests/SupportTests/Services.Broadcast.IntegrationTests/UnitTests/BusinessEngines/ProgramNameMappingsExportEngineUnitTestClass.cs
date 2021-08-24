@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
     public class ProgramNameMappingsExportEngineUnitTestClass : ProgramNameMappingsExportEngine
     {
+        public ProgramNameMappingsExportEngineUnitTestClass(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        {
+
+        }
         public List<ColumnDescriptor> UT_GetColumnDescriptors()
         {
             return _GetColumnDescriptors();

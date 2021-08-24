@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using OfficeOpenXml;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace Services.Broadcast.Converters.Post
         internal const string WEEKSTART = "Weekstart";
         internal const string AFFILIATE = "Affiliate";
 
-        public PostFileParser(IDataRepositoryFactory dataRepositoryFactory) : base(dataRepositoryFactory)
+        public PostFileParser(IDataRepositoryFactory dataRepositoryFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(dataRepositoryFactory, featureToggleHelper, configurationSettingsHelper)
         {
         }
 

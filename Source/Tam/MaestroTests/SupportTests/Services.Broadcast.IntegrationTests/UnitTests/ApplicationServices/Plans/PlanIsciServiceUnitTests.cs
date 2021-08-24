@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
@@ -27,6 +28,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
         private Mock<IAabEngine> _AabEngineMock;
         private AgencyAdvertiserBrandApiClientStub _AgencyAdvertiserBrandApiClientStub;
+        private Mock<IFeatureToggleHelper> _FeatureToggleMock;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
         [SetUp]
         public void SetUp()
@@ -36,6 +39,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
             _AabEngineMock = new Mock<IAabEngine>();
+            _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
+            _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
@@ -43,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _AgencyAdvertiserBrandApiClientStub = new AgencyAdvertiserBrandApiClientStub();
 
-            _PlanIsciService = new PlanIsciService(_DataRepositoryFactoryMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object, _DateTimeEngineMock.Object, _AabEngineMock.Object);
+            _PlanIsciService = new PlanIsciService(_DataRepositoryFactoryMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object, _DateTimeEngineMock.Object, _AabEngineMock.Object, _FeatureToggleMock.Object,_ConfigurationSettingsHelperMock.Object);
         }
 
         [Test]

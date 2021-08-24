@@ -1,6 +1,7 @@
 ﻿using BroadcastLogging;
 using Cadent.Library.Logging.Standard.Common.LoggingModels;
 using log4net;
+using Services.Broadcast.Helpers;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -11,10 +12,16 @@ namespace Services.Broadcast
     public abstract class BroadcastBaseClass
     {
         private readonly ILog _Log;
-
-        protected BroadcastBaseClass()
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        
+        protected BroadcastBaseClass(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _Log = LogManager.GetLogger(GetType());
+            _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         #region Logging Methods
@@ -85,10 +92,10 @@ namespace Services.Broadcast
         protected virtual string _GetBroadcastAppFolder()
         {
 #if DEBUG
-            return Path.GetTempPath();
-            
-#else
-            return BroadcastServiceSystemParameter.BroadcastAppFolder;
+             return Path.GetTempPath();         
+ #else
+           return _IsPipelineVariablesEnabled.Value 
+               ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder): BroadcastServiceSystemParameter.BroadcastAppFolder;
 #endif
         }
 

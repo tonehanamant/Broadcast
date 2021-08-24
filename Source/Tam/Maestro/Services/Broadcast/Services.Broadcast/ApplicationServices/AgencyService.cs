@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.ApplicationServices
@@ -22,7 +23,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IAabEngine _AabEngine;
 
-        public AgencyService(IAabEngine aabEngine)
+        public AgencyService(IAabEngine aabEngine,IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base( featureToggleHelper,  configurationSettingsHelper)
         {
             _AabEngine = aabEngine;
         }

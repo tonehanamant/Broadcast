@@ -14,7 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [SetUp]
         public void SetUp()
         {
-            _VpvhExportEngine = new VpvhExportEngine();
+            _VpvhExportEngine = new VpvhExportEngine(null,null);
         }
 
         [Test]

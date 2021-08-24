@@ -6,6 +6,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Entities.ReelRosterIscis;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IBackgroundJobClient _BackgroundJobClient;
 
-        public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine, IBackgroundJobClient backgroundJobClient)
+        public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine, IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ReelIsciApiClient = reelIsciApiClient;
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Timers;
 
@@ -16,7 +17,7 @@ namespace Services.Broadcast.Services
         public const int MILSEC_BETWEEN_CHECKS = 1000 * 5;
 
         readonly Timer _Timer;
-        public ScheduledWindowsServiceMethodRunner(List<ScheduledServiceMethod> servicesToRun) 
+        public ScheduledWindowsServiceMethodRunner(List<ScheduledServiceMethod> servicesToRun, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _Timer = new Timer(MILSEC_BETWEEN_CHECKS) { AutoReset = true }; 
             _Timer.Elapsed += _Timer_check_for_WWT_files;

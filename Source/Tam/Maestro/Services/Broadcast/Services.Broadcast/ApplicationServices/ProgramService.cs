@@ -37,7 +37,7 @@ namespace Services.Broadcast.ApplicationServices
             IConfigurationWebApiClient configurationWebApiClient,
             IProgramsSearchApiClient programsSearchApiClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
-			IFeatureToggleHelper featureToggleHelper)
+			IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
 		{
             _GenreCache = genreCache;
             _ConfigurationWebApiClient = configurationWebApiClient;

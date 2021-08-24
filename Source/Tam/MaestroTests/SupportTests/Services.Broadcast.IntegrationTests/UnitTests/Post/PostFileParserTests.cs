@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
             dataRepoFactory.Setup(s => s.GetDataRepository<ISpotLengthRepository>())
                 .Returns(spotLengthRepo.Object);
 
-            _PostFileParser = new PostFileParser(dataRepoFactory.Object);
+            _PostFileParser = new PostFileParser(dataRepoFactory.Object,null,null);
 
             _ValidRow = new PostFileRow("93", "BATON ROUGE", "WAFB", "CBS", "2/20/2017", "THU", "2/23/2017", "2/23/2017 4:56:08 AM", "WAFB 9 NEWS THIS MORNING: EARLY EDIT", "15", "", "NNVA0045000", "BEIERSDORF", "ASSEMBLY", "EMN", "", "Testing", "7196", "BVS Cadent", "1");
             _Package = new ExcelPackage();

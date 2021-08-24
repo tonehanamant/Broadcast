@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Services.Broadcast.Entities.Enums.Inventory;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -20,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
             IMarketService marketService,
-            INsiPostingBookService nsiPostingBookService)
+            INsiPostingBookService nsiPostingBookService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         : base(broadcastDataRepositoryFactory, 
             quarterCalculationEngine, 
             mediaMonthAndWeekAggregateCache,
@@ -29,13 +30,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             spotLengthEngine,
             daypartCache,
             marketService,
-            nsiPostingBookService)
+            nsiPostingBookService, featureToggleHelper, configurationSettingsHelper)
         {
         }
 
 		protected override string _GetBroadcastAppFolder()
 		{
-			return "BroadcastServiceSystemParameter.BroadcastAppFolder";
+            return "BroadcastServiceSystemParameter.BroadcastAppFolder" ;
 		}
 		
         public DateTime? UT_DateTimeNow { get; set; }

@@ -38,9 +38,9 @@ namespace Services.Broadcast.Converters.Post
             }
 
             if (postFileHeaderFound)
-                return new PostFileParser(_DataRepositoryFactory);
+                return new PostFileParser(_DataRepositoryFactory,null,null);
 
-            return new BvsPostFileParser(_DataRepositoryFactory);
+            return new BvsPostFileParser(_DataRepositoryFactory,null,null);
         }
     }
 }

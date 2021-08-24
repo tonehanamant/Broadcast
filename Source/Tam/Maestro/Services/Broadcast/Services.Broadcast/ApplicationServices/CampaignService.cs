@@ -167,7 +167,7 @@ namespace Services.Broadcast.ApplicationServices
             IWeeklyBreakdownEngine weeklyBreakdownEngine,
             IDaypartCache daypartCache,
             IFeatureToggleHelper featureToggleHelper,
-            IAabEngine aabEngine)
+            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;

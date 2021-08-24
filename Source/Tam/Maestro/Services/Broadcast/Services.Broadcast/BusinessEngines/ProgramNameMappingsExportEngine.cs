@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +20,10 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ProgramNameMappingsExportEngine : BroadcastBaseClass, IProgramNameMappingsExportEngine
     {
+        public ProgramNameMappingsExportEngine(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        {
+
+        }
         /// <summary>
         /// The types of columns used in this export
         /// </summary>

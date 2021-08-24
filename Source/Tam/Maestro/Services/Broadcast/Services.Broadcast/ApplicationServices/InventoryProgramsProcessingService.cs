@@ -94,7 +94,7 @@ namespace Services.Broadcast.ApplicationServices
             IBackgroundJobClient backgroundJobClient,
             IEmailerService emailerService,
             IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory,
-            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _BackgroundJobClient = backgroundJobClient;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();

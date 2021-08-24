@@ -211,7 +211,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IAudienceService audienceService,
                                   ICreativeLengthEngine creativeLengthEngine,
                                   IAsyncTaskHelper asyncTaskHelper,
-                                  IFeatureToggleHelper featureToggleHelper)
+                                  IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             // Arrange
             var aabEngine = new Mock<IAabEngine>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var getAgenciesReturn = new List<AgencyDto>
             {
                 new AgencyDto { Id = 1, Name = "AgencyOne" },
@@ -26,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             aabEngine.Setup(x => x.GetAgencies()).Returns(getAgenciesReturn);
 
-            var tc = new AgencyService(aabEngine.Object);
+            var tc = new AgencyService(aabEngine.Object,featureToggle.Object,configurationSettingsHelper.Object);
 
             // Act
             var result = tc.GetAgencies();
@@ -43,12 +46,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const string expectedMessage = "This is a test exception thrown from GetAgencies";
 
             var aabEngine = new Mock<IAabEngine>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             aabEngine
                 .Setup(x => x.GetAgencies())
                 .Callback(() => throw new Exception(expectedMessage));
 
-            var tc = new AgencyService(aabEngine.Object);
+            var tc = new AgencyService(aabEngine.Object,featureToggle.Object,configurationSettingsHelper.Object);
 
             // Act
             var caught = Assert.Throws<Exception>(() => tc.GetAgencies());

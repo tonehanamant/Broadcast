@@ -14,7 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetColumnDescriptors()
         {
-            var engine = new ProgramNameMappingsExportEngineUnitTestClass();
+            var engine = new ProgramNameMappingsExportEngineUnitTestClass(null,null);
 
             var result = engine.UT_GetColumnDescriptors();
 
@@ -25,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetDateGeneratedCellValue()
         {
-            var engine = new ProgramNameMappingsExportEngineUnitTestClass
+            var engine = new ProgramNameMappingsExportEngineUnitTestClass(null, null)
             {
                 UT_CurrentDateTime = new DateTime(2020, 10, 17, 7, 31, 26)
             };
@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             DateTime? modifiedDateTime = null;
             const int testProgramCount = 10;
             var mappings = _GetTestPrograms(testProgramCount, createDateTime, modifiedDateTime);
-            var engine = new ProgramNameMappingsExportEngineUnitTestClass
+            var engine = new ProgramNameMappingsExportEngineUnitTestClass(null, null)
             {
                 UT_CurrentDateTime = createDateTime
             };
@@ -62,7 +62,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             ;
             const int testProgramCount = 10;
             var mappings = _GetTestPrograms(testProgramCount, createDateTime, modifiedDateTime);
-            var engine = new ProgramNameMappingsExportEngineUnitTestClass
+            var engine = new ProgramNameMappingsExportEngineUnitTestClass(null, null)
             {
                 UT_CurrentDateTime = createDateTime
             };

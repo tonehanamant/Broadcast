@@ -256,7 +256,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
             , ICreativeLengthEngine creativeLengthEngine
             , IFeatureToggleHelper featureToggleHelper
-            , IPlanMarketSovCalculator planMarketSovCalculator)
+            , IPlanMarketSovCalculator planMarketSovCalculator,  IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;

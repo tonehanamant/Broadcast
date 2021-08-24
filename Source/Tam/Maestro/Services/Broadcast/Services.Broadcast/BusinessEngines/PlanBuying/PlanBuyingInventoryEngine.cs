@@ -65,7 +65,7 @@ namespace Services.Broadcast.BusinessEngines
                                           IQuarterCalculationEngine quarterCalculationEngine,
                                           ISpotLengthEngine spotLengthEngine,
                                           IFeatureToggleHelper featureToggleHelper,
-                                          IConfigurationSettingsHelper configurationSettingsHelper)
+                                          IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;

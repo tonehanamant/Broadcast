@@ -7,6 +7,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly Dictionary<int, int> _SpotLengthMap;
 
         public InventoryProprietarySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IQuarterCalculationEngine quarterCalculationEngine)
+            IQuarterCalculationEngine quarterCalculationEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
 

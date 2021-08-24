@@ -5,6 +5,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.RateImport;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Validators;
 using Tam.Maestro.Services.Clients;
 
@@ -29,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
             IInventoryRatingsProcessingService inventoryRatingsService,
-            IInventoryProgramsProcessingService inventoryProgramsProcessingService)
+            IInventoryProgramsProcessingService inventoryProgramsProcessingService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         : base(broadcastDataRepositoryFactory,
             inventoryFileValidator,
             daypartCache,
@@ -47,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             openMarketFileImporter,
             fileService,
             inventoryRatingsService,
-            inventoryProgramsProcessingService)
+            inventoryProgramsProcessingService,featureToggleHelper, configurationSettingsHelper)
         {
         }
 

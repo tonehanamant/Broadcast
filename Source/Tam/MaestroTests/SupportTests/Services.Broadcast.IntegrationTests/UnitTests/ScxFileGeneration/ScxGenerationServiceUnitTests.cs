@@ -10,6 +10,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object, 
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object);
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object);
 
             Assert.IsNotNull(tc);
         }
@@ -57,6 +60,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>
             {
                 GetPopulatedDetailRaw(),
@@ -68,7 +73,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
                 .Returns(getHistoryReturn);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -94,6 +99,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>
             {
                 new ScxFileGenerationDetailDto(),
@@ -110,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -143,13 +150,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>();
             scxGenerationJobRepository.Setup(s => s.GetScxFileGenerationDetails(It.IsAny<int>()))
                 .Callback<int>((s) => getHistoryCalls.Add(s))
                 .Returns(getHistoryReturn);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -175,6 +184,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
             var dropFolder = "thisFolder";
             var getHistoryCalls = new List<int>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var getHistoryReturn = new List<ScxFileGenerationDetailDto>
             {
                 GetPopulatedDetailRaw(),
@@ -186,7 +197,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
                 .Returns(getHistoryReturn);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -215,10 +226,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var dropFolder = "thisFolder";
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder,
             };
@@ -264,9 +277,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var dropFolder = "thisFolder";
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -314,12 +330,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var dropFolder = "thisFolder";
             var updateJobCallCount = 0;
             var testJob = new Mock<ScxGenerationJob>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             testJob.Object.Status = BackgroundJobProcessingStatus.Queued;
             scxGenerationJobRepository.Setup(x => x.UpdateJob(testJob.Object))
                 .Callback(() => updateJobCallCount++);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -346,6 +364,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var dropFolder = "thisFolder";
             var testJob = new Mock<ScxGenerationJob>();
             testJob.Object.Status = BackgroundJobProcessingStatus.Queued;
@@ -353,7 +373,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             scxGenerationJobRepository.Setup(x => x.AddJob(It.IsAny<ScxGenerationJob>())).Returns(jobId);
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -385,10 +405,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var fileService = new Mock<IFileService>();
             var quartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var dropFolder = "thisFolder";
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, quartersCalculationEngine.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };
@@ -428,10 +450,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
             var fileService = new Mock<IFileService>();
             var calculator = new Mock<IQuarterCalculationEngine>();
             var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             var dropFolder = "thisFolder";
             var tc = new ScxGenerationServiceUnitTestClass(dataRepoFactory.Object,
                 proprietaryInventoryService.Object, fileService.Object, calculator.Object,
-                backgroundJobClient.Object)
+                backgroundJobClient.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 DropFolderPath = dropFolder
             };

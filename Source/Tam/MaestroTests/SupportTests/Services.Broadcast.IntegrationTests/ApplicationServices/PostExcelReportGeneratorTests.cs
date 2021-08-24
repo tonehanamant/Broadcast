@@ -47,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 files.post_file_details.Add(postUploadFileDetails2);
 
 
-                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), _RatingForecastService);
+                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), _RatingForecastService,null,null);
                 var report = x.Generate(files.Convert());
                 File.WriteAllBytes(report.Filename, report.Stream.GetBuffer());
                 Assert.IsNotNull(report.Stream);
@@ -73,7 +73,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 postUploadFileDetails.post_file_detail_impressions.Add(new post_file_detail_impressions { demo = 34, impression = 12345 });
                 files.post_file_details.Add(postUploadFileDetails);
 
-                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), _RatingForecastService);
+                var x = new PostExcelReportGenerator(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, IntegrationTestApplicationServiceFactory.GetApplicationService<IImpressionAdjustmentEngine>(), _RatingForecastService,null,null);
                 var report = x.GenerateExcelPackage(files.Convert());
                 var column = report.Workbook.Worksheets.First().Dimension.Columns;
                 var row = report.Workbook.Worksheets.First().Dimension.Rows;

@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using OfficeOpenXml;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -24,7 +25,7 @@ namespace Services.Broadcast.Converters.Post
         protected readonly DateTime MagicBaseDate = DateTime.Parse("12/30/1899");
         protected readonly IDataRepositoryFactory DataRepositoryFactory;
 
-        protected BasePostFileParser(IDataRepositoryFactory dataRepositoryFactory)
+        protected BasePostFileParser(IDataRepositoryFactory dataRepositoryFactory,IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             DataRepositoryFactory = dataRepositoryFactory;
         }

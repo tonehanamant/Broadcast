@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ReportGenerators
 {
@@ -69,7 +70,7 @@ namespace Services.Broadcast.ReportGenerators
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IRatingForecastService _RatingForecastService;
 
-        public PostExcelReportGenerator(IDataRepositoryFactory factory, IImpressionAdjustmentEngine engine, IRatingForecastService ratingForecastService)
+        public PostExcelReportGenerator(IDataRepositoryFactory factory, IImpressionAdjustmentEngine engine, IRatingForecastService ratingForecastService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _Factory = factory;
             _ImpressionAdjustmentEngine = engine;

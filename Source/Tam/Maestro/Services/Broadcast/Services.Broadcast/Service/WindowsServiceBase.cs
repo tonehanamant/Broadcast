@@ -2,6 +2,7 @@
 using log4net;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks;
+using Services.Broadcast.Helpers;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -17,7 +18,7 @@ namespace Services.Broadcast.Services
     {
         private readonly ILog _Log;
 
-        protected WindowsServiceBase()
+        protected WindowsServiceBase(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _Log = LogManager.GetLogger(GetType());
         }

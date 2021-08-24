@@ -81,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private Mock<IConfigurationSettingsHelper> _IConfigurationSettingsHelperMock;
 
         protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false,
             bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
@@ -121,7 +122,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 featureToggleHelper,
                 _AabEngine.Object,
                 _AudienceServiceMock.Object,
-                _DaypartCacheMock.Object
+                _DaypartCacheMock.Object,
+                _IConfigurationSettingsHelperMock.Object
             );
         }
 
@@ -162,6 +164,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngine = new Mock<IAabEngine>();
             _AudienceServiceMock = new Mock<IAudienceService>();
             _DaypartCacheMock = new Mock<IDaypartCache>();
+            _IConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
+
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(MarketsTestData.GetLatestMarketCoverages());

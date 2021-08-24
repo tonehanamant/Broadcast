@@ -34,7 +34,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public InventoryProgramsRepairEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IFeatureToggleHelper featureToggleHelper,
-            IConfigurationSettingsHelper configurationSettingsHelper)
+            IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();

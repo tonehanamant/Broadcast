@@ -116,7 +116,7 @@ namespace Services.Broadcast.ApplicationServices
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
             IInventoryRatingsProcessingService inventoryRatingsService,
-            IInventoryProgramsProcessingService inventoryProgramsProcessingService)
+            IInventoryProgramsProcessingService inventoryProgramsProcessingService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();

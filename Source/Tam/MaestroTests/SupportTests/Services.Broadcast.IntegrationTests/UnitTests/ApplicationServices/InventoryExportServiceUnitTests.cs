@@ -12,6 +12,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Inventory;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.Inventory;
 using System;
@@ -65,6 +66,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var genreRepository = new Mock<IGenreRepository>();
             var stationRepository = new Mock<IStationRepository>();
             var audienceRepository = new Mock<IBroadcastAudienceRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -208,7 +211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object)
+                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 UT_DateTimeNow = testCurrentTimestamp
             };
@@ -278,6 +281,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var genreRepository = new Mock<IGenreRepository>();
             var stationRepository = new Mock<IStationRepository>();
             var audienceRepository = new Mock<IBroadcastAudienceRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -427,7 +432,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object)
+                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object)
             {
                 UT_DateTimeNow = testCurrentTimestamp
             };
@@ -477,6 +482,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
             var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
@@ -486,7 +493,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object);
+                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object);
 
             var genres = _GetAllGenres();
 
@@ -568,6 +575,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
             var genreRepository = new Mock<IGenreRepository>();
             var stationRepository = new Mock<IStationRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -650,7 +659,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object);
+                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object);
 
             service.UT_DateTimeNow = testCurrentTimestamp;
 
@@ -684,6 +693,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
             var genreRepository = new Mock<IGenreRepository>();
             var stationRepository = new Mock<IStationRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
             // load our mocks with our test data.
             inventoryExportJobRepository.Setup(s => s.GetJob(It.IsAny<int>()))
@@ -720,7 +731,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object);
+                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object);
 
             // *** ACT ***/
             var result = service.DownloadOpenMarketExportFile(1);

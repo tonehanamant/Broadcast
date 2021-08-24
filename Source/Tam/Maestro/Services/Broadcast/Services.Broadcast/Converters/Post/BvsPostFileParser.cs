@@ -2,6 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using OfficeOpenXml;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -48,8 +49,8 @@ namespace Services.Broadcast.Converters.Post
 
         const char _EstimateInventorySourceSeparator = '/';
 
-        public BvsPostFileParser(IDataRepositoryFactory dataRepositoryFactory)
-            : base(dataRepositoryFactory)
+        public BvsPostFileParser(IDataRepositoryFactory dataRepositoryFactory,IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(dataRepositoryFactory, featureToggleHelper, configurationSettingsHelper)
         {
         }
 

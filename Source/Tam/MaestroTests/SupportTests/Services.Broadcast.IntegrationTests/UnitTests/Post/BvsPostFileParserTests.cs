@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Services.Repositories;
 using Services.Broadcast.IntegrationTests.TestData;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Post
 {
@@ -31,8 +32,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Post
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             dataRepoFactory.Setup(s => s.GetDataRepository<ISpotLengthRepository>())
                 .Returns(spotLengthRepo.Object);
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
-            _BvsPostFileParser = new BvsPostFileParser(dataRepoFactory.Object);
+            _BvsPostFileParser = new BvsPostFileParser(dataRepoFactory.Object, featureToggle.Object,configurationSettingsHelper.Object);
 
             _ValidRow = new BvsPostFileRow("9", "ATLANTA", "WGCL", "CBS", "9/30/2017", "9/30/2017 6:12:51", "CBS46 NEWS AT 6AM", "30", "NNVA0045000", "BEIERSDORF", "TACO BELL (EMN)", "3763/CNN AM", "In Spec", "Incorrect Day");
             _Package = new ExcelPackage();

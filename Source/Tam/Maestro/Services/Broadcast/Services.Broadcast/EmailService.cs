@@ -27,7 +27,7 @@ namespace Common.Services
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
-        public EmailerService(IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
+        public EmailerService(IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _configurationWebApiClient = configurationWebApiClient;
             _FeatureToggleHelper = featureToggleHelper;
