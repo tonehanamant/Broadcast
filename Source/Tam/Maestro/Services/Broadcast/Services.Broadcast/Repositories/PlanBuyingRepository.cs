@@ -1043,8 +1043,9 @@ namespace Services.Broadcast.Repositories
                                    Spots = d.spots,
                                    Station = d.station,
                                    Affiliate = st.affiliation,
-                                   RepFirm = st.rep_firm_name ?? st.legacy_call_letters,
-                                   OwnerName = st.owner_name ?? st.legacy_call_letters
+                                   RepFirm = st.rep_firm_name  ,
+                                   OwnerName = st.owner_name ,
+                                   LegacyCallLetters = st.legacy_call_letters
                                }).OrderByDescending(p => p.ImpressionsPercentage).ToList()
                 };
             });

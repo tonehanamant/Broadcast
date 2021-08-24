@@ -27,5 +27,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public string Affiliate { get; set; }
         public string RepFirm { get; set; }
         public string OwnerName { get; set; }
+        public string LegacyCallLetters { get; set; }
+        
     }
 }

@@ -1019,7 +1019,7 @@
           <Property Name="station" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
-          <Property Name="budget" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="budget" Type="decimal" Precision="19" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_result_spots">
           <Key>
@@ -16645,7 +16645,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="budget" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" FromRole="plan_version_buying_result_spot_stations" ToRole="plan_version_buying_results" />
         </EntityType>
         <Association Name="FK_plan_version_buying_result_spot_stations_plan_version_buying_results">

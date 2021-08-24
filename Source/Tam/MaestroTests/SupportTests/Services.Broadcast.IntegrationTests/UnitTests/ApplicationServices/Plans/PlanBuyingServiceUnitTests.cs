@@ -2891,7 +2891,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
                 .Returns(currentDateTime);
 
-            _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>(), 
+            _PlanBuyingScxDataPrep.Setup(s => s.GetScxData(It.IsAny<PlanBuyingScxExportRequest>(), It.IsAny<DateTime>(),
                 It.IsAny<SpotAllocationModelMode>(),
                 It.IsAny<PostingTypeEnum>()))
                 .Returns<PlanBuyingScxExportRequest, DateTime, SpotAllocationModelMode, PostingTypeEnum>((a, b, c, d) => new PlanScxData { PlanName = planName, Generated = b });
@@ -4600,8 +4600,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                     .Returns(new PlanDto()
                     {
-                        Id = planId,                        
-                        PostingType = postingType,                        
+                        Id = planId,
+                        PostingType = postingType,
                         BuyingParameters = _GetPlanBuyingParametersDto()
                     });
 
@@ -4735,7 +4735,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         TargetRatingPoints = 1000,
                         VersionId = 77,
                         PostingType = PostingTypeEnum.NSI,
-                        Dayparts = _GetPlanDayparts()                        
+                        Dayparts = _GetPlanDayparts()
                     });
 
             var tc = _GetService();
@@ -4804,7 +4804,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Completed = new DateTime(2021, 3, 24, 11, 13, 13),
                     ErrorMessage = null,
                     DiagnosticResult = "DiagnosticResult"
-                });                        
+                });
 
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetBuyingResultsByJobId(JobID,PostingTypeEnum.NSI))
@@ -4996,7 +4996,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
                     OptimalCpm = 23
                 });
-                
+
                 candidateResults.Add(new CurrentBuyingExecutionResultDto
                 {
                     PostingType = postingType,
@@ -5027,7 +5027,102 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
             Assert.IsTrue(results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == SpotAllocationModelMode.Floor));
         }
+        [Test]
+        public void GetStations()
+        {
+            // Arrange
+            const int planId = 224;
+            PostingTypeEnum postingType = PostingTypeEnum.NSI;
 
+            _PlanBuyingRepositoryMock.Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                    .Returns(new PlanBuyingJob()
+                    {
+                        Id = 4,
+                        HangfireJobId = "10980",
+                        PlanVersionId = 879,
+                        Status = BackgroundJobProcessingStatus.Succeeded,
+                        Queued = new DateTime(2021, 08, 16),
+                        Completed = new DateTime(2021, 08, 16),
+                        ErrorMessage = null,
+                        DiagnosticResult = null,
+                    });
+            _PlanBuyingRepositoryMock.Setup(x => x.GetBuyingStationsResultByJobId(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                   .Returns(new PlanBuyingStationResultDto()
+                   {
+                       Id = 8,
+                       BuyingJobId = 4,
+                       PlanVersionId = 879,
+                       PostingType = PostingTypeEnum.NSI,
+                       SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                       Details = new List<PlanBuyingStationDto>
+                       {
+                            new PlanBuyingStationDto
+                            {
+                                Station ="WDCW" ,
+                                Market = "Washington, Dc (Hagrstwn)",
+                                Spots = 19,
+                                Impressions = 114400,
+                                Cpm = 6.8291M,
+                                Budget =781.25M ,
+                                ImpressionsPercentage =5.32935,
+                                Affiliate = "CW",
+                                RepFirm = null,
+                                OwnerName = null,
+                                LegacyCallLetters ="WDCW"
+                            },
+                             new PlanBuyingStationDto
+                            {
+                                Station ="WDCW" ,
+                                Market = "Washington, Dc (Hagrstwn)",
+                                Spots = 19,
+                                Impressions = 114400,
+                                Cpm = 6.8291M,
+                                Budget =781.25M ,
+                                ImpressionsPercentage =5.32935,
+                                Affiliate = "CW",
+                                RepFirm = "Katz",
+                                OwnerName = "Lockwood Broadcasting Inc.",
+                                LegacyCallLetters ="WDCW"
+                            }
+                       },
+                       Totals = new PlanBuyingProgramTotalsDto
+                       {
+                           Budget = 17365,
+                           AvgCpm = 8.0895M,
+                           Impressions = 2146600,
+                           SpotCount = 749,
+                           StationCount = 108
+                       },
+
+
+                   });
+            _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(new PlanDto()
+                    {
+                        Id = planId,
+                        Budget = 2000,
+                        TargetCPM = 10,
+                        TargetCPP = 10,
+                        Currency = PlanCurrenciesEnum.Impressions,
+                        TargetImpressions = 60000,
+                        TargetRatingPoints = 1000,
+                        VersionId = 77,
+                        PostingType = PostingTypeEnum.NSI,
+                        Dayparts = _GetPlanDayparts()
+                    });
+
+            var tc = _GetService();
+
+            // Act
+            var result = tc.GetStations(planId, postingType);
+
+            // Assert
+            Assert.AreEqual(result.Details[0].LegacyCallLetters, result.Details[0].RepFirm);
+            Assert.AreEqual(result.Details[0].LegacyCallLetters, result.Details[0].OwnerName);
+            Assert.AreEqual("Katz", result.Details[1].RepFirm);
+            Assert.AreEqual("Lockwood Broadcasting Inc.", result.Details[1].OwnerName);
+        }
         private List<CurrentBuyingExecutionResultDto> _GetCurrentBuyingExecutionsResults()
         {
             return new List<CurrentBuyingExecutionResultDto>

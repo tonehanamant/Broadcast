@@ -792,6 +792,12 @@ CREATE TABLE [dbo].[plan_version_buying_result_spot_stations]
 )
 END
 GO
+IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_buying_result_spot_stations' AND COLUMN_NAME = 'budget' AND NUMERIC_PRECISION = 19 AND NUMERIC_SCALE = 4)
+BEGIN
+ALTER TABLE plan_version_buying_result_spot_stations
+ALTER COLUMN budget decimal(19,4) not null;
+END
+GO
 /*************************************** END BP-2889 *****************************************************/
 
 /*************************************** START BP-2937 *****************************************************/

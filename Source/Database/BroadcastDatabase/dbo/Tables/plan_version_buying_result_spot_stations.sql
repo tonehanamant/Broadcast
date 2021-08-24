@@ -7,7 +7,7 @@
 		[station] varchar(15) NOT NULL,
 		[impressions] FLOAT NOT NULL,
 		[spots] INT NOT NULL, 
-		[budget] decimal NOT NULL,
+		[budget] decimal(19, 4) NOT NULL,
 		CONSTRAINT [FK_plan_version_buying_result_spot_stations_plan_version_buying_results] FOREIGN KEY ([plan_version_buying_result_id]) REFERENCES [dbo].[plan_version_buying_results]
 		
 )

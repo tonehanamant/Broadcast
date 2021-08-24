@@ -2505,7 +2505,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (result == null)
                 return null;
 
-            _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
+            result.Details = result.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
+           _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
 
             return result;
         }
