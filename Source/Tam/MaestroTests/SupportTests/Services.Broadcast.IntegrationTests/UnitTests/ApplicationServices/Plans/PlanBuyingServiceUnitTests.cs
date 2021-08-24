@@ -169,7 +169,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SpotLengthEngineMock.Setup(s => s.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
             _SpotLengthEngineMock.Setup(s => s.GetCostMultipliers(true))
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium:true));
+                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium: true));
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanBuyingRepository>())
@@ -4612,7 +4612,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()),Times.Never);
+            _PlanRepositoryMock.Verify(x => x.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()), Times.Never);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -4807,7 +4807,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanBuyingRepositoryMock
-                .Setup(x => x.GetBuyingResultsByJobId(JobID,PostingTypeEnum.NSI))
+                .Setup(x => x.GetBuyingResultsByJobId(JobID, PostingTypeEnum.NSI))
                 .Returns(_GetCurrentBuyingExecutionsResults());
 
             _PlanBuyingRepositoryMock
@@ -5186,6 +5186,45 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert            
             Assert.AreEqual(expectedResult, results.Count());
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetResultRepFirms()
+        {
+            // Arrange
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Id = 1,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime()
+                });
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetBuyingStationsResultByJobId(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new PlanBuyingStationResultDto
+                {
+                    Details = new List<PlanBuyingStationDto>()
+                {
+                  new PlanBuyingStationDto()
+                  {
+                  RepFirm = "Sales group 3"
+                  },
+                  new PlanBuyingStationDto()
+                  {
+                  RepFirm = "Sales group 4"
+                  }
+                }
+                });
+            var service = _GetService();
+            var plan = _GetPlan();
+
+            // Act
+            var result = service.GetResultRepFirms(plan.Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

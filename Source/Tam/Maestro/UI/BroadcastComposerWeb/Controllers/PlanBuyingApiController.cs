@@ -209,5 +209,18 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPlanBuyingGoals(planId, postingType));
         }
+        /// <summary>
+        /// Gets the Result Rep Firms. 
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The posting Type</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>       
+        /// <returns>The list of Rep firms from buying result</returns>
+        [HttpGet]
+        [Route("result-rep-firms")]
+        public BaseResponse<List<string>> GetResultRepFirms(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetResultRepFirms(planId,postingType,spotAllocationModelMode));
+        }
     }
 }

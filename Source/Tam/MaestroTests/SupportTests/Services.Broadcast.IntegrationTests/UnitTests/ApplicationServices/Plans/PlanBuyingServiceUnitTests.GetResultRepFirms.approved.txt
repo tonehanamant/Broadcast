@@ -1,0 +1,4 @@
+[
+  "Sales group 3",
+  "Sales group 4"
+]

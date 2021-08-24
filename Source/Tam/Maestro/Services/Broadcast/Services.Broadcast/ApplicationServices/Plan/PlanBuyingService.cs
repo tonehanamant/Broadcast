@@ -201,6 +201,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="postingType">The type of posting</param>
         /// <returns>The PlanBuyingParametersDto object</returns>
         PlanBuyingParametersDto GetPlanBuyingGoals(int planId, PostingTypeEnum postingType);
+        /// <summary>
+        /// Retrieves list of result Rep Firms  
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The Type of Posting</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>      
+        /// <returns>The list of Rep firms</returns>
+        List<string> GetResultRepFirms(int planId, PostingTypeEnum? postingType,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
     }
 
     /// <summary>
@@ -2433,7 +2442,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            postingType = _GetPlanPostingType(planId, postingType);
+            postingType = _ResolvePostingType(planId, postingType);
 
             var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, postingType, spotAllocationModelMode);
 
@@ -2454,7 +2463,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            postingType = _GetPlanPostingType(planId, postingType);
+            postingType = _ResolvePostingType(planId, postingType);
 
             var results = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, postingType, spotAllocationModelMode);
 
@@ -2477,7 +2486,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            postingType = _GetPlanPostingType(planId, postingType);
+            postingType = _ResolvePostingType(planId, postingType);
 
             var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, postingType, spotAllocationModelMode);
 
@@ -2499,7 +2508,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            postingType = _GetPlanPostingType(planId, postingType);
+            postingType = _ResolvePostingType(planId, postingType);
 
             var result = _PlanBuyingRepository.GetBuyingStationsResultByJobId(job.Id, postingType, spotAllocationModelMode);
             if (result == null)
@@ -2522,7 +2531,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            postingType = _GetPlanPostingType(planId, postingType);
+            postingType = _ResolvePostingType(planId, postingType);
 
             PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, postingType, spotAllocationModelMode);
 
@@ -2547,7 +2556,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            postingType = _GetPlanPostingType(planId, postingType);
+            postingType = _ResolvePostingType(planId, postingType);
 
             PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType, spotAllocationModelMode);
 
@@ -2706,9 +2715,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return result;
         }
-        private PostingTypeEnum? _GetPlanPostingType(int planId, PostingTypeEnum? postingType)
+        private PostingTypeEnum? _ResolvePostingType(int planId, PostingTypeEnum? postingType)
         {
-            if (postingType == null)
+            if (!postingType.HasValue)
             {
                 var plan = _PlanRepository.GetPlan(planId);
                 postingType = plan.PostingType;
@@ -2909,6 +2918,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new ApplicationException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
             }
         }
+        public List<string> GetResultRepFirms(int planId, PostingTypeEnum? postingType,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            postingType = _ResolvePostingType(planId, postingType);
 
+            var stations = GetStations(planId, postingType, spotAllocationModelMode);
+
+            if (stations == null)
+                return new List<string>();
+
+            var result = stations.Details.Select(x => x.RepFirm.ToString()).Distinct().ToList();
+
+            result.OrderByDescending(x => x).ToList();
+
+            return result;
+        }
     }
 }

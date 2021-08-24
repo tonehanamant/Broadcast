@@ -994,7 +994,7 @@ namespace Services.Broadcast.Repositories
                     return null;
 
                 var BuyingResult = result.Select(_MapToCurrentBuyingExecutionResultDto).ToList();
-                
+
                 return BuyingResult;
             });
         }
@@ -1477,5 +1477,5 @@ namespace Services.Broadcast.Repositories
                 .ToList();
             });
         }
-    }
+     }
 }
