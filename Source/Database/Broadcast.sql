@@ -827,6 +827,83 @@ from (
 where RowNumber = 1
 GO
 /*************************************** End BP-2937 *****************************************************/
+
+/*************************************** Start BP-2920 *****************************************************/
+
+/*** Update the standard dayparts ***/
+DECLARE @newDaypartIds TABLE
+(
+	daypart_code VARCHAR(5),
+	daypart_id INT
+)
+
+-- there should be only one each, but just in case grab the earlier one as it existed at the time of this implementation.
+INSERT INTO @newDaypartIds (daypart_code, daypart_id)
+	SELECT TOP 1 'EM', id FROM dayparts WHERE daypart_text = 'M-SU 4AM-10AM' ORDER BY ID ASC
+
+INSERT INTO @newDaypartIds (daypart_code, daypart_id)
+	SELECT TOP 1 'PMN', id FROM dayparts WHERE daypart_text = 'M-SU 4PM-12:05AM' ORDER BY ID ASC
+
+INSERT INTO @newDaypartIds (daypart_code, daypart_id)
+	SELECT TOP 1 'EN', id FROM dayparts WHERE daypart_text = 'M-SU 4PM-8PM' ORDER BY ID ASC 
+
+UPDATE sd SET 
+	daypart_id = nd.daypart_id
+FROM standard_dayparts sd
+JOIN @newDaypartIds nd
+	ON nd.daypart_code = sd.code
+
+/*** Update Existing Plans ***/
+
+DECLARE @flat_standard_dayparts TABLE
+(
+	standard_daypart_id INT,
+	daypart_id INT,
+	code VARCHAR(15),
+	[name] VARCHAR(63),
+	daypart_text VARCHAR(63),
+	start_time INT,
+	end_time INT
+)
+
+INSERT INTO @flat_standard_dayparts (standard_daypart_id, daypart_id, code, [name], daypart_text, start_time, end_time)
+	SELECT sd.id
+		, sd.daypart_id 
+		, sd.code
+		, sd.[name]
+		, d.daypart_text
+		, t.start_time
+		, t.end_time
+	FROM standard_dayparts sd
+	JOIN dayparts d
+		ON d.id = sd.daypart_id
+	JOIN timespans t
+		ON t.id = d.timespan_id 
+
+--if start time is different set is_start_time_modified = 1
+UPDATE pd SET
+	is_start_time_modified = 1
+FROM plan_version_dayparts pd
+JOIN @flat_standard_dayparts ssdd
+	ON ssdd.standard_daypart_id = pd.standard_daypart_id
+WHERE ssdd.code in ('EM', 'PMN', 'EN')
+AND pd.start_time_seconds <> ssdd.start_time
+AND pd.is_start_time_modified = 0
+
+-- if end time is different set is_end_time_modified = 1
+UPDATE pd SET
+	is_end_time_modified = 1
+FROM plan_version_dayparts pd
+JOIN @flat_standard_dayparts ssdd
+	ON ssdd.standard_daypart_id = pd.standard_daypart_id
+WHERE ssdd.code in ('EM', 'PMN', 'EN')
+AND pd.end_time_seconds <> ssdd.end_time
+AND pd.is_end_time_modified = 0
+
+GO
+
+/*************************************** End BP-2920 *****************************************************/
+
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
 SET parameter_value = '21.02.2' -- Current release version

@@ -140,7 +140,7 @@
           "Code": "PMN",
           "DaypartType": 1,
           "DefaultEndTimeSeconds": 299,
-          "DefaultStartTimeSeconds": 46800,
+          "DefaultStartTimeSeconds": 57600,
           "FullName": "PM News",
           "Id": 16,
           "VpvhCalculationSourceType": 2
@@ -455,7 +455,7 @@
           "Code": "PMN",
           "DaypartType": 1,
           "DefaultEndTimeSeconds": 299,
-          "DefaultStartTimeSeconds": 46800,
+          "DefaultStartTimeSeconds": 57600,
           "FullName": "PM News",
           "Id": 16,
           "VpvhCalculationSourceType": 2
@@ -770,7 +770,7 @@
           "Code": "PMN",
           "DaypartType": 1,
           "DefaultEndTimeSeconds": 299,
-          "DefaultStartTimeSeconds": 46800,
+          "DefaultStartTimeSeconds": 57600,
           "FullName": "PM News",
           "Id": 16,
           "VpvhCalculationSourceType": 2

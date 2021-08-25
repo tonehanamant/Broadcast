@@ -26,8 +26,8 @@
   {
     "Code": "EM",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 32400,
-    "DefaultStartTimeSeconds": 21600,
+    "DefaultEndTimeSeconds": 36000,
+    "DefaultStartTimeSeconds": 14400,
     "FullName": "Early morning",
     "VpvhCalculationSourceType": 0
   },
@@ -42,7 +42,7 @@
   {
     "Code": "EN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 68400,
+    "DefaultEndTimeSeconds": 72000,
     "DefaultStartTimeSeconds": 57600,
     "FullName": "Evening News",
     "VpvhCalculationSourceType": 0
@@ -99,7 +99,7 @@
     "Code": "PMN",
     "DaypartType": 1,
     "DefaultEndTimeSeconds": 300,
-    "DefaultStartTimeSeconds": 46800,
+    "DefaultStartTimeSeconds": 57600,
     "FullName": "PM News",
     "VpvhCalculationSourceType": 0
   },

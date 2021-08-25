@@ -1977,7 +1977,7 @@
       "DaypartTypeId": 1,
       "EndTimeSeconds": 300,
       "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
+      "IsStartTimeModified": true,
       "Restrictions": {
         "AffiliateRestrictions": {
           "Affiliates": [],

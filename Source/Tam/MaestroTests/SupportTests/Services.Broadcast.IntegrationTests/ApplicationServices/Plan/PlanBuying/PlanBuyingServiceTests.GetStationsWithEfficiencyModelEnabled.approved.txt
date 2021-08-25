@@ -2,20 +2,28 @@
   "Default": {
     "Details": [
       {
+        "Affiliate": "CW",
         "Budget": 16205.6250,
         "Cpm": 17.5186,
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": "WPIX",
         "Market": "New York",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 30,
         "Station": "WPIX"
       },
       {
+        "Affiliate": "FOX",
         "Budget": 180.9000,
         "Cpm": 34.4571,
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": "WPFO",
         "Market": "Portland-Auburn",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 20,
         "Station": "WPFO"
       }
@@ -37,20 +45,28 @@
   "Efficiency": {
     "Details": [
       {
+        "Affiliate": "CW",
         "Budget": 16205.6250,
         "Cpm": 17.5186,
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": "WPIX",
         "Market": "New York",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 30,
         "Station": "WPIX"
       },
       {
+        "Affiliate": "FOX",
         "Budget": 180.9000,
         "Cpm": 34.4571,
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": "WPFO",
         "Market": "Portland-Auburn",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 20,
         "Station": "WPFO"
       }
@@ -72,20 +88,28 @@
   "Floor": {
     "Details": [
       {
+        "Affiliate": "CW",
         "Budget": 16205.6250,
         "Cpm": 17.5186,
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": "WPIX",
         "Market": "New York",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 30,
         "Station": "WPIX"
       },
       {
+        "Affiliate": "FOX",
         "Budget": 180.9000,
         "Cpm": 34.4571,
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": "WPFO",
         "Market": "Portland-Auburn",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 20,
         "Station": "WPFO"
       }
@@ -107,20 +131,28 @@
   "Quality": {
     "Details": [
       {
+        "Affiliate": "CW",
         "Budget": 16205.6250,
         "Cpm": 17.5186,
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": "WPIX",
         "Market": "New York",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 30,
         "Station": "WPIX"
       },
       {
+        "Affiliate": "FOX",
         "Budget": 180.9000,
         "Cpm": 34.4571,
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": "WPFO",
         "Market": "Portland-Auburn",
+        "OwnerName": "Ownership group 3",
+        "RepFirm": "Sales group 4",
         "Spots": 20,
         "Station": "WPFO"
       }
