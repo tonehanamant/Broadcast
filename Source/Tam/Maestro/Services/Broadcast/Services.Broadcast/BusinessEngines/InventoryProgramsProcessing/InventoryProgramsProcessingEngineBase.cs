@@ -61,9 +61,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IEnvironmentService _EnvironmentService;        
 
         private readonly ILog _Log;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         protected InventoryProgramsProcessingEngineBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -87,9 +84,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
 
             _Log = LogManager.GetLogger(GetType());
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         protected abstract IInventoryProgramsJobsRepository _GetJobsRepository();

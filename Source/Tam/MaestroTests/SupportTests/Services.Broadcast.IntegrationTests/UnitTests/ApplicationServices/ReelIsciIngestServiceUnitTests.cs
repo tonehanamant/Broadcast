@@ -73,6 +73,87 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
+        public void RunQueued_ConfiguredIngestNumberOfDays()
+        {
+            //Arrange
+            var currentDateTime = new DateTime(2021, 08, 26, 14, 26, 36);
+            var expectedIngestStartDate = new DateTime(2020, 08, 25);
+            const int numberOfDays = 366;
+            const int jobId = 12;
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
+            var passedIngestNumberOfDays = -1;
+            var passedIngestStartDate = DateTime.MinValue;
+            _ReelIsciApiClientMock
+                .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
+                .Callback<DateTime, int>((st, nm) =>
+                {
+                    passedIngestStartDate = st;
+                    passedIngestNumberOfDays = nm;
+                })
+                .Returns(new List<ReelRosterIsciDto>());
+
+            _ReelIsciRepository
+                .Setup(x => x.DeleteReelIscisBetweenRange(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(0);
+
+            _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<int>(ConfigKeys.ReelIsciIngestNumberOfDays))
+                .Returns(numberOfDays);
+
+            //Act
+            _ReelIsciIngestService.RunQueued(jobId, _UserName);
+
+            //Assert
+            Assert.AreEqual(numberOfDays, passedIngestNumberOfDays);
+            const string dtFormat = "yyyy/MM/dd";
+            Assert.AreEqual(expectedIngestStartDate.ToString(dtFormat), passedIngestStartDate.ToString(dtFormat));
+        }
+
+        [Test]
+        public void PerformReelIsciIngest_ConfiguredIngestNumberOfDays()
+        {
+            //Arrange
+            var currentDateTime = new DateTime(2021, 08, 26, 14,26,36);
+            var expectedIngestStartDate = new DateTime(2020, 08, 25);
+            const int numberOfDays = 366;
+            const int jobId = 12;
+
+            _ReelIsciIngestJobsRepositoryMock.Setup(s => s.AddReelIsciIngestJob(It.IsAny<ReelIsciIngestJobDto>()))
+                .Returns(jobId);
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
+            var passedIngestNumberOfDays = -1;
+            var passedIngestStartDate = DateTime.MinValue;
+            _ReelIsciApiClientMock
+                .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
+                .Callback<DateTime, int>((st, nm) =>
+                {
+                    passedIngestStartDate = st;
+                    passedIngestNumberOfDays = nm;
+                })
+                .Returns(new List<ReelRosterIsciDto>());
+
+            _ReelIsciRepository
+                .Setup(x => x.DeleteReelIscisBetweenRange(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(0);
+
+            _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<int>(ConfigKeys.ReelIsciIngestNumberOfDays))
+                .Returns(numberOfDays);
+
+            //Act
+            _ReelIsciIngestService.PerformReelIsciIngest(_UserName);
+
+            //Assert
+            Assert.AreEqual(numberOfDays, passedIngestNumberOfDays);
+            const string dtFormat = "yyyy/MM/dd";
+            Assert.AreEqual(expectedIngestStartDate.ToString(dtFormat), passedIngestStartDate.ToString(dtFormat));
+        }
+
+        [Test]
         public void PerformReelIsciIngestBetweenRange_NoReelIsciReceive()
         {
             //Arrange

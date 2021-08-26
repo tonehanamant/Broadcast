@@ -45,7 +45,6 @@ namespace Services.Broadcast.Cache
     /// <summary>
     /// Caches Aab data
     /// </summary>
-    /// <seealso cref="Services.Broadcast.Cache.IAabCache" />
     public class AabCache : IAabCache
     {
         private const string CACHE_NAME_AGENCIES = "Agencies";

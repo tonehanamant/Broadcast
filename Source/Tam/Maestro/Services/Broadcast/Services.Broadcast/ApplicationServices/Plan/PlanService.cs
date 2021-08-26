@@ -232,7 +232,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly IDayRepository _DayRepository;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
@@ -279,7 +278,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _StandardDaypartService = standardDaypartService;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _CreativeLengthEngine = creativeLengthEngine;
-            _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
 

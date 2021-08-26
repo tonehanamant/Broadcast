@@ -44,15 +44,12 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IDaypartCache _DaypartCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         protected Lazy<bool> _UseTrueIndependentStations;
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<int> _NumberOfFallbackQuarters;
         protected Lazy<bool> _IsMultiSpotLengthEnabled;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         private Lazy<List<Day>> _CadentDayDefinitions;
         protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
@@ -78,14 +75,11 @@ namespace Services.Broadcast.BusinessEngines
             _DaypartCache = daypartCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _SpotLengthEngine = spotLengthEngine;
-            _FeatureToggleHelper = featureToggleHelper;
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
 
             // register lazy delegates - settings
             _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(_GetThresholdInSecondsForProgramIntersectInPricing);
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
             _NumberOfFallbackQuarters = new Lazy<int>(_GetNumberOfFallbackQuarters);
             _IsMultiSpotLengthEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS));
 

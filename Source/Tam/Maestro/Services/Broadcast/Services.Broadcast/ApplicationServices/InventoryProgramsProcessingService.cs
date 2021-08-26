@@ -85,9 +85,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryProgramsRepairEngine _InventoryProgramsRepairEngine;
 
         private readonly IInventoryProgramsProcessorFactory _InventoryProgramsProcessorFactory;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public InventoryProgramsProcessingService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -104,9 +101,6 @@ namespace Services.Broadcast.ApplicationServices
             _EmailerService = emailerService;
             _InventoryProgramsProcessorFactory = inventoryProgramsProcessorFactory;
             _InventoryProgramsRepairEngine = inventoryProgramsRepairEngine;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJob(int fileId, string username)

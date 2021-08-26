@@ -256,12 +256,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IPlanBuyingScxDataPrep _PlanBuyingScxDataPrep;
         private readonly IPlanBuyingScxDataConverter _PlanBuyingScxDataConverter;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IAabEngine _AabEngine;
         private readonly IAudienceService _AudienceService;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDaypartCache _DaypartCache;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
@@ -320,12 +318,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SharedFolderService = sharedFolderService;
             _PlanBuyingScxDataPrep = planBuyingScxDataPrep;
             _PlanBuyingScxDataConverter = planBuyingScxDataConverter;
-            _FeatureToggleHelper = featureToggleHelper;
             _AabEngine = aabEngine;
             _AudienceService = audienceService;
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _DaypartCache = daypartCache;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));

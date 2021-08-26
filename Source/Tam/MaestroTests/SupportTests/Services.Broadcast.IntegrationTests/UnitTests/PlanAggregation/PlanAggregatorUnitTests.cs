@@ -320,13 +320,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 .Returns(campaignRepository.Object);
 
             var aabEngine = new Mock<IAabEngine>();
-            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
 
             var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
                 , aabEngine.Object
-                , featureToggleHelper.Object
             );
 
             return tc;
@@ -349,13 +347,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             aabEngine.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
                 .Returns(new ProductDto { Name = productName });
 
-            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-
             var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
                 , aabEngine.Object
-                , featureToggleHelper.Object
             );
             var getQuartersReturn = new List<QuarterDetailDto>
             {
@@ -381,13 +376,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                 .Returns(campaignRepository.Object);
 
             var aabEngine = new Mock<IAabEngine>();
-            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
 
             var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
                 , aabEngine.Object
-                , featureToggleHelper.Object
             );
 
             quarterCalculationEngine
@@ -410,13 +403,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
             aabEngine = new Mock<IAabEngine>();
 
-            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-
             var tc = new PlanAggregator(
                 broadcastDataRepositoryFactory.Object
                 , quarterCalculationEngine.Object
                 , aabEngine.Object
-                , featureToggleHelper.Object
             );
 
             return tc;

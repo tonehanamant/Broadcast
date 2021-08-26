@@ -32,7 +32,6 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IRatingsRepository _RatingsRepo;
         private readonly IInventoryFileRepository _InventoryFileRepo;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;   
 
         public EnvironmentService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IFeatureToggleHelper featureToggleHelper,
@@ -40,7 +39,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             _RatingsRepo = broadcastDataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _InventoryFileRepo = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
-            _FeatureToggleHelper = featureToggleHelper;                    
         }
 
         public Dictionary<string, string> GetDbInfo()

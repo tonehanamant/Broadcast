@@ -149,7 +149,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IDaypartCache _DaypartCache;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IAabEngine _AabEngine;
 
         public CampaignService(
@@ -188,7 +187,6 @@ namespace Services.Broadcast.ApplicationServices
             _DateTimeEngine = _dateTimeEngine;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _DaypartCache = daypartCache;
-            _FeatureToggleHelper = featureToggleHelper;
             _AabEngine = aabEngine;
         }
 

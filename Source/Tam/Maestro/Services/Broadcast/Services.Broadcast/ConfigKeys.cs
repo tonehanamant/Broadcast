@@ -98,6 +98,7 @@ namespace Services.Broadcast
 		public static readonly string WWTV_SharedFolder = "WWTV_SharedFolder";
 		public static readonly string WWTV_SharedFolder_Password = "WWTV_SharedFolder_Password";
 		public static readonly string WWTV_SharedFolder_UserName = "WWTV_SharedFolder_UserName";
+        public static readonly string ReelIsciIngestNumberOfDays = "ReelIsciIngestNumberOfDays";
 	}
 }
 

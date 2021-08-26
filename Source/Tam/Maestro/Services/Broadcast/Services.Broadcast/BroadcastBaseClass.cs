@@ -12,9 +12,9 @@ namespace Services.Broadcast
     public abstract class BroadcastBaseClass
     {
         private readonly ILog _Log;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
+        protected readonly IFeatureToggleHelper _FeatureToggleHelper;
+        protected readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        protected readonly Lazy<bool> _IsPipelineVariablesEnabled;
         
         protected BroadcastBaseClass(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {

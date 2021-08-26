@@ -29,25 +29,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IAabEngine _AabEngine;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanAggregator"/> class.
         /// </summary>
         /// <param name="broadcastDataRepositoryFactory">The broadcast data repository factory.</param>
         /// <param name="quarterCalculationEngine">The quarter calculation engine.</param>
-        /// <param name="trafficApiCache">The api to the traffic app</param>
+        /// <param name="aabEngine">The aab engine.</param>
         public PlanAggregator(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IQuarterCalculationEngine quarterCalculationEngine
-            , IAabEngine aabEngine
-            , IFeatureToggleHelper featureToggleHelper)
+            , IAabEngine aabEngine)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
 
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
 
             _AabEngine = aabEngine;
-            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc/>

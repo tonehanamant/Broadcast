@@ -63,7 +63,6 @@ namespace Services.Broadcast.BusinessEngines
     /// <summary>
     /// Gets Aab data from the correct source based on the system configuration.
     /// </summary>
-    /// <seealso cref="Services.Broadcast.BusinessEngines.IAabEngine" />
     public class AabEngine : IAabEngine
     {
         private IAabCache _AabApiCache;

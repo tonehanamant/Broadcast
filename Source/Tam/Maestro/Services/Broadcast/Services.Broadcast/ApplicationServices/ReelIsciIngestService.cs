@@ -47,8 +47,10 @@ namespace Services.Broadcast.ApplicationServices
 
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IBackgroundJobClient _BackgroundJobClient;
+        private Lazy<int> _IngestNumberOfDays;
 
-        public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine, IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        public ReelIsciIngestService(IReelIsciApiClient reelIsciApiClient, IDataRepositoryFactory broadcastDataRepositoryFactory, IDateTimeEngine dateTimeEngine,
+            IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ReelIsciApiClient = reelIsciApiClient;
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
@@ -59,6 +61,13 @@ namespace Services.Broadcast.ApplicationServices
 
             _DateTimeEngine = dateTimeEngine;            
             _BackgroundJobClient = backgroundJobClient;
+            _IngestNumberOfDays = new Lazy<int>(_GetIngestNumberOfDays);
+        }
+
+        private int _GetIngestNumberOfDays()
+        {
+            var numberOfDays = _ConfigurationSettingsHelper.GetConfigValue<int>(ConfigKeys.ReelIsciIngestNumberOfDays);
+            return numberOfDays;
         }
 
         /// <inheritdoc />
@@ -98,16 +107,16 @@ namespace Services.Broadcast.ApplicationServices
 
         protected void _Run(int jobId, string userName)
         {
-            int numberOfDays = 21;
-            DateTime startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
+            var numberOfDays = _IngestNumberOfDays.Value;
+            var startDate = _GetIngestStartDate(numberOfDays);
             PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, userName);
         }
 
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void PerformReelIsciIngest(string userName)
         {
-            var numberOfDays = 21;
-            var startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
+            var numberOfDays = _IngestNumberOfDays.Value;
+            var startDate = _GetIngestStartDate(numberOfDays);
 
             _LogInfo($"Starting the Reel Isci Ingest Job.", userName);
 
@@ -121,6 +130,12 @@ namespace Services.Broadcast.ApplicationServices
             jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
 
             PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, userName);
+        }
+
+        private DateTime _GetIngestStartDate(int numberOfDays)
+        {
+            var startDate = _DateTimeEngine.GetCurrentMoment().AddDays(numberOfDays * -1);
+            return startDate;
         }
 
         internal void PerformReelIsciIngestBetweenRange(int jobId, DateTime startDate, int numberOfDays, string userName)

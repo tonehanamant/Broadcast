@@ -103,8 +103,6 @@ namespace Services.Broadcast.ApplicationServices
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
         private const float MATCH_NOT_FOUND = 0;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsInternalProgramSearchEnabled;
 
         public ProgramMappingService(
@@ -133,8 +131,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramCleanupEngine = programMappingCleanupEngine;
             _MasterProgramListImporter = masterListImporter;
             _DateTimeEngine = dateTimeEngine;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
+            
             _IsInternalProgramSearchEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.INTERNAL_PROGRAM_SEARCH));
         }
 

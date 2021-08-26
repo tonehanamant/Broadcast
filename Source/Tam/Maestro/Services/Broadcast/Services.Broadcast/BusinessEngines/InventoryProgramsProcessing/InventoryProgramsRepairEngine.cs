@@ -28,9 +28,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     {
         protected readonly IInventoryRepository _InventoryRepository;
         protected readonly IProgramMappingRepository _ProgramMappingRepository;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         public InventoryProgramsRepairEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IFeatureToggleHelper featureToggleHelper,
@@ -38,9 +35,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         {
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         public void RepairInventoryPrograms(CancellationToken token)
