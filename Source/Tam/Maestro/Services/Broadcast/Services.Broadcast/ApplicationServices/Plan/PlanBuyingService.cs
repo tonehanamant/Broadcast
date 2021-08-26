@@ -193,7 +193,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="templatesFilePath">Path to the template files</param>
         /// <returns>The report id</returns>
         Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
-
+        
         /// <summary>
         /// Gets the plan buying parameters. 
         /// </summary>
@@ -209,6 +209,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>      
         /// <returns>The list of Rep firms</returns>
         List<string> GetResultRepFirms(int planId, PostingTypeEnum? postingType,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        /// <summary>
+        /// Retrieves list of result Ownership Groups  
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The Type of Posting</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>      
+        /// <returns>The list of Ownership Groups</returns>
+        List<string> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
     }
 
@@ -2515,7 +2525,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
 
             result.Details = result.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
-           _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
+            _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
 
             return result;
         }
@@ -2931,6 +2941,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = stations.Details.Select(x => x.RepFirm.ToString()).Distinct().ToList();
 
             result.OrderByDescending(x => x).ToList();
+
+            return result;
+        }
+
+        public List<string> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            postingType = _ResolvePostingType(planId, postingType);
+
+            var stations = GetStations(planId, postingType, spotAllocationModelMode);
+
+            if (stations == null)
+                return new List<string>();
+
+            var result = stations.Details.Select(x => x.OwnerName).Distinct().OrderByDescending(x => x).ToList();
 
             return result;
         }

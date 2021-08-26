@@ -222,5 +222,19 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetResultRepFirms(planId,postingType,spotAllocationModelMode));
         }
+
+        /// <summary>
+        /// Gets the Result Ownership Groups. 
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="postingType">The posting Type</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>       
+        /// <returns>The list of Ownership Groups from buying result</returns>
+        [HttpGet]
+        [Route("result-ownership-groups")]
+        public BaseResponse<List<string>> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetResultOwnershipGroups(planId, postingType, spotAllocationModelMode));
+        }
     }
 }

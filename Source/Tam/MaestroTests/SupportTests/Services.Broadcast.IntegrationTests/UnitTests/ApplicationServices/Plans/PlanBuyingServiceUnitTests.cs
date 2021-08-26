@@ -5230,5 +5230,48 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetResultOwnershipGroups()
+        {
+            // Arrange
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Id = 1,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime()
+                });
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetBuyingStationsResultByJobId(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new PlanBuyingStationResultDto
+                {
+                    Details = new List<PlanBuyingStationDto>()
+                {
+                  new PlanBuyingStationDto()
+                  {
+                    OwnerName = "Ownership group 3"
+                  },
+                  new PlanBuyingStationDto()
+                  {
+                    OwnerName = "NASY"
+                  },
+                  new PlanBuyingStationDto()
+                  {
+                    OwnerName = "NASY"
+                  }
+                }
+                });
+            var service = _GetService();
+            var Id = 1197;
+
+            // Act
+            var result = service.GetResultOwnershipGroups(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }
