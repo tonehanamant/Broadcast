@@ -689,6 +689,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             //Assert
             Assert.AreEqual(expectedData, actualResult);
         }
+
         [Test]
         public void SaveIsciPlanMappings()
         {
@@ -757,6 +758,119 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             //Assert
             Assert.AreEqual(expectedData, actualResult);
+        }
+
+        [Test]
+        public void SaveIsciPlanMappings_FilterDuplicatesInDb()
+        {
+            //Arrange
+            string createdBy = "Test User";
+            DateTime createdAt = DateTime.Now;
+            var existingMappings = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7059,
+                                Isci= "AE87VR15"
+                            }
+                        };
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7049,
+                                Isci= "AE87VR16"
+                            }
+                        };
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList
+            };
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(existingMappings);
+
+            var savedPlanMappings = new List<List<IsciPlanMappingDto>>();
+            _PlanIsciRepositoryMock
+                .Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<IsciPlanMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            .Callback<List<IsciPlanMappingDto>, string, DateTime>((pms, un, dt) => savedPlanMappings.Add(pms))
+            .Returns(2);
+
+            //Act
+            _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlanMappings));
+        }
+
+        [Test]
+        public void SaveIsciPlanMappings_FilterDuplicatesInGivenList()
+        {
+            //Arrange
+            var createdBy = "Test User";
+            var createdAt = DateTime.Now;
+            var existingMappings = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR16"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7059,
+                                Isci= "AE87VR15"
+                            }
+                        };
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR14"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7059,
+                                Isci= "AE87VR27"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 7009,
+                                Isci= "AE77VR14"
+                            }
+                        };
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList
+            };
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(existingMappings);
+
+            var savedPlanMappings = new List<List<IsciPlanMappingDto>>();
+            _PlanIsciRepositoryMock
+                .Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<IsciPlanMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+            .Callback<List<IsciPlanMappingDto>, string, DateTime>((pms, un, dt) => savedPlanMappings.Add(pms))
+            .Returns(2);
+
+            //Act
+            _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlanMappings));
         }
 
         [Test]

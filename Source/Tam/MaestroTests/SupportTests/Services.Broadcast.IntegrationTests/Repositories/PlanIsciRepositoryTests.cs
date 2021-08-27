@@ -186,25 +186,27 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
-        public void SaveIsciPlanMappings_RemoveDuplicateListItem()
+        public void SaveIsciPlanMappings_DuplicateMapping()
         {
             // Arrange
             string createdBy = "Test User";
             DateTime createdAt = DateTime.Now;
             var isciMappings = _GetIsciMappings_DuplicatePlan();
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-            int result = 0;
-            int data = 2;
+
+            Exception caught = null;
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                result = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
+                caught = Assert.Throws<Exception>(() =>
+                    planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt));
             }
 
             // Assert
-            Assert.AreEqual(data, result);
+            Assert.IsTrue(caught.InnerException.InnerException.InnerException.Message.Contains("Cannot insert duplicate key"));
         }
+
         private IsciPlanProductMappingDto _GetIsciMappings()
         {
             return new IsciPlanProductMappingDto()

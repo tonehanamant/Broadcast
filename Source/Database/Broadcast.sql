@@ -542,7 +542,8 @@ GO
 UPDATE spot_length_cost_multipliers
 	SET cost_multiplier = 0.5
 	WHERE spot_length_id = 3
-/*************************************** END UPDATE SCRIPT *******************************************************/
+
+/*************************************** End BP-2410 *****************************************************/
 
 /*************************************** Start BP-2514 *****************************************************/
 
@@ -903,6 +904,25 @@ AND pd.is_end_time_modified = 0
 GO
 
 /*************************************** End BP-2920 *****************************************************/
+
+/*************************************** Start BP-2920 *****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('plan_iscis') AND name='UX_plan_iscis_plan_id_isci') 
+BEGIN
+
+	CREATE UNIQUE NONCLUSTERED INDEX [UX_plan_iscis_plan_id_isci] ON [dbo].[plan_iscis]
+	(
+		[plan_id] ASC,
+		[isci] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+END 
+
+GO
+
+/*************************************** End BP-2920 *****************************************************/
+
+/*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
