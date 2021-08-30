@@ -745,7 +745,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             // Assert
             Assert.AreEqual("All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.", testClass.Notes);
         }
-            private static PlanDto _GetNewPlan()
+
+        [Test]
+        [TestCase(0, 0)]
+        [TestCase(2400, 1.2)]
+        public void CalculateUnitsForWeekComponent(double weeklyImpressions, double expectedResult)
+        {
+            // Arrange
+            var planWeek = new WeeklyBreakdownWeek
+            {
+                WeeklyImpressions = weeklyImpressions
+            };
+            var planImpressionsPerUnit = 2;
+
+            // Act
+            var result = CampaignReportData._CalculateUnitsForWeekComponent(planWeek, planImpressionsPerUnit);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        private static PlanDto _GetNewPlan()
         {
             return new PlanDto
             {

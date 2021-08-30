@@ -264,7 +264,7 @@ namespace Services.Broadcast.Entities.Campaign
                             plan.Dayparts.Single(x => x.DaypartCodeId == weekComponent.DaypartCodeId));
 
                         newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
-                        newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, _SpotLengthDeliveryMultipliers);
+                        newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit);
 
                         _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts);
                         _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts, _IsVPVHDemoEnabled.Value);
@@ -410,7 +410,7 @@ namespace Services.Broadcast.Entities.Campaign
                                 , plan.Dayparts.Single(x => x.DaypartCodeId == weekComponent.DaypartCodeId));
 
                             newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
-                            newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, _SpotLengthDeliveryMultipliers);
+                            newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit);
 
                             //guaranteed audience data
                             _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan);
@@ -425,19 +425,17 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private static double _CalculateUnitsForWeekComponent(WeeklyBreakdownWeek planWeek, double planImpressionsPerUnit, Dictionary<int, double> spotLengthDeliveryMultipliers)
+        internal static double _CalculateUnitsForWeekComponent(WeeklyBreakdownWeek planWeek, double planImpressionsPerUnit)
         {
             if (planWeek.WeeklyImpressions == 0)
             {
                 //this is a hiatus week
                 return 0;
             }
-            var spotLengthId = planWeek.SpotLengthId.Value;
-            var deliveryMultiplier = spotLengthDeliveryMultipliers[spotLengthId];
-
+            
             // WeeklyImpressions is from the weekly breakdown results and already weighted
             var weekImpressions = planWeek.WeeklyImpressions / 1000;
-            var deliveryUnitsForThisWeek = weekImpressions / (planImpressionsPerUnit * deliveryMultiplier);
+            var deliveryUnitsForThisWeek = weekImpressions / planImpressionsPerUnit;
 
             return deliveryUnitsForThisWeek;
         }

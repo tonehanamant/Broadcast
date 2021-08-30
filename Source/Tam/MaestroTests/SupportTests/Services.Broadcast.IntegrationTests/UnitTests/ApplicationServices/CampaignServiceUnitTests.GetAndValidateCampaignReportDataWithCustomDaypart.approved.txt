@@ -197,10 +197,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        108.0,
-        108.0,
-        108.0,
-        108.0,
+        54.0,
+        54.0,
+        54.0,
+        54.0,
         0.0,
         0.0,
         0.0,
@@ -208,7 +208,7 @@
         0.0,
         0.0,
         0.0,
-        432.0
+        216.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -489,10 +489,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        144.0,
-        144.0,
-        144.0,
-        144.0,
+        90.0,
+        90.0,
+        90.0,
+        90.0,
         0.0,
         0.0,
         0.0,
@@ -500,7 +500,7 @@
         0.0,
         0.0,
         0.0,
-        576.0
+        360.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -635,10 +635,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        72.0,
-        72.0,
-        72.0,
-        72.0,
+        36.0,
+        36.0,
+        36.0,
+        36.0,
         0.0,
         0.0,
         0.0,
@@ -646,7 +646,7 @@
         0.0,
         0.0,
         0.0,
-        288.0
+        144.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -927,10 +927,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        96.0,
-        96.0,
-        96.0,
-        96.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0,
         0.0,
         0.0,
         0.0,
@@ -938,7 +938,7 @@
         0.0,
         0.0,
         0.0,
-        384.0
+        240.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -1072,10 +1072,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        240.0,
-        240.0,
-        240.0,
-        240.0,
+        150.0,
+        150.0,
+        150.0,
+        150.0,
         0.0,
         0.0,
         0.0,
@@ -1083,7 +1083,7 @@
         0.0,
         0.0,
         0.0,
-        960.0
+        600.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -1123,8 +1123,8 @@
           "CPM": 13.333333296296296296296296296,
           "CPP": 16129.032213261648745519713262,
           "DaypartCode": null,
-          "Impressions": 50.0,
-          "RatingPoints": 0.04133333,
+          "Impressions": 100.0,
+          "RatingPoints": 0.08266667,
           "SpotLengthLabel": null,
           "TotalImpressions": 21600.0,
           "TotalRatingPoints": 17.856,
@@ -1134,8 +1134,8 @@
           "CPM": 5.6533333176296290014814832263,
           "CPP": 6814.3099376869218831926086409,
           "DaypartCode": null,
-          "Impressions": 117.9245283,
-          "RatingPoints": 0.09783333,
+          "Impressions": 235.8490566,
+          "RatingPoints": 0.19566667,
           "SpotLengthLabel": null,
           "TotalImpressions": 50943.39622642,
           "TotalRatingPoints": 42.26400059,
@@ -1143,8 +1143,8 @@
         },
         "SpotLengthLabel": "15 eq.",
         "TotalCost": 287999.9992,
-        "Units": 432.0,
-        "UnitsCost": 666.66666481481481481481481481
+        "Units": 216.0,
+        "UnitsCost": 1333.3333296296296296296296296
       },
       {
         "DaypartCode": "DAY",
@@ -1181,8 +1181,8 @@
           "CPM": 13.333333277777777777777777778,
           "CPP": 16129.03219086021505376344086,
           "DaypartCode": null,
-          "Impressions": 50.0,
-          "RatingPoints": 0.04133333,
+          "Impressions": 100.0,
+          "RatingPoints": 0.08266667,
           "SpotLengthLabel": null,
           "TotalImpressions": 14400.0,
           "TotalRatingPoints": 11.904,
@@ -1192,8 +1192,8 @@
           "CPM": 5.6533333097777771496296322469,
           "CPP": 6814.3099282226024990043299582,
           "DaypartCode": null,
-          "Impressions": 117.9245283,
-          "RatingPoints": 0.09783333,
+          "Impressions": 235.8490566,
+          "RatingPoints": 0.19566667,
           "SpotLengthLabel": null,
           "TotalImpressions": 33962.26415094,
           "TotalRatingPoints": 28.17600039,
@@ -1201,8 +1201,8 @@
         },
         "SpotLengthLabel": "15 eq.",
         "TotalCost": 191999.9992,
-        "Units": 288.0,
-        "UnitsCost": 666.66666388888888888888888889
+        "Units": 144.0,
+        "UnitsCost": 1333.3333277777777777777777778
       },
       {
         "DaypartCode": "PA",
@@ -1261,7 +1261,7 @@
       },
       "SpotLengthLabel": null,
       "TotalCost": 799999.9968,
-      "Units": 960.0,
+      "Units": 600.0,
       "UnitsCost": 0.0
     }
   },
@@ -1276,8 +1276,8 @@
             "CPM": 13.333333296296296296296296296,
             "CPP": 16129.032213261648745519713262,
             "DaypartCode": null,
-            "Impressions": 50.0,
-            "RatingPoints": 0.04133333,
+            "Impressions": 100.0,
+            "RatingPoints": 0.08266667,
             "SpotLengthLabel": null,
             "TotalImpressions": 21600.0,
             "TotalRatingPoints": 17.856,
@@ -1287,8 +1287,8 @@
             "CPM": 5.6533333176296290014814832263,
             "CPP": 6814.3099376869218831926086409,
             "DaypartCode": null,
-            "Impressions": 117.9245283,
-            "RatingPoints": 0.09783333,
+            "Impressions": 235.8490566,
+            "RatingPoints": 0.19566667,
             "SpotLengthLabel": null,
             "TotalImpressions": 50943.39622642,
             "TotalRatingPoints": 42.26400059,
@@ -1296,8 +1296,8 @@
           },
           "SpotLengthLabel": "15 eq.",
           "TotalCost": 287999.9992,
-          "Units": 432.0,
-          "UnitsCost": 666.66666481481481481481481481
+          "Units": 216.0,
+          "UnitsCost": 1333.3333296296296296296296296
         },
         {
           "DaypartCode": "DAY",
@@ -1334,8 +1334,8 @@
             "CPM": 13.333333277777777777777777778,
             "CPP": 16129.03219086021505376344086,
             "DaypartCode": null,
-            "Impressions": 50.0,
-            "RatingPoints": 0.04133333,
+            "Impressions": 100.0,
+            "RatingPoints": 0.08266667,
             "SpotLengthLabel": null,
             "TotalImpressions": 14400.0,
             "TotalRatingPoints": 11.904,
@@ -1345,8 +1345,8 @@
             "CPM": 5.6533333097777771496296322469,
             "CPP": 6814.3099282226024990043299582,
             "DaypartCode": null,
-            "Impressions": 117.9245283,
-            "RatingPoints": 0.09783333,
+            "Impressions": 235.8490566,
+            "RatingPoints": 0.19566667,
             "SpotLengthLabel": null,
             "TotalImpressions": 33962.26415094,
             "TotalRatingPoints": 28.17600039,
@@ -1354,8 +1354,8 @@
           },
           "SpotLengthLabel": "15 eq.",
           "TotalCost": 191999.9992,
-          "Units": 288.0,
-          "UnitsCost": 666.66666388888888888888888889
+          "Units": 144.0,
+          "UnitsCost": 1333.3333277777777777777777778
         },
         {
           "DaypartCode": "PA",
@@ -1414,7 +1414,7 @@
         },
         "SpotLengthLabel": null,
         "TotalCost": 799999.9968,
-        "Units": 960.0,
+        "Units": 600.0,
         "UnitsCost": 0.0
       }
     }
