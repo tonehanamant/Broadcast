@@ -3,7 +3,7 @@
     "AdvertiserName": "ReckittBenckiser",
     "Id": 1,
     "Isci": "AB82TXT2",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product1",
     "SpotLengthDuration": 30
   },
@@ -11,7 +11,7 @@
     "AdvertiserName": "ReckittBenckiser",
     "Id": 2,
     "Isci": "AB82TXT2H",
-    "PlanIsci": "AB82TXT2H",
+    "PlanIsci": 1,
     "ProductName": "Product2",
     "SpotLengthDuration": 30
   },
@@ -19,7 +19,7 @@
     "AdvertiserName": "ReckittBenckiser",
     "Id": 3,
     "Isci": "AB82VR58",
-    "PlanIsci": "AB82VR58",
+    "PlanIsci": 1,
     "ProductName": "Product3",
     "SpotLengthDuration": 30
   },
@@ -27,7 +27,7 @@
     "AdvertiserName": "Chattem,Inc.",
     "Id": 4,
     "Isci": "AB82VR58H",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product4",
     "SpotLengthDuration": 30
   },
@@ -35,7 +35,7 @@
     "AdvertiserName": "Colgate",
     "Id": 5,
     "Isci": "AB82YV61",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product5",
     "SpotLengthDuration": 30
   },
@@ -43,7 +43,7 @@
     "AdvertiserName": "Sonic",
     "Id": 6,
     "Isci": "AB82YV61H",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product6",
     "SpotLengthDuration": 30
   },
@@ -51,7 +51,7 @@
     "AdvertiserName": "RedBull",
     "Id": 7,
     "Isci": "AB83GUC5",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product7",
     "SpotLengthDuration": 30
   },
@@ -59,7 +59,7 @@
     "AdvertiserName": "LibertyMutual",
     "Id": 8,
     "Isci": "AB83GUC5H",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product8",
     "SpotLengthDuration": 30
   }

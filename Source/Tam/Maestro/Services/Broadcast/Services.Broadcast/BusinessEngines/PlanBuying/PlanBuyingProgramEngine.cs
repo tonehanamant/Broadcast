@@ -19,6 +19,16 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
             PlanBuyingAllocationResult apiResponse, bool goalsFulfilledByProprietaryInventory);
 
         /// <summary>
+        /// Calculates the specified inventory.
+        /// </summary>
+        /// <param name="inventory">The inventory.</param>
+        /// <param name="apiResponse">The API response.</param>
+        /// <param name="goalsFulfilledByProprietaryInventory">True or False</param>
+        /// <returns>PlanBuyingResultBaseDto object</returns>
+        PlanBuyingResultBaseDto CalculateProgramStations(List<PlanBuyingInventoryProgram> inventory,
+            PlanBuyingAllocationResult apiResponse, bool goalsFulfilledByProprietaryInventory);
+
+        /// <summary>
         /// Converts the impressions to user format.
         /// </summary>
         /// <param name="planBuyingResult">The plan buying result.</param>
@@ -176,6 +186,75 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 program.AvgImpressions /= 1000;
                 program.Impressions /= 1000;
             }
+        }
+
+        /// <inheritdoc/>
+        public PlanBuyingResultBaseDto CalculateProgramStations(
+           List<PlanBuyingInventoryProgram> inventory,
+           PlanBuyingAllocationResult apiResponse,
+           bool goalsFulfilledByProprietaryInventory)
+        {
+            var programs = _AggregateProgramStations(inventory, apiResponse);
+            var planBuyingResult = new PlanBuyingResultBaseDto
+            {
+                GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory,
+                OptimalCpm = apiResponse.BuyingCpm,
+                JobId = apiResponse.JobId,
+                PlanVersionId = apiResponse.PlanVersionId,
+                Programs = programs.Select(x => new PlanBuyingProgramDto
+                {
+                    ProgramName = x.ProgramName,
+                    Genre = x.Genre,
+                    Station = x.Station,
+                    Impressions = x.TotalImpressions,
+                    SpotCount = x.TotalSpots,
+                    Budget = x.TotalCost
+                }).ToList()
+            };
+            return planBuyingResult;
+        }
+
+        private List<PlanBuyingProgram> _AggregateProgramStations(
+            List<PlanBuyingInventoryProgram> inventory,
+            PlanBuyingAllocationResult apiResponse)
+        {
+            var planBuyingPrograms = new List<PlanBuyingProgram>();
+
+            var manifestIds = apiResponse.AllocatedSpots.Select(s => s.Id).Distinct();
+            var groupedInventories = inventory
+                .Where(y => manifestIds.Contains(y.ManifestId))
+                .SelectMany(x => x.ManifestDayparts.Select(d => new PlanBuyingManifestWithManifestDaypart
+                {
+                    Manifest = x,
+                    ManifestDaypart = d
+                }))
+                .GroupBy(x => new 
+                { 
+                    ProgramName = x.ManifestDaypart.PrimaryProgram.Name, 
+                    Genre = x.ManifestDaypart.PrimaryProgram.Genre,
+                    StationName = x.Manifest.Station.LegacyCallLetters
+                });
+
+            foreach (var groupedInventory in groupedInventories)
+            {
+                var programInventory = groupedInventory.ToList();
+                var allocatedProgramSpots = _GetAllocatedProgramSpots(apiResponse, programInventory);
+                _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots);
+                if (programSpots == 0)
+                    continue;
+
+                var planBuyingProgram = new PlanBuyingProgram
+                {
+                    ProgramName = groupedInventory.Key.ProgramName,
+                    Genre = groupedInventory.Key.Genre,
+                    Station = groupedInventory.Key.StationName,                    
+                    TotalImpressions = programImpressions,
+                    TotalCost = programCost,
+                    TotalSpots = programSpots
+                };
+                planBuyingPrograms.Add(planBuyingProgram);
+            };
+            return planBuyingPrograms;
         }
     }
 }

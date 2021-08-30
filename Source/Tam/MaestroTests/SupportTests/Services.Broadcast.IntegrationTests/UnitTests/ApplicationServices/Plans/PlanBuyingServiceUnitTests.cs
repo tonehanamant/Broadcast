@@ -1448,6 +1448,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                  }
              });
 
+            _PlanBuyingProgramEngine.Setup(s => s.CalculateProgramStations(
+                   It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
+                   It.IsAny<bool>()))
+               .Returns(new PlanBuyingResultBaseDto());
+
             _PlanBuyingBandCalculationEngineMock.Setup(s => s.Calculate(
                     It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
                     It.IsAny<PlanBuyingParametersDto>()))
@@ -1935,10 +1940,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               });
 
             var passedParameters = new List<PlanBuyingResultBaseDto>();
-
+            var planVersionBuyingResultId = 100;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.SaveBuyingAggregateResults(It.IsAny<PlanBuyingResultBaseDto>()))
-                .Callback<PlanBuyingResultBaseDto>(p => passedParameters.Add(p));
+                .Callback<PlanBuyingResultBaseDto>(p => 
+                {
+                    passedParameters.Add(p);
+                    planVersionBuyingResultId++; 
+                })
+                .Returns<PlanBuyingResultBaseDto>(c => planVersionBuyingResultId);
+            
+            var planVersionBuyingResultIds = new List<int>();
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.SavePlanBuyingResultSpots(It.IsAny<int>(), It.IsAny<PlanBuyingResultBaseDto>()))
+                .Callback<int, PlanBuyingResultBaseDto>((p1, p2) =>
+                {
+                    planVersionBuyingResultIds.Add(p1);                    
+                });
 
             _PlanBuyingProgramEngine.Setup(s => s.Calculate(
                    It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
@@ -1993,6 +2011,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                    }
                });
 
+            _PlanBuyingProgramEngine.Setup(s => s.CalculateProgramStations(
+                   It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
+                   It.IsAny<bool>()))
+               .Returns(new PlanBuyingResultBaseDto());
+
             _PlanBuyingBandCalculationEngineMock.Setup(s => s.Calculate(
                     It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
                     It.IsAny<PlanBuyingParametersDto>()))
@@ -2023,6 +2046,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.RunBuyingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
+            Assert.IsTrue(planVersionBuyingResultIds.Count(x => x <= 100) == 0);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
         }
 
@@ -5272,6 +5296,594 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesBuyingAggregateResults_WhenRunningBuyingJob_SaveProgramStations()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            _InventoryProprietarySummaryRepositoryMock
+                .Setup(x => x.GetInventoryProprietarySummariesByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetInventoryProprietaryQuarterSummary(false));
+
+            _BroadcastAudienceRepositoryMock
+                .Setup(x => x.GetRatingsAudiencesByMaestroAudience(It.IsAny<List<int>>()))
+                .Returns(new List<audience_audiences>
+                {
+                    new audience_audiences { rating_audience_id = 1 },
+                    new audience_audiences { rating_audience_id = 2 }
+                });
+
+            var parameters = _GetPlanBuyingParametersDto();
+            parameters.Margin = 20;
+            parameters.JobId = jobId;
+
+            _PlanBuyingRepositoryMock
+               .Setup(x => x.GetPlanBuyingJob(It.IsAny<int>()))
+               .Returns(new PlanBuyingJob
+               {
+                   Id = jobId
+               });
+            _PlanRepositoryMock
+               .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+               .Returns(new PlanDto
+               {
+                   VersionId = 77,
+                   CoverageGoalPercent = 80,
+                   PostingType = PostingTypeEnum.NSI,
+                   CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
+                   AvailableMarkets = new List<PlanAvailableMarketDto>
+                   {
+                        new PlanAvailableMarketDto
+                        {
+                            Id = 5,
+                            MarketCode = 101,
+                            ShareOfVoicePercent = 12
+                        },
+                        new PlanAvailableMarketDto
+                        {
+                            Id = 6,
+                            MarketCode = 102,
+                            ShareOfVoicePercent = 13
+                        }
+                   },
+                   FlightStartDate = new DateTime(2005, 11, 21),
+                   FlightEndDate = new DateTime(2005, 12, 18),
+                   FlightDays = new List<int>(),
+                   TargetRatingPoints = 1000,
+                   Dayparts = new List<PlanDaypartDto>
+                   {
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 15,
+                            WeightingGoalPercent = 60
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 16,
+                            WeightingGoalPercent = 40
+                        }
+                   },
+                   BuyingParameters = _GetPlanBuyingParametersDto(),
+                   WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                   {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                   }
+               });
+
+            _WeeklyBreakdownEngineMock
+               .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+               .Returns(_GetWeeklyBreakDownWeeks());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
+                    }
+                });
+
+            _PlanBuyingInventoryEngineMock
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
+                .Returns(new List<PlanBuyingInventoryProgram>
+                {
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld_2",
+                                        Genre = "Sport"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld_2",
+                                    Genre = "Sport"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                                InventoryMediaWeekId = 90
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                                InventoryMediaWeekId = 91
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                                InventoryMediaWeekId = 92
+                            }
+                        }
+                    },
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 16,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 6,
+                            LegacyCallLetters = "wabc",
+                            MarketCode = 100,
+                        },
+                        ProjectedImpressions = 1500,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 4,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Wednesday = true,
+                                    Friday = true,
+                                    StartTime = 64800, // 6pm
+                                    EndTime = 71999 // 8pm
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                                InventoryMediaWeekId = 90
+                            }
+                        }
+                    },
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 3,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 0,
+                        ProjectedImpressions = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 4,
+                        StandardDaypartId = 15,
+                        PostingType = PostingTypeEnum.NSI,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    }
+                });
+
+            _MarketCoverageRepositoryMock
+              .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+              .Returns(_GetLatestMarketCoverages());
+
+            _BuyingApiClientMock
+             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto>()))
+             .Returns(new PlanBuyingApiSpotsResponseDto
+             {
+                 RequestId = "#q1w2e3",
+                 Results = new List<PlanBuyingApiSpotsResultDto>
+                 {
+                        new PlanBuyingApiSpotsResultDto
+                        {
+                            ManifestId = 1,
+                            MediaWeekId = 100,
+                            Frequency = 1
+                        },
+                        new PlanBuyingApiSpotsResultDto
+                        {
+                            ManifestId = 1,
+                            MediaWeekId = 101,
+                            Frequency = 2
+                        },
+                        new PlanBuyingApiSpotsResultDto
+                        {
+                            ManifestId = 2,
+                            MediaWeekId = 100,
+                            Frequency = 3
+                        }
+                 }
+             });
+
+            _MediaMonthAndWeekAggregateCacheMock
+              .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
+              .Returns<int>(weekId => new MediaWeek
+              {
+                  Id = weekId
+              });
+            
+            var planVersionBuyingResultId = 100;
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.SaveBuyingAggregateResults(It.IsAny<PlanBuyingResultBaseDto>()))
+                .Callback(() => planVersionBuyingResultId++)
+                .Returns<PlanBuyingResultBaseDto>(c => planVersionBuyingResultId);
+
+            var passedParameters = new List<PlanBuyingResultBaseDto>();
+            var planVersionBuyingResultIds = new List<int>();
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.SavePlanBuyingResultSpotStations(It.IsAny<int>(), It.IsAny<PlanBuyingResultBaseDto>()))
+                .Callback<int, PlanBuyingResultBaseDto>((p1, p2) =>
+                {
+                    planVersionBuyingResultIds.Add(p1);
+                    passedParameters.Add(p2);
+                });
+
+            _PlanBuyingProgramEngine.Setup(s => s.Calculate(
+                   It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
+                   It.IsAny<bool>()))
+               .Returns(new PlanBuyingResultBaseDto
+               {
+                   GoalFulfilledByProprietary = false,
+                   JobId = 1,
+                   OptimalCpm = 0.1682953311617806731813246000m,
+                   PlanVersionId = 77,
+                   Programs = new List<PlanBuyingProgramDto>
+                   {
+                        new PlanBuyingProgramDto
+                        {
+                            AvgCpm = 62.5000m,
+                            AvgImpressions = 1000,
+                            Budget = 187.5m,
+                            Genre = "Sport",
+                            Id = 0,
+                            Impressions = 3000,
+                            MarketCount = 1,
+                            PercentageOfBuy = 40,
+                            ProgramName = "seinfeld_2",
+                            SpotCount = 3,
+                            StationCount = 1
+                        },
+                        new PlanBuyingProgramDto
+                        {
+                            AvgCpm = 50.00m,
+                            AvgImpressions = 1500,
+                            Budget = 225m,
+                            Genre = "News",
+                            Id = 0,
+                            Impressions = 4500,
+                            MarketCount = 1,
+                            PercentageOfBuy = 60,
+                            ProgramName = "seinfeld",
+                            SpotCount = 3,
+                            StationCount = 1
+                        }
+                   },
+                   Totals = new PlanBuyingProgramTotalsDto
+                   {
+                       AvgCpm = 55.000m,
+                       AvgImpressions = 1250,
+                       Budget = 412.5m,
+                       Impressions = 7500,
+                       ImpressionsPercentage = 0,
+                       MarketCount = 2,
+                       SpotCount = 6,
+                       StationCount = 2
+                   }
+               });
+
+            _PlanBuyingProgramEngine.Setup(s => s.CalculateProgramStations(
+                   It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
+                   It.IsAny<bool>()))
+               .Returns(new PlanBuyingResultBaseDto
+               {
+                   GoalFulfilledByProprietary = false,
+                   JobId = 1,
+                   OptimalCpm = 0.1682953311617806731813246000m,
+                   PlanVersionId = 77,
+                   Programs = new List<PlanBuyingProgramDto>
+                   {
+                        new PlanBuyingProgramDto
+                        {
+                            Budget = 187.5m,
+                            Genre = "Sport",
+                            Impressions = 3000,
+                            ProgramName = "seinfeld_2",
+                            SpotCount = 3,
+                            Station = "WABC"
+                        },
+                        new PlanBuyingProgramDto
+                        {
+                            Budget = 225m,
+                            Genre = "News",
+                            Impressions = 4500,
+                            ProgramName = "seinfeld",
+                            SpotCount = 3,
+                            Station = "EUVP"
+                        }
+                   }
+               });
+
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.Calculate(
+                    It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
+                    It.IsAny<PlanBuyingParametersDto>()))
+                .Returns(new PlanBuyingBandsDto());
+
+            _PlanBuyingStationEngineMock.Setup(s =>
+                    s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
+                        It.IsAny<PlanBuyingParametersDto>()))
+                .Returns(new PlanBuyingStationResultDto());
+
+            _PlanBuyingMarketResultsEngine.Setup(s => s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(),
+                    It.IsAny<PlanBuyingAllocationResult>(), It.IsAny<PlanBuyingParametersDto>(),
+                    It.IsAny<PlanDto>(), It.IsAny<List<MarketCoverage>>()))
+                .Returns(new PlanBuyingResultMarketsDto());
+
+            _PlanBuyingOwnershipGroupEngine.Setup(s => s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(),
+                    It.IsAny<PlanBuyingAllocationResult>(), It.IsAny<PlanBuyingParametersDto>()
+                   ))
+                .Returns(new PlanBuyingResultOwnershipGroupDto());
+
+            _PlanBuyingRepFirmEngine.Setup(s => s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(),
+                    It.IsAny<PlanBuyingAllocationResult>(), It.IsAny<PlanBuyingParametersDto>()
+                   ))
+                .Returns(new PlanBuyingResultRepFirmDto());
+
+            var service = _GetService();
+            // Act
+            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(planVersionBuyingResultIds.Count(x => x <= 100) == 0);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
         }
     }
 }

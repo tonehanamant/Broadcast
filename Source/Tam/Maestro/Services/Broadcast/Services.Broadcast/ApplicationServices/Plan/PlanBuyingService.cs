@@ -1285,6 +1285,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             calculateBuyingProgramsTask));
                         calculateBuyingProgramsTask.Start();
 
+                        var calculateBuyingProgramStationsTask = new Task<PlanBuyingResultBaseDto>(() =>
+                        {
+                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                            var programStationResults = _PlanBuyingProgramEngine.CalculateProgramStations(postingTypeInventory, postingAllocationResult,
+                                goalsFulfilledByProprietaryInventory);
+                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                            return programStationResults;
+                        });
+                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateProgramStations,
+                            calculateBuyingProgramStationsTask));
+                        calculateBuyingProgramStationsTask.Start();
+
                         var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
                         {
                             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
@@ -1436,7 +1448,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             CalculateStations,
             CalculateMarkets,
             CalculateOwnershipGroups,
-            CalculateRepFirms
+            CalculateRepFirms,
+            CalculateProgramStations
         }
 
         internal class AggregationTask
@@ -1470,7 +1483,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var calculateBuyingProgramsTaskResult = calculateBuyingProgramsTask.Result;
                 calculateBuyingProgramsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
                 calculateBuyingProgramsTaskResult.PostingType = postingAllocationResult.PostingType;
-                _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
+
+                var calculateBuyingProgramStationsTask = (Task<PlanBuyingResultBaseDto>)aggregationTasks
+                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateProgramStations)
+                    .Task;
+                var calculateBuyingProgramStationsTaskResult = calculateBuyingProgramStationsTask.Result;
+                calculateBuyingProgramStationsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                calculateBuyingProgramStationsTaskResult.PostingType = postingAllocationResult.PostingType;
+
+                var planVersionBuyingResultId = _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
+                _PlanBuyingRepository.SavePlanBuyingResultSpots(planVersionBuyingResultId, calculateBuyingProgramsTaskResult);
+                _PlanBuyingRepository.SavePlanBuyingResultSpotStations(planVersionBuyingResultId, calculateBuyingProgramStationsTaskResult);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);

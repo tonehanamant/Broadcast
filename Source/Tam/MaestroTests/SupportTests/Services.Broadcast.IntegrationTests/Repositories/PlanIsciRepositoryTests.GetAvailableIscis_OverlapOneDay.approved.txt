@@ -3,7 +3,7 @@
     "AdvertiserName": "ReckittBenckiser",
     "Id": 1,
     "Isci": "AB82TXT2",
-    "PlanIsci": null,
+    "PlanIsci": 0,
     "ProductName": "Product1",
     "SpotLengthDuration": 30
   }

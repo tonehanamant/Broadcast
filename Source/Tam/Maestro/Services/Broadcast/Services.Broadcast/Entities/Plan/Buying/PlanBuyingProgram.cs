@@ -14,5 +14,6 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public int TotalSpots { get; set; }
         public List<string> Stations { get; set; }
         public List<int> MarketCodes { get; set; }
+        public string Station { get; set; }
     }
 }

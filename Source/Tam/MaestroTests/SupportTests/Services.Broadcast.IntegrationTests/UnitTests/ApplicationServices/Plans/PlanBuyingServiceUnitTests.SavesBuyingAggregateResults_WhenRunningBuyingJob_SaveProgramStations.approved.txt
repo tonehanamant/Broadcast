@@ -7,45 +7,45 @@
     "PostingType": 2,
     "Programs": [
       {
-        "AvgCpm": 62.5000,
-        "AvgImpressions": 1000.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 40.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld_2",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "WABC",
+        "StationCount": 0
       },
       {
-        "AvgCpm": 50.00,
-        "AvgImpressions": 1500.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 60.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "EUVP",
+        "StationCount": 0
       }
     ],
     "SpotAllocationModelMode": 1,
     "Totals": {
-      "AvgCpm": 55.000,
-      "AvgImpressions": 1250.0,
-      "Budget": 412.5,
-      "Impressions": 7500.0,
-      "ImpressionsPercentage": 0.0,
-      "MarketCount": 2,
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
       "MarketCoveragePercent": 0.0,
-      "SpotCount": 6,
-      "StationCount": 2
+      "SpotCount": 0,
+      "StationCount": 0
     }
   },
   {
@@ -56,45 +56,45 @@
     "PostingType": 2,
     "Programs": [
       {
-        "AvgCpm": 62.5000,
-        "AvgImpressions": 1000.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 40.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld_2",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "WABC",
+        "StationCount": 0
       },
       {
-        "AvgCpm": 50.00,
-        "AvgImpressions": 1500.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 60.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "EUVP",
+        "StationCount": 0
       }
     ],
     "SpotAllocationModelMode": 1,
     "Totals": {
-      "AvgCpm": 55.000,
-      "AvgImpressions": 1250.0,
-      "Budget": 412.5,
-      "Impressions": 7500.0,
-      "ImpressionsPercentage": 0.0,
-      "MarketCount": 2,
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
       "MarketCoveragePercent": 0.0,
-      "SpotCount": 6,
-      "StationCount": 2
+      "SpotCount": 0,
+      "StationCount": 0
     }
   },
   {
@@ -105,45 +105,45 @@
     "PostingType": 2,
     "Programs": [
       {
-        "AvgCpm": 62.5000,
-        "AvgImpressions": 1000.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 40.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld_2",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "WABC",
+        "StationCount": 0
       },
       {
-        "AvgCpm": 50.00,
-        "AvgImpressions": 1500.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 60.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "EUVP",
+        "StationCount": 0
       }
     ],
     "SpotAllocationModelMode": 1,
     "Totals": {
-      "AvgCpm": 55.000,
-      "AvgImpressions": 1250.0,
-      "Budget": 412.5,
-      "Impressions": 7500.0,
-      "ImpressionsPercentage": 0.0,
-      "MarketCount": 2,
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
       "MarketCoveragePercent": 0.0,
-      "SpotCount": 6,
-      "StationCount": 2
+      "SpotCount": 0,
+      "StationCount": 0
     }
   },
   {
@@ -154,45 +154,45 @@
     "PostingType": 2,
     "Programs": [
       {
-        "AvgCpm": 62.5000,
-        "AvgImpressions": 1000.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 40.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld_2",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "WABC",
+        "StationCount": 0
       },
       {
-        "AvgCpm": 50.00,
-        "AvgImpressions": 1500.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 60.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "EUVP",
+        "StationCount": 0
       }
     ],
     "SpotAllocationModelMode": 1,
     "Totals": {
-      "AvgCpm": 55.000,
-      "AvgImpressions": 1250.0,
-      "Budget": 412.5,
-      "Impressions": 7500.0,
-      "ImpressionsPercentage": 0.0,
-      "MarketCount": 2,
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
       "MarketCoveragePercent": 0.0,
-      "SpotCount": 6,
-      "StationCount": 2
+      "SpotCount": 0,
+      "StationCount": 0
     }
   },
   {
@@ -203,45 +203,45 @@
     "PostingType": 2,
     "Programs": [
       {
-        "AvgCpm": 62.5000,
-        "AvgImpressions": 1000.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 40.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld_2",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "WABC",
+        "StationCount": 0
       },
       {
-        "AvgCpm": 50.00,
-        "AvgImpressions": 1500.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 60.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "EUVP",
+        "StationCount": 0
       }
     ],
     "SpotAllocationModelMode": 1,
     "Totals": {
-      "AvgCpm": 55.000,
-      "AvgImpressions": 1250.0,
-      "Budget": 412.5,
-      "Impressions": 7500.0,
-      "ImpressionsPercentage": 0.0,
-      "MarketCount": 2,
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
       "MarketCoveragePercent": 0.0,
-      "SpotCount": 6,
-      "StationCount": 2
+      "SpotCount": 0,
+      "StationCount": 0
     }
   },
   {
@@ -252,45 +252,45 @@
     "PostingType": 2,
     "Programs": [
       {
-        "AvgCpm": 62.5000,
-        "AvgImpressions": 1000.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 40.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld_2",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "WABC",
+        "StationCount": 0
       },
       {
-        "AvgCpm": 50.00,
-        "AvgImpressions": 1500.0,
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
         "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
-        "MarketCount": 1,
-        "PercentageOfBuy": 60.0,
+        "MarketCount": 0,
+        "PercentageOfBuy": 0.0,
         "ProgramName": "seinfeld",
         "SpotCount": 3,
-        "Station": null,
-        "StationCount": 1
+        "Station": "EUVP",
+        "StationCount": 0
       }
     ],
     "SpotAllocationModelMode": 1,
     "Totals": {
-      "AvgCpm": 55.000,
-      "AvgImpressions": 1250.0,
-      "Budget": 412.5,
-      "Impressions": 7500.0,
-      "ImpressionsPercentage": 0.0,
-      "MarketCount": 2,
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
       "MarketCoveragePercent": 0.0,
-      "SpotCount": 6,
-      "StationCount": 2
+      "SpotCount": 0,
+      "StationCount": 0
     }
   }
 ]

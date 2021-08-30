@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
-        public PostingTypeEnum PostingType { get; set; }
+        public PostingTypeEnum PostingType { get; set; }        
     }
 
     public class PlanBuyingResultDto : PlanBuyingResultBaseDto
@@ -33,6 +33,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double PercentageOfBuy { get; set; }
         public int SpotCount { get; set; }
         public decimal Budget { get; set; }
+        public string Station { get; set; }
     }
 
     public class PlanBuyingProgramTotalsDto

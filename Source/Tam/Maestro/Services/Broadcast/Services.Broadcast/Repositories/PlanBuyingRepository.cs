@@ -146,8 +146,23 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Saves the buying aggregate results.
         /// </summary>
-        /// <param name="result">The result.</param>
-        void SaveBuyingAggregateResults(PlanBuyingResultBaseDto result);
+        /// <param name="planBuyingResult">The plan buying result</param>
+        /// <returns>The id of saved plan buying results</returns>
+        int SaveBuyingAggregateResults(PlanBuyingResultBaseDto planBuyingResult);
+
+        /// <summary>
+        /// Save the plan buying spots
+        /// </summary>
+        /// <param name="planVersionBuyingResultId">The plan version buying result id</param>
+        /// <param name="planBuyingResult">The plan buying result</param>
+        void SavePlanBuyingResultSpots(int planVersionBuyingResultId, PlanBuyingResultBaseDto planBuyingResult);
+
+        /// <summary>
+        /// Save the plan buying spot stations
+        /// </summary>
+        /// <param name="planVersionBuyingResultId">The plan version buying result id</param>
+        /// <param name="planBuyingResult">The plan buying result</param>
+        void SavePlanBuyingResultSpotStations(int planVersionBuyingResultId, PlanBuyingResultBaseDto planBuyingResult);
 
         /// <summary>
         /// Gets the buying programs result by job identifier.
@@ -845,58 +860,78 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SaveBuyingAggregateResults(PlanBuyingResultBaseDto buyingResult)
+        public int SaveBuyingAggregateResults(PlanBuyingResultBaseDto planBuyingResult)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planBuyingResultEntity = new plan_version_buying_results
+                {
+                    optimal_cpm = planBuyingResult.OptimalCpm,
+                    total_market_count = planBuyingResult.Totals.MarketCount,
+                    total_station_count = planBuyingResult.Totals.StationCount,
+                    total_avg_cpm = planBuyingResult.Totals.AvgCpm,
+                    total_avg_impressions = planBuyingResult.Totals.AvgImpressions,
+                    total_budget = planBuyingResult.Totals.Budget,
+                    total_impressions = planBuyingResult.Totals.Impressions,
+                    plan_version_buying_job_id = planBuyingResult.JobId,
+                    goal_fulfilled_by_proprietary = planBuyingResult.GoalFulfilledByProprietary,
+                    total_spots = planBuyingResult.Totals.SpotCount,
+                    total_market_coverage_percent = planBuyingResult.Totals.MarketCoveragePercent,
+                    spot_allocation_model_mode = (int)planBuyingResult.SpotAllocationModelMode,
+                    posting_type = (int)planBuyingResult.PostingType,
+                };
+                context.plan_version_buying_results.Add(planBuyingResultEntity);
+                context.SaveChanges();
+                return planBuyingResultEntity.id;
+            });
+        }
+
+        /// <inheritdoc/>
+        public void SavePlanBuyingResultSpots(int planVersionBuyingResultId, PlanBuyingResultBaseDto planBuyingResult)
         {
             _InReadUncommitedTransaction(context =>
             {
-                var propertiesToIgnore = new List<string>() { "id" };
-
-                var planBuyingResult = new plan_version_buying_results
+                var planBuyingResultSpots = planBuyingResult.Programs.Select(program => new plan_version_buying_result_spots
                 {
-                    optimal_cpm = buyingResult.OptimalCpm,
-                    total_market_count = buyingResult.Totals.MarketCount,
-                    total_station_count = buyingResult.Totals.StationCount,
-                    total_avg_cpm = buyingResult.Totals.AvgCpm,
-                    total_avg_impressions = buyingResult.Totals.AvgImpressions,
-                    total_budget = buyingResult.Totals.Budget,
-                    total_impressions = buyingResult.Totals.Impressions,
-                    plan_version_buying_job_id = buyingResult.JobId,
-                    goal_fulfilled_by_proprietary = buyingResult.GoalFulfilledByProprietary,
-                    total_spots = buyingResult.Totals.SpotCount,
-                    total_market_coverage_percent = buyingResult.Totals.MarketCoveragePercent,
-                    spot_allocation_model_mode = (int)buyingResult.SpotAllocationModelMode,
-                    posting_type = (int)buyingResult.PostingType,
-                };
-
-                context.plan_version_buying_results.Add(planBuyingResult);
-
-                context.SaveChanges();
-
-                var spots = new List<plan_version_buying_result_spots>();
-
-                foreach (var program in buyingResult.Programs)
+                    plan_version_buying_result_id = planVersionBuyingResultId,
+                    program_name = program.ProgramName,
+                    genre = program.Genre,
+                    avg_impressions = program.AvgImpressions,
+                    avg_cpm = program.AvgCpm,
+                    percentage_of_buy = program.PercentageOfBuy,
+                    market_count = program.MarketCount,
+                    station_count = program.StationCount,
+                    budget = program.Budget,
+                    spots = program.SpotCount,
+                    impressions = program.Impressions
+                }).ToList();
+                if (planBuyingResultSpots.Any())
                 {
-                    var planBuyingResultSpots = new plan_version_buying_result_spots
-                    {
-                        plan_version_buying_result_id = planBuyingResult.id,
-                        program_name = program.ProgramName,
-                        genre = program.Genre,
-                        avg_impressions = program.AvgImpressions,
-                        avg_cpm = program.AvgCpm,
-                        percentage_of_buy = program.PercentageOfBuy,
-                        market_count = program.MarketCount,
-                        station_count = program.StationCount,
-                        budget = program.Budget,
-                        spots = program.SpotCount,
-                        impressions = program.Impressions
-                    };
-
-                    spots.Add(planBuyingResultSpots);
+                    var propertiesToIgnore = new List<string>() { "id" };
+                    BulkInsert(context, planBuyingResultSpots, propertiesToIgnore);
                 }
+            });
+        }
 
-                if (spots.Any())
+        /// <inheritdoc/>
+        public void SavePlanBuyingResultSpotStations(int planVersionBuyingResultId, PlanBuyingResultBaseDto planBuyingResult)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var planBuyingResultSpotStations = planBuyingResult.Programs.Select(program => new plan_version_buying_result_spot_stations
                 {
-                    BulkInsert(context, spots, propertiesToIgnore);
+                    plan_version_buying_result_id = planVersionBuyingResultId,
+                    program_name = program.ProgramName,
+                    genre = program.Genre,
+                    station = program.Station,
+                    impressions = program.Impressions,
+                    spots = program.SpotCount,
+                    budget = program.Budget
+                }).ToList();
+                if (planBuyingResultSpotStations.Any())
+                {
+                    var propertiesToIgnoreForSpotStations = new List<string>() { "id" };
+                    BulkInsert(context, planBuyingResultSpotStations, propertiesToIgnoreForSpotStations);
                 }
             });
         }
