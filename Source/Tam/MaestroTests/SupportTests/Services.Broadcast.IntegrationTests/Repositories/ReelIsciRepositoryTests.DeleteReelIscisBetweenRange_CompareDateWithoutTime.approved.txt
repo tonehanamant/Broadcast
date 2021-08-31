@@ -1,0 +1,26 @@
+[
+  {
+    "ActiveEndDate": "2021-08-08T00:00:00",
+    "ActiveStartDate": "2021-08-02T00:00:00",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "Isci": "DELETE_TEST_1",
+    "ReelIsciAdvertiserNameReferences": [
+      {
+        "AdvertiserNameReference": "Colgate EM"
+      }
+    ],
+    "SpotLengthId": 1
+  },
+  {
+    "ActiveEndDate": "2021-08-15T00:00:00",
+    "ActiveStartDate": "2021-08-09T00:00:00",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "Isci": "DELETE_TEST_2",
+    "ReelIsciAdvertiserNameReferences": [
+      {
+        "AdvertiserNameReference": "Colgate EM"
+      }
+    ],
+    "SpotLengthId": 1
+  }
+]

@@ -90,8 +90,12 @@ namespace Services.Broadcast.ApplicationServices
                 QueuedAt = _DateTimeEngine.GetCurrentMoment()
             };
             var jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
-           
-            _BackgroundJobClient.Enqueue<IReelIsciIngestService>(x => x.RunQueued(jobId, userName));
+
+            //_BackgroundJobClient.Enqueue<IReelIsciIngestService>(x => x.RunQueued(jobId, userName));
+
+
+            RunQueued(jobId, userName);
+
 
             _LogInfo($"Queued Reel Isci Ingest job.  JobId : {jobId}");
 
