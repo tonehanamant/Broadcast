@@ -5,15 +5,17 @@
         public string Environment { get; set; }
 
         public string HostName { get; set; }
-
-        public bool DisplayCampaignLink { get; set; }
-
-        public bool DisplayBuyingLink { get; set; }
+        
 
         public bool AllowMultipleCreativeLengths { get; set; }
       
         public bool EnableExportPreBuy { get; set; }
        
         public bool EnableAabNavigation { get; set; }
+
+        // Keep These : these are referenced by the NavBar.cshtml
+        public bool DisplayCampaignLink { get; set; }
+        public bool DisplayBuyingLink { get; set; }
+        public bool DisplayIsciMappingLink { get; set; }
     }
 }

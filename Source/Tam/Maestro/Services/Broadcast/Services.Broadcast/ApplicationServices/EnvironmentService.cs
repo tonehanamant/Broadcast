@@ -81,9 +81,11 @@ namespace Services.Broadcast.ApplicationServices
                 Environment = new AppSettings().Environment.ToString(),
                 HostName = Environment.MachineName,
                 // TODO : Tech-Debt to remove these and have the FE got to LaunchDarkly directly
+                AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS),
+                // Keep These : these are referenced by the NavBar.cshtml
                 DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_CAMPAIGN_LINK),
                 DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
-                AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS),           
+                DisplayIsciMappingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ISCI_MAPPING)
             };
             
             return environmentInfo;

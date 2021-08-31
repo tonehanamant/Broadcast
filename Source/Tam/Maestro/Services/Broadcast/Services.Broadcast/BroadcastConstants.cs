@@ -66,5 +66,6 @@
         public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";
         public static string ADU_FLAG = "broadcast-enabled-adu-flag";
         public static string EXTERNAL_NOTE_EXPORT = "Broadcast-EnableExternalNoteExport";
+        public static string ENABLE_ISCI_MAPPING = "broadcast-enable-isci-mapping";
     }
 }
