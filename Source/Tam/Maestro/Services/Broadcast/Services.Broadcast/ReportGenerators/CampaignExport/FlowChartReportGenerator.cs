@@ -19,18 +19,18 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         private readonly string TABLE_12_WEEKS = "A2:O9";
 
-        private readonly string TABLE_13_WEEKS_MONTH_1 = "A11:P18";   //month 1 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_2 = "A20:P27";   //month 2 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_3 = "A29:P36";   //month 3 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_1 = "A12:P21";   //month 1 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_2 = "A21:P30";   //month 2 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_3 = "A30:P39";   //month 3 has 5 weeks
 
-        private readonly string TABLE_14_WEEKS_MONTH_1 = "A56:Q63";   //month 2 & 3 have 5 weeks        
-        private readonly string TABLE_14_WEEKS_MONTH_2 = "A47:Q54";   //month 1 & 3 have 5 weeks
-        private readonly string TABLE_14_WEEKS_MONTH_3 = "A38:Q45";   //month 1 & 2 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_1 = "A57:Q66";   //month 2 & 3 have 5 weeks        
+        private readonly string TABLE_14_WEEKS_MONTH_2 = "A48:Q57";   //month 1 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_3 = "A39:Q48";   //month 1 & 2 have 5 weeks
 
         private readonly int FIVE_WEEKS = 5;
         private readonly int FOUR_WEEKS = 4;
 
-        private readonly int ROWS_TO_COPY = 8;
+        private readonly int ROWS_TO_COPY = 9;
         private int planNameRowIndex = 7;
         private int currentRowIndex = 0;
         
@@ -144,11 +144,24 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
                 .LoadFromArrays(new List<object[]> { table.CostValues.ToArray() });
             currentRowIndex++;
-
+          
             //add hiatus days
             flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT_LARGE;
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
                 .LoadFromArrays(new List<object[]> { table.HiatusDaysFormattedValues.ToArray() });
+            currentRowIndex++;
+
+            //add Total Monthly Cost
+            if (!table.TableTitle.Contains("ADU"))
+            {
+                flowChartWorksheet.Cells[currentRowIndex, FIRST_MONTH_COLUMN_INDEX]
+                    .Value = table.MonthlyCostValues[0];
+                flowChartWorksheet.Cells[currentRowIndex, (SECOND_MONTH_COLUMN_INDEX + offsetForSecondMonth)]
+                    .Value = table.MonthlyCostValues[1];
+                flowChartWorksheet.Cells[currentRowIndex, (THIRD_MONTH_COLUMN_INDEX + offsetForThirdMonth)]
+                    .Value = table.MonthlyCostValues[2];
+                currentRowIndex++;
+            }
             if (table.TableTitle.Contains("Summary"))
             {
                 for (int i = 0; i < table.HiatusDaysFormattedValues.Count; i++)
