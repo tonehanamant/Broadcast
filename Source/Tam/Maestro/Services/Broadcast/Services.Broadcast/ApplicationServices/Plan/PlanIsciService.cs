@@ -314,7 +314,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (isciPlanProductMapping.IsciProductMappings.Count > 0)
             {
                 var resolvedIsciProductMappings = _RemoveDuplicateIsciProducts(isciPlanProductMapping.IsciProductMappings);
-                isciProductMappingCount = _PlanIsciRepository.SaveIsciProductMappings(resolvedIsciProductMappings, createdBy, createdAt);
+                if (resolvedIsciProductMappings.Any())
+                {
+                    isciProductMappingCount = _PlanIsciRepository.SaveIsciProductMappings(resolvedIsciProductMappings, createdBy, createdAt);
+                }
             }
             _LogInfo($"{isciProductMappingCount } IsciProductMappings are stored into database");
             var isciPlanMappings = _RemoveDuplicateListItem(isciPlanProductMapping);
