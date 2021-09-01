@@ -13,6 +13,7 @@ using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -683,6 +684,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                    result = 2;
                })
                .Returns(result);
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>());
+
             //Act
             actualResult = _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
 
@@ -753,6 +758,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 result = 2;
             })
             .Returns(result);
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>());
+
             //Act
             actualResult = _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
 
@@ -806,6 +815,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<IsciPlanMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
             .Callback<List<IsciPlanMappingDto>, string, DateTime>((pms, un, dt) => savedPlanMappings.Add(pms))
             .Returns(2);
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>());
 
             //Act
             _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
@@ -866,11 +878,178 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             .Callback<List<IsciPlanMappingDto>, string, DateTime>((pms, un, dt) => savedPlanMappings.Add(pms))
             .Returns(2);
 
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>());
+
             //Act
             _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlanMappings));
+        }
+
+        [Test]
+        public void SaveIsciPlanMappings_DuplicateProgramMappingsInGivenList()
+        {
+            //Arrange
+            var createdBy = "Test User";
+            var createdAt = DateTime.Now;
+            var existingMappings = new List<IsciPlanMappingDto>();
+            var existingProductMappings = new List<IsciProductMappingDto>();
+
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 123,
+                                Isci= "Isci-273"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 789,
+                                Isci= "Isci-789"
+                            }
+                        };
+            var isciProductList = new List<IsciProductMappingDto>
+            {
+                new IsciProductMappingDto
+                {
+                    Isci = "Isci-123",
+                    ProductName = "Product-273"
+                },
+                new IsciProductMappingDto
+                {
+                    Isci = "Isci-789",
+                    ProductName = "Product-789"
+                },
+                new IsciProductMappingDto
+                {
+                    Isci = "Isci-123",
+                    ProductName = "Product-273"
+                }
+            };
+
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList,
+                IsciProductMappings = isciProductList
+            };
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(existingMappings);
+
+            var savedIsciProductMappings = new List<List<IsciProductMappingDto>>();
+            _PlanIsciRepositoryMock.Setup(s => 
+                    s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<List<IsciProductMappingDto>, string, DateTime>((m, c, d) => savedIsciProductMappings.Add(m))
+                .Returns(2);
+
+            var getIsciProductMappingsParams = new List<List<string>>();
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Callback<List<string>>((l) => getIsciProductMappingsParams.Add(l))
+                .Returns(existingProductMappings);
+            
+            //Act
+            _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            var toVerify = new
+            {
+                getIsciProductMappingsParams = getIsciProductMappingsParams,
+                savedIsciProductMappings = savedIsciProductMappings
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+
+        [Test]
+        public void SaveIsciPlanMappings_DuplicateProgramMappingsInDb()
+        {
+            //Arrange
+            var createdBy = "Test User";
+            var createdAt = DateTime.Now;
+            var existingMappings = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 123,
+                                Isci= "Isci-123"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 456,
+                                Isci= "Isci-456"
+                            }
+                        };
+            var existingProductMappings = new List<IsciProductMappingDto>
+                {
+                    new IsciProductMappingDto
+                    {
+                        Isci = "Isci-123",
+                        ProductName = "Product-123"
+                    }
+                };
+
+            var isciPlanList = new List<IsciPlanMappingDto>
+                        {
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 123,
+                                Isci= "Isci-273"
+                            },
+                            new IsciPlanMappingDto()
+                            {
+                                PlanId = 789,
+                                Isci= "Isci-789"
+                            }
+                        };
+            var isciProductList = new List<IsciProductMappingDto>
+            {
+                new IsciProductMappingDto
+                {
+                    Isci = "Isci-123",
+                    ProductName = "Product-273"
+                },
+                new IsciProductMappingDto
+                {
+                    Isci = "Isci-789",
+                    ProductName = "Product-789"
+                }
+            };
+
+            var isciPlanProductMapping = new IsciPlanProductMappingDto()
+            {
+                IsciPlanMappings = isciPlanList,
+                IsciProductMappings = isciProductList
+            };
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIscis())
+                .Returns(existingMappings);
+
+            var savedIsciProductMappings = new List<List<IsciProductMappingDto>>();
+            _PlanIsciRepositoryMock.Setup(s =>
+                    s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<List<IsciProductMappingDto>, string, DateTime>((m, c, d) => savedIsciProductMappings.Add(m))
+                .Returns(2);
+
+            var getIsciProductMappingsParams = new List<List<string>>();
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Callback<List<string>>((l) => getIsciProductMappingsParams.Add(l))
+                .Returns(existingProductMappings);
+
+            //Act
+            _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
+
+            //Assert
+            var toVerify = new
+            {
+                getIsciProductMappingsParams = getIsciProductMappingsParams,
+                savedIsciProductMappings = savedIsciProductMappings
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
         }
 
         [Test]
@@ -937,6 +1116,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 result = 2;
             })
             .Returns(result);
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>());
+
             //Act
             actualResult = _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, createdBy);
 
@@ -985,6 +1168,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 IsciPlanMappings = isciPlanList,
                 IsciProductMappings = isciProductList
             };
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>());
+
             // Act
             var result = Assert.Throws<Exception>(() => _PlanIsciService.SaveIsciMappings(isciPlanProductMapping, It.IsAny<string>()));
 

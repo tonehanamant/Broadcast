@@ -51,6 +51,13 @@ namespace Services.Broadcast.Repositories
         int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt);
 
         /// <summary>
+        /// Gets the isci product mappings for the given list of icsis.
+        /// </summary>
+        /// <param name="iscis">The iscis.</param>
+        /// <returns></returns>
+        List<IsciProductMappingDto> GetIsciProductMappings(List<string> iscis);
+
+        /// <summary>
         /// Get PlanIsci List
         /// </summary>
         /// <returns>List of IsciPlanMappingDto</returns>
@@ -181,6 +188,22 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
                     return addedCount;
                 });
+        }
+
+        public List<IsciProductMappingDto> GetIsciProductMappings(List<string> iscis)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.reel_isci_products
+                    .Where(i => iscis.Contains(i.isci))
+                    .Select(i => new IsciProductMappingDto
+                    {
+                        Isci = i.isci,
+                        ProductName = i.product_name
+                    })
+                    .ToList();
+                return result;
+            });
         }
 
         public int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt)

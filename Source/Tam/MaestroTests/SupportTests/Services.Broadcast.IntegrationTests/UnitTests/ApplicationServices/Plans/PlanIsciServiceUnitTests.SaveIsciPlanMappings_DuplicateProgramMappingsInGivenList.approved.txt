@@ -1,0 +1,20 @@
+{
+  "getIsciProductMappingsParams": [
+    [
+      "Isci-123",
+      "Isci-789"
+    ]
+  ],
+  "savedIsciProductMappings": [
+    [
+      {
+        "Isci": "Isci-123",
+        "ProductName": "Product-273"
+      },
+      {
+        "Isci": "Isci-789",
+        "ProductName": "Product-789"
+      }
+    ]
+  ]
+}

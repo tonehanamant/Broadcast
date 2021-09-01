@@ -313,7 +313,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             int isciPlanMappingsDeletedCount = 0;
             if (isciPlanProductMapping.IsciProductMappings.Count > 0)
             {
-                isciProductMappingCount = _PlanIsciRepository.SaveIsciProductMappings(isciPlanProductMapping.IsciProductMappings, createdBy, createdAt);
+                var resolvedIsciProductMappings = _RemoveDuplicateIsciProducts(isciPlanProductMapping.IsciProductMappings);
+                isciProductMappingCount = _PlanIsciRepository.SaveIsciProductMappings(resolvedIsciProductMappings, createdBy, createdAt);
             }
             _LogInfo($"{isciProductMappingCount } IsciProductMappings are stored into database");
             var isciPlanMappings = _RemoveDuplicateListItem(isciPlanProductMapping);
@@ -337,6 +338,38 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return isSave;
             }
+        }
+
+        private List<IsciProductMappingDto> _RemoveDuplicateIsciProducts(List<IsciProductMappingDto> isciProducts)
+        {
+            // remove duplicates within the list, keeping the first one
+            var dedupped = new List<IsciProductMappingDto>();
+            isciProducts.ForEach(p =>
+                {
+                    if (!dedupped.Any(d => d.Isci.Equals(p.Isci)))
+                    {
+                        dedupped.Add(p);
+                    }
+                });
+
+            // if already in the db then ignore
+            var iscis = dedupped.Select(s => s.Isci).ToList();
+            var existing = _PlanIsciRepository.GetIsciProductMappings(iscis);
+            if (!existing.Any())
+            {
+                return dedupped;
+            }
+
+            var dbDedupped = new List<IsciProductMappingDto>();
+            var existingIscis = existing.Select(s => s.Isci).ToList();
+            dedupped.ForEach(p =>
+            {
+                if (!existingIscis.Contains(p.Isci))
+                {
+                    dbDedupped.Add(p);
+                }
+            });
+            return dbDedupped;
         }
 
         private List<IsciPlanMappingDto> _RemoveDuplicateListItem(IsciPlanProductMappingDto isciPlanProductMapping)
