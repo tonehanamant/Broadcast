@@ -20,12 +20,12 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string TABLE_12_WEEKS = "A2:O9";
 
         private readonly string TABLE_13_WEEKS_MONTH_1 = "A12:P21";   //month 1 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_2 = "A21:P30";   //month 2 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_3 = "A30:P39";   //month 3 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_2 = "A22:P31";   //month 2 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_3 = "A32:P41";   //month 3 has 5 weeks
 
-        private readonly string TABLE_14_WEEKS_MONTH_1 = "A57:Q66";   //month 2 & 3 have 5 weeks        
-        private readonly string TABLE_14_WEEKS_MONTH_2 = "A48:Q57";   //month 1 & 3 have 5 weeks
-        private readonly string TABLE_14_WEEKS_MONTH_3 = "A39:Q48";   //month 1 & 2 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_1 = "A62:Q71";   //month 2 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_2 = "A52:Q61";   //month 1 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_3 = "A42:Q51";   //month 1 & 2 have 5 weeks
 
         private readonly int FIVE_WEEKS = 5;
         private readonly int FOUR_WEEKS = 4;
