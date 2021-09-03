@@ -73,11 +73,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<ReelRosterIsciDto> TestReelISciApiClient(DateTime startDate, int numberOfDays)
         {
-            _LogInfo($"Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
+            _LogInfo($"reel-isci-ingest : Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
 
             var result = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
 
-            _LogInfo($"Received a response containing '{result.Count}' records.");
+            _LogInfo($"reel-isci-ingest : Received a response containing '{result.Count}' records.");
             return result;
         }
 
@@ -91,22 +91,18 @@ namespace Services.Broadcast.ApplicationServices
             };
             var jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
 
-            //_BackgroundJobClient.Enqueue<IReelIsciIngestService>(x => x.RunQueued(jobId, userName));
-
-
-            RunQueued(jobId, userName);
-
-
-            _LogInfo($"Queued Reel Isci Ingest job.  JobId : {jobId}");
+            _BackgroundJobClient.Enqueue<IReelIsciIngestService>(x => x.RunQueued(jobId, userName));
+            _LogInfo($"reel-isci-ingest : Queued Reel Isci Ingest job.  JobId : {jobId}");
 
         }
 
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void RunQueued(int jobId, string userName)
         {
-            _LogInfo($"De-queueing a Reel Isci Ingest Job.  JobId : {jobId}");
+            _LogInfo($"reel-isci-ingest : De-queueing a Reel Isci Ingest Job.  JobId : {jobId}");
 
             _Run(jobId, userName);
+           
         }
 
         protected void _Run(int jobId, string userName)
@@ -122,7 +118,7 @@ namespace Services.Broadcast.ApplicationServices
             var numberOfDays = _IngestNumberOfDays.Value;
             var startDate = _GetIngestStartDate(numberOfDays);
 
-            _LogInfo($"Starting the Reel Isci Ingest Job.", userName);
+            _LogInfo($"reel-isci-ingest : Starting the Reel Isci Ingest Job.", userName);
 
             var jobId = 0;
             var reelIsciIngestJob = new ReelIsciIngestJobDto
@@ -134,6 +130,7 @@ namespace Services.Broadcast.ApplicationServices
             jobId = _ReelIsciIngestJobsRepository.AddReelIsciIngestJob(reelIsciIngestJob);
 
             PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, userName);
+           
         }
 
         private DateTime _GetIngestStartDate(int numberOfDays)
@@ -146,27 +143,27 @@ namespace Services.Broadcast.ApplicationServices
         {
             try
             {
-                _LogInfo($"Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
+                _LogInfo($"reel-isci-ingest : Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
                 var reelRosterIscis = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
-                _LogInfo($"Received a response containing '{reelRosterIscis.Count}' records.");
+                _LogInfo($"reel-isci-ingest : Received a response containing '{reelRosterIscis.Count}' records.");
 
                 var endDate = startDate.AddDays(numberOfDays);
                 var deletedCount = _DeleteReelIscisBetweenRange(startDate, endDate);
-                _LogInfo($"Deleted {deletedCount} reel iscis.");
+                _LogInfo($"reel-isci-ingest : Deleted {deletedCount} reel iscis.");
 
                 var addedCount = 0;
                 if (reelRosterIscis?.Any() ?? false)
                 {
                     addedCount = _AddReelIscis(reelRosterIscis);
                 }
-                _LogInfo($"Added {addedCount} reel iscis");
+                _LogInfo($"reel-isci-ingest : Added {addedCount} reel iscis");
 
                 var deletedReelIsciProductsCount = _DeleteReelIsciProductsNotExistInReelIsci();
-                _LogInfo($"Deleted {deletedReelIsciProductsCount} reel iscis products.");
+                _LogInfo($"reel-isci-ingest : Deleted {deletedReelIsciProductsCount} reel iscis products.");
 
                 DateTime deletedAt = _DateTimeEngine.GetCurrentMoment();
                 var deletedplanIscisCount = _DeletePlanIscisNotExistInReelIsci(deletedAt, userName);
-                _LogInfo($"Deleted {deletedplanIscisCount} plan iscis.");
+                _LogInfo($"reel-isci-ingest : Deleted {deletedplanIscisCount} plan iscis.");
 
                 var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
                 {
@@ -176,11 +173,11 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 _ReelIsciIngestJobsRepository.UpdateReelIsciIngestJob(reelIsciIngestJobCompleted);
 
-                _LogInfo("Job completed.");
+                _LogInfo("reel-isci-ingest : Job completed.");
             }
             catch (Exception ex)
             {
-                _LogError("Error Caught", ex);
+                _LogError("reel-isci-ingest : Error Caught", ex);
                 var reelIsciIngestJobFailed = new ReelIsciIngestJobDto
                 {
                     Id = jobId,
@@ -189,6 +186,7 @@ namespace Services.Broadcast.ApplicationServices
                     ErrorMessage = $"Error Caught : {ex.ToString()}"
                 };
                 _ReelIsciIngestJobsRepository.UpdateReelIsciIngestJob(reelIsciIngestJobFailed);
+                throw;
             }
         }
 

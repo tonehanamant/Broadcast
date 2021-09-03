@@ -365,8 +365,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Callback<ReelIsciIngestJobDto>((j) => savedJobs.Add(j));
 
             //Act
-            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
-
+            var result = Assert.Throws<Exception>(() => _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName));
             //Assert
             Assert.AreEqual(1, savedJobs.Count);
             var job = savedJobs.First();
