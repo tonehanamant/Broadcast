@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Plan.Buying;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,6 +23,12 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// </summary>
         /// <param name="results">The buying ownership group results.</param>
         void ConvertImpressionsToUserFormat(PlanBuyingResultRepFirmDto results);
+
+        /// <summary>
+        /// Aggregate result of plan buying RepFirm result
+        /// </summary>
+        /// <param name="planBuyingStationResult">The Plan Buying Station Result dto.</param>
+        PlanBuyingResultRepFirmDto CalculateAggregateOfRepFirm(PlanBuyingStationResultDto planBuyingStationResult);
     }
 
     public class PlanBuyingRepFirmEngine : IPlanBuyingRepFirmEngine
@@ -83,6 +90,62 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 PlanVersionId = allocationResult.PlanVersionId,
                 BuyingJobId = allocationResult.JobId,
                 Details = details
+            };
+
+            return result;
+        }
+
+        public PlanBuyingResultRepFirmDto CalculateAggregateOfRepFirm(PlanBuyingStationResultDto planBuyingStationResult)
+        {
+            var groupOfRepFirm = planBuyingStationResult.Details.GroupBy(u => u.RepFirm, StringComparer.InvariantCultureIgnoreCase).Select(grp => grp.ToList()).ToList();
+            var details = new List<PlanBuyingStationDto>();
+            details = groupOfRepFirm.Select(repFirm => new PlanBuyingStationDto
+            {
+                Spots = repFirm.Sum(x => x.Spots),
+                Impressions = repFirm.Sum(x => x.Impressions),
+                Budget = repFirm.Sum(x => x.Budget),
+                Cpm = ProposalMath.CalculateCpm(repFirm.Sum(x => x.Budget), repFirm.Sum(x => x.Impressions)),
+                ImpressionsPercentage = repFirm.Sum(x => x.ImpressionsPercentage),
+                Affiliate = repFirm.Select(x => x.Affiliate).FirstOrDefault(),
+                RepFirm = repFirm.Select(x => x.RepFirm).FirstOrDefault(),
+                OwnerName = repFirm.Select(x => x.OwnerName).FirstOrDefault(),
+                LegacyCallLetters = repFirm.Select(x => x.LegacyCallLetters).FirstOrDefault(),
+                Station = Convert.ToString(repFirm.Select(x => x.Station).Distinct().Count()),
+                Market = Convert.ToString(repFirm.Select(x => x.Market).Distinct().Count())
+            }).ToList();
+
+            var planBuyingResultrepFirmDetails = details.Select(d => new PlanBuyingResultRepFirmDetailsDto
+            {
+                Budget = d.Budget,
+                Cpm = d.Cpm,
+                Impressions = d.Impressions,
+                ImpressionsPercentage = d.ImpressionsPercentage,
+                MarketCount = Convert.ToInt32(d.Market),
+                SpotCount = d.Spots,
+                StationCount = Convert.ToInt32(d.Station),
+                RepFirmName = d.RepFirm
+            }).OrderByDescending(p => p.ImpressionsPercentage).ThenByDescending(p => p.Budget).ToList();
+
+            var totals = new PlanBuyingProgramTotalsDto
+            {
+                MarketCount = planBuyingResultrepFirmDetails.Sum(x => x.MarketCount),
+                Budget = planBuyingResultrepFirmDetails.Sum(x => x.Budget),
+                AvgCpm = ProposalMath.CalculateCpm(planBuyingResultrepFirmDetails.Sum(x => x.Budget), planBuyingResultrepFirmDetails.Sum(x => x.Impressions)),
+                Impressions = planBuyingResultrepFirmDetails.Sum(x => x.Impressions),
+                StationCount = planBuyingResultrepFirmDetails.Sum(x => x.StationCount),
+                SpotCount = planBuyingResultrepFirmDetails.Sum(x => x.SpotCount),
+                ImpressionsPercentage = (decimal)planBuyingResultrepFirmDetails.Sum(x => x.ImpressionsPercentage)
+            };
+
+            var result = new PlanBuyingResultRepFirmDto
+            {
+                BuyingJobId = planBuyingStationResult.BuyingJobId,
+                PlanVersionId = planBuyingStationResult.PlanVersionId ?? default(int),
+                Totals = totals,
+                Details = planBuyingResultrepFirmDetails,
+                SpotAllocationModelMode = planBuyingStationResult.SpotAllocationModelMode,
+                PostingType = planBuyingStationResult.PostingType
+
             };
 
             return result;

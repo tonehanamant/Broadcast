@@ -1,0 +1,29 @@
+{
+  "BuyingJobId": 24,
+  "Details": [
+    {
+      "Budget": 14201.0,
+      "Cpm": 11.0,
+      "Impressions": 13328.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 2,
+      "OwnershipGroupName": "TEGNA",
+      "SpotCount": 8,
+      "StationCount": 2
+    }
+  ],
+  "PlanVersionId": 95,
+  "PostingType": 1,
+  "SpotAllocationModelMode": 2,
+  "Totals": {
+    "AvgCpm": 2.0,
+    "AvgImpressions": 0.0,
+    "Budget": 3912.0,
+    "Impressions": 2041.65,
+    "ImpressionsPercentage": 100.0,
+    "MarketCount": 0,
+    "MarketCoveragePercent": 0.0,
+    "SpotCount": 300,
+    "StationCount": 46
+  }
+}

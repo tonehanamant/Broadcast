@@ -1,0 +1,59 @@
+{
+  "BuyingJobId": 24,
+  "Details": [
+    {
+      "Affiliate": "CW",
+      "Budget": 3912.0,
+      "Cpm": 2.0,
+      "Impressions": 2045.0,
+      "ImpressionsPercentage": 0.0,
+      "LegacyCallLetters": "HMTV",
+      "Market": "Madison",
+      "OwnerName": "TEGNA",
+      "RepFirm": "TEGNA",
+      "Spots": 2,
+      "Station": "HMTV"
+    },
+    {
+      "Affiliate": "KMYT",
+      "Budget": 5436.0,
+      "Cpm": 2.0,
+      "Impressions": 3452.0,
+      "ImpressionsPercentage": 0.0,
+      "LegacyCallLetters": "HMTV",
+      "Market": "Tulsa",
+      "OwnerName": "TEGNA",
+      "RepFirm": "TEGNA",
+      "Spots": 6,
+      "Station": "HMTV"
+    },
+    {
+      "Affiliate": "CW",
+      "Budget": 8765.0,
+      "Cpm": 9.0,
+      "Impressions": 9876.0,
+      "ImpressionsPercentage": 0.0,
+      "LegacyCallLetters": "HMTV",
+      "Market": "Madison",
+      "OwnerName": "HMTV",
+      "RepFirm": "Cox",
+      "Spots": 6,
+      "Station": "HMTV"
+    }
+  ],
+  "Id": 0,
+  "PlanVersionId": 95,
+  "PostingType": 1,
+  "SpotAllocationModelMode": 2,
+  "Totals": {
+    "AvgCpm": 2.0,
+    "AvgImpressions": 0.0,
+    "Budget": 3912.0,
+    "Impressions": 2041.65,
+    "ImpressionsPercentage": 100.0,
+    "MarketCount": 0,
+    "MarketCoveragePercent": 0.0,
+    "SpotCount": 300,
+    "StationCount": 46
+  }
+}

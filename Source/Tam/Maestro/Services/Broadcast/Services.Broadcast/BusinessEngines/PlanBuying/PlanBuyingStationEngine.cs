@@ -3,6 +3,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +28,12 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         /// <param name="results">The buying ownership group results.</param>
         void ConvertImpressionsToUserFormat(PlanBuyingStationResultDto results);
+
+        /// <summary>
+        /// Aggregate result of plan buying station result
+        /// </summary>
+        /// <param name="planBuyingStationResult">The Plan Buying Station Result dto.</param>
+         PlanBuyingStationResultDto CalculateAggregateOfStations(PlanBuyingStationResultDto planBuyingStationResult);
     }
 
     public class PlanBuyingStationEngine : IPlanBuyingStationEngine
@@ -146,6 +153,48 @@ namespace Services.Broadcast.BusinessEngines
                     result.Add(spot);
                 }
             }
+
+            return result;
+        }
+
+        public PlanBuyingStationResultDto CalculateAggregateOfStations(PlanBuyingStationResultDto planBuyingStationResult)
+        {
+            var groupOfStations = planBuyingStationResult.Details.GroupBy(u => u.Station, StringComparer.InvariantCultureIgnoreCase).Select(grp => grp.ToList()).ToList();
+
+            var details = groupOfStations.Select(station => new PlanBuyingStationDto
+            {
+                Spots = station.Sum(x => x.Spots),
+                Impressions = station.Sum(x => x.Impressions),
+                Budget = station.Sum(x => x.Budget),
+                Cpm = ProposalMath.CalculateCpm(station.Sum(x => x.Budget), station.Sum(x => x.Impressions)),
+                ImpressionsPercentage = station.Sum(x => x.ImpressionsPercentage),
+                Affiliate = station.Select(x => x.Affiliate).FirstOrDefault(),
+                RepFirm = station.Select(x => x.RepFirm).FirstOrDefault(),
+                OwnerName = station.Select(x => x.OwnerName).FirstOrDefault(),
+                LegacyCallLetters = station.Select(x => x.LegacyCallLetters).FirstOrDefault(),
+                Station = station.Select(x => x.Station).FirstOrDefault(),
+                Market = station.Select(x => x.Market).FirstOrDefault()
+            }).ToList();
+
+            var totals = new PlanBuyingProgramTotalsDto
+            {
+                Budget = details.Sum(x => x.Budget),
+                AvgCpm = ProposalMath.CalculateCpm(details.Sum(x => x.Budget), details.Sum(x => x.Impressions)),
+                Impressions = details.Sum(x => x.Impressions),
+                StationCount = details.Select(x => x.Market).Distinct().Count(),
+                SpotCount = details.Sum(x => x.Spots)
+            };
+
+            var result = new PlanBuyingStationResultDto
+            {
+                BuyingJobId = planBuyingStationResult.BuyingJobId,
+                PlanVersionId = planBuyingStationResult.PlanVersionId ?? default(int),
+                Totals = totals,
+                Details = details,
+                SpotAllocationModelMode = planBuyingStationResult.SpotAllocationModelMode,
+                PostingType = planBuyingStationResult.PostingType
+
+            };
 
             return result;
         }

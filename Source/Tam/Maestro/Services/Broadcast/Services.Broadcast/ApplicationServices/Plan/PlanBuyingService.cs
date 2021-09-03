@@ -81,9 +81,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="planBuyingFilter">The plan Buying Filter.</param>
         /// <returns></returns>
         PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// Gets the buying rep firms.
@@ -91,9 +92,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="planBuyingFilter">The plan Buying Filter.</param>
         /// <returns></returns>
         PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// For troubleshooting
@@ -160,9 +162,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="planBuyingFilter">The plan Buying Filter </param>
         /// <returns></returns>
         PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
@@ -193,7 +196,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="templatesFilePath">Path to the template files</param>
         /// <returns>The report id</returns>
         Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
-        
+
         /// <summary>
         /// Gets the plan buying parameters. 
         /// </summary>
@@ -263,6 +266,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
+        private readonly Lazy<bool> _IsBuyExpRepOrgEnabled;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -325,6 +329,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
+            _IsBuyExpRepOrgEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.BUY_EXP_REP_ORG));
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -2531,7 +2536,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
@@ -2544,6 +2549,30 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
 
             result.Details = result.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
+
+            if (_IsBuyExpRepOrgEnabled.Value)
+            {
+                if (planBuyingFilter != null)
+                {
+                    if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
+                    {
+                        result.Details = result.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                    }
+                    else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
+                    {
+                        result.Details = result.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
+                    }
+                    else if (planBuyingFilter.OwnerNames?.Any() ?? false)
+                    {
+                        result.Details = result.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                    }
+                }
+
+                var aggStationResult = _PlanBuyingStationCalculationEngine.CalculateAggregateOfStations(result);
+
+                return aggStationResult;
+            }
+
             _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
 
             return result;
@@ -2551,52 +2580,86 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
         {
-            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+            if (_IsBuyExpRepOrgEnabled.Value)
             {
-                return null;
+                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter);
+
+                if (result == null)
+                {
+                    return null;
+                }
+
+                var aggResult = _PlanBuyingOwnershipGroupEngine.CalculateAggregateOfOwnershipGroup(result);
+
+                return aggResult;
+            }
+            else
+            {
+                var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+
+                if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                {
+                    return null;
+                }
+
+                postingType = _ResolvePostingType(planId, postingType);
+
+                PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, postingType, spotAllocationModelMode);
+
+                if (results == null)
+                {
+                    return null;
+                }
+
+                _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(results);
+
+                return results;
             }
 
-            postingType = _ResolvePostingType(planId, postingType);
-
-            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, postingType, spotAllocationModelMode);
-
-            if (results == null)
-            {
-                return null;
-            }
-
-            _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(results);
-
-            return results;
         }
 
         /// <inheritdoc />
         public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
         {
-            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-
-            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+            if (_IsBuyExpRepOrgEnabled.Value)
             {
-                return null;
+                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter);
+
+                if (result == null)
+                {
+                    return null;
+                }
+
+                var aggResult = _PlanBuyingRepFirmEngine.CalculateAggregateOfRepFirm(result);
+
+                return aggResult;
             }
-
-            postingType = _ResolvePostingType(planId, postingType);
-
-            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType, spotAllocationModelMode);
-
-            if (results == null)
+            else
             {
-                return null;
+                var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+
+                if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                {
+                    return null;
+                }
+
+                postingType = _ResolvePostingType(planId, postingType);
+
+                PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType, spotAllocationModelMode);
+
+                if (results == null)
+                {
+                    return null;
+                }
+
+                _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(results);
+
+                return results;
             }
-
-            _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(results);
-
-            return results;
         }
 
         internal int _GetPricingModelVersion()

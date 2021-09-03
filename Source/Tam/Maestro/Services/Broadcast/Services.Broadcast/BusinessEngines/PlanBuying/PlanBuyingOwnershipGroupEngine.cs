@@ -27,6 +27,12 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// </summary>
         /// <param name="results">The buying ownership group results.</param>
         void ConvertImpressionsToUserFormat(PlanBuyingResultOwnershipGroupDto results);
+
+        /// <summary>
+        /// Aggregate result of plan buying ownership group result
+        /// </summary>
+        /// <param name="planBuyingStationResult">The Plan BuyingStation Result dto.</param>
+        PlanBuyingResultOwnershipGroupDto CalculateAggregateOfOwnershipGroup(PlanBuyingStationResultDto planBuyingStationResult);
     }
 
     public class PlanBuyingOwnershipGroupEngine : IPlanBuyingOwnershipGroupEngine
@@ -88,6 +94,62 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 PlanVersionId = allocationResult.PlanVersionId,
                 BuyingJobId = allocationResult.JobId,
                 Details = details
+            };
+
+            return result;
+        }
+
+        public PlanBuyingResultOwnershipGroupDto CalculateAggregateOfOwnershipGroup(PlanBuyingStationResultDto planBuyingStationResult)
+        {
+            var groupOfOwnershipGroups = planBuyingStationResult.Details.GroupBy(u => u.OwnerName, StringComparer.InvariantCultureIgnoreCase).Select(grp => grp.ToList()).ToList();
+            var details = new List<PlanBuyingStationDto>();
+            details = groupOfOwnershipGroups.Select(ownershipGroup => new PlanBuyingStationDto
+            {
+                Spots = ownershipGroup.Sum(x => x.Spots),
+                Impressions = ownershipGroup.Sum(x => x.Impressions),
+                Budget = ownershipGroup.Sum(x => x.Budget),
+                Cpm = ProposalMath.CalculateCpm(ownershipGroup.Sum(x => x.Budget), ownershipGroup.Sum(x => x.Impressions)),
+                ImpressionsPercentage = ownershipGroup.Sum(x => x.ImpressionsPercentage),
+                Affiliate = ownershipGroup.Select(x => x.Affiliate).FirstOrDefault(),
+                RepFirm = ownershipGroup.Select(x => x.RepFirm).FirstOrDefault(),
+                OwnerName = ownershipGroup.Select(x => x.OwnerName).FirstOrDefault(),
+                LegacyCallLetters = ownershipGroup.Select(x => x.LegacyCallLetters).FirstOrDefault(),
+                Station = Convert.ToString(ownershipGroup.Select(x => x.Station).Distinct().Count()),
+                Market = Convert.ToString(ownershipGroup.Select(x => x.Market).Distinct().Count())
+            }).ToList();
+
+            var planBuyingResultOwnershipGroupDetails = details.Select(d => new PlanBuyingResultOwnershipGroupDetailsDto
+            {
+                Budget = d.Budget,
+                Cpm = d.Cpm,
+                Impressions = d.Impressions,
+                ImpressionsPercentage = d.ImpressionsPercentage,
+                MarketCount = Convert.ToInt32(d.Market),
+                SpotCount = d.Spots,
+                StationCount = Convert.ToInt32(d.Station),
+                OwnershipGroupName = d.OwnerName
+            }).OrderByDescending(p => p.ImpressionsPercentage).ThenByDescending(p => p.Budget).ToList();
+
+            var totals = new PlanBuyingProgramTotalsDto
+            {
+                MarketCount = planBuyingResultOwnershipGroupDetails.Sum(x => x.MarketCount),
+                Budget = planBuyingResultOwnershipGroupDetails.Sum(x => x.Budget),
+                AvgCpm = ProposalMath.CalculateCpm(planBuyingResultOwnershipGroupDetails.Sum(x => x.Budget), planBuyingResultOwnershipGroupDetails.Sum(x => x.Impressions)),
+                Impressions = planBuyingResultOwnershipGroupDetails.Sum(x => x.Impressions),
+                StationCount = planBuyingResultOwnershipGroupDetails.Sum(x => x.StationCount),
+                SpotCount = planBuyingResultOwnershipGroupDetails.Sum(x => x.SpotCount),
+                ImpressionsPercentage = (decimal)planBuyingResultOwnershipGroupDetails.Sum(x=>x.ImpressionsPercentage)
+            };
+
+            var result = new PlanBuyingResultOwnershipGroupDto
+            {
+                BuyingJobId = planBuyingStationResult.BuyingJobId,
+                PlanVersionId = planBuyingStationResult.PlanVersionId ?? default(int),
+                Totals = totals,
+                Details = planBuyingResultOwnershipGroupDetails,
+                SpotAllocationModelMode = planBuyingStationResult.SpotAllocationModelMode,
+                PostingType = planBuyingStationResult.PostingType
+               
             };
 
             return result;

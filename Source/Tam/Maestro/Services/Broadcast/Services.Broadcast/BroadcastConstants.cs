@@ -67,5 +67,6 @@
         public static string ADU_FLAG = "broadcast-enabled-adu-flag";
         public static string EXTERNAL_NOTE_EXPORT = "Broadcast-EnableExternalNoteExport";
         public static string ENABLE_ISCI_MAPPING = "broadcast-enable-isci-mapping";
+        public static string BUY_EXP_REP_ORG = "broadcast-buy-exp-rep-org";
     }
 }
