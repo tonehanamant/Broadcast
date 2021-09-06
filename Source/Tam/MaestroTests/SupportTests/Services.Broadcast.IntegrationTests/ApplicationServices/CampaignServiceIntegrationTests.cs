@@ -47,14 +47,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private static readonly bool WRITE_FILE_TO_DISK = false;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private static IFeatureToggleHelper _FeatureToggleHelper;
 
         [SetUp]
         public void SetUpCampaignServiceIntegrationTests()
-        {
+        {            
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
+            _SetFeatureToggle(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST, false);
+            _FeatureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
         }
 
         private void _SetFeatureToggle(string feature, bool activate)
@@ -975,12 +978,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         private static void _WriteFileToLocalFileSystem<T>(T reportData, string filename)
-        {
+        {           
             if (WRITE_FILE_TO_DISK)
             {
                 if (typeof(T).Name.Equals("CampaignReportData"))
                 {
-                    var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData as CampaignReportData);
+                    var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates", _FeatureToggleHelper).Generate(reportData as CampaignReportData);
                     reportOutput.Filename = filename;
                     _WriteStream(reportOutput);
                     Assert.AreEqual(reportOutput.Stream.Length,

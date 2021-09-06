@@ -205,6 +205,7 @@
         571.4,
         2857.2
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -351,6 +352,7 @@
         571.4,
         2857.2
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -497,6 +499,7 @@
         571.4,
         2857.2
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -643,6 +646,7 @@
         571.4,
         2857.2
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -789,6 +793,7 @@
         2098.7,
         13573.1
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -935,6 +940,7 @@
         2098.7,
         13573.1
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -1081,6 +1087,7 @@
         384.5,
         5001.5
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -1227,6 +1234,7 @@
         384.5,
         5001.5
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -1372,6 +1380,7 @@
         3626.0,
         24289.0
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "January",
@@ -1518,6 +1527,7 @@
         0.0,
         1142.8
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -1664,6 +1674,7 @@
         0.0,
         1142.8
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -1810,6 +1821,7 @@
         0.0,
         1142.8
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -1956,6 +1968,7 @@
         0.0,
         1142.8
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -2102,6 +2115,7 @@
         384.5,
         8426.9
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -2248,6 +2262,7 @@
         384.5,
         8426.9
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -2394,6 +2409,7 @@
         384.5,
         4998.5
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -2540,6 +2556,7 @@
         384.5,
         4998.5
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",
@@ -2685,6 +2702,7 @@
         769.0,
         15711.0
       ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "April",

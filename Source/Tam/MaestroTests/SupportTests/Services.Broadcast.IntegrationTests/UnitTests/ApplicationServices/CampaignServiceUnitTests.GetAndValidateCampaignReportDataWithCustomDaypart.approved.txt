@@ -177,11 +177,7 @@
         0.0,
         21600.0
       ],
-      "MonthlyCostValues": [
-        143999.9996,
-        143999.9996,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",
@@ -328,11 +324,7 @@
         0.0,
         14400.0
       ],
-      "MonthlyCostValues": [
-        95999.9996,
-        95999.9996,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",
@@ -479,11 +471,7 @@
         0.0,
         36000.0
       ],
-      "MonthlyCostValues": [
-        239999.9992,
-        239999.9992,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",
@@ -630,11 +618,7 @@
         0.0,
         14400.0
       ],
-      "MonthlyCostValues": [
-        95999.9996,
-        95999.9996,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",
@@ -781,11 +765,7 @@
         0.0,
         9600.0
       ],
-      "MonthlyCostValues": [
-        63999.9996,
-        63999.9996,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",
@@ -932,11 +912,7 @@
         0.0,
         24000.0
       ],
-      "MonthlyCostValues": [
-        159999.9992,
-        159999.9992,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",
@@ -1082,11 +1058,7 @@
         0.0,
         60000.0
       ],
-      "MonthlyCostValues": [
-        399999.9984,
-        399999.9984,
-        0.0
-      ],
+      "MonthlyCostValues": [],
       "Months": [
         {
           "Item1": "October",

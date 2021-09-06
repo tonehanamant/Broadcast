@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
@@ -19,13 +20,21 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         private readonly string TABLE_12_WEEKS = "A2:O9";
 
-        private readonly string TABLE_13_WEEKS_MONTH_1 = "A12:P21";   //month 1 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_2 = "A22:P31";   //month 2 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_3 = "A32:P41";   //month 3 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_1 = "A12:P19";   //month 1 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_2 = "A22:P29";   //month 2 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_3 = "A32:P39";   //month 3 has 5 weeks
 
-        private readonly string TABLE_14_WEEKS_MONTH_1 = "A62:Q71";   //month 2 & 3 have 5 weeks
-        private readonly string TABLE_14_WEEKS_MONTH_2 = "A52:Q61";   //month 1 & 3 have 5 weeks
-        private readonly string TABLE_14_WEEKS_MONTH_3 = "A42:Q51";   //month 1 & 2 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_1 = "A62:Q69";   //month 2 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_2 = "A52:Q59";   //month 1 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_3 = "A42:Q49";   //month 1 & 2 have 5 weeks
+
+        private readonly string TABLE_13_WEEKS_MONTH_1_V2 = "A12:P21";   //month 1 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_2_V2 = "A22:P31";   //month 2 has 5 weeks
+        private readonly string TABLE_13_WEEKS_MONTH_3_V2 = "A32:P41";   //month 3 has 5 weeks
+
+        private readonly string TABLE_14_WEEKS_MONTH_1_V2 = "A62:Q71";   //month 2 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_2_V2 = "A52:Q61";   //month 1 & 3 have 5 weeks
+        private readonly string TABLE_14_WEEKS_MONTH_3_V2 = "A42:Q51";   //month 1 & 2 have 5 weeks
 
         private readonly int FIVE_WEEKS = 5;
         private readonly int FOUR_WEEKS = 4;
@@ -33,20 +42,23 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly int ROWS_TO_COPY = 9;
         private int planNameRowIndex = 7;
         private int currentRowIndex = 0;
-        
+
         private readonly ExcelWorksheet WORKSHEET;
         private readonly ExcelWorksheet TEMPLATES_WORKSHEET;
-
-        public FlowChartReportGenerator(ExcelWorksheet flowChartWorksheet, ExcelWorksheet templatesWorksheet)
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsCampaignExportTotalMonthlyCostEnabled;
+        public FlowChartReportGenerator(ExcelWorksheet flowChartWorksheet, ExcelWorksheet templatesWorksheet, IFeatureToggleHelper featureToggleHelper)
         {
             WORKSHEET = flowChartWorksheet;
             TEMPLATES_WORKSHEET = templatesWorksheet;
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsCampaignExportTotalMonthlyCostEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST));
         }
 
         public void PopulateFlowChartTab(CampaignReportData campaignReportData, string dayparts)
         {
             _PopulateDayparts(dayparts);
-            currentRowIndex = planNameRowIndex;            
+            currentRowIndex = planNameRowIndex;
             foreach (var table in campaignReportData.FlowChartQuarterTables)
             {
                 string address = _FindTemplateTableAddress(TEMPLATES_WORKSHEET, table);
@@ -59,25 +71,47 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             WORKSHEET.Cells[$"{DAYPARTS.Column}{DAYPARTS.Row}"].Value = dayparts;
         }
-        
+
         private string _FindTemplateTableAddress(ExcelWorksheet templateTablesWorksheet, FlowChartQuarterTableData table)
         {
             string result = string.Empty;
-            switch (table.TotalWeeksInQuarter)
+            if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
             {
-                case 12:
-                    result = TABLE_12_WEEKS;
-                    break;
-                case 13:
-                    if (table.Months[0].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_1;
-                    if (table.Months[1].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_2;
-                    if (table.Months[2].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_3;
-                    break;
-                case 14:
-                    if (table.Months[0].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_1;
-                    if (table.Months[1].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_2;
-                    if (table.Months[2].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_3;
-                    break;
+                switch (table.TotalWeeksInQuarter)
+                {
+                    case 12:
+                        result = TABLE_12_WEEKS;
+                        break;
+                    case 13:
+                        if (table.Months[0].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_1_V2;
+                        if (table.Months[1].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_2_V2;
+                        if (table.Months[2].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_3_V2;
+                        break;
+                    case 14:
+                        if (table.Months[0].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_1_V2;
+                        if (table.Months[1].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_2_V2;
+                        if (table.Months[2].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_3_V2;
+                        break;
+                }
+            }
+            else
+            {
+                switch (table.TotalWeeksInQuarter)
+                {
+                    case 12:
+                        result = TABLE_12_WEEKS;
+                        break;
+                    case 13:
+                        if (table.Months[0].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_1;
+                        if (table.Months[1].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_2;
+                        if (table.Months[2].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_3;
+                        break;
+                    case 14:
+                        if (table.Months[0].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_1;
+                        if (table.Months[1].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_2;
+                        if (table.Months[2].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_3;
+                        break;
+                }
             }
             return string.IsNullOrWhiteSpace(result)
                 ? throw new ApplicationException($"Could not find the correct flow chart template table. Quarter {table.QuarterLabel}")
@@ -97,7 +131,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         {
             //add table title and months label
             int offsetForSecondMonth = table.Months[0].WeeksInMonth == FIVE_WEEKS ? 1 : 0;
-            int offsetForThirdMonth = table.Months[1].WeeksInMonth == FIVE_WEEKS ? 1+offsetForSecondMonth : offsetForSecondMonth;
+            int offsetForThirdMonth = table.Months[1].WeeksInMonth == FIVE_WEEKS ? 1 + offsetForSecondMonth : offsetForSecondMonth;
 
             flowChartWorksheet.Cells[$"{TABLE_TITLE_COLUMN}{currentRowIndex}"].Value = table.TableTitle;
             flowChartWorksheet.Cells[currentRowIndex, FIRST_MONTH_COLUMN_INDEX]
@@ -144,15 +178,15 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
                 .LoadFromArrays(new List<object[]> { table.CostValues.ToArray() });
             currentRowIndex++;
-          
+
             //add hiatus days
             flowChartWorksheet.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT_LARGE;
             flowChartWorksheet.Cells[$"C{currentRowIndex}"]
                 .LoadFromArrays(new List<object[]> { table.HiatusDaysFormattedValues.ToArray() });
             currentRowIndex++;
 
-            //add Total Monthly Cost
-            if (!table.TableTitle.Contains("ADU"))
+            //add Total Monthly Cost            
+            if (_IsCampaignExportTotalMonthlyCostEnabled.Value && !table.TableTitle.Contains("ADU"))
             {
                 flowChartWorksheet.Cells[currentRowIndex, FIRST_MONTH_COLUMN_INDEX]
                     .Value = table.MonthlyCostValues[0];

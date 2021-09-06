@@ -9,7 +9,7 @@
   "ClientName": "Advertiser1",
   "ContractQuarterTables": [],
   "ContractTotals": [],
-  "CreatedDate": "01/01/01",
+  "CreatedDate": "01/01/20",
   "DaypartsData": [
     {
       "DaypartCode": "DAY",
@@ -27,16 +27,27 @@
           ]
         }
       ],
-      "ProgramRestrictions": [
+      "ProgramRestrictions": [],
+      "StartTime": "09:00am"
+    },
+    {
+      "DaypartCode": "DAY",
+      "DaypartCodeId": 12,
+      "EndTime": "12:30pm",
+      "FlightDays": "M-SU",
+      "GenreRestrictions": [
         {
           "ContainType": 2,
-          "PlanId": 1252,
+          "PlanId": 1253,
           "Restrictions": [
-            "Mom"
+            "News",
+            "Religious",
+            "Paid Program"
           ]
         }
       ],
-      "StartTime": "09:00am"
+      "ProgramRestrictions": [],
+      "StartTime": "11:40am"
     },
     {
       "DaypartCode": "PA",
@@ -47,6 +58,15 @@
         {
           "ContainType": 2,
           "PlanId": 1252,
+          "Restrictions": [
+            "News",
+            "Religious",
+            "Paid Program"
+          ]
+        },
+        {
+          "ContainType": 2,
+          "PlanId": 1253,
           "Restrictions": [
             "News",
             "Religious",
@@ -64,10 +84,10 @@
       "CostValues": [
         0.0,
         0.0,
-        35999.9999,
-        35999.9999,
-        35999.9999,
-        35999.9999,
+        71999.9998,
+        71999.9998,
+        71999.9998,
+        71999.9998,
         0.0,
         0.0,
         0.0,
@@ -75,7 +95,7 @@
         0.0,
         0.0,
         0.0,
-        143999.9996
+        287999.9992
       ],
       "CPMValues": [
         0.0,
@@ -144,10 +164,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        2700.0,
-        2700.0,
-        2700.0,
-        2700.0,
+        5400.0,
+        5400.0,
+        5400.0,
+        5400.0,
         0.0,
         0.0,
         0.0,
@@ -155,9 +175,13 @@
         0.0,
         0.0,
         0.0,
-        10800.0
+        21600.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        143999.9996,
+        143999.9996,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -178,10 +202,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        27.0,
-        27.0,
-        27.0,
-        27.0,
+        54.0,
+        54.0,
+        54.0,
+        54.0,
         0.0,
         0.0,
         0.0,
@@ -189,7 +213,7 @@
         0.0,
         0.0,
         0.0,
-        108.0
+        216.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -211,10 +235,10 @@
       "CostValues": [
         0.0,
         0.0,
-        23999.9999,
-        23999.9999,
-        23999.9999,
-        23999.9999,
+        47999.9998,
+        47999.9998,
+        47999.9998,
+        47999.9998,
         0.0,
         0.0,
         0.0,
@@ -222,7 +246,7 @@
         0.0,
         0.0,
         0.0,
-        95999.9996
+        191999.9992
       ],
       "CPMValues": [
         0.0,
@@ -291,10 +315,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        1800.0,
-        1800.0,
-        1800.0,
-        1800.0,
+        3600.0,
+        3600.0,
+        3600.0,
+        3600.0,
         0.0,
         0.0,
         0.0,
@@ -302,9 +326,13 @@
         0.0,
         0.0,
         0.0,
-        7200.0
+        14400.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        95999.9996,
+        95999.9996,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -325,10 +353,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        18.0,
-        18.0,
-        18.0,
-        18.0,
+        36.0,
+        36.0,
+        36.0,
+        36.0,
         0.0,
         0.0,
         0.0,
@@ -336,7 +364,7 @@
         0.0,
         0.0,
         0.0,
-        72.0
+        144.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -358,10 +386,10 @@
       "CostValues": [
         0.0,
         0.0,
-        59999.9998,
-        59999.9998,
-        59999.9998,
-        59999.9998,
+        119999.9996,
+        119999.9996,
+        119999.9996,
+        119999.9996,
         0.0,
         0.0,
         0.0,
@@ -369,7 +397,7 @@
         0.0,
         0.0,
         0.0,
-        239999.9992
+        479999.9984
       ],
       "CPMValues": [
         0.0,
@@ -438,10 +466,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        4500.0,
-        4500.0,
-        4500.0,
-        4500.0,
+        9000.0,
+        9000.0,
+        9000.0,
+        9000.0,
         0.0,
         0.0,
         0.0,
@@ -449,9 +477,13 @@
         0.0,
         0.0,
         0.0,
-        18000.0
+        36000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        239999.9992,
+        239999.9992,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -472,10 +504,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        45.0,
-        45.0,
-        45.0,
-        45.0,
+        90.0,
+        90.0,
+        90.0,
+        90.0,
         0.0,
         0.0,
         0.0,
@@ -483,7 +515,7 @@
         0.0,
         0.0,
         0.0,
-        180.0
+        360.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -505,10 +537,10 @@
       "CostValues": [
         0.0,
         0.0,
-        23999.9999,
-        23999.9999,
-        23999.9999,
-        23999.9999,
+        47999.9998,
+        47999.9998,
+        47999.9998,
+        47999.9998,
         0.0,
         0.0,
         0.0,
@@ -516,7 +548,7 @@
         0.0,
         0.0,
         0.0,
-        95999.9996
+        191999.9992
       ],
       "CPMValues": [
         0.0,
@@ -585,10 +617,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        1800.0,
-        1800.0,
-        1800.0,
-        1800.0,
+        3600.0,
+        3600.0,
+        3600.0,
+        3600.0,
         0.0,
         0.0,
         0.0,
@@ -596,9 +628,13 @@
         0.0,
         0.0,
         0.0,
-        7200.0
+        14400.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        95999.9996,
+        95999.9996,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -619,10 +655,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        18.0,
-        18.0,
-        18.0,
-        18.0,
+        36.0,
+        36.0,
+        36.0,
+        36.0,
         0.0,
         0.0,
         0.0,
@@ -630,7 +666,7 @@
         0.0,
         0.0,
         0.0,
-        72.0
+        144.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -652,10 +688,10 @@
       "CostValues": [
         0.0,
         0.0,
-        15999.9999,
-        15999.9999,
-        15999.9999,
-        15999.9999,
+        31999.9998,
+        31999.9998,
+        31999.9998,
+        31999.9998,
         0.0,
         0.0,
         0.0,
@@ -663,7 +699,7 @@
         0.0,
         0.0,
         0.0,
-        63999.9996
+        127999.9992
       ],
       "CPMValues": [
         0.0,
@@ -732,10 +768,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        1200.0,
-        1200.0,
-        1200.0,
-        1200.0,
+        2400.0,
+        2400.0,
+        2400.0,
+        2400.0,
         0.0,
         0.0,
         0.0,
@@ -743,9 +779,13 @@
         0.0,
         0.0,
         0.0,
-        4800.0
+        9600.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        63999.9996,
+        63999.9996,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -766,10 +806,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0,
+        24.0,
+        24.0,
+        24.0,
+        24.0,
         0.0,
         0.0,
         0.0,
@@ -777,7 +817,7 @@
         0.0,
         0.0,
         0.0,
-        48.0
+        96.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -799,10 +839,10 @@
       "CostValues": [
         0.0,
         0.0,
-        39999.9998,
-        39999.9998,
-        39999.9998,
-        39999.9998,
+        79999.9996,
+        79999.9996,
+        79999.9996,
+        79999.9996,
         0.0,
         0.0,
         0.0,
@@ -810,7 +850,7 @@
         0.0,
         0.0,
         0.0,
-        159999.9992
+        319999.9984
       ],
       "CPMValues": [
         0.0,
@@ -879,10 +919,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        3000.0,
-        3000.0,
-        3000.0,
-        3000.0,
+        6000.0,
+        6000.0,
+        6000.0,
+        6000.0,
         0.0,
         0.0,
         0.0,
@@ -890,9 +930,13 @@
         0.0,
         0.0,
         0.0,
-        12000.0
+        24000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        159999.9992,
+        159999.9992,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -913,10 +957,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        30.0,
-        30.0,
-        30.0,
-        30.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0,
         0.0,
         0.0,
         0.0,
@@ -924,7 +968,7 @@
         0.0,
         0.0,
         0.0,
-        120.0
+        240.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -946,10 +990,10 @@
       "CostValues": [
         0.0,
         0.0,
-        99999.9996,
-        99999.9996,
-        99999.9996,
-        99999.9996,
+        199999.9992,
+        199999.9992,
+        199999.9992,
+        199999.9992,
         0.0,
         0.0,
         0.0,
@@ -957,7 +1001,7 @@
         0.0,
         0.0,
         0.0,
-        399999.9984
+        799999.9968
       ],
       "CPMValues": [
         0.0,
@@ -1025,10 +1069,10 @@
       "ImpressionsValues": [
         0.0,
         0.0,
-        7500.0,
-        7500.0,
-        7500.0,
-        7500.0,
+        15000.0,
+        15000.0,
+        15000.0,
+        15000.0,
         0.0,
         0.0,
         0.0,
@@ -1036,9 +1080,13 @@
         0.0,
         0.0,
         0.0,
-        30000.0
+        60000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        399999.9984,
+        399999.9984,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -1059,10 +1107,10 @@
       "UnitsValues": [
         0.0,
         0.0,
-        75.0,
-        75.0,
-        75.0,
-        75.0,
+        150.0,
+        150.0,
+        150.0,
+        150.0,
         0.0,
         0.0,
         0.0,
@@ -1070,7 +1118,7 @@
         0.0,
         0.0,
         0.0,
-        300.0
+        600.0
       ],
       "WeeksStartDate": [
         "2020-09-28T00:00:00",
@@ -1113,24 +1161,24 @@
           "Impressions": 100.0,
           "RatingPoints": 0.08266667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 10800.0,
-          "TotalRatingPoints": 8.928,
+          "TotalImpressions": 21600.0,
+          "TotalRatingPoints": 17.856,
           "VPVH": 0.424
         },
         "HHData": {
-          "CPM": 5.6533333176296400987654030179,
+          "CPM": 5.6533333176296290014814832263,
           "CPP": 6814.3099376869218831926086409,
           "DaypartCode": null,
           "Impressions": 235.8490566,
           "RatingPoints": 0.19566667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 25471.69811321,
-          "TotalRatingPoints": 21.13200029,
+          "TotalImpressions": 50943.39622642,
+          "TotalRatingPoints": 42.26400059,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "15 eq.",
-        "TotalCost": 143999.9996,
-        "Units": 108.0,
+        "TotalCost": 287999.9992,
+        "Units": 216.0,
         "UnitsCost": 1333.3333296296296296296296296
       },
       {
@@ -1142,8 +1190,8 @@
           "Impressions": 100.0,
           "RatingPoints": 0.08266667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 7200.0,
-          "TotalRatingPoints": 5.952,
+          "TotalImpressions": 14400.0,
+          "TotalRatingPoints": 11.904,
           "VPVH": 0.424
         },
         "HHData": {
@@ -1153,13 +1201,13 @@
           "Impressions": 235.8490566,
           "RatingPoints": 0.19566667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 16981.13207547,
-          "TotalRatingPoints": 14.0880002,
+          "TotalImpressions": 33962.26415094,
+          "TotalRatingPoints": 28.17600039,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "30",
-        "TotalCost": 95999.9996,
-        "Units": 72.0,
+        "TotalCost": 191999.9992,
+        "Units": 144.0,
         "UnitsCost": 1333.3333277777777777777777778
       },
       {
@@ -1171,8 +1219,8 @@
           "Impressions": 100.0,
           "RatingPoints": 0.08266667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 7200.0,
-          "TotalRatingPoints": 5.952,
+          "TotalImpressions": 14400.0,
+          "TotalRatingPoints": 11.904,
           "VPVH": 0.424
         },
         "HHData": {
@@ -1182,13 +1230,13 @@
           "Impressions": 235.8490566,
           "RatingPoints": 0.19566667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 16981.13207547,
-          "TotalRatingPoints": 14.0880002,
+          "TotalImpressions": 33962.26415094,
+          "TotalRatingPoints": 28.17600039,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "15 eq.",
-        "TotalCost": 95999.9996,
-        "Units": 72.0,
+        "TotalCost": 191999.9992,
+        "Units": 144.0,
         "UnitsCost": 1333.3333277777777777777777778
       },
       {
@@ -1200,24 +1248,24 @@
           "Impressions": 100.0,
           "RatingPoints": 0.08266667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 4800.0,
-          "TotalRatingPoints": 3.968,
+          "TotalImpressions": 9600.0,
+          "TotalRatingPoints": 7.936,
           "VPVH": 0.424
         },
         "HHData": {
-          "CPM": 5.6533332980000160177776776667,
-          "CPP": 6814.3099140261185857615062453,
+          "CPM": 5.6533332979999910488889448333,
+          "CPP": 6814.3099140261113303208977121,
           "DaypartCode": null,
           "Impressions": 235.8490566,
           "RatingPoints": 0.19566667,
           "SpotLengthLabel": null,
-          "TotalImpressions": 11320.75471698,
-          "TotalRatingPoints": 9.39200013,
+          "TotalImpressions": 22641.50943396,
+          "TotalRatingPoints": 18.78400026,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "30",
-        "TotalCost": 63999.9996,
-        "Units": 48.0,
+        "TotalCost": 127999.9992,
+        "Units": 96.0,
         "UnitsCost": 1333.333325
       }
     ],
@@ -1231,24 +1279,24 @@
         "Impressions": 0.0,
         "RatingPoints": 0.0,
         "SpotLengthLabel": null,
-        "TotalImpressions": 30000.0,
-        "TotalRatingPoints": 24.8,
+        "TotalImpressions": 60000.0,
+        "TotalRatingPoints": 49.6,
         "VPVH": 0.0
       },
       "HHData": {
-        "CPM": 5.6533333107199980401777856171,
-        "CPP": 6814.3099293583246946752566576,
+        "CPM": 5.6533333107200060302221981013,
+        "CPP": 6814.3099293583014772652571124,
         "DaypartCode": null,
         "Impressions": 0.0,
         "RatingPoints": 0.0,
         "SpotLengthLabel": null,
-        "TotalImpressions": 70754.71698113,
-        "TotalRatingPoints": 58.70000081,
+        "TotalImpressions": 141509.43396226,
+        "TotalRatingPoints": 117.40000163,
         "VPVH": 0.0
       },
       "SpotLengthLabel": null,
-      "TotalCost": 399999.9984,
-      "Units": 300.0,
+      "TotalCost": 799999.9968,
+      "Units": 600.0,
       "UnitsCost": 0.0
     }
   },
@@ -1266,24 +1314,24 @@
             "Impressions": 100.0,
             "RatingPoints": 0.08266667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 10800.0,
-            "TotalRatingPoints": 8.928,
+            "TotalImpressions": 21600.0,
+            "TotalRatingPoints": 17.856,
             "VPVH": 0.424
           },
           "HHData": {
-            "CPM": 5.6533333176296400987654030179,
+            "CPM": 5.6533333176296290014814832263,
             "CPP": 6814.3099376869218831926086409,
             "DaypartCode": null,
             "Impressions": 235.8490566,
             "RatingPoints": 0.19566667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 25471.69811321,
-            "TotalRatingPoints": 21.13200029,
+            "TotalImpressions": 50943.39622642,
+            "TotalRatingPoints": 42.26400059,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
-          "TotalCost": 143999.9996,
-          "Units": 108.0,
+          "TotalCost": 287999.9992,
+          "Units": 216.0,
           "UnitsCost": 1333.3333296296296296296296296
         },
         {
@@ -1295,8 +1343,8 @@
             "Impressions": 100.0,
             "RatingPoints": 0.08266667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 7200.0,
-            "TotalRatingPoints": 5.952,
+            "TotalImpressions": 14400.0,
+            "TotalRatingPoints": 11.904,
             "VPVH": 0.424
           },
           "HHData": {
@@ -1306,13 +1354,13 @@
             "Impressions": 235.8490566,
             "RatingPoints": 0.19566667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 16981.13207547,
-            "TotalRatingPoints": 14.0880002,
+            "TotalImpressions": 33962.26415094,
+            "TotalRatingPoints": 28.17600039,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 95999.9996,
-          "Units": 72.0,
+          "TotalCost": 191999.9992,
+          "Units": 144.0,
           "UnitsCost": 1333.3333277777777777777777778
         },
         {
@@ -1324,8 +1372,8 @@
             "Impressions": 100.0,
             "RatingPoints": 0.08266667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 7200.0,
-            "TotalRatingPoints": 5.952,
+            "TotalImpressions": 14400.0,
+            "TotalRatingPoints": 11.904,
             "VPVH": 0.424
           },
           "HHData": {
@@ -1335,13 +1383,13 @@
             "Impressions": 235.8490566,
             "RatingPoints": 0.19566667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 16981.13207547,
-            "TotalRatingPoints": 14.0880002,
+            "TotalImpressions": 33962.26415094,
+            "TotalRatingPoints": 28.17600039,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
-          "TotalCost": 95999.9996,
-          "Units": 72.0,
+          "TotalCost": 191999.9992,
+          "Units": 144.0,
           "UnitsCost": 1333.3333277777777777777777778
         },
         {
@@ -1353,24 +1401,24 @@
             "Impressions": 100.0,
             "RatingPoints": 0.08266667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 4800.0,
-            "TotalRatingPoints": 3.968,
+            "TotalImpressions": 9600.0,
+            "TotalRatingPoints": 7.936,
             "VPVH": 0.424
           },
           "HHData": {
-            "CPM": 5.6533332980000160177776776667,
-            "CPP": 6814.3099140261185857615062453,
+            "CPM": 5.6533332979999910488889448333,
+            "CPP": 6814.3099140261113303208977121,
             "DaypartCode": null,
             "Impressions": 235.8490566,
             "RatingPoints": 0.19566667,
             "SpotLengthLabel": null,
-            "TotalImpressions": 11320.75471698,
-            "TotalRatingPoints": 9.39200013,
+            "TotalImpressions": 22641.50943396,
+            "TotalRatingPoints": 18.78400026,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 63999.9996,
-          "Units": 48.0,
+          "TotalCost": 127999.9992,
+          "Units": 96.0,
           "UnitsCost": 1333.333325
         }
       ],
@@ -1384,24 +1432,24 @@
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 30000.0,
-          "TotalRatingPoints": 24.8,
+          "TotalImpressions": 60000.0,
+          "TotalRatingPoints": 49.6,
           "VPVH": 0.0
         },
         "HHData": {
-          "CPM": 5.6533333107199980401777856171,
-          "CPP": 6814.3099293583246946752566576,
+          "CPM": 5.6533333107200060302221981013,
+          "CPP": 6814.3099293583014772652571124,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 70754.71698113,
-          "TotalRatingPoints": 58.70000081,
+          "TotalImpressions": 141509.43396226,
+          "TotalRatingPoints": 117.40000163,
           "VPVH": 0.0
         },
         "SpotLengthLabel": null,
-        "TotalCost": 399999.9984,
-        "Units": 300.0,
+        "TotalCost": 799999.9968,
+        "Units": 600.0,
         "UnitsCost": 0.0
       }
     }

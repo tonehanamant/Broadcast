@@ -479,7 +479,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             _LogInfo($"Gathering the report data...");
             var campaignReportData = GetAndValidateCampaignReportData(request);
-            var reportGenerator = new CampaignReportGenerator(templatesFilePath);
+            var reportGenerator = new CampaignReportGenerator(templatesFilePath, _FeatureToggleHelper);
             _LogInfo($"Preparing to generate the file.  templatesFilePath='{templatesFilePath}'");
             var report = reportGenerator.Generate(campaignReportData);
 

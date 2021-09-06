@@ -59,6 +59,7 @@ namespace Services.Broadcast.Entities.Campaign
         internal Lazy<bool> _IsAduFlagEnabled;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         internal Lazy<bool> _IsExternalNoteExportEnabled;
+        private readonly Lazy<bool> _IsCampaignExportTotalMonthlyCostEnabled;
 
         /// <summary>
         /// DO NOT CONSUME outside of Unit Tests.
@@ -93,6 +94,7 @@ namespace Services.Broadcast.Entities.Campaign
             _IsVPVHDemoEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.VPVH_DEMO));
             _IsAduFlagEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ADU_FLAG));
             _IsExternalNoteExportEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EXTERNAL_NOTE_EXPORT));
+            _IsCampaignExportTotalMonthlyCostEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST));
 
             List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans, planPricingResultsDayparts);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
@@ -663,9 +665,12 @@ namespace Services.Broadcast.Entities.Campaign
                 WeeksStartDate = firstTable.WeeksStartDate,
                 Months = firstTable.Months
             };
-            for (int i = 0; i < firstTable.Months.Count; i++)
+            if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
             {
-                tableData.MonthlyCostValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
+                for (int i = 0; i < firstTable.Months.Count; i++)
+                {
+                    tableData.MonthlyCostValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
+                }
             }
             for (int i = 0; i < tableData.TotalWeeksInQuarter; i++)
             {
@@ -761,9 +766,12 @@ namespace Services.Broadcast.Entities.Campaign
             tablesInQuarterDaypart.AddRange(finalSummaryTable);
 
             _CalculateTotalsForFlowChartTableSummary(tableData);
-            for (int i = 0; i < tableData.Months.Count; i++)
+            if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
             {
-                tableData.MonthlyCostValues.Add(afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
+                for (int i = 0; i < tableData.Months.Count; i++)
+                {
+                    tableData.MonthlyCostValues.Add(afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
+                }
             }
             FlowChartQuarterTables.Add(tableData);
             
@@ -913,8 +921,11 @@ namespace Services.Broadcast.Entities.Campaign
                                         //add the tuple to the Month array
                                         newTable.Months.Add((monthGroup.Key.MediaMonthName, weeksInMonth));
                                         var monthItems = monthGroup.ToList();
-                                        var monthlyCost = monthGroup.Sum(y => y.TotalCost);
-                                        newTable.MonthlyCostValues.Add(monthlyCost);
+                                        if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
+                                        {
+                                            var monthlyCost = monthGroup.Sum(y => y.TotalCost);
+                                            newTable.MonthlyCostValues.Add(monthlyCost);
+                                        }                                          
                                         monthItems
                                                 .GroupBy(x => x.WeekStartDate)
                                                 .ToList()

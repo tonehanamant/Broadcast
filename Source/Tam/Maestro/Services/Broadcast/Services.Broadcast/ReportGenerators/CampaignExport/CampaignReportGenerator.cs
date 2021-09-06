@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
+using Services.Broadcast.Helpers;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -18,10 +19,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly string CAMPAIGN_EXPORT_TEMPLATE_FILENAME = "Template - Campaign Export.xlsx";
         private readonly string CAMPAIGN_EXPORT_WITH_SECONDARY_DEMOS_TEMPLATE_FILENAME = "Template - Campaign Export With Secondary Audiences.xlsx";
         private readonly string TEMPLATES_FILE_PATH;
-
-        public CampaignReportGenerator(string templatesPath)
+        protected readonly IFeatureToggleHelper _FeatureToggleHelper;
+        public CampaignReportGenerator(string templatesPath, IFeatureToggleHelper featureToggleHelper)
         {
             TEMPLATES_FILE_PATH = templatesPath;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
             ExcelWorksheet flowChartWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_WORKSHEET_NAME);
             ExcelWorksheet flowChartTemplateTablesWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, FLOW_CHART_TEMPLATE_TABLES_WORKSHEET_NAME);            
-            new FlowChartReportGenerator(flowChartWorksheet, flowChartTemplateTablesWorksheet)
+            new FlowChartReportGenerator(flowChartWorksheet, flowChartTemplateTablesWorksheet,_FeatureToggleHelper)
                 .PopulateFlowChartTab(campaignReportData, proposalReportGenerator.Dayparts);
             if (campaignReportData.Status.Equals("Proposal"))
             {

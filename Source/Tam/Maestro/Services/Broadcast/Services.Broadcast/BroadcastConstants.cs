@@ -68,5 +68,6 @@
         public static string EXTERNAL_NOTE_EXPORT = "Broadcast-EnableExternalNoteExport";
         public static string ENABLE_ISCI_MAPPING = "broadcast-enable-isci-mapping";
         public static string BUY_EXP_REP_ORG = "broadcast-buy-exp-rep-org";
+        public static string CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST = "broadcast-campaign-export-total-monthly-cost";
     }
 }
