@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.Isci;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -45,16 +46,17 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc />
         public int DeleteReelIscisBetweenRange(DateTime startDate, DateTime endDate)
         {
+            startDate = startDate.Date;
+            endDate = endDate.Date.AddDays(1).AddMinutes(-1);
+
             return _InReadUncommitedTransaction(context =>
             {
-                var reelIscisToDelete = context.reel_iscis
-                                                .Where(reelIsci => reelIsci.active_start_date <= startDate.Date && reelIsci.active_end_date >= endDate.Date
-                                                                    || reelIsci.active_start_date >= startDate.Date && reelIsci.active_start_date <= endDate.Date
-                                                                    || reelIsci.active_end_date >= startDate.Date && reelIsci.active_end_date <= endDate.Date)
-                                                .ToList();
-
-                var deletedCount = context.reel_iscis.RemoveRange(reelIscisToDelete).Count();
-                context.SaveChanges();
+                var sql = $@"DELETE FROM reel_iscis WHERE (active_start_date <= @startDate AND active_end_date >= @endDate)
+                                OR (active_start_date >= @startDate AND active_start_date <= @endDate)
+                                OR (active_end_date >= @startDate AND active_end_date <= @endDate)";
+                var startDateParameter = new SqlParameter("@startDate", startDate);
+                var endDateParameter = new SqlParameter("@endDate", endDate);
+                var deletedCount = context.Database.ExecuteSqlCommand(sql, startDateParameter, endDateParameter);
                 return deletedCount;
             });
         }
@@ -76,8 +78,46 @@ namespace Services.Broadcast.Repositories
                     }).ToList(),
                     ingested_at = reelIsci.IngestedAt
                 }).ToList();
-                var addedCount = context.reel_iscis.AddRange(reelIscisToAdd).Count();
-                context.SaveChanges();
+
+                if (reelIscisToAdd.Any())
+                {
+                    var propertiesToIgnore = new List<string>() { "id" };
+                    BulkInsert(context, reelIscisToAdd, propertiesToIgnore);
+
+                    var ingestedAt = reelIscisToAdd.First().ingested_at;
+                    var addedReelIscis = context.reel_iscis.Where(x => x.ingested_at == ingestedAt).ToList();
+                    var reelIsciEntities = (from reelIsci in reelIscisToAdd
+                                            join addedReelIsci in addedReelIscis on new
+                                            {
+                                                Isci = reelIsci.isci,
+                                                SpotLengthId = reelIsci.spot_length_id,
+                                                ActiveStartDate = reelIsci.active_start_date,
+                                                ActiveEndDate = reelIsci.active_end_date,
+                                            } equals new
+                                            {
+                                                Isci = addedReelIsci.isci,
+                                                SpotLengthId = addedReelIsci.spot_length_id,
+                                                ActiveStartDate = addedReelIsci.active_start_date,
+                                                ActiveEndDate = addedReelIsci.active_end_date,
+                                            }
+                                            select new
+                                            {
+                                                ReelIscisToAdd = reelIsci,
+                                                AddedReelIscis = addedReelIsci
+                                            }).ToList();
+
+                    var reelIsciAdvertiserNameReferencesToAdd = reelIsciEntities.SelectMany(x => x.ReelIscisToAdd.reel_isci_advertiser_name_references.Select(reelIsciAdvertiserNameReference => new reel_isci_advertiser_name_references()
+                    {
+                        reel_isci_id = x.AddedReelIscis.id,
+                        advertiser_name_reference = reelIsciAdvertiserNameReference.advertiser_name_reference
+                    })).ToList();
+                    if (reelIsciAdvertiserNameReferencesToAdd.Any())
+                    {
+                        var propertiesToIgnoreReelIsciAdvertiserNameReferences = new List<string>() { "id" };
+                        BulkInsert(context, reelIsciAdvertiserNameReferencesToAdd, propertiesToIgnoreReelIsciAdvertiserNameReferences);
+                    }
+                }
+                var addedCount = reelIscisToAdd.Count();
                 return addedCount;
             });
         }

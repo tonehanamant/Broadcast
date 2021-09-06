@@ -1,0 +1,41 @@
+[
+  {
+    "ActiveEndDate": "2019-01-17T00:00:00",
+    "ActiveStartDate": "2019-01-01T00:00:00",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "Isci": "OKWF1701H",
+    "ReelIsciAdvertiserNameReferences": [
+      {
+        "AdvertiserNameReference": "Colgate EM"
+      },
+      {
+        "AdvertiserNameReference": "Nature's Bounty"
+      }
+    ],
+    "SpotLengthId": 1
+  },
+  {
+    "ActiveEndDate": "2019-01-17T00:00:00",
+    "ActiveStartDate": "2019-01-01T00:00:00",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "Isci": "OKWL1702H",
+    "ReelIsciAdvertiserNameReferences": [
+      {
+        "AdvertiserNameReference": "O'Keeffes"
+      }
+    ],
+    "SpotLengthId": 3
+  },
+  {
+    "ActiveEndDate": "2020-01-17T00:00:00",
+    "ActiveStartDate": "2020-01-01T00:00:00",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "Isci": "OKWL1703H",
+    "ReelIsciAdvertiserNameReferences": [
+      {
+        "AdvertiserNameReference": "O'Keeffes"
+      }
+    ],
+    "SpotLengthId": 3
+  }
+]

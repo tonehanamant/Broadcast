@@ -114,20 +114,31 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Arrange
             int expectedAddCount = 3;
             var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
-            var reelIscis = _GetReelIscis();
-            var result = 0;
+            var ingestedDateTime = new DateTime(2010, 10, 12);
+            var reelIscis = _GetReelIscisToAdd(ingestedDateTime);
+            var addedCount = 0;
+            List<ReelIsciDto> result;
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                result = reelIsciRepo.AddReelIscis(reelIscis);
+                addedCount = reelIsciRepo.AddReelIscis(reelIscis);
+                result = reelIsciRepo.GetReelIscis();
             }
 
             // Assert
-            Assert.AreEqual(expectedAddCount, result);
+            var resultForValidation = result.Where(s => s.IngestedAt.Equals(ingestedDateTime));
+
+            var settings = IntegrationTestHelper._GetJsonSettings();
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(ReelIsciDto), "Id");
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(ReelIsciAdvertiserNameReferenceDto), "Id");
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(ReelIsciAdvertiserNameReferenceDto), "ReelIsciId");
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(resultForValidation, settings));
+            Assert.AreEqual(expectedAddCount, addedCount);
         }
 
-        private List<ReelIsciDto> _GetReelIscis()
+        private List<ReelIsciDto> _GetReelIscisToAdd(DateTime ingestedAt)
         {
             return new List<ReelIsciDto>()
             {
@@ -137,6 +148,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     SpotLengthId = 1,
                     ActiveStartDate = new DateTime(2019,01,01),
                     ActiveEndDate = new DateTime(2019,01,17),
+                    IngestedAt = ingestedAt,
                     ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
                     {
                         new ReelIsciAdvertiserNameReferenceDto()
@@ -155,6 +167,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     SpotLengthId = 3,
                     ActiveStartDate = new DateTime(2019,01,01),
                     ActiveEndDate = new DateTime(2019,01,17),
+                    IngestedAt = ingestedAt,
                     ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
                     {
                         new ReelIsciAdvertiserNameReferenceDto()
@@ -169,6 +182,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     SpotLengthId = 3,
                     ActiveStartDate = new DateTime(2020,01,01),
                     ActiveEndDate = new DateTime(2020,01,17),
+                    IngestedAt = ingestedAt,
                     ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
                     {
                         new ReelIsciAdvertiserNameReferenceDto()

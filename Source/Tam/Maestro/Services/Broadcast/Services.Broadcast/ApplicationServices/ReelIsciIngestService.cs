@@ -144,7 +144,8 @@ namespace Services.Broadcast.ApplicationServices
             try
             {
                 _LogInfo($"reel-isci-ingest : Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
-                var reelRosterIscis = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
+                //var reelRosterIscis = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
+                var reelRosterIscis = _GetReelRosterIscis(startDate, numberOfDays);
                 _LogInfo($"reel-isci-ingest : Received a response containing '{reelRosterIscis.Count}' records.");
 
                 var endDate = startDate.AddDays(numberOfDays);
@@ -190,6 +191,32 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        internal List<ReelRosterIsciDto> _GetReelRosterIscis(DateTime startDate, int totalNumberOfDays)
+        {
+            var maxDaysForCall = 100;
+            var totalCallsForMaxDays = totalNumberOfDays / maxDaysForCall;
+            var totalCallsForRemainingDays = totalNumberOfDays % maxDaysForCall;
+
+            var numberOfDaysList = new List<int>();
+            for (int i = 0; i < totalCallsForMaxDays; i++)
+            {
+                numberOfDaysList.Add(maxDaysForCall);
+            }
+            if (totalCallsForRemainingDays > 0)
+            {
+                numberOfDaysList.Add(totalCallsForRemainingDays);
+            }
+
+            var reelRosterIscis = new List<ReelRosterIsciDto>();
+            foreach (var numberOfDays in numberOfDaysList)
+            {
+                var result = _ReelIsciApiClient.GetReelRosterIscis(startDate, numberOfDays);
+                reelRosterIscis.AddRange(result);
+                startDate = startDate.AddDays(numberOfDays);
+            }
+            return reelRosterIscis;
+        }
+
         private int _DeleteReelIscisBetweenRange(DateTime startDate, DateTime endDate)
         {
             var result = _ReelIsciRepository.DeleteReelIscisBetweenRange(startDate, endDate);
@@ -199,6 +226,7 @@ namespace Services.Broadcast.ApplicationServices
         private int _AddReelIscis(List<ReelRosterIsciDto> reelRosterIscis)
         {
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
+            var ingestedAt = _DateTimeEngine.GetCurrentMoment();
 
             var reelIscis = reelRosterIscis.Select(reelRosterIsci => new ReelIsciDto()
             {
@@ -210,7 +238,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     AdvertiserNameReference = x
                 }).ToList(),
-                IngestedAt = _DateTimeEngine.GetCurrentMoment()
+                IngestedAt = ingestedAt
             }).ToList();
             var result = _ReelIsciRepository.AddReelIscis(reelIscis);
             return result;

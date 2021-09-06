@@ -77,8 +77,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             //Arrange
             var currentDateTime = new DateTime(2021, 08, 26, 14, 26, 36);
-            var expectedIngestStartDate = new DateTime(2020, 08, 25);
-            const int numberOfDays = 366;
+            var expectedIngestStartDate = new DateTime(2021, 07, 27);
+            const int numberOfDays = 30;
             const int jobId = 12;
 
             _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
@@ -116,8 +116,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             //Arrange
             var currentDateTime = new DateTime(2021, 08, 26, 14,26,36);
-            var expectedIngestStartDate = new DateTime(2020, 08, 25);
-            const int numberOfDays = 366;
+            var expectedIngestStartDate = new DateTime(2021, 07, 27);
+            const int numberOfDays = 30;
             const int jobId = 12;
 
             _ReelIsciIngestJobsRepositoryMock.Setup(s => s.AddReelIsciIngestJob(It.IsAny<ReelIsciIngestJobDto>()))
@@ -372,6 +372,45 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(BackgroundJobProcessingStatus.Failed, job.Status);
             Assert.IsNotNull(job.CompletedAt);
             Assert.IsTrue(job.ErrorMessage.Contains(errorMessage));
+        }
+
+        [Test]
+        [TestCase("01/01/2020", 10, 1)]
+        [TestCase("01/01/2020", 101, 2)]
+        [TestCase("01/01/2020", 201, 3)]
+        [TestCase("01/01/2020", 366, 4)]
+        public void GetReelRosterIscis(string startDateString, int numberOfDays, int expectedNumberOfCall)
+        {
+            //Arrange
+            var startDate = DateTime.Parse(startDateString);
+
+            _ReelIsciApiClientMock
+                .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
+                .Returns(new List<ReelRosterIsciDto>()
+                {
+                    new ReelRosterIsciDto
+                    {
+                        Isci = "OKWF1701H",
+                        SpotLengthDuration = 15,
+                        StartDate = new DateTime(2021,01,01),
+                        EndDate = new DateTime(2021,01,17),
+                        AdvertiserNames = new List<string> { "Colgate EM", "Nature's Bounty" }
+                    },
+                    new ReelRosterIsciDto
+                    {
+                        Isci = "OKWL1702H",
+                        SpotLengthDuration = 30,
+                        StartDate = new DateTime(2021,01,01),
+                        EndDate = new DateTime(2021,01,17),
+                        AdvertiserNames = new List<string> { "O'Keeffes" }
+                    }
+                });
+
+            //Act
+            _ReelIsciIngestService._GetReelRosterIscis(startDate, numberOfDays);
+
+            //Assert
+            _ReelIsciApiClientMock.Verify(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()), Times.Exactly(expectedNumberOfCall));
         }
     }
 }
