@@ -1178,5 +1178,72 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+        [Test]
+        public void GetAvailableIscis_WithoutDuplication()
+        {
+            // Arrange
+            IsciSearchDto isciSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                UnmappedOnly = false,
+
+            };
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns(
+                new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
+                );
+
+            _PlanIsciRepositoryMock
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetAvailableIscis_withDuplication());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIscis(isciSearch);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private List<IsciAdvertiserDto> _GetAvailableIscis_withDuplication()
+        {
+            return new List<IsciAdvertiserDto>()
+            {
+                new IsciAdvertiserDto()
+                {
+                AdvertiserName = "O'Keeffes",
+                Id = 1,
+                SpotLengthDuration = 21,
+                ProductName = "Product1",
+                Isci = "OKWF1701H",
+                PlanIsci=1
+                },
+                 new IsciAdvertiserDto()
+                {
+                AdvertiserName = "O'Keeffes",
+                Id = 2,
+                SpotLengthDuration = 22,
+                ProductName = "Product1",
+                Isci = "OKWF1701H",
+                PlanIsci=1
+                },
+                new IsciAdvertiserDto()
+                {
+                AdvertiserName = "Reckitt Benckiser",
+                Id = 3,
+                SpotLengthDuration = 23,
+                ProductName = "Product3",
+                Isci = "OKWF1701H",
+                PlanIsci=1
+                },
+                   new IsciAdvertiserDto()
+                {
+                AdvertiserName = "O'Keeffes",
+                Id = 4,
+                SpotLengthDuration = 24,
+                ProductName = "Product4",
+                Isci = "CLDC6513000H",
+                PlanIsci=1
+                }
+            };
+        }
     }
 }

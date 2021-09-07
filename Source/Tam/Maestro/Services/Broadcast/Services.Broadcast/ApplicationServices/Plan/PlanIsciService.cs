@@ -93,14 +93,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
                 if (isciAdvertiserListDto?.Any() ?? false)
                 {
-                    var resultlamba = isciAdvertiserListDto.GroupBy(stu => stu.AdvertiserName).OrderBy(stu => stu.Key);
+                    var resultlamba = isciAdvertiserListDto.GroupBy(stu => new { stu.AdvertiserName, stu.Isci }).Select(x => x.LastOrDefault()).GroupBy(x => x.AdvertiserName).OrderBy(x => x.Key).ToList();
 
                     foreach (var group in resultlamba)
                     {
                         IsciListItemDto isciListItemDto = new IsciListItemDto();
                         isciListItemDto.AdvertiserName = group.Key;
                         foreach (var item in group)
-                        {                            
+                        {
                             IsciDto isciItemDto = new IsciDto();
                             isciItemDto.Id = item.Id;
                             isciItemDto.Isci = item.Isci;
