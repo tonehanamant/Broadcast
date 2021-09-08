@@ -53,7 +53,7 @@ namespace PricingModelEndpointTester
             Console.WriteLine($"Results written to file '{outputFilePath}'");
 
             Console.WriteLine($"Transforming to sql...");
-            var sqlResults = SqlUtility.TransformResultToSql(result, "Vanilla");
+            var sqlResults = Utilities.TransformResultToSql(result, "Vanilla");
             Utilities.WriteStringToFile(sqlOutputFilePath, sqlResults);
             Console.WriteLine($"Sql written tp '{sqlOutputFilePath}'");
 

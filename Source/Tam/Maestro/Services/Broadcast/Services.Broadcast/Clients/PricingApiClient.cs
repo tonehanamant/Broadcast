@@ -19,13 +19,13 @@ namespace Services.Broadcast.Clients
 
     public class PricingApiClient : IPricingApiClient
     {
-        protected const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
+        private const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
 
         private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
-        protected readonly HttpClient _HttpClient;
-        protected readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        protected readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly HttpClient _HttpClient;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         public PricingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)

@@ -6,7 +6,7 @@ using System.Text;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers.Json;
 
-namespace PricingModelEndpointTester
+namespace AttachmentMicroServiceApiTester
 {
     public static class Utilities
     {
