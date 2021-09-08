@@ -178,11 +178,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest, string apiVersion);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
 
         Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,
@@ -1733,7 +1733,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spotsAndMappings.Spots
             };
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -1786,7 +1786,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();
             _HandleMissingSpotCosts(planSpotLengthIds, buyingApiRequest);
 
-            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -2086,11 +2086,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return grouped;
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest, string apiVersion)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto buyingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion,spotAllocationModelMode);
             }
             catch (Exception exception)
             {
@@ -2098,11 +2098,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {

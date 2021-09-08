@@ -229,7 +229,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_MarketRepositoryMock.Object);
 
             _PlanBuyingRequestLogClient
-                .Setup(x => x.SaveBuyingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanBuyingApiRequestDto>(), It.IsAny<string>()));
+                .Setup(x => x.SaveBuyingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanBuyingApiRequestDto>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeekById(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeek);

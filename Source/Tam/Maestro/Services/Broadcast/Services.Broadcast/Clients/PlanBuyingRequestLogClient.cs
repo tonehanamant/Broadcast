@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Plan.Buying;
+﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Helpers;
 using System;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -8,9 +9,9 @@ namespace Services.Broadcast.Clients
 {
     public interface IPlanBuyingRequestLogClient
     {
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
 
-        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto, string apiVersion);
+        void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
     }
 
     public class PlanBuyingRequestLogClientAmazonS3 : IPlanBuyingRequestLogClient
@@ -31,27 +32,27 @@ namespace Services.Broadcast.Clients
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
-            var fileName = _GetFileName(planId, jobId, apiVersion);
+            var fileName = _GetFileName(planId, jobId, apiVersion, spotAllocationModelMode);
             var keyName = _GetKeyName(fileName);
 
             _LogToAmazonS3.SaveRequest(_BucketName.Value, keyName, fileName, planBuyingApiRequestDto);            
         }
 
-        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto, string apiVersion)
+        public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
-            var fileName = _GetFileName(planId, jobId, apiVersion);
+            var fileName = _GetFileName(planId, jobId, apiVersion, spotAllocationModelMode);
             var keyName = _GetKeyName(fileName);
 
             _LogToAmazonS3.SaveRequest(_BucketName.Value, keyName, fileName, planBuyingApiRequestDto);
         }
 
-        private string _GetFileName(int planId, int jobId, string apiVersion)
+        private string _GetFileName(int planId, int jobId, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             var appSettings = new AppSettings();
             var environment = appSettings.Environment.ToString().ToLower();
-            var fileName = PlanPricingBuyingFileHelper.GetRequestFileName(environment, planId, jobId, apiVersion, DateTime.Now);
+            var fileName = PlanPricingBuyingFileHelper.GetRequestFileName(environment, planId, jobId, apiVersion, DateTime.Now, spotAllocationModelMode);
             return fileName;
         }
 
