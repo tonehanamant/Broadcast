@@ -747,19 +747,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         }
 
         [Test]
-        [TestCase(0, 0)]
-        [TestCase(2400, 1.2)]
-        public void CalculateUnitsForWeekComponent(double weeklyImpressions, double expectedResult)
+        [TestCase(0, 0, false)]
+        [TestCase(2400, 1.2, false)]
+        [TestCase(0, 0, true)]
+        [TestCase(2400, .6, true)]
+        public void CalculateUnitsForWeekComponent(double weeklyImpressions, double expectedResult, bool equivalized)
         {
             // Arrange
             var planWeek = new WeeklyBreakdownWeek
             {
-                WeeklyImpressions = weeklyImpressions
+                WeeklyImpressions = weeklyImpressions,
+                SpotLengthId = 2 // :60s
             };
             var planImpressionsPerUnit = 2;
+            var spotLengthDeliveryMultipliers = SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId();
 
             // Act
-            var result = CampaignReportData._CalculateUnitsForWeekComponent(planWeek, planImpressionsPerUnit);
+            var result = CampaignReportData._CalculateUnitsForWeekComponent(planWeek, planImpressionsPerUnit, equivalized, spotLengthDeliveryMultipliers);
 
             Assert.AreEqual(expectedResult, result);
         }
