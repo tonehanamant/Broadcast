@@ -301,7 +301,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var sharedFolderFile = new SharedFolderFile
                 {
                     FolderPath = Path.GetTempPath(),
-                    FileNameWithExtension = "ProgramMappingsException.xlsx",
+                    FileNameWithExtension = "ProgramMappingsMappedGenre.xlsx",
                     FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     FileUsage = SharedFolderFileUsage.ProgramLineup,
                     CreatedDate = new DateTime(2020, 8, 28),
