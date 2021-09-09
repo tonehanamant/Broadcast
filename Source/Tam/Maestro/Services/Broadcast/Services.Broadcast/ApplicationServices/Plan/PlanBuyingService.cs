@@ -560,9 +560,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         decimal goalCpm;
                         if (buyingExecutionResult.PlanVersionId.HasValue)
                             goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.PlanVersionId.Value,
-                                buyingExecutionResult.JobId.Value);
+                                buyingExecutionResult.JobId.Value, buyingExecutionResult.PostingType);
                         else
-                            goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.JobId.Value);
+                            goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.JobId.Value, buyingExecutionResult.PostingType);
 
                         buyingExecutionResult.CpmPercentage =
                             CalculateCpmPercentage(buyingExecutionResult.OptimalCpm, goalCpm);
@@ -751,9 +751,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 decimal goalCpm;
                 if (buyingExecutionResult.PlanVersionId.HasValue)
                     goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.PlanVersionId.Value,
-                        buyingExecutionResult.JobId.Value);
+                        buyingExecutionResult.JobId.Value, buyingExecutionResult.PostingType);
                 else
-                    goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.JobId.Value);
+                    goalCpm = _PlanBuyingRepository.GetGoalCpm(buyingExecutionResult.JobId.Value, buyingExecutionResult.PostingType);
 
                 buyingExecutionResult.CpmPercentage =
                     CalculateCpmPercentage(buyingExecutionResult.OptimalCpm, goalCpm);

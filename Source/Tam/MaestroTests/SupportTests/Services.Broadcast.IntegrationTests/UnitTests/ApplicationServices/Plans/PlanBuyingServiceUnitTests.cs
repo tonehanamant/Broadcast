@@ -4840,7 +4840,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetCurrentBuyingExecutionsResults());
 
             _PlanBuyingRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             var service = _GetService(false, false, true, true);
 
@@ -4876,7 +4876,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetCurrentBuyingExecutionsResults());
 
             _PlanBuyingRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             var service = _GetService();
 

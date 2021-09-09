@@ -306,7 +306,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None
+                    MarketGroup = MarketGroupEnum.None,
+                    PostingType =PostingTypeEnum.NTI
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -730,7 +731,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
                 MarketGroup = MarketGroupEnum.None,
-                Margin = 20
+                Margin = 20,
+                PostingType = PostingTypeEnum.NTI
             };
         }
 
@@ -756,7 +758,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.Per30Min,
-                MarketGroup = MarketGroupEnum.None
+                MarketGroup = MarketGroupEnum.None,
+                PostingType = PostingTypeEnum.NSI
             };
 
             var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequest, savedDate, "test user");

@@ -198,21 +198,23 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
         PlanBuyingStationResultDto GetBuyingStationsResultByJobId(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode);
-       
+
         /// <summary>
         /// Gets the goal CPM.
         /// </summary>
         /// <param name="planVersionId">The plan version identifier.</param>
         /// <param name="jobId">The job identifier.</param>
+        /// <param name="postingType"></param>
         /// <returns>Decimal Goal CPM</returns>
-        decimal GetGoalCpm(int planVersionId, int jobId);
+        decimal GetGoalCpm(int planVersionId, int jobId, PostingTypeEnum postingType);
 
         /// <summary>
         /// Gets the goal CPM.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
+        /// <param name="postingType"></param>
         /// <returns>Decimal Goal CPM</returns>
-        decimal GetGoalCpm(int jobId);
+        decimal GetGoalCpm(int jobId, PostingTypeEnum postingType);
 
         /// <summary>
         /// Updates the plan buying version identifier.
@@ -1014,7 +1016,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<CurrentBuyingExecutionResultDto> GetBuyingResultsByJobId(int jobId,PostingTypeEnum postingType)
+        public List<CurrentBuyingExecutionResultDto> GetBuyingResultsByJobId(int jobId, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1078,34 +1080,37 @@ namespace Services.Broadcast.Repositories
                                    Spots = d.spots,
                                    Station = d.station,
                                    Affiliate = st.affiliation,
-                                   RepFirm = st.rep_firm_name  ,
-                                   OwnerName = st.owner_name ,
+                                   RepFirm = st.rep_firm_name,
+                                   OwnerName = st.owner_name,
                                    LegacyCallLetters = st.legacy_call_letters
                                }).OrderByDescending(p => p.ImpressionsPercentage).ToList()
                 };
             });
         }
-       
+
         /// <inheritdoc/>
-        public decimal GetGoalCpm(int planVersionId, int jobId)
+        public decimal GetGoalCpm(int planVersionId, int jobId, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_version_buying_parameters.Where(p =>
-                        p.plan_version_id == planVersionId && p.plan_version_buying_job_id == jobId)
-                    .Select(p => p.cpm_goal).FirstOrDefault();
+                var result = context.plan_version_buying_parameters
+                    .Where(p => p.plan_version_id == planVersionId && p.plan_version_buying_job_id == jobId && p.posting_type == (int)postingType)
+                    .Select(p => p.cpm_goal)
+                    .FirstOrDefault();
 
                 return result;
             });
         }
 
         /// <inheritdoc/>
-        public decimal GetGoalCpm(int jobId)
+        public decimal GetGoalCpm(int jobId, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_version_buying_parameters.Where(p => p.plan_version_buying_job_id == jobId)
-                    .Select(p => p.cpm_goal).FirstOrDefault();
+                var result = context.plan_version_buying_parameters
+                    .Where(p => p.plan_version_buying_job_id == jobId && p.posting_type == (int)postingType)
+                    .Select(p => p.cpm_goal)
+                    .FirstOrDefault();
 
                 return result;
             });
@@ -1512,5 +1517,5 @@ namespace Services.Broadcast.Repositories
                 .ToList();
             });
         }
-     }
+    }
 }
