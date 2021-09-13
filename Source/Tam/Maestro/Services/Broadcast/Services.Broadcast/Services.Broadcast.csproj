@@ -115,6 +115,50 @@
     <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-QA|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-UAT|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-STG|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-PROD|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Services.Broadcast.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cadent.Library.Utilities.Standard.Common, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Utilities.Standard.Common.1.0.1\lib\netstandard2.0\Cadent.Library.Utilities.Standard.Common.dll</HintPath>
@@ -1459,8 +1503,29 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="appsettings.Debug-PROD.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="appsettings.Debug-QA.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="appsettings.Debug-STG.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="appsettings.Debug-UAT.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="appsettings.Debug.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
     <None Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </None>
     <None Include="Entities\spotcableOrder_101.xsd">
       <SubType>Designer</SubType>
@@ -1490,9 +1555,11 @@
     <Error Condition="!Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
   </Target>
   <Import Project="..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets" Condition="Exists('..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -9,6 +9,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 using System.Data;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -26,8 +27,9 @@ namespace Services.Broadcast.Repositories
     public class NsiUniverseRepository : BroadcastForecastRepositoryBase, INsiUniverseRepository
     {
         public NsiUniverseRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         /// <summary>
         /// Returns a dictionary with market codes and subscribers for specified audiences

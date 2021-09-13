@@ -9,7 +9,7 @@ namespace Services.Broadcast
     public static class ConnectionStringConfigKeys
     {
         public static readonly string CONNECTIONSTRINGS_BROADCAST = "ConnectionStrings:Broadcast";
-        public static readonly string CONNECTIONSTRINGS_BROADCAST_FORECAST = "ConnectionStrings:BroadcastForcast";
+        public static readonly string CONNECTIONSTRINGS_BROADCAST_FORECAST = "ConnectionStrings:BroadcastForecast";
 
     }
 }

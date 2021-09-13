@@ -1,12 +1,12 @@
 ﻿using Common.Services.Repositories;
+using ConfigurationService.Client;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
-using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.Repositories
 {
@@ -31,8 +31,9 @@ namespace Services.Broadcast.Repositories
         public NsiStationRepository(
             IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper,
-            IConfigurationWebApiClient configurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient) { }
+            IConfigurationWebApiClient configurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public List<NsiStationDto> GetNsiStationListByMediaMonth(int mediaMonthId)
         {

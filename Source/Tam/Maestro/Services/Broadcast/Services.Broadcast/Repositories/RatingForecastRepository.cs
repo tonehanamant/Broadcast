@@ -21,6 +21,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 using System.Data.Common;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -38,8 +39,9 @@ namespace Services.Broadcast.Repositories
     public class RatingForecastRepository : BroadcastForecastRepositoryBase, IRatingForecastRepository
     {
         public RatingForecastRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public ImpressionsPointInTimeResult GetImpressionsPointInTime(
             int postingBookId, 

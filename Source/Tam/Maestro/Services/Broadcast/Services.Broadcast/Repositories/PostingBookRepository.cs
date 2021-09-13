@@ -4,6 +4,7 @@ using System.Linq;
 using System.Transactions;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
@@ -19,8 +20,9 @@ namespace Services.Broadcast.Repositories
     public class PostingBookRepository : BroadcastForecastRepositoryBase, IPostingBookRepository
     {
         public PostingBookRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
+            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
 
         public List<int> GetPostableMediaMonths(int marketThreshold)
         {
