@@ -38,12 +38,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 if (pTamResource == "broadcast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
                 else if (pTamResource == "broadcastforecast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_forecast_integration;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
             else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Staging")
@@ -51,12 +51,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 if (pTamResource == "broadcast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
                 else if (pTamResource == "broadcastforecast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_forecast_integration_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
             else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release")
@@ -64,12 +64,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 if (pTamResource == "broadcast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
                 else if (pTamResource == "broadcastforecast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_forecast_integration_codefreeze;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
             else if (System.Configuration.ConfigurationManager.AppSettings["Environment"] == "Release_CodeFreeze")
@@ -77,12 +77,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 if (pTamResource == "broadcast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
                 else if (pTamResource == "broadcastforecast")
                 {
                     return
-                        @"Data Source=CPA-DEV-SQLDEV.dev.crossmw.com\maestro2_dev;Initial Catalog=broadcast_forecast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
+                        @"Data Source=cd-db.dev.cadent.tv\maestro2_dev;Initial Catalog=broadcast_forecast_integration_codefreeze_staging;  Persist Security Info=True;user id=tamservice;pwd=KFqUjr+SjgugpL7h7yeJCg==; Asynchronous Processing=true";
                 }
             }
 
