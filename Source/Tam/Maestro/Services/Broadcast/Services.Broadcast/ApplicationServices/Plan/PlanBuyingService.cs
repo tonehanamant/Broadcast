@@ -171,7 +171,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Retrieves the Buying Results Markets Summary
         /// </summary>
         PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
 
         PlanBuyingBandsDto GetBuyingBands(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
@@ -2511,27 +2511,40 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
         {
-            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-
-            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+            if (_IsBuyExpRepOrgEnabled.Value)
             {
-                return null;
+                var stationResult = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter);
+                if (stationResult == null)
+                {
+                    return null;
+                }
+                var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+                var plan = _PlanRepository.GetPlan(planId);
+
+                var aggregatedResult = _PlanBuyingMarketResultsEngine.CalculateAggregatedResultOfMarket(stationResult, marketCoverages,plan);
+                _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(aggregatedResult);
+                return aggregatedResult;
             }
-
-            postingType = _ResolvePostingType(planId, postingType);
-
-            var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, postingType, spotAllocationModelMode);
-
-            if (results == null)
+            else
             {
-                return null;
+                var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+
+                if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                {
+                    return null;
+                }
+                postingType = _ResolvePostingType(planId, postingType);
+                var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, postingType, spotAllocationModelMode);
+                if (results == null)
+                {
+                    return null;
+                }
+                _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(results);
+
+                return results;
             }
-
-            _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(results);
-
-            return results;
         }
 
         /// <inheritdoc />

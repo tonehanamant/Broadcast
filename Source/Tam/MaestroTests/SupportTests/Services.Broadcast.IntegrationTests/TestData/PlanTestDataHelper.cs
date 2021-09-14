@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
 using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -165,7 +166,7 @@ namespace Services.Broadcast.IntegrationTests.TestData
         {
             var planDto = new PlanDto
             {
-                CampaignId = 1,               
+                CampaignId = 1,
                 Equivalized = true,
                 Name = "New Plan",
                 ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),

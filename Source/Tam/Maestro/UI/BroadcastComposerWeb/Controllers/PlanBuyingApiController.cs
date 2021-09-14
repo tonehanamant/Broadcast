@@ -75,9 +75,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("markets/{planId}")]
-        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,[FromUri]PlanBuyingFilterDto planBuyingFilter = null)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId,postingType ,spotAllocationModelMode));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId,postingType,spotAllocationModelMode, planBuyingFilter));
         }
 
         [HttpGet]

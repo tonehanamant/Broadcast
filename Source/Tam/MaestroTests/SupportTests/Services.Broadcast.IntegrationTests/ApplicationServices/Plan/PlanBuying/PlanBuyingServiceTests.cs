@@ -1068,7 +1068,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             Approvals.Verify(resultsToVerify);
         }
-
         #endregion // #region Allocation Model Versions
     }
 }

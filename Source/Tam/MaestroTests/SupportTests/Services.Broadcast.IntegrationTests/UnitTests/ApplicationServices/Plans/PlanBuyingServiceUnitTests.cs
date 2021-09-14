@@ -6784,5 +6784,182 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMarketsWithFilter()
+        {
+            // Arrange
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Id = 1,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime()
+                });
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetBuyingStationsResultByJobId(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new PlanBuyingStationResultDto
+                {
+                    BuyingJobId = 24,
+                    PlanVersionId = 95,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    PostingType = PostingTypeEnum.NSI,
+                    Totals = new PlanBuyingProgramTotalsDto()
+                    {
+                        Budget = 3912,
+                        AvgCpm = 2,
+                        Impressions = 2041.65,
+                        SpotCount = 300,
+                        StationCount = 46
+                    },
+                    Details = new List<PlanBuyingStationDto>()
+                    {
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 3912,
+                        Cpm = 2,
+                        Impressions = 2045,
+                        ImpressionsPercentage = 0,
+                        Market = "Madison",
+                        Spots = 2,
+                        Station = "HMTV",
+                        Affiliate = "CW",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      },
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 5436,
+                        Cpm = 2,
+                        Impressions = 3452,
+                        ImpressionsPercentage = 0,
+                        Market = "Tulsa",
+                        Spots = 6,
+                        Station = "HMTV",
+                        Affiliate = "KMYT",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      },
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 8765,
+                        Cpm = 9,
+                        Impressions = 9876,
+                        ImpressionsPercentage = 0,
+                        Market = "Madison",
+                        Spots = 6,
+                        Station = "HMTV",
+                        Affiliate = "CW",
+                        RepFirm = "Cox",
+                        OwnerName = null,
+                        LegacyCallLetters = "HMTV"
+                      }
+                    }
+                });
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(MarketsTestData.GetLatestMarketCoverages());
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(_GetPlan());
+            _PlanBuyingStationEngineMock.Setup(s => s.CalculateAggregateOfStations(It.IsAny<PlanBuyingStationResultDto>()))
+               .Returns(new PlanBuyingStationResultDto()
+               {
+                   BuyingJobId = 24,
+                   PlanVersionId = 95,
+                   SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                   PostingType = PostingTypeEnum.NSI,
+                   Totals = new PlanBuyingProgramTotalsDto()
+                   {
+                       Budget = 3912,
+                       AvgCpm = 2,
+                       Impressions = 2041.65,
+                       SpotCount = 300,
+                       StationCount = 46
+                   },
+                   Details = new List<PlanBuyingStationDto>()
+                   {
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 3912,
+                        Cpm = 2,
+                        Impressions = 2045,
+                        ImpressionsPercentage = 0,
+                        Market = "Madison",
+                        Spots = 2,
+                        Station = "HMTV",
+                        Affiliate = "CW",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      },
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 5436,
+                        Cpm = 2,
+                        Impressions = 3452,
+                        ImpressionsPercentage = 0,
+                        Market = "Tulsa",
+                        Spots = 6,
+                        Station = "HMTV",
+                        Affiliate = "KMYT",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      }
+                   }
+               });
+            _PlanBuyingMarketResultsEngine.Setup(s => s.CalculateAggregatedResultOfMarket(It.IsAny<PlanBuyingStationResultDto>(), It.IsAny<List<MarketCoverage>>(), It.IsAny<PlanDto>()))
+                .Returns(new PlanBuyingResultMarketsDto()
+                {
+                    BuyingJobId = 24,
+                    PlanVersionId = 95,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    PostingType = PostingTypeEnum.NSI,
+                    Totals = new PlanBuyingProgramTotalsDto()
+                    {
+                        Budget = 14201,
+                        AvgCpm = 11,
+                        Impressions = 13328,
+                        SpotCount = 8,
+                        StationCount = 2,
+                        MarketCoveragePercent = 3.986,
+                        ImpressionsPercentage = 100,
+                        MarketCount = 1
+                    },
+                    Details = new List<PlanBuyingResultMarketDetailsDto>()
+                    {
+                      new PlanBuyingResultMarketDetailsDto()
+                      {
+                        Budget = 14201,
+                        Cpm = 11,
+                        Impressions = 13328,
+                        ImpressionsPercentage = 100,
+                        MarketName = "Milwaukee",
+                        SpotCount = 8,
+                        StationCount = 2,
+                        MarketCoveragePercent = 3.986
+                      }
+                    }
+                });
+            var service = _GetService();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
+            var planId = 1197;
+            var planBuyingFilter = new PlanBuyingFilterDto()
+            {
+                OwnerNames = new List<string> { "TEGNA", "Newsweb Corporation/Channel 3 TV Company LLC" },
+                RepFirmNames = new List<string> { "TEGNA", "Direct" }
+            };
+
+            // Act
+            var result = service.GetMarkets(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }
