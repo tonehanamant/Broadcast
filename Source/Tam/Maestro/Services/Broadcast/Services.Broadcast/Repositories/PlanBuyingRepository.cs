@@ -591,48 +591,74 @@ namespace Services.Broadcast.Repositories
 
                 context.SaveChanges();
 
-                var pkSpots = context.plan_version_buying_api_result_spots.Any() ? context.plan_version_buying_api_result_spots.Max(x => x.id) + 1 : 1;
-
                 var planBuyingApiResultSpots = new List<plan_version_buying_api_result_spots>();
-                var planBuyingApiResultSpotFrequencies = new List<plan_version_buying_api_result_spot_frequencies>();
 
                 foreach (var spot in spots)
                 {
-                    var currentSpotId = pkSpots++;
 
                     var planBuyingApiResultSpot = new plan_version_buying_api_result_spots
                     {
-                        id = currentSpotId,
                         plan_version_buying_api_results_id = planBuyingApiResult.id,
                         station_inventory_manifest_id = spot.Id,
                         contract_media_week_id = spot.ContractMediaWeek.Id,
                         inventory_media_week_id = spot.InventoryMediaWeek.Id,
                         impressions30sec = spot.Impressions30sec,
                         standard_daypart_id = spot.StandardDaypart.Id,
+                        plan_version_buying_api_result_spot_frequencies = spot.SpotFrequencies.Select(x => new plan_version_buying_api_result_spot_frequencies()
+                        {
+
+                            spot_length_id = x.SpotLengthId,
+                            cost = x.SpotCost,
+                            spots = x.Spots,
+                            impressions = x.Impressions
+                        }).ToList()
                     };
-
-                    var frequencies = spot.SpotFrequencies
-                            .Select(x => new plan_version_buying_api_result_spot_frequencies
-                            {
-                                plan_version_buying_api_result_spot_id = currentSpotId,
-                                spot_length_id = x.SpotLengthId,
-                                cost = x.SpotCost,
-                                spots = x.Spots,
-                                impressions = x.Impressions
-                            })
-                            .ToList();
-
                     planBuyingApiResultSpots.Add(planBuyingApiResultSpot);
-                    planBuyingApiResultSpotFrequencies.AddRange(frequencies);
                 }
+                BulkInsert(context, planBuyingApiResultSpots, propertiesToIgnore);
 
-                BulkInsert(context, planBuyingApiResultSpots);
-                BulkInsert(context, planBuyingApiResultSpotFrequencies, propertiesToIgnore);
+                var addedplanBuyingApiResultSpots = context.plan_version_buying_api_result_spots.Where(x => x.plan_version_buying_api_results_id == planBuyingApiResult.id).ToList();
+                var planBuyingApiResultSpotsEntities = (from actualspots in planBuyingApiResultSpots
+                                                        join addedSpots in addedplanBuyingApiResultSpots on new
+                                                        {
+                                                            plan_version_buying_api_results_id = actualspots.plan_version_buying_api_results_id,
+                                                            station_inventory_manifest_id = actualspots.station_inventory_manifest_id,
+                                                            contract_media_week_id = actualspots.contract_media_week_id,
+                                                            inventory_media_week_id = actualspots.inventory_media_week_id,
+                                                            impressions30sec = actualspots.impressions30sec,
+                                                            standard_daypart_id = actualspots.standard_daypart_id,
+                                                        } equals new
+                                                        {
+                                                            plan_version_buying_api_results_id = addedSpots.plan_version_buying_api_results_id,
+                                                            station_inventory_manifest_id = addedSpots.station_inventory_manifest_id,
+                                                            contract_media_week_id = addedSpots.contract_media_week_id,
+                                                            inventory_media_week_id = addedSpots.inventory_media_week_id,
+                                                            impressions30sec = addedSpots.impressions30sec,
+                                                            standard_daypart_id = addedSpots.standard_daypart_id,
+                                                        }
+                                                        select new
+                                                        {
+                                                            PlanBuyingApiResultSpots = actualspots,
+                                                            AddedplanBuyingApiResultSpots = addedSpots
+                                                        }).ToList();
+
+                var planBuyingApiResultSpotsFrequency = planBuyingApiResultSpotsEntities.SelectMany(x => x.PlanBuyingApiResultSpots.plan_version_buying_api_result_spot_frequencies.Select(spotFrequency => new plan_version_buying_api_result_spot_frequencies()
+                {
+                    plan_version_buying_api_result_spot_id = x.AddedplanBuyingApiResultSpots.id,
+                    spot_length_id = spotFrequency.spot_length_id,
+                    cost = spotFrequency.cost,
+                    spots = spotFrequency.spots,
+                    impressions = spotFrequency.impressions
+                })).ToList();
+
+                var propertiestoIgnore = new List<string>() { "id" };
+                BulkInsert(context, planBuyingApiResultSpotsFrequency, propertiestoIgnore);
+
             });
         }
 
-        /// <inheritdoc/>
-        public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
+            /// <inheritdoc/>
+            public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
             SpotAllocationModelMode spotAllocationModelMode,
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {

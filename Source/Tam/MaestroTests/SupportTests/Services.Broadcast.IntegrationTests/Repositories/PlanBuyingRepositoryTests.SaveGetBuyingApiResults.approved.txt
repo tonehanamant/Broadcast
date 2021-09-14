@@ -9,7 +9,6 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 1,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",
@@ -49,7 +48,6 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 3,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",
@@ -104,7 +102,6 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 1,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",
@@ -144,7 +141,6 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Id": 2,
       "Impressions30sec": 12346.69,
       "InventoryMediaWeek": {
         "_EndDate": "2019-09-22T00:00:00",

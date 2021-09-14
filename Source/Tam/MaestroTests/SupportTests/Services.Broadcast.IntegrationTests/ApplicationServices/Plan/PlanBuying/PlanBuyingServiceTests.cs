@@ -13,7 +13,7 @@ using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.Stubs.Plan;
 using Services.Broadcast.IntegrationTests.TestData;
-using Services.Broadcast.Repositories;
+using Services.Broadcast.Repositories;  
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -792,6 +792,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             jsonResolver.Ignore(typeof(PlanBuyingResultMarketsDto), "PlanVersionId");
             jsonResolver.Ignore(typeof(PlanBuyingResultMarketsDto), "BuyingJobId");
+
+            jsonResolver.Ignore(typeof(PlanBuyingAllocatedSpot), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {

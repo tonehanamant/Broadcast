@@ -109,6 +109,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanBuyingAllocationResult), "JobId");
+            jsonResolver.Ignore(typeof(PlanBuyingAllocatedSpot), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
