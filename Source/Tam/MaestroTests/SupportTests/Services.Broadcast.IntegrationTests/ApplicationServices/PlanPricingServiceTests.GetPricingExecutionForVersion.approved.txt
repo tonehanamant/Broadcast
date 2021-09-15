@@ -7,7 +7,7 @@
   },
   "Result": {
     "CalculatedVpvh": 1.0,
-    "CpmPercentage": 1787,
+    "CpmPercentage": 0,
     "GoalFulfilledByProprietary": false,
     "HasResults": true,
     "Notes": "",

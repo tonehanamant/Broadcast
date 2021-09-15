@@ -766,6 +766,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns></returns>
         public int CalculateCpmPercentage(decimal optimalCpm, decimal goalCpm)
         {
+            if (goalCpm == 0) return 0;
             return (int)Math.Round(GeneralMath.ConvertFractionToPercentage(optimalCpm / goalCpm));
         }
 

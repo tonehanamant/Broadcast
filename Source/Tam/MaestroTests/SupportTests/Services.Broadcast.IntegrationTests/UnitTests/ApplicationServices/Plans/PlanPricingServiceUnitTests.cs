@@ -6056,7 +6056,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             var service = _GetService();
 
@@ -6092,7 +6092,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetCurrentPricingExecutionsResults());
 
             _PlanRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             var service = _GetService(false, false, true, true);
 
@@ -6128,7 +6128,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetCurrentPricingExecutionsResults());
 
             _PlanRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             var service = _GetService();
 
@@ -6165,7 +6165,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetCurrentPricingExecutionsResults());
 
             _PlanRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             var service = _GetService(false, false, true, true);
 
@@ -8261,7 +8261,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     //,CalculatedVpvh = 12.3  // Commented as per requirement of BP-2513
                 });
             _PlanRepositoryMock
-                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>()))
                 .Returns(110.0M);
             var service = _GetService();
 

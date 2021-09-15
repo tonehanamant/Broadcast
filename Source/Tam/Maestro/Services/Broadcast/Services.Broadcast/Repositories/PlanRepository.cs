@@ -155,14 +155,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="planVersionId"></param>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        decimal GetGoalCpm(int planVersionId, int jobId);
+        decimal GetGoalCpm(int planVersionId, int jobId, PostingTypeEnum postingType);
 
         /// <summary>
         /// Get Goal CPM value
         /// </summary>
         /// <param name="jobId">The job identifier</param>
         /// <returns></returns>
-        decimal GetGoalCpm(int jobId);
+        decimal GetGoalCpm(int jobId, PostingTypeEnum postingType);
         /// <summary>Get average calculated VPVH from plan_version_pricing_results_dayparts table
         /// </summary>
         /// <param name="PlanVersionPricingResultId">The plan_version_pricing_results identifier</param>
@@ -2422,24 +2422,27 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        public decimal GetGoalCpm(int planVersionId, int jobId)
+        public decimal GetGoalCpm(int planVersionId, int jobId, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_version_pricing_parameters.Where(p =>
-                        p.plan_version_id == planVersionId && p.plan_version_pricing_job_id == jobId)
-                    .Select(p => p.cpm_goal).FirstOrDefault();
+                var result = context.plan_version_pricing_parameters
+                    .Where(p => p.plan_version_id == planVersionId && p.plan_version_pricing_job_id == jobId && p.posting_type == (int)postingType)
+                    .Select(p => p.cpm_goal)
+                    .FirstOrDefault();
 
                 return result;
             });
         }
 
-        public decimal GetGoalCpm(int jobId)
+        public decimal GetGoalCpm(int jobId, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_version_pricing_parameters.Where(p => p.plan_version_pricing_job_id == jobId)
-                    .Select(p => p.cpm_goal).FirstOrDefault();
+                var result = context.plan_version_pricing_parameters
+                    .Where(p => p.plan_version_pricing_job_id == jobId && p.posting_type == (int)postingType)
+                    .Select(p => p.cpm_goal)
+                    .FirstOrDefault();
 
                 return result;
             });
