@@ -75,25 +75,48 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("markets/{planId}")]
-        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,[FromUri]PlanBuyingFilterDto planBuyingFilter = null)
+        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId,postingType,spotAllocationModelMode, planBuyingFilter));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId, postingType, spotAllocationModelMode));
+        }
+
+        [HttpPost]
+        [Route("~/api/v2/Buying/markets")]
+        public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PlanBuyingFilterDto planBuyingFilter, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId, postingType, spotAllocationModelMode, planBuyingFilter));
         }
 
         [HttpGet]
         [Route("ownershipgroups/{planId}")]
-        public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType = null, 
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, [FromUri]PlanBuyingFilterDto planBuyingFilter = null)
+        public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType = null,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId,postingType, spotAllocationModelMode, planBuyingFilter));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId, postingType, spotAllocationModelMode));
+        }
+
+        [HttpPost]
+        [Route("~/api/v2/Buying/ownershipgroups")]
+        public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId, PlanBuyingFilterDto planBuyingFilter, PostingTypeEnum? postingType = null,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId, postingType, spotAllocationModelMode, planBuyingFilter));
         }
 
         [HttpGet]
         [Route("repfirms/{planId}")]
         public BaseResponse<PlanBuyingResultRepFirmDto> GetBuyingRepFirms(int planId, PostingTypeEnum? postingType = null,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, [FromUri]PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingRepFirms(planId,postingType, spotAllocationModelMode, planBuyingFilter));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingRepFirms(planId, postingType, spotAllocationModelMode));
+        }
+
+        [HttpPost]
+        [Route("~/api/v2/Buying/repfirms")]
+        public BaseResponse<PlanBuyingResultRepFirmDto> GetBuyingRepFirms(int planId, PlanBuyingFilterDto planBuyingFilter, PostingTypeEnum? postingType = null,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingRepFirms(planId, postingType, spotAllocationModelMode, planBuyingFilter));
         }
 
         [HttpPost]
@@ -165,18 +188,25 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("stations/{planId}")]
-        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, [FromUri]PlanBuyingFilterDto planBuyingFilter = null)
+        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId, postingType ,spotAllocationModelMode, planBuyingFilter));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId, postingType, spotAllocationModelMode));
+        }
+
+        [HttpPost]
+        [Route("~/api/v2/Buying/stations")]
+        public BaseResponse<PlanBuyingStationResultDto> GetStations(int planId, PlanBuyingFilterDto planBuyingFilter, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter));
         }
 
         [HttpPost]
         [Route("ExportBuyingScx")]
-        public BaseResponse<Guid> ExportBuyingScx(PlanBuyingScxExportRequest request, 
+        public BaseResponse<Guid> ExportBuyingScx(PlanBuyingScxExportRequest request,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
-            var username = _GetCurrentUserFullName();           
+            var username = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>()
             .ExportPlanBuyingScx(request, username, spotAllocationModelMode, postingType));
         }
