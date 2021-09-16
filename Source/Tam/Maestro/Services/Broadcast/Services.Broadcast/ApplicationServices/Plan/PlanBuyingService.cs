@@ -2583,7 +2583,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 var aggStationResult = _PlanBuyingStationCalculationEngine.CalculateAggregateOfStations(result);
-
+                _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
                 return aggStationResult;
             }
 
@@ -2607,7 +2607,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 var aggResult = _PlanBuyingOwnershipGroupEngine.CalculateAggregateOfOwnershipGroup(result);
-
+                _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(aggResult);
                 return aggResult;
             }
             else
@@ -2649,7 +2649,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 var aggResult = _PlanBuyingRepFirmEngine.CalculateAggregateOfRepFirm(result);
-
+                _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(aggResult);
                 return aggResult;
             }
             else
