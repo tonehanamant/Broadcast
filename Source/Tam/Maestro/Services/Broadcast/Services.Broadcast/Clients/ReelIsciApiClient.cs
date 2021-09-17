@@ -84,7 +84,7 @@ namespace Services.Broadcast.Clients
             }
             catch (Exception e)
             {
-                throw new Exception("Error calling the ReelIsciApi for post data during get.", e); ;
+                throw new Exception("Error calling the ReelIsciApi for post data during get.", e);
             }
 
             return result;

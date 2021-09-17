@@ -145,5 +145,18 @@ namespace BroadcastComposerWeb.Controllers
             var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IReelIsciIngestService>().TestReelISciApiClient(startDate, numDays));
             return result;
         }
+
+        /// <summary>
+        /// Tests the reel isci API client dynamically with the start date being Today-numDays
+        /// </summary>
+        [HttpGet]
+        [Route("test-reel-isci-api-client-numDays-date")]
+        public BaseResponse<List<ReelRosterIsciDto>> TestReelISciApiClientDays(int numDays, DateTime startDate)
+        {
+            //var startDate = DateTime.Now.AddDays(-1 * numDays);
+
+            var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IReelIsciIngestService>().TestReelISciApiClient(startDate, numDays));
+            return result;
+        }
     }
 }

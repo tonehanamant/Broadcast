@@ -375,11 +375,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase("01/01/2020", 10, 1)]
-        [TestCase("01/01/2020", 101, 2)]
-        [TestCase("01/01/2020", 201, 3)]
-        [TestCase("01/01/2020", 366, 4)]
-        public void GetReelRosterIscis(string startDateString, int numberOfDays, int expectedNumberOfCall)
+        [TestCase("01/01/2020", 10, true, 1)]
+        [TestCase("01/01/2020", 101, true, 2)]
+        [TestCase("01/01/2020", 201, true, 3)]
+        [TestCase("01/01/2020", 366, true, 4)]
+        [TestCase("01/01/2020", 366, false, 1)]
+        public void GetReelRosterIscis_ManyCalls(string startDateString, int numberOfDays, bool manyCalls, int expectedNumberOfCall)
         {
             //Arrange
             var startDate = DateTime.Parse(startDateString);
@@ -407,7 +408,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             //Act
-            _ReelIsciIngestService._GetReelRosterIscis(startDate, numberOfDays);
+            _ReelIsciIngestService._GetReelRosterIscis(startDate, numberOfDays, manyCalls: manyCalls);
 
             //Assert
             _ReelIsciApiClientMock.Verify(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()), Times.Exactly(expectedNumberOfCall));
