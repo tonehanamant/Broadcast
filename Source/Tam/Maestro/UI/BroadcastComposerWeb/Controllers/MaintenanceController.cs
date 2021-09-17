@@ -38,12 +38,12 @@ namespace BroadcastComposerWeb.Controllers
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public MaintenanceController(
-            BroadcastApplicationServiceFactory applicationServiceFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            BroadcastApplicationServiceFactory applicationServiceFactory)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
             _BroadcastDataRepositoryFactory = BroadcastApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>();
-            _FeatureToggleHelper = featureToggleHelper;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _FeatureToggleHelper = BroadcastApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>();
+            _ConfigurationSettingsHelper = BroadcastApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
         }
 
         protected string _GetCurrentUserFullName() =>
