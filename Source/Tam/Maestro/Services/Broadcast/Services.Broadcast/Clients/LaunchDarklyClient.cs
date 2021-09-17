@@ -37,7 +37,12 @@ namespace Services.Broadcast.Clients
 
     /// <inheritdoc />
     public class LaunchDarklyClient : ILaunchDarklyClient
-    {             
+    {
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        public LaunchDarklyClient(IConfigurationSettingsHelper configurationSettingsHelper)
+        {
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+        }
         /// <inheritdoc />
         public bool IsToggleEnabled(string toggleKey, string username)
         {
@@ -79,7 +84,7 @@ namespace Services.Broadcast.Clients
 
         private string _GetSdkKey()
         {           
-            var encryptedKey = BroadcastServiceSystemParameter.LaunchDarklySdkKey;
+            var encryptedKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.LaunchDarklySdkKey);
             var decryptedKey = EncryptionHelper.DecryptString(encryptedKey, EncryptionHelper.EncryptionKey);
             return decryptedKey;
         }

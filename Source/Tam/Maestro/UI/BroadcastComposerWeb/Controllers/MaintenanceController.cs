@@ -34,12 +34,16 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
+        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public MaintenanceController(
-            BroadcastApplicationServiceFactory applicationServiceFactory)
+            BroadcastApplicationServiceFactory applicationServiceFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
             _BroadcastDataRepositoryFactory = BroadcastApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>();
+            _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
 
         protected string _GetCurrentUserFullName() =>
@@ -303,11 +307,8 @@ namespace BroadcastComposerWeb.Controllers
         [HttpGet]
         public ActionResult TestFtpAccess()
         {
-            FtpService srv = new FtpService();
-            ConfigurationSettingsHelper configurationSettingsHelper = new ConfigurationSettingsHelper();
-            LaunchDarklyClient launchDarklyClient = new LaunchDarklyClient();
-            FeatureToggleHelper featureToggleHelper = new FeatureToggleHelper(launchDarklyClient);
-            WWTVFtpHelper helper = new WWTVFtpHelper(srv,configurationSettingsHelper, featureToggleHelper);
+            FtpService srv = new FtpService();          
+            WWTVFtpHelper helper = new WWTVFtpHelper(srv, _ConfigurationSettingsHelper, _FeatureToggleHelper);
             NetworkCredential creds = helper.GetClientCredentials();
             var site = "ftp://" + helper.Host; 
             var list = srv.GetFileList(creds, site);
