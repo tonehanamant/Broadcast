@@ -37,11 +37,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [SetUp]
         public void SetUp()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();           
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, true);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
-            // register our stub instance so it is used to instantiate the service
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = true;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = false;
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();

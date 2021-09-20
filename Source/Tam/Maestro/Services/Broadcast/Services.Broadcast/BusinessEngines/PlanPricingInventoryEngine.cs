@@ -50,7 +50,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
-        protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
+        internal Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<int> _NumberOfFallbackQuartersForPricing;
         protected Lazy<bool> _UseTrueIndependentStations;
         protected Lazy<bool> _IsMultiSpotLengthEnabled;

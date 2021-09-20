@@ -62,6 +62,7 @@ namespace Services.Broadcast.ApplicationServices
                         _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
                         _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
                         _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
+                        _instance.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
 
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 
@@ -299,7 +300,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAabEngine, AabEngine>();
 
             //launch darkly
-            unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
 
             //@todo This is temporary to control the daypart source for Broadcast

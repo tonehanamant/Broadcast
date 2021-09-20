@@ -51,8 +51,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [SetUp]
         public void SetUpCampaignServiceIntegrationTests()
-        {            
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+        {
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub) IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
@@ -928,6 +928,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const int planId = 1197;
                 var now = new DateTime(2020, 4, 4);
+
+                // TODO: this should be reworked for these to be true, as they are in production
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
                 var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
                 var planPricingRequestDto = new PlanPricingParametersDto

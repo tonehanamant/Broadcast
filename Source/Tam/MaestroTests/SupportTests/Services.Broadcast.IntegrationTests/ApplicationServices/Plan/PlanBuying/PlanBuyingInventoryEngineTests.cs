@@ -3,23 +3,21 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
-using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
+using Unity;
 using static Services.Broadcast.Entities.Plan.Buying.PlanBuyingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
+using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuying
 {
@@ -38,6 +36,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _InventoryFileTestHelper = new InventoryFileTestHelper();
+
+            var launchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            // TODO: Affected tests should be reworked for these to be true, as they are in production
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
         }
 
         [Test]

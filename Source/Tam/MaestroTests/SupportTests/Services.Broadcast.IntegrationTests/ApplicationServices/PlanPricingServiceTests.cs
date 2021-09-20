@@ -44,11 +44,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [SetUp]
         public void SetUp()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, false);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, false);
-            // register our stub instance so it is used to instantiate the service
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            // TODO: Affected tests should be reworked for these to be true, as they are in production
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL] = false;
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
 

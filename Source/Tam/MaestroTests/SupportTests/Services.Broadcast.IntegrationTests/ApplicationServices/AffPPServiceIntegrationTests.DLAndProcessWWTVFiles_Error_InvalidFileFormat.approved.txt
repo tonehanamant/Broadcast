@@ -45,10 +45,10 @@
   "SubjectEncoding": null,
   "To": [
     {
-      "Address": "mhohenshilt@crossmw.com",
+      "Address": "broadcast@crossmw.com",
       "DisplayName": "",
       "Host": "crossmw.com",
-      "User": "mhohenshilt"
+      "User": "broadcast"
     }
   ]
 }

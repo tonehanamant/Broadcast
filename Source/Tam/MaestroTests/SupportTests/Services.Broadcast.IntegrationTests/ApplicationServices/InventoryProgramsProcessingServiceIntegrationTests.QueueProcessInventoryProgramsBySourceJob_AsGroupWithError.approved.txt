@@ -45,10 +45,10 @@
   "SubjectEncoding": null,
   "To": [
     {
-      "Address": "TestEmailsForInventoryProcessingNotificationEmails@cadent.tv",
+      "Address": "SomeDev@cadent.tv",
       "DisplayName": "",
       "Host": "cadent.tv",
-      "User": "TestEmailsForInventoryProcessingNotificationEmails"
+      "User": "SomeDev"
     }
   ]
 }

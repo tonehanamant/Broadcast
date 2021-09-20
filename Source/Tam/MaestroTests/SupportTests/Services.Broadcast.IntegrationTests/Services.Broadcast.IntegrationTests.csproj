@@ -102,6 +102,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-Tests-Development|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-Tests-Staging\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
@@ -429,8 +438,17 @@
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="DaypartCacheTests.cs" />
     <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
+    <None Include="appsettings.Debug-Tests-Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
+    <None Include="appsettings.Debug.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <IsTransformFile>true</IsTransformFile>
+    </None>
     <None Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </None>
     <None Include="Files\Campaign export\BasePlanForCampaignExportUnitTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1725,10 +1743,12 @@
     <Error Condition="!Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalTests.5.2.5\build\ApprovalTests.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalTests.5.2.5\build\ApprovalTests.props'))" />
     <Error Condition="!Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalTests.5.2.5\build\ApprovalTests.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalTests.5.2.5\build\ApprovalTests.targets'))" />
     <Error Condition="!Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets'))" />
   </Target>
   <Import Project="..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalTests.5.2.5\build\ApprovalTests.targets" Condition="Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\ApprovalTests.5.2.5\build\ApprovalTests.targets')" />
   <Import Project="..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets" Condition="Exists('..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.VisualStudio.SlowCheetah.3.2.26\build\Microsoft.VisualStudio.SlowCheetah.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

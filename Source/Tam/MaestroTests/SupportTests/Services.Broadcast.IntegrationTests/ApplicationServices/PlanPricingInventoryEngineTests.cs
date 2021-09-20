@@ -33,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IStationRepository _StationRepository;
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()
@@ -42,10 +43,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _InventoryFileTestHelper = new InventoryFileTestHelper();
 
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, false);
-            // register our stub instance so it is used to instantiate the service
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
+            /*
+             * TODO:
+             *  Rework this test with these toggles :
+             * - ALLOW_MULTIPLE_CREATIVE_LENGTHS = true
+             * - PRICING_MODEL_BARTER_INVENTORY = false
+             * - PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = false
+             */
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+
+            _ConfigurationSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
         }
 
         private void _SetFeatureToggle(string feature, bool activate)
@@ -148,73 +156,66 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void GetInventoryForQuoteTest()
         {
-            try
+            using (new TransactionScopeWrapper())
             {
-                StubbedConfigurationWebApiClient.RunTimeParameters["ThresholdInSecondsForProgramIntersectInPricing"] = "100";
-
-                using (new TransactionScopeWrapper())
+                var request = new QuoteRequestDto
                 {
-                    var request = new QuoteRequestDto
+                    FlightStartDate = new DateTime(2018, 10, 1),
+                    FlightEndDate = new DateTime(2018, 10, 7),
+                    FlightHiatusDays = new List<DateTime>(),
+                    FlightDays = new List<int> { 1, 5 },
+                    CreativeLengths = new List<CreativeLength>
                     {
-                        FlightStartDate = new DateTime(2018, 10, 1),
-                        FlightEndDate = new DateTime(2018, 10, 7),
-                        FlightHiatusDays = new List<DateTime>(),
-                        FlightDays = new List<int> { 1, 5 },
-                        CreativeLengths = new List<CreativeLength>
+                        new CreativeLength
                         {
-                            new CreativeLength
-                            {
-                                SpotLengthId = 2
-                            }
-                        },
-                        Dayparts = new List<PlanDaypartDto>
+                            SpotLengthId = 2
+                        }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto
                         {
-                            new PlanDaypartDto
+                            DaypartCodeId = 1,
+                            StartTimeSeconds = 10,
+                            EndTimeSeconds = 1699,
+                            Restrictions = new RestrictionsDto
                             {
-                                DaypartCodeId = 1,
-                                StartTimeSeconds = 10,
-                                EndTimeSeconds = 1699,
-                                Restrictions = new RestrictionsDto
+                                ProgramRestrictions = new RestrictionsDto.ProgramRestrictionDto
                                 {
-                                    ProgramRestrictions = new RestrictionsDto.ProgramRestrictionDto
+                                    Programs = new List<ProgramDto>
                                     {
-                                        Programs = new List<ProgramDto>
+                                        new ProgramDto
                                         {
-                                            new ProgramDto
-                                            {
-                                                Name = "Early news"
-                                            }
+                                            Name = "Early news"
                                         }
                                     }
                                 }
                             }
-                        },
-                        Equivalized = true,
-                        PostingType = PostingTypeEnum.NTI,
-                        Margin = 20,
-                        HUTBookId = 437,
-                        ShareBookId = 437,
-                        AudienceId = 33,
-                        SecondaryAudiences = new List<PlanAudienceDto>
-                        {
-                            new PlanAudienceDto
-                            {
-                                AudienceId = 37
-                            }
                         }
-                    };
+                    },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    Margin = 20,
+                    HUTBookId = 437,
+                    ShareBookId = 437,
+                    AudienceId = 33,
+                    SecondaryAudiences = new List<PlanAudienceDto>
+                    {
+                        new PlanAudienceDto
+                        {
+                            AudienceId = 37
+                        }
+                    }
+                };
 
-                    var planPricingInventoryEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
+                var planPricingInventoryEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
+                ((PlanPricingInventoryEngine) planPricingInventoryEngine)._ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => 100);
 
-                    var result = planPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
+                var result = planPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
 
-                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-                }
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
-            finally
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["ThresholdInSecondsForProgramIntersectInPricing"] = "1800";
-            }
+           
         }
 
         [Test]

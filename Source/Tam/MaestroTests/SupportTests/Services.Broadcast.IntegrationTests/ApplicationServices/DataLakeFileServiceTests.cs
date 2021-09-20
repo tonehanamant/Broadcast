@@ -10,6 +10,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System.IO;
+using Services.Broadcast.Clients;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
 
@@ -19,18 +20,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [Category("short_running")]
     public class DataLakeFileServiceTests
     {
-        private LaunchDarklyClientStub _LaunchDarklyClientStub;
-        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private string _DataLakeFolder;
+
+        [SetUp]
+        public void Setup()
+        {
+            var launchDarklyClientStub = (LaunchDarklyClientStub) IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            var configurationSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
+
+            _DataLakeFolder = launchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] 
+                ? configurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) 
+                : BroadcastServiceSystemParameter.DataLake_SharedFolder;
+        }
 
         [Test]
         public void FileStreamSaveTest()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);         
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
-            var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) :BroadcastServiceSystemParameter.DataLake_SharedFolder;
+            
             var fileName = "Assembly Schedule For Mapping.csv";
 
             var request = new FileRequest
@@ -46,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             _DataLakeFileService.Save(request);
 
-            fileName = Path.Combine(dataLakeFolder, Path.GetFileName(fileName));
+            fileName = Path.Combine(_DataLakeFolder, Path.GetFileName(fileName));
             Assert.True(fileService.Exists(fileName));
         }
 
@@ -54,19 +63,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         public void FileSaveTest()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
             var filePath = @".\Files\1Chicago WLS Syn 4Q16.xml";
-            var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder):BroadcastServiceSystemParameter.DataLake_SharedFolder;
 
             IDataLakeFileService _DataLakeFileService =
                 IntegrationTestApplicationServiceFactory.GetApplicationService<IDataLakeFileService>();
             _DataLakeFileService.Save(filePath);
 
-            filePath = Path.Combine(dataLakeFolder, Path.GetFileName(filePath));
+            filePath = Path.Combine(_DataLakeFolder, Path.GetFileName(filePath));
             Assert.True(fileService.Exists(filePath));
         }
 

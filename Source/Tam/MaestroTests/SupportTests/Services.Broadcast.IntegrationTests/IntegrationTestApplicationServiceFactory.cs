@@ -26,7 +26,7 @@ namespace Services.Broadcast.IntegrationTests
         private static volatile UnityContainer _instance;
         private static readonly object SyncLock = new object();
 
-        public static readonly BroadcastDataDataRepositoryFactory BroadcastDataRepositoryFactory;
+        public static BroadcastDataDataRepositoryFactory BroadcastDataRepositoryFactory;
         public static IMediaMonthAndWeekAggregateCache MediaMonthAndWeekAggregateCache;
 
         public static  IBackgroundJobClient BackgroundJobClient;
@@ -43,7 +43,16 @@ namespace Services.Broadcast.IntegrationTests
 
                     _instance = new UnityContainer();
 
+                    var launchDarklyClientStub = new LaunchDarklyClientStub();
+                    // populate the flags
+                    _SetupGlobalFeatureToggles(launchDarklyClientStub);
+                    // register our stub instance so it is used to instantiate the service
+                    _instance.RegisterInstance<ILaunchDarklyClient>(launchDarklyClientStub);
+                    
                     BroadcastDataRepositoryFactory = new BroadcastDataDataRepositoryFactory();
+                    BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance<ILaunchDarklyClient>(launchDarklyClientStub);
+                    _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
+
                     CommonRepositoryFactory.Instance.RegisterInstance<IConfigurationWebApiClient>(new StubbedConfigurationWebApiClient());
 
                     var stubbedSmsClient = new StubbedSMSClient();
@@ -53,8 +62,7 @@ namespace Services.Broadcast.IntegrationTests
                         System.Diagnostics.Process.GetCurrentProcess().ProcessName);
                     GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
                     BackgroundJobClient = new BackgroundJobClient(JobStorage.Current);
-
-                    _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
+                    
                     _instance.RegisterInstance<IConfigurationWebApiClient>(stubbedConfigurationClient);
                     _instance.RegisterInstance<IBackgroundJobClient>(BackgroundJobClient);
 
@@ -70,7 +78,9 @@ namespace Services.Broadcast.IntegrationTests
 
                     _instance.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClientStub>();
 
+
                     _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelperStub>();
+
                 }
             }
         }
@@ -86,6 +96,20 @@ namespace Services.Broadcast.IntegrationTests
                 Instance.Resolve<T>(),
                 new InterfaceInterceptor(),
                 new IInterceptionBehavior[] { });
+        }
+
+        private static void _SetupGlobalFeatureToggles(LaunchDarklyClientStub launchDarklyClientStub)
+        {
+            /*** These are set as they are in production. ***/
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, true);
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = true;
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.EMAIL_NOTIFICATIONS] = true;
+
+            // TODO: Affected tests should be reworked for these to be false, as they are in production
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = true;
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = true;
         }
     }
 
