@@ -118,6 +118,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="postingType">The Posting Type.</param>
         void SavePlanBuyingBands(PlanBuyingBandsDto planBuyingBandDto, PostingTypeEnum postingType);
 
+        /// <summary>
+        /// Saves the plan buying band stations.
+        /// </summary>
+        /// <param name="planBuyingBandStations">The plan buying band stations dto.</param>
+        void SavePlanBuyingBandStations(PlanBuyingBandStationsDto planBuyingBandStations);
 
         /// <summary>
         /// Saves the plan buying stations.
@@ -760,6 +765,35 @@ namespace Services.Broadcast.Repositories
                             impressions = x.Impressions,
                             impressions_percentage = x.ImpressionsPercentage,
                             available_inventory_percentage = x.AvailableInventoryPercent
+                        }).ToList();
+
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc/>
+        public void SavePlanBuyingBandStations(PlanBuyingBandStationsDto planBuyingBandStations)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var buyingResults = context.plan_version_buying_results
+                    .Single(x => x.plan_version_buying_job_id == planBuyingBandStations.BuyingJobId &&
+                                 x.spot_allocation_model_mode == (int)planBuyingBandStations.SpotAllocationModelMode &&
+                                 x.posting_type == (int)planBuyingBandStations.PostingType, 
+                                 $"Unable to find results for given job id {planBuyingBandStations.BuyingJobId}, posting type {planBuyingBandStations.PostingType} and allocation mode {planBuyingBandStations.SpotAllocationModelMode}");
+
+                buyingResults.plan_version_buying_band_stations = planBuyingBandStations.Details.Select(x =>
+                        new plan_version_buying_band_stations
+                        {
+                            station_id = x.StationId,
+                            impressions = x.Impressions,
+                            cost = x.Cost,
+                            manifest_weeks_count = x.ManifestWeeksCount,
+                            plan_version_buying_band_station_dayparts = x.PlanBuyingBandStationDayparts.Select(y => new plan_version_buying_band_station_dayparts
+                            {
+                                active_days = y.ActiveDays,
+                                hours = y.Hours
+                            }).ToList()
                         }).ToList();
 
                 context.SaveChanges();

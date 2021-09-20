@@ -21,6 +21,14 @@ namespace Services.Broadcast.BusinessEngines
             PlanBuyingParametersDto parametersDto);
 
         /// <summary>
+        /// Calculates the specified inventory for band stations.
+        /// </summary>
+        /// <param name="inventories">The inventories.</param>
+        /// <param name="planBuyingAllocationResult">The plan buying allocation result.</param>        
+        /// <returns>The PlanBuyingBandStationsDto object</returns>
+        PlanBuyingBandStationsDto CalculateBandStation(List<PlanBuyingInventoryProgram> inventories,PlanBuyingAllocationResult planBuyingAllocationResult);
+
+        /// <summary>
         /// Converts the impressions to user format.
         /// </summary>
         /// <param name="results">The results.</param>
@@ -157,5 +165,72 @@ namespace Services.Broadcast.BusinessEngines
                 detail.Impressions /= 1000;
             }
         }
+
+        /// <inheritdoc/>
+        public PlanBuyingBandStationsDto CalculateBandStation(List<PlanBuyingInventoryProgram> inventories, PlanBuyingAllocationResult planBuyingAllocationResult)
+        {
+            var manifestIds = planBuyingAllocationResult.AllocatedSpots.Select(s => s.Id).Distinct();
+            var groupedInventories = inventories
+                .Where(y => manifestIds.Contains(y.ManifestId))
+                .GroupBy(x => x.Station.Id);
+
+            var planBuyingBandStationDetails = new List<PlanBuyingBandStationDetailDto>();
+            foreach (var groupedInventory in groupedInventories)
+            {
+                var planBuyingBandStationId = groupedInventory.Key;
+                var planBuyingBandStationInventories = groupedInventory.ToList();
+                var planBuyingAllocatedSpots = _GetPlanBuyingAllocatedSpots(planBuyingAllocationResult, planBuyingBandStationInventories);
+
+                var planBuyingBandStationDetail = new PlanBuyingBandStationDetailDto()
+                {
+                    StationId = planBuyingBandStationId,
+                    Impressions = planBuyingAllocatedSpots.Sum(x => x.TotalImpressions),
+                    Cost = planBuyingAllocatedSpots.Sum(x => x.TotalCostWithMargin),
+                    ManifestWeeksCount = planBuyingBandStationInventories.SelectMany(x => x.ManifestWeeks).Count(),
+                    PlanBuyingBandStationDayparts = _GetPlanBuyingBandStationDayparts(planBuyingBandStationInventories)
+                };
+                planBuyingBandStationDetails.Add(planBuyingBandStationDetail);
+            }
+
+            var planBuyingBandStations = new PlanBuyingBandStationsDto
+            {
+                PlanVersionId = planBuyingAllocationResult.PlanVersionId,
+                BuyingJobId = planBuyingAllocationResult.JobId,
+                Details = planBuyingBandStationDetails
+            };
+            return planBuyingBandStations;
+        }
+
+        private List<PlanBuyingAllocatedSpot> _GetPlanBuyingAllocatedSpots(PlanBuyingAllocationResult planBuyingAllocationResult, List<PlanBuyingInventoryProgram> planBuyingBandStationInventories)
+        {
+            var planBuyingAllocatedSpots = new List<PlanBuyingAllocatedSpot>();
+            foreach (var allocatedSpot in planBuyingAllocationResult.AllocatedSpots)
+            {
+                if (planBuyingBandStationInventories.Any(x => x.ManifestId == allocatedSpot.Id))
+                {
+                    planBuyingAllocatedSpots.Add(allocatedSpot);
+                }
+            }
+            return planBuyingAllocatedSpots;
+        }
+
+        private List<PlanBuyingBandStationDaypartDto> _GetPlanBuyingBandStationDayparts(List<PlanBuyingInventoryProgram> planBuyingBandStationInventories)
+        {
+            var planBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>();
+            planBuyingBandStationInventories.ForEach(x =>
+            {
+                var manifestDayparts = x.ManifestDayparts;
+                manifestDayparts.ForEach(manifestDaypart =>
+                {
+                    var planBuyingBandStationDaypart = new PlanBuyingBandStationDaypartDto()
+                    {
+                        ActiveDays = manifestDaypart.Daypart.ActiveDays,
+                        Hours = manifestDaypart.Daypart.Hours
+                    };
+                    planBuyingBandStationDayparts.Add(planBuyingBandStationDaypart);
+                });
+            });
+            return planBuyingBandStationDayparts;
+        }        
     }
 }

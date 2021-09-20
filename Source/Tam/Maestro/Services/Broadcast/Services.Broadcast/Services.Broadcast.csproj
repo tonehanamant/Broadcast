@@ -566,6 +566,8 @@
     <Compile Include="Entities\Isci\ReelIsciAdvertiserNameReferenceDto.cs" />
     <Compile Include="Entities\Isci\ReelIsciDto.cs" />
     <Compile Include="Entities\Isci\ReelIsciIngestJobDto.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingBandStationDaypartDto.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingBandStationsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingFilterDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciEntity.cs" />

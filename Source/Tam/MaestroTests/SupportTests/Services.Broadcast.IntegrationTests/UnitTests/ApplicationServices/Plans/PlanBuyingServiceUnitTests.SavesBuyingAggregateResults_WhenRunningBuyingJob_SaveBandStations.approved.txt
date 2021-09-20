@@ -1,0 +1,290 @@
+[
+  {
+    "BuyingJobId": 1,
+    "Details": [
+      {
+        "Cost": 6593.75,
+        "Impressions": 1135000.0,
+        "ManifestWeeksCount": 2,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 5,
+            "Hours": 1
+          },
+          {
+            "ActiveDays": 3,
+            "Hours": 2
+          }
+        ],
+        "StationId": 1376
+      },
+      {
+        "Cost": 16250.00,
+        "Impressions": 2045420.0,
+        "ManifestWeeksCount": 1,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 1,
+            "Hours": 4
+          }
+        ],
+        "StationId": 1377
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 77,
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "BuyingJobId": 1,
+    "Details": [
+      {
+        "Cost": 6593.75,
+        "Impressions": 1135000.0,
+        "ManifestWeeksCount": 2,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 5,
+            "Hours": 1
+          },
+          {
+            "ActiveDays": 3,
+            "Hours": 2
+          }
+        ],
+        "StationId": 1376
+      },
+      {
+        "Cost": 16250.00,
+        "Impressions": 2045420.0,
+        "ManifestWeeksCount": 1,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 1,
+            "Hours": 4
+          }
+        ],
+        "StationId": 1377
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 77,
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "BuyingJobId": 1,
+    "Details": [
+      {
+        "Cost": 6593.75,
+        "Impressions": 1135000.0,
+        "ManifestWeeksCount": 2,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 5,
+            "Hours": 1
+          },
+          {
+            "ActiveDays": 3,
+            "Hours": 2
+          }
+        ],
+        "StationId": 1376
+      },
+      {
+        "Cost": 16250.00,
+        "Impressions": 2045420.0,
+        "ManifestWeeksCount": 1,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 1,
+            "Hours": 4
+          }
+        ],
+        "StationId": 1377
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 77,
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "BuyingJobId": 1,
+    "Details": [
+      {
+        "Cost": 6593.75,
+        "Impressions": 1135000.0,
+        "ManifestWeeksCount": 2,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 5,
+            "Hours": 1
+          },
+          {
+            "ActiveDays": 3,
+            "Hours": 2
+          }
+        ],
+        "StationId": 1376
+      },
+      {
+        "Cost": 16250.00,
+        "Impressions": 2045420.0,
+        "ManifestWeeksCount": 1,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 1,
+            "Hours": 4
+          }
+        ],
+        "StationId": 1377
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 77,
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "BuyingJobId": 1,
+    "Details": [
+      {
+        "Cost": 6593.75,
+        "Impressions": 1135000.0,
+        "ManifestWeeksCount": 2,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 5,
+            "Hours": 1
+          },
+          {
+            "ActiveDays": 3,
+            "Hours": 2
+          }
+        ],
+        "StationId": 1376
+      },
+      {
+        "Cost": 16250.00,
+        "Impressions": 2045420.0,
+        "ManifestWeeksCount": 1,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 1,
+            "Hours": 4
+          }
+        ],
+        "StationId": 1377
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 77,
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "BuyingJobId": 1,
+    "Details": [
+      {
+        "Cost": 6593.75,
+        "Impressions": 1135000.0,
+        "ManifestWeeksCount": 2,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 5,
+            "Hours": 1
+          },
+          {
+            "ActiveDays": 3,
+            "Hours": 2
+          }
+        ],
+        "StationId": 1376
+      },
+      {
+        "Cost": 16250.00,
+        "Impressions": 2045420.0,
+        "ManifestWeeksCount": 1,
+        "PlanBuyingBandStationDayparts": [
+          {
+            "ActiveDays": 1,
+            "Hours": 4
+          }
+        ],
+        "StationId": 1377
+      }
+    ],
+    "Id": 0,
+    "PlanVersionId": 77,
+    "PostingType": 2,
+    "SpotAllocationModelMode": 1,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 100.0,
+      "MarketCount": 0,
+      "MarketCoveragePercent": 0.0,
+      "SpotCount": 0,
+      "StationCount": 0
+    }
+  }
+]

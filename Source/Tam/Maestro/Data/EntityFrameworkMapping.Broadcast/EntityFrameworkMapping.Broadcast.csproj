@@ -538,6 +538,12 @@
     <Compile Include="plan_version_buying_band_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_buying_band_stations.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_band_station_dayparts.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_buying_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

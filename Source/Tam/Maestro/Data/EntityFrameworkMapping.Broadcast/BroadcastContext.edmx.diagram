@@ -521,6 +521,11 @@
         <EntityTypeShape EntityType="BroadcastModel.reel_isci_ingest_jobs" Width="1.5" PointX="36.375" PointY="3.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spot_stations" Width="1.5" PointX="19.25" PointY="99.375" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_station_dayparts" Width="1.5" PointX="24.5" PointY="87.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_stations" Width="1.5" PointX="22.25" PointY="87.375" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_station_dayparts_plan_version_buying_band_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_stations_plan_version_buying_results" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_stations_stations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
