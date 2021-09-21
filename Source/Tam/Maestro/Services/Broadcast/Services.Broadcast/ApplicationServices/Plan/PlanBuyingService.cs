@@ -164,9 +164,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <param name="planBuyingFilter">The plan Buying Filter </param>
+        /// <param name="isConversionRequired">User Format Conversion Flag</param>
         /// <returns></returns>
         PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null,bool isConversionRequired = true);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
@@ -2566,7 +2567,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (_IsBuyExpRepOrgEnabled.Value)
             {
-                var stationResult = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter);
+                bool isConversionRequired = false;
+                var stationResult = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
                 if (stationResult == null)
                 {
                     return null;
@@ -2600,7 +2602,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null, bool isConversionRequired = true)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
@@ -2633,7 +2635,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 var aggStationResult = _PlanBuyingStationCalculationEngine.CalculateAggregateOfStations(result);
-                _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
+                if (isConversionRequired)
+                {
+                    _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(aggStationResult);
+                }
                 return aggStationResult;
             }
 
@@ -2649,7 +2654,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (_IsBuyExpRepOrgEnabled.Value)
             {
-                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter);
+                bool isConversionRequired = false;
+                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
 
                 if (result == null)
                 {
@@ -2691,7 +2697,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (_IsBuyExpRepOrgEnabled.Value)
             {
-                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter);
+                bool isConversionRequired = false;
+                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
 
                 if (result == null)
                 {
