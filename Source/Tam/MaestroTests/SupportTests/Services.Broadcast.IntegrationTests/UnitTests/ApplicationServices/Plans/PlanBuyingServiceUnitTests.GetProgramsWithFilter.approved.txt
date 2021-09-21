@@ -1,0 +1,34 @@
+{
+  "Details": [
+    {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 304.6875,
+      "Genre": "News",
+      "Impressions": 18868.80333924,
+      "ImpressionsPercentage": 0.09801592,
+      "LegacyCallLetters": "WPBN",
+      "MarketCode": 318,
+      "MarketCount": 1,
+      "OwnerName": "WPBN",
+      "ProgramName": "14 NEWS SUNRISE",
+      "RepFirm": "WPBN",
+      "Spots": 25,
+      "Station": "WPBN",
+      "StationCount": 1
+    }
+  ],
+  "PostingType": 1,
+  "SpotAllocationModelMode": 2,
+  "Totals": {
+    "AvgCpm": 11.6318,
+    "AvgImpressions": 1025.9014,
+    "Budget": 223912.9087,
+    "Impressions": 19250014.450819,
+    "ImpressionsPercentage": 100.0,
+    "MarketCount": 825,
+    "MarketCoveragePercent": 0.0,
+    "SpotCount": 18764,
+    "StationCount": 825
+  }
+}

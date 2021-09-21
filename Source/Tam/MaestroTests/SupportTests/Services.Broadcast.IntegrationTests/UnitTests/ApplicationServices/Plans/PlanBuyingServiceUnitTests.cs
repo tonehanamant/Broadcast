@@ -7520,5 +7520,137 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_AggregatedProgramStations()
+        {
+            // Arrange
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Id = 1,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime()
+                });
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetBuyingProgramsResultByJobId_V2(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new PlanBuyingResultProgramsDto
+                {
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    PostingType = PostingTypeEnum.NSI,
+                    Totals = new PlanBuyingProgramTotalsDto()
+                    {
+                        MarketCount = 825,
+                        StationCount = 825,
+                        AvgCpm = 11.6318M,
+                        AvgImpressions = 1025.9014,
+                        Budget = 223912.9087M,
+                        SpotCount = 18764,
+                        Impressions = 19250014.450819
+                    },
+                    Details = new List<PlanBuyingProgramProgramDto>()
+                    {
+                      new PlanBuyingProgramProgramDto()
+                      {
+                        ProgramName = "12 News",
+                        Genre = "News",
+                        RepFirm = "WJTV",
+                        OwnerName = "WJTV",
+                        LegacyCallLetters = "WJTV",
+                        MarketCode = 318,
+                        Station = "WJTV",
+                        Impressions = 18868.80333923681,
+                        ImpressionsPercentage = 0.09801592,
+                        Budget = 304.6875M,
+                        Spots = 25,
+                        StationCount = 1,
+                        MarketCount= 1
+                      },
+                      new PlanBuyingProgramProgramDto()
+                      {
+                        ProgramName = "14 NEWS SUNRISE",
+                        Genre = "News",
+                        RepFirm = "KHBS",
+                        OwnerName = "KHBS",
+                        LegacyCallLetters = "KHBS",
+                        MarketCode = 318,
+                        Station = "KHBS",
+                        Impressions = 18868.80333923681,
+                        ImpressionsPercentage = 0.09801592,
+                        Budget = 304.6875M,
+                        Spots = 25,
+                        StationCount = 1,
+                        MarketCount= 1
+                      },
+                      new PlanBuyingProgramProgramDto()
+                      {
+                        ProgramName = "14 NEWS SUNRISE",
+                        Genre = "News",
+                        RepFirm = "WPBN",
+                        OwnerName = "WPBN",
+                        LegacyCallLetters = "WPBN",
+                        MarketCode = 318,
+                        Station = "WPBN",
+                        Impressions = 18868.80333923681,
+                        ImpressionsPercentage = 0.09801592,
+                        Budget = 304.6875M,
+                        Spots = 25,
+                        StationCount = 1,
+                        MarketCount= 1
+                      }
+                    }
+                });
+            _PlanBuyingProgramEngine.Setup(s => s.GetAggregatedProgramStations(It.IsAny<PlanBuyingResultProgramsDto>()))
+               .Returns(new PlanBuyingResultProgramsDto()
+               {
+                   SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                   PostingType = PostingTypeEnum.NSI,
+                   Totals = new PlanBuyingProgramTotalsDto()
+                   {
+                       MarketCount = 825,
+                       StationCount = 825,
+                       AvgCpm = 11.6318M,
+                       AvgImpressions = 1025.9014,
+                       Budget = 223912.9087M,
+                       SpotCount = 18764,
+                       Impressions = 19250014.450819
+                   },
+                   Details = new List<PlanBuyingProgramProgramDto>()
+                    {                      
+                      new PlanBuyingProgramProgramDto()
+                      {
+                        ProgramName = "14 NEWS SUNRISE",
+                        Genre = "News",
+                        RepFirm = "WPBN",
+                        OwnerName = "WPBN",
+                        LegacyCallLetters = "WPBN",
+                        MarketCode = 318,
+                        Station = "WPBN",
+                        Impressions = 18868.80333923681,
+                        ImpressionsPercentage = 0.09801592,
+                        Budget = 304.6875M,
+                        Spots = 25,
+                        StationCount = 1,
+                        MarketCount= 1
+                      }
+                   }
+               });
+          
+            var service = _GetService();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
+            var planId = 1197;
+            var planBuyingFilter = new PlanBuyingFilterDto()
+            {
+                OwnerNames = new List<string> { "WPBN", "Newsweb Corporation/Channel 3 TV Company LLC" },
+                RepFirmNames = new List<string> { "WPBN", "Direct" }
+            };
+
+            // Act
+            var result = service.GetPrograms(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
+
 }

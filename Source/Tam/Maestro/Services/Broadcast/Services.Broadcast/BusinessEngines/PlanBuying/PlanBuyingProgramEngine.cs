@@ -33,6 +33,13 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// </summary>
         /// <param name="planBuyingResult">The plan buying result.</param>
         void ConvertImpressionsToUserFormat(PlanBuyingResultProgramsDto planBuyingResult);
+
+        /// <summary>
+        /// Aggregate program data based on station level.
+        /// </summary>
+        /// <param name="planBuyingResultPrograms">The plan buying result.</param>
+        /// <returns>Return aggregated result of program</returns>
+        PlanBuyingResultProgramsDto GetAggregatedProgramStations(PlanBuyingResultProgramsDto planBuyingResultPrograms);
     }
 
     public class PlanBuyingProgramEngine : IPlanBuyingProgramEngine
@@ -228,9 +235,9 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                     Manifest = x,
                     ManifestDaypart = d
                 }))
-                .GroupBy(x => new 
-                { 
-                    ProgramName = x.ManifestDaypart.PrimaryProgram.Name, 
+                .GroupBy(x => new
+                {
+                    ProgramName = x.ManifestDaypart.PrimaryProgram.Name,
                     Genre = x.ManifestDaypart.PrimaryProgram.Genre,
                     StationName = x.Manifest.Station.LegacyCallLetters
                 });
@@ -247,7 +254,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 {
                     ProgramName = groupedInventory.Key.ProgramName,
                     Genre = groupedInventory.Key.Genre,
-                    Station = groupedInventory.Key.StationName,                    
+                    Station = groupedInventory.Key.StationName,
                     TotalImpressions = programImpressions,
                     TotalCost = programCost,
                     TotalSpots = programSpots
@@ -255,6 +262,47 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 planBuyingPrograms.Add(planBuyingProgram);
             };
             return planBuyingPrograms;
+        }
+
+        public PlanBuyingResultProgramsDto GetAggregatedProgramStations(PlanBuyingResultProgramsDto planBuyingResultPrograms)
+        {
+            List<PlanBuyingProgramProgramDto> planBuyingProgramStationDetails = new List<PlanBuyingProgramProgramDto>();
+            var groupOfProgram = planBuyingResultPrograms.Details.GroupBy(u => u.ProgramName, StringComparer.InvariantCultureIgnoreCase).Select(grp => grp.ToList()).ToList();
+            double totalImpressionsForAllPrograms = groupOfProgram.SelectMany(y => y).Sum(x => x.Impressions);
+            planBuyingProgramStationDetails = groupOfProgram.Select(program => new PlanBuyingProgramProgramDto
+            {
+                ProgramName = program.Select(x => x.ProgramName).First(),
+                Genre = program.Select(x => x.Genre).First(),
+                RepFirm = program.Select(x => x.RepFirm).First(),
+                OwnerName = program.Select(x => x.OwnerName).First(),
+                LegacyCallLetters = program.Select(x => x.LegacyCallLetters).First(),
+                MarketCode = program.Select(x => x.MarketCode).First(),
+                Station = program.Select(x => x.Station).First(),
+                Impressions = program.Sum(x => x.Impressions),
+                ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(program.Sum(x => x.Impressions), totalImpressionsForAllPrograms),
+                Budget = program.Sum(x => x.Budget),
+                Spots = program.Sum(x => x.Spots),
+                StationCount = program.Select(s => s.Station).Distinct().Count(),
+                MarketCount = program.Select(s => s.MarketCode).Distinct().Count()
+            }).ToList();
+            var totals = new PlanBuyingProgramTotalsDto
+            {
+                MarketCount = planBuyingProgramStationDetails.Select(x => x.MarketCode).Count(),
+                StationCount = planBuyingProgramStationDetails.Sum(x => x.StationCount),
+                AvgCpm = ProposalMath.CalculateCpm(planBuyingProgramStationDetails.Sum(x => x.Budget), planBuyingProgramStationDetails.Sum(x => x.Impressions)),
+                AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllPrograms, planBuyingProgramStationDetails.Sum(x => x.Spots)),               
+                Budget = planBuyingProgramStationDetails.Sum(x => x.Budget),
+                SpotCount = planBuyingProgramStationDetails.Sum(x => x.Spots),
+                Impressions = planBuyingProgramStationDetails.Sum(x => x.Impressions)                
+            };
+            var result = new PlanBuyingResultProgramsDto
+            {
+                PostingType = planBuyingResultPrograms.PostingType,
+                SpotAllocationModelMode = planBuyingResultPrograms.SpotAllocationModelMode,
+                Totals = planBuyingResultPrograms.Totals,
+                Details = planBuyingProgramStationDetails
+            };
+            return result;
         }
     }
 }

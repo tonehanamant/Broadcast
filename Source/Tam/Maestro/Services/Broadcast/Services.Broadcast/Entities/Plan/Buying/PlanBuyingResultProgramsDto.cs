@@ -23,5 +23,10 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public decimal Budget { get; set; }
         public double ImpressionsPercentage { get; set; }
         public double Impressions { get; set; }
-    }
+        public string RepFirm { get; set; }
+        public string OwnerName { get; set; }
+        public string LegacyCallLetters { get; set; }
+        public string Station  { get; set; }
+        public int? MarketCode { get; set; }
+    }    
 }

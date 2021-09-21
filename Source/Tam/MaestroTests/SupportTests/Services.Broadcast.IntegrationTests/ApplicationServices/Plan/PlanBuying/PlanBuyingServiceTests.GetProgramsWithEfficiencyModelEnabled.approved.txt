@@ -8,9 +8,14 @@
         "Genre": "Children",
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Early news",
+        "RepFirm": null,
         "Spots": 30,
+        "Station": null,
         "StationCount": 1
       },
       {
@@ -20,9 +25,14 @@
         "Genre": "Comedy",
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Late news",
+        "RepFirm": null,
         "Spots": 20,
+        "Station": null,
         "StationCount": 1
       }
     ],
@@ -49,9 +59,14 @@
         "Genre": "Children",
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Early news",
+        "RepFirm": null,
         "Spots": 30,
+        "Station": null,
         "StationCount": 1
       },
       {
@@ -61,9 +76,14 @@
         "Genre": "Comedy",
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Late news",
+        "RepFirm": null,
         "Spots": 20,
+        "Station": null,
         "StationCount": 1
       }
     ],
@@ -90,9 +110,14 @@
         "Genre": "Children",
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Early news",
+        "RepFirm": null,
         "Spots": 30,
+        "Station": null,
         "StationCount": 1
       },
       {
@@ -102,9 +127,14 @@
         "Genre": "Comedy",
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Late news",
+        "RepFirm": null,
         "Spots": 20,
+        "Station": null,
         "StationCount": 1
       }
     ],
@@ -131,9 +161,14 @@
         "Genre": "Children",
         "Impressions": 925.05,
         "ImpressionsPercentage": 99.43566591,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Early news",
+        "RepFirm": null,
         "Spots": 30,
+        "Station": null,
         "StationCount": 1
       },
       {
@@ -143,9 +178,14 @@
         "Genre": "Comedy",
         "Impressions": 5.25,
         "ImpressionsPercentage": 0.56433409,
+        "LegacyCallLetters": null,
+        "MarketCode": null,
         "MarketCount": 1,
+        "OwnerName": null,
         "ProgramName": "Late news",
+        "RepFirm": null,
         "Spots": 20,
+        "Station": null,
         "StationCount": 1
       }
     ],

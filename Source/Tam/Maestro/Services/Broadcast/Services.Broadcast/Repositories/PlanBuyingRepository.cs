@@ -177,6 +177,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
         PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode);
+        /// <summary>
+        /// Gets the buying programs result by job identifier.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns></returns>
+        PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId_V2(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
         /// Gets the buying results by job identifier.
@@ -662,10 +670,10 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-            /// <inheritdoc/>
-            public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        /// <inheritdoc/>
+        public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
+        SpotAllocationModelMode spotAllocationModelMode,
+        PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -779,7 +787,7 @@ namespace Services.Broadcast.Repositories
                 var buyingResults = context.plan_version_buying_results
                     .Single(x => x.plan_version_buying_job_id == planBuyingBandStations.BuyingJobId &&
                                  x.spot_allocation_model_mode == (int)planBuyingBandStations.SpotAllocationModelMode &&
-                                 x.posting_type == (int)planBuyingBandStations.PostingType, 
+                                 x.posting_type == (int)planBuyingBandStations.PostingType,
                                  $"Unable to find results for given job id {planBuyingBandStations.BuyingJobId}, posting type {planBuyingBandStations.PostingType} and allocation mode {planBuyingBandStations.SpotAllocationModelMode}");
 
                 buyingResults.plan_version_buying_band_stations = planBuyingBandStations.Details.Select(x =>
@@ -1042,6 +1050,51 @@ namespace Services.Broadcast.Repositories
                     }).OrderByDescending(p => p.ImpressionsPercentage)
                        .ThenByDescending(p => p.AvgCpm)
                        .ThenBy(p => p.ProgramName).ToList()
+                };
+            });
+        }
+        /// <inheritdoc/>
+        public PlanBuyingResultProgramsDto GetBuyingProgramsResultByJobId_V2(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var buyingResult = context.plan_version_buying_results
+                   .Include(x => x.plan_version_buying_result_spot_stations)
+                   .Single(x => x.plan_version_buying_job_id == jobId &&
+                                x.spot_allocation_model_mode == (int)spotAllocationModelMode &&
+                                x.posting_type == (int)postingType,
+                                $"Unable to find results for given job id {jobId}, posting type {postingType} and allocation mode {spotAllocationModelMode}");
+
+                return new PlanBuyingResultProgramsDto
+                {
+                    PostingType = (PostingTypeEnum)buyingResult.posting_type,
+                    SpotAllocationModelMode = (SpotAllocationModelMode)buyingResult.spot_allocation_model_mode,
+                    Totals = new PlanBuyingProgramTotalsDto
+                    {
+                        MarketCount = buyingResult.total_market_count,
+                        StationCount = buyingResult.total_station_count,
+                        AvgCpm = buyingResult.total_avg_cpm,
+                        AvgImpressions = buyingResult.total_avg_impressions,
+                        Budget = buyingResult.total_budget,
+                        SpotCount = buyingResult.total_spots,
+                        Impressions = buyingResult.total_impressions
+                    },
+                    Details = (from planVersionBuyingResultSpotStations in buyingResult.plan_version_buying_result_spot_stations
+                               join stations in context.stations
+                               on planVersionBuyingResultSpotStations.station equals stations.legacy_call_letters
+                               select new PlanBuyingProgramProgramDto
+                               {
+                                   ProgramName = planVersionBuyingResultSpotStations.program_name,
+                                   Genre = planVersionBuyingResultSpotStations.genre,
+                                   MarketCode = stations.market_code,
+                                   Station = planVersionBuyingResultSpotStations.station,
+                                   Impressions = planVersionBuyingResultSpotStations.impressions,
+                                   Budget = planVersionBuyingResultSpotStations.budget,
+                                   Spots = planVersionBuyingResultSpotStations.spots,
+                                   RepFirm = stations.rep_firm_name,
+                                   OwnerName = stations.owner_name,
+                                   LegacyCallLetters = stations.legacy_call_letters
+                               }).ToList()
                 };
             });
         }

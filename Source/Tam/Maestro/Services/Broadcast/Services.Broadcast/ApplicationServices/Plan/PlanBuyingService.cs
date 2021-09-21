@@ -152,9 +152,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <param name="postingType">The Posting Type.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="planBuyingFilter">The filter parameter to filter the result.</param>
         /// <returns></returns>
         PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// Gets the stations.
@@ -2112,7 +2113,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion,spotAllocationModelMode);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {
@@ -2491,17 +2492,45 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         public PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
         {
+            PlanBuyingResultProgramsDto results = new PlanBuyingResultProgramsDto();
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
             postingType = _ResolvePostingType(planId, postingType);
-
-            var results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, postingType, spotAllocationModelMode);
-
+            if (_IsBuyExpRepOrgEnabled.Value)
+            {
+                var stationProgramResult = _PlanBuyingRepository.GetBuyingProgramsResultByJobId_V2(job.Id, postingType, spotAllocationModelMode);
+                if (stationProgramResult == null)
+                    return null;
+                stationProgramResult.Details = stationProgramResult.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
+               
+                if (planBuyingFilter != null)
+                {
+                    if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
+                    {
+                        stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                    }
+                    else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
+                    {
+                        stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
+                    }
+                    else if (planBuyingFilter.OwnerNames?.Any() ?? false)
+                    {
+                        stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                    }                    
+                }
+                results = _PlanBuyingProgramEngine.GetAggregatedProgramStations(stationProgramResult);
+                results.Details = results.Details.OrderByDescending(p => p.ImpressionsPercentage)
+                                                  .ThenByDescending(p => p.ProgramName)
+                                                  .ToList();
+            }
+            else
+            {
+                results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, postingType, spotAllocationModelMode);
+            }
             if (results == null)
                 return null;
 
@@ -2545,7 +2574,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
                 var plan = _PlanRepository.GetPlan(planId);
 
-                var aggregatedResult = _PlanBuyingMarketResultsEngine.CalculateAggregatedResultOfMarket(stationResult, marketCoverages,plan);
+                var aggregatedResult = _PlanBuyingMarketResultsEngine.CalculateAggregatedResultOfMarket(stationResult, marketCoverages, plan);
                 _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(aggregatedResult);
                 return aggregatedResult;
             }

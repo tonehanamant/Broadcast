@@ -65,6 +65,20 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId, postingType,spotAllocationModelMode));
         }
+        /// <summary>
+        /// Get programs data from the lastest pricing execution
+        /// </summary>
+        /// <param name="planId">Plan ID</param>
+        /// <param name="postingType">The Posting Type</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>
+        /// <param name="planBuyingFilter">Filter parameter to filter the program data</param>
+        /// <returns>Programs from the lastest pricing execution</returns>
+        [HttpPost]
+        [Route("~/api/v2/Buying/Programs")]
+        public BaseResponse<PlanBuyingResultProgramsDto> GetPrograms(int planId, PlanBuyingFilterDto planBuyingFilter, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId, postingType, spotAllocationModelMode, planBuyingFilter));
+        }
 
         [HttpGet]
         [Route("bands/{planId}")]
