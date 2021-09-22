@@ -4,7 +4,7 @@
     {
       "Budget": 14201.0,
       "Cpm": 11.0,
-      "Impressions": 13328.0,
+      "Impressions": 13.328,
       "ImpressionsPercentage": 100.0,
       "MarketCount": 2,
       "OwnershipGroupName": "TEGNA",
@@ -19,7 +19,7 @@
     "AvgCpm": 2.0,
     "AvgImpressions": 0.0,
     "Budget": 3912.0,
-    "Impressions": 2041.65,
+    "Impressions": 2.04165,
     "ImpressionsPercentage": 100.0,
     "MarketCount": 0,
     "MarketCoveragePercent": 0.0,

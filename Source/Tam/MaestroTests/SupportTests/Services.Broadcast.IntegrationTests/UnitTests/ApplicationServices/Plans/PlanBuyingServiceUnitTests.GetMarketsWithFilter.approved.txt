@@ -4,7 +4,7 @@
     {
       "Budget": 14201.0,
       "Cpm": 11.0,
-      "Impressions": 13328.0,
+      "Impressions": 13.328,
       "ImpressionsPercentage": 100.0,
       "MarketCoveragePercent": 3.986,
       "MarketName": "Milwaukee",
@@ -21,7 +21,7 @@
     "AvgCpm": 11.0,
     "AvgImpressions": 0.0,
     "Budget": 14201.0,
-    "Impressions": 13328.0,
+    "Impressions": 13.328,
     "ImpressionsPercentage": 100.0,
     "MarketCount": 1,
     "MarketCoveragePercent": 3.986,

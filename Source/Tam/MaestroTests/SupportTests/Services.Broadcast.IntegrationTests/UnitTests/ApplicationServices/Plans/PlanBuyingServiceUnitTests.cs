@@ -5904,6 +5904,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetStationsWithFilter()
         {
             // Arrange
+            int stationResultCount = 0;
+            int expectedCount = 2;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6020,7 +6022,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         LegacyCallLetters = "HMTV"
                       }
                    }
+               }).Callback<PlanBuyingStationResultDto>(element =>
+               {
+                   stationResultCount = element.Details.Count;
                });
+            _PlanBuyingStationEngineMock.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingStationResultDto>()))
+                .Callback<PlanBuyingStationResultDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
+                });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
@@ -6034,6 +6048,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -6042,6 +6057,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetBuyingOwnershipGroupsWithFilter()
         {
             // Arrange
+            int stationResultCount = 0;
+            int expectedCount = 2;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6188,6 +6205,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         OwnershipGroupName = "TEGNA"
                       }
                     }
+                }).Callback<PlanBuyingStationResultDto>(element =>
+                {
+                    stationResultCount = element.Details.Count;
+                });
+            _PlanBuyingOwnershipGroupEngine.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingResultOwnershipGroupDto>()))
+                .Callback<PlanBuyingResultOwnershipGroupDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
                 });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
@@ -6202,6 +6231,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetBuyingOwnershipGroups(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -6210,7 +6240,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetBuyingRepFirmsWithFilter()
         {
             // Arrange
-
+            int stationResultCount = 0;
+            int expectedCount = 2;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6357,6 +6388,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             RepFirmName = "TEGNA"
                         }
                     }
+                }).Callback<PlanBuyingStationResultDto>(element =>
+                {
+                    stationResultCount = element.Details.Count;
+                });
+            _PlanBuyingRepFirmEngine.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingResultRepFirmDto>()))
+                .Callback<PlanBuyingResultRepFirmDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
                 });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
@@ -6371,6 +6414,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetBuyingRepFirms(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -6379,6 +6423,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetStationsWithoutFilter()
         {
             // Arrange
+            int stationResultCount = 0;
+            int expectedCount = 3;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6509,7 +6555,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         LegacyCallLetters = "HMTV"
                       }
                    }
+               }).Callback<PlanBuyingStationResultDto>(element =>
+               {
+                   stationResultCount = element.Details.Count;
                });
+            _PlanBuyingStationEngineMock.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingStationResultDto>()))
+                .Callback<PlanBuyingStationResultDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
+                });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
@@ -6520,6 +6578,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -6528,6 +6587,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetStationsWithFilterRepFirm()
         {
             // Arrange
+            int stationResultCount = 0;
+            int expectedCount = 2;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6644,7 +6705,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         LegacyCallLetters = "HMTV"
                       }
                    }
+               }).Callback<PlanBuyingStationResultDto>(element =>
+               {
+                   stationResultCount = element.Details.Count;
                });
+            _PlanBuyingStationEngineMock.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingStationResultDto>()))
+                .Callback<PlanBuyingStationResultDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
+                });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
@@ -6657,6 +6730,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -6665,6 +6739,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetStationsWithFilterOwnerNames()
         {
             // Arrange
+            int stationResultCount = 0;
+            int expectedCount = 2;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6781,7 +6857,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         LegacyCallLetters = "HMTV"
                       }
                    }
+               }).Callback<PlanBuyingStationResultDto>(element =>
+               {
+                   stationResultCount = element.Details.Count;
                });
+            _PlanBuyingStationEngineMock.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingStationResultDto>()))
+                .Callback<PlanBuyingStationResultDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
+                });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
@@ -6794,6 +6882,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -6802,6 +6891,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetMarketsWithFilter()
         {
             // Arrange
+            int stationResultCount = 0;
+            int expectedCount = 2;
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
                 .Returns(new PlanBuyingJob
@@ -6957,6 +7048,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         MarketCoveragePercent = 3.986
                       }
                     }
+                }).Callback<PlanBuyingStationResultDto,List<MarketCoverage>,PlanDto>((planBuyingStationResult,marketCoverage,plan) =>
+                {
+                    stationResultCount = planBuyingStationResult.Details.Count;
+                });
+            _PlanBuyingMarketResultsEngine.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingResultMarketsDto>()))
+                .Callback<PlanBuyingResultMarketsDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
                 });
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
@@ -6971,6 +7074,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetMarkets(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
 
             // Assert
+            Assert.AreEqual(expectedCount, stationResultCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
