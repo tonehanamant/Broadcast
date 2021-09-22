@@ -7524,6 +7524,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void GetPrograms_AggregatedProgramStations()
         {
+            int count = 0;
+            int expectedCount = 1;
             // Arrange
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
@@ -7635,7 +7637,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         MarketCount= 1
                       }
                    }
+               }).Callback<PlanBuyingResultProgramsDto>(element =>
+               {
+                   count = element.Details.Count;
                });
+            _PlanBuyingProgramEngine.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingResultProgramsDto>()))
+                .Callback<PlanBuyingResultProgramsDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
+                }); ;
           
             var service = _GetService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
@@ -7646,9 +7660,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 RepFirmNames = new List<string> { "WPBN", "Direct" }
             };
 
-            // Act
+            // Act           
             var result = service.GetPrograms(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
             // Assert
+            Assert.AreEqual(expectedCount, count);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
