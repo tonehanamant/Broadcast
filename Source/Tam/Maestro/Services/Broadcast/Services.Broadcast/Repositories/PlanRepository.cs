@@ -1545,84 +1545,36 @@ namespace Services.Broadcast.Repositories
 
         public void SavePricingApiResults(PlanPricingAllocationResult result)
         {
+            var planPricingApiResultSpots = result.Spots.Select(spot => new plan_version_pricing_api_result_spots
+            {
+                station_inventory_manifest_id = spot.Id,
+                contract_media_week_id = spot.ContractMediaWeek.Id,
+                inventory_media_week_id = spot.InventoryMediaWeek.Id,
+                impressions30sec = spot.Impressions30sec,
+                standard_daypart_id = spot.StandardDaypart.Id,
+                plan_version_pricing_api_result_spot_frequencies = spot.SpotFrequencies.Select(x => new plan_version_pricing_api_result_spot_frequencies()
+                {
+                    spot_length_id = x.SpotLengthId,
+                    cost = x.SpotCost,
+                    spots = x.Spots,
+                    impressions = x.Impressions
+                }).ToList()
+            }).ToList();
+
+            var planPricingApiResult = new plan_version_pricing_api_results
+            {
+                optimal_cpm = result.PricingCpm,
+                plan_version_pricing_job_id = result.JobId,
+                pricing_version = result.PricingVersion,
+                spot_allocation_model_mode = (int)(result.SpotAllocationModelMode),
+                posting_type = (int)result.PostingType,
+                plan_version_pricing_api_result_spots = planPricingApiResultSpots
+            };
+
             _InReadUncommitedTransaction(context =>
             {
-                var propertiesToIgnore = new List<string>() { "id" };
-                var planPricingApiResult = new plan_version_pricing_api_results
-                {
-                    optimal_cpm = result.PricingCpm,
-                    plan_version_pricing_job_id = result.JobId,
-                    pricing_version = result.PricingVersion,
-                    spot_allocation_model_mode = (int)(result.SpotAllocationModelMode),
-                    posting_type = (int)result.PostingType
-                };
-
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
-
                 context.SaveChanges();
-
-                var planPricingApiResultSpots = new List<plan_version_pricing_api_result_spots>();               
-
-                foreach (var spot in result.Spots)
-                {
-                    var planPricingApiResultSpot = new plan_version_pricing_api_result_spots
-                    {                     
-                        plan_version_pricing_api_results_id = planPricingApiResult.id,
-                        station_inventory_manifest_id = spot.Id,
-                        contract_media_week_id = spot.ContractMediaWeek.Id,
-                        inventory_media_week_id = spot.InventoryMediaWeek.Id,
-                        impressions30sec = spot.Impressions30sec,
-                        standard_daypart_id = spot.StandardDaypart.Id,
-                        plan_version_pricing_api_result_spot_frequencies = spot.SpotFrequencies.Select(x => new plan_version_pricing_api_result_spot_frequencies()
-                        {
-
-                            spot_length_id = x.SpotLengthId,
-                            cost = x.SpotCost,
-                            spots = x.Spots,
-                            impressions = x.Impressions
-                        }).ToList()
-                    };
-                    planPricingApiResultSpots.Add(planPricingApiResultSpot);                   
-                }
-
-                BulkInsert(context, planPricingApiResultSpots, propertiesToIgnore);
-
-                var addedplanPricingApiResultSpots = context.plan_version_pricing_api_result_spots.Where(x => x.plan_version_pricing_api_results_id == planPricingApiResult.id).ToList();
-                var planPricingApiResultSpotsEntities = (from spots in planPricingApiResultSpots
-                                  join addedSpots in addedplanPricingApiResultSpots on new
-                                  {
-                                      plan_version_pricing_api_results_id = spots.plan_version_pricing_api_results_id,
-                                      station_inventory_manifest_id = spots.station_inventory_manifest_id,
-                                      contract_media_week_id = spots.contract_media_week_id,
-                                      inventory_media_week_id = spots.inventory_media_week_id,
-                                      impressions30sec = spots.impressions30sec,
-                                      standard_daypart_id = spots.standard_daypart_id,
-                                  } equals new
-                                  {
-                                      plan_version_pricing_api_results_id = addedSpots.plan_version_pricing_api_results_id,
-                                      station_inventory_manifest_id = addedSpots.station_inventory_manifest_id,
-                                      contract_media_week_id = addedSpots.contract_media_week_id,
-                                      inventory_media_week_id = addedSpots.inventory_media_week_id,
-                                      impressions30sec = addedSpots.impressions30sec,
-                                      standard_daypart_id = addedSpots.standard_daypart_id,
-                                  }
-                                  select new
-                                  {
-                                      PlanPricingApiResultSpots= spots,
-                                      AddedplanPricingApiResultSpots = addedSpots                                 
-                                  }).ToList();
-
-                var planPricingApiResultSpotsFrequency = planPricingApiResultSpotsEntities.SelectMany(x => x.PlanPricingApiResultSpots.plan_version_pricing_api_result_spot_frequencies.Select(spotFrequency => new plan_version_pricing_api_result_spot_frequencies()
-                {
-                    plan_version_pricing_api_result_spot_id = x.AddedplanPricingApiResultSpots.id,
-                    spot_length_id = spotFrequency.spot_length_id,
-                    cost = spotFrequency.cost,
-                    spots = spotFrequency.spots,
-                    impressions = spotFrequency.impressions
-                })).ToList();
-
-                var propertiestoIgnore = new List<string>() { "id" };
-                BulkInsert(context, planPricingApiResultSpotsFrequency, propertiestoIgnore);
             });
         }
      
