@@ -41,7 +41,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             try
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
                 nbcOAndO_InventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
                 _InventoryFileTestHelper = new InventoryFileTestHelper();
             }

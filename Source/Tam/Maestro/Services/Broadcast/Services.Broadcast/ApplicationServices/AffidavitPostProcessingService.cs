@@ -56,8 +56,8 @@ namespace Services.Broadcast.ApplicationServices
             , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
             , IEmailerService emailerService
             , IFileService fileService
-            , IDataLakeFileService dataLakeFileService
-            , IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient,featureToggleHelper,configurationSettingsHelper)
+            , IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : 
+            base(emailHelper, ftpHelper, audienceCache, emailerService, fileService, configurationWebApiClient,featureToggleHelper,configurationSettingsHelper)
         {
             _affidavitEmailProcessorService = affidavitEmailProcessorService;
             _AffidavidService = affidavidService;
@@ -115,7 +115,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
                 }
 
-                SendFileToDataLake(fileContents, fileName);
+                SendFileToFileStore(fileContents, fileName);
 
                 var result = ProcessFileContents(userName, fileName, fileContents, currentDateTime);
                 response.SaveResults.Add(result);

@@ -234,6 +234,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_Empty()
@@ -262,6 +263,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_Error_InvalidFileFormat()
@@ -294,7 +296,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(json);
             }
         }
-        
+
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_Validation_Errors()
@@ -325,6 +328,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
         
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_Clean()
@@ -351,7 +355,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 VerifyAffidavit(response.SaveResults.First().Id.Value);
             }
         }
-        
+
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_KeepingTrac_Clean()
@@ -380,6 +385,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void DLAndProcessWWTVFiles_KeepingTrac_BadTime()
@@ -438,7 +444,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 EmailerServiceStub.ClearLastMessage();
             }
         }
-        
+
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [UseReporter(typeof(DiffReporter))]
         [Test]
         // use for manual testing and not automated running 
@@ -499,6 +506,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("WWTV has been disabled.  This code will be cleaned up with WWTV")]
         [Test]
         public void DLAndProcessWWTVFiles_DataLakeCopy()
         {
@@ -507,19 +515,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFtpService>(new FtpServiceStub_SingleFile(filename));
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
 
                 var affidavitPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>();
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
 
-                var featureToggleHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>();
-                var configurationSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
+                var fileStoreFolder = _GetInventoryUploadFolder();
 
-                var dataLakeFolder = featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES) ? 
-                    configurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) : 
-                    BroadcastServiceSystemParameter.DataLake_SharedFolder;
-
-                string filePath = Path.Combine(dataLakeFolder, filename);
+                string filePath = Path.Combine(fileStoreFolder, filename);
                 if (fileService.Exists(filePath))
                 {
                     fileService.Delete(filePath);
@@ -529,6 +531,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
                 Assert.True(fileService.Exists(filePath));
             }
+        }
+
+        protected virtual string _GetInventoryUploadFolder()
+        {
+            var path = Path.Combine(_GetBroadcastAppFolder()
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD);
+            return path;
+        }
+
+        protected virtual string _GetBroadcastAppFolder()
+        {
+            var configurationSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
+            var path = configurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder);
+            return path;
         }
 
         private void VerifyAffidavit(int affidavitId)

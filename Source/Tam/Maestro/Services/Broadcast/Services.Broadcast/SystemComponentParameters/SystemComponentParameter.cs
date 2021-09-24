@@ -80,8 +80,8 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastSharedFolder); }
         }
-	 
-		public static string DataLake_NotificationEmail  
+
+        public static string DataLake_NotificationEmail  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DataLake_NotificationEmail); }
@@ -104,8 +104,8 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DataLake_SharedFolder_UserName); }
         }
-	 
-		public static float DefaultMarketCoverage  
+
+        public static float DefaultMarketCoverage  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<float>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultMarketCoverage); }

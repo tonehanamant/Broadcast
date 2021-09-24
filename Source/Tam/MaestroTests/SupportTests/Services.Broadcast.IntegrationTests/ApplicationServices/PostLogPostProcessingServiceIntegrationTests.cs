@@ -33,7 +33,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public PostLogPostProcessingServiceIntegrationTests()
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);          
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFtpService, FtpServiceStub_Empty>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
@@ -142,34 +141,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WWTVSaveResult response = _PostLogPostProcessingService.ProcessFileContents(_UserName, filePath, fileContents, new DateTime(2019, 3, 31));
 
                 VerifyPostLogFile(response.Id.Value);
-            }
-        }
-
-        //[Ignore("Not certain why we are ignoring this...")]
-        [Test]
-        public void DLAndProcessWWTVFiles_DataLakeCopy()
-        {
-            var filename = "PostLogDLAndProcessWWTVFiles_DataLakeCopy.txt";
-            using (var trans = new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFtpService>(new FtpServiceStub_SingleFile(filename));
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileService>();
-
-                var postLogPostProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostLogPostProcessingService>();
-                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
-
-                var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder):BroadcastServiceSystemParameter.DataLake_SharedFolder;
-                string filePath = Path.Combine(dataLakeFolder, filename);
-                if (fileService.Exists(filePath))
-                {
-                    fileService.Delete(filePath);
-                }
-
-                postLogPostProcessingService.DownloadAndProcessWWTVFiles("WWTV Service", new DateTime(2019, 3, 31));
-
-                Assert.True(fileService.Exists(filePath));
             }
         }
 

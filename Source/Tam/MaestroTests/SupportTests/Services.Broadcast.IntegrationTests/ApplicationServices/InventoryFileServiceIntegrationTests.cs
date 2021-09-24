@@ -44,9 +44,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SetUp()
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IDataLakeFileService, DataLakeFileServiceStub>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
             _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
@@ -1835,13 +1832,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var now = new DateTime(2019, 02, 02);
                 var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
 
-                var broadcastAppFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder) : BroadcastServiceSystemParameter.BroadcastAppFolder;
+                var broadcastAppFolder = IntegrationTestHelper.GetBroadcastAppFolder();
                 string errorsFilePath = $@"{broadcastAppFolder}\{result.FileId}_{fileName}.txt";
 
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 Assert.IsTrue(fileService.Exists(errorsFilePath));
             }
-        }
+        }        
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1880,6 +1877,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Ignore("This runs super long.  Run it manually.")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]

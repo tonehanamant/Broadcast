@@ -11,9 +11,7 @@ namespace Services.Broadcast
         public static readonly string AABCacheExpirationSeconds = "AABCacheExpirationSeconds";
 		public static readonly string BroadcastDayStart = "BroadcastDayStart";
 		public static readonly string BroadcastMatchingBuffer = "BroadcastMatchingBuffer";
-		public static readonly string DataLakeSharedFolderPassword = "DataLake_SharedFolder_Password";
-		public static readonly string DataLakeSharedFolderUserName = "DataLake_SharedFolder_UserName";
-		public static readonly string DefaultMarketCoverage = "DefaultMarketCoverage";
+        public static readonly string DefaultMarketCoverage = "DefaultMarketCoverage";
 		public static readonly string DefaultNtiConversionFactor = "DefaultNtiConversionFactor";
 		public static readonly string EfficiencyModelCpmGoal = "EfficiencyModelCpmGoal";
 		public static readonly string EmailHost = "EmailHost";
@@ -64,9 +62,7 @@ namespace Services.Broadcast
 		public static readonly string BroadcastAppFolder = "BroadcastAppFolder";
 		public static readonly string BroadcastNTIUploadApiUrl= "BroadcastNTIUploadApiUrl";
 		public static readonly string BroadcastSharedFolder = "BroadcastSharedFolder";
-		public static readonly string DataLake_NotificationEmail = "DataLake_NotificationEmail";
-		public static readonly string DataLake_SharedFolder = "DataLake_SharedFolder";
-		public static readonly string EmailFrom = "EmailFrom";
+        public static readonly string EmailFrom = "EmailFrom";
 		public static readonly string EmailWhiteList = "EmailWhiteList";
 		public static readonly string InventoryProcessingNotificationEmails = "InventoryProcessingNotificationEmails";
 		public static readonly string InventoryRatingsJobIntervalSeconds = "InventoryRatingsJobIntervalSeconds";

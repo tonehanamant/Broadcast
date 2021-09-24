@@ -90,7 +90,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly ILockingEngine _LockingEngine;
-        private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IStationProcessingEngine _StationProcessingEngine;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IOpenMarketFileImporter _OpenMarketFileImporter;
@@ -98,6 +97,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
+        private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -109,7 +109,6 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastAudiencesCache audiencesCache,
             IRatingForecastService ratingForecastService,
             INsiPostingBookService nsiPostingBookService,
-            IDataLakeFileService dataLakeFileService,
             ILockingEngine lockingEngine,
             IStationProcessingEngine stationProcessingEngine,
             IImpressionsService impressionsService,
@@ -135,7 +134,6 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _NsiPostingBookService = nsiPostingBookService;
             _LockingEngine = lockingEngine;
-            _DataLakeFileService = dataLakeFileService;
             _StationProcessingEngine = stationProcessingEngine;
             _ImpressionsService = impressionsService;
             _OpenMarketFileImporter = openMarketFileImporter;
@@ -143,6 +141,15 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _InventoryRatingsService = inventoryRatingsService;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
+
+            _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
+        }
+
+        private bool _GetEnableSaveIngestedInventoryFile()
+        {
+            var toggle =
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SAVE_INGESTED_INVENTORY_FILE);
+            return toggle;
         }
 
         public bool GetStationProgramConflicted(StationProgramConflictRequest conflict, int manifestId)
@@ -280,18 +287,28 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
                 _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(inventoryFile.Id, userName);
 
-                try
+                if (_EnableSaveIngestedInventoryFile.Value)
                 {
-                    _DataLakeFileService.Save(request);
-                }
-                catch (Exception ex)
-                {
-                    var msg = "Unable to send file to Data Lake shared folder and e-mail reporting the error.";
-                    _LogError(msg, ex);
+                    _SaveInventoryFileToFileStore(request);
                 }
             }
 
             return _SetInventoryFileSaveResult(inventoryFile);
+        }
+
+        private void _SaveInventoryFileToFileStore(InventoryFileSaveRequest request)
+        {
+            try
+            {
+                var filePath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
+                _CreateDirectoryIfNotExists(filePath);
+                _FileService.Copy(request.StreamData, filePath, overwriteExisting:true);
+            }
+            catch (Exception ex)
+            {
+                var msg = "Unable to send file to shared folder and e-mail reporting the error.";
+                _LogError(msg, ex);
+            }
         }
 
         private void _ProcessFileWithProblems(InventoryFile inventoryFile, params string[] problems)
@@ -310,8 +327,8 @@ namespace Services.Broadcast.ApplicationServices
 			var saveDirectory = _GetInventoryUploadErrorsFolder();
 			string fullFileName = $@"{fileId}_{fileName}.txt";
 			string path = Path.Combine(saveDirectory, fullFileName);
-			_FileService.CreateDirectory(saveDirectory);
-			_FileService.CreateTextFile(path, validationErrors);
+            _CreateDirectoryIfNotExists(path);
+            _FileService.CreateTextFile(path, validationErrors);
         }
 
         private InventoryFileSaveResult _SetInventoryFileSaveResult(InventoryFile file)
@@ -846,10 +863,25 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         protected virtual string _GetInventoryUploadErrorsFolder()
         {	        
-			var path = Path.Combine(_GetBroadcastAppFolder()
-                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD
+			var path = Path.Combine(_GetInventoryUploadFolder()
                 , BroadcastConstants.FolderNames.INVENTORY_UPLOAD_ERRORS);
 	        return path;
+        }
+
+        protected virtual string _GetInventoryUploadFolder()
+        {
+            var path = Path.Combine(_GetBroadcastAppFolder()
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD);
+            return path;
+        }
+
+        private void _CreateDirectoryIfNotExists(string filePath)
+        {
+            var dir = Path.GetDirectoryName(filePath);
+            if (!_FileService.DirectoryExists(dir))
+            {
+                _FileService.CreateDirectory(dir);
+            }
         }
 
         /// <summary>

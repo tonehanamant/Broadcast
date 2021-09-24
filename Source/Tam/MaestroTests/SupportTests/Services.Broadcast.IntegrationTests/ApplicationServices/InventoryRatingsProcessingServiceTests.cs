@@ -29,7 +29,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             try
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceDataLakeStubb>();
                 _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
                 _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
                 _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();

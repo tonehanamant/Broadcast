@@ -202,8 +202,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryProgramsRepairEngine, InventoryProgramsRepairEngine>();
             unityContainer.RegisterType<IInventoryWeekEngine, InventoryWeekEngine>();
 
-            unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
-            unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();
             unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();
 
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();

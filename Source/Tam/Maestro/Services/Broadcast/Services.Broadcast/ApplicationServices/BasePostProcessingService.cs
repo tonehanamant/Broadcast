@@ -26,12 +26,12 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IEmailerService _EmailerService;
         private readonly IFileService _FileService;
-        private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IConfigurationWebApiClient _configurationWebApiClient;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
+        private readonly Lazy<string> _PostProcessingFileStorePath;
 
         private const string VALID_INCOMING_FILE_EXTENSION = ".txt";
 
@@ -40,7 +40,6 @@ namespace Services.Broadcast.ApplicationServices
             , IBroadcastAudiencesCache audienceCache
             , IEmailerService emailerService
             , IFileService fileService
-            , IDataLakeFileService dataLakeFileService
             , IConfigurationWebApiClient configurationWebApiClient
             , IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
         {
@@ -49,12 +48,18 @@ namespace Services.Broadcast.ApplicationServices
             _AudienceCache = audienceCache;
             _EmailerService = emailerService;
             _FileService = fileService;
-            _DataLakeFileService = dataLakeFileService;
             _configurationWebApiClient = configurationWebApiClient;
             _FeatureToggleHelper = featureToggleHelper;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
+            _PostProcessingFileStorePath = new Lazy<string>(_GetPostProcessingFileStorePath);
+        }
+
+        private string _GetPostProcessingFileStorePath()
+        {
+            var path = Path.Combine(_ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder), BroadcastConstants.FolderNames.POST_PROCESSING_FILE_STORE);
+            return path;
         }
 
         /// <summary>
@@ -148,25 +153,18 @@ namespace Services.Broadcast.ApplicationServices
             }
             return localPaths;
         }
-        
-        /// <summary>
-        /// Sends a file to data lake
-        /// </summary>
-        /// <param name="fileContents">File content to send</param>
-        /// <param name="fileName">Filename for the file</param>
-        public void SendFileToDataLake(string fileContents, string fileName)
+
+        public void SendFileToFileStore(string fileContents, string fileName)
         {
             try
             {
-                _DataLakeFileService.Save(new FileRequest
-                {
-                    FileName = fileName,
-                    StreamData = new MemoryStream(Encoding.UTF8.GetBytes(fileContents))
-                });
+                var contentStream = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
+                var filePath = Path.Combine(_PostProcessingFileStorePath.Value, fileName);
+                _FileService.Copy(contentStream, filePath, overwriteExisting:true);
             }
             catch
             {
-                throw new ApplicationException("Unable to send WWTV file to Data Lake shared folder and e-mail reporting the error.");
+                throw new ApplicationException("Unable to send WWTV file to shared folder and e-mail reporting the error.");
             }
         }
 

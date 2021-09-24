@@ -59,9 +59,9 @@ namespace Services.Broadcast.ApplicationServices
             , IWWTVSharedNetworkHelper wWTVSharedNetworkHelper
             , IEmailerService emailerService
             , IFileService fileService
-            , IDataLakeFileService dataLakeFileService
             , IConfigurationWebApiClient configurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper) : base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, dataLakeFileService, configurationWebApiClient, featureToggleHelper,configurationSettingsHelper)
+            , IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper) : 
+            base(emailHelper, wwtvFtpHelper, audienceCache, emailerService, fileService, configurationWebApiClient, featureToggleHelper,configurationSettingsHelper)
         {
             _WWTVFtpHelper = wwtvFtpHelper;
             _EmailProcessorService = emailService;
@@ -113,7 +113,7 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
                 }
 
-                SendFileToDataLake(fileContents, fileName);
+                SendFileToFileStore(fileContents, fileName);
 
                 var result = ProcessFileContents(userName, fileName, fileContents, currentDateTime);
                 response.SaveResults.Add(result);

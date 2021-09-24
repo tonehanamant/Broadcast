@@ -31,16 +31,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRepository _IInventoryRepository;
         private IProprietaryRepository _ProprietaryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
-        private LaunchDarklyClientStub _LaunchDarklyClientStub;
-        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);           
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
             _ProprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
             _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -450,8 +445,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
-                var dataLakeFolder = _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.DataLake_SharedFolder) :BroadcastServiceSystemParameter.DataLake_SharedFolder;
-                var filePath = Path.Combine(dataLakeFolder, fileName);
+                var fileStoreFolder = _GetInventoryUploadFolder();
+                var filePath = Path.Combine(fileStoreFolder, fileName);
                 var proprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
 
                 if (fileService.Exists(filePath))
@@ -470,7 +465,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.True(fileService.Exists(filePath));
             }
-        }        
+        }
+
+        protected virtual string _GetInventoryUploadFolder()
+        {
+            var path = Path.Combine(IntegrationTestHelper.GetBroadcastAppFolder()
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD);
+            return path;
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

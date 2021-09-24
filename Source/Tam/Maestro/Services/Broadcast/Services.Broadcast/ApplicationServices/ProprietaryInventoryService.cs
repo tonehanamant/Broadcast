@@ -63,7 +63,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IStationInventoryGroupService _StationInventoryGroupService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
-        private readonly IDataLakeFileService _DataLakeFileService;
         private readonly IInventoryScxDataConverter _InventoryScxDataConverter;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
@@ -77,6 +76,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Spot lengths dictionary where key is the id and value is the duration
         /// </summary>
         private readonly Lazy<Dictionary<int, int>> _SpotLengthDurationsById;
+        private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -87,7 +87,6 @@ namespace Services.Broadcast.ApplicationServices
             , IStationInventoryGroupService stationInventoryGroupService
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IInventoryScxDataConverter inventoryScxDataConverter
-            , IDataLakeFileService dataLakeFileService
             , IInventoryRatingsProcessingService inventoryRatingsService
             , IQuarterCalculationEngine quarterCalculationEngine
             , IInventoryWeekEngine inventoryWeekEngine
@@ -108,7 +107,6 @@ namespace Services.Broadcast.ApplicationServices
             _StationInventoryGroupService = stationInventoryGroupService;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _InventoryScxDataConverter = inventoryScxDataConverter;
-            _DataLakeFileService = dataLakeFileService;
             _InventoryRatingsService = inventoryRatingsService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _InventoryWeekEngine = inventoryWeekEngine;
@@ -117,6 +115,15 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _IStationMappingService = stationMappingService;
             _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
+
+            _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
+        }
+
+        private bool _GetEnableSaveIngestedInventoryFile()
+        {
+            var toggle =
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SAVE_INGESTED_INVENTORY_FILE);
+            return toggle;
         }
 
         ///<inheritdoc/>
@@ -197,14 +204,9 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
                 _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(proprietaryFile.Id, userName);
 
-                try
+                if (_EnableSaveIngestedInventoryFile.Value)
                 {
-                    _DataLakeFileService.Save(request);
-                }
-                catch (Exception ex)
-                {
-                    var msg = "Unable to send file to Data Lake shared folder and e-mail reporting the error.";
-                    _LogError(msg, ex);
+                    _SaveInventoryFileToFileStore(request);
                 }
             }            
 
@@ -214,6 +216,30 @@ namespace Services.Broadcast.ApplicationServices
                 ValidationProblems = proprietaryFile.ValidationProblems,
                 Status = proprietaryFile.FileStatus
             };
+        }
+
+        private void _SaveInventoryFileToFileStore(FileRequest request)
+        {
+            try
+            {
+                var filePath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
+                _CreateDirectoryIfNotExists(filePath);
+                _FileService.Copy(request.StreamData, filePath, overwriteExisting: true);
+            }
+            catch (Exception ex)
+            {
+                var msg = "Unable to send file to shared folder and e-mail reporting the error.";
+                _LogError(msg, ex);
+            }
+        }
+        
+        private void _CreateDirectoryIfNotExists(string filePath)
+        {
+            var dir = Path.GetDirectoryName(filePath);
+            if (!_FileService.DirectoryExists(dir))
+            {
+                _FileService.CreateDirectory(dir);
+            }
         }
 
         private void _SetStartAndEndDatesForManifestWeeks(InventoryFileBase inventoryFile, DateTime effectiveDate, DateTime endDate)
@@ -314,15 +340,21 @@ namespace Services.Broadcast.ApplicationServices
 	        var fullFileName = $@"{fileId}_{fileName}";
 	        var path = Path.Combine(saveDirectory, fullFileName);
 	        stream.Position = 0;
-	        _FileService.CreateDirectory(saveDirectory);
+            _CreateDirectoryIfNotExists(path);
 	        _FileService.Copy(stream, path, true);
         }
         private string _GetInventoryUploadErrorDirectory()
         {
-			var path = Path.Combine(_GetBroadcastAppFolder()
-                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD
+			var path = Path.Combine(_GetInventoryUploadFolder()
                 , BroadcastConstants.FolderNames.INVENTORY_UPLOAD_ERRORS);
             return path;
 		}
-	}
+
+        protected virtual string _GetInventoryUploadFolder()
+        {
+            var path = Path.Combine(_GetBroadcastAppFolder()
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD);
+            return path;
+        }
+    }
 }

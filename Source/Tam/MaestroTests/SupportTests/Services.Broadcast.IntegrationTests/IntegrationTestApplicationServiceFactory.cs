@@ -57,14 +57,11 @@ namespace Services.Broadcast.IntegrationTests
 
                     var stubbedSmsClient = new StubbedSMSClient();
                     var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-                    var connectionString = ConnectionStringHelper.BuildConnectionString(
-                        stubbedConfigurationClient.GetResource(TAMResource.BroadcastConnectionString.ToString()), 
-                        System.Diagnostics.Process.GetCurrentProcess().ProcessName);
-                    GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
-                    BackgroundJobClient = new BackgroundJobClient(JobStorage.Current);
+
+                    
                     
                     _instance.RegisterInstance<IConfigurationWebApiClient>(stubbedConfigurationClient);
-                    _instance.RegisterInstance<IBackgroundJobClient>(BackgroundJobClient);
+                    
 
                     SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
                     
@@ -72,6 +69,9 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
+
+                    _SetupBackgroundJobClient();
+
                     MediaMonthAndWeekAggregateCache = _instance.Resolve<IMediaMonthAndWeekAggregateCache>();
 
                     _instance.RegisterType<ICampaignAggregator, CampaignAggregator>();
@@ -83,6 +83,17 @@ namespace Services.Broadcast.IntegrationTests
 
                 }
             }
+        }
+
+        private static void _SetupBackgroundJobClient()
+        {
+            var configSettingsHelper = _instance.Resolve<IConfigurationSettingsHelper>();
+            var connectionStringRaw = configSettingsHelper.GetConfigValue<string>(ConnectionStringConfigKeys.CONNECTIONSTRINGS_BROADCAST);
+            var connectionString = ConnectionStringHelper.BuildConnectionString(connectionStringRaw, System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+
+            GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString);
+            BackgroundJobClient = new BackgroundJobClient(JobStorage.Current);
+            _instance.RegisterInstance<IBackgroundJobClient>(BackgroundJobClient);
         }
 
         public static UnityContainer Instance
@@ -110,6 +121,9 @@ namespace Services.Broadcast.IntegrationTests
             // TODO: Affected tests should be reworked for these to be false, as they are in production
             launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = true;
             launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = true;
+
+            // this is only enabled for test
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SAVE_INGESTED_INVENTORY_FILE] = true;
         }
     }
 

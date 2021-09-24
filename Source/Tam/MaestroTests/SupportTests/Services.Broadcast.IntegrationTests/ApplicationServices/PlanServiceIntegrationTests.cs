@@ -39,7 +39,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = false;
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();

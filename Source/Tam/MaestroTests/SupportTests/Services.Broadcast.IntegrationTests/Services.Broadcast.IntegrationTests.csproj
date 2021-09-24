@@ -397,7 +397,6 @@
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
     <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\DataLakeFileServiceTests.cs" />
     <Compile Include="ApplicationServices\InventorySummaryServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryScxDataPrepIntegrationTests.cs" />
@@ -481,7 +480,6 @@
     <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\AgencyAdvertiserBrandApiClientStub.cs" />
     <Compile Include="Stubs\AsyncTaskHelperStub.cs" />
-    <Compile Include="Stubs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubs\DateTimeEngineStub.cs" />
     <Compile Include="Stubs\FileServiceStub.cs" />
     <Compile Include="Stubs\GenreCacheStub.cs" />

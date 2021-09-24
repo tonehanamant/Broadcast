@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 // Don't remove this import, or it will fail in the build.
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests
 {
@@ -89,7 +90,9 @@ namespace Services.Broadcast.IntegrationTests
 #if DEBUG
             return Path.GetTempPath();
 #else
-            return BroadcastServiceSystemParameter.BroadcastAppFolder;
+            var configSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
+            var path = configSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder);
+            return path;
 #endif
         }
     }

@@ -33,7 +33,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<IBroadcastAudiencesCache> _AudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
         private readonly Mock<IRatingForecastService> _RatingForecastServiceMock = new Mock<IRatingForecastService>();
         private readonly Mock<INsiPostingBookService> _NsiPostingBookServiceMock = new Mock<INsiPostingBookService>();
-        private readonly Mock<IDataLakeFileService> _DataLakeFileServiceMock = new Mock<IDataLakeFileService>();
         private readonly Mock<ILockingEngine> _LockingEngineMock = new Mock<ILockingEngine>();
         private readonly Mock<IStationProcessingEngine> _StationProcessingEngineMock = new Mock<IStationProcessingEngine>();
         private readonly Mock<IImpressionsService> _ImpressionsServiceMock = new Mock<IImpressionsService>();
@@ -308,7 +307,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _AudiencesCacheMock.Object,
                 _RatingForecastServiceMock.Object,
                 _NsiPostingBookServiceMock.Object,
-                _DataLakeFileServiceMock.Object,
                 _LockingEngineMock.Object,
                 _StationProcessingEngineMock.Object,
                 _ImpressionsServiceMock.Object,

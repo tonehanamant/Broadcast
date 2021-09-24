@@ -31,7 +31,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _FileService = new InMemoryFileServiceStubb();
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(_FileService);
-            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDataLakeFileService>(new DataLakeFileServiceStub());
             
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
             _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();

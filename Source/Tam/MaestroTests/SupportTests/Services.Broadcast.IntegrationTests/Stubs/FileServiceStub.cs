@@ -91,7 +91,12 @@ namespace Services.Broadcast.IntegrationTests
 
         public bool DirectoryExists(string filePath)
         {
-            throw new NotImplementedException();
+            if (!CreatedDirectories.Contains(filePath))
+            {
+                CreatedDirectories.Add(filePath);
+                return true;
+            }
+            return false;
         }
 
         public void CreateDirectory(string filePath)
@@ -214,78 +219,6 @@ namespace Services.Broadcast.IntegrationTests
         {
             return string.Compare(Path.Combine(_BasePath, _SingleFileName), path,
                        StringComparison.CurrentCultureIgnoreCase) == 0;
-        }
-    }
-
-    public class FileServiceDataLakeStubb : FileServiceStub
-    {
-        private List<string> _Files = new List<string>();
-        
-        public override bool Exists(string path)
-        {
-            var frame = new StackFrame(1);
-            var method = frame.GetMethod();
-            Debug.WriteLine($"===> Called Exists({path}) from {method.Name} {method.DeclaringType}");
-            Debug.WriteLine("===> Existing files:");
-            foreach(var file in _Files)
-            {
-                Debug.WriteLine(file);
-            }
-            Debug.WriteLine("<===");
-            return _Files.Where(x=> x.Equals(path)).Count() == 1;
-        }
-
-        public override string Copy(string filePath, string destinationPath, bool overwriteExisting = false)
-        {
-            _Files.Add(destinationPath);
-            return destinationPath;
-        }
-
-        public override string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
-        {
-            _Files.Add(destinationPath);
-            return destinationPath;
-        }
-
-        public override void Delete(params string[] paths)
-        {
-            var frame = new StackFrame(1);
-            var method = frame.GetMethod();
-            Debug.WriteLine($"===> Called Delete({paths}) from {method.Name} {method.DeclaringType}");
-            Debug.WriteLine("===> Existing files:");
-            foreach (string path in paths)
-            {
-                _Files.RemoveAll(x => x.Equals(path));
-            }
-            foreach (var file in _Files)
-            {
-                Debug.WriteLine(file);
-            }
-            Debug.WriteLine("<===");
-        }
-
-        public override List<string> GetFiles(string path)
-        {
-            return _Files;
-        }
-
-        public override Stream CreateZipArchive(IDictionary<string, string> filePaths)
-        {
-            MemoryStream archiveFile = new MemoryStream();
-            using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, true))
-            {
-                foreach (var pair in filePaths)
-                {
-                    archive.CreateEntry(pair.Value);
-                }
-            }
-            archiveFile.Seek(0, SeekOrigin.Begin);
-            return archiveFile;
-        }
-
-        public override void CreateTextFile(string filePath, List<string> lines)
-        {
-            _Files.Add(filePath);
         }
     }
 }

@@ -190,18 +190,6 @@ namespace Services.Broadcast.IntegrationTests
                 case "ImpressionStartOfDayForAdjustment":
                     result = @"18000";
                     break;
-                case "DataLake_SharedFolder":
-                    result =  Path.GetTempPath();
-                    break;
-                case "DataLake_SharedFolder_UserName":
-                    result = string.Empty;
-                    break;
-                case "DataLake_SharedFolder_Password":
-                    result = string.Empty;
-                    break;
-                case "DataLake_NotificationEmail":
-                    result = "mhohenshilt@crossmw.com";
-                    break;
                 case "InventoryUploadErrorsFolder":
                     result = @"\\cadfs11\Inventory Management UI\Continuous Deployment";
                     break;
