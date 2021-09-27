@@ -602,6 +602,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedUpdatePlanPricingVersionId, updatePlanPricingVersionIdCalled);            
             Assert.AreEqual(expectedSavePlanPricingParametersCalled, savePlanPricingParametersCallsed);
         }
+        [Test] 
+        public void _FinalizePricingOnPlanSave_PlanSpotAllocationModelModeTest()
+        {
+            // Arrange
+            const int planId = 12;
+            const int planVersionId = 14;
+            var modifiedDate = new DateTime(2020, 10, 17, 12, 30, 40);
+            const string modifiedBy = "TestUser";
+
+            bool shouldPromotePricingResults = false;
+            PlanService.SaveState saveState = PlanService.SaveState.UpdatingExisting;
+
+            var plan = _GetNewPlan();
+            plan.Id = planId;
+            plan.VersionId = planVersionId;
+
+            var beforePlan = _GetNewPlan();
+            beforePlan.Id = planId;
+            beforePlan.VersionId = planVersionId;
+
+            var afterPlan = _GetNewPlan();
+            afterPlan.Id = planId;
+            afterPlan.VersionId = planVersionId + 1;
+            // Act
+            _PlanService._FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, modifiedDate, modifiedBy, shouldPromotePricingResults);
+            // Assert
+            Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);           
+        }
 
         private class UpdatePlanPricingVersionIdParams
         {

@@ -351,8 +351,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             else
             {
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
-            }
-
+            }           
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
@@ -476,6 +475,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
+                plan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
             }
         }
