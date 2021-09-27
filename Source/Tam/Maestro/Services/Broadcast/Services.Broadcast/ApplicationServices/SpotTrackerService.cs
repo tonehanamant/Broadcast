@@ -1,7 +1,6 @@
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Extensions;
@@ -54,7 +53,6 @@ namespace Services.Broadcast.ApplicationServices
 
         public SpotTrackerService(IDataRepositoryFactory repositoryFactory
             , ISigmaConverter sigmaConverter
-            , IWWTVSharedNetworkHelper wwtvSharedNetworkHelper
             , IFileService fileService
             , ISMSClient smsClient)
         {

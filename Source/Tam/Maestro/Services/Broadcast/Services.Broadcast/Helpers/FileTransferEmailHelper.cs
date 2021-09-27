@@ -77,7 +77,7 @@ namespace Services.Broadcast.Helpers
             if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return;
 
-            var to = new List<MailAddress>() { new MailAddress(_IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.WWTV_NotificationEmail) :BroadcastServiceSystemParameter.WWTV_NotificationEmail) };
+            var to = new List<MailAddress>() { new MailAddress(_ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastNotificationEmail)) };
             _EmailerService.QuickSend(false, emailBody, subject, MailPriority.Normal, to);
         }
 

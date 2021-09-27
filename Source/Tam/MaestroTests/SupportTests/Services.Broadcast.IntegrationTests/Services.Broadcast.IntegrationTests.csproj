@@ -363,9 +363,7 @@
   <ItemGroup>
     <Compile Include="Aggregates\ScheduleAggregateIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitImpressionsServiceTests.cs" />
-    <Compile Include="ApplicationServices\AffidavitEmailProcessorTests.cs" />
     <Compile Include="ApplicationServices\AffiliateServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\AffPPServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\AffidavitValidationEngineTests.cs" />
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartTypeServiceTests.cs" />
@@ -396,14 +394,12 @@
     <Compile Include="ApplicationServices\BaseProposalInventoryServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\BulkInventoryFileImportTester.cs" />
     <Compile Include="ApplicationServices\AffidavitServiceTests.cs" />
-    <Compile Include="ApplicationServices\AffidavitPreprocessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventorySummaryServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryDaypartParsingEngineIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryScxDataPrepIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryRatingsProcessingServiceTests.cs" />
     <Compile Include="ApplicationServices\IsciServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\NtiTransmittalsServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\PostLogPostProcessingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideDistributionEngineTests.cs" />
     <Compile Include="ApplicationServices\PostLogServiceTests.cs" />
     <Compile Include="ApplicationServices\PricingGuideServiceIntegrationTests.cs" />
@@ -415,7 +411,6 @@
     <Compile Include="ApplicationServices\MyEventsReportNamingEngineTests.cs" />
     <Compile Include="ApplicationServices\NsiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProjectionBooksService.cs" />
-    <Compile Include="ApplicationServices\PostLogPreprocessingServiceTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingRepositoryIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostPrePostingServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostReportServiceTests.cs" />
@@ -431,7 +426,6 @@
     <Compile Include="ApplicationServices\StationServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\VpvhServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\WhosWatchingTvServiceTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />

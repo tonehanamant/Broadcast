@@ -7,7 +7,6 @@ using Hangfire.Client;
 using Hangfire.Common;
 using Hangfire.States;
 using Services.Broadcast.ApplicationServices.Buying;
-using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.ApplicationServices.Maintenance;
@@ -163,12 +162,8 @@ namespace Services.Broadcast.ApplicationServices
             
             unityContainer.RegisterType<IPostLogService, PostLogService>();
             unityContainer.RegisterType<IAffidavitService, AffidavitService>();
-            unityContainer.RegisterType<IAffidavitPreprocessingService, AffidavitPreprocessingService>();
-            unityContainer.RegisterType<IAffidavitPostProcessingService, AffidavitPostProcessingService>();
             unityContainer.RegisterType<IMatchingEngine, MatchingEngine>();
             unityContainer.RegisterType<IProgramScrubbingEngine, ProgramScrubbingEngine>();
-            unityContainer.RegisterType<IWhosWatchingTvService, WhosWatchingTvService>();
-            unityContainer.RegisterType<IWWTVEmailProcessorService, WWTVEmailProcessorService>();
             unityContainer.RegisterType<IAffidavitValidationEngine, AffidavitValidationEngine>();
             unityContainer.RegisterType<IPostReportService, PostReportService>();
             unityContainer.RegisterType<IImpressionsService, ImpressionsService>();
@@ -176,21 +171,16 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IIsciService, IsciService>();
 
             unityContainer.RegisterType<IInventoryScxDataPrepFactory, InventoryScxDataPrepFactory>();
-            
-            unityContainer.RegisterType<IPostLogPreprocessingService, PostLogPreprocessingService>();
-            unityContainer.RegisterType<IPostLogPostProcessingService, PostLogPostProcessingService>();
 
             unityContainer.RegisterType<INsiPostingBookService, NsiPostingBookService>();
 
             unityContainer.RegisterType<IEmailerService, EmailerService>();
 
-            unityContainer.RegisterType<IWWTVFtpHelper, WWTVFtpHelper>();
             unityContainer.RegisterType<IFtpService, FtpService>();
             unityContainer.RegisterType<IFileService, FileService>();
             unityContainer.RegisterType<IFileTransferEmailHelper, FileTransferEmailHelper>();
 
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
-            unityContainer.RegisterType<IWWTVSharedNetworkHelper, WWTVSharedNetworkHelper>();
             unityContainer.RegisterType<IExcelHelper, ExcelHelper>();
 
             unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();            

@@ -53,12 +53,9 @@ namespace Services.Broadcast
 		public static readonly string SCXGenerationParallelJobs = "SCXGenerationParallelJobs";
 		public static readonly string ThresholdInSecondsForProgramIntersectInPricing = "ThresholdInSecondsForProgramIntersectInPricing";
 		public static readonly string UseMaestroDayPartRepo = "UseMaestroDayPartRepo";
-		public static readonly string WWTV_WhenTocheckDataFiles = "WWTV_WhenTocheckDataFiles";
-		public static readonly string WWTV_WhenTocheckErrorFiles = "WWTV_WhenTocheckErrorFiles";
-		public static readonly string WWTV_WhenToCheckWWTV = "WWTV_WhenToCheckWWTV";
-		public static readonly string AffidavitUploadUrl = "AffidavitUploadUrl";
+		
 		public static readonly string AgencyAdvertiserBrandApiUrl = "AgencyAdvertiserBrandApiUrl";
-		public static readonly string AgencyAdvertiserBrandTrafficApiUrl = "AgencyAdvertiserBrandTrafficApiUrl";
+		
 		public static readonly string BroadcastAppFolder = "BroadcastAppFolder";
 		public static readonly string BroadcastNTIUploadApiUrl= "BroadcastNTIUploadApiUrl";
 		public static readonly string BroadcastSharedFolder = "BroadcastSharedFolder";
@@ -72,29 +69,10 @@ namespace Services.Broadcast
 		public static readonly string ProgramGuideUrl = "ProgramGuideUrl";
 		public static readonly string ProgramSearchApiUrl = "ProgramSearchApiUrl";
 		public static readonly string ScxGenerationFolder = "ScxGenerationFolder";
-		public static readonly string WWTV_FailedFolder = "WWTV_FailedFolder";
+		
 		public static readonly string LaunchDarklySdkKey = "LaunchDarklySdkKey";
-		public static readonly string WWTV_FtpErrorFolder = "WWTV_FtpErrorFolder";
-		public static readonly string WWTV_FtpHost = "WWTV_FtpHost";
-		public static readonly string WWTV_FtpInboundFolder = "WWTV_FtpInboundFolder";
-		public static readonly string WWTV_FtpOutboundFolder = "WWTV_FtpOutboundFolder";
-		public static readonly string WWTV_FtpPassword = "WWTV_FtpPassword";
-		public static readonly string WWTV_FtpUsername = "WWTV_FtpUsername";
-		public static readonly string WWTV_KeepingTracDropFolder = "WWTV_KeepingTracDropFolder";
-		public static readonly string WWTV_KeepingTracErrorFolder = "WWTV_KeepingTracErrorFolder";
-		public static readonly string WWTV_KeepingTracErrorFtpFolder = "WWTV_KeepingTracErrorFtpFolder";
-		public static readonly string WWTV_KeepingTracFtpInboundFolder = "WWTV_KeepingTracFtpInboundFolder";
-		public static readonly string WWTV_KeepingTracFtpOutboundFolder = "WWTV_KeepingTracFtpOutboundFolder";
-		public static readonly string WWTV_LocalFtpErrorFolder = "WWTV_LocalFtpErrorFolder";
-		public static readonly string WWTV_NotificationEmail = "WWTV_NotificationEmail";
-		public static readonly string WWTV_PostLogDropFolder = "WWTV_PostLogDropFolder";
-		public static readonly string WWTV_PostLogErrorFolder = "WWTV_PostLogErrorFolder";
-		public static readonly string WWTV_PostLogFtpOutboundFolder = "WWTV_PostLogFtpOutboundFolder";
-		public static readonly string WWTV_SecondsBetweenRuns = "WWTV_SecondsBetweenRuns";
-		public static readonly string WWTV_SharedFolder = "WWTV_SharedFolder";
-		public static readonly string WWTV_SharedFolder_Password = "WWTV_SharedFolder_Password";
-		public static readonly string WWTV_SharedFolder_UserName = "WWTV_SharedFolder_UserName";
         public static readonly string ReelIsciIngestNumberOfDays = "ReelIsciIngestNumberOfDays";
+        public static readonly string BroadcastNotificationEmail = "BroadcastNotificationEmail";
 	}
 }
 

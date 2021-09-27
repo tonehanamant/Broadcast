@@ -429,42 +429,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetNsiPostReportData_NonRatedStation()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var filePath = @".\Files\WWTV_NonRatedStation.txt";
-                var fileContents = File.ReadAllText(filePath);
-
-                var processingResult = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitPostProcessingService>()
-                    .ProcessFileContents("integration test", filePath, fileContents, new DateTime(2019, 3, 31));
-                
-                var affidavit = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IAffidavitRepository>().GetAffidavit(processingResult.Id.Value);
-                
-                var overrideScrubbingResult = IntegrationTestApplicationServiceFactory.GetApplicationService<IAffidavitService>()
-                    .OverrideScrubbingStatus(new ScrubStatusOverrideRequest
-                    {
-                        OverrideStatus = ScrubbingStatus.InSpec,
-                        ScrubIds = new List<int> { affidavit.FileDetails.First().ClientScrubs.First().Id },
-                        ProposalId = 26000
-                    });
-                var postReportData = _PostReportService.GetPostReportData(26000);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PostReport), "ProposalId");
-
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Assert.IsTrue(postReportData.QuarterTabs.SelectMany(x => x.TabRows.Where(y => y.Station.Equals("NewStation"))).Count() == 1);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(postReportData, jsonSettings));
-            }
-        }
     }
 }

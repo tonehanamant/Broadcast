@@ -695,12 +695,6 @@
             <div id="settings" class="tabcontent">
                 <div class="form">
                     <h1 class="heading">Testing Services</h1>
-                    @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
-                    {
-                        <div class="input-container">
-                            <input class="button" type="submit" value="Test FTP" id="txtTestFtpAccess" />
-                        </div>
-                    }
                     @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
                     {
                         <div class="input-container">

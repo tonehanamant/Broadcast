@@ -3,7 +3,6 @@ using Common.Services.Repositories;
 using Newtonsoft.Json;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
@@ -300,20 +299,6 @@ namespace BroadcastComposerWeb.Controllers
             service.ClearMediaMonthCrunchCache();
 
             TempData["Message"] = "Media Month Crunch Cache cleared, good luck!";
-            TempData["TabId"] = "settings";
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public ActionResult TestFtpAccess()
-        {
-            FtpService srv = new FtpService();          
-            WWTVFtpHelper helper = new WWTVFtpHelper(srv, _ConfigurationSettingsHelper, _FeatureToggleHelper);
-            NetworkCredential creds = helper.GetClientCredentials();
-            var site = "ftp://" + helper.Host; 
-            var list = srv.GetFileList(creds, site);
-
-            TempData["Message"] = "Get file worked w/o error!\r\n";
             TempData["TabId"] = "settings";
             return RedirectToAction("Index");
         }
