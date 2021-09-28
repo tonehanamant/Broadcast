@@ -2016,66 +2016,49 @@ namespace Services.Broadcast.Repositories
 
         public void SavePricingAggregateResults(PlanPricingResultBaseDto pricingResult)
         {
+            var planVersionPricingDayparts = pricingResult.PlanVersionPricingDaypartsList.Select(planVersionPricingDaypart => new plan_version_pricing_results_dayparts
+            {
+                standard_daypart_id = planVersionPricingDaypart.StandardDaypartId,
+                calculated_vpvh = planVersionPricingDaypart.CalculatedVpvh
+            }).ToList();
+
+            var planPricingResultSpots = pricingResult.Programs.Select(program => new plan_version_pricing_result_spots
+            {
+                program_name = program.ProgramName,
+                genre = program.Genre,
+                avg_impressions = program.AvgImpressions,
+                avg_cpm = program.AvgCpm,
+                percentage_of_buy = program.PercentageOfBuy,
+                market_count = program.MarketCount,
+                station_count = program.StationCount,
+                budget = program.Budget,
+                spots = program.Spots,
+                impressions = program.Impressions,
+                is_proprietary = program.IsProprietary,
+            }).ToList();
+
+            var planPricingResult = new plan_version_pricing_results
+            {
+                optimal_cpm = pricingResult.OptimalCpm,
+                total_market_count = pricingResult.Totals.MarketCount,
+                total_station_count = pricingResult.Totals.StationCount,
+                total_avg_cpm = pricingResult.Totals.AvgCpm,
+                total_avg_impressions = pricingResult.Totals.AvgImpressions,
+                total_budget = pricingResult.Totals.Budget,
+                total_impressions = pricingResult.Totals.Impressions,
+                plan_version_pricing_job_id = pricingResult.JobId,
+                goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
+                total_spots = pricingResult.Totals.Spots,
+                posting_type = (int)pricingResult.PostingType,
+                spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode,
+                plan_version_pricing_results_dayparts = planVersionPricingDayparts,
+                plan_version_pricing_result_spots = planPricingResultSpots
+            };
+
             _InReadUncommitedTransaction(context =>
             {
-                var propertiesToIgnore = new List<string>() { "id" };
-
-                var planPricingResult = new plan_version_pricing_results
-                {
-                    optimal_cpm = pricingResult.OptimalCpm,
-                    total_market_count = pricingResult.Totals.MarketCount,
-                    total_station_count = pricingResult.Totals.StationCount,
-                    total_avg_cpm = pricingResult.Totals.AvgCpm,
-                    total_avg_impressions = pricingResult.Totals.AvgImpressions,
-                    total_budget = pricingResult.Totals.Budget,
-                    total_impressions = pricingResult.Totals.Impressions,
-                    plan_version_pricing_job_id = pricingResult.JobId,
-                    goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
-                    total_spots = pricingResult.Totals.Spots,
-                    posting_type = (int)pricingResult.PostingType,
-                    spot_allocation_model_mode = (int)pricingResult.SpotAllocationModelMode                   
-                };
-                foreach (var planVersionPricingDaypart in pricingResult.PlanVersionPricingDaypartsList)
-                {
-                    var planVersionPricingDayparts = new plan_version_pricing_results_dayparts
-                    {
-                        standard_daypart_id = planVersionPricingDaypart.StandardDaypartId,
-                        calculated_vpvh = planVersionPricingDaypart.CalculatedVpvh
-                    };
-
-                    planPricingResult.plan_version_pricing_results_dayparts.Add(planVersionPricingDayparts);
-                }
                 context.plan_version_pricing_results.Add(planPricingResult);
-
                 context.SaveChanges();
-
-                var spots = new List<plan_version_pricing_result_spots>();
-
-                foreach (var program in pricingResult.Programs)
-                {
-                    var planPricingResultSpots = new plan_version_pricing_result_spots
-                    {
-                        plan_version_pricing_result_id = planPricingResult.id,
-                        program_name = program.ProgramName,
-                        genre = program.Genre,
-                        avg_impressions = program.AvgImpressions,
-                        avg_cpm = program.AvgCpm,
-                        percentage_of_buy = program.PercentageOfBuy,
-                        market_count = program.MarketCount,
-                        station_count = program.StationCount,
-                        budget = program.Budget,
-                        spots = program.Spots,
-                        impressions = program.Impressions,
-                        is_proprietary = program.IsProprietary,
-                    };
-
-                    spots.Add(planPricingResultSpots);
-                }
-
-                if (spots.Any())
-                {
-                    BulkInsert(context, spots, propertiesToIgnore);
-                }
             });
         }
 

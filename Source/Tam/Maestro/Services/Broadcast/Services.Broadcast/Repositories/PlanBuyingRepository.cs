@@ -928,8 +928,8 @@ namespace Services.Broadcast.Repositories
                 }).ToList();
                 if (planBuyingResultSpots.Any())
                 {
-                    var propertiesToIgnore = new List<string>() { "id" };
-                    BulkInsert(context, planBuyingResultSpots, propertiesToIgnore);
+                    context.plan_version_buying_result_spots.AddRange(planBuyingResultSpots);
+                    context.SaveChanges();
                 }
             });
         }
@@ -951,8 +951,8 @@ namespace Services.Broadcast.Repositories
                 }).ToList();
                 if (planBuyingResultSpotStations.Any())
                 {
-                    var propertiesToIgnoreForSpotStations = new List<string>() { "id" };
-                    BulkInsert(context, planBuyingResultSpotStations, propertiesToIgnoreForSpotStations);
+                    context.plan_version_buying_result_spot_stations.AddRange(planBuyingResultSpotStations);
+                    context.SaveChanges();
                 }
             });
         }
