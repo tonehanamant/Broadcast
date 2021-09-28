@@ -164,7 +164,8 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                                         d.Spots,
                                         d.Impressions,
                                         d.Cpm,
-                                        d.Budget
+                                        d.Budget,
+                                        d.ImpressionsPercentage
                                       };
             var marketCodes = planBuyingMarketList.Select(s => s.MarketCode).Distinct().ToList();
 
@@ -186,7 +187,8 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                     Impressions = aggregatedImpressions,
                     Budget = aggregatedSpotCostWithMargin,
                     Cpm = ProposalMath.CalculateCpm(aggregatedSpotCostWithMargin, aggregatedImpressions),
-                    ShareOfVoiceGoalPercentage = planMarket?.ShareOfVoicePercent
+                    ShareOfVoiceGoalPercentage = planMarket?.ShareOfVoicePercent,
+                    ImpressionsPercentage = marketGroup.Sum(x=>x.ImpressionsPercentage)
                 };
                 planBuyingResultMarketDetails.Add(aggPlanBuyingResultMarketDetails);
             }

@@ -283,7 +283,8 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 Budget = program.Sum(x => x.Budget),
                 Spots = program.Sum(x => x.Spots),
                 StationCount = program.Select(s => s.Station).Distinct().Count(),
-                MarketCount = program.Select(s => s.MarketCode).Distinct().Count()
+                MarketCount = program.Select(s => s.MarketCode).Distinct().Count(),
+                AvgCpm = ProposalMath.CalculateCpm(program.Sum(x => x.Budget),program.Sum(x => x.Impressions))
             }).ToList();
             var totals = new PlanBuyingProgramTotalsDto
             {
@@ -299,7 +300,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
             {
                 PostingType = planBuyingResultPrograms.PostingType,
                 SpotAllocationModelMode = planBuyingResultPrograms.SpotAllocationModelMode,
-                Totals = planBuyingResultPrograms.Totals,
+                Totals = totals,
                 Details = planBuyingProgramStationDetails
             };
             return result;
