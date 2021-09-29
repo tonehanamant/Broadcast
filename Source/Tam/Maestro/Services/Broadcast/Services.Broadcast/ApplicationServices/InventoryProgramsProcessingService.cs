@@ -46,21 +46,12 @@ namespace Services.Broadcast.ApplicationServices
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromNow(string username);
 
-        string ImportInventoryProgramsResults(Stream fileStream, string fileName);
-
         InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceJobUnprocessed(int sourceId, DateTime startDate, DateTime endDate,
             string username);
 
         [Queue("inventoryprogramsprocessing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJobUnprocessed(int jobId);
-
-        /// <summary>
-        /// Pick up the enrichment result files from the drop folder and marshal them to the import process.
-        /// </summary>
-        [Queue("processprogramenrichedinventoryfiles")]
-        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void ProcessProgramEnrichedInventoryFiles();
 
         int QueueRepairInventoryProgramsJob();
 
@@ -205,16 +196,9 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJob(int jobId)
         {
-            try
-            {
-                var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.BySource);
-                var result = engine.ProcessInventoryJob(jobId);
-                return result;
-            }
-            finally
-            {
-                _ReportInventoryProgramsBySourceGroupJobCompleted(jobId);
-            }
+            var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.BySource);
+            var result = engine.ProcessInventoryJob(jobId);
+            return result;
         }
 
         public InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromNow(string username)
@@ -279,105 +263,6 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        public string ImportInventoryProgramsResults(Stream fileStream, string fileName)
-        {
-            // either processor type will work
-            var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.ByFile);
-            var result = engine.ImportInventoryProgramResults(fileStream, fileName);
-            return result;
-        }
-
-        /// <inheritdoc />
-        public void ProcessProgramEnrichedInventoryFiles()
-        {
-            try
-            {
-                const int dayOffset = -1;
-                var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.ByFile);
-                engine.ImportInventoryProgramResultsFromDirectory(dayOffset);
-            }
-            catch (Exception ex)
-            {
-                _LogError("Exception caught attempting to process enriched inventory files from the directory.", ex);
-                // rethrow so that the caller (background service) Will mark it's job also as a fail
-                throw;
-            }
-        }
-
-        private void _ReportInventoryProgramsBySourceGroupJobCompleted(int jobId)
-        {
-            var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
-
-            if (job.JobGroupId.HasValue == false)
-            {
-                // only report if the failure occurred within a group process.
-                // A singular job can be triggered through the api directly or through the Maintenance screen.
-                return;
-            }
-
-            if (job.Status == InventoryProgramsJobStatus.Completed)
-            {
-                // nothing to report.
-                return;
-            }
-
-            var source = _InventoryRepository.GetInventorySource(job.InventorySourceId);
-
-            var priority = MailPriority.Normal;
-            var subject = $"Broadcast Process Inventory Programs job completed";
-
-            if (job.Status == InventoryProgramsJobStatus.Error)
-            {
-                subject += $" with Errors";
-                priority = MailPriority.High;
-            }
-            else if (job.Status == InventoryProgramsJobStatus.Warning)
-            {
-                subject += $" with Warnings";
-            }
-
-            subject += $" : Source '{source.Name}' - Group '{job.JobGroupId}'";
-
-            var body = new StringBuilder();
-            body.AppendLine("Hello,");
-            body.AppendLine();
-            body.AppendLine($"Broadcast Job 'InventoryProgramsBySourceGroupJob' completed.");
-            body.AppendLine();
-            body.AppendLine($"\tJobGroupID : {job.JobGroupId}");
-            body.AppendLine($"\tInventory Source : {source.Name}");
-
-            if (job.Status == InventoryProgramsJobStatus.Error)
-            {
-                body.AppendLine();
-                body.AppendLine($"Error : ");
-
-                body.AppendLine($"\t{job.StatusMessage}");
-            }
-
-            if (job.Status == InventoryProgramsJobStatus.Warning)
-            {
-                body.AppendLine();
-                body.AppendLine($"Warning : ");
-
-                body.AppendLine($"\t{job.StatusMessage}");
-            }
-
-            body.AppendLine();
-            body.AppendLine($"Have a nice day.");
-
-            var toEmails = _GetProcessingBySourceResultReportToEmails();
-            if (toEmails?.Any() != true)
-            {
-                throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
-            }
-            
-            // the engine will send on error
-            if (_IsEmailEnabled)
-            {
-                _EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
-            }
-        }
-
         public int QueueRepairInventoryProgramsJob()
         {
             var hangfireId = _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.PerformRepairInventoryPrograms(CancellationToken.None));
@@ -437,13 +322,6 @@ namespace Services.Broadcast.ApplicationServices
         protected virtual void _DoEnqueueProcessInventoryProgramsBySourceJobUnprocessed(int jobId)
         {
             _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.ProcessInventoryProgramsBySourceJobUnprocessed(jobId));
-        }
-
-        protected virtual string[] _GetProcessingBySourceResultReportToEmails()
-        {
-            var raw = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.InventoryProcessingNotificationEmails): BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
-            var split = raw.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
-            return split;
         }
     }
 }

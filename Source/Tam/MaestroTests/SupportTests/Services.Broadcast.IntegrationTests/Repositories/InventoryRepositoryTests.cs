@@ -406,10 +406,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
 		        /*** Assert ***/
 		      //  Assert.AreEqual(expectedCount, totalCount);
-		       
-
 	        }
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+
+            var toValidate = result.Where(s => s.ProgramName.Equals("TestOfficialProgramName"));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toValidate));
         }
     }
 }

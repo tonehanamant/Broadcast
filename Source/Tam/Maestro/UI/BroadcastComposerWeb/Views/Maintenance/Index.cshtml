@@ -376,19 +376,6 @@
                             <input class="button" type="submit" value="Queue Inventory Programs By Source Job Unprocessed Between Dates" id="submit" />
                         </div>
                     }
-
-                    @using (Html.BeginForm("ImportInventoryProgramsResults", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <div class="inner-form">
-                            <h2 class="heading">Import Inventory Programs Results File</h2>
-                            <div class="input-container">
-                                <label class="label" for="file">Filename:</label>
-                                <input class="input" type="file" name="file" id="file" />
-                            </div>
-                            <input class="button" type="submit" value="Submit" id="txt Inventory Programs Results" />
-                            <textarea class="input" rows="5" id="divJSON">@ViewBag.TextareaMessage</textarea>
-                        </div>
-                    }
                 </div>
             </div>
         </div>

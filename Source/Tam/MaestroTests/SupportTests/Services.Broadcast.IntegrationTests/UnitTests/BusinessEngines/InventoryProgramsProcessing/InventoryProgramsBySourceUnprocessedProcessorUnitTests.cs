@@ -31,18 +31,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private Mock<IInventoryRepository> _InventoryRepo = new Mock<IInventoryRepository>();
         private Mock<IInventoryProgramsBySourceJobsRepository> _InventoryProgramsBySourceJobsRepo = new Mock<IInventoryProgramsBySourceJobsRepository>();
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaWeekCache = new Mock<IMediaMonthAndWeekAggregateCache>();
-        private Mock<IProgramGuideApiClient> _ProgramGuidClient = new Mock<IProgramGuideApiClient>();
-        private Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
         private Mock<IGenreCache> _GenreCacheMock = new Mock<IGenreCache>();
 
-        private Mock<IFileService> _FileService = new Mock<IFileService>();
-        private Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
-        private Mock<IEnvironmentService> _EnvironmentService = new Mock<IEnvironmentService>();
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
         private Mock<IFeatureToggleHelper> _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void BySourceUnprocessedJob()
         {
             /*** Arrange ***/
@@ -65,7 +59,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var guideResponse = _GetGuideResponse();
 
             var getInventoryBySourceUnprocessedCalled = 0;
             _InventoryRepo.Setup(r => r.GetInventoryBySourceWithUnprocessedPrograms(It.IsAny<int>(), It.IsAny<List<int>>()))
@@ -115,41 +108,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 .Callback(() => setJobCompleteErrorCalled++);
             var setJobCompleteWarningCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback(() => setJobCompleteWarningCalled++);
-
-            var getProgramsForGuidCallCount = 0;
-            var guideRequests = new List<GuideRequestElementDto>();
-            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
-                .Callback<List<GuideRequestElementDto>>((r) =>
-                {
-                    getProgramsForGuidCallCount++;
-                    guideRequests.AddRange(r);
-                })
-                .Returns(guideResponse);
-
-            var mappedStations = new List<StationMappingsDto>
-            {
-                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
-                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSI, MapValue = "NSIMappedValue"},
-                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
-                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
-            };
-            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
-                .Returns(mappedStations);
-
-            var createdFiles = new List<Tuple<string, List<string>>>();
-            _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
-                .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
-            _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
-
-            // body, subject, priority, to_emails
-            var emailsSent = new List<Tuple<string, string, MailPriority, string[]>>();
-            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<MailPriority>(), It.IsAny<string[]>(),
-                    It.IsAny<List<string>>()))
-                .Callback<bool, string, string, MailPriority, string[], List<string>>((h, b, s, p, t, a) =>
-                    emailsSent.Add(new Tuple<string, string, MailPriority, string[]>(b, s, p, t)))
-                .Returns(true);
+                .Callback(() => setJobCompleteWarningCalled++);            
 
             var engine = _GetInventoryProgramsProcessingEngine();
             engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14, 22, 35);
@@ -162,114 +121,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(getInventorySourceCalled > 0);
             Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
             Assert.IsTrue(inventoryProgramsBySourceJobsRepoCalls > 0);
-            Assert.AreEqual(2, getInventoryBySourceUnprocessedCalled);
+            Assert.AreEqual(1, getInventoryBySourceUnprocessedCalled);
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteWarningCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
-
-            // email disabled PRI-25264
-            // verify that the email was sent
-            Assert.AreEqual(0, emailsSent.Count);
-            //var body = emailsSent[0].Item1;
-            //Assert.IsTrue(body.Contains("A ProgramGuide Interface file has been exported."));
-            //Assert.IsTrue(body.Contains("JobGroupID : 33a4940e-e0e7-4ccd-9dda-de0063b3ab40"));
-            //Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
-            //Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
-            //Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
-            //Assert.IsTrue(body.Contains(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv"));
-
-            //Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
-            //Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
-            //Assert.IsTrue(emailsSent[0].Item4.Any());
-
-            // verify the file was exported well
-            Assert.AreEqual(1, createdFiles.Count);
-            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdFiles[0].Item2));
-        }
-
-        private List<GuideResponseElementDto> _GetGuideResponse()
-        {
-            return new List<GuideResponseElementDto>
-            {
-                new GuideResponseElementDto
-                {
-                    RequestDaypartId = "R000001.M001.D1",
-                    Programs = new List<GuideResponseProgramDto>
-                    {
-                        new GuideResponseProgramDto
-                        {
-                            ProgramName = "ProgramOne",
-                            SourceGenre = "SourceGenreOne",
-                            ShowType = "ShowTypeOne",
-                            SyndicationType = "SyndicationTypeOne",
-                            Occurrences = 1,
-                            StartDate = new DateTime(2020, 01, 01),
-                            EndDate = new DateTime(2020, 01, 06),
-                            StartTime = 3600 * 3,
-                            EndTime = (3600 * 4) - 1
-                        }
-                    }
-                },
-                new GuideResponseElementDto
-                {
-                    RequestDaypartId = "R000002.M001.D2",
-                    Programs = new List<GuideResponseProgramDto>
-                    {
-                        new GuideResponseProgramDto
-                        {
-                            ProgramName = "ProgramTwo",
-                            SourceGenre = "SourceGenreTwo",
-                            ShowType = "ShowTypeTwo",
-                            SyndicationType = "SyndicationTypeTwo",
-                            Occurrences = 1,
-                            StartDate = new DateTime(2020, 01, 08),
-                            EndDate = new DateTime(2020, 01, 13),
-                            StartTime = 3600 * 4,
-                            EndTime = (3600 * 5) - 1
-                        }
-                    }
-                },
-                new GuideResponseElementDto
-                {
-                    RequestDaypartId = "R000003.M002.D3",
-                    Programs = new List<GuideResponseProgramDto>
-                    {
-                        new GuideResponseProgramDto
-                        {
-                            ProgramName = "ProgramThree",
-                            SourceGenre = "SourceGenreThree",
-                            ShowType = "ShowTypeThree",
-                            SyndicationType = "SyndicationTypeThree",
-                            Occurrences = 1,
-                            StartDate = new DateTime(2020, 01, 01),
-                            EndDate = new DateTime(2020, 01, 06),
-                            StartTime = 3600 * 3,
-                            EndTime = (3600 * 4) - 1
-                        }
-                    }
-                },
-                new GuideResponseElementDto
-                {
-                    RequestDaypartId = "R000004.M002.D4",
-                    Programs = new List<GuideResponseProgramDto>
-                    {
-                        new GuideResponseProgramDto
-                        {
-                            ProgramName = "ProgramFour",
-                            SourceGenre = "SourceGenreFour",
-                            ShowType = "ShowTypeFour",
-                            SyndicationType = "SyndicationTypeFour",
-                            Occurrences = 1,
-                            StartDate = new DateTime(2020, 01, 08),
-                            EndDate = new DateTime(2020, 01, 13),
-                            StartTime = 3600 * 4,
-                            EndTime = (3600 * 5) - 1
-                        }
-                    }
-                }
-            };
         }
 
         /// <remarks>Do this after you've setup all your data repository returns</remarks>
@@ -342,24 +198,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     Display = "Maestro Genre"
                 });
 
-            _EnvironmentService.Setup(s => s.GetEnvironmentInfo())
-                .Returns(new EnvironmentDto
-                {
-                    DisplayBuyingLink = true,
-                    DisplayCampaignLink = true,
-                    AllowMultipleCreativeLengths = false,
-                    Environment = "DEV"
-                });
-
             var engine = new InventoryProgramsBySourceUnprocessedProcessorTestClass(
                 dataRepoFactory.Object, 
-                _ProgramGuidClient.Object,
-                _StationMappingService.Object, 
                 _MediaWeekCache.Object,
                 _GenreCacheMock.Object,
-                _FileService.Object,
-                _EmailerService.Object,
-                _EnvironmentService.Object,
                 _FeatureToggleHelper.Object,
                 _ConfigurationSettingsHelper.Object);
 

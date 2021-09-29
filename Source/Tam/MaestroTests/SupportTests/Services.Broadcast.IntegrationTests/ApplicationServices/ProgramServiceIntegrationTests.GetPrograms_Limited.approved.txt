@@ -1,9 +1,0 @@
-﻿[
-  {
-    "ContentRating": "R",
-    "Genre": {
-      "Display": "Crime"
-    },
-    "Name": "Joker"
-  }
-]

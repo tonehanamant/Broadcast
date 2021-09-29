@@ -62,46 +62,6 @@ namespace BroadcastJobScheduler
                Cron.Daily(_ReelIsciiUpdateJobRunHour()),
                TimeZoneInfo.Local,
                queue: "reelisciingest");
-
-            if (_GetEnableProgramEnrichmentJobs())
-            {
-                ScheduleProgramEnrichmentJobs();
-            }
-            else
-            {
-                _LogInfo($"Skipping scheduling the Program Enrichment jobs per the configuration.");
-            }
-        }
-
-        /// <summary>
-        /// These processes enriched the data using Dativa's ProgramGuide.
-        /// That process has been replaced so these are disabled, but we'll keep them just in case.
-        /// </summary>
-        private void ScheduleProgramEnrichmentJobs()
-        {
-            _RecurringJobManager.AddOrUpdate(
-                "inventory-programs-processing-for-weeks",
-                () => _InventoryProgramsProcessingService.QueueProcessInventoryProgramsBySourceForWeeksFromNow(RECURRING_JOBS_USERNAME),
-                Cron.Daily(_GetInventoryProgramsProcessingForWeeksJobRunHour()),
-                TimeZoneInfo.Local,
-                queue: "inventoryprogramsprocessing");
-
-            _RecurringJobManager.AddOrUpdate(
-                "process-program-enriched-inventory-files",
-                () => _InventoryProgramsProcessingService.ProcessProgramEnrichedInventoryFiles(),
-                Cron.Daily(_ProgramEnrichedInventoryFilesJobRunHour()),
-                TimeZoneInfo.Local,
-                queue: "processprogramenrichedinventoryfiles");
-        }
-
-        private bool _GetEnableProgramEnrichmentJobs()
-        {
-            return AppSettingHelper.GetConfigSetting("EnableProgramEnrichmentJobs", false);
-        }
-
-        private int _GetInventoryProgramsProcessingForWeeksJobRunHour()
-        {
-            return AppSettingHelper.GetConfigSetting("InventoryProgramsProcessingForWeeksJobRunHour", 0);
         }
 
         private int _StationsUpdateJobRunHour()
@@ -111,11 +71,6 @@ namespace BroadcastJobScheduler
         private int _ReelIsciiUpdateJobRunHour()
         {
             return AppSettingHelper.GetConfigSetting("ReelIsciiImportJobRunHour", 1);
-        }
-
-        private int _ProgramEnrichedInventoryFilesJobRunHour()
-        {
-            return AppSettingHelper.GetConfigSetting("ProgramEnrichedInventoryFilesJobRunHour", 12);
         }
     }
 }

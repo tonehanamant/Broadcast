@@ -22,7 +22,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         public ProgramServiceIntegrationTests()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramsSearchApiClient, ProgramsSearchApiClientStub>();
             _ProgramService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramService>();
         }
 
@@ -37,22 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
 
             _VerifyPrograms(programs);
-        }
-
-        [Test]
-        public void GetPrograms_Limited()
-        {
-            var searchRequest = new SearchRequestProgramDto
-            {
-                ProgramName = "jo",
-                Start = 2,
-                Limit = 1
-            };
-
-            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
-
-            _VerifyPrograms(programs);
-        }
+        }        
 
         [Test]
         public void GetPrograms_IgnorePrograms()
@@ -140,6 +124,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(LookupDto), "Id");
+            // Lost ContentRating when we went to internal program search
+            jsonResolver.Ignore(typeof(ProgramDto), "ContentRating");
+
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

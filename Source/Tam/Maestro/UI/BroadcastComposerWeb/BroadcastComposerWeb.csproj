@@ -381,7 +381,6 @@
     <Compile Include="Controllers\PricingApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="Controllers\ProgramApiController.cs" />
-    <Compile Include="Controllers\ProgramGuideController.cs" />
     <Compile Include="Controllers\ProgramMappingApiController.cs" />
     <Compile Include="Controllers\ShowTypeApiController.cs" />
     <Compile Include="Controllers\SpotLengthApiController.cs" />

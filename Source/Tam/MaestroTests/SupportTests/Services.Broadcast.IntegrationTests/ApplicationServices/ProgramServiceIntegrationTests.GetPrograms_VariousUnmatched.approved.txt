@@ -1,6 +1,5 @@
 [
   {
-    "ContentRating": null,
     "Genre": {
       "Display": "Animation"
     },

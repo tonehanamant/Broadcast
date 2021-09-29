@@ -8,10 +8,8 @@ using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Extensions;
@@ -27,7 +25,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -93,7 +90,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramNameMappingsExportEngine _ProgramNameMappingsExportEngine;
         private readonly IGenreCache _GenreCache;
         private readonly IShowTypeCache _ShowTypeCache;
-        private readonly IProgramsSearchApiClient _ProgramsSearchApiClient;
         private readonly IProgramMappingCleanupEngine _ProgramCleanupEngine;
         private readonly IProgramNameMappingKeywordRepository _ProgramNameMappingKeywordRepository;
         private readonly IMasterProgramListImporter _MasterProgramListImporter;
@@ -103,7 +99,6 @@ namespace Services.Broadcast.ApplicationServices
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
         private const float MATCH_NOT_FOUND = 0;
-        private readonly Lazy<bool> _IsInternalProgramSearchEnabled;
 
         public ProgramMappingService(
             IBackgroundJobClient backgroundJobClient,
@@ -112,7 +107,6 @@ namespace Services.Broadcast.ApplicationServices
             IProgramNameMappingsExportEngine programNameMappingsExportEngine,
             IGenreCache genreCache,
             IShowTypeCache showTypeCache,
-            IProgramsSearchApiClient programsSearchApiClient,
             IProgramMappingCleanupEngine programMappingCleanupEngine,
             IMasterProgramListImporter masterListImporter,
             IDateTimeEngine dateTimeEngine,
@@ -127,12 +121,9 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramNameMappingsExportEngine = programNameMappingsExportEngine;
             _GenreCache = genreCache;
             _ShowTypeCache = showTypeCache;
-            _ProgramsSearchApiClient = programsSearchApiClient;
             _ProgramCleanupEngine = programMappingCleanupEngine;
             _MasterProgramListImporter = masterListImporter;
             _DateTimeEngine = dateTimeEngine;
-            
-            _IsInternalProgramSearchEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.INTERNAL_PROGRAM_SEARCH));
         }
 
         /// <inheritdoc />
@@ -356,7 +347,7 @@ namespace Services.Broadcast.ApplicationServices
             return output;
         }
 
-        protected void _ProcessProgramMappings(
+        internal void _ProcessProgramMappings(
             List<ProgramMappingsFileRequestDto> programMappings,
             DateTime createdDate,
             string username)
@@ -706,13 +697,8 @@ namespace Services.Broadcast.ApplicationServices
             return new UnmappedProgramsReportGenerator().Generate(reportaData);
         }
 
-        protected virtual bool _GetEnableInternalProgramSearch()
-        {
-            return _IsPipelineVariablesEnabled.Value ? _IsInternalProgramSearchEnabled.Value : BroadcastServiceSystemParameter.EnableInternalProgramSearch;
-        }
-
         //BP1-402 is pushed to next release so leaving this code for later use. Additional testing and coordination to point to the Dativa Search would be required.
-        protected void _LoadShowTypes(List<ProgramMappingsFileRequestDto> mappings)
+        internal void _LoadShowTypes(List<ProgramMappingsFileRequestDto> mappings)
         {
             var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
 
@@ -730,55 +716,9 @@ namespace Services.Broadcast.ApplicationServices
                     }
                     else
                     {
-                        if (!_GetEnableInternalProgramSearch())
-                        {
-                            var request = new SearchRequestProgramDto
-                            {
-                                ProgramName = mapping.OfficialProgramName,
-                                Start = 1,
-                                Limit = 1000
-                            };
-                            var programs =
-                                _ProgramsSearchApiClient.GetPrograms(request);
-
-                            if (programs != null && programs.Any())
-                            {
-                                var matchedProgram = programs.SingleOrDefault(p =>
-                                    p.ProgramName.Equals(mapping.OfficialProgramName) &&
-                                    p.Genre.Equals(mapping.OfficialGenre));
-                                if (matchedProgram != null)
-                                {
-                                    mapping.OfficialShowType = _ShowTypeCache.GetMaestroShowTypeLookupDtoByName(matchedProgram.ShowType)
-                                        .Display;
-                                }
-                                else
-                                {
-                                    var matchingPrograms = programs.Where(p =>
-                                        p.ProgramName.Contains(mapping.OfficialProgramName) &&
-                                        p.Genre.Equals(mapping.OfficialGenre)).ToList();
-                                    if (matchingPrograms.Any())
-                                    {
-                                        var seriesP = matchingPrograms.SingleOrDefault(p =>
-                                            p.ProgramName.ToLower().EndsWith("series"));
-                                        var showType = seriesP != null
-                                            ? seriesP.ShowType
-                                            : matchingPrograms.FirstOrDefault().ShowType;
-                                        mapping.OfficialShowType =
-                                            _ShowTypeCache.GetMaestroShowTypeLookupDtoByName(showType).Display;
-                                    }
-                                    else
-                                    {
-                                        mapping.OfficialShowType = MISC_SHOW_TYPE;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            mapping.OfficialShowType = !string.IsNullOrWhiteSpace(mapping.OfficialShowType)
-                                ? mapping.OfficialShowType
-                                : MISC_SHOW_TYPE;
-                        }
+                        mapping.OfficialShowType = !string.IsNullOrWhiteSpace(mapping.OfficialShowType)
+                            ? mapping.OfficialShowType
+                            : MISC_SHOW_TYPE;
                     }
                 }
 

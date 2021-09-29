@@ -30,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     [Category("short_running")]
     public class ProgramMappingServiceUnitTests
     {
-        private ProgramMappingServiceTestClass _ProgramMappingService;
+        private ProgramMappingService _ProgramMappingService;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
         private Mock<IProgramMappingRepository> _ProgramMappingRepositoryMock;
@@ -38,7 +38,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IShowTypeRepository> _ShowTypeRepositoryMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
         private Mock<IProgramNameExceptionsRepository> _ProgramNameExceptionRepositoryMock;
-        private Mock<IProgramsSearchApiClient> _ProgramsSearchApiClientMock;
         private Mock<IProgramMappingCleanupEngine> _ProgramMappingCleanupEngine;
         private Mock<IProgramNameMappingKeywordRepository> _ProgramNameMappingKeywordRepositoryMock;
         private Mock<IMasterProgramListImporter> _MasterListImporterMock;
@@ -63,7 +62,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _GenreCache = new Mock<IGenreCache>();
             _ShowTypeCacheStub = new ShowTypeCacheStub();
             _ProgramNameExceptionRepositoryMock = new Mock<IProgramNameExceptionsRepository>();
-            _ProgramsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
             _ProgramMappingCleanupEngine = new Mock<IProgramMappingCleanupEngine>();
             _ProgramNameMappingKeywordRepositoryMock = new Mock<IProgramNameMappingKeywordRepository>();
             _MasterListImporterMock = new Mock<IMasterProgramListImporter>();
@@ -123,14 +121,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             });
 
             // Setup the actual Program Mapping Service
-            _ProgramMappingService = new ProgramMappingServiceTestClass(
+            _ProgramMappingService = new ProgramMappingService(
                 _BackgroundJobClientMock.Object,
                 _DataRepositoryFactoryMock.Object,
                 _SharedFolderServiceMock.Object,
                 null,
                 _GenreCache.Object,
                 _ShowTypeCacheStub,
-                _ProgramsSearchApiClientMock.Object,
                 _ProgramMappingCleanupEngine.Object,
                 _MasterListImporterMock.Object,
                 _DateTimeEngineMock.Object,
@@ -250,7 +247,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username);
+            _ProgramMappingService._ProcessProgramMappings(programMappings, modifiedWhen, username);
 
             // Assert
             var result = new
@@ -322,7 +319,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username);
+            _ProgramMappingService._ProcessProgramMappings(programMappings, modifiedWhen, username);
 
             // Assert
             var result = new
@@ -378,7 +375,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username);
+            _ProgramMappingService._ProcessProgramMappings(programMappings, modifiedWhen, username);
 
             // Assert
             var result = new
@@ -413,7 +410,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null, null, _ConfigurationSettingsHelperMock.Object);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null, _ConfigurationSettingsHelperMock.Object);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);
@@ -457,65 +454,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(programExceptions);
 
             // Act
-            _ProgramMappingService.UT_LoadShowTypes(programMappings);
+            _ProgramMappingService._LoadShowTypes(programMappings);
 
 
             // Assert
             Assert.IsNotNull(programMappings);
             Assert.AreEqual("NewsException", programMappings.FirstOrDefault().OfficialShowType);
         }
-        [TestCase("Star", "APIExactMatch")]
-        [TestCase("Star T", "Series")]
-        [TestCase("ABC", "Miscellaneous")]
-        public void LoadShowTypeTest_API_PopulateShowType(string officialProgramName, string expected)
-        {
-            // Arrange
-            var programMappings = new List<ProgramMappingsFileRequestDto>
-            {
-                new ProgramMappingsFileRequestDto
-                {
-                    OfficialProgramName = officialProgramName, OfficialGenre = "Non-News", OfficialShowType = "NA"
-                }
-            };
-            var programExceptions = new List<ProgramNameExceptionDto>
-            {
-                new ProgramNameExceptionDto
-                {
-                    CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
-                }
-            };
-            _ProgramNameExceptionRepositoryMock
-                .Setup(s => s.GetProgramExceptions())
-                .Returns(programExceptions);
 
-            var showTypes = new List<LookupDto>
-            {   new LookupDto{Id=1, Display = "News"},
-                new LookupDto{Id=2, Display = "APINoMatch"},
-                new LookupDto{Id=3, Display = "APISeriesMatch"},
-                new LookupDto{Id=3, Display = "APIExactMatch"},
-                new LookupDto{Id=4, Display = "NewsException"},
-
-            };
-            _ShowTypeRepositoryMock.Setup(s => s.GetMaestroShowTypesLookupDto())
-                .Returns(showTypes);
-
-
-            _ProgramMappingService.UT_EnableInternalProgramSearch = false;
-
-            _ProgramsSearchApiClientMock.Setup(api => api.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
-                .Returns(_Programs);
-
-            // Act
-            _ProgramMappingService.UT_LoadShowTypes(programMappings);
-
-            // Assert
-            // Assert.IsNotNull(result);
-            Assert.AreEqual(expected, programMappings.FirstOrDefault().OfficialShowType);
-        }
-
-        [TestCase("ABC", "FileShowType", "FileShowType", true)]
-        [TestCase("ABC", "", "Miscellaneous", true)]
-        public void LoadShowTypeTest_EnableInternalProgramSearch_PopulateShowType_FromFile(string officialProgramName, string officialShowType, string expected, bool enableInternalPrgmSearch)
+        [TestCase("ABC", "FileShowType", "FileShowType")]
+        [TestCase("ABC", "", "Miscellaneous")]
+        public void LoadShowTypeTest_EnableInternalProgramSearch_PopulateShowType_FromFile(string officialProgramName, string officialShowType, string expected)
         {
             // Arrange
             var programMappings = new List<ProgramMappingsFileRequestDto>
@@ -538,13 +487,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(s => s.GetProgramExceptions())
                 .Returns(programExceptions);
 
-            _ProgramMappingService.UT_EnableInternalProgramSearch = enableInternalPrgmSearch;
-
-            _ProgramsSearchApiClientMock.Setup(api => api.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
-                .Returns(_Programs);
-
             // Act
-            _ProgramMappingService.UT_LoadShowTypes(programMappings);
+            _ProgramMappingService._LoadShowTypes(programMappings);
 
 
             // Assert

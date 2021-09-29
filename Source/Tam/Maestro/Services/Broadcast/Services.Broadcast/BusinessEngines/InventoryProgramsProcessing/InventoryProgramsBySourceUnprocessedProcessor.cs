@@ -1,12 +1,8 @@
-﻿using Common.Services;
-using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices;
+﻿using Common.Services.Repositories;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
@@ -17,23 +13,13 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     public class InventoryProgramsBySourceUnprocessedProcessor : InventoryProgramsBySourceProcessor
     {
         public InventoryProgramsBySourceUnprocessedProcessor(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IProgramGuideApiClient programGuideApiClient,
-            IStationMappingService stationMappingService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IGenreCache genreCache,
-            IFileService fileService,
-            IEmailerService emailerService,
-            IEnvironmentService environmentService,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper)
             : base(broadcastDataRepositoryFactory,
-                programGuideApiClient,
-                stationMappingService,
                 mediaMonthAndWeekAggregateCache,
                 genreCache,
-                fileService,
-                emailerService,
-                environmentService,
                 featureToggleHelper,
                 configurationSettingsHelper)
         {

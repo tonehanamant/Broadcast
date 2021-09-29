@@ -609,7 +609,6 @@
     <Compile Include="ApplicationServices\InventoryProgramsProcessingService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanPricingService.cs" />
     <Compile Include="ApplicationServices\Buying\BuyingService.cs" />
-    <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ProgramService.cs" />
     <Compile Include="ApplicationServices\Security\UserService.cs" />
     <Compile Include="ApplicationServices\SharedFolderService.cs" />
@@ -631,8 +630,6 @@
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
     <Compile Include="Clients\PricingApiClient.cs" />
     <Compile Include="Cache\GenreCache.cs" />
-    <Compile Include="Clients\ProgramGuideApiClient.cs" />
-    <Compile Include="Clients\ProgramsSearchApiClient.cs" />
     <Compile Include="Converters\DetectionConverter.cs" />
     <Compile Include="Clients\TokenizedClientBase.cs" />
     <Compile Include="Converters\RateImport\BaseInventoryFileImporter.cs" />

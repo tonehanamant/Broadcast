@@ -242,9 +242,6 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IGenreService, GenreService>();
 
-            unityContainer.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
-            unityContainer.RegisterType<IProgramGuideService, ProgramGuideService>();
-            unityContainer.RegisterType<IProgramsSearchApiClient, ProgramsSearchApiClient>();
             unityContainer.RegisterType<IProgramService, ProgramService>();
 
             unityContainer.RegisterType<IPlanPricingService, PlanPricingService>();

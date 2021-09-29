@@ -263,36 +263,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("ImportInventoryProgramsResults")]
-        public ActionResult ImportInventoryProgramsResults(HttpPostedFileBase file)
-        {
-            if (file != null && file.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(file.FileName);
-                if (!fileName.EndsWith(".csv"))
-                {
-                    TempData["Message"] = "Only CSV (.csv) files supported";
-                }
-                else
-                {
-                    try
-                    {
-                        var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
-                        var result = service.ImportInventoryProgramsResults(file.InputStream, fileName);
-                        TempData["TextareaMessage"] = result;
-                    }
-                    catch (Exception ex)
-                    {
-                        TempData["Message"] = ex.Message;
-                    }
-                }
-            }
-
-            TempData["TabId"] = "program_guide";
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
         public ActionResult ClearMediaMonthCrunchCache()
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();

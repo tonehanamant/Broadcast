@@ -1,13 +1,11 @@
 ﻿[
   {
-    "ContentRating": "PG-13",
     "Genre": {
       "Display": "Comedy"
     },
     "Name": "Jojo Rabbit"
   },
   {
-    "ContentRating": "R",
     "Genre": {
       "Display": "Drama"
     },

@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -42,9 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 				ProgramName = "Golf"
 			};
 
-			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
-				broadcastDataRepositoryFactory.Object, null,null);
-			service.UT_EnableInternalProgramSearch = true;
+			var service = new ProgramService(genreCacheMock.Object, broadcastDataRepositoryFactory.Object, null, null);
 
 			// Act
 			var result = service.GetPrograms(searchRequest, "shubhra");
@@ -84,9 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 				IgnorePrograms = {"Golf"}
 			};
 
-			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
-				broadcastDataRepositoryFactory.Object, null,null);
-			service.UT_EnableInternalProgramSearch = true;
+            var service = new ProgramService(genreCacheMock.Object, broadcastDataRepositoryFactory.Object, null, null);
 
 			// Act
 			var result = service.GetPrograms(searchRequest, "shubhra");
@@ -125,9 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 				IgnorePrograms = { "Golf 123" }
 			};
 
-			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
-				broadcastDataRepositoryFactory.Object, null,null);
-			service.UT_EnableInternalProgramSearch = true;
+            var service = new ProgramService(genreCacheMock.Object, broadcastDataRepositoryFactory.Object, null, null);
 
 			// Act
 			var result = service.GetPrograms(searchRequest, "shubhra");

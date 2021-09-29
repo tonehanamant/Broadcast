@@ -386,7 +386,6 @@
     <Compile Include="ApplicationServices\Plan\PlanBuying\PlanBuyingInventoryEngineTests.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuying\PlanBuyingServiceTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
-    <Compile Include="ApplicationServices\ProgramGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramMappingServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
@@ -487,8 +486,6 @@
     <Compile Include="Stubs\LaunchDarklyClientStub.cs" />
     <Compile Include="Stubs\Plan\PlanBuyingApiClientStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
-    <Compile Include="Stubs\ProgramGuideApiClientStub.cs" />
-    <Compile Include="Stubs\ProgramsSearchApiClientStub.cs" />
     <Compile Include="Stubs\ShowTypeCacheStub.cs" />
     <Compile Include="Stubs\StubbedConfigurationWebApiClient.cs" />
     <Compile Include="Stubs\StubbedSMSClient.cs" />
@@ -521,9 +518,7 @@
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
-    <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceUnitTests.cs" />
-    <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ReelIsciIngestServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
@@ -536,7 +531,6 @@
     <Compile Include="UnitTests\BusinessEngines\InventoryExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorUnitTests.cs" />
-    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsResultImportUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorTestClass.cs" />

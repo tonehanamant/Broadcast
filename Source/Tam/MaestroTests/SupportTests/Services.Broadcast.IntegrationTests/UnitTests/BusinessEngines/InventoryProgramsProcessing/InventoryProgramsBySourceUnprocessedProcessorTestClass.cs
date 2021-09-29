@@ -1,76 +1,25 @@
-﻿using System;
-using Common.Services;
-using Common.Services.Repositories;
-using Services.Broadcast.ApplicationServices;
+﻿using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
     public class InventoryProgramsBySourceUnprocessedProcessorTestClass : InventoryProgramsBySourceUnprocessedProcessor
     {
         public InventoryProgramsBySourceUnprocessedProcessorTestClass(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IProgramGuideApiClient programGuideApiClient,
-            IStationMappingService stationMappingService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IGenreCache genreCache,
-            IFileService fileService,
-            IEmailerService emailerService,
-            IEnvironmentService environmentService,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper)
             : base(
                 broadcastDataRepositoryFactory,
-                programGuideApiClient,
-                stationMappingService,
                 mediaMonthAndWeekAggregateCache,
                 genreCache,
-                fileService,
-                emailerService,
-                environmentService,
                 featureToggleHelper,
                 configurationSettingsHelper)
         {
-        }
-
-        public int UT_RequestElementMaxCount { get; set; } = 10;
-
-        protected override int _GetRequestElementMaxCount()
-        {
-            return UT_RequestElementMaxCount;
-        }
-
-        public bool UT_ParallelApiCallsEnabled { get; set; } = false;
-
-        protected override bool _GetParallelApiCallsEnabled()
-        {
-            return UT_ParallelApiCallsEnabled;
-        }
-
-        public int UT_MaxDegreesOfParallelism { get; set; } = -1;
-
-        protected override int _GetMaxDegreesOfParallelism()
-        {
-            return UT_MaxDegreesOfParallelism;
-        }
-
-        public int UT_ParallelApiCallsBatchSize { get; set; } = 10;
-
-        protected override int _GetParallelApiCallsBatchSize()
-        {
-            return UT_ParallelApiCallsBatchSize;
-        }
-
-        protected override string _GetBroadcastSharedDirectoryPath()
-        {
-            return "testSettingBroadcastSharedDirectoryPath";
-        }
-
-        protected override string[] _GetProcessingBySourceResultReportToEmails()
-        {
-            return new[] { "ToEmail1", "ToEmail2" };
         }
 
         public DateTime? UT_CurrentDateTime { get; set; }
@@ -83,11 +32,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         protected override int _GetSaveBatchSize()
-        {
-            return 1000;
-        }
-
-        protected override int _GetDeleteBatchSize()
         {
             return 1000;
         }

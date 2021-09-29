@@ -1,51 +1,34 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO.Program;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Exceptions;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Common.Services.Repositories;
-using Services.Broadcast.Repositories;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using System;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices
 {
     public interface IProgramService : IApplicationService
     {
         List<ProgramDto> GetPrograms(SearchRequestProgramDto searchRequest, string userName);
-       
     }
 
     public class ProgramService : BroadcastBaseClass, IProgramService
     {
         private IGenreCache _GenreCache;
-        private IConfigurationWebApiClient _ConfigurationWebApiClient;
-        private IProgramsSearchApiClient _ProgramsSearchApiClient;
         private readonly IProgramNameRepository _ProgramNameRepository;
-		private readonly IFeatureToggleHelper _FeatureToggleHelper;
-		private readonly Lazy<bool> _IsPipelineVariablesEnabled;
-		private readonly Lazy<bool> _IsInternalProgramSearchEnabled;
 
 		public ProgramService(
             IGenreCache genreCache,
-            IConfigurationWebApiClient configurationWebApiClient,
-            IProgramsSearchApiClient programsSearchApiClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
 			IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
 		{
             _GenreCache = genreCache;
-            _ConfigurationWebApiClient = configurationWebApiClient;
-            _ProgramsSearchApiClient = programsSearchApiClient;
             _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
-			_FeatureToggleHelper = featureToggleHelper;
-			_IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
-			_IsInternalProgramSearchEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.INTERNAL_PROGRAM_SEARCH));
 		}
 
         public List<ProgramDto> GetPrograms(SearchRequestProgramDto searchRequest, string userName)
@@ -62,23 +45,12 @@ namespace Services.Broadcast.ApplicationServices
 		        result.Add(exceptionResult);
 	        }
 
-	        if (_GetEnableInternalProgramSearch())
-	        {
-		        var internalResults = _LoadProgramFromMapping(searchRequest);
-		        foreach (var internalResult in internalResults)
-		        {
-			        result.Add(internalResult);
-		        }
-	        }
-	        else
-	        {
-		        var externalResults = _LoadProgramFromExternalApi(searchRequest);
-		        foreach (var externalResult in externalResults)
-		        {
-			        result.Add(externalResult);
-		        }
-	        }
-			
+			var internalResults = _LoadProgramFromMapping(searchRequest);
+            foreach (var internalResult in internalResults)
+            {
+                result.Add(internalResult);
+            }
+
 			_RemoveVariousAndUnmatched(result);
 	        var sortedResults = result
 		        .Distinct(new ProgramEqualityComparer())
@@ -98,41 +70,6 @@ namespace Services.Broadcast.ApplicationServices
 		{
 			result.RemoveAll(x => x.Genre.Display.Equals("Various", StringComparison.OrdinalIgnoreCase) 
 					|| x.Name.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
-		}
-
-		protected virtual bool _GetEnableInternalProgramSearch()
-		{
-			return _IsPipelineVariablesEnabled.Value ? _IsInternalProgramSearchEnabled.Value : BroadcastServiceSystemParameter.EnableInternalProgramSearch;
-		}
-		private List<ProgramDto> _LoadProgramFromExternalApi(SearchRequestProgramDto searchRequest)
-		{
-			var result = new List<ProgramDto>();
-			var externalApiPrograms = _ProgramsSearchApiClient.GetPrograms(searchRequest);
-
-			foreach (var externalApiProgram in externalApiPrograms)
-			{
-				if (searchRequest.IgnorePrograms.Contains(externalApiProgram.ProgramName))
-					continue;
-
-				try
-				{
-					var programGenre = _GenreCache.GetMaestroGenreBySourceGenreName(externalApiProgram.Genre,
-						ProgramSourceEnum.Master);
-
-					result.Add(new ProgramDto
-					{
-						Name = externalApiProgram.ProgramName,
-						Genre = programGenre,
-						ContentRating = externalApiProgram.MpaaRating
-					});
-				}
-				catch (UnknownGenreException ex)
-				{
-					_LogError("Exception caught resolving program genre.", ex);
-				}
-			}
-
-			return result;
 		}
 
         private List<ProgramDto> _LoadProgramFromMapping(SearchRequestProgramDto searchRequest)
