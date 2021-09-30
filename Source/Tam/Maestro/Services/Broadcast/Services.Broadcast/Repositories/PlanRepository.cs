@@ -154,15 +154,10 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="planVersionId"></param>
         /// <param name="jobId"></param>
+        /// <param name="postingType"></param>
         /// <returns></returns>
-        decimal GetGoalCpm(int planVersionId, int jobId, PostingTypeEnum postingType);
+        decimal GetGoalCpm(int jobId, PostingTypeEnum postingType, int? planVersionId = null);
 
-        /// <summary>
-        /// Get Goal CPM value
-        /// </summary>
-        /// <param name="jobId">The job identifier</param>
-        /// <returns></returns>
-        decimal GetGoalCpm(int jobId, PostingTypeEnum postingType);
         /// <summary>Get average calculated VPVH from plan_version_pricing_results_dayparts table
         /// </summary>
         /// <param name="PlanVersionPricingResultId">The plan_version_pricing_results identifier</param>
@@ -225,7 +220,7 @@ namespace Services.Broadcast.Repositories
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
 
         double GetNsiToNtiConversionRate(List<PlanDaypartDto> planDayparts);
-        List<PlanPricingResultsDaypartDto> GetPlanPricingResultsDaypartsByPlanPricingResultId(int planPricingResultId);        
+        List<PlanPricingResultsDaypartDto> GetPlanPricingResultsDaypartsByPlanPricingResultId(int planPricingResultId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1577,7 +1572,7 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
             });
         }
-     
+
         public PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
         {
             return _InReadUncommitedTransaction(context =>
@@ -2357,45 +2352,35 @@ namespace Services.Broadcast.Repositories
             return result;
         }
 
-        public decimal GetGoalCpm(int planVersionId, int jobId, PostingTypeEnum postingType)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var result = context.plan_version_pricing_parameters
-                    .Where(p => p.plan_version_id == planVersionId && p.plan_version_pricing_job_id == jobId && p.posting_type == (int)postingType)
-                    .Select(p => p.cpm_goal)
-                    .FirstOrDefault();
+        public decimal GetGoalCpm(int jobId, PostingTypeEnum postingType, int? planVersionId = null)
+        {            
+            var planId = GetPlanIdFromPricingJob(jobId);
 
-                return result;
-            });
+            if (!planId.HasValue) return 0;
+
+            var plan = GetPlan(planId.Value, planVersionId);
+            var conversionRate = GetNsiToNtiConversionRate(plan.Dayparts);
+            var parameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, conversionRate);
+
+            var result = parameters.FirstOrDefault(x => x.PostingType == postingType)?.CPM ?? 0;
+
+            return result;
         }
 
-        public decimal GetGoalCpm(int jobId, PostingTypeEnum postingType)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var result = context.plan_version_pricing_parameters
-                    .Where(p => p.plan_version_pricing_job_id == jobId && p.posting_type == (int)postingType)
-                    .Select(p => p.cpm_goal)
-                    .FirstOrDefault();
-
-                return result;
-            });
-        }
         public List<PlanPricingResultsDaypartDto> GetPricingResultsDayparts(int PlanVersionPricingResultId)
         {
-           return _InReadUncommitedTransaction(context =>
-            {
-                var result = context.plan_version_pricing_results_dayparts.Where(p => p.plan_version_pricing_result_id == PlanVersionPricingResultId)
-                .Select(d => new PlanPricingResultsDaypartDto
-                {
-                    Id = d.id,
-                    PlanVersionPricingResultId = d.plan_version_pricing_result_id,
-                    CalculatedVpvh = d.calculated_vpvh,
-                    StandardDaypartId = d.standard_daypart_id
-                }).ToList();               
-                return result;
-            });
+            return _InReadUncommitedTransaction(context =>
+             {
+                 var result = context.plan_version_pricing_results_dayparts.Where(p => p.plan_version_pricing_result_id == PlanVersionPricingResultId)
+                 .Select(d => new PlanPricingResultsDaypartDto
+                 {
+                     Id = d.id,
+                     PlanVersionPricingResultId = d.plan_version_pricing_result_id,
+                     CalculatedVpvh = d.calculated_vpvh,
+                     StandardDaypartId = d.standard_daypart_id
+                 }).ToList();
+                 return result;
+             });
         }
 
         public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)

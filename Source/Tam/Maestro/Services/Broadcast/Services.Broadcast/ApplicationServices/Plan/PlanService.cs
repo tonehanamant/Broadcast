@@ -207,7 +207,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="username">The username.</param>
         /// /// <param name="aggregatePlanSynchronously">if set to <c>true</c> [aggregate plan synchronously].</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType, 
+        bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType,
             string username, bool aggregatePlanSynchronously = false);
     }
 
@@ -255,7 +255,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
             , ICreativeLengthEngine creativeLengthEngine
             , IFeatureToggleHelper featureToggleHelper
-            , IPlanMarketSovCalculator planMarketSovCalculator,  IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            , IPlanMarketSovCalculator planMarketSovCalculator, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -281,9 +281,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanMarketSovCalculator = planMarketSovCalculator;
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
 
-            _IsMarketSovCalculationEnabled = new Lazy<bool>(() => 
+            _IsMarketSovCalculationEnabled = new Lazy<bool>(() =>
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
-        }        
+        }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
         {
@@ -291,7 +291,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!_IsMarketSovCalculationEnabled.Value)
             {
                 plan.AvailableMarkets.Where(s => s.ShareOfVoicePercent.HasValue).ToList()
-                    .ForEach(s =>s.IsUserShareOfVoicePercent = true);
+                    .ForEach(s => s.IsUserShareOfVoicePercent = true);
 
                 var result = _PlanMarketSovCalculator.CalculateMarketWeights(plan.AvailableMarkets);
                 plan.AvailableMarkets = result.AvailableMarkets;
@@ -317,7 +317,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
-            var result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, forceKeepModelResults : false);
+            var result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, forceKeepModelResults: false);
             return result;
         }
 
@@ -351,7 +351,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             else
             {
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
-            }           
+            }
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
@@ -458,7 +458,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
             // This sets the default parameters in case we don't promote existing results.
-            _SetPlanPricingParameters(plan);            
+            _SetPlanPricingParameters(plan);
 
             var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
 
@@ -469,9 +469,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             bool shouldPromotePricingResults)
         {
             if (shouldPromotePricingResults)
-            {                               
-                 _LogInfo($"Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
-                 _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);      
+            {
+                _LogInfo($"Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
             }
             else
             {
@@ -483,11 +483,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan)
         {
             var shouldPromotePricingResults = false;
-                if(saveState != SaveState.CreatingNewPlan)               
-                {
-                    var goalsHaveChanged = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
-                    shouldPromotePricingResults = !goalsHaveChanged;
-                }             
+            if (saveState != SaveState.CreatingNewPlan)
+            {
+                var goalsHaveChanged = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
+                shouldPromotePricingResults = !goalsHaveChanged;
+            }
             return shouldPromotePricingResults;
         }
 
@@ -740,42 +740,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 JobId = plan.JobId,
                 SpotAllocationModelMode = plan.SpotAllocationModelMode
             };
-            
-            dto.PricingParameters = new List<PlanPricingParametersDto>();
 
-            if (plan.PricingParameters != null)
-            {
-                var convertedParameters = plan.PricingParameters.DeepCloneUsingSerialization();
-
-                //Add original parameters
-                plan.PricingParameters.IsSelected = true;
-                dto.PricingParameters.Add(plan.PricingParameters);
-
-                //Convert parameters
-                if (convertedParameters.PostingType == PostingTypeEnum.NSI)
-                {
-                    convertedParameters.DeliveryImpressions = Math.Floor(convertedParameters.DeliveryImpressions * ntiToNsiConversionRate);
-                    convertedParameters.PostingType = PostingTypeEnum.NTI;
-                }
-                else if (convertedParameters.PostingType == PostingTypeEnum.NTI)
-                {
-                    convertedParameters.DeliveryImpressions = Math.Floor(convertedParameters.DeliveryImpressions / ntiToNsiConversionRate);
-                    convertedParameters.PostingType = PostingTypeEnum.NSI;
-                }
-
-                if (convertedParameters.DeliveryImpressions != 0)
-                {
-                    convertedParameters.CPM = (decimal)((double)convertedParameters.Budget / convertedParameters.DeliveryImpressions);
-                }
-                else
-                {
-                    convertedParameters.CPM = 0;
-                    _LogWarning($"Delivery impressions are 0 for the plan with id {plan.Id} version {plan.VersionNumber} for {convertedParameters.PostingType} posting type. " +
-                                $"The cpm for the parameters could not be calculated properly and is set to 0.");
-                }
-
-                dto.PricingParameters.Add(convertedParameters);
-            }
+            dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);
 
             return dto;
         }
@@ -1042,12 +1008,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // if the UI is sending the user entered value keep it as it is or calculated value means round it off
             if (impressionsHasValue)
             {
-                result.Impressions =result.Impressions.Value / 1000;
+                result.Impressions = result.Impressions.Value / 1000;
             }
             else
             {
                 result.Impressions = Math.Floor(result.Impressions.Value / 1000);
-            }          
+            }
             // BP-2482 : Found that the database plan_version.target_cpm, target_cpp and budget columns are Sql Type Money.
             // On insert their values will be rounded to the 4th decimal.
             // We will do the same here to close the loop.
@@ -1073,7 +1039,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var conversionRates = _NtiToNsiConversionRepository.GetLatestNtiToNsiConversionRates();
             var conversionRate = conversionRates.Single(r => r.StandardDaypartId == budgetRequest.StandardDaypartId);
-            
+
             var convertedImpressions = budgetRequest.DeliveryImpressions;
             var convertedRatingPoints = budgetRequest.DeliveryRatingPoints;
 
@@ -1121,7 +1087,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             : originalBudgetCalculationResult.RatingPoints.Value / conversionRate.ConversionRate;
                 }
             }
-            
+
             otherBudgetInput.Impressions = convertedImpressions;
             otherBudgetInput.RatingPoints = convertedRatingPoints;
 
@@ -1144,7 +1110,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Impressions = budgetRequest.DeliveryImpressions,
                 RatingPoints = budgetRequest.DeliveryRatingPoints,
                 CPM = budgetRequest.CPM,
-                CPP= budgetRequest.CPP,
+                CPP = budgetRequest.CPP,
                 Universe = budgetRequest.Universe,
                 AudienceId = budgetRequest.AudienceId
             };
@@ -1547,9 +1513,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PostingTypeEnum postingType, string username, bool aggregatePlanSynchronously = false)
         {
             // use the service, not the repo, so that transformations happen.
-            var beforePlan = GetPlan(planId);          
+            var beforePlan = GetPlan(planId);
             var beforePlanVersionId = beforePlan.VersionId;
-          
+
             // get the latest pricing results per the given 
             var jobExecutions = _PlanPricingService.GetAllCurrentPricingExecutions(planId, null);
             if (jobExecutions.Job == null)
@@ -1557,8 +1523,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new InvalidOperationException($"Did not find a pricing job for PlanId='{planId}'.");
             }
 
-            var pricingResults = jobExecutions.Results?.SingleOrDefault(s => 
-                s.SpotAllocationModelMode == spotAllocationModelMode && 
+            var pricingResults = jobExecutions.Results?.SingleOrDefault(s =>
+                s.SpotAllocationModelMode == spotAllocationModelMode &&
                 s.PostingType == postingType);
 
             if (pricingResults == null)
@@ -1612,13 +1578,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Dayparts = beforePlan.Dayparts,
                 ImpressionsPerUnit = beforePlan.ImpressionsPerUnit,
                 Equivalized = beforePlan.Equivalized
-            };         
-            var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);            
+            };
+            var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);
             beforePlan.WeeklyBreakdownWeeks = calculatedWeeklyBreakdown.Weeks;
-          
-             /***
-             * Finalize and Save
-             */
+
+            /***
+            * Finalize and Save
+            */
             var currentDateTime = _GetCurrentDateTime();
             // use the service, not the repo, so all validations, etc are used.
             _DoSavePlan(beforePlan, username, currentDateTime, aggregatePlanSynchronously, forceKeepModelResults: true);
@@ -1644,9 +1610,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var planPricingResultsDayparts = _GetPlanPricingResultsDayparts(planDto);
             if (planPricingResultsDayparts?.Any() ?? false)
-            {                
+            {
                 planDto.Vpvh = planPricingResultsDayparts.Average(x => x.CalculatedVpvh);
-            }            
+            }
         }
     }
 }

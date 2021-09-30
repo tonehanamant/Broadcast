@@ -353,7 +353,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 transaction.Complete();
             }
 
-            job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>( x => x.RunPricingWithoutPlanJobAsync(pricingParametersWithoutPlanDto, job.Id, CancellationToken.None));
+            job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingWithoutPlanJobAsync(pricingParametersWithoutPlanDto, job.Id, CancellationToken.None));
 
             _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
 
@@ -463,7 +463,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     transaction.Complete();
                 }
 
-                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x =>  x.RunPricingJobAsync(planPricingParametersDto, job.Id, CancellationToken.None));
+                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJobAsync(planPricingParametersDto, job.Id, CancellationToken.None));
 
                 _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
 
@@ -587,15 +587,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (pricingExecutionResult.JobId.HasValue)
             {
                 decimal goalCpm;
-                if (pricingExecutionResult.PlanVersionId.HasValue)
-                {
-                    goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId.Value,
-                        pricingExecutionResult.JobId.Value, pricingExecutionResult.PostingType);
-                }
-                else
-                {
-                    goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value, pricingExecutionResult.PostingType);
-                }
+
+                goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value, pricingExecutionResult.PostingType, pricingExecutionResult.PlanVersionId);
+
                 pricingExecutionResult.CalculatedVpvh = GetCalculatedDaypartVPVH(pricingExecutionResult.Id);
                 pricingExecutionResult.CpmPercentage = CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
             }
