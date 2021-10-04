@@ -1,4 +1,5 @@
 ﻿using System;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.Entities.Plan
 {
@@ -22,6 +23,7 @@ namespace Services.Broadcast.Entities.Plan
         public bool IsUpdated { get; set; }
         public double UnitImpressions { get; set; }
         public double WeeklyUnits { get; set; }
+        public decimal WeeklyCpm => ProposalMath.CalculateCpm(WeeklyBudget, WeeklyImpressions);
     }
 
     public class WeeklyBreakdownTotals

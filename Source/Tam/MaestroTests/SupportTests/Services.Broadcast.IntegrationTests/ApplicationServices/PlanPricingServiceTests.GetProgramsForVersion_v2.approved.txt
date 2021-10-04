@@ -3,7 +3,7 @@
     "NsiResults": {
       "ProgramDetails": [
         {
-          "AvgCpm": 12.2631,
+          "AvgCpm": 12.2630,
           "AvgImpressions": 44.05,
           "Budget": 16205.6250,
           "Genre": "Children",
@@ -82,7 +82,7 @@
     "NsiResults": {
       "ProgramDetails": [
         {
-          "AvgCpm": 12.2631,
+          "AvgCpm": 12.2630,
           "AvgImpressions": 44.05,
           "Budget": 16205.6250,
           "Genre": "Children",
@@ -161,7 +161,7 @@
     "NsiResults": {
       "ProgramDetails": [
         {
-          "AvgCpm": 12.2631,
+          "AvgCpm": 12.2630,
           "AvgImpressions": 44.05,
           "Budget": 16205.6250,
           "Genre": "Children",
@@ -240,7 +240,7 @@
     "NsiResults": {
       "ProgramDetails": [
         {
-          "AvgCpm": 12.2631,
+          "AvgCpm": 12.2630,
           "AvgImpressions": 44.05,
           "Budget": 16205.6250,
           "Genre": "Children",

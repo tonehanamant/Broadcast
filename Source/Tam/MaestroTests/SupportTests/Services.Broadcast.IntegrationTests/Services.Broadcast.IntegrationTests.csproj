@@ -566,6 +566,7 @@
     <Compile Include="UnitTests\EntitiesUnitTests\CampaignReportDataUnitTest.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\QuoteReport\QuoteReportDataTests.cs" />
+    <Compile Include="UnitTests\EntitiesUnitTests\WeeklyBreakdownWeekUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\AudienceExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\DateTimeExtensionsUnitTests.cs" />

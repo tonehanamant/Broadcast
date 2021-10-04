@@ -2,7 +2,7 @@
   "PostingType": 2,
   "Programs": [
     {
-      "AvgCpm": 17.4315,
+      "AvgCpm": 17.4314,
       "AvgImpressions": 20.55666667,
       "Budget": 5375.0000,
       "Genre": "Children",
