@@ -7,6 +7,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -295,7 +296,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SetIsciPlanAdvertiser(List<IsciPlanDetailDto> isciPlanSummaries)
         {
             var advertisers = _AabEngine.GetAdvertisers();
-            isciPlanSummaries.ForEach(x => x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
+            isciPlanSummaries.ForEach(x =>
+                {
+                    x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name;
+                    x.ProductName = _AabEngine.GetAdvertiserProduct(x.AdvertiserMasterId.Value, x.ProductMasterId.Value).Name;
+                });
         }
 
         public bool SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductMapping, string createdBy)

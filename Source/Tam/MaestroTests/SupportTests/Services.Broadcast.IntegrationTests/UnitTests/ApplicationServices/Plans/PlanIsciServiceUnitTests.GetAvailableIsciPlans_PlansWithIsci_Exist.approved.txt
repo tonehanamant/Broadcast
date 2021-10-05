@@ -11,7 +11,7 @@
           "CLDC6513000H",
           "CUSA1813000H"
         ],
-        "ProductName": "1-800-Contacts",
+        "ProductName": "TestProduct1",
         "SpotLengthsString": ":30",
         "Title": "Colgate Early Morning Upfront"
       },
@@ -24,7 +24,7 @@
           "OKWF1703H",
           "OKWL1704H"
         ],
-        "ProductName": "1-800-Contacts",
+        "ProductName": "TestProduct1",
         "SpotLengthsString": ":15",
         "Title": "Colgate Daytime Upfront"
       }
@@ -42,7 +42,7 @@
           "OKWF1701H",
           "OKWL1702H"
         ],
-        "ProductName": "Sample - 2Q09",
+        "ProductName": "TestProduct1",
         "SpotLengthsString": ":15, :30",
         "Title": "Wellcare CBS Shows"
       }

@@ -196,7 +196,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
         }
 
         [Test]
-        public void GetAdvertiserProductsNotCached()
+        public void GetAdvertiserProductsCached()
         {
             // Arrange
             var testAdvertiserMasterId = Guid.NewGuid();
@@ -207,7 +207,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             aabApiClient.Setup(s => s.GetAdvertiserProducts(testAdvertiserMasterId))
                 .Returns(advertiserProducts);
-            const int expectedCallCount = 3;
 
             var tc = new AabCache(aabApiClient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
 
@@ -218,7 +217,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
 
             // Assert
             Assert.AreEqual(expectedResultCount, result.Count);
-            aabApiClient.Verify(s => s.GetAdvertiserProducts(testAdvertiserMasterId), Times.Exactly(expectedCallCount));
+            aabApiClient.Verify(s => s.GetAdvertiserProducts(testAdvertiserMasterId), Times.Once);
         }
 
         private List<AgencyDto> _GetAgencies()

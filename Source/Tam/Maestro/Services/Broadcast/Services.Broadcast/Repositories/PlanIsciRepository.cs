@@ -144,7 +144,6 @@ namespace Services.Broadcast.Repositories
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_creative_lengths.Select(y => y.spot_lengths)))
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(y => y.standard_dayparts)))
-                                    .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
                                     .Include(p => p.plan_versions.Select(x => x.audience))
                                     .Include(x => x.plan_iscis)
                                     .ToList();
@@ -152,7 +151,6 @@ namespace Services.Broadcast.Repositories
                 var result = planEntities.Select(plan =>
                 {
                     var planVersion = plan.plan_versions.Where(x => x.id == plan.latest_version_id).Single();
-                    var planVersionSummary = planVersion.plan_version_summaries.Single();
                     var isciPlanDetail = new IsciPlanDetailDto()
                     {
                         Id = plan.id,
@@ -163,7 +161,7 @@ namespace Services.Broadcast.Repositories
                         Dayparts = planVersion.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
                         FlightStartDate = planVersion.flight_start_date,
                         FlightEndDate = planVersion.flight_end_date,
-                        ProductName = planVersionSummary.product_name,
+                        ProductMasterId = plan.product_master_id,
                         Iscis = plan.plan_iscis.Where(x => x.deleted_at == null).Select(x => x.isci).ToList()
                     };
                     return isciPlanDetail;

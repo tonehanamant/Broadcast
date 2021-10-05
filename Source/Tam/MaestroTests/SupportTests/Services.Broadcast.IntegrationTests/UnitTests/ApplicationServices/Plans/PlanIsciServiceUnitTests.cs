@@ -14,6 +14,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -403,12 +404,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 219,
                         Title = "Wellcare CBS Shows",
                         AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591C"),
                         SpotLengthValues = new List<int>(){ 15, 30},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
-                        ProductName = "Sample - 2Q09",
                         Iscis = new List<string>()
                         {
                             "OKWF1701H",
@@ -420,12 +421,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 220,
                         Title = "Colgate Daytime Upfront",
                         AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591D"),
                         SpotLengthValues = new List<int>(){ 15},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
-                        ProductName = "1-800-Contacts",
                         Iscis = new List<string>()
                         {
                             "OKWF1703H",
@@ -437,12 +438,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 221,
                         Title = "Colgate Early Morning Upfront",
                         AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591E"),
                         SpotLengthValues = new List<int>(){ 30},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
-                        ProductName = "1-800-Contacts",
                         Iscis = new List<string>()
                         {
                             "CLDC6513000H",
@@ -454,6 +455,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock.Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(new ProductDto{Name = "TestProduct1"});
 
             // Act
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
@@ -485,6 +489,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 219,
                         Title = "Wellcare CBS Shows",
                         AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591C"),
                         SpotLengthValues = new List<int>(){ 15, 30},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
@@ -498,6 +503,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 220,
                         Title = "Colgate Daytime Upfront",
                         AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591D"),
                         SpotLengthValues = new List<int>(){ 15},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN" },
@@ -511,6 +517,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 221,
                         Title = "Colgate Early Morning Upfront",
                         AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591E"),
                         SpotLengthValues = new List<int>(){ 30},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN" },
@@ -524,6 +531,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock.Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(new ProductDto { Name = "TestProduct1" });
 
             // Act
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
@@ -555,6 +565,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 219,
                         Title = "Wellcare CBS Shows",
                         AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591C"),
                         SpotLengthValues = new List<int>(){ 15, 30},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
@@ -568,6 +579,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 220,
                         Title = "Colgate Daytime Upfront",
                         AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591D"),
                         SpotLengthValues = new List<int>(){ 15},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN" },
@@ -581,6 +593,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 221,
                         Title = "Colgate Early Morning Upfront",
                         AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        ProductMasterId= new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591E"),
                         SpotLengthValues = new List<int>(){ 30},
                         AudienceCode = "HH",
                         Dayparts = new List<string>(){ "EN" },
@@ -598,6 +611,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock.Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(new ProductDto { Name = "TestProduct1" });
 
             // Act
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);

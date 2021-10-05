@@ -98,7 +98,6 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<AdvertiserDto> GetAdvertisers()
         {
-
             var result = _AabApiCache.GetAdvertisers();
             return result;
         }
@@ -106,7 +105,6 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public AdvertiserDto GetAdvertiser(Guid advertiserMasterId)
         {
-            // No need to check the toggle as when disabled you won't have a Guid master id.
             var items = _AabApiCache.GetAdvertisers();
             var item = items.Single(i => i.MasterId == advertiserMasterId, $"Advertiser with master id {advertiserMasterId} not found.");
             return item;
@@ -115,7 +113,6 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
-            // No need to check the toggle as when disabled you won't have a Guid master id.
             var products = _AabApiCache.GetAdvertiserProducts(advertiserMasterId);
             return products;
         }
@@ -123,8 +120,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public ProductDto GetAdvertiserProduct(Guid advertiserMasterId, Guid productMasterId)
         {
-            // No need to check the toggle as when disabled you won't have a Guid master id.
-            var products = _AabApiCache.GetAdvertiserProducts(advertiserMasterId);
+            var products = GetAdvertiserProducts(advertiserMasterId);
             var product = products.Single(i => i.MasterId == productMasterId, $"Product '{productMasterId}' not found for advertiser '{advertiserMasterId}'.");
             return product;
         }

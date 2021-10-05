@@ -52,6 +52,10 @@ namespace Services.Broadcast.Cache
 
         private const string CACHE_NAME_ADVERTISERS = "Advertisers";
         private readonly BaseMemoryCache<List<AdvertiserDto>> _AdvertisersCache = new BaseMemoryCache<List<AdvertiserDto>>(CACHE_NAME_ADVERTISERS);
+
+        private const string CACHE_NAME_ADVERTISER_PRODUCTS = "AdvertiserProducts";
+        private readonly BaseMemoryCache<List<ProductDto>> _AdvertiserProductsCache = new BaseMemoryCache<List<ProductDto>>(CACHE_NAME_ADVERTISER_PRODUCTS);
+
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         internal static Lazy<bool> _IsPipelineVariablesEnabled;
@@ -94,7 +98,10 @@ namespace Services.Broadcast.Cache
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
-            var result = _AabApiClient.GetAdvertiserProducts(advertiserMasterId).OrderBy(a => a.Name).ToList();
+            var policy = _GetCacheItemPolicy();
+            var result = _AdvertiserProductsCache.GetOrCreate(advertiserMasterId.ToString(), () =>
+                    _AabApiClient.GetAdvertiserProducts(advertiserMasterId).OrderBy(a => a.Name).ToList(),
+                policy);
             return result;
         }
 
@@ -127,8 +134,6 @@ namespace Services.Broadcast.Cache
                 : BroadcastServiceSystemParameter.AABCacheExpirationSeconds;
                 return result;
             }
-           
-            
         }
 
         private CacheItemPolicy _GetCacheItemPolicy()
