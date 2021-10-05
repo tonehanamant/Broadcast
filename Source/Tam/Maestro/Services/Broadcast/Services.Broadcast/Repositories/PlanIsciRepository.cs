@@ -107,7 +107,7 @@ namespace Services.Broadcast.Repositories
                               join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
                               join pro in context.reel_isci_products on isci.isci equals pro.isci into ps
                               from pro in ps.DefaultIfEmpty()
-                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id                             
+                              join sl in context.spot_lengths on isci.spot_length_id equals sl.id
                               where (isci.active_start_date <= startDate && isci.active_end_date >= endDate)
                               || (isci.active_start_date >= startDate && isci.active_start_date <= endDate)
                               || (isci.active_end_date >= startDate && isci.active_end_date <= endDate)
@@ -118,7 +118,7 @@ namespace Services.Broadcast.Repositories
                                   SpotLengthDuration = sl.length,
                                   ProductName = pro.product_name,
                                   Isci = isci.isci,
-                                  PlanIsci = context.plan_iscis.Count(x => x.isci == isci.isci)                                  
+                                  PlanIsci = context.plan_iscis.Count(x => x.isci == isci.isci)
                               }).ToList();
                 return result;
             });
@@ -144,6 +144,7 @@ namespace Services.Broadcast.Repositories
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_creative_lengths.Select(y => y.spot_lengths)))
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(y => y.standard_dayparts)))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
                                     .Include(p => p.plan_versions.Select(x => x.audience))
                                     .Include(x => x.plan_iscis)
                                     .ToList();
@@ -151,6 +152,7 @@ namespace Services.Broadcast.Repositories
                 var result = planEntities.Select(plan =>
                 {
                     var planVersion = plan.plan_versions.Where(x => x.id == plan.latest_version_id).Single();
+                    var planVersionSummary = planVersion.plan_version_summaries.Single();
                     var isciPlanDetail = new IsciPlanDetailDto()
                     {
                         Id = plan.id,
@@ -161,7 +163,7 @@ namespace Services.Broadcast.Repositories
                         Dayparts = planVersion.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
                         FlightStartDate = planVersion.flight_start_date,
                         FlightEndDate = planVersion.flight_end_date,
-                        ProductMasterId = plan.product_master_id,
+                        ProductName = planVersionSummary.product_name,
                         Iscis = plan.plan_iscis.Where(x => x.deleted_at == null).Select(x => x.isci).ToList()
                     };
                     return isciPlanDetail;
@@ -173,19 +175,19 @@ namespace Services.Broadcast.Repositories
         public int SaveIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappings, string createdBy, DateTime createdAt)
         {
             return _InReadUncommitedTransaction(context =>
+            {
+                var isciPlanMappingsToAdd = isciPlanMappings.Select(isciPlanMapping => new plan_iscis()
                 {
-                    var isciPlanMappingsToAdd = isciPlanMappings.Select(isciPlanMapping => new plan_iscis()
-                    {
-                        plan_id = isciPlanMapping.PlanId,
-                        isci = isciPlanMapping.Isci,
-                        created_at = createdAt,
-                        created_by = createdBy
-                    }).ToList();
+                    plan_id = isciPlanMapping.PlanId,
+                    isci = isciPlanMapping.Isci,
+                    created_at = createdAt,
+                    created_by = createdBy
+                }).ToList();
 
-                   var addedCount = context.plan_iscis.AddRange(isciPlanMappingsToAdd).Count();
-                    context.SaveChanges();
-                    return addedCount;
-                });
+                var addedCount = context.plan_iscis.AddRange(isciPlanMappingsToAdd).Count();
+                context.SaveChanges();
+                return addedCount;
+            });
         }
 
         public List<IsciProductMappingDto> GetIsciProductMappings(List<string> iscis)
@@ -207,24 +209,24 @@ namespace Services.Broadcast.Repositories
         public int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt)
         {
             return _InReadUncommitedTransaction(context =>
-              {
-                  var isciProductMappingsToAdd = isciProductMappings.Select(isciProductMapping => new reel_isci_products()
-                  {
-                      product_name = isciProductMapping.ProductName,
-                      isci = isciProductMapping.Isci,
-                      created_at = createdAt,
-                      created_by = createdBy
-                  }).ToList();
-                 var addedCount = context.reel_isci_products.AddRange(isciProductMappingsToAdd).Count();
-                  context.SaveChanges();
-                  return addedCount;
-              });
+            {
+                var isciProductMappingsToAdd = isciProductMappings.Select(isciProductMapping => new reel_isci_products()
+                {
+                    product_name = isciProductMapping.ProductName,
+                    isci = isciProductMapping.Isci,
+                    created_at = createdAt,
+                    created_by = createdBy
+                }).ToList();
+                var addedCount = context.reel_isci_products.AddRange(isciProductMappingsToAdd).Count();
+                context.SaveChanges();
+                return addedCount;
+            });
         }
         public List<IsciPlanMappingDto> GetPlanIscis()
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from planIsci in context.plan_iscis.Where(x=> x.deleted_at == null)
+                var result = (from planIsci in context.plan_iscis.Where(x => x.deleted_at == null)
                               select new IsciPlanMappingDto
                               {
                                   PlanId = planIsci.plan_id,
@@ -246,7 +248,7 @@ namespace Services.Broadcast.Repositories
                 foreach (var item in isciPlanMappingsDeleted)
                 {
                     var isciPlanMappingDeletedList = context.plan_iscis.Where(x => item.PlanId == x.plan_id && item.Isci == x.isci && x.deleted_at == null);
-                    
+
                     if (isciPlanMappingDeletedList != null)
                     {
                         foreach (var isciPlanMappingDeletedObj in isciPlanMappingDeletedList)

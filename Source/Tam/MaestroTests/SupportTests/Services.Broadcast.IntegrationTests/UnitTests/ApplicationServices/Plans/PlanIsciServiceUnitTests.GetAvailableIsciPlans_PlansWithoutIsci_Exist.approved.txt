@@ -8,7 +8,7 @@
         "FlightString": "07/15-08/22/2021",
         "Id": 221,
         "Iscis": [],
-        "ProductName": "TestProduct1",
+        "ProductName": "1-800-Contacts",
         "SpotLengthsString": ":30",
         "Title": "Colgate Early Morning Upfront"
       },
@@ -18,7 +18,7 @@
         "FlightString": "08/20-08/28/2021",
         "Id": 220,
         "Iscis": [],
-        "ProductName": "TestProduct1",
+        "ProductName": "1-800-Contacts",
         "SpotLengthsString": ":15",
         "Title": "Colgate Daytime Upfront"
       }
@@ -33,7 +33,7 @@
         "FlightString": "08/29-08/31/2021",
         "Id": 219,
         "Iscis": [],
-        "ProductName": "TestProduct1",
+        "ProductName": "Sample - 2Q09",
         "SpotLengthsString": ":15, :30",
         "Title": "Wellcare CBS Shows"
       }

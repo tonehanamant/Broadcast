@@ -12,8 +12,7 @@
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 1852,
     "Iscis": [],
-    "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
-    "ProductName": null,
+    "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       45
     ],
@@ -32,8 +31,7 @@
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 1854,
     "Iscis": [],
-    "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
-    "ProductName": null,
+    "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       30
     ],
@@ -52,8 +50,7 @@
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 2233,
     "Iscis": [],
-    "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
-    "ProductName": null,
+    "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       45
     ],
@@ -72,8 +69,7 @@
     "FlightStartDate": "2020-03-14T00:00:00",
     "Id": 1853,
     "Iscis": [],
-    "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
-    "ProductName": null,
+    "ProductName": "Veggie Tales",
     "SpotLengthValues": [
       15,
       30,

@@ -33,19 +33,6 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Mocked data endpoint for GetAvailableIscis
-        /// </summary>
-        /// <returns>Mocked List of iscis</returns>
-        [HttpPost]
-        [Route("available-isci-mock")]
-        public BaseResponse<List<IsciListItemDto>> GetAvailableIscisMock(IsciSearchDto isciSearch)
-        {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetAvailableIscisMock(isciSearch));
-        }
-
-        /// <summary>
         /// Gets media months
         /// </summary>
         /// <returns>List of MediaMonthDto object</returns>

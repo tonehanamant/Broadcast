@@ -15,8 +15,7 @@
       "AB82TXT2H",
       "AB82VR58"
     ],
-    "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
-    "ProductName": null,
+    "ProductName": "PetMed Express",
     "SpotLengthValues": [
       45
     ],

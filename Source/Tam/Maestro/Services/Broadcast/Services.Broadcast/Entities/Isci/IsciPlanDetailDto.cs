@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Entities.Isci
 {
@@ -15,7 +12,6 @@ namespace Services.Broadcast.Entities.Isci
         public string AudienceCode { get; set; }
         public string Title { get; set; }
         public List<string> Dayparts { get; set; }
-        public Guid? ProductMasterId { get; set; }
         public string ProductName { get; set; }
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
