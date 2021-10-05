@@ -12,7 +12,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         [TestCase(2760, 460000, 6)]
         [TestCase(3000, 500000, 6)]
         [TestCase(38450.00, 3076000, 12.5)]
-
         public void WeeklyBreakdownWeek_WeeklyCpm(decimal weeklyBudget, double weeklyImpressions, decimal expectedWeeklyCpm)
         {
             var testWeek = new WeeklyBreakdownWeek

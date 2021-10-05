@@ -1,6 +1,7 @@
 [
   {
     "Budget": 25.0,
+    "Cpm": 1.000,
     "GoalPercentage": 20,
     "Impressions": 25000.0,
     "ImpressionsPercentage": 25.0,
@@ -8,6 +9,7 @@
   },
   {
     "Budget": 50.0,
+    "Cpm": 1.000,
     "GoalPercentage": 50,
     "Impressions": 50000.0,
     "ImpressionsPercentage": 50.0,
@@ -15,6 +17,7 @@
   },
   {
     "Budget": 25.0,
+    "Cpm": 1.000,
     "GoalPercentage": 30,
     "Impressions": 25000.0,
     "ImpressionsPercentage": 25.0,

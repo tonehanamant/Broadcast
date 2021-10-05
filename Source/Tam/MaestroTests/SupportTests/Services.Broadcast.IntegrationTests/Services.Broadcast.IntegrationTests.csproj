@@ -564,6 +564,7 @@
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\CampaignReportDataUnitTest.cs" />
+    <Compile Include="UnitTests\EntitiesUnitTests\LengthMakeUpTableRowUnitTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\QuoteReport\QuoteReportDataTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\WeeklyBreakdownWeekUnitTests.cs" />

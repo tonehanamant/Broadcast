@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities.Plan
+﻿using Services.Broadcast.BusinessEngines;
+
+namespace Services.Broadcast.Entities.Plan
 {
     public class LengthMakeUpTableRow
     {
@@ -7,5 +9,7 @@
         public double ImpressionsPercentage { get; set; }
         public decimal Budget { get; set; }
         public double Impressions { get; set; }
+
+        public decimal Cpm => ProposalMath.CalculateCpm(Budget, Impressions);
     }
 }
