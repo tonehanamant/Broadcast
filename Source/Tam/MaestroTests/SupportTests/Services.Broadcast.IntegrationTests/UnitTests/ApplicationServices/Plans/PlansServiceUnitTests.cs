@@ -33,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private PlanService _PlanService;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
+        private Mock<IPlanBuyingRepository> _PlanBuyingRepositoryMock;
         private Mock<IPlanSummaryRepository> _PlanSummaryRepositoryMock;
         private Mock<IInventoryProprietarySummaryRepository> _InventoryProprietarySummaryRepositoryMock;
         private Mock<IDayRepository> _DayRepositoryMock;
@@ -61,6 +62,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Create Mocks
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _PlanRepositoryMock = new Mock<IPlanRepository>();
+            _PlanBuyingRepositoryMock = new Mock<IPlanBuyingRepository>();
             _PlanSummaryRepositoryMock = new Mock<IPlanSummaryRepository>();
             _DayRepositoryMock = new Mock<IDayRepository>();
             _PlanValidatorMock = new Mock<IPlanValidator>();
@@ -109,7 +111,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(_PlanRepositoryMock.Object);
-
+            _DataRepositoryFactoryMock
+               .Setup(s => s.GetDataRepository<IPlanBuyingRepository>())
+               .Returns(_PlanBuyingRepositoryMock.Object);
+            
             _DataRepositoryFactoryMock
                .Setup(s => s.GetDataRepository<IInventoryProprietarySummaryRepository>())
                .Returns(_InventoryProprietarySummaryRepositoryMock.Object);
@@ -429,47 +434,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void HandleBuyingOnPlanSaveCreateNew()
-        {
-            PlanDto beforePlan = null;
-            var savingPlan = _GetNewPlan();
-            savingPlan.BuyingParameters = new PlanBuyingParametersDto { JobId = 12 };
-            var afterPlan = _GetNewPlan();
-
-            _PlanService._HandleBuyingOnPlanSave(PlanService.SaveState.CreatingNewPlan, savingPlan, beforePlan, afterPlan);
-
-            _PlanRepositoryMock.Verify(s => s.SetBuyingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
-            _PlanRepositoryMock.Verify(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-        }
-
-        [Test]
-        public void HandleBuyingOnPlanSaveUpdateExisting()
-        {
-            var beforePlan = _GetNewPlan();
-            var savingPlan = _GetNewPlan();
-            savingPlan.BuyingParameters = new PlanBuyingParametersDto { JobId = 12};
-            var afterPlan = _GetNewPlan();
-
-            _PlanService._HandleBuyingOnPlanSave(PlanService.SaveState.UpdatingExisting, savingPlan, beforePlan, afterPlan);
-
-            _PlanRepositoryMock.Verify(s => s.SetBuyingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-            _PlanRepositoryMock.Verify(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
-        }
-
-        [Test]
-        public void HandleBuyingOnPlanSaveWithoutBuyingResults()
-        {
-            var beforePlan = _GetNewPlan();
-            var savingPlan = _GetNewPlan();
-            var afterPlan = _GetNewPlan();
-
-            _PlanService._HandleBuyingOnPlanSave(PlanService.SaveState.UpdatingExisting, savingPlan, beforePlan, afterPlan);
-
-            _PlanRepositoryMock.Verify(s => s.SetBuyingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-            _PlanRepositoryMock.Verify(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
-        }
-
-        [Test]
         [TestCase(0, 1, false, false, PlanService.SaveState.CreatingNewPlan)]
         [TestCase(1, 0, false, false, PlanService.SaveState.CreatingNewPlan)]
         [TestCase(1, 1, false, true, PlanService.SaveState.CreatingNewDraft)]
@@ -602,17 +566,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedUpdatePlanPricingVersionId, updatePlanPricingVersionIdCalled);            
             Assert.AreEqual(expectedSavePlanPricingParametersCalled, savePlanPricingParametersCallsed);
         }
-        [Test] 
-        public void _FinalizePricingOnPlanSave_PlanSpotAllocationModelModeTest()
+        [Test]
+        [TestCase(PlanService.SaveState.CreatingNewPlan, true)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, true)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, false)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, false)]
+        public void _FinalizeBuyingOnPlanSave(PlanService.SaveState saveState, bool shouldPromotePricingResults)
         {
             // Arrange
             const int planId = 12;
             const int planVersionId = 14;
-            var modifiedDate = new DateTime(2020, 10, 17, 12, 30, 40);
-            const string modifiedBy = "TestUser";
-
-            bool shouldPromotePricingResults = false;
-            PlanService.SaveState saveState = PlanService.SaveState.UpdatingExisting;
 
             var plan = _GetNewPlan();
             plan.Id = planId;
@@ -625,12 +588,46 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var afterPlan = _GetNewPlan();
             afterPlan.Id = planId;
             afterPlan.VersionId = planVersionId + 1;
-            // Act
-            _PlanService._FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, modifiedDate, modifiedBy, shouldPromotePricingResults);
-            // Assert
-            Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);           
-        }
 
+
+            var expectedUpdatePlanBuyingVersionId = 0;
+            var expectedSavePlanBuyingParametersCalled = 0;
+
+            if (shouldPromotePricingResults)
+            {
+                plan.JobId = 26;
+                expectedUpdatePlanBuyingVersionId++;
+            }
+
+            else
+            {
+                expectedSavePlanBuyingParametersCalled++;
+            }
+
+            var setBuyingPlanVersionIdCalled = 0;
+            _PlanRepositoryMock.Setup(s => s.SetBuyingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback(() => setBuyingPlanVersionIdCalled++);
+
+            var updatePlanBuyingVersionIdCalled = 0;
+            _PlanRepositoryMock.Setup(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback(() => updatePlanBuyingVersionIdCalled++);
+
+            var queuePricingJobCalled = 0;
+            _PlanBuyingServiceMock.Setup(s => s.QueueBuyingJob(It.IsAny<PlanBuyingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback(() => queuePricingJobCalled++);
+
+            var savePlanBuyingParametersCallsed = 0;
+            _PlanBuyingRepositoryMock.Setup(s => s.SavePlanBuyingParameters(It.IsAny<PlanBuyingParametersDto>()))
+                .Callback(() => savePlanBuyingParametersCallsed++);
+
+            // Act
+            _PlanService._FinalizeBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePricingResults);
+
+            // Assert
+
+            Assert.AreEqual(expectedUpdatePlanBuyingVersionId, updatePlanBuyingVersionIdCalled);
+            Assert.AreEqual(expectedSavePlanBuyingParametersCalled, savePlanBuyingParametersCallsed);
+        }
         private class UpdatePlanPricingVersionIdParams
         {
             public int AfterPlanVersionID { get; set; }

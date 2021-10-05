@@ -9,6 +9,7 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -235,7 +236,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
-
+        private readonly IPlanBuyingRepository _PlanBuyingRepository;
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
 
         private Lazy<bool> _IsMarketSovCalculationEnabled;
@@ -280,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CreativeLengthEngine = creativeLengthEngine;
             _PlanMarketSovCalculator = planMarketSovCalculator;
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
-
+            _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
             _IsMarketSovCalculationEnabled = new Lazy<bool>(() =>
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
         }
@@ -370,7 +371,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CalculateDeliveryDataPerAudience(plan);
             _SetPlanVersionNumber(plan);
             _SetPlanFlightDays(plan);
-
+           
             if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
             {
                 plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
@@ -410,8 +411,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             processTimers.End(SW_KEY_PLAN_SAVE);
             processTimers.Start(SW_KEY_POST_PLAN_SAVE);
 
-            _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
-
+            _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);           
+           
             // We only aggregate data for versions, not drafts.
             if (!plan.IsDraft)
             {
@@ -422,12 +423,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             /*** Handle Pricing and Buying ***/
             // This plan.id and plan.versionId were updated in their respective saves.
             // if a new version was published then the VersionId is the latest published version.
-            // if a draft was saved then the VersionId is the draft version instead.
+            // if a draft was saved then the VersionId is the draft version instead. 
             var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
             if (!plan.IsDraft)
             {
-                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, forceKeepModelResults);
-                _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan);
+                var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
+                if (!shouldPromotePricingResults)
+                {
+                    plan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+                    _PlanRepository.SavePlan(plan, createdBy, createdDate);
+                }               
+                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults);
+                _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePricingResults);
             }
             processTimers.End(SW_KEY_POST_PLAN_SAVE);
             processTimers.End(SW_KEY_TOTAL_DURATION);
@@ -436,31 +443,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return plan.Id;
         }
-
-        internal void _HandleBuyingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan)
+        internal void _HandleBuyingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, bool shouldPromotePricingResults)
         {
-            if (plan.BuyingParameters != null)
-            {
-                if (saveState == SaveState.CreatingNewPlan)
-                {
-                    _LogInfo($"Relating previous buying results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
-                    _PlanRepository.SetBuyingPlanVersionId(plan.BuyingParameters.JobId.Value, plan.VersionId);
-                }
-                else
-                {
-                    _LogInfo($"Relating previous buying results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
-                    _PlanRepository.UpdatePlanBuyingVersionId(afterPlan.VersionId, beforePlan.VersionId);
-                }
-            }
-        }
+            // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
+            // This sets the default parameters in case we don't promote existing results.
+            _SetPlanBuyingParameters(plan);
 
-        internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy, bool forceKeepModelResults)
+            _FinalizeBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePricingResults);
+        }      
+
+        internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy, bool shouldPromotePricingResults)
         {
             // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
             // This sets the default parameters in case we don't promote existing results.
             _SetPlanPricingParameters(plan);
-
-            var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
 
             _FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults);
         }
@@ -474,12 +470,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
             }
             else
-            {
-                plan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+            {               
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
             }
         }
-
+        internal void _FinalizeBuyingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan,
+           bool shouldPromotePricingResults)
+        {
+            if (shouldPromotePricingResults)
+            {
+                _LogInfo($"Relating previous buying results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                _PlanRepository.UpdatePlanBuyingVersionId(afterPlan.VersionId, beforePlan.VersionId);
+            }
+            else
+            {
+               _PlanBuyingRepository.SavePlanBuyingParameters(plan.BuyingParameters);
+            }
+        }
         internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan)
         {
             var shouldPromotePricingResults = false;
@@ -558,6 +565,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
 
             _PlanPricingService.ValidateAndApplyMargin(plan.PricingParameters);
+        }
+        private void _SetPlanBuyingParameters(PlanDto plan)
+        {
+            var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
+
+            plan.BuyingParameters = new PlanBuyingParametersDto
+            {
+                PlanId = plan.Id,
+                Budget = Convert.ToDecimal(plan.Budget),
+                CPM = Convert.ToDecimal(plan.TargetCPM),
+                CPP = Convert.ToDecimal(plan.TargetCPP),
+                Currency = plan.Currency,
+                DeliveryImpressions = Convert.ToDouble(plan.TargetImpressions) / 1000,
+                DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
+                UnitCaps = pricingDefaults.UnitCaps,
+                UnitCapsType = pricingDefaults.UnitCapsType,
+                Margin = pricingDefaults.Margin,
+                PlanVersionId = plan.VersionId,
+                MarketGroup = pricingDefaults.MarketGroup,
+                PostingType = plan.PostingType
+            };
+            
+            _PlanBuyingService.ValidateAndApplyMargin(plan.BuyingParameters);
         }
 
         private void _SetPlanFlightDays(PlanDto plan)
