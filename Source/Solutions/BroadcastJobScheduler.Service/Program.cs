@@ -2,6 +2,7 @@
 using log4net;
 using Services.Broadcast.ApplicationServices;
 using System;
+using System.Net;
 using System.ServiceProcess;
 using System.Threading;
 using Unity;
@@ -20,6 +21,7 @@ namespace BroadcastJobScheduler.Service
         /// </summary>
         static void Main()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             // Initialize BroadcastApplicationServiceFactory UnityContainer instance so it's available
             var instance = BroadcastApplicationServiceFactory.Instance;
             SetupLogging();

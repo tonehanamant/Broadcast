@@ -1,6 +1,7 @@
 ﻿using BroadcastLogging;
 using log4net;
 using Owin;
+using System.Net;
 using System.Runtime.CompilerServices;
 
 namespace BroadcastComposerWeb
@@ -18,6 +19,7 @@ namespace BroadcastComposerWeb
         /// <param name="app"></param>
         public void Configuration(IAppBuilder app)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
             _Log = LogManager.GetLogger(typeof(Startup));
 
             app.MapSignalR();
