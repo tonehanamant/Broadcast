@@ -4,7 +4,7 @@
     "PlanVersionId": 0,
     "PostingType": 1,
     "PricingCpm": 0.1616530106063676809789899000,
-    "PricingVersion": "2",
+    "PricingVersion": "4",
     "RequestId": "AAA",
     "SpotAllocationModelMode": 1,
     "Spots": [
@@ -14,13 +14,13 @@
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1000.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 1
           }
         ],
@@ -42,13 +42,13 @@
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1000.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 2
           }
         ],
@@ -70,13 +70,13 @@
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1000.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 3
           }
         ],
@@ -98,13 +98,13 @@
         "Id": 2,
         "Impressions30sec": 1100.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1100.0,
         "SpotFrequencies": [
           {
             "Impressions": 1100.0,
             "SpotCost": 60.0,
             "SpotCostWithMargin": 66.666666666666666666666666667,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 4
           }
         ],
@@ -127,7 +127,7 @@
     "PlanVersionId": 0,
     "PostingType": 2,
     "PricingCpm": 0.1616530106063676809789899000,
-    "PricingVersion": "2",
+    "PricingVersion": "4",
     "RequestId": "AAA",
     "SpotAllocationModelMode": 1,
     "Spots": [
@@ -137,13 +137,13 @@
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1000.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 1
           }
         ],
@@ -165,13 +165,13 @@
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1000.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 2
           }
         ],
@@ -193,13 +193,13 @@
         "Id": 1,
         "Impressions30sec": 1000.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1000.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 3
           }
         ],
@@ -221,13 +221,13 @@
         "Id": 2,
         "Impressions30sec": 1100.0,
         "InventoryMediaWeek": null,
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1100.0,
         "SpotFrequencies": [
           {
             "Impressions": 1100.0,
             "SpotCost": 60.0,
             "SpotCostWithMargin": 66.666666666666666666666666667,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 4
           }
         ],

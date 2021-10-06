@@ -8,12 +8,12 @@
       "PlanVersionId": 0,
       "PostingType": 1,
       "PricingCpm": 0.0,
-      "PricingVersion": "2",
+      "PricingVersion": "4",
       "RequestId": "Request1",
       "SpotAllocationModelMode": 1,
       "Spots": []
     },
-    "apiVersion": "2",
+    "apiVersion": "4",
     "jobId": 1,
     "plan": {
       "AudienceId": 0,
@@ -168,7 +168,7 @@
         "ProprietaryBlend": 0.2,
         "ProprietaryInventory": [],
         "UnitCaps": 10,
-        "UnitCapsType": 3
+        "UnitCapsType": 1
       },
       "ProductId": 1,
       "ProductMasterId": "ad71646f-2736-45da-bf65-71120da01221",
@@ -195,7 +195,344 @@
         "TotalRatingPoints": 0.0,
         "TotalUnits": 0.0
       },
-      "WeeklyBreakdownWeeks": null
+      "WeeklyBreakdownWeeks": [
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 100,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 100.0,
+          "WeeklyImpressions": 150.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 101,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 60.00,
+          "WeeklyImpressions": 250.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 102,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 150.00,
+          "WeeklyImpressions": 100.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 103,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 0.0,
+          "WeeklyImpressions": 0.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 100,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 100.0,
+          "WeeklyImpressions": 150.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 101,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 60.00,
+          "WeeklyImpressions": 250.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 102,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 150.00,
+          "WeeklyImpressions": 100.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 103,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 1,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 0.0,
+          "WeeklyImpressions": 0.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 100,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 100.0,
+          "WeeklyImpressions": 150.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 101,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 60.00,
+          "WeeklyImpressions": 250.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 102,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 150.00,
+          "WeeklyImpressions": 100.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 1,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 103,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 0.0,
+          "WeeklyImpressions": 0.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 100,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 100.0,
+          "WeeklyImpressions": 150.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 101,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 60.00,
+          "WeeklyImpressions": 250.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 102,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 150.00,
+          "WeeklyImpressions": 100.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        },
+        {
+          "ActiveDays": null,
+          "AduImpressions": 0.0,
+          "DaypartCodeId": 2,
+          "EndDate": "0001-01-01T00:00:00",
+          "IsUpdated": false,
+          "MediaWeekId": 103,
+          "NumberOfActiveDays": 0,
+          "PercentageOfWeek": null,
+          "SpotLengthId": 2,
+          "StartDate": "0001-01-01T00:00:00",
+          "UnitImpressions": 0.0,
+          "WeeklyAdu": 0,
+          "WeeklyBudget": 15.0,
+          "WeeklyCpm": 0.0,
+          "WeeklyImpressions": 0.0,
+          "WeeklyImpressionsPercentage": 0.0,
+          "WeeklyRatings": 0.0,
+          "WeeklyUnits": 0.0,
+          "WeekNumber": 0
+        }
+      ]
     },
     "pricingApiRequest": {
       "contract": [
@@ -203,17 +540,15 @@
           "cpm_goal": 80.00,
           "daypart_weighting": [
             {
-              "daypart_goal": 0.6,
+              "daypart_goal": 0.5,
               "daypart_id": 1
             },
             {
-              "daypart_goal": 0.4,
+              "daypart_goal": 0.5,
               "daypart_id": 2
             }
           ],
-          "frequency_cap_spots": 10,
-          "frequency_cap_time": 1.0,
-          "frequency_cap_unit": "day",
+          "frequency_cap": 20,
           "impression_goal": 150.0,
           "market_coverage_goal": 0.8,
           "share_of_voice": [
@@ -222,23 +557,28 @@
               "market_goal": 0.13
             }
           ],
+          "spot_lengths": [
+            {
+              "spot_length_goal": 1.0,
+              "spot_length_id": 1,
+              "spot_scale_factor": 1.0
+            }
+          ],
           "week_id": 100
         },
         {
           "cpm_goal": 48.000,
           "daypart_weighting": [
             {
-              "daypart_goal": 0.6,
+              "daypart_goal": 0.5,
               "daypart_id": 1
             },
             {
-              "daypart_goal": 0.4,
+              "daypart_goal": 0.5,
               "daypart_id": 2
             }
           ],
-          "frequency_cap_spots": 10,
-          "frequency_cap_time": 1.0,
-          "frequency_cap_unit": "day",
+          "frequency_cap": 20,
           "impression_goal": 250.0,
           "market_coverage_goal": 0.8,
           "share_of_voice": [
@@ -247,23 +587,28 @@
               "market_goal": 0.13
             }
           ],
+          "spot_lengths": [
+            {
+              "spot_length_goal": 1.0,
+              "spot_length_id": 1,
+              "spot_scale_factor": 1.0
+            }
+          ],
           "week_id": 101
         },
         {
           "cpm_goal": 120.00,
           "daypart_weighting": [
             {
-              "daypart_goal": 0.6,
+              "daypart_goal": 0.5,
               "daypart_id": 1
             },
             {
-              "daypart_goal": 0.4,
+              "daypart_goal": 0.5,
               "daypart_id": 2
             }
           ],
-          "frequency_cap_spots": 10,
-          "frequency_cap_time": 1.0,
-          "frequency_cap_unit": "day",
+          "frequency_cap": 20,
           "impression_goal": 100.0,
           "market_coverage_goal": 0.8,
           "share_of_voice": [
@@ -272,53 +617,80 @@
               "market_goal": 0.13
             }
           ],
+          "spot_lengths": [
+            {
+              "spot_length_goal": 1.0,
+              "spot_length_id": 1,
+              "spot_scale_factor": 1.0
+            }
+          ],
           "week_id": 102
         }
       ],
       "inventory": [
         {
-          "cost": 50.0,
           "daypart_id": 15,
           "id": 1,
           "impressions": 1000.0,
           "market_code": 101,
           "percentage_of_us": 0.00101,
+          "spot_cost": [
+            {
+              "spot_length_cost": 50.0,
+              "spot_length_id": 1
+            }
+          ],
           "spot_days": 1,
           "spot_hours": 1.0,
           "station_id": 5,
           "week_id": 100
         },
         {
-          "cost": 50.0,
           "daypart_id": 15,
           "id": 1,
           "impressions": 1000.0,
           "market_code": 101,
           "percentage_of_us": 0.00101,
+          "spot_cost": [
+            {
+              "spot_length_cost": 50.0,
+              "spot_length_id": 1
+            }
+          ],
           "spot_days": 1,
           "spot_hours": 1.0,
           "station_id": 5,
           "week_id": 101
         },
         {
-          "cost": 50.0,
           "daypart_id": 15,
           "id": 1,
           "impressions": 1000.0,
           "market_code": 101,
           "percentage_of_us": 0.00101,
+          "spot_cost": [
+            {
+              "spot_length_cost": 50.0,
+              "spot_length_id": 1
+            }
+          ],
           "spot_days": 1,
           "spot_hours": 1.0,
           "station_id": 5,
           "week_id": 102
         },
         {
-          "cost": 60.0,
           "daypart_id": 16,
           "id": 2,
           "impressions": 1500.0,
           "market_code": 100,
           "percentage_of_us": 0.001,
+          "spot_cost": [
+            {
+              "spot_length_cost": 60.0,
+              "spot_length_id": 1
+            }
+          ],
           "spot_days": 2,
           "spot_hours": 2.0,
           "station_id": 6,

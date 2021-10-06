@@ -6,7 +6,7 @@
       "PlaybackType": 4,
       "ShareProjectionBookId": 102,
       "HutProjectionBookId": 101,
-      "Equivalized": true,
+      "Equivalized": false,
       "SpotLengthId": 5,
       "PostType": 2
     },

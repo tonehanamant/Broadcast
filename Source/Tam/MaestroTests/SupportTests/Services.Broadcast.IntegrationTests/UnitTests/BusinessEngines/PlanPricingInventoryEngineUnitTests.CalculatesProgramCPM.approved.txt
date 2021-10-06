@@ -10,7 +10,7 @@
     "ManifestRates": [
       {
         "Cost": 50.00,
-        "SpotLengthId": 0
+        "SpotLengthId": 1
       }
     ],
     "ManifestWeeks": null,

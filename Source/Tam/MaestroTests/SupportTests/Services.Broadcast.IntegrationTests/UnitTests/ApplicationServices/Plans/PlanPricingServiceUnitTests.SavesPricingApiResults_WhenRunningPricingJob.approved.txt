@@ -4,7 +4,7 @@
     "PlanVersionId": 77,
     "PostingType": 1,
     "PricingCpm": 0.1682953311617806731813246000,
-    "PricingVersion": "2",
+    "PricingVersion": "4",
     "RequestId": "#q1w2e3",
     "SpotAllocationModelMode": 1,
     "Spots": [
@@ -28,13 +28,13 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1100.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 1
           }
         ],
@@ -70,13 +70,13 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1100.0,
         "SpotFrequencies": [
           {
             "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 2
           }
         ],
@@ -112,13 +112,13 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
-        "ProjectedImpressions": 0.0,
+        "ProjectedImpressions": 1500.0,
         "SpotFrequencies": [
           {
             "Impressions": 1500.0,
             "SpotCost": 60.0,
             "SpotCostWithMargin": 75.0,
-            "SpotLengthId": 0,
+            "SpotLengthId": 1,
             "Spots": 3
           }
         ],

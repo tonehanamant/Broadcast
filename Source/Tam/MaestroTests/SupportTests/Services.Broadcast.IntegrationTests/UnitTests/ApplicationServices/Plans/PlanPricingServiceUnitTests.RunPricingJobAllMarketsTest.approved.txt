@@ -5,17 +5,15 @@
         "cpm_goal": 80.00,
         "daypart_weighting": [
           {
-            "daypart_goal": 0.6,
+            "daypart_goal": 0.5,
             "daypart_id": 1
           },
           {
-            "daypart_goal": 0.4,
+            "daypart_goal": 0.5,
             "daypart_id": 2
           }
         ],
-        "frequency_cap_spots": 10,
-        "frequency_cap_time": 1.0,
-        "frequency_cap_unit": "day",
+        "frequency_cap": 20,
         "impression_goal": 150.0,
         "market_coverage_goal": 0.8,
         "share_of_voice": [
@@ -24,23 +22,28 @@
             "market_goal": 0.13
           }
         ],
+        "spot_lengths": [
+          {
+            "spot_length_goal": 1.0,
+            "spot_length_id": 1,
+            "spot_scale_factor": 1.0
+          }
+        ],
         "week_id": 100
       },
       {
         "cpm_goal": 48.000,
         "daypart_weighting": [
           {
-            "daypart_goal": 0.6,
+            "daypart_goal": 0.5,
             "daypart_id": 1
           },
           {
-            "daypart_goal": 0.4,
+            "daypart_goal": 0.5,
             "daypart_id": 2
           }
         ],
-        "frequency_cap_spots": 10,
-        "frequency_cap_time": 1.0,
-        "frequency_cap_unit": "day",
+        "frequency_cap": 20,
         "impression_goal": 250.0,
         "market_coverage_goal": 0.8,
         "share_of_voice": [
@@ -49,23 +52,28 @@
             "market_goal": 0.13
           }
         ],
+        "spot_lengths": [
+          {
+            "spot_length_goal": 1.0,
+            "spot_length_id": 1,
+            "spot_scale_factor": 1.0
+          }
+        ],
         "week_id": 101
       },
       {
         "cpm_goal": 120.00,
         "daypart_weighting": [
           {
-            "daypart_goal": 0.6,
+            "daypart_goal": 0.5,
             "daypart_id": 1
           },
           {
-            "daypart_goal": 0.4,
+            "daypart_goal": 0.5,
             "daypart_id": 2
           }
         ],
-        "frequency_cap_spots": 10,
-        "frequency_cap_time": 1.0,
-        "frequency_cap_unit": "day",
+        "frequency_cap": 20,
         "impression_goal": 100.0,
         "market_coverage_goal": 0.8,
         "share_of_voice": [
@@ -74,53 +82,80 @@
             "market_goal": 0.13
           }
         ],
+        "spot_lengths": [
+          {
+            "spot_length_goal": 1.0,
+            "spot_length_id": 1,
+            "spot_scale_factor": 1.0
+          }
+        ],
         "week_id": 102
       }
     ],
     "inventory": [
       {
-        "cost": 50.0,
         "daypart_id": 15,
         "id": 1,
         "impressions": 1000.0,
         "market_code": 101,
         "percentage_of_us": 0.00101,
+        "spot_cost": [
+          {
+            "spot_length_cost": 50.0,
+            "spot_length_id": 1
+          }
+        ],
         "spot_days": 1,
         "spot_hours": 1.0,
         "station_id": 5,
         "week_id": 100
       },
       {
-        "cost": 50.0,
         "daypart_id": 15,
         "id": 1,
         "impressions": 1000.0,
         "market_code": 101,
         "percentage_of_us": 0.00101,
+        "spot_cost": [
+          {
+            "spot_length_cost": 50.0,
+            "spot_length_id": 1
+          }
+        ],
         "spot_days": 1,
         "spot_hours": 1.0,
         "station_id": 5,
         "week_id": 101
       },
       {
-        "cost": 50.0,
         "daypart_id": 15,
         "id": 1,
         "impressions": 1000.0,
         "market_code": 101,
         "percentage_of_us": 0.00101,
+        "spot_cost": [
+          {
+            "spot_length_cost": 50.0,
+            "spot_length_id": 1
+          }
+        ],
         "spot_days": 1,
         "spot_hours": 1.0,
         "station_id": 5,
         "week_id": 102
       },
       {
-        "cost": 60.0,
         "daypart_id": 16,
         "id": 2,
         "impressions": 1500.0,
         "market_code": 100,
         "percentage_of_us": 0.001,
+        "spot_cost": [
+          {
+            "spot_length_cost": 60.0,
+            "spot_length_id": 1
+          }
+        ],
         "spot_days": 2,
         "spot_hours": 2.0,
         "station_id": 6,

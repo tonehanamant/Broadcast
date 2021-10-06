@@ -10,7 +10,7 @@
   },
   {
     "Completed": "2020-02-04T15:31:27",
-    "DiagnosticResult": "System.ApplicationException: Unsupported unit cap type was discovered\r\n   at Ser",
+    "DiagnosticResult": "System.Exception: Unsupported unit cap type was discovered\r\n   at Services.Broad",
     "HangfireJobId": null,
     "Id": 1,
     "PlanVersionId": null,

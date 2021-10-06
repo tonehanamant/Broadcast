@@ -64,6 +64,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _StandardDaypartRepository = _GetMockDaypartDefaultRepository();
 
+            _SpotLengthEngineMock.Setup(s => s.GetSpotCostMultiplierBySpotLengthId(It.IsAny<int>()))
+                .Returns<int>((i) => SpotLengthTestData.GetCostMultipliersBySpotLengthId()[i]);
+
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
                 .Returns(_GetDays());
@@ -107,12 +110,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
         }
 
-        private PlanBuyingInventoryEngineTestClass _GetTestClass(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false)
+        private PlanBuyingInventoryEngineTestClass _GetTestClass(bool useTrueIndependentStations = false)
         {
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             var testClass = new PlanBuyingInventoryEngineTestClass(
@@ -1266,6 +1268,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 350.00M,
                         }
                     },
@@ -1278,6 +1281,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 400.00M,
                         }
                     },
@@ -1290,6 +1294,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 375.00M,
                         }
                     },
@@ -1302,6 +1307,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 300.00M,
                         }
                     },
@@ -1328,6 +1334,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 50.00M,
                         }
                     },
@@ -1366,8 +1373,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var allowMultipleCreativeLengths = true;
-            var testEngine = _GetTestClass(false, allowMultipleCreativeLengths);
+            var testEngine = _GetTestClass(false);
             var result = testEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1389,13 +1395,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 300.00M
                         }
                     }
                 }
             };
 
-            var testEngine = _GetTestClass(false, true);
+            var testEngine = _GetTestClass(false);
             testEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
@@ -1417,6 +1424,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 300.00M
                         }
                     }
@@ -1446,6 +1454,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = defaultSpotCost
                         }
                     }
@@ -1457,6 +1466,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = defaultSpotCost
                         }
                     }
@@ -1486,6 +1496,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 350.00M
                         }
                     },
@@ -1497,6 +1508,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 400.00M
                         }
                     },
@@ -1508,6 +1520,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 375.00M
                         }
                     },
@@ -1519,6 +1532,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanBuyingInventoryProgram.ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 300.00M
                         }
                     },
@@ -2487,8 +2501,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void ProjectsImpressions_WhenGatheringInventory_ForBuying_v3()
         {
-            var allowMultiLength = true;
-
             // Arrange
             var parameters = new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto();
             var inventorySourceIds = new List<int>();
@@ -2612,7 +2624,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
-            var testEngine = _GetTestClass(false, allowMultiLength);
+            var testEngine = _GetTestClass(false);
 
             // Act
             var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
@@ -2630,8 +2642,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void AppliesProvidedImpressions_WhenGatheringInventory_ForBuying_v3()
         {
-            var allowMultiLength = true;
-
             // Arrange
             var parameters = new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto();
             var inventorySourceIds = new List<int>();
@@ -2760,7 +2770,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProvidedImpressions = 1500;
                     }
                 });
-            var testEngine = _GetTestClass(false, allowMultiLength);
+            var testEngine = _GetTestClass(false);
 
             // Act
             var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);

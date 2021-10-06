@@ -7,7 +7,6 @@
         public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";     
         public static string DISPLAY_CAMPAIGN_LINK = "broadcast-display-campaign-link";
         public static string DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
-        public static string ALLOW_MULTIPLE_CREATIVE_LENGTHS = "broadcast-allow-multiple-creative-lengths";
         public static string ENABLE_PRICING_EFFICIENCY_MODEL = "broadcast-enable-pricing-efficiency-model";
         public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";
         public static string ENABLE_PLAN_MARKET_SOV_CALCULATIONS = "broadcast-enable-plan-market-sov-calculations";

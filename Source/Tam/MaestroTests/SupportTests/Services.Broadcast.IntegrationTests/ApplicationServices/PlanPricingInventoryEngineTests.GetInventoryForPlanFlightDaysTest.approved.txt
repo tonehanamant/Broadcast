@@ -1,7 +1,7 @@
 ﻿[
   {
     "Cpm": 15.527950310559006211180124200,
-    "HouseholdProjectedImpressions": 83343.125,
+    "HouseholdProjectedImpressions": 41671.5625,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -114,9 +114,9 @@
     ],
     "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 2,
-    "PostingTypeImpressions": 48300.0,
-    "ProjectedImpressions": 83343.125,
-    "ProvidedImpressions": 69000.0,
+    "PostingTypeImpressions": 24150.0,
+    "ProjectedImpressions": 41671.5625,
+    "ProvidedImpressions": 34500.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
@@ -251,9 +251,9 @@
     ],
     "NsiToNtiImpressionConversionRate": 0.7,
     "PostingType": 2,
-    "PostingTypeImpressions": 420.0,
+    "PostingTypeImpressions": 210.0,
     "ProjectedImpressions": 0.0,
-    "ProvidedImpressions": 600.0,
+    "ProvidedImpressions": 300.0,
     "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {

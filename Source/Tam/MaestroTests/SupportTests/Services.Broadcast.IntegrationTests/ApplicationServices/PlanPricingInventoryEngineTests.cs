@@ -46,12 +46,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             /*
              * TODO:
              *  Rework this test with these toggles :
-             * - ALLOW_MULTIPLE_CREATIVE_LENGTHS = true
              * - PRICING_MODEL_BARTER_INVENTORY = false
              * - PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = false
              */
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+
+
+            // TODO SDE : this should be reworked for these to be true, as they are in production
+            //_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
 
             _ConfigurationSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
         }
@@ -89,7 +91,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void GetsInventoryForPricing()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
@@ -129,7 +130,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(json);
             }
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, false);
         }
 
         [Test]

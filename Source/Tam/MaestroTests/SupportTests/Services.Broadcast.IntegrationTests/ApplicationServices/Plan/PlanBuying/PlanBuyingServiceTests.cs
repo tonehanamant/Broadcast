@@ -39,8 +39,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         public void SetUp()
         {
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
-            // TODO: Affected tests should be reworked for these to be true, as they are in production
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+            // TODO SDE : this should be reworked for these to be true, as they are in production
+            //_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL] = false;
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPlanBuyingApiClient, PlanBuyingApiClientStub>();
@@ -169,12 +169,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay
+                    UnitCapsType = UnitCapEnum.Per30Min
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "integration test user");
 
-                var result = _PlanBuyingService.GetBuyingApiRequestPrograms(1197, new BuyingInventoryGetRequestParametersDto());
+                var result = _PlanBuyingService.GetBuyingApiRequestPrograms_v3(1197, new BuyingInventoryGetRequestParametersDto());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -304,7 +304,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.Per30Min,
                     MarketGroup = MarketGroupEnum.None,
                     PostingType =PostingTypeEnum.NTI
                 };
@@ -367,7 +367,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.PerWeek,
                     CPP = 14.6m,
                     Currency = PlanCurrenciesEnum.Impressions,
                     DeliveryRatingPoints = 1234,
@@ -599,7 +599,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.Per30Min,
                     MarketGroup = MarketGroupEnum.Top25
                 };
 
@@ -690,7 +690,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     DeliveryImpressions = 50000,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.Per30Min,
                     MarketGroup = MarketGroupEnum.Top100,
                     ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
                 };
@@ -728,7 +728,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 InflationFactor = 0.5,
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
-                UnitCapsType = UnitCapEnum.PerDay,
+                UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.None,
                 Margin = 20,
                 PostingType = PostingTypeEnum.NTI
@@ -830,7 +830,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void SavePricingResultsTestWithMultiLengthAndEfficiency()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
@@ -865,7 +864,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBandsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
@@ -900,7 +898,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetStationsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
@@ -935,7 +932,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetMarketsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
@@ -970,7 +966,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetProgramsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
@@ -1005,7 +1000,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBuyingOwnershipGroupsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
@@ -1040,7 +1034,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBuyingRepFirmsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;

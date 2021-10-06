@@ -83,12 +83,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IConfigurationSettingsHelper> _IConfigurationSettingsHelperMock;
 
-        protected PlanBuyingService _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false,
+        protected PlanBuyingService _GetService(bool useTrueIndependentStations = false,
             bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
@@ -284,183 +283,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var result = service._GetBuyingModelSpots_v3(groupedInventory, skippedWeekIds);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetPricingModelSpots_HandleDupWeekInventory()
-        {
-            // Arrange
-            var inventory = new List<PlanBuyingInventoryProgram>
-                {
-                    new PlanBuyingInventoryProgram
-                    {
-                        ManifestId = 1,
-                        StandardDaypartId = 15,
-                        Station = new DisplayBroadcastStation
-                        {
-                            Id = 5,
-                            LegacyCallLetters = "wnbc",
-                            MarketCode = 101,
-                        },
-                        ProvidedImpressions = 1000,
-                        ProjectedImpressions = 1100,
-                        ManifestRates = new List<ManifestRate>
-                        {
-                            new ManifestRate
-                            {
-                                SpotLengthId = 1,
-                                Cost = 50
-                            }
-                        },
-                        InventorySource = new InventorySource
-                        {
-                            Id = 3,
-                            InventoryType = InventorySourceTypeEnum.Barter
-                        },
-                        ManifestDayparts = new List<ManifestDaypart>
-                        {
-                            new ManifestDaypart
-                            {
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 1,
-                                    Monday = true,
-                                    StartTime = 18000, // 5am
-                                    EndTime = 21599 // 6am
-                                },
-                                Programs = new List<Program>
-                                {
-                                    new Program
-                                    {
-                                        Name = "seinfeld",
-                                        Genre = "News"
-                                    }
-                                },
-                                PrimaryProgram = new Program
-                                {
-                                    Name = "seinfeld",
-                                    Genre = "News"
-                                }
-                            }
-                        },
-                        ManifestWeeks = new List<ManifestWeek>
-                        {
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 100,
-                                InventoryMediaWeekId = 100
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 2,
-                                ContractMediaWeekId = 101,
-                                InventoryMediaWeekId = 101
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 102,
-                                InventoryMediaWeekId = 102
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 103,
-                                InventoryMediaWeekId = 103
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 104,
-                                InventoryMediaWeekId = 104
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 105,
-                                InventoryMediaWeekId = 105
-                            }
-                        }
-                    },
-                    new PlanBuyingInventoryProgram
-                    {
-                        ManifestId = 2,
-                        StandardDaypartId = 15,
-                        Station = new DisplayBroadcastStation
-                        {
-                            Id = 5,
-                            LegacyCallLetters = "wnbc",
-                            MarketCode = 101,
-                        },
-                        ProvidedImpressions = 1000,
-                        ProjectedImpressions = 1100,
-                        ManifestRates = new List<ManifestRate>
-                        {
-                            new ManifestRate
-                            {
-                                SpotLengthId = 1,
-                                Cost = 100
-                            }
-                        },
-                        InventorySource = new InventorySource
-                        {
-                            Id = 3,
-                            InventoryType = InventorySourceTypeEnum.Barter
-                        },
-                        ManifestDayparts = new List<ManifestDaypart>
-                        {
-                            new ManifestDaypart
-                            {
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 1,
-                                    Monday = true,
-                                    StartTime = 18000, // 5am
-                                    EndTime = 21599 // 6am
-                                },
-                                Programs = new List<Program>
-                                {
-                                    new Program
-                                    {
-                                        Name = "seinfeld",
-                                        Genre = "News"
-                                    }
-                                },
-                                PrimaryProgram = new Program
-                                {
-                                    Name = "seinfeld",
-                                    Genre = "News"
-                                }
-                            }
-                        },
-                        ManifestWeeks = new List<ManifestWeek>
-                        {
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 102,
-                                InventoryMediaWeekId = 102
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 2,
-                                ContractMediaWeekId = 103,
-                                InventoryMediaWeekId = 103
-                            }
-                        }
-                    }
-                };
-            var skippedWeekIds = new List<int>();
-            var groupedInventory = PlanBuyingService._GroupInventory(inventory);
-            var service = _GetService();
-
-            // Act
-            var result = service._GetBuyingModelSpots(groupedInventory, skippedWeekIds);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -700,11 +522,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanBuyingApiRequestDto>();
             _BuyingApiClientMock
-                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto>()))
-                .Returns(new PlanBuyingApiSpotsResponseDto
+                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+                .Returns(new PlanBuyingApiSpotsResponseDto_v3
                 {
                     RequestId = "q1w2e3r4",
-                    Results = new List<PlanBuyingApiSpotsResultDto>()
+                    Results = new List<PlanBuyingApiSpotsResultDto_v3>()
                 })
                 .Callback<PlanBuyingApiRequestDto>(request => requests.Add(request));
 
@@ -802,6 +624,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -870,6 +693,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -930,6 +754,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -999,6 +824,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -1139,7 +965,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 InflationFactor = 0.5,
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
-                UnitCapsType = UnitCapEnum.PerDay,
+                UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.All,
                 PostingType = postingType
             };
@@ -1595,6 +1421,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Returns(_GetWeeklyBreakDownWeeks());
 
             _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(new List<WeeklyBreakdownByWeek>
@@ -1646,6 +1476,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -1718,6 +1549,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -1780,6 +1612,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -1910,29 +1743,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               .Returns(_GetLatestMarketCoverages());
 
             _BuyingApiClientMock
-             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto>()))
-             .Returns(new PlanBuyingApiSpotsResponseDto
+             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+             .Returns(new PlanBuyingApiSpotsResponseDto_v3
              {
                  RequestId = "#q1w2e3",
-                 Results = new List<PlanBuyingApiSpotsResultDto>
+                 Results = new List<PlanBuyingApiSpotsResultDto_v3>
                  {
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 100,
-                            Frequency = 1
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 1
+                                }
+                            }
                         },
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 101,
-                            Frequency = 2
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 2
+                                }
+                            }
                         },
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 2,
                             MediaWeekId = 100,
-                            Frequency = 3
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 3
+                                }
+                            }
                         }
                  }
              });
@@ -2057,69 +1911,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.IsTrue(planVersionBuyingResultIds.Count(x => x <= 100) == 0);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetBuyingModelSpots_VerifyMappings_V2()
-        {
-            // Arrange
-            var inventory = _GetInventory();
-            // for v2 must remove the multi spot length. 
-            // stick with SpotLength 1
-            inventory.ForEach(s => s.ManifestRates = s.ManifestRates.Where(r => r.SpotLengthId == 1).ToList());
-
-            var skippedWeekIds = new List<int> { 821 };
-            var service = _GetService();
-            var groupedInventory = PlanBuyingService._GroupInventory(inventory);
-
-            // Act
-            var result = service._GetBuyingModelSpots(groupedInventory, skippedWeekIds);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ResultSeparatesAllocatedAndUnallocatedV2()
-        {
-            var inventory = _GetInventory();
-            // for v2 must remove the multi spot length. 
-            // stick with SpotLength 1
-            inventory.ForEach(s => s.ManifestRates = s.ManifestRates.Where(r => r.SpotLengthId == 1).ToList());
-
-            var parameters = new PlanBuyingParametersDto { Margin = 20 };
-            var service = _GetService();
-            var skippedWeeks = new List<int>();
-
-            // these service steps are performed leading up to this step.
-            var groupedInventory = PlanBuyingService._GroupInventory(inventory);
-            var spotsAndMappings = service._GetBuyingModelSpots(groupedInventory, skippedWeeks);
-            var buyingApiRequest = new PlanBuyingApiRequestDto { Spots = spotsAndMappings.Spots };
-            var apiSpotsResults = new PlanBuyingApiSpotsResponseDto
-            {
-                Results = new List<PlanBuyingApiSpotsResultDto>
-                {
-                    new PlanBuyingApiSpotsResultDto
-                    {
-                        ManifestId = spotsAndMappings.Spots[0].Id, MediaWeekId = spotsAndMappings.Spots[0].MediaWeekId, Frequency = 5
-                    },
-                    new PlanBuyingApiSpotsResultDto
-                    {
-                        ManifestId = spotsAndMappings.Spots[2].Id, MediaWeekId = spotsAndMappings.Spots[2].MediaWeekId, Frequency = 2
-                    },
-                    new PlanBuyingApiSpotsResultDto
-                    {
-                        ManifestId = spotsAndMappings.Spots[3].Id, MediaWeekId = spotsAndMappings.Spots[3].MediaWeekId, Frequency = 3
-                    }
-                }
-            };
-
-            // put this in
-            var results = service._MapToResultSpotsV2(apiSpotsResults, buyingApiRequest, inventory, parameters, spotsAndMappings.Mappings);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
         private List<PlanBuyingInventoryProgram> _GetInventory()
@@ -2876,11 +2667,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanBuyingApiRequestDto>();
             _BuyingApiClientMock
-                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto>()))
-                .Returns(new PlanBuyingApiSpotsResponseDto
+                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+                .Returns(new PlanBuyingApiSpotsResponseDto_v3
                 {
                     RequestId = "q1w2e3r4",
-                    Results = new List<PlanBuyingApiSpotsResultDto>()
+                    Results = new List<PlanBuyingApiSpotsResultDto_v3>()
                 })
                 .Callback<PlanBuyingApiRequestDto>(request => requests.Add(request));
 
@@ -4850,7 +4641,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
-            var service = _GetService(false, false, true, true);
+            // TODO SDE : this should be reworked for these to be true, as they are in production
+            var service = _GetService(false, true, true);
 
             // Act
             var result = service.GetCurrentBuyingExecution_v2(planId, PostingTypeEnum.NSI);
@@ -5441,6 +5233,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PlanBuyingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
                 .Returns(new List<PlanBuyingInventoryProgram>
@@ -5462,6 +5258,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -5534,6 +5331,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -5596,6 +5394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -5666,6 +5465,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -5726,29 +5526,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               .Returns(_GetLatestMarketCoverages());
 
             _BuyingApiClientMock
-             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto>()))
-             .Returns(new PlanBuyingApiSpotsResponseDto
+             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+             .Returns(new PlanBuyingApiSpotsResponseDto_v3
              {
                  RequestId = "#q1w2e3",
-                 Results = new List<PlanBuyingApiSpotsResultDto>
+                 Results = new List<PlanBuyingApiSpotsResultDto_v3>
                  {
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 100,
-                            Frequency = 1
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 1
+                                }
+                            }
                         },
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 101,
-                            Frequency = 2
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 2
+                                }
+                            }
                         },
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 2,
                             MediaWeekId = 100,
-                            Frequency = 3
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 3
+                                }
+                            }
                         }
                  }
              });
@@ -7212,6 +7033,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PlanBuyingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanBuyingJobDiagnostic>()))
                 .Returns(new List<PlanBuyingInventoryProgram>
@@ -7233,6 +7058,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -7305,6 +7131,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -7367,6 +7194,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -7437,6 +7265,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -7497,29 +7326,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               .Returns(_GetLatestMarketCoverages());
 
             _BuyingApiClientMock
-             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto>()))
-             .Returns(new PlanBuyingApiSpotsResponseDto
+             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+             .Returns(new PlanBuyingApiSpotsResponseDto_v3
              {
                  RequestId = "#q1w2e3",
-                 Results = new List<PlanBuyingApiSpotsResultDto>
+                 Results = new List<PlanBuyingApiSpotsResultDto_v3>
                  {
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 100,
-                            Frequency = 1
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 1
+                                }
+                            }
                         },
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 101,
-                            Frequency = 2
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 2
+                                }
+                            }
                         },
-                        new PlanBuyingApiSpotsResultDto
+                        new PlanBuyingApiSpotsResultDto_v3
                         {
                             ManifestId = 2,
                             MediaWeekId = 100,
-                            Frequency = 3
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 3
+                                }
+                            }
                         }
                  }
              });

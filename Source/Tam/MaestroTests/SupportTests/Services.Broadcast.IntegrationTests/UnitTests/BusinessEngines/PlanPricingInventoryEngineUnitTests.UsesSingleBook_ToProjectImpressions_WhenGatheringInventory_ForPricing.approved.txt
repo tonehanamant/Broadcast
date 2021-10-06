@@ -182,7 +182,7 @@
       "PlaybackType": 4,
       "ShareProjectionBookId": 201,
       "HutProjectionBookId": null,
-      "Equivalized": true,
+      "Equivalized": false,
       "SpotLengthId": 5,
       "PostType": 2
     },

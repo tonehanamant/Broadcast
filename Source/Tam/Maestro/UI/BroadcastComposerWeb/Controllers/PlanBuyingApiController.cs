@@ -146,18 +146,6 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="planId">Plan ID</param>
         /// <param name="requestParameters">Parameters</param>
         [HttpPost]
-        [Route("requestprograms")]
-        public BaseResponse<PlanBuyingApiRequestDto> GetBuyingProgramApiRequest(int planId, BuyingInventoryGetRequestParametersDto requestParameters)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingApiRequestPrograms(planId, requestParameters));
-        }
-
-        /// <summary>
-        /// Allows checking that correct inventory is used for pricing
-        /// </summary>
-        /// <param name="planId">Plan ID</param>
-        /// <param name="requestParameters">Parameters</param>
-        [HttpPost]
         [Route("requestprograms3")]
         public BaseResponse<PlanBuyingApiRequestDto_v3> GetBuyingProgramApiRequest_v3(int planId, BuyingInventoryGetRequestParametersDto requestParameters)
         {

@@ -8,35 +8,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs.Plan
 {
     public class PlanBuyingApiClientStub : IPlanBuyingApiClient
     {
-        public PlanBuyingApiRequestDto LastSentRequest;
-
-        public PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request)
-        {
-            LastSentRequest = request;
-
-            var results = new List<PlanBuyingApiSpotsResultDto>();
-
-            foreach (var spot in request.Spots)
-            {
-                var result = new PlanBuyingApiSpotsResultDto
-                {
-                    ManifestId = spot.Id,
-                    MediaWeekId = spot.MediaWeekId,
-                    Frequency = 1
-                };
-
-                results.Add(result);
-            }
-            
-            return new PlanBuyingApiSpotsResponseDto
-            {
-                RequestId = "djj4j4399fmmf1m212",
-                Results = results
-            };
-        }
+        public PlanBuyingApiRequestDto_v3 LastSentRequest;        
 
         public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)
         {
+            LastSentRequest = request;
+
             var results = new List<PlanBuyingApiSpotsResultDto_v3>();
 
             foreach (var spot in request.Spots)

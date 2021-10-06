@@ -79,7 +79,7 @@
       "ManifestRates": [
         {
           "Cost": 18.75,
-          "SpotLengthId": 0
+          "SpotLengthId": 1
         }
       ],
       "StandardDaypartId": 23,
@@ -124,7 +124,7 @@
           },
           "ManifestRates": [
             {
-              "SpotLengthId": 0,
+              "SpotLengthId": 1,
               "Cost": 15.0
             }
           ],
@@ -242,7 +242,7 @@
           },
           "ManifestRates": [
             {
-              "SpotLengthId": 0,
+              "SpotLengthId": 1,
               "Cost": 15.0
             }
           ],

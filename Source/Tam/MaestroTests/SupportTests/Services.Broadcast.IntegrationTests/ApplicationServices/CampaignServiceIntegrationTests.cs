@@ -929,8 +929,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 const int planId = 1197;
                 var now = new DateTime(2020, 4, 4);
 
-                // TODO: this should be reworked for these to be true, as they are in production
-                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+                // TODO SDE : this should be reworked for these to be true, as they are in production
+                //_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
 
                 IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
                 var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
@@ -946,7 +946,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay
+                    UnitCapsType = UnitCapEnum.Per30Min
                 };
 
                 var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");

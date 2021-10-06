@@ -81,23 +81,23 @@
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 2.5545977,
-      "Budget": 5560.0000,
+      "AvailableInventoryPercent": 7.6637931,
+      "Budget": 16680.0000,
       "Cpm": 17.869194922063313514382130800,
-      "Impressions": 311.15,
+      "Impressions": 933.45,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
       "MinBand": 2.0000,
-      "Spots": 30
+      "Spots": 60
     }
   ],
   "PlanVersionId": 0,
   "PostingType": 2,
   "SpotAllocationModelMode": 1,
   "Totals": {
-    "Budget": 5560.0000,
+    "Budget": 16680.0000,
     "Cpm": 17.8691,
-    "Impressions": 311.15,
-    "Spots": 30
+    "Impressions": 933.45,
+    "Spots": 60
   }
 }

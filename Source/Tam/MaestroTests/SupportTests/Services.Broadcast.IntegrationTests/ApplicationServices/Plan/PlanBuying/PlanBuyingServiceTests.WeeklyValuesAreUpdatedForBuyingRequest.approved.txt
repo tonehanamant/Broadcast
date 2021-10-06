@@ -8,9 +8,7 @@
           "daypart_id": 2
         }
       ],
-      "frequency_cap_spots": 10,
-      "frequency_cap_time": 1.0,
-      "frequency_cap_unit": "day",
+      "frequency_cap": 20,
       "impression_goal": 9990694.0,
       "market_coverage_goal": 0.001,
       "share_of_voice": [
@@ -415,6 +413,13 @@
           "market_goal": 0.345
         }
       ],
+      "spot_lengths": [
+        {
+          "spot_length_goal": 1.0,
+          "spot_length_id": 2,
+          "spot_scale_factor": 2.0
+        }
+      ],
       "week_id": 771
     },
     {
@@ -425,9 +430,7 @@
           "daypart_id": 2
         }
       ],
-      "frequency_cap_spots": 10,
-      "frequency_cap_time": 1.0,
-      "frequency_cap_unit": "day",
+      "frequency_cap": 20,
       "impression_goal": 9990690.0,
       "market_coverage_goal": 0.001,
       "share_of_voice": [
@@ -830,6 +833,13 @@
         {
           "market_code": 101,
           "market_goal": 0.345
+        }
+      ],
+      "spot_lengths": [
+        {
+          "spot_length_goal": 1.0,
+          "spot_length_id": 2,
+          "spot_scale_factor": 2.0
         }
       ],
       "week_id": 772
@@ -842,9 +852,7 @@
           "daypart_id": 2
         }
       ],
-      "frequency_cap_spots": 10,
-      "frequency_cap_time": 1.0,
-      "frequency_cap_unit": "day",
+      "frequency_cap": 20,
       "impression_goal": 9990690.0,
       "market_coverage_goal": 0.001,
       "share_of_voice": [
@@ -1247,6 +1255,13 @@
         {
           "market_code": 101,
           "market_goal": 0.345
+        }
+      ],
+      "spot_lengths": [
+        {
+          "spot_length_goal": 1.0,
+          "spot_length_id": 2,
+          "spot_scale_factor": 2.0
         }
       ],
       "week_id": 773
@@ -1259,9 +1274,7 @@
           "daypart_id": 2
         }
       ],
-      "frequency_cap_spots": 10,
-      "frequency_cap_time": 1.0,
-      "frequency_cap_unit": "day",
+      "frequency_cap": 20,
       "impression_goal": 9990690.0,
       "market_coverage_goal": 0.001,
       "share_of_voice": [
@@ -1664,6 +1677,13 @@
         {
           "market_code": 101,
           "market_goal": 0.345
+        }
+      ],
+      "spot_lengths": [
+        {
+          "spot_length_goal": 1.0,
+          "spot_length_id": 2,
+          "spot_scale_factor": 2.0
         }
       ],
       "week_id": 774
@@ -1676,9 +1696,7 @@
           "daypart_id": 2
         }
       ],
-      "frequency_cap_spots": 10,
-      "frequency_cap_time": 1.0,
-      "frequency_cap_unit": "day",
+      "frequency_cap": 20,
       "impression_goal": 9990690.0,
       "market_coverage_goal": 0.001,
       "share_of_voice": [
@@ -2081,6 +2099,13 @@
         {
           "market_code": 101,
           "market_goal": 0.345
+        }
+      ],
+      "spot_lengths": [
+        {
+          "spot_length_goal": 1.0,
+          "spot_length_id": 2,
+          "spot_scale_factor": 2.0
         }
       ],
       "week_id": 775
@@ -2088,360 +2113,510 @@
   ],
   "inventory": [
     {
-      "cost": 750.0000,
       "daypart_id": 2,
       "id": 287146,
-      "impressions": 48300.0,
+      "impressions": 24150.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 750.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 771
     },
     {
-      "cost": 750.0000,
       "daypart_id": 2,
       "id": 287146,
-      "impressions": 48300.0,
+      "impressions": 24150.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 750.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 772
     },
     {
-      "cost": 750.0000,
       "daypart_id": 2,
       "id": 287146,
-      "impressions": 48300.0,
+      "impressions": 24150.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 750.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 773
     },
     {
-      "cost": 750.0000,
       "daypart_id": 2,
       "id": 287146,
-      "impressions": 48300.0,
+      "impressions": 24150.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 750.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 774
     },
     {
-      "cost": 750.0000,
       "daypart_id": 2,
       "id": 287146,
-      "impressions": 48300.0,
+      "impressions": 24150.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 750.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 775
     },
     {
-      "cost": 800.0000,
       "daypart_id": 2,
       "id": 287150,
-      "impressions": 42280.0,
+      "impressions": 21140.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 800.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 771
     },
     {
-      "cost": 800.0000,
       "daypart_id": 2,
       "id": 287150,
-      "impressions": 42280.0,
+      "impressions": 21140.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 800.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 772
     },
     {
-      "cost": 800.0000,
       "daypart_id": 2,
       "id": 287150,
-      "impressions": 42280.0,
+      "impressions": 21140.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 800.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 773
     },
     {
-      "cost": 800.0000,
       "daypart_id": 2,
       "id": 287150,
-      "impressions": 42280.0,
+      "impressions": 21140.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 800.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 774
     },
     {
-      "cost": 800.0000,
       "daypart_id": 2,
       "id": 287150,
-      "impressions": 42280.0,
+      "impressions": 21140.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 800.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 0.5,
       "station_id": 575,
       "week_id": 775
     },
     {
-      "cost": 600.0000,
       "daypart_id": 2,
       "id": 287154,
-      "impressions": 32760.0,
+      "impressions": 16380.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 600.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 575,
       "week_id": 771
     },
     {
-      "cost": 600.0000,
       "daypart_id": 2,
       "id": 287154,
-      "impressions": 32760.0,
+      "impressions": 16380.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 600.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 575,
       "week_id": 772
     },
     {
-      "cost": 600.0000,
       "daypart_id": 2,
       "id": 287154,
-      "impressions": 32760.0,
+      "impressions": 16380.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 600.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 575,
       "week_id": 773
     },
     {
-      "cost": 600.0000,
       "daypart_id": 2,
       "id": 287154,
-      "impressions": 32760.0,
+      "impressions": 16380.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 600.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 575,
       "week_id": 774
     },
     {
-      "cost": 600.0000,
       "daypart_id": 2,
       "id": 287154,
-      "impressions": 32760.0,
+      "impressions": 16380.0,
       "market_code": 101,
       "percentage_of_us": 0.1,
+      "spot_cost": [
+        {
+          "spot_length_cost": 600.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 575,
       "week_id": 775
     },
     {
-      "cost": 50.0000,
       "daypart_id": 2,
       "id": 288692,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 50.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 2106,
       "week_id": 771
     },
     {
-      "cost": 50.0000,
       "daypart_id": 2,
       "id": 288692,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 50.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 2106,
       "week_id": 772
     },
     {
-      "cost": 50.0000,
       "daypart_id": 2,
       "id": 288692,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 50.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 2106,
       "week_id": 773
     },
     {
-      "cost": 50.0000,
       "daypart_id": 2,
       "id": 288692,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 50.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 2106,
       "week_id": 774
     },
     {
-      "cost": 50.0000,
       "daypart_id": 2,
       "id": 288692,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 50.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 5,
       "spot_hours": 0.5,
       "station_id": 2106,
       "week_id": 775
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288693,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 771
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288693,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 772
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288693,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 773
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288693,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 774
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288693,
-      "impressions": 420.0,
+      "impressions": 210.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 775
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288694,
-      "impressions": 280.0,
+      "impressions": 140.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 771
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288694,
-      "impressions": 280.0,
+      "impressions": 140.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 772
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288694,
-      "impressions": 280.0,
+      "impressions": 140.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 773
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288694,
-      "impressions": 280.0,
+      "impressions": 140.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,
       "week_id": 774
     },
     {
-      "cost": 12.0000,
       "daypart_id": 2,
       "id": 288694,
-      "impressions": 280.0,
+      "impressions": 140.0,
       "market_code": 100,
       "percentage_of_us": 0.00328,
+      "spot_cost": [
+        {
+          "spot_length_cost": 12.0000,
+          "spot_length_id": 2
+        }
+      ],
       "spot_days": 1,
       "spot_hours": 1.0,
       "station_id": 2106,

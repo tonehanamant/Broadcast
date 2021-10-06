@@ -10,6 +10,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -3160,6 +3161,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanVersionId");
+            jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "JobId");
+            jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "PlanId");
+            jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "PlanVersionId");
 
             return new JsonSerializerSettings
             {

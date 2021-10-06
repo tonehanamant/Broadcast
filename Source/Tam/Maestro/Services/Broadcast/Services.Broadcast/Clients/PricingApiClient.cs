@@ -12,8 +12,6 @@ namespace Services.Broadcast.Clients
 {
     public interface IPricingApiClient
     {
-        Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request);
-
         Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request);
     }
 
@@ -36,12 +34,6 @@ namespace Services.Broadcast.Clients
             _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
             _HttpClient = httpClient;
-        }
-
-        public async Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request)
-        {
-            var url = $"{_OpenMarketSpotsAllocationUrl.Value}";
-            return await _PostAsync<PlanPricingApiSpotsResponseDto>(url, request);
         }
 
         public async Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request)

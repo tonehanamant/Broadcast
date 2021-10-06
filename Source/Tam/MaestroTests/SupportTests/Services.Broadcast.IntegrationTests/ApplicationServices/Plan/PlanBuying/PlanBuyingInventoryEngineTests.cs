@@ -38,8 +38,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             _InventoryFileTestHelper = new InventoryFileTestHelper();
 
             var launchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
-            // TODO: Affected tests should be reworked for these to be true, as they are in production
-            launchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
+            // TODO SDE : this should be reworked for these to be true, as they are in production
+            //launchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
         }
 
         [Test]

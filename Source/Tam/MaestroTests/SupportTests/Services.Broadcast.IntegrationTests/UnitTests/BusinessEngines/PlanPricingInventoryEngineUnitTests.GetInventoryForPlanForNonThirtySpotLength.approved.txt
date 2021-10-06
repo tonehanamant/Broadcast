@@ -1,7 +1,7 @@
 {
   "inventory": [
     {
-      "Cpm": 33.333333333333333333333333300,
+      "Cpm": 5.5555555555555555555555556000,
       "HouseholdProjectedImpressions": 0.0,
       "InventoryPricingQuarterType": "Plan",
       "InventorySource": null,
@@ -182,7 +182,7 @@
       "PlaybackType": 4,
       "ShareProjectionBookId": 201,
       "HutProjectionBookId": 202,
-      "Equivalized": true,
+      "Equivalized": false,
       "SpotLengthId": 5,
       "PostType": 1
     },

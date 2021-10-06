@@ -20,5 +20,5 @@
   "ProprietaryBlend": 0.2,
   "ProprietaryInventory": [],
   "UnitCaps": 10,
-  "UnitCapsType": 3
+  "UnitCapsType": 1
 }

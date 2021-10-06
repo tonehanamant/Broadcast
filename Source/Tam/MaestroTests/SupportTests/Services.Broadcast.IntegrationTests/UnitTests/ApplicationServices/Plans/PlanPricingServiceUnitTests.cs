@@ -158,7 +158,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_BroadcastAudienceRepositoryMock.Object);
 
             _PricingRequestLogClient
-                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
+                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto_v3>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
@@ -944,6 +944,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -1012,6 +1013,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -1062,10 +1064,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
 
-
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
 
             var jobUpdates = new List<PlanPricingJob>();
             _PlanRepositoryMock
@@ -1097,12 +1102,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
         }
 
-        protected PlanPricingServiceUnitTestClass _GetService(bool useTrueIndependentStations = false, bool allowMultipleCreativeLengths = false,
+        protected PlanPricingServiceUnitTestClass _GetService(bool useTrueIndependentStations = false,
                                                                 bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, allowMultipleCreativeLengths);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
@@ -1149,7 +1153,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 InflationFactor = 0.5,
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
-                UnitCapsType = UnitCapEnum.PerDay,
+                UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.All,
                 PostingType = PostingTypeEnum.NSI
             };
@@ -1174,6 +1178,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 50
                         }
                     },
@@ -1234,6 +1239,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 50
                         }
                     },
@@ -1289,6 +1295,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 50
                         }
                     },
@@ -1344,6 +1351,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 130
                         }
                     },
@@ -1477,6 +1485,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 40
                         }
                     },
@@ -1537,6 +1546,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 40
                         }
                     },
@@ -1592,6 +1602,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new ManifestRate
                         {
+                            SpotLengthId = 1,
                             Cost = 40
                         }
                     },
@@ -1911,6 +1922,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -1976,6 +1988,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -2040,6 +2053,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
 
             _InventoryProprietarySummaryRepositoryMock
                 .Setup(x => x.GetInventoryProprietarySummariesByIds(It.IsAny<IEnumerable<int>>()))
@@ -2295,6 +2312,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                .Returns(_GetWeeklyBreakDownWeeks());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PlanPricingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
                 .Returns(new List<PlanPricingInventoryProgram>
@@ -2315,6 +2336,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -2383,6 +2405,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -2443,6 +2466,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -2512,6 +2536,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -2571,10 +2596,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -2719,6 +2744,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -2787,6 +2813,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -2847,6 +2874,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -2916,6 +2944,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -2979,19 +3008,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(
                 Task.FromResult(
-                    new PlanPricingApiSpotsResponseDto
+                    new PlanPricingApiSpotsResponseDto_v3
                     {
-                        Error = new PlanPricingApiSpotsErrorDto
+                        Error = new PlanPricingApiSpotsErrorDto_v3
                         {
                             Messages = new List<string>
-                        {
-                            "Message 1",
-                            "Error 2"
-                        }
+                            {
+                                "Message 1",
+                                "Error 2"
+                            }
                         }
                     }));
 
@@ -3185,6 +3218,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -3253,6 +3287,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -3313,6 +3348,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -3382,6 +3418,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -3445,18 +3482,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(
-                new PlanPricingApiSpotsResponseDto
+                new PlanPricingApiSpotsResponseDto_v3
                 {
-                    Results = new List<PlanPricingApiSpotsResultDto>
+                    Results = new List<PlanPricingApiSpotsResultDto_v3>
                     {
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 1000,
                             MediaWeekId = 1000,
-                            Frequency = 5
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 5
+                                }
+                            }
                         }
                     }
                 }));
@@ -3633,6 +3681,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -3701,6 +3750,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -3761,6 +3811,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -3830,6 +3881,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -3893,13 +3945,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(
-                new PlanPricingApiSpotsResponseDto
+                new PlanPricingApiSpotsResponseDto_v3
                 {
                     RequestId = "#q1w2e3",
-                    Results = new List<PlanPricingApiSpotsResultDto>()
+                    Results = new List<PlanPricingApiSpotsResultDto_v3>()
                 }));
 
             var jobUpdates = new List<PlanPricingJob>();
@@ -4082,6 +4138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -4154,6 +4211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -4216,6 +4274,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -4286,6 +4345,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -4349,31 +4409,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                .Returns(_GetWeeklyBreakDownWeeks());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(
-                new PlanPricingApiSpotsResponseDto
+                new PlanPricingApiSpotsResponseDto_v3
                 {
                     RequestId = "#q1w2e3",
-                    Results = new List<PlanPricingApiSpotsResultDto>
+                    Results = new List<PlanPricingApiSpotsResultDto_v3>
                     {
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 100,
-                            Frequency = 1
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 1
+                                }
+                            }
                         },
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 101,
-                            Frequency = 2
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 2
+                                }
+                            }
                         },
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 2,
                             MediaWeekId = 100,
-                            Frequency = 3
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 3
+                                }
+                            }
                         }
                     }
                 }));
@@ -4531,6 +4616,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PlanPricingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<Guid>()))
                 .Returns(new List<PlanPricingInventoryProgram>
@@ -4553,6 +4642,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -4626,6 +4716,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -4688,6 +4779,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -4758,6 +4850,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -4818,30 +4911,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetLatestMarketCoverages());
 
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(
-                    new PlanPricingApiSpotsResponseDto
+                    new PlanPricingApiSpotsResponseDto_v3
                     {
                         RequestId = "#q1w2e3",
-                        Results = new List<PlanPricingApiSpotsResultDto>
+                        Results = new List<PlanPricingApiSpotsResultDto_v3>
                     {
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 100,
-                            Frequency = 1
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 1
+                                }
+                            }
                         },
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 1,
                             MediaWeekId = 101,
-                            Frequency = 2
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 2
+                                }
+                            }
                         },
-                        new PlanPricingApiSpotsResultDto
+                        new PlanPricingApiSpotsResultDto_v3
                         {
                             ManifestId = 2,
                             MediaWeekId = 100,
-                            Frequency = 3
+                            Frequencies = new List<SpotFrequencyResponse>
+                            {
+                                new SpotFrequencyResponse
+                                {
+                                    SpotLengthId = 1,
+                                    Frequency = 3
+                                }
+                            }
                         }
                     }
                     }));
@@ -6094,7 +6208,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<int?>())).Returns(6.75M);
 
-            var service = _GetService(false, false, true, true);
+            // TODO SDE : this should be reworked for these to be true, as they are in production
+            var service = _GetService(false, true, true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, null);
@@ -6167,7 +6282,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<int?>())).Returns(6.75M);
 
-            var service = _GetService(false, false, true, true);
+            // TODO SDE : this should be reworked for these to be true, as they are in production
+            var service = _GetService(false, true, true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, PlanVersionId);
@@ -8526,10 +8642,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -8593,10 +8713,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -8665,16 +8789,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(
-                    new PlanPricingApiSpotsResponseDto
+                    new PlanPricingApiSpotsResponseDto_v3
                     {
                         RequestId = "q1w2e3r4",
-                        Results = new List<PlanPricingApiSpotsResultDto>()
+                        Results = new List<PlanPricingApiSpotsResultDto_v3>()
                     }))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -8750,16 +8878,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(
-                    new PlanPricingApiSpotsResponseDto
+                    new PlanPricingApiSpotsResponseDto_v3
                     {
                         RequestId = "q1w2e3r4",
-                        Results = new List<PlanPricingApiSpotsResultDto>()
+                        Results = new List<PlanPricingApiSpotsResultDto_v3>()
                     }))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -8823,10 +8955,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -8890,10 +9026,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -8957,10 +9097,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakDownGroup());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -9009,10 +9153,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             _InventoryProprietarySummaryRepositoryMock
                 .Setup(x => x.GetInventoryProprietarySummariesByIds(It.IsAny<IEnumerable<int>>()))
@@ -9088,10 +9236,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                .Returns(_GetWeeklyBreakDownWeeksTiered());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -9155,8 +9307,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                .Returns(_GetWeeklyBreakDownWeeksTiered());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
                 .Returns(Task.FromResult(_GetTieredAllocations()));
 
             var allocations = new List<PlanPricingAllocationResult>();
@@ -9285,36 +9441,64 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
         }
 
-        private PlanPricingApiSpotsResponseDto _GetTieredAllocations()
+        private PlanPricingApiSpotsResponseDto_v3 _GetTieredAllocations()
         {
-            return new PlanPricingApiSpotsResponseDto
+            return new PlanPricingApiSpotsResponseDto_v3
             {
                 RequestId = "AAA",
-                Results = new List<PlanPricingApiSpotsResultDto>
+                Results = new List<PlanPricingApiSpotsResultDto_v3>
                 {
-                    new PlanPricingApiSpotsResultDto
+                    new PlanPricingApiSpotsResultDto_v3
                     {
                         ManifestId = 1,
                         MediaWeekId = 100,
-                        Frequency = 1
+                        Frequencies = new List<SpotFrequencyResponse>
+                        {
+                            new SpotFrequencyResponse
+                            {
+                                SpotLengthId = 1,
+                                Frequency = 1
+                            }
+                        }
                     },
-                    new PlanPricingApiSpotsResultDto
+                    new PlanPricingApiSpotsResultDto_v3
                     {
                         ManifestId = 1,
                         MediaWeekId = 101,
-                        Frequency = 2
+                        Frequencies = new List<SpotFrequencyResponse>
+                        {
+                            new SpotFrequencyResponse
+                            {
+                                SpotLengthId = 1,
+                                Frequency = 2
+                            }
+                        }
                     },
-                    new PlanPricingApiSpotsResultDto
+                    new PlanPricingApiSpotsResultDto_v3
                     {
                         ManifestId = 1,
                         MediaWeekId = 102,
-                        Frequency = 3
+                        Frequencies = new List<SpotFrequencyResponse>
+                        {
+                            new SpotFrequencyResponse
+                            {
+                                SpotLengthId = 1,
+                                Frequency = 3
+                            }
+                        }
                     },
-                    new PlanPricingApiSpotsResultDto
+                    new PlanPricingApiSpotsResultDto_v3
                     {
                         ManifestId = 1,
                         MediaWeekId = 103,
-                        Frequency = 4
+                        Frequencies = new List<SpotFrequencyResponse>
+                        {
+                            new SpotFrequencyResponse
+                            {
+                                SpotLengthId = 1,
+                                Frequency = 4
+                            }
+                        }
                     }
                 }
             };
@@ -9634,10 +9818,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Callback<PlanPricingApiRequestDto_v3>(request => requests.Add(request));
 
             var service = _GetService();
 
@@ -9697,10 +9885,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
                 .Returns(_GetWeeklyBreakDownWeeks());
 
-            var requests = new List<PlanPricingApiRequestDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
+
+            var requests = new List<PlanPricingApiRequestDto_v3>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto>()))
-                .Returns(Task.FromResult(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" }));
+                .Setup(x => x.GetPricingSpotsResultAsync(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                .Returns(Task.FromResult(new PlanPricingApiSpotsResponseDto_v3 { RequestId = "Request1", Results = new List<PlanPricingApiSpotsResultDto_v3>()}));
 
             var service = _GetService();
 
@@ -10635,7 +10827,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var result = service._GetPricingModelSpots(groupedInventory, skippedWeekIds);
+            var result = service._GetPricingModelSpots_v3(groupedInventory, skippedWeekIds);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -11063,6 +11255,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -11131,6 +11324,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -11199,6 +11393,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -11268,6 +11463,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -11329,6 +11525,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -11399,6 +11596,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },
@@ -11476,6 +11674,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -11545,6 +11744,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 60
                             }
                         },
@@ -11606,6 +11806,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 50
                             }
                         },
@@ -11676,6 +11877,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             new ManifestRate
                             {
+                                SpotLengthId = 1,
                                 Cost = 0
                             }
                         },

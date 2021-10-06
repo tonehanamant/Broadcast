@@ -9,8 +9,6 @@ namespace Services.Broadcast.Clients
 {
     public interface IPlanBuyingApiClient
     {
-        PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request);
-
         PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request);
     }
 
@@ -31,12 +29,6 @@ namespace Services.Broadcast.Clients
             _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
             _HttpClient = httpClient;
-        }
-
-        public PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request)
-        {
-            var url = $"{_OpenMarketSpotsAllocationUrl.Value}";
-            return _Post<PlanBuyingApiSpotsResponseDto>(url, request);
         }
 
         public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)

@@ -112,7 +112,6 @@ namespace Services.Broadcast.IntegrationTests
         private static void _SetupGlobalFeatureToggles(LaunchDarklyClientStub launchDarklyClientStub)
         {
             /*** These are set as they are in production. ***/
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS, true);
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, true);
             launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = true;
