@@ -720,7 +720,8 @@ namespace Services.Broadcast.Repositories
                     NumberOfUnit = p.unit_number,
                     Id = p.inventory_proprietary_summary_id
                 }).ToList(),
-                PostingType = (PostingTypeEnum)arg.posting_type
+                PostingType = (PostingTypeEnum)arg.posting_type,
+                BudgetCpmLever = (BudgetCpmLeverEnum)arg.budget_cpm_lever
             };
         }
 
@@ -1529,7 +1530,8 @@ namespace Services.Broadcast.Repositories
                             unit_number = x.NumberOfUnit.GetValueOrDefault()
                         })
                         .ToList(),
-                    posting_type = (int)planPricingParametersDto.PostingType
+                    posting_type = (int)planPricingParametersDto.PostingType,
+                    budget_cpm_lever = (int)planPricingParametersDto.BudgetCpmLever
                 };
 
                 context.plan_version_pricing_parameters.Add(planPricingParameters);

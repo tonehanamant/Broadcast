@@ -531,6 +531,7 @@
     <Compile Include="ApplicationServices\Plan\PlanIsciService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="Entities\LogoResultDto.cs" />
+    <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
     <Compile Include="FeatureToggles.cs" />
     <Compile Include="BusinessEngines\AabEngine.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />

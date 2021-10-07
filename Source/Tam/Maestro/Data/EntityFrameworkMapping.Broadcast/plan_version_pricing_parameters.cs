@@ -41,6 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cpm_adjusted { get; set; }
         public int market_group { get; set; }
         public int posting_type { get; set; }
+        public int budget_cpm_lever { get; set; }
     
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
         public virtual plan_versions plan_versions { get; set; }

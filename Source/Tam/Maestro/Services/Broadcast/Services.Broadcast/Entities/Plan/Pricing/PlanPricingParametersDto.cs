@@ -28,6 +28,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int? JobId { get; set; }
         public bool IsSelected { get; set; }
         public PostingTypeEnum PostingType { get; set; }
+        public BudgetCpmLeverEnum BudgetCpmLever { get; set; } = BudgetCpmLeverEnum.Cpm;
         public List<InventoryProprietarySummary> ProprietaryInventory { get; set; } = new List<InventoryProprietarySummary>();
     }
 }

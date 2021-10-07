@@ -953,6 +953,47 @@ END
 GO
 /*************************************** END BP-1101 ***************************************/
 
+/*************************************** START BP-3128 ***************************************/
+
+DECLARE @pricingAddColumnSql VARCHAR(MAX) = 
+'ALTER TABLE plan_version_pricing_parameters 
+	ADD budget_cpm_lever INT NULL'
+
+DECLARE @pricingPopulateSql VARCHAR(MAX) =
+'UPDATE plan_version_pricing_parameters SET budget_cpm_lever = 1 WHERE budget_cpm_lever IS NULL'
+
+DECLARE @pricingAlterSql VARCHAR(MAX) = 
+'ALTER TABLE plan_version_pricing_parameters 
+	ALTER COLUMN budget_cpm_lever INT NOT NULL'
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_version_pricing_parameters') AND name = 'budget_cpm_lever')
+BEGIN 	
+	EXEC (@pricingAddColumnSql)
+	EXEC (@pricingPopulateSql)
+	EXEC (@pricingAlterSql)
+END
+
+DECLARE @buyingAddColumnSql VARCHAR(MAX) = 
+'ALTER TABLE plan_version_buying_parameters 
+	ADD budget_cpm_lever INT NULL'
+
+DECLARE @buyingPopulateSql VARCHAR(MAX) =
+'UPDATE plan_version_buying_parameters SET budget_cpm_lever = 1 WHERE budget_cpm_lever IS NULL'
+
+DECLARE @buyingAlterSql VARCHAR(MAX) = 
+'ALTER TABLE plan_version_buying_parameters 
+	ALTER COLUMN budget_cpm_lever INT NOT NULL'
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE  object_id = OBJECT_ID('plan_version_buying_parameters') AND name = 'budget_cpm_lever')
+BEGIN 	
+	EXEC (@buyingAddColumnSql)
+	EXEC (@buyingPopulateSql)
+	EXEC (@buyingAlterSql)
+END
+
+GO
+/*************************************** END BP-3128 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

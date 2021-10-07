@@ -27,6 +27,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double? Margin { get; set; }
         public int? JobId { get; set; }
         public PostingTypeEnum PostingType { get; set; }
+        public BudgetCpmLeverEnum BudgetCpmLever { get; set; } = BudgetCpmLeverEnum.Cpm;
         public List<InventoryProprietarySummary> ProprietaryInventory { get; set; } = new List<InventoryProprietarySummary>();
     }
 }

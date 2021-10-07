@@ -99,6 +99,7 @@
     "AdjustedBudget": 80.0,
     "AdjustedCPM": 10.0,
     "Budget": 100.0,
+    "BudgetCpmLever": 1,
     "CompetitionFactor": null,
     "CPM": 12.0,
     "CPP": 0.0,
