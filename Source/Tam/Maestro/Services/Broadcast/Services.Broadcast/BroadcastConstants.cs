@@ -28,9 +28,12 @@
 
         public const int DefaultDatabaseQueryChunkSize = 1000;
 
-        public const int SpotLengthId30 = 1;  
-        
-      
+        public const int SpotLengthId30 = 1;
+
+        public static string LOGO_FILENAME = "cadentLogo_full_scalable.svg";
+
+        public static string LOGO_PNG_FILENAME = "logo.png";
+
         public class FolderNames
         {
             public const string SCX_EXPORT_DIRECTORY = "ScxFiles";

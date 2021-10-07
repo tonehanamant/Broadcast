@@ -27,20 +27,35 @@ namespace BroadcastComposerWeb.Controllers
         [CacheOutput(ClientTimeSpan = BroadcastConstants.LogoCachingDurationInSeconds, 
                      ServerTimeSpan = BroadcastConstants.LogoCachingDurationInSeconds)]
         public HttpResponseMessage GetLogo()
-        {
+        {           
             var logoService = _ApplicationServiceFactory.GetApplicationService<ILogoService>();
-            var logo = logoService.GetLogoAsByteArray();
+            var appDataPath = _GetAppDataPath();
+            var logo = logoService.GetLogoAsByteArray(appDataPath);
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StreamContent(new MemoryStream(logo))
+                Content = new StreamContent(new MemoryStream(logo.LogoAsByteArray))
             };
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            if (logo.logoFlag)
             {
-                FileName = "logo.png"
-            };
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = BroadcastConstants.LOGO_FILENAME
+                };
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/svg");
 
-            return response;
+                return response;
+            }
+            else
+            {
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = BroadcastConstants.LOGO_PNG_FILENAME
+                };
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+                return response;
+            }
+            
         }
 
         [HttpGet]

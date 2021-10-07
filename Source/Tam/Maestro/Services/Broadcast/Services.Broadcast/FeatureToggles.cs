@@ -24,5 +24,6 @@
         public static string BUY_EXP_REP_ORG = "broadcast-buy-exp-rep-org";
         public static string CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST = "broadcast-campaign-export-total-monthly-cost";
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
+        public static string ENABLE_LOCAL_CADENT_LOGO = "broadcast-enable-local-cadent-logo";
     }
 }
