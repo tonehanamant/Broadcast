@@ -18,6 +18,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": null,
+      "OwnerName": null,
+      "RepFirm": null,
       "SpotFrequencies": [
         {
           "Impressions": 659.63,
@@ -57,6 +60,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": null,
+      "OwnerName": null,
+      "RepFirm": null,
       "SpotFrequencies": [
         {
           "Impressions": 659.63,
@@ -111,6 +117,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": null,
+      "OwnerName": null,
+      "RepFirm": null,
       "SpotFrequencies": [
         {
           "Impressions": 659.63,
@@ -150,6 +159,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": null,
+      "OwnerName": null,
+      "RepFirm": null,
       "SpotFrequencies": [
         {
           "Impressions": 659.63,

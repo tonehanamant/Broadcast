@@ -18,6 +18,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 69000.0,
@@ -57,6 +60,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 69000.0,
@@ -96,6 +102,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 69000.0,
@@ -135,6 +144,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 69000.0,
@@ -174,6 +186,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 69000.0,
@@ -213,6 +228,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 60400.0,
@@ -252,6 +270,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 60400.0,
@@ -291,6 +312,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 60400.0,
@@ -330,6 +354,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 60400.0,
@@ -369,6 +396,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 60400.0,
@@ -408,6 +438,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 46800.0,
@@ -447,6 +480,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 46800.0,
@@ -486,6 +522,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 46800.0,
@@ -525,6 +564,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 46800.0,
@@ -564,6 +606,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPIX",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 46800.0,
@@ -603,6 +648,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 600.0,
@@ -642,6 +690,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 600.0,
@@ -681,6 +732,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 600.0,
@@ -720,6 +774,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 600.0,
@@ -759,6 +816,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 600.0,
@@ -798,6 +858,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 400.0,
@@ -837,6 +900,9 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 400.0,
@@ -876,6 +942,9 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 400.0,
@@ -915,6 +984,9 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 400.0,
@@ -954,6 +1026,9 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
+      "LegacyCallLetters": "WPFO",
+      "OwnerName": "Ownership group 3",
+      "RepFirm": "Sales group 4",
       "SpotFrequencies": [
         {
           "Impressions": 400.0,

@@ -7620,6 +7620,273 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedCount, count);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetBuyingBands_Verify_PlanBuyingFilter()
+        {
+            int filteredStationCount = 0, filteredAllocatedSpotCount = 0, expectedCount = 3;
+
+            // Arrange
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
+                .Returns(new PlanBuyingJob
+                {
+                    Id = 1,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = _CurrentDate
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetLatestParametersForPlanBuyingJob(It.IsAny<int>()))
+                .Returns(_GetPlanBuyingParametersDto());
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetBuyingApiResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>(), It.IsAny<PostingTypeEnum>()))
+                .Returns(new PlanBuyingAllocationResult
+                {
+                    BuyingCpm = 4.6841m,
+                    JobId = 1,
+                    BuyingVersion = "4",
+                    PlanVersionId = 1172,
+                    AllocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 4340, 
+                            SpotFrequencies = new List<SpotFrequency>
+                            {
+                                new SpotFrequency {SpotLengthId = 1, SpotCost = 65.0m, SpotCostWithMargin = 67.0m, Spots = 3, Impressions = 659.63},
+                                new SpotFrequency {SpotLengthId = 2, SpotCost = 65.0m, SpotCostWithMargin = 67.0m, Spots = 1, Impressions = 659.63}
+                            },
+                            RepFirm = "WPBN",
+                            OwnerName = null,
+                            LegacyCallLetters = "WPBN"
+                        },
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 4341,
+                            SpotFrequencies = new List<SpotFrequency>
+                            {
+                                new SpotFrequency {SpotLengthId = 1, SpotCost = 65.0m, SpotCostWithMargin = 67.0m, Spots = 3, Impressions = 659.63},
+                            },
+                            RepFirm = null,
+                            OwnerName = null,
+                            LegacyCallLetters = "WPBN"
+                        },
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 4342,
+                            SpotFrequencies = new List<SpotFrequency>
+                            {
+                                new SpotFrequency {SpotLengthId = 1, SpotCost = 65.0m, SpotCostWithMargin = 67.0m, Spots = 3, Impressions = 659.63},
+                            },
+                            RepFirm = null,
+                            OwnerName = "WPBN",
+                            LegacyCallLetters = "WPBN"
+                        },
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 4343,
+                            SpotFrequencies = new List<SpotFrequency>
+                            {
+                                new SpotFrequency {SpotLengthId = 1, SpotCost = 65.0m, SpotCostWithMargin = 67.0m, Spots = 3, Impressions = 659.63},
+                            },
+                            RepFirm = "KHBS",
+                            OwnerName = "KHBS",
+                            LegacyCallLetters = "KHBS"
+                        }
+                    },
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    PostingType = PostingTypeEnum.NSI
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetPlanBuyingBandStations(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new PlanBuyingBandStationsDto
+                {
+                    Details = new List<PlanBuyingBandStationDetailDto>
+                    {
+                        new PlanBuyingBandStationDetailDto
+                        {
+                            StationId = 162,
+                            RepFirm = "WPBN",
+                            OwnerName = null,
+                            LegacyCallLetters = "WPBN"
+                        },
+                        new PlanBuyingBandStationDetailDto
+                        {
+                            StationId = 164,
+                            RepFirm = null,
+                            OwnerName = null,
+                            LegacyCallLetters = "WPBN"
+                        },
+                        new PlanBuyingBandStationDetailDto
+                        {
+                            StationId = 166,
+                            RepFirm = null,
+                            OwnerName = "WPBN",
+                            LegacyCallLetters = "WPBN"
+                        },
+                        new PlanBuyingBandStationDetailDto
+                        {
+                            StationId = 168,
+                            RepFirm = "KHBS",
+                            OwnerName = "KHBS",
+                            LegacyCallLetters = "KHBS"
+                        }
+                    }
+                });
+
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.Calculate(It.IsAny<PlanBuyingBandStationsDto>(), It.IsAny<PlanBuyingAllocationResult>(), It.IsAny<PlanBuyingParametersDto>()))
+               .Returns(new PlanBuyingBandsDto()
+               {
+                   PlanVersionId = 1172,
+                   BuyingJobId = 1,
+                   PostingType = PostingTypeEnum.NSI,
+                   SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                   Details = new List<PlanBuyingBandDetailDto>
+                   {
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = null,
+                           MaxBand = 0.36891m,
+                           Spots = 0,
+                           Impressions = 0,
+                           Budget = 0,
+                           Cpm = 0,
+                           ImpressionsPercentage = 0,
+                           AvailableInventoryPercent = 0
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 0.36891m,
+                           MaxBand = 1.370237142857143m,
+                           Spots = 0,
+                           Impressions = 0,
+                           Budget = 0,
+                           Cpm = 0,
+                           ImpressionsPercentage = 0,
+                           AvailableInventoryPercent = 0
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                            MinBand = 1.370237142857143m,
+                            MaxBand = 2.371564285714286m,
+                            Spots = 156,
+                            Impressions = 496.6,
+                            Budget = 975,
+                            Cpm = 1.963350785340314m,
+                            ImpressionsPercentage = 9.696889223877857,
+                            AvailableInventoryPercent = 869.3977591036414
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 2.371564285714286m,
+                           MaxBand = 3.3728914285714287m,
+                           Spots = 369,
+                           Impressions = 2666.8,
+                           Budget = 8331.25m,
+                           Cpm = 3.1240625468726564m,
+                           ImpressionsPercentage = 52.073427672648954,
+                           AvailableInventoryPercent = 5426.943426943428
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 3.3728914285714287m,
+                           MaxBand = 4.374218571428571m,
+                           Spots = 18,
+                           Impressions = 600.1,
+                           Budget = 2281.25m,
+                           Cpm = 3.801449758373604m,
+                           ImpressionsPercentage = 11.717888085479466,
+                           AvailableInventoryPercent = 5.12069165602878
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 4.374218571428571m,
+                           MaxBand = 5.375545714285714m,
+                           Spots = 9,
+                           Impressions = 900,
+                           Budget = 4187.5m,
+                           Cpm = 4.652777777777778m,
+                           ImpressionsPercentage = 17.573903144361804,
+                           AvailableInventoryPercent = 3.497190978490721
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 5.375545714285714m,
+                           MaxBand = 6.376872857142857m,
+                           Spots = 0,
+                           Impressions = 0,
+                           Budget = 0,
+                           Cpm = 0,
+                           ImpressionsPercentage = 0,
+                           AvailableInventoryPercent = 0
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 6.376872857142857m,
+                           MaxBand = 7.3782m,
+                           Spots = 0,
+                           Impressions = 0,
+                           Budget = 0,
+                           Cpm = 0,
+                           ImpressionsPercentage = 0,
+                           AvailableInventoryPercent = 0
+                       },
+                       new PlanBuyingBandDetailDto
+                       {
+                           MinBand = 7.3782m,
+                           MaxBand = null,
+                           Spots = 52,
+                           Impressions = 457.73,
+                           Budget = 5118.75m,
+                           Cpm = 11.182902584493041m,
+                           ImpressionsPercentage = 8.93789187363192,
+                           AvailableInventoryPercent = 0.26264892141627816
+                       }
+                   },
+                   Totals = new PlanBuyingProgramTotalsDto()
+                   {
+                       AvgCpm = 4.079830431361216M,
+                       Budget = 20893.75M,
+                       SpotCount = 604,
+                       Impressions = 5121.23
+                   }
+               }).Callback<PlanBuyingBandStationsDto, PlanBuyingAllocationResult, PlanBuyingParametersDto>((planBuyingBandStation, planBuyingAllocationResult, planBuyingParameters) =>
+               {
+                   filteredStationCount = planBuyingBandStation.Details.Count;
+                   filteredAllocatedSpotCount = planBuyingAllocationResult.AllocatedSpots.Count;
+               });
+
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.ConvertImpressionsToUserFormat(It.IsAny<PlanBuyingBandsDto>()))
+                .Callback<PlanBuyingBandsDto>(element =>
+                {
+                    element.Totals.Impressions /= 1000;
+                    foreach (var detail in element.Details)
+                    {
+                        detail.Impressions /= 1000;
+                    }
+                }); ;
+
+            var service = _GetService();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
+            var planId = 1197;
+            var planBuyingFilter = new PlanBuyingFilterDto()
+            {
+                OwnerNames = new List<string> { "WPBN", "Newsweb Corporation/Channel 3 TV Company LLC" },
+                RepFirmNames = new List<string> { "WPBN", "Direct" }
+            };
+
+            // Act           
+            var result = service.GetBuyingBands(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
+
+            // Assert
+            Assert.AreEqual(expectedCount, filteredStationCount);
+            Assert.AreEqual(expectedCount, filteredAllocatedSpotCount);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 
 }

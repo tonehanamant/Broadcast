@@ -4,8 +4,12 @@
     "Details": [
       {
         "Cost": 6593.75,
+        "Cpm": 0.0,
         "Impressions": 1135000.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 2,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 5,
@@ -16,18 +20,24 @@
             "Hours": 2
           }
         ],
+        "RepFirm": null,
         "StationId": 1376
       },
       {
         "Cost": 16250.00,
+        "Cpm": 0.0,
         "Impressions": 2045420.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 1,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 1,
             "Hours": 4
           }
         ],
+        "RepFirm": null,
         "StationId": 1377
       }
     ],
@@ -52,8 +62,12 @@
     "Details": [
       {
         "Cost": 6593.75,
+        "Cpm": 0.0,
         "Impressions": 1135000.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 2,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 5,
@@ -64,18 +78,24 @@
             "Hours": 2
           }
         ],
+        "RepFirm": null,
         "StationId": 1376
       },
       {
         "Cost": 16250.00,
+        "Cpm": 0.0,
         "Impressions": 2045420.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 1,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 1,
             "Hours": 4
           }
         ],
+        "RepFirm": null,
         "StationId": 1377
       }
     ],
@@ -100,8 +120,12 @@
     "Details": [
       {
         "Cost": 6593.75,
+        "Cpm": 0.0,
         "Impressions": 1135000.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 2,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 5,
@@ -112,18 +136,24 @@
             "Hours": 2
           }
         ],
+        "RepFirm": null,
         "StationId": 1376
       },
       {
         "Cost": 16250.00,
+        "Cpm": 0.0,
         "Impressions": 2045420.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 1,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 1,
             "Hours": 4
           }
         ],
+        "RepFirm": null,
         "StationId": 1377
       }
     ],
@@ -148,8 +178,12 @@
     "Details": [
       {
         "Cost": 6593.75,
+        "Cpm": 0.0,
         "Impressions": 1135000.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 2,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 5,
@@ -160,18 +194,24 @@
             "Hours": 2
           }
         ],
+        "RepFirm": null,
         "StationId": 1376
       },
       {
         "Cost": 16250.00,
+        "Cpm": 0.0,
         "Impressions": 2045420.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 1,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 1,
             "Hours": 4
           }
         ],
+        "RepFirm": null,
         "StationId": 1377
       }
     ],
@@ -196,8 +236,12 @@
     "Details": [
       {
         "Cost": 6593.75,
+        "Cpm": 0.0,
         "Impressions": 1135000.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 2,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 5,
@@ -208,18 +252,24 @@
             "Hours": 2
           }
         ],
+        "RepFirm": null,
         "StationId": 1376
       },
       {
         "Cost": 16250.00,
+        "Cpm": 0.0,
         "Impressions": 2045420.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 1,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 1,
             "Hours": 4
           }
         ],
+        "RepFirm": null,
         "StationId": 1377
       }
     ],
@@ -244,8 +294,12 @@
     "Details": [
       {
         "Cost": 6593.75,
+        "Cpm": 0.0,
         "Impressions": 1135000.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 2,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 5,
@@ -256,18 +310,24 @@
             "Hours": 2
           }
         ],
+        "RepFirm": null,
         "StationId": 1376
       },
       {
         "Cost": 16250.00,
+        "Cpm": 0.0,
         "Impressions": 2045420.0,
+        "LegacyCallLetters": null,
         "ManifestWeeksCount": 1,
+        "MarketCode": null,
+        "OwnerName": null,
         "PlanBuyingBandStationDayparts": [
           {
             "ActiveDays": 1,
             "Hours": 4
           }
         ],
+        "RepFirm": null,
         "StationId": 1377
       }
     ],

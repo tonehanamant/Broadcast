@@ -22,5 +22,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public decimal TotalCostWithMargin => SpotFrequencies.Sum(x => x.SpotCostWithMargin * x.Spots);
 
         public int TotalSpots => SpotFrequencies.Sum(x => x.Spots);
+        public string RepFirm { get; set; }
+        public string OwnerName { get; set; }
+        public string LegacyCallLetters { get; set; }
     }
 }

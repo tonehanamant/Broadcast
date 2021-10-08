@@ -8,6 +8,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IPlanBuyingUnitCapImpressionsCalculationEngine
     {
         double CalculateTotalImpressionsForUnitCaps(List<PlanBuyingInventoryProgram> inventory, PlanBuyingParametersDto parametersDto);
+        double CalculateTotalImpressionsForUnitCaps(List<PlanBuyingBandStationDetailDto> inventory, PlanBuyingParametersDto parametersDto);
     }
 
     public class PlanBuyingUnitCapImpressionsCalculationEngine : IPlanBuyingUnitCapImpressionsCalculationEngine
@@ -75,6 +76,78 @@ namespace Services.Broadcast.BusinessEngines
                                 manifestDaypart.Daypart.ActiveDays * 
                                 hours * 
                                 parametersDto.UnitCaps * 
+                                programWithHighestImpressions.Impressions;
+                        }
+                        break;
+                }
+            }
+
+            return totalInventoryImpressions;
+        }
+
+        public double CalculateTotalImpressionsForUnitCaps(List<PlanBuyingBandStationDetailDto> inventory, PlanBuyingParametersDto parametersDto)
+        {
+            var totalInventoryImpressions = 0d;
+
+            var groupedByStation = inventory.GroupBy(x => x.StationId);
+
+            foreach (var stationGroup in groupedByStation)
+            {
+                var programWithHighestImpressions = stationGroup.OrderByDescending(x => x.Impressions).FirstOrDefault();
+
+                if (programWithHighestImpressions == null)
+                    continue;
+
+                var numberOfWeeks = programWithHighestImpressions.ManifestWeeksCount;
+                var numberOfMonths = numberOfWeeks / 4;
+                numberOfMonths = numberOfMonths == 0 ? 1 : numberOfMonths;
+
+                switch (parametersDto.UnitCapsType)
+                {
+                    case UnitCapEnum.PerMonth:
+                        totalInventoryImpressions += numberOfMonths *
+                                parametersDto.UnitCaps *
+                                programWithHighestImpressions.Impressions;
+                        break;
+                    case UnitCapEnum.PerWeek:
+                        totalInventoryImpressions += numberOfWeeks *
+                                parametersDto.UnitCaps *
+                                programWithHighestImpressions.Impressions;
+                        break;
+                    case UnitCapEnum.PerDay:
+                        foreach (var planBuyingBandStationDaypart in programWithHighestImpressions.PlanBuyingBandStationDayparts)
+                        {
+                            totalInventoryImpressions += numberOfWeeks *
+                                    planBuyingBandStationDaypart.ActiveDays *
+                                    parametersDto.UnitCaps *
+                                    programWithHighestImpressions.Impressions;
+                        }
+                        break;
+                    case UnitCapEnum.PerHour:
+                        foreach (var planBuyingBandStationDaypart in programWithHighestImpressions.PlanBuyingBandStationDayparts)
+                        {
+                            var hours = planBuyingBandStationDaypart.Hours;
+                            hours = hours == 0 ? 1 : hours;
+
+                            totalInventoryImpressions += numberOfWeeks *
+                                    planBuyingBandStationDaypart.ActiveDays *
+                                    hours *
+                                    parametersDto.UnitCaps *
+                                    programWithHighestImpressions.Impressions;
+                        }
+                        break;
+                    case UnitCapEnum.Per30Min:
+                        foreach (var planBuyingBandStationDaypart in programWithHighestImpressions.PlanBuyingBandStationDayparts)
+                        {
+                            const int per30MinMultiplier = 2;
+                            var hours = planBuyingBandStationDaypart.Hours;
+                            hours = hours == 0 ? 1 : hours;
+
+                            totalInventoryImpressions += per30MinMultiplier *
+                                numberOfWeeks *
+                                planBuyingBandStationDaypart.ActiveDays *
+                                hours *
+                                parametersDto.UnitCaps *
                                 programWithHighestImpressions.Impressions;
                         }
                         break;

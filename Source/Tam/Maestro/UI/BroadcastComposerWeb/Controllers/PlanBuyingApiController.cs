@@ -87,6 +87,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingBands(planId, postingType ,spotAllocationModelMode));
         }
 
+        [HttpPost]
+        [Route("~/api/v2/Buying/bands")]
+        public BaseResponse<PlanBuyingBandsDto> GetBuyingBands(int planId, PlanBuyingFilterDto planBuyingFilter, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingBands(planId, postingType, spotAllocationModelMode, planBuyingFilter));
+        }
+
         [HttpGet]
         [Route("markets/{planId}")]
         public BaseResponse<PlanBuyingResultMarketsDto> GetBuyingMarkets(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)

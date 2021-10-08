@@ -112,6 +112,15 @@ namespace Services.Broadcast.Repositories
         PlanBuyingBandsDto GetPlanBuyingBandByJobId(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
+        /// Gets the plan buying band station.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="postingType">The Posting Type.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <returns>The plan buying band station details</returns>
+        PlanBuyingBandStationsDto GetPlanBuyingBandStations(int jobId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
+
+        /// <summary>
         /// Saves the plan buying bands.
         /// </summary>
         /// <param name="planBuyingBandDto">The plan buying band dto.</param>
@@ -633,6 +642,7 @@ namespace Services.Broadcast.Repositories
                 var apiResult = context.plan_version_buying_api_results
                     .Include(x => x.plan_version_buying_api_result_spots)
                     .Include(x => x.plan_version_buying_api_result_spots.Select(y => y.plan_version_buying_api_result_spot_frequencies))
+                    .Include(x => x.plan_version_buying_api_result_spots.Select(y => y.station_inventory_manifest))                    
                     .Where(x => x.plan_version_buying_job_id == jobId && x.spot_allocation_model_mode == (int)spotAllocationModelMode
                         && x.posting_type == (int)postingType)
                     .OrderByDescending(p => p.id)
@@ -702,6 +712,58 @@ namespace Services.Broadcast.Repositories
                         AvailableInventoryPercent = r.available_inventory_percentage
                     }).OrderBy(p => p.MinBand).ToList()
                 };
+            });
+        }
+
+        /// <inheritdoc/>
+        public PlanBuyingBandStationsDto GetPlanBuyingBandStations(int jobId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planBuyingResult = context.plan_version_buying_results
+                                    .Include(x => x.plan_version_buying_band_stations)
+                                    .Include(x => x.plan_version_buying_band_stations.Select(y => y.station))
+                                    .Include(x => x.plan_version_buying_band_stations.Select(y => y.plan_version_buying_band_station_dayparts))
+                                    .Where(x => x.plan_version_buying_job_id == jobId
+                                                    && x.posting_type == (int)postingType
+                                                    && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
+                                    .OrderByDescending(x => x.id)
+                                    .FirstOrDefault();
+                if (planBuyingResult == null)
+                {
+                    return null;
+                }
+
+                var planBuyingBandStations = new PlanBuyingBandStationsDto
+                {
+                    BuyingJobId = planBuyingResult.plan_version_buying_job_id,
+                    SpotAllocationModelMode = (SpotAllocationModelMode)planBuyingResult.spot_allocation_model_mode,
+                    PostingType = (PostingTypeEnum)planBuyingResult.posting_type,
+                    Totals = new PlanBuyingProgramTotalsDto
+                    {
+                        AvgCpm = planBuyingResult.total_avg_cpm,
+                        Budget = planBuyingResult.total_budget,
+                        Impressions = planBuyingResult.total_impressions,
+                        SpotCount = planBuyingResult.total_spots
+                    },
+                    Details = planBuyingResult.plan_version_buying_band_stations.Select(planBuyingBandStationDetail => new PlanBuyingBandStationDetailDto
+                    {
+                        StationId = planBuyingBandStationDetail.station_id,
+                        Impressions = planBuyingBandStationDetail.impressions,
+                        Cost = planBuyingBandStationDetail.cost,
+                        ManifestWeeksCount = planBuyingBandStationDetail.manifest_weeks_count,
+                        RepFirm = planBuyingBandStationDetail.station.rep_firm_name,
+                        OwnerName = planBuyingBandStationDetail.station.owner_name,
+                        LegacyCallLetters = planBuyingBandStationDetail.station.legacy_call_letters,
+                        MarketCode = planBuyingBandStationDetail.station.market_code,
+                        PlanBuyingBandStationDayparts = planBuyingBandStationDetail.plan_version_buying_band_station_dayparts.Select(planBuyingBandStationDaypart => new PlanBuyingBandStationDaypartDto
+                        {
+                            ActiveDays = planBuyingBandStationDaypart.active_days,
+                            Hours = planBuyingBandStationDaypart.hours
+                        }).ToList()
+                    }).ToList()
+                };
+                return planBuyingBandStations;
             });
         }
 
@@ -1405,6 +1467,9 @@ namespace Services.Broadcast.Repositories
             {
                 Id = spot.id,
                 StationInventoryManifestId = spot.station_inventory_manifest_id,
+                LegacyCallLetters = spot.station_inventory_manifest.station?.legacy_call_letters,
+                RepFirm = spot.station_inventory_manifest.station?.rep_firm_name,
+                OwnerName = spot.station_inventory_manifest.station?.owner_name,
                 // impressions are for :30 sec only for buying v3
                 Impressions30sec = spot.impressions30sec,
                 SpotFrequencies = spotLengths

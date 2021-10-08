@@ -29,6 +29,15 @@ namespace Services.Broadcast.BusinessEngines
         PlanBuyingBandStationsDto CalculateBandStation(List<PlanBuyingInventoryProgram> inventories,PlanBuyingAllocationResult planBuyingAllocationResult);
 
         /// <summary>
+        /// Calculates the specified band stations inventory.
+        /// </summary>
+        /// <param name="planBuyingBandStationsInventory">The band stations inventory.</param>
+        /// <param name="planBuyingAllocationResult">The allocation result.</param>
+        /// <param name="planBuyingParameter">The buying parameters.</param>
+        /// <returns>The list of buying bands</returns>
+        PlanBuyingBandsDto Calculate(PlanBuyingBandStationsDto planBuyingBandStationsInventory, PlanBuyingAllocationResult planBuyingAllocationResult, PlanBuyingParametersDto planBuyingParameter);
+
+        /// <summary>
         /// Converts the impressions to user format.
         /// </summary>
         /// <param name="results">The results.</param>
@@ -38,11 +47,14 @@ namespace Services.Broadcast.BusinessEngines
     public class PlanBuyingBandCalculationEngine : IPlanBuyingBandCalculationEngine
     {
         public IPlanBuyingUnitCapImpressionsCalculationEngine _PlanBuyingUnitCapImpressionsCalculationEngine;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
 
         public PlanBuyingBandCalculationEngine(
-            IPlanBuyingUnitCapImpressionsCalculationEngine planBuyingUnitCapImpressionsCalculationEngine)
+            IPlanBuyingUnitCapImpressionsCalculationEngine planBuyingUnitCapImpressionsCalculationEngine,
+            ISpotLengthEngine spotLengthEngine)
         {
             _PlanBuyingUnitCapImpressionsCalculationEngine = planBuyingUnitCapImpressionsCalculationEngine;
+            _SpotLengthEngine = spotLengthEngine;
         }
 
         /// <inheritdoc/>
@@ -88,6 +100,67 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return buyingBandDto;
+        }
+
+        /// <inheritdoc/>
+        public PlanBuyingBandsDto Calculate(PlanBuyingBandStationsDto planBuyingBandStationsInventory, PlanBuyingAllocationResult planBuyingAllocationResult, PlanBuyingParametersDto planBuyingParameter)
+        {
+            planBuyingBandStationsInventory.Details.ForEach(planBuyingBandStation =>
+            {
+                planBuyingBandStation.Cpm = ProposalMath.CalculateCpm(planBuyingBandStation.Cost, planBuyingBandStation.Impressions);
+            });
+
+            var spotFrequencies = planBuyingAllocationResult.AllocatedSpots.SelectMany(x => x.SpotFrequencies).ToList();
+            spotFrequencies.ForEach(spotFrequency =>
+            {
+                spotFrequency.SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(spotFrequency.SpotCost, planBuyingParameter.Margin);
+            });
+
+            var allocatedInventory = _GetAllocatedInventory(planBuyingAllocationResult);
+            var totalAllocatedImpressions = allocatedInventory.Sum(x => x.TotalImpressions);
+
+            var planBuyingBandDetails = _CreateBandsForBuying(planBuyingParameter.AdjustedCPM);
+            foreach (var band in planBuyingBandDetails)
+            {
+                var minBand = 0m;
+
+                if (band.MinBand.HasValue)
+                    minBand = band.MinBand.Value;
+
+                var maxBand = decimal.MaxValue;
+
+                if (band.MaxBand.HasValue)
+                    maxBand = band.MaxBand.Value;
+
+                var allocatedInventoryOfBand = allocatedInventory.Where(x => x.AvgCpm >= minBand && x.AvgCpm < maxBand);
+                var planBuyingBandStationsInventoryOfBand = planBuyingBandStationsInventory.Details.Where(x => x.Cpm >= minBand && x.Cpm < maxBand).ToList();
+
+                var totalInventoryImpressions = _PlanBuyingUnitCapImpressionsCalculationEngine.CalculateTotalImpressionsForUnitCaps(planBuyingBandStationsInventoryOfBand, planBuyingParameter);
+
+                band.Spots = allocatedInventoryOfBand.Sum(x => x.TotalSpots);
+                band.Impressions = allocatedInventoryOfBand.Sum(x => x.TotalImpressions);
+                band.Budget = allocatedInventoryOfBand.Sum(x => x.TotalCost);
+                band.Cpm = ProposalMath.CalculateCpm(band.Budget, band.Impressions);
+                band.ImpressionsPercentage = totalAllocatedImpressions == 0 ? 0 : (band.Impressions / totalAllocatedImpressions) * 100;
+                band.AvailableInventoryPercent = totalInventoryImpressions == 0 ? 0 : (band.Impressions / totalInventoryImpressions) * 100;
+            }
+
+            var planBuyingBands = new PlanBuyingBandsDto
+            {
+                PlanVersionId = planBuyingAllocationResult.PlanVersionId,
+                BuyingJobId = planBuyingAllocationResult.JobId,
+                PostingType = planBuyingBandStationsInventory.PostingType,
+                SpotAllocationModelMode = planBuyingBandStationsInventory.SpotAllocationModelMode,
+                Details = planBuyingBandDetails,
+                Totals = new PlanBuyingProgramTotalsDto
+                {
+                    Budget = allocatedInventory.Sum(x => x.TotalCost),
+                    Impressions = allocatedInventory.Sum(x => x.TotalImpressions),
+                    AvgCpm = ProposalMath.CalculateCpm(allocatedInventory.Sum(x => x.TotalCost), allocatedInventory.Sum(x => x.TotalImpressions)),
+                    SpotCount = allocatedInventory.Sum(x => x.TotalSpots)
+                }
+            };
+            return planBuyingBands;
         }
 
         private List<PlanBuyingBandDetailDto> _CreateBandsForBuying(decimal buyingCpm)
@@ -169,28 +242,18 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc/>
         public PlanBuyingBandStationsDto CalculateBandStation(List<PlanBuyingInventoryProgram> inventories, PlanBuyingAllocationResult planBuyingAllocationResult)
         {
-            var manifestIds = planBuyingAllocationResult.AllocatedSpots.Select(s => s.Id).Distinct();
-            var groupedInventories = inventories
-                .Where(y => manifestIds.Contains(y.ManifestId))
-                .GroupBy(x => x.Station.Id);
-
-            var planBuyingBandStationDetails = new List<PlanBuyingBandStationDetailDto>();
-            foreach (var groupedInventory in groupedInventories)
+            /*
+             * As we need each band station inventory details while retrieving buying band details, here we calculate each inventory which we retrieves from data science separately as band station. 
+             * It may possible that total impressions and total cost of band stations do not match with total impressions and total cost of plan version buying results.
+             */
+            var planBuyingBandStationDetails = inventories.Select(inventory => new PlanBuyingBandStationDetailDto()
             {
-                var planBuyingBandStationId = groupedInventory.Key;
-                var planBuyingBandStationInventories = groupedInventory.ToList();
-                var planBuyingAllocatedSpots = _GetPlanBuyingAllocatedSpots(planBuyingAllocationResult, planBuyingBandStationInventories);
-
-                var planBuyingBandStationDetail = new PlanBuyingBandStationDetailDto()
-                {
-                    StationId = planBuyingBandStationId,
-                    Impressions = planBuyingAllocatedSpots.Sum(x => x.TotalImpressions),
-                    Cost = planBuyingAllocatedSpots.Sum(x => x.TotalCostWithMargin),
-                    ManifestWeeksCount = planBuyingBandStationInventories.SelectMany(x => x.ManifestWeeks).Count(),
-                    PlanBuyingBandStationDayparts = _GetPlanBuyingBandStationDayparts(planBuyingBandStationInventories)
-                };
-                planBuyingBandStationDetails.Add(planBuyingBandStationDetail);
-            }
+                StationId = inventory.Station.Id,
+                Impressions = inventory.Impressions,
+                Cost = _GetInventoryCost(inventory),
+                ManifestWeeksCount = inventory.ManifestWeeks.Count(),
+                PlanBuyingBandStationDayparts = _GetPlanBuyingBandStationDayparts(inventory)
+            }).ToList();
 
             var planBuyingBandStations = new PlanBuyingBandStationsDto
             {
@@ -201,35 +264,46 @@ namespace Services.Broadcast.BusinessEngines
             return planBuyingBandStations;
         }
 
-        private List<PlanBuyingAllocatedSpot> _GetPlanBuyingAllocatedSpots(PlanBuyingAllocationResult planBuyingAllocationResult, List<PlanBuyingInventoryProgram> planBuyingBandStationInventories)
+        private decimal _GetInventoryCost(PlanBuyingInventoryProgram planBuyingInventory)
         {
-            var planBuyingAllocatedSpots = new List<PlanBuyingAllocatedSpot>();
-            foreach (var allocatedSpot in planBuyingAllocationResult.AllocatedSpots)
+            decimal cost = 0;
+
+            // for multi-length, we use impressions for :30 and that`s why the cost must be for :30 as well
+            var rate = planBuyingInventory.ManifestRates.SingleOrDefault(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30);
+            if (rate != null)
             {
-                if (planBuyingBandStationInventories.Any(x => x.ManifestId == allocatedSpot.Id))
-                {
-                    planBuyingAllocatedSpots.Add(allocatedSpot);
-                }
+                cost = rate.Cost;
             }
-            return planBuyingAllocatedSpots;
+            else
+            {
+                // if there is no rate for :30 in the plan, let`s calculate it
+                // the formula that we use during inventory import is 
+                // cost for spot length = cost for :30 * multiplier for the spot length
+                // so, cost for :30 = cost for spot length / multiplier for the spot length
+
+                rate = planBuyingInventory.ManifestRates.First();
+                cost = rate.Cost / _SpotLengthEngine.GetSpotCostMultiplierBySpotLengthId(rate.SpotLengthId);
+            }
+
+            return cost;
         }
 
-        private List<PlanBuyingBandStationDaypartDto> _GetPlanBuyingBandStationDayparts(List<PlanBuyingInventoryProgram> planBuyingBandStationInventories)
+        private List<PlanBuyingBandStationDaypartDto> _GetPlanBuyingBandStationDayparts(PlanBuyingInventoryProgram planBuyingBandStationInventory)
         {
-            var planBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>();
-            planBuyingBandStationInventories.ForEach(x =>
+            if (planBuyingBandStationInventory == null)
             {
-                var manifestDayparts = x.ManifestDayparts;
-                manifestDayparts.ForEach(manifestDaypart =>
+                return null;
+            }
+
+            List<PlanBuyingBandStationDaypartDto> planBuyingBandStationDayparts = null;
+            if (planBuyingBandStationInventory.ManifestDayparts?.Any() ?? false)
+            {
+                planBuyingBandStationDayparts = planBuyingBandStationInventory.ManifestDayparts.Select(manifestDaypart => new PlanBuyingBandStationDaypartDto()
                 {
-                    var planBuyingBandStationDaypart = new PlanBuyingBandStationDaypartDto()
-                    {
-                        ActiveDays = manifestDaypart.Daypart.ActiveDays,
-                        Hours = manifestDaypart.Daypart.Hours
-                    };
-                    planBuyingBandStationDayparts.Add(planBuyingBandStationDaypart);
-                });
-            });
+                    ActiveDays = manifestDaypart.Daypart.ActiveDays,
+                    Hours = manifestDaypart.Daypart.Hours
+                }).ToList();
+            }
             return planBuyingBandStationDayparts;
         }        
     }

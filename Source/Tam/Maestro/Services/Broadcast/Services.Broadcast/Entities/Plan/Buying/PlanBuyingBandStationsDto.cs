@@ -26,8 +26,13 @@ namespace Services.Broadcast.Entities.Plan.Buying
             PlanBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>();
         }
         public int StationId { get; set; }
+        public string RepFirm { get; set; }
+        public string OwnerName { get; set; }
+        public string LegacyCallLetters { get; set; }
+        public int? MarketCode { get; set; }
         public double Impressions { get; set; }
         public decimal Cost { get; set; }
+        public decimal Cpm { get; set; }
         public int ManifestWeeksCount { get; set; }
         public List<PlanBuyingBandStationDaypartDto> PlanBuyingBandStationDayparts { get; set; }
     }
