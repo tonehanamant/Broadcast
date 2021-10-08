@@ -831,6 +831,24 @@
     <Compile Include="show_type_mappings.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="spot_exceptions_ingest_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spot_exceptions_out_of_specs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spot_exceptions_out_of_spec_decisions.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spot_exceptions_recommended_plans.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spot_exceptions_recommended_plan_decision.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spot_exceptions_recommended_plan_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="spot_lengths.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

@@ -34,6 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_pricing_api_result_spot_frequencies = new HashSet<plan_version_pricing_api_result_spot_frequencies>();
             this.plan_version_buying_api_result_spot_frequencies = new HashSet<plan_version_buying_api_result_spot_frequencies>();
             this.reel_iscis = new HashSet<reel_iscis>();
+            this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
+            this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
         }
     
         public int id { get; set; }
@@ -60,5 +62,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_pricing_api_result_spot_frequencies> plan_version_pricing_api_result_spot_frequencies { get; set; }
         public virtual ICollection<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
         public virtual ICollection<reel_iscis> reel_iscis { get; set; }
+        public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
     }
 }

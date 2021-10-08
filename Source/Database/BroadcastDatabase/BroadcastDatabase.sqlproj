@@ -279,6 +279,12 @@
     <Build Include="dbo\Tables\plan_version_buying_result_spot_stations.sql" />
     <Build Include="dbo\Tables\plan_version_buying_band_stations.sql" />
     <Build Include="dbo\Tables\plan_version_buying_band_station_dayparts.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_ingest_jobs.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_recommended_plans.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_recommended_plan_details.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_recommended_plan_decision.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_out_of_specs.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_out_of_spec_decisions.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
