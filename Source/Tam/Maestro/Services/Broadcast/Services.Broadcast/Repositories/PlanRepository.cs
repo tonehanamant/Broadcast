@@ -78,7 +78,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns>Dravt id</returns>
         int CheckIfDraftExists(int planId);
-
+        /// <summary>
+        /// Update SpotAllocationModelMode of plan.
+        /// </summary>
+        /// <param name="planId">The plan id.</param> 
+        /// <param name="spotAllocationModelMode">The spotAllocationModelMode of plan.</param> 
+        void UpdateSpotAllocationModelMode(int planId, SpotAllocationModelMode spotAllocationModelMode);
         /// <summary>
         /// Deletes the plan draft.
         /// </summary>
@@ -338,6 +343,20 @@ namespace Services.Broadcast.Repositories
                        context.SaveChanges();
 
                        planDto.VersionId = draftVersion.id;
+                   });
+        }
+
+        /// <inheritdoc/>
+        public void UpdateSpotAllocationModelMode(int planId, SpotAllocationModelMode spotAllocationModelMode)
+        {
+            _InReadUncommitedTransaction(
+                   context =>
+                   {
+                       var plan = (from p in context.plans
+                                   where p.id == planId
+                                   select p).Single();
+                       plan.spot_allocation_model_mode = (int)spotAllocationModelMode;
+                       context.SaveChanges();
                    });
         }
 

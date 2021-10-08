@@ -428,6 +428,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!plan.IsDraft)
             {
                 var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
+                if (!shouldPromotePricingResults)
+                {
+                    _PlanRepository.UpdateSpotAllocationModelMode(plan.Id, SpotAllocationModelMode.Quality);
+                }
                 _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults);
                 _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePricingResults);
             }
