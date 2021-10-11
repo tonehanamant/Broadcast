@@ -418,6 +418,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
+            Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);
             Assert.AreEqual(0, saveNewPlanCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, savePlanCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, setStatusCalls.Count, "Invalid call count.");
@@ -432,7 +433,113 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedUpdatePlanPricingVersionIdCalls, updatePlanPricingVersionIdCalls.Count, "Invalid updatePlanPricingVersionIdCalls Count.");
             Assert.AreEqual(expectedSetPricingPlanVersionIdCallCount, setPricingPlanVersionIdCallCount, "Invalid setPricingPlanVersionIdCallCount Count.");
         }
+        [Test]
+        public void SavePlanSetSpotAllocationModelModeToDefaultOnGoalChanged()
+        {
+            // Arrange
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            var saveNewPlanCalls = new List<DateTime>();
+            _PlanRepositoryMock.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
+
+            var savePlanCalls = new List<DateTime>();
+            _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() => savePlanCalls.Add(DateTime.Now));
+
+            var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s =>
+                    s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
+                .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
+
+            var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
+
+            _PlanRepositoryMock.Setup(s => s.GetSuccessfulPricingJobs(It.IsAny<int>()))
+                .Returns(new List<PlanPricingJob> {
+                new PlanPricingJob { Completed = modifiedWhen } });
+
+
+            var planAggregator = new Mock<IPlanAggregator>();
+            var aggregateCallCount = 0;
+            var aggregateReturn = new PlanSummaryDto();
+            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Callback(() => aggregateCallCount++)
+                .Returns(aggregateReturn);
+
+            var plan = _GetNewPlan();
+            var campaignId = plan.CampaignId;
+            plan.JobId = 42;
+            plan.PricingParameters = _GetPricingParameters(plan.Id, plan.VersionId);
+            plan.PricingParameters.JobId = plan.JobId;
+            plan.ModifiedDate = modifiedWhen;
+
+            plan.Id = 1;
+            plan.VersionId = 526;
+            plan.VersionNumber = 1;
+            plan.IsDraft = false;
+            plan.SpotAllocationModelMode = SpotAllocationModelMode.Efficiency;
+            // mock a before plan
+            var beforePlan = _GetNewPlan();
+            beforePlan.Id = plan.Id;
+            beforePlan.VersionId = plan.VersionId;
+            beforePlan.VersionNumber = plan.VersionNumber;
+            beforePlan.IsDraft = plan.IsDraft;
+            beforePlan.JobId = plan.JobId;
+            beforePlan.PricingParameters = _GetPricingParameters(beforePlan.Id, beforePlan.VersionId);
+            beforePlan.PricingParameters.JobId = plan.JobId;
+
+            // mock an after plan
+            var afterPlan = _GetNewPlan();
+            afterPlan.Id = plan.Id;
+            afterPlan.VersionId = plan.VersionId + 1;
+            afterPlan.VersionNumber = plan.VersionNumber + 1;
+            afterPlan.IsDraft = plan.IsDraft;
+            afterPlan.Budget = 200m;
+            var getPlanReturns = new Queue<PlanDto>();
+            getPlanReturns.Enqueue(beforePlan);
+            getPlanReturns.Enqueue(afterPlan);
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(() => getPlanReturns.Dequeue());
+
+            var queuePricingJobCallCount = 0;
+            _PlanPricingServiceMock.Setup(s =>
+                    s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback(() => queuePricingJobCallCount++);
+
+            var setPricingPlanVersionIdCallCount = 0;
+            _PlanRepositoryMock.Setup(s => s.SetPricingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback(() => setPricingPlanVersionIdCallCount++);
+
+            var updatePlanPricingVersionIdCalls = new List<UpdatePlanPricingVersionIdParams>();
+            _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
+
+            _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
+                .Returns(beforePlan.Id);
+
+          
+
+            plan.IsOutOfSync = false;
+
+            // Act
+            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+
+            // Assert
+            Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);           
+        }
         [Test]
         [TestCase(0, 1, false, false, PlanService.SaveState.CreatingNewPlan)]
         [TestCase(1, 0, false, false, PlanService.SaveState.CreatingNewPlan)]

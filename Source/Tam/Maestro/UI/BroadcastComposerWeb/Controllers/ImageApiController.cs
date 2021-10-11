@@ -41,7 +41,7 @@ namespace BroadcastComposerWeb.Controllers
                 {
                     FileName = BroadcastConstants.LOGO_FILENAME
                 };
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/svg");
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/svg+xml");
 
                 return response;
             }
