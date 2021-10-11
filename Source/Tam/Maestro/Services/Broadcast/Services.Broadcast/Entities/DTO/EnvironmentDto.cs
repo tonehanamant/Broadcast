@@ -17,5 +17,6 @@
         public bool DisplayCampaignLink { get; set; }
         public bool DisplayBuyingLink { get; set; }
         public bool DisplayIsciMappingLink { get; set; }
+        public bool DisplaySpotExceptionsLink { get; set; }
     }
 }

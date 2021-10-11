@@ -84,7 +84,8 @@ namespace Services.Broadcast.ApplicationServices
                 // Keep These : these are referenced by the NavBar.cshtml
                 DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_CAMPAIGN_LINK),
                 DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
-                DisplayIsciMappingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ISCI_MAPPING)
+                DisplayIsciMappingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ISCI_MAPPING),
+                DisplaySpotExceptionsLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS)
             };
             
             return environmentInfo;

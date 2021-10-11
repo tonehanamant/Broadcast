@@ -20,6 +20,7 @@ namespace BroadcastComposerWeb.Controllers
             ViewBag.DisplayBuyingLink = environmentInfo.DisplayBuyingLink;
             ViewBag.DisplayAABLink = environmentInfo.EnableAabNavigation;
             ViewBag.DisplayIsciMappingLink = environmentInfo.DisplayIsciMappingLink;
+            ViewBag.DisplaySpotExceptionsLink = environmentInfo.DisplaySpotExceptionsLink;
 
             base.OnActionExecuting(filterContext);
         }

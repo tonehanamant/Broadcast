@@ -21,28 +21,32 @@
                 {
                     <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>
                 }
-                 @if (ViewBag.DisplayIsciMappingLink != null && ViewBag.DisplayIsciMappingLink)
+                @if (ViewBag.DisplayIsciMappingLink != null && ViewBag.DisplayIsciMappingLink)
                 {
-                <li><a href="/broadcastreact/isci-mapping">Isci Mapping</a></li>
+                    <li><a href="/broadcastreact/isci-mapping">Isci Mapping</a></li>
                 }
-                <li><a href="/broadcastreact/planning">Planning</a></li>
-                @if (ViewBag.DisplayBuyingLink != null && ViewBag.DisplayBuyingLink)
+                @if (ViewBag.DisplaySpotExceptionsLink != null && ViewBag.DisplaySpotExceptionsLink)
                 {
-                    <li><a href="/broadcastreact/buying">Buying</a></li>
+                    <li><a href="/broadcastreact/spot-exceptions">Spot Exceptions</a></li>
                 }
-                <!-- @if (ViewBag.EnableAabNavigation == null || !ViewBag.EnableAabNavigation)
-                {
-                    @* Comparing using lowercase because in some cases the framework sends the controller name in lowercase. *@
-                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
-                    <li><a href="/broadcastreact/tracker">Tracker</a></li>
-                    <li><a href="/broadcastreact/post">Post</a></li>
-                } -->
-                @* Tracker Pre Posting controller is called HomeController. *@
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "home" ? "active" : "")">@Html.ActionLink("Tracker Pre Posting", "TrackerPrePosting", "Home")</li>
-                <li><a href="/broadcastreact/post-pre-posting">Post Pre Posting</a></li>
-                <li><a href="/broadcastreact/aab">AAB</a></li>
-               
-            </ul>
+                    <li><a href="/broadcastreact/planning">Planning</a></li>
+                    @if (ViewBag.DisplayBuyingLink != null && ViewBag.DisplayBuyingLink)
+                    {
+                        <li><a href="/broadcastreact/buying">Buying</a></li>
+                    }
+                    <!-- @if (ViewBag.EnableAabNavigation == null || !ViewBag.EnableAabNavigation)
+        {
+            @* Comparing using lowercase because in some cases the framework sends the controller name in lowercase. *@
+            <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "traffic" ? "active" : "")">@Html.ActionLink("Traffic", "Index", "Traffic")</li>
+            <li><a href="/broadcastreact/tracker">Tracker</a></li>
+            <li><a href="/broadcastreact/post">Post</a></li>
+        } -->
+                    @* Tracker Pre Posting controller is called HomeController. *@
+                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "home" ? "active" : "")">@Html.ActionLink("Tracker Pre Posting", "TrackerPrePosting", "Home")</li>
+                    <li><a href="/broadcastreact/post-pre-posting">Post Pre Posting</a></li>
+                    <li><a href="/broadcastreact/aab">AAB</a></li>
+
+                </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li id="app_title_info">
                     <a href="#" style="pointer-events: none; cursor: default;">
