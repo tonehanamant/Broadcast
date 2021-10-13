@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -25,7 +24,8 @@ namespace Services.Broadcast.Helpers
             List<Day> cadentDayDefinitions,
             Dictionary<int, List<int>> daypartDefaultDayIds,
             int thresholdInSecondsForProgramIntersect,
-            bool useTrueIndependentStations
+            bool useTrueIndependentStations,
+            bool enableRestrictionsProgramOr
             ) where T : BasePlanInventoryProgram
         {
             var result = new List<T>();
@@ -37,7 +37,7 @@ namespace Services.Broadcast.Helpers
                 {
                     continue;
                 }
-                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program, useTrueIndependentStations);
+                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program, useTrueIndependentStations, enableRestrictionsProgramOr);
                 if (planDaypartsMatchByRestrictions.Count == 0)
                 {
                     continue;
@@ -143,16 +143,27 @@ namespace Services.Broadcast.Helpers
         }
 
         private static List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program, 
-            bool useTrueIndependentStations)
+            bool useTrueIndependentStations, bool enableRestrictionsProgramOr)
         {
             var result = new List<ProgramInventoryDaypart>();
 
             foreach (var inventoryDaypart in programInventoryDayparts)
             {
-                var passGenreOrProgramRestrictions = _IsProgramAllowedByGenreOrProgramRestrictions(inventoryDaypart);
-                if (!passGenreOrProgramRestrictions)
+                if (enableRestrictionsProgramOr)
                 {
-                    continue;
+                    var passGenreOrProgramRestrictions = _IsProgramAllowedByGenreOrProgramRestrictions(inventoryDaypart);
+                    if (!passGenreOrProgramRestrictions)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (!_IsProgramAllowedByProgramRestrictions(inventoryDaypart))
+                        continue;
+
+                    if (!_IsProgramAllowedByGenreRestrictions(inventoryDaypart))
+                        continue;
                 }
 
                 if (!_IsProgramAllowedByShowTypeRestrictions(inventoryDaypart))

@@ -26,5 +26,6 @@
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
         public static string ENABLE_LOCAL_CADENT_LOGO = "broadcast-enable-local-cadent-logo";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
+        public static string ENABLE_RESTRICTIONS_PROGRAM_OR = "broadcast-restrictions-enable-program-or";
     }
 }
