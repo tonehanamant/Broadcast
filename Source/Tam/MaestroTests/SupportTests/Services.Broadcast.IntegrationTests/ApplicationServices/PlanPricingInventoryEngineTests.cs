@@ -3,24 +3,20 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.IntegrationTests.Helpers;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Unity;
-using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
-using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -32,8 +28,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IPlanRepository _PlanRepository;
         private IStationRepository _StationRepository;
         private InventoryFileTestHelper _InventoryFileTestHelper;
-        private LaunchDarklyClientStub _LaunchDarklyClientStub;
-        private IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()
@@ -42,28 +36,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _InventoryFileTestHelper = new InventoryFileTestHelper();
-
-            /*
-             * TODO:
-             *  Rework this test with these toggles :
-             * - PRICING_MODEL_BARTER_INVENTORY = false
-             * - PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = false
-             */
-            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
-
-
-            // TODO SDE : this should be reworked for these to be true, as they are in production
-            //_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
-
-            _ConfigurationSettingsHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
-        }
-
-        private void _SetFeatureToggle(string feature, bool activate)
-        {
-            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
-                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
-            else
-                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -119,7 +91,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
-                jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(BasePlanInventoryProgram.ManifestDaypart), "Id");
                 jsonResolver.Ignore(typeof(ManifestWeek), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
@@ -178,9 +150,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             DaypartCodeId = 1,
                             StartTimeSeconds = 10,
                             EndTimeSeconds = 1699,
-                            Restrictions = new RestrictionsDto
+                            Restrictions = new PlanDaypartDto.RestrictionsDto
                             {
-                                ProgramRestrictions = new RestrictionsDto.ProgramRestrictionDto
+                                ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
                                 {
                                     Programs = new List<ProgramDto>
                                     {
@@ -267,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
-                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
                 {
                     Affiliates = new List<LookupDto>()
                 };
@@ -303,7 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StationId = 575
                 });
                 // Since affiliate has been updated, it shouldn't be filtered by inventory gathering.
-                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
                 {
                     Affiliates = new List<LookupDto>()
                 };

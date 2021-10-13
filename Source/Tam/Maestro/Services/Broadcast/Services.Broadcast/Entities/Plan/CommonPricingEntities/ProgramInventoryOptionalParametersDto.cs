@@ -1,6 +1,6 @@
 ﻿using Services.Broadcast.Entities.Enums;
 
-namespace Services.Broadcast.Entities.Plan.Pricing
+namespace Services.Broadcast.Entities.Plan.CommonPricingEntities
 {
     public class ProgramInventoryOptionalParametersDto
     {

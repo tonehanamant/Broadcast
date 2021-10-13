@@ -9,8 +9,8 @@ using System.Linq;
 using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 
 namespace Services.Broadcast.Entities.Campaign
 {
@@ -60,7 +60,7 @@ namespace Services.Broadcast.Entities.Campaign
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
-            Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
+            Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds,
             List<ProgramLineupProprietaryInventory> proprietaryInventory,
             PostingTypeEnum postingType,
             SpotAllocationModelMode spotAllocationModelMode)
@@ -105,7 +105,7 @@ namespace Services.Broadcast.Entities.Campaign
             List<PlanBuyingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
-            Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
+            Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds,
             List<ProgramLineupProprietaryInventory> proprietaryInventory,
             PostingTypeEnum postingType,
             SpotAllocationModelMode spotAllocationModelMode)
@@ -272,7 +272,7 @@ namespace Services.Broadcast.Entities.Campaign
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             Dictionary<int, MarketCoverageByStation.Market> markets,
-            Dictionary<int, Program> primaryProgramsByManifestDaypartIds)
+            Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds)
         {
             var dataRows = new List<DetailedViewRowData>();
             var planDaypartById = plan.Dayparts.ToDictionary(x => x.DaypartCodeId, x => x);
@@ -369,7 +369,7 @@ namespace Services.Broadcast.Entities.Campaign
            List<PlanBuyingAllocatedSpot> allocatedSpots,
            List<StationInventoryManifest> manifests,
            Dictionary<int, MarketCoverageByStation.Market> markets,
-           Dictionary<int, Program> primaryProgramsByManifestDaypartIds)
+           Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds)
         {
             var dataRows = new List<DetailedViewRowData>();
             var planDaypartById = plan.Dayparts.ToDictionary(x => x.DaypartCodeId, x => x);

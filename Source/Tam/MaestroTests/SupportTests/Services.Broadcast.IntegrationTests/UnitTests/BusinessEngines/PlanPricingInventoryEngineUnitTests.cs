@@ -158,1106 +158,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
-        public void DoesNotIncludeProgram_WhenDoesNotMatchFlightDays()
-        {
-            const int expectedCount = 0;
-
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = false,
-                                Tuesday = false,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = false,
-                                Sunday = false,
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        [TestCase(46800, 50399, 0)] // 13pm-14pm
-        [TestCase(36000, 37739, 0)] // 10am-10:29am, 29 minutes intersection
-        [TestCase(36000, 37799, 1)] // 10am-10:30am, 30 minutes intersection
-        public void MatchingByDaypartTime(int startTime, int endTime, int expectedCount)
-        {
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = startTime,
-                                EndTime = endTime,
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        public void IncludesProgram_WhenNoRestrictionsSpecified()
-        {
-            const int expectedCount = 1;
-
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        [TestCase("Early news", ContainTypeEnum.Exclude, "Early news", 0)]
-        [TestCase("Early news", ContainTypeEnum.Include, "Early news", 1)]
-        [TestCase("Early news", ContainTypeEnum.Exclude, "Late news", 1)]
-        [TestCase("Early news", ContainTypeEnum.Include, "Late news", 0)]
-        public void ProgramNameRestrictionsTest(
-            string restrictedProgramName,
-            ContainTypeEnum containType,
-            string inventoryProgramName,
-            int expectedCount)
-        {
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            plan.Dayparts.First().Restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-            {
-                ContainType = containType,
-                Programs = new List<ProgramDto>
-                {
-                    new ProgramDto
-                    {
-                        Name = restrictedProgramName
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            // Make sure this program name is not considered.
-                            ProgramName = "SomethingToBeIgnored",
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                Name = inventoryProgramName
-                            },
-                            // Make sure only the primary program is considered
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Name = inventoryProgramName
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Name = "Early news"
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Name = "Late news"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        [TestCase("Comedy", ContainTypeEnum.Exclude, "Comedy", 0)]
-        [TestCase("Comedy", ContainTypeEnum.Include, "Comedy", 1)]
-        [TestCase("Comedy", ContainTypeEnum.Exclude, "Crime", 1)]
-        [TestCase("Comedy", ContainTypeEnum.Include, "Crime", 0)]
-        public void GenreRestrictionsTest(
-            string restrictedGenre,
-            ContainTypeEnum containType,
-            string inventoryGenre,
-            int expectedCount)
-        {
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            plan.Dayparts.First().Restrictions.GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
-            {
-                ContainType = containType,
-                Genres = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = restrictedGenre
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                Genre = inventoryGenre
-                            },
-                            // Make sure only the primary program is considered
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Genre = inventoryGenre
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Genre = "Comedy"
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Genre = "Crime"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, false, 1)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, true, 1)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, true, 1)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, false, 1)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, false, 0)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, true, 0)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, true, 0)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, false, 0)]
-        [TestCase("IND", ContainTypeEnum.Include, "IND", true, true, 1)]
-        [TestCase("IND", ContainTypeEnum.Include, "IND", true, false, 1)]
-        [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, false, 0)]
-        [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, true, 0)]
-        [TestCase("IND", ContainTypeEnum.Exclude, "IND", false, false, 0)]
-        public void AffiliateRestrictionsTest(
-            string restrictedAffiliate,
-            ContainTypeEnum containType,
-            string inventoryAffiliate,
-            bool isStationTrueIndependent,
-            bool useTrueIndependentStations,
-            int expectedCount)
-        {
-            // setup feature flags
-            var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
-
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            plan.Dayparts.First().Restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
-            {
-                ContainType = containType,
-                Affiliates = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = restrictedAffiliate
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<BasePlanInventoryProgram.ManifestDaypart>
-                    {
-                        new BasePlanInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                Genre = "comedy"
-                            },
-                            // Make sure only the primary program is considered
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    Genre = "Comedy"
-                                }
-                            }
-                        }
-                    },
-                    Station = new DisplayBroadcastStation
-                    {
-                        Affiliation = inventoryAffiliate,
-                        IsTrueInd = isStationTrueIndependent
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        [TestCase("Mini-Movie", ContainTypeEnum.Exclude, "Mini-Movie", 0)]
-        [TestCase("Mini-Movie", ContainTypeEnum.Include, "Mini-Movie", 1)]
-        [TestCase("Mini-Movie", ContainTypeEnum.Exclude, "Sports", 1)]
-        [TestCase("Mini-Movie", ContainTypeEnum.Include, "Sports", 0)]
-        public void ShowTypeRestrictionsTest(
-            string restrictedShowType,
-            ContainTypeEnum containType,
-            string inventoryShowType,
-            int expectedCount)
-        {
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            plan.Dayparts.First().Restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
-            {
-                ContainType = containType,
-                ShowTypes = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = restrictedShowType
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = inventoryShowType
-                            },
-                            // Make sure only the primary program is considered
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = inventoryShowType
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Mini-Movie"
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Sports"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        public void DoesNotIncludeProgram_WhenItIsBothIncludedAndExcluded()
-        {
-            const int expectedCount = 0;
-
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            var restrictions = plan.Dayparts.First().Restrictions;
-            restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
-            {
-                ContainType = ContainTypeEnum.Exclude,
-                ShowTypes = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = "Sports"
-                    }
-                }
-            };
-            restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-            {
-                ContainType = ContainTypeEnum.Include,
-                Programs = new List<ProgramDto>
-                {
-                    new ProgramDto
-                    {
-                        Name = "Early news"
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Sports",
-                                Name = "Early news"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Sports",
-                                    Name = "Early news"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        public void IncludesProgram_WhenItIsExcludedByAnotherDaypart()
-        {
-            const int expectedCount = 1;
-
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            var restrictions = plan.Dayparts.First().Restrictions;
-            restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
-            {
-                ContainType = ContainTypeEnum.Exclude,
-                ShowTypes = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = "Sports"
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Sports",
-                                Name = "Early news"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Sports",
-                                    Name = "Early news"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-
-            plan.Dayparts.Add(new PlanDaypartDto
-            {
-                DaypartCodeId = 14,
-                StartTimeSeconds = 36000, // 10am
-                EndTimeSeconds = 39599 // 11am
-            });
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void AssignsCorrectDaypartWkdMix(bool programPlaysOnWeekend)
-        {
-            // Expecting to have Daypart 1 to be selected
-            const int expectedCount = 1;
-
-            var plan = _GetPlan();
-            var daypartsData = DaypartsTestData.GetAllStandardDaypartsWithFullData();
-            var daypartEm = daypartsData.Single(s => s.Code == "EM");
-            var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
-
-            // while WKD covers more time in 1 day, EM covers more time overall.
-            var expectedProgramStandardDaypartId = daypartEm.Id;
-
-            var restrictions = new PlanDaypartDto.RestrictionsDto
-            {
-                ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-                {
-                    ContainType = ContainTypeEnum.Include,
-                    Programs = new List<ProgramDto>
-                    {
-                        new ProgramDto { Name = "Program B" }
-                    }
-                }
-            };
-
-            plan.Dayparts = new List<PlanDaypartDto>
-            {
-                new PlanDaypartDto
-                {
-                    DaypartTypeId = daypartEm.DaypartType,
-                    DaypartCodeId = daypartEm.Id,
-                    StartTimeSeconds = 18000, // 5am
-                    EndTimeSeconds = 21599, // 6am
-                    Restrictions = restrictions
-                },
-                new PlanDaypartDto
-                {
-                    DaypartTypeId = daypartWkd.DaypartType,
-                    DaypartCodeId = daypartWkd.Id,
-                    StartTimeSeconds = 18000, // 5am
-                    EndTimeSeconds = 359999, // 10am
-                    Restrictions = restrictions
-                }
-            };
-
-            // this should account for 
-            // - flight days of the week
-            // - all daypart days of the week
-            // in this case that is all days of the week
-            var planCoveredDays = new DisplayDaypart
-            {
-                Monday = true,
-                Tuesday = true,
-                Wednesday = true,
-                Thursday = true,
-                Friday = true,
-                Saturday = true,
-                Sunday = true
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 999,
-                                StartTime = 18000, // 5am
-                                EndTime = 25199, // 7am
-                                Monday = true,
-                                Tuesday = false,
-                                Wednesday = true,
-                                Thursday = false,
-                                Friday = true,
-                                Saturday = programPlaysOnWeekend,
-                                Sunday = programPlaysOnWeekend,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Sports",
-                                Name = "Program B"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Sports",
-                                    Name = "Program B"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-            Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
-        }
-
-        [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void AssignsCorrectDaypartWkdMixAndFlightDays(bool programPlaysOnFriday)
-        {
-            // Expecting to have Daypart 1 to be selected
-            const int expectedCount = 1;
-
-            var plan = _GetPlan();
-            var daypartsData = DaypartsTestData.GetAllStandardDaypartsWithFullData();
-            var daypartEm = daypartsData.Single(s => s.Code == "EM");
-            var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
-
-            // while WKD covers more time in 1 day, EM covers more time overall.
-            var expectedProgramStandardDaypartId = daypartWkd.Id;
-
-            var restrictions = new PlanDaypartDto.RestrictionsDto
-            {
-                ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-                {
-                    ContainType = ContainTypeEnum.Include,
-                    Programs = new List<ProgramDto>
-                    {
-                        new ProgramDto { Name = "Program B" }
-                    }
-                }
-            };
-
-            plan.Dayparts = new List<PlanDaypartDto>
-            {
-                new PlanDaypartDto
-                {
-                    DaypartTypeId = daypartEm.DaypartType,
-                    DaypartCodeId = daypartEm.Id,
-                    StartTimeSeconds = 18000, // 5am
-                    EndTimeSeconds = 21599, // 6am
-                    Restrictions = restrictions
-                },
-                new PlanDaypartDto
-                {
-                    DaypartTypeId = daypartWkd.DaypartType,
-                    DaypartCodeId = daypartWkd.Id,
-                    StartTimeSeconds = 18000, // 5am
-                    EndTimeSeconds = 359999, // 10am
-                    Restrictions = restrictions
-                }
-            };
-
-            // this should account for 
-            // - flight days of the week
-            // - all daypart days of the week
-            var planCoveredDays = new DisplayDaypart
-            {
-                Monday = false,
-                Tuesday = false,
-                Wednesday = false,
-                Thursday = false,
-                Friday = true,
-                Saturday = true,
-                Sunday = true
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 999,
-                                StartTime = 18000, // 5am
-                                EndTime = 25199, // 7am
-                                Monday = true,
-                                Tuesday = false,
-                                Wednesday = true,
-                                Thursday = false,
-                                Friday = programPlaysOnFriday,
-                                Saturday = true,
-                                Sunday = true
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Sports",
-                                Name = "Program B"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Sports",
-                                    Name = "Program B"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-            Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
-        }
-
-        /// <summary>
-        /// In this test the total intersect comes out equal for both dayparts for different reasons.
-        /// We're testing that the selection is then consistent.
-        /// </summary>
-        [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void AssignsCorrectDaypartWkdMixAndFlightDaysTie(bool programPlaysOnSatWed)
-        {
-            // Expecting to have Daypart 1 to be selected
-            const int expectedCount = 1;
-
-            var plan = _GetPlan();
-            var daypartsData = DaypartsTestData.GetAllStandardDaypartsWithFullData();
-            var daypartEm = daypartsData.Single(s => s.Code == "EM");
-            var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
-
-            // while WKD covers more time in 1 day, EM covers more time overall.
-            var expectedProgramStandardDaypartId = daypartEm.Id;
-
-            var restrictions = new PlanDaypartDto.RestrictionsDto
-            {
-                ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-                {
-                    ContainType = ContainTypeEnum.Include,
-                    Programs = new List<ProgramDto>
-                    {
-                        new ProgramDto { Name = "Program B" }
-                    }
-                }
-            };
-
-            plan.Dayparts = new List<PlanDaypartDto>
-            {
-                new PlanDaypartDto
-                {
-                    DaypartTypeId = daypartEm.DaypartType,
-                    DaypartCodeId = daypartEm.Id,
-                    StartTimeSeconds = 18000, // 5am
-                    EndTimeSeconds = 21599, // 6am
-                    Restrictions = restrictions
-                },
-                new PlanDaypartDto
-                {
-                    DaypartTypeId = daypartWkd.DaypartType,
-                    DaypartCodeId = daypartWkd.Id,
-                    StartTimeSeconds = 18000, // 5am
-                    EndTimeSeconds = 359999, // 10am
-                    Restrictions = restrictions
-                }
-            };
-
-            // this should account for 
-            // - flight days of the week
-            // - all daypart days of the week
-            var planCoveredDays = new DisplayDaypart
-            {
-                Monday = false,
-                Tuesday = false,
-                Wednesday = true,
-                Thursday = false,
-                Friday = true,
-                Saturday = true,
-                Sunday = true
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                Id = 999,
-                                StartTime = 18000, // 5am
-                                EndTime = 25199, // 7am
-                                Monday = true,
-                                Tuesday = false,
-                                Wednesday = programPlaysOnSatWed,
-                                Thursday = false,
-                                Friday = true,
-                                Saturday = programPlaysOnSatWed,
-                                Sunday = true
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Sports",
-                                Name = "Program B"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Sports",
-                                    Name = "Program B"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-            Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
-        }
-
-        [Test]
-        public void IncludesProgramTest()
-        {
-            const int expectedCount = 1;
-
-            var plan = _GetPlan();
-            var planFlightDays = _GetPlanFlightDays();
-
-            var restrictions = plan.Dayparts.First().Restrictions;
-            restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
-            {
-                ContainType = ContainTypeEnum.Exclude,
-                ShowTypes = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = "Sports"
-                    }
-                }
-            };
-            restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-            {
-                ContainType = ContainTypeEnum.Include,
-                Programs = new List<ProgramDto>
-                {
-                    new ProgramDto
-                    {
-                        Name = "Early news"
-                    }
-                }
-            };
-            restrictions.GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
-            {
-                ContainType = ContainTypeEnum.Include,
-                Genres = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = "Comedy"
-                    }
-                }
-            };
-
-            var programs = new List<PlanPricingInventoryProgram>
-            {
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Mini-Movie",
-                                Name = "Early news",
-                                Genre = "Comedy"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Mini-Movie",
-                                    Name = "Early news",
-                                    Genre = "Comedy"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Mini-Movie",
-                                Name = "Late news",
-                                Genre = "Comedy"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Mini-Movie",
-                                    Name = "Early news",
-                                    Genre = "Comedy"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                },
-                new PlanPricingInventoryProgram
-                {
-                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
-                    {
-                        new PlanPricingInventoryProgram.ManifestDaypart
-                        {
-                            Daypart = new DisplayDaypart
-                            {
-                                StartTime = 36000, // 10am
-                                EndTime = 39599, // 11am
-                                Monday = true,
-                                Tuesday = true,
-                                Wednesday = true,
-                                Thursday = true,
-                                Friday = true,
-                                Saturday = true,
-                                Sunday = true,
-                            },
-                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                            {
-                                ShowType = "Mini-Movie",
-                                Name = "Late news",
-                                Genre = "Comedy"
-                            },
-                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
-                            {
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Mini-Movie",
-                                    Name = "Early news",
-                                    Genre = "Comedy"
-                                },
-                                new PlanPricingInventoryProgram.ManifestDaypart.Program
-                                {
-                                    ShowType = "Mini-Movie",
-                                    Name = "Early news",
-                                    Genre = "Sports"
-                                }
-                            }
-                        }
-                    },
-                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
-                }
-            };
-            var testClass = _GetTestClass();
-
-            var result = testClass.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
-
-            Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
         [TestCase(null, null, 4)]
         [TestCase(12.00, null, 3)]
         [TestCase(null, 15.00, 3)]
@@ -1268,9 +168,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 350.00M,
@@ -1281,9 +181,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 400.00M,
@@ -1294,9 +194,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 375.00M,
@@ -1307,9 +207,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 300.00M,
@@ -1334,9 +234,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 50.00M,
@@ -1360,14 +260,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 2,
                             Cost = 50.00M,
                         },
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 25.00M,
@@ -1390,14 +290,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 2,
                             Cost = 50.00M,
                         },
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 3,
                             Cost = 30.00M,
@@ -1430,9 +330,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 300.00M
@@ -1459,9 +359,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback,
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 300.00M
@@ -1489,9 +389,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback,
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = defaultSpotCost
@@ -1501,9 +401,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = defaultSpotCost
@@ -1531,9 +431,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram // CPM 11.8243
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 350.00M
@@ -1543,9 +443,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram // CPM 13.2450
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 400.00M
@@ -1555,9 +455,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram // CPM 17.2018
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 375.00M
@@ -1567,9 +467,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram // CPM 12.8205
                 {
-                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new PlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             SpotLengthId = 1,
                             Cost = 300.00M
@@ -2309,9 +1209,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         },
-                        ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                        ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                         {
-                            new PlanPricingInventoryProgram.ManifestRate
+                            new BasePlanInventoryProgram.ManifestRate
                             {
                                 SpotLengthId = 1,
                                 Cost = 10
@@ -2454,9 +1354,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         },
-                        ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                        ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                         {
-                            new PlanPricingInventoryProgram.ManifestRate
+                            new BasePlanInventoryProgram.ManifestRate
                             {
                                 SpotLengthId = programSpotLengthId,
                                 Cost = (10 * programSpotLengthId)
@@ -2611,9 +1511,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     }
                                 }
                             },
-                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                             {
-                                new PlanPricingInventoryProgram.ManifestRate
+                                new BasePlanInventoryProgram.ManifestRate
                                 {
                                     SpotLengthId = 1,
                                     Cost = 10
@@ -2756,9 +1656,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     }
                                 }
                             },
-                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                             {
-                                new PlanPricingInventoryProgram.ManifestRate
+                                new BasePlanInventoryProgram.ManifestRate
                                 {
                                     SpotLengthId = 1,
                                     Cost = 10
@@ -2899,9 +1799,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     }
                                 }
                             },
-                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                             {
-                                new PlanPricingInventoryProgram.ManifestRate
+                                new BasePlanInventoryProgram.ManifestRate
                                 {
                                     SpotLengthId = 1,
                                     Cost = 10

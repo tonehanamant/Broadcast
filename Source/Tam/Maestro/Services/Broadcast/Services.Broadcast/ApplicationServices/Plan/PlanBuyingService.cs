@@ -28,7 +28,6 @@ using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using static Services.Broadcast.BusinessEngines.PlanBuyingInventoryEngine;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {

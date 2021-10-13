@@ -16,7 +16,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         {
             get
             {
-                //Impresions are by default NSI
+                //Impressions are by default NSI
                 var impressions = ProvidedImpressions ?? ProjectedImpressions;
                 if (PostingType == PostingTypeEnum.NTI)
                     impressions *= NsiToNtiImpressionConversionRate;

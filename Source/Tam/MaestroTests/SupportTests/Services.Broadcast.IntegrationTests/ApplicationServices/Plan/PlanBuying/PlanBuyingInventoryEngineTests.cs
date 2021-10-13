@@ -3,21 +3,18 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Unity;
-using static Services.Broadcast.Entities.Plan.Buying.PlanBuyingInventoryProgram;
-using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
-using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuying
 {
@@ -36,10 +33,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _InventoryFileTestHelper = new InventoryFileTestHelper();
-
-            var launchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
-            // TODO SDE : this should be reworked for these to be true, as they are in production
-            //launchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
         }
 
         [Test]
@@ -53,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 plan.CreativeLengths.First().SpotLengthId = 2;
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -90,14 +83,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                     var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                         plan,
-                        new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                        new ProgramInventoryOptionalParametersDto(),
                         _GetAvailableInventorySources(),
                         diagnostic);
 
                     var jsonResolver = new IgnorableSerializerContractResolver();
                     jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram), "ManifestId");
-                    jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
-                    jsonResolver.Ignore(typeof(ManifestWeek), "Id");
+                    jsonResolver.Ignore(typeof(BasePlanInventoryProgram.ManifestDaypart), "Id");
+                    jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram.ManifestWeek), "Id");
                     var jsonSettings = new JsonSerializerSettings()
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -124,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var plan = _PlanRepository.GetPlan(1199);
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -142,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -158,7 +151,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
-                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
                 {
                     Affiliates = new List<LookupDto>()
                 };
@@ -168,7 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // Result has affiliates CW and FOX.
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -193,7 +186,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     StationId = 575
                 });
                 // Since affiliate has been updated, it shouldn't be filtered by inventory gathering.
-                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
                 {
                     Affiliates = new List<LookupDto>()
                 };
@@ -203,7 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // Result has affiliates CW and FOX.
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -225,7 +218,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 2, 27));
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -243,7 +236,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var plan = _PlanRepository.GetPlan(1200);
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic);
 
