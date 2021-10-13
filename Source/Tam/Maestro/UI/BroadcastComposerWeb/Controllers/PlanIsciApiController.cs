@@ -61,6 +61,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>True or False</returns>
         [HttpPost]
         [Route("plan-iscis")]
+        [Authorize]
         public BaseResponse<bool> SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductsMapping)
         {
             var createdBy = _GetCurrentUserFullName();
