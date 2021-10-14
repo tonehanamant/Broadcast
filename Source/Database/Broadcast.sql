@@ -1065,33 +1065,24 @@ BEGIN
 END
 GO
 
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions')
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' AND COLUMN_NAME='spot_lenth_id')
 BEGIN
-DROP TABLE spot_exceptions_out_of_spec_decisions
-END
-GO
-
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_specs')
-BEGIN
-DROP TABLE spot_exceptions_out_of_specs
-END
-GO
 
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_decision')
 BEGIN
 DROP TABLE spot_exceptions_recommended_plan_decision
 END
-GO
 
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_details')
 BEGIN
 DROP TABLE spot_exceptions_recommended_plan_details
 END
-GO
 
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_recommended_plans')
 BEGIN
 DROP TABLE spot_exceptions_recommended_plans
+END
+
 END
 GO
 
@@ -1123,6 +1114,7 @@ BEGIN
 )
 END
 GO
+
 IF OBJECT_ID('spot_exceptions_recommended_plan_details') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[spot_exceptions_recommended_plan_details]
@@ -1137,6 +1129,7 @@ BEGIN
 )
 END
 GO
+
 IF OBJECT_ID('spot_exceptions_recommended_plan_decision') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[spot_exceptions_recommended_plan_decision]
@@ -1149,6 +1142,23 @@ BEGIN
 )
 END
 GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME='spot_lenth_id')
+BEGIN
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions')
+BEGIN
+DROP TABLE spot_exceptions_out_of_spec_decisions
+END
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_specs')
+BEGIN
+DROP TABLE spot_exceptions_out_of_specs
+END
+
+END
+GO
+
 IF OBJECT_ID('spot_exceptions_out_of_specs') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[spot_exceptions_out_of_specs]
@@ -1184,6 +1194,7 @@ BEGIN
 )
 END
 GO
+
 IF OBJECT_ID('spot_exceptions_out_of_spec_decisions') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[spot_exceptions_out_of_spec_decisions]
@@ -1198,7 +1209,6 @@ BEGIN
 )
 END
 GO
-
 
 /*************************************** END BP-3266 ***************************************/
 
