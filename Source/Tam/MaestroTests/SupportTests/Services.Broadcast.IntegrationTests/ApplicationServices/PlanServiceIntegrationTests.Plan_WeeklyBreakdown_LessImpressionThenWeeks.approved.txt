@@ -21,7 +21,7 @@
       "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 75000.0,
-      "WeeklyCpm": 25000000.0,
+      "WeeklyCpm": 25000.0,
       "WeeklyImpressions": 3.0,
       "WeeklyImpressionsPercentage": 100.0,
       "WeeklyRatings": 0.0,

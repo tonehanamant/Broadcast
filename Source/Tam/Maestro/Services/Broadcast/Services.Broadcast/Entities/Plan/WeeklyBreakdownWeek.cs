@@ -23,7 +23,8 @@ namespace Services.Broadcast.Entities.Plan
         public bool IsUpdated { get; set; }
         public double UnitImpressions { get; set; }
         public double WeeklyUnits { get; set; }
-        public decimal WeeklyCpm => ProposalMath.CalculateCpm(WeeklyBudget, WeeklyImpressions);
+        // assumes that the WeeklyImpressions have been formatted for (000)
+        public decimal WeeklyCpm => ProposalMath.CalculateCpm(WeeklyBudget, (WeeklyImpressions * 1000));
     }
 
     public class WeeklyBreakdownTotals
