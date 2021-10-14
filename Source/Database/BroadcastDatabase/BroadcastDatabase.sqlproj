@@ -295,4 +295,7 @@
   <ItemGroup>
     <None Include="readme.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="BroadcastDatabase.refactorlog" />
+  </ItemGroup>
 </Project>

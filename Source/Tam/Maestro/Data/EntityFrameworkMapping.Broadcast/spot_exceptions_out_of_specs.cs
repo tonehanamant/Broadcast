@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class spot_exceptions_out_of_specs
     {
+        public spot_exceptions_out_of_specs()
+        {
+            this.spot_exceptions_out_of_spec_decisions = new HashSet<spot_exceptions_out_of_spec_decisions>();
+        }
+    
         public int id { get; set; }
         public string reason_code { get; set; }
         public string reason_code_message { get; set; }
@@ -22,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> recommended_plan_id { get; set; }
         public string program_name { get; set; }
         public string station_legacy_call_letters { get; set; }
-        public Nullable<int> spot_lenth_id { get; set; }
+        public Nullable<int> spot_length_id { get; set; }
         public Nullable<int> audience_id { get; set; }
         public string product { get; set; }
         public Nullable<System.DateTime> flight_start_date { get; set; }
@@ -34,12 +39,15 @@ namespace EntityFrameworkMapping.Broadcast
         public string program_network { get; set; }
         public Nullable<int> program_audience_id { get; set; }
         public System.DateTime program_air_time { get; set; }
+        public string ingested_by { get; set; }
+        public System.DateTime ingested_at { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual audience audience1 { get; set; }
         public virtual daypart daypart { get; set; }
         public virtual daypart daypart1 { get; set; }
         public virtual plan plan { get; set; }
+        public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
     }
 }

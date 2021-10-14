@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int spot_exceptions_recommended_plan_id { get; set; }
         public int recommended_plan_id { get; set; }
         public double metric_percent { get; set; }
+        public bool is_recommended_plan { get; set; }
     
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }

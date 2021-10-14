@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public spot_exceptions_recommended_plans()
         {
-            this.spot_exceptions_out_of_spec_decisions = new HashSet<spot_exceptions_out_of_spec_decisions>();
             this.spot_exceptions_recommended_plan_details = new HashSet<spot_exceptions_recommended_plan_details>();
         }
     
@@ -29,17 +28,18 @@ namespace EntityFrameworkMapping.Broadcast
         public string station_legacy_call_letters { get; set; }
         public Nullable<decimal> cost { get; set; }
         public Nullable<double> impressions { get; set; }
-        public Nullable<int> spot_lenth_id { get; set; }
+        public Nullable<int> spot_length_id { get; set; }
         public Nullable<int> audience_id { get; set; }
         public string product { get; set; }
         public Nullable<System.DateTime> flight_start_date { get; set; }
         public Nullable<System.DateTime> flight_end_date { get; set; }
         public Nullable<int> daypart_id { get; set; }
+        public string ingested_by { get; set; }
+        public System.DateTime ingested_at { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
         public virtual plan plan { get; set; }
-        public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
     }

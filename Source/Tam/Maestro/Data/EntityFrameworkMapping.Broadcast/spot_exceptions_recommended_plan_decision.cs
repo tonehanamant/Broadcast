@@ -15,7 +15,7 @@ namespace EntityFrameworkMapping.Broadcast
     public partial class spot_exceptions_recommended_plan_decision
     {
         public int id { get; set; }
-        public int selected_details_id { get; set; }
+        public int spot_exceptions_recommended_plan_detail_id { get; set; }
         public string username { get; set; }
         public System.DateTime created_at { get; set; }
     

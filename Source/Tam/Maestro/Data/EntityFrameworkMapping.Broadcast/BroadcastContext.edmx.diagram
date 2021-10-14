@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="30">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="26">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
@@ -527,22 +527,22 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_stations_plan_version_buying_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_stations_stations" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_ingest_jobs" Width="1.5" PointX="36.375" PointY="30.5" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" Width="1.5" PointX="38.25" PointY="45.75" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="28" PointY="0.75" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" Width="1.5" PointX="38.25" PointY="38.375" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" Width="1.5" PointX="38.25" PointY="40.25" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="36" PointY="38.125" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_decision" Width="1.5" PointX="39.5" PointY="12.75" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" Width="1.5" PointX="37.25" PointY="13.5" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans" Width="1.5" PointX="28" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_decision" Width="1.5" PointX="40.5" PointY="38.625" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans" Width="1.5" PointX="36" PointY="36.375" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_recommended_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />

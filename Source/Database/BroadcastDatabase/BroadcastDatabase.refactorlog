@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="2aadb6bc-0731-456c-9019-5ab9e13a32fe" ChangeDateTime="10/13/2021 12:20:05">
+    <Property Name="ElementName" Value="[dbo].[spot_exceptions_recommended_plans].[spot_lenth_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[spot_exceptions_recommended_plans]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="spot_length_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a0e2b8d8-ef58-4267-9eef-e9cfa07bf6c4" ChangeDateTime="10/13/2021 12:21:13">
+    <Property Name="ElementName" Value="[dbo].[spot_exceptions_out_of_specs].[spot_lenth_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[spot_exceptions_out_of_specs]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="spot_length_id" />
+  </Operation>
+</Operations>

@@ -15,12 +15,12 @@ namespace EntityFrameworkMapping.Broadcast
     public partial class spot_exceptions_out_of_spec_decisions
     {
         public int id { get; set; }
-        public int spot_exceptions_recommended_plan_id { get; set; }
+        public int spot_exceptions_out_of_spec_id { get; set; }
         public bool accepted_as_in_spec { get; set; }
         public string decision_notes { get; set; }
         public string username { get; set; }
         public System.DateTime created_at { get; set; }
     
-        public virtual spot_exceptions_recommended_plans spot_exceptions_recommended_plans { get; set; }
+        public virtual spot_exceptions_out_of_specs spot_exceptions_out_of_specs { get; set; }
     }
 }
