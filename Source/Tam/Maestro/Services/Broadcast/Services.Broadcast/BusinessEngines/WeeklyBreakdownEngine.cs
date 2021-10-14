@@ -68,6 +68,13 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             double? customImpressionsGoal = null,
             decimal? customBudgetGoal = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
     }
 
     public class WeeklyBreakdownEngine : IWeeklyBreakdownEngine
@@ -528,6 +535,31 @@ namespace Services.Broadcast.BusinessEngines
             return response;
         }
 
+
+        public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
+        {
+            //TODO: Add check for lock
+
+            //Switch delivery type if it is even to prevent redestribution          
+            if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
+                request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
+
+            foreach (var week in request.Weeks)
+            {
+                week.WeeklyBudget = 0;
+                week.WeeklyUnits = 0;
+                week.WeeklyRatings = 0;
+                week.WeeklyImpressions = 0;
+                week.WeeklyImpressionsPercentage = 0;
+                week.WeeklyAdu = 0;
+                week.IsUpdated = true;
+            }
+
+            var response = CalculatePlanWeeklyGoalBreakdown(request);
+
+            return response;
+        }
+
         private void _AdjustSpotLengthBudget(List<WeeklyBreakdownWeek> weeks, PlanGoalBreakdownTypeEnum deliveryType,
             bool equivalized, decimal totalBudget)
         {
@@ -831,6 +863,18 @@ namespace Services.Broadcast.BusinessEngines
         private void _RecalculateExistingWeeks(WeeklyBreakdownRequest request, out bool redistributeCustom)
         {
             redistributeCustom = false;
+
+            //All weeks have been updated do not redistribute
+            if (request.Weeks.All(x => x.IsUpdated))
+            {
+                //reset update flag
+                foreach(var week in request.Weeks)
+                {
+                    week.IsUpdated = false;
+                }
+                return;
+            }
+
             double oldImpressionTotals = 0;
             List<WeeklyBreakdownWeek> weeksToUpdate;
             var updatedWeek = request.Weeks.SingleOrDefault(x => x.IsUpdated);
@@ -1441,5 +1485,6 @@ namespace Services.Broadcast.BusinessEngines
                 return (aduImpressions / impressionsPerUnit);
             }
         }
+
     }
 }

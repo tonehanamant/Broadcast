@@ -1868,7 +1868,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
             }
         }
 
@@ -1882,7 +1882,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     FlightEndDate = default,
                     FlightStartDate = default,
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+                }, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
@@ -1896,7 +1896,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     FlightEndDate = default,
                     FlightStartDate = new DateTime(2019, 01, 01),
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+                }, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
@@ -1913,7 +1913,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     TotalImpressions = 1000,
                     ImpressionsPerUnit = 1001,
                     FlightDays = new List<int> { 1, 2, 3, 4, 5 },
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
+                }, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
             }
         }
 
@@ -1935,7 +1935,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     TotalRatings = 0.000907291831869388,
                     WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                     ImpressionsPerUnit = 100
-                });
+                }, false);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -1959,7 +1959,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ImpressionsPerUnit = 100
                 };
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(request));
+                var exception = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false));
 
                 Assert.That(exception.Message, Is.EqualTo("For the chosen delivery type, dayparts are required"));
             }
@@ -1988,7 +1988,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
                         new PlanDaypartDto { DaypartCodeId = 2 }
                     }
-                });
+                }, false);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -2018,7 +2018,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
                         new PlanDaypartDto { DaypartCodeId = standardDaypartIdWKD }
                     }
-                });
+                }, false);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -2109,7 +2109,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
@@ -2130,7 +2130,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 ImpressionsPerUnit = 100
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2151,7 +2151,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 250,
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2172,7 +2172,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 ImpressionsPerUnit = 100
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2193,7 +2193,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalRatings = 896090.698153806, // not accurate to the total impressions, but that doesn't matter for the test.
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 ImpressionsPerUnit = 10000000
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2215,7 +2215,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 ImpressionsPerUnit = 100
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2247,7 +2247,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                       WeekNumber= 1
                 }},
                 ImpressionsPerUnit = 100
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2262,7 +2262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Ratings;
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2277,7 +2277,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Units;
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2291,7 +2291,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions = 300;
             request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2307,7 +2307,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Percentage;
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2352,7 +2352,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     },
                 },
                 ImpressionsPerUnit = 100
-            });
+            }, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2375,7 +2375,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 100
             };
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2443,7 +2443,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 1
             };
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2535,7 +2535,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 1
             };
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2638,7 +2638,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 1
             };
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2663,7 +2663,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 1
             };
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -2688,7 +2688,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ImpressionsPerUnit = 1
             };
 
-            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }

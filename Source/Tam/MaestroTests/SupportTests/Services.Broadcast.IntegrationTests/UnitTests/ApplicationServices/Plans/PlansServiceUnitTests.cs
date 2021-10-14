@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                .Setup(s => s.GetDataRepository<IPlanBuyingRepository>())
                .Returns(_PlanBuyingRepositoryMock.Object);
-            
+
             _DataRepositoryFactoryMock
                .Setup(s => s.GetDataRepository<IInventoryProprietarySummaryRepository>())
                .Returns(_InventoryProprietarySummaryRepositoryMock.Object);
@@ -174,7 +174,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();           
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.VPVH_DEMO, false);
 
@@ -267,7 +267,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var updatePlanPricingVersionIdCalls = new List<UpdatePlanPricingVersionIdParams>();
             _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));           
+                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
 
             _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
                 .Returns(plan.Id);
@@ -299,7 +299,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 Budget = 100,
                 CPM = 12,
-                CPP=50,
+                CPP = 50,
                 DeliveryImpressions = 100,
                 DeliveryRatingPoints = 50,
                 PlanId = planId,
@@ -405,13 +405,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
 
             _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
-                .Returns(beforePlan.Id);           
+                .Returns(beforePlan.Id);
 
             // handle the test parameter
             var expectedQueuePricingJobCallCount = 0;
             var expectedUpdatePlanPricingVersionIdCalls = 1;
             var expectedSetPricingPlanVersionIdCallCount = 0;
-            
+
             plan.IsOutOfSync = false;
 
             // Act
@@ -530,7 +530,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
                 .Returns(beforePlan.Id);
 
-          
+
 
             plan.IsOutOfSync = false;
 
@@ -538,7 +538,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
-            Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);           
+            Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);
         }
         [Test]
         [TestCase(0, 1, false, false, PlanService.SaveState.CreatingNewPlan)]
@@ -575,9 +575,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(PlanService.SaveState.CreatingNewPlan, true, false)]
         [TestCase(PlanService.SaveState.CreatingNewPlan, false, false)]
         [TestCase(PlanService.SaveState.UpdatingExisting, true, false)]
-        [TestCase(PlanService.SaveState.UpdatingExisting,true, false)]
+        [TestCase(PlanService.SaveState.UpdatingExisting, true, false)]
         [TestCase(PlanService.SaveState.UpdatingExisting, false, true)]
-        public void ShouldPromotePricingResultsOnPlanSave(PlanService.SaveState saveState, 
+        public void ShouldPromotePricingResultsOnPlanSave(PlanService.SaveState saveState,
              bool goalsChanged, bool expectedResult)
         {
             // Arrange
@@ -634,16 +634,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             afterPlan.Id = planId;
             afterPlan.VersionId = planVersionId + 1;
 
-            
-            var expectedUpdatePlanPricingVersionId = 0;           
+
+            var expectedUpdatePlanPricingVersionId = 0;
             var expectedSavePlanPricingParametersCalled = 0;
 
             if (shouldPromotePricingResults)
             {
-                plan.JobId = 26;                                           
-                expectedUpdatePlanPricingVersionId++;      
+                plan.JobId = 26;
+                expectedUpdatePlanPricingVersionId++;
             }
-           
+
             else
             {
                 expectedSavePlanPricingParametersCalled++;
@@ -657,7 +657,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
                 .Callback(() => updatePlanPricingVersionIdCalled++);
 
-            var queuePricingJobCalled= 0;
+            var queuePricingJobCalled = 0;
             _PlanPricingServiceMock.Setup(s => s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCalled++);
 
@@ -669,8 +669,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanService._FinalizePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, modifiedDate, modifiedBy, shouldPromotePricingResults);
 
             // Assert
-           
-            Assert.AreEqual(expectedUpdatePlanPricingVersionId, updatePlanPricingVersionIdCalled);            
+
+            Assert.AreEqual(expectedUpdatePlanPricingVersionId, updatePlanPricingVersionIdCalled);
             Assert.AreEqual(expectedSavePlanPricingParametersCalled, savePlanPricingParametersCallsed);
         }
         [Test]
@@ -759,7 +759,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
             _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
-                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));            
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
 
             var planAggregator = new Mock<IPlanAggregator>();
             var aggregateCallCount = 0;
@@ -783,7 +783,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto { VersionId = 66 });
 
             // aggregatePlanSynchronously = false because we are testing that aggregation is on a separate thread.
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously:false);
+            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
             Thread.Sleep(200);
 
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
@@ -1088,7 +1088,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
                 .Returns(standardResult);
 
-            var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously:true));
+            var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true));
 
             Assert.AreEqual(expectedMessage, exception.Message);
         }
@@ -1121,7 +1121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()));
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(new PlanDto{VersionId = 66});
+                .Returns(new PlanDto { VersionId = 66 });
 
             var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
             _PlanMarketSovCalculator.Setup(s =>
@@ -1129,7 +1129,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(standardResult);
 
             // Act
-            _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously:true);
+            _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true);
 
             // Assert
             Assert.NotNull(plan.FlightDays, "FlightDays list should be initialized");
@@ -1676,7 +1676,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var plan = _GetNewPlan();
 
-            var standardResult = new PlanAvailableMarketCalculationResult {AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50};
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
             _PlanMarketSovCalculator.Setup(s =>
                     s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()))
                 .Returns(standardResult);
@@ -1707,7 +1707,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 71, Market = "Flint-Saginaw-Bay City", PercentageOfUS = 0.00367, MarketCode = 113},
                 new PlanAvailableMarketDto { MarketCoverageFileId = 1, Rank = 92, Market = "Charleston, SC", PercentageOfUS = 0.00286, MarketCode = 119 }
             };
-            
+
             var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
             _PlanMarketSovCalculator.Setup(s =>
                     s.CalculateMarketWeightChange(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<short>(), It.IsAny<double?>()))
@@ -1738,7 +1738,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             var plan = _GetNewPlan();
-            var removedMarketCodes = new List<short> {101};
+            var removedMarketCodes = new List<short> { 101 };
 
             var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
             _PlanMarketSovCalculator.Setup(s =>
@@ -1945,7 +1945,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             _NtiToNsiConversionRepository.Setup(s => s.GetLatestNtiToNsiConversionRates())
-                .Returns(new List<NtiToNsiConversionRate> {new NtiToNsiConversionRate {StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
+                .Returns(new List<NtiToNsiConversionRate> { new NtiToNsiConversionRate { StandardDaypartId = testStandardDaypartId, ConversionRate = testConversionRate } });
 
             _PlanBudgetDeliveryCalculatorMock
                 .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
@@ -2342,7 +2342,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const decimal testOptimalCpm = 123.4m;
             const int testAudienceId = 31;
             const int testExpectedPlanVersionNumber = 11;
-            const int testExpectedPlanVersionId = 666;                                    
+            const int testExpectedPlanVersionId = 666;
             var beforePlan = _GetNewPlan();
             beforePlan.PostingType = PostingTypeEnum.NTI;
             beforePlan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
@@ -2357,7 +2357,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             beforePlan.PricingParameters.ProprietaryInventory = new List<InventoryProprietarySummary>();
             beforePlan.BuyingParameters = new PlanBuyingParametersDto();
 
-            var afterPlanDto = new PlanDto {VersionId = 666};
+            var afterPlanDto = new PlanDto { VersionId = 666 };
 
             _SpotLengthEngineMock.Setup(s => s.GetSpotLengths())
                 .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
@@ -2403,8 +2403,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var calculateBudgetParams = new List<PlanDeliveryBudget>();
             _PlanBudgetDeliveryCalculatorMock.Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Callback<PlanDeliveryBudget>((s) => calculateBudgetParams.Add(s))
-                .Returns<PlanDeliveryBudget>((b) => new PlanDeliveryBudget {Impressions = testImpressions, RatingPoints = 12, CPP = 1522, 
-                    Universe = 8000000, CPM = b.CPM ?? 8.3m, Budget = b.Budget ?? 125000});
+                .Returns<PlanDeliveryBudget>((b) => new PlanDeliveryBudget
+                {
+                    Impressions = testImpressions,
+                    RatingPoints = 12,
+                    CPP = 1522,
+                    Universe = 8000000,
+                    CPM = b.CPM ?? 8.3m,
+                    Budget = b.Budget ?? 125000
+                });
 
             var weeklyBreakdownRequests = new List<WeeklyBreakdownRequest>();
             _WeeklyBreakdownEngineMock
@@ -2419,7 +2426,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     TotalImpressionsPercentage = 5,
                     TotalBudget = 6,
                     TotalUnits = 7,
-                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27, WeeklyImpressions = testImpressions} }
+                    Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { MediaWeekId = 27, WeeklyImpressions = testImpressions } }
                 });
 
             _WeeklyBreakdownEngineMock.Setup(s =>
@@ -2436,7 +2443,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             int pricingNewVersion = -1;
             _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<int,int>((n,o) => pricingNewVersion = n);
+                .Callback<int, int>((n, o) => pricingNewVersion = n);
 
             int buyingNewVersion = -1;
             _PlanRepositoryMock.Setup(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()))
@@ -2444,8 +2451,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var results = _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username,
-                aggregatePlanSynchronously:true);
-            
+                aggregatePlanSynchronously: true);
+
             // Assert
             Assert.IsTrue(results);
             // Validate saved correct info
@@ -2527,7 +2534,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private static Dictionary<int, InventoryProprietarySummary> _GetInventorySummaryProprietaryData()
         {
             return new Dictionary<int, InventoryProprietarySummary> {
-                    { 1, 
+                    { 1,
                         new InventoryProprietarySummary
                         {
                             Id = 1,
@@ -2544,7 +2551,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             var planToReturn = _GetNewPlan();
-            
+
             _InventoryProprietarySummaryRepositoryMock
                 .Setup(x => x.GetInventorySummaryDataById(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetInventorySummaryProprietaryData());
@@ -2555,7 +2562,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     planToReturn.Id = planId;
                     planToReturn.VersionId = versionId;
-                    planToReturn.PricingParameters.PostingType = PostingTypeEnum.NSI;                    
+                    planToReturn.PricingParameters.PostingType = PostingTypeEnum.NSI;
                     return planToReturn;
                 });
 
@@ -2688,6 +2695,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert            
             Assert.AreEqual(expectedVPVH, result.Vpvh);
+        }
+
+        [Test]
+        public void CalculatePlanWeeklyGoalBreakdown_WithClearAllFlag_CallsClearMethod()
+        {
+            //arrange
+            var request = new WeeklyBreakdownRequest();
+
+            //act
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, true);
+
+            //assert
+            _WeeklyBreakdownEngineMock.Verify(x => x.ClearPlanWeeklyGoalBreakdown(request), Times.Once);
+        }
+
+        [Test]
+        public void CalculatePlanWeeklyGoalBreakdown_CallsCalculateMethod()
+        {
+            //arrange
+            var request = new WeeklyBreakdownRequest();
+
+            //act
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            //assert
+            _WeeklyBreakdownEngineMock.Verify(x => x.CalculatePlanWeeklyGoalBreakdown(request), Times.Once);
         }
     }
 }

@@ -161,12 +161,13 @@ namespace BroadcastComposerWeb.Controllers
         /// Calculates the weekly breakdown.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="clearAll"></param>
         /// <returns>WeeklyBreakdownResponse object containing the weekly breakdown</returns>
         [HttpPost]
         [Route("WeeklyBreakdown")]
-        public BaseResponse<WeeklyBreakdownResponseDto> CalculateWeeklyBreakdown(WeeklyBreakdownRequest request)
+        public BaseResponse<WeeklyBreakdownResponseDto> CalculateWeeklyBreakdown(WeeklyBreakdownRequest request, bool clearAll = false )
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePlanWeeklyGoalBreakdown(request));
+            return _ConvertToBaseResponse(() =>  _ApplicationServiceFactory.GetApplicationService<IPlanService>().CalculatePlanWeeklyGoalBreakdown(request, clearAll));
         }
 
         /// <summary>

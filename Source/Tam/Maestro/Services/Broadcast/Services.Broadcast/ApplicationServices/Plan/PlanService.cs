@@ -97,8 +97,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Calculates the weekly breakdown.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="clearAll"></param>
         /// <returns>WeeklyBreakdownResponse object</returns>
-        WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
+        WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, bool clearAll);
 
         /// <summary>
         /// Gets the plan defaults.
@@ -1204,9 +1205,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
+        public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, bool clearAll = false)
         {
-            return _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = clearAll ? _WeeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request) 
+                : _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            return result;
         }
 
         // attribute has to be on the class instead of the interface because this is a recurring job.
