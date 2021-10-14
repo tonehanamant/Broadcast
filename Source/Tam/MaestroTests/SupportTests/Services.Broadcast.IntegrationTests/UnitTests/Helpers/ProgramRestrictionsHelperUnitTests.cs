@@ -1116,7 +1116,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
         #region GenreOrProgramsTests
 
         [Test]
-        [TestCase(false, true, 2, true, true)]
+        [TestCase(false, true, 1, true, false)]
         [TestCase(true, true, 2, true, false)]
         [TestCase(true, false, 1, false, false)]
         [TestCase(false, false, 1, false, true)]
@@ -1169,58 +1169,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
                     && p.ManifestDayparts[0].PrimaryProgram.Genre.Equals("News")
                 );
                 Assert.IsNotNull(foundProgram);
-            }
-        }
-
-        [Test]
-        [TestCase(false, 1, false)]
-        [TestCase(true, 2, true)]
-        public void GenreOrProgramTest_SameGenreOtherProgram(bool includeGenre, int expectedProgramCount, bool expectFriends)
-        {
-            var plan = _GetPlan();
-            var restrictions = plan.Dayparts.First().Restrictions;
-            restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-            {
-                ContainType = ContainTypeEnum.Include,
-                Programs = new List<ProgramDto> { new ProgramDto { Name = "Other Funny Program" } }
-            };
-            restrictions.GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
-            {
-                ContainType = includeGenre ? ContainTypeEnum.Include : ContainTypeEnum.Exclude,
-                Genres = new List<LookupDto>
-                {
-                    new LookupDto
-                    {
-                        Display = "Comedy"
-                    }
-                }
-            };
-
-            var planFlightDays = new DisplayDaypart
-            {
-                Monday = true,
-                Tuesday = true,
-                Wednesday = true,
-                Thursday = true,
-                Friday = true,
-                Saturday = true,
-                Sunday = true
-            };
-
-            var programs = _GetProgramsForGenreOrProgramsTests();
-
-            var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
-                _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations, EnableRestrictionsProgramOr);
-
-            Assert.AreEqual(expectedProgramCount, result.Count);
-            if (expectFriends)
-            {
-                var friendsProgram = result.SingleOrDefault(p =>
-                    p.ManifestDayparts[0].PrimaryProgram.Name.Equals("Friends")
-                    && p.ManifestDayparts[0].PrimaryProgram.Genre.Equals("Comedy")
-                    );
-                Assert.IsNotNull(friendsProgram);
             }
         }
 

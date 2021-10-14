@@ -239,24 +239,55 @@ namespace Services.Broadcast.Helpers
                 return result;
             }
 
-            /*** Program Name is higher priority than genre. ***/
-            if (programInspectionResult.IsInList)
+            /*** Use cases are from BP-3250 ***/
+            
+            // use case 1
+            if (programInspectionResult.ContainType == ContainTypeEnum.Include
+                && genreInspectionResult.ContainType == ContainTypeEnum.Exclude)
             {
-                /*** if one of these then no need to consider Genre. ***/
-                if (programInspectionResult.ContainType == ContainTypeEnum.Include)
+                return programInspectionResult.IsInList;
+            }
+
+            // use case 2
+            if (programInspectionResult.ContainType == ContainTypeEnum.Include
+                && genreInspectionResult.ContainType == ContainTypeEnum.Include)
+            {
+                if (programInspectionResult.IsInList)
                 {
                     return true;
                 }
-                
-                if (programInspectionResult.ContainType == ContainTypeEnum.Exclude)
+
+                return genreInspectionResult.IsInList;
+            }
+
+            // use case 3
+            if (programInspectionResult.ContainType == ContainTypeEnum.Exclude
+                && genreInspectionResult.ContainType == ContainTypeEnum.Include)
+            {
+                if (programInspectionResult.IsInList)
+                {
+                    return false;
+                }
+
+                return genreInspectionResult.IsInList;
+            }
+
+            // use case 4
+            if (programInspectionResult.ContainType == ContainTypeEnum.Exclude
+                && genreInspectionResult.ContainType == ContainTypeEnum.Exclude)
+            {
+                if (programInspectionResult.IsInList)
+                {
+                    return false;
+                }
+
+                if (genreInspectionResult.IsInList)
                 {
                     return false;
                 }
             }
-            
-            /*** Genre last ***/
-            var result1 = _IsProgramAllowedByGenreRestrictions(inventoryDaypart);
-            return result1;
+
+            return true;
         }
 
         private class RestrictionInspectionResult
