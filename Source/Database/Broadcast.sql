@@ -1065,6 +1065,73 @@ BEGIN
 END
 GO
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME='spot_lenth_id')
+BEGIN
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions')
+BEGIN
+DROP TABLE spot_exceptions_out_of_spec_decisions
+END
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_specs')
+BEGIN
+DROP TABLE spot_exceptions_out_of_specs
+END
+
+END
+GO
+
+IF OBJECT_ID('spot_exceptions_out_of_specs') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[spot_exceptions_out_of_specs]
+(
+	[id] INT IDENTITY(1,1) PRIMARY KEY,
+	[reason_code] VARCHAR(20) NOT NULL, 
+	[reason_code_message] NVARCHAR(500) NULL, 
+	[estimate_id] INT NOT NULL,
+	[isci_name] VARCHAR(100) NOT NULL,
+	[recommended_plan_id] INT NULL,
+	[program_name] NVARCHAR(500) NULL,
+	[station_legacy_call_letters] VARCHAR(15) NULL,
+	[spot_length_id] INT NULL,
+	[audience_id] INT NULL,
+	[product] NVARCHAR(100) NULL,
+	[flight_start_date] DATETIME NULL,
+	[flight_end_date] DATETIME NULL,
+	[daypart_id] INT NULL,
+	[program_daypart_id] INT NOT NULL,
+	[program_flight_start_date] DATETIME NOT NULL,
+	[program_flight_end_date] DATETIME NOT NULL,
+	[program_network] VARCHAR(10),
+	[program_audience_id] INT NULL,
+	[program_air_time] DATETIME NOT NULL,
+	[ingested_by] VARCHAR(100) NOT NULL, 
+    [ingested_at] DATETIME NOT NULL,
+	CONSTRAINT [FK_spot_exceptions_out_of_specs_plans] FOREIGN KEY ([recommended_plan_id]) REFERENCES [dbo].[plans]([ID]),
+	CONSTRAINT [FK_spot_exceptions_out_of_specs_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths]([ID]),
+	CONSTRAINT [FK_spot_exceptions_out_of_specs_audiences] FOREIGN KEY ([audience_id]) REFERENCES [dbo].[audiences]([ID]),
+	CONSTRAINT [FK_spot_exceptions_out_of_specs_dayparts] FOREIGN KEY ([daypart_id]) REFERENCES [dbo].[dayparts]([ID]),
+	CONSTRAINT [FK_spot_exceptions_out_of_specs_dayparts_program] FOREIGN KEY ([program_daypart_id]) REFERENCES [dbo].[dayparts]([ID]),
+	CONSTRAINT [FK_spot_exceptions_out_of_specs_audiences_program] FOREIGN KEY ([program_audience_id]) REFERENCES [dbo].[audiences]([ID])		
+)
+END
+GO
+
+IF OBJECT_ID('spot_exceptions_out_of_spec_decisions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[spot_exceptions_out_of_spec_decisions]
+(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	spot_exceptions_out_of_spec_id INT NOT NULL,
+	accepted_as_in_spec BIT NOT NULL,
+	decision_notes NVARCHAR(1024) NULL,
+	username VARCHAR(63) NOT NULL,
+	created_at DATETIME NOT NULL,
+	CONSTRAINT [FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs] FOREIGN KEY ([spot_exceptions_out_of_spec_id]) REFERENCES [dbo].[spot_exceptions_out_of_specs]([ID])
+)
+END
+GO
+
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' AND COLUMN_NAME='spot_lenth_id')
 BEGIN
 
@@ -1139,73 +1206,6 @@ BEGIN
 	[username] VARCHAR(63) NOT NULL,
 	[created_at] DATETIME NOT NULL,
 	CONSTRAINT [FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details] FOREIGN KEY ([spot_exceptions_recommended_plan_detail_id]) REFERENCES [dbo].[spot_exceptions_recommended_plan_details]([ID])
-)
-END
-GO
-
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME='spot_lenth_id')
-BEGIN
-
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions')
-BEGIN
-DROP TABLE spot_exceptions_out_of_spec_decisions
-END
-
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_out_of_specs')
-BEGIN
-DROP TABLE spot_exceptions_out_of_specs
-END
-
-END
-GO
-
-IF OBJECT_ID('spot_exceptions_out_of_specs') IS NULL
-BEGIN
-	CREATE TABLE [dbo].[spot_exceptions_out_of_specs]
-(
-	[id] INT IDENTITY(1,1) PRIMARY KEY,
-	[reason_code] VARCHAR(20) NOT NULL, 
-	[reason_code_message] NVARCHAR(500) NULL, 
-	[estimate_id] INT NOT NULL,
-	[isci_name] VARCHAR(100) NOT NULL,
-	[recommended_plan_id] INT NULL,
-	[program_name] NVARCHAR(500) NULL,
-	[station_legacy_call_letters] VARCHAR(15) NULL,
-	[spot_length_id] INT NULL,
-	[audience_id] INT NULL,
-	[product] NVARCHAR(100) NULL,
-	[flight_start_date] DATETIME NULL,
-	[flight_end_date] DATETIME NULL,
-	[daypart_id] INT NULL,
-	[program_daypart_id] INT NOT NULL,
-	[program_flight_start_date] DATETIME NOT NULL,
-	[program_flight_end_date] DATETIME NOT NULL,
-	[program_network] VARCHAR(10),
-	[program_audience_id] INT NULL,
-	[program_air_time] DATETIME NOT NULL,
-	[ingested_by] VARCHAR(100) NOT NULL, 
-    [ingested_at] DATETIME NOT NULL,
-	CONSTRAINT [FK_spot_exceptions_out_of_specs_plans] FOREIGN KEY ([recommended_plan_id]) REFERENCES [dbo].[plans]([ID]),
-	CONSTRAINT [FK_spot_exceptions_out_of_specs_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths]([ID]),
-	CONSTRAINT [FK_spot_exceptions_out_of_specs_audiences] FOREIGN KEY ([audience_id]) REFERENCES [dbo].[audiences]([ID]),
-	CONSTRAINT [FK_spot_exceptions_out_of_specs_dayparts] FOREIGN KEY ([daypart_id]) REFERENCES [dbo].[dayparts]([ID]),
-	CONSTRAINT [FK_spot_exceptions_out_of_specs_dayparts_program] FOREIGN KEY ([program_daypart_id]) REFERENCES [dbo].[dayparts]([ID]),
-	CONSTRAINT [FK_spot_exceptions_out_of_specs_audiences_program] FOREIGN KEY ([program_audience_id]) REFERENCES [dbo].[audiences]([ID])		
-)
-END
-GO
-
-IF OBJECT_ID('spot_exceptions_out_of_spec_decisions') IS NULL
-BEGIN
-	CREATE TABLE [dbo].[spot_exceptions_out_of_spec_decisions]
-(
-	id INT IDENTITY(1,1) PRIMARY KEY,
-	spot_exceptions_out_of_spec_id INT NOT NULL,
-	accepted_as_in_spec BIT NOT NULL,
-	decision_notes NVARCHAR(1024) NULL,
-	username VARCHAR(63) NOT NULL,
-	created_at DATETIME NOT NULL,
-	CONSTRAINT [FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs] FOREIGN KEY ([spot_exceptions_out_of_spec_id]) REFERENCES [dbo].[spot_exceptions_out_of_specs]([ID])
 )
 END
 GO
