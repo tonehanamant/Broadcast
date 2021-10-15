@@ -193,7 +193,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryWeekEngine, InventoryWeekEngine>();
 
             unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();
-
+            unityContainer.RegisterType<ISpotExceptionService, SpotExceptionService>();
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
 			unityContainer.RegisterType<IInventoryProprietarySummaryService, InventoryProprietarySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();

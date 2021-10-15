@@ -762,6 +762,20 @@ namespace BroadcastComposerWeb.Controllers
             service.Queue(username);
             return RedirectToAction("Index");
         }
+        [HttpPost] 
+        public ActionResult AddOrClearSpotExceptionsData(string Add, string Clear)
+        {
+            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>();
+            if (!string.IsNullOrEmpty(Add))
+            {
+                service.AddSpotExceptionData();
+            }
+            if (!string.IsNullOrEmpty(Clear))
+            {
+                service.ClearSpotExceptionData();
+            }
+            return RedirectToAction("Index");
+        }
         [HttpGet]
         public ActionResult ExportVpvh()
         {
