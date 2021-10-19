@@ -6,8 +6,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -27,7 +25,15 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsOutOfSpecPostsRequest">The media week start and end date</param>
         /// <returns>List of SpotExceptionsOutOfSpecPostsResultDto object</returns>
         List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest);
+
+        /// <summary>
+        /// Gets spot exceptions recommended plans
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlansRequest">The spot exceptions recommended plans request parameters</param>
+        /// <returns>The spot exceptions recommended plans</returns>
+        List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest);
     }
+
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
     {
         private readonly ISpotExceptionRepository _SpotExceptionRepository;
@@ -68,7 +74,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters = "KOB",
                         Cost = 675,
                         Impressions = 765,
-                        SpotLenthId = 12,
+                        SpotLengthId = 12,
                         AudienceId = 431,
                         Product = "Pizza Hut",
                         FlightStartDate = new DateTime(2019, 8, 1),
@@ -89,7 +95,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters = "KSTP",
                         Cost = 700,
                         Impressions = 879,
-                        SpotLenthId = 11,
+                        SpotLengthId = 11,
                         AudienceId = 430,
                         Product = "Spotify",
                         FlightStartDate = new DateTime(2018, 7, 2),
@@ -109,7 +115,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="KHGI",
                         Cost = 0,
                         Impressions = 877,
-                        SpotLenthId = 12,
+                        SpotLengthId = 12,
                         AudienceId = 431,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2021, 3, 6),
@@ -129,7 +135,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="KWCH" ,
                         Cost = 987,
                         Impressions = 987,
-                        SpotLenthId = 11,
+                        SpotLengthId = 11,
                         AudienceId = 430,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2018, 3, 6),
@@ -149,7 +155,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="WDAY" ,
                         Cost = 555,
                         Impressions = 9878,
-                        SpotLenthId = 10,
+                        SpotLengthId = 10,
                         AudienceId = 429,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2019, 7, 3),
@@ -169,7 +175,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="KPNX" ,
                         Cost = 987,
                         Impressions = 999,
-                        SpotLenthId = 10,
+                        SpotLengthId = 10,
                         AudienceId = 428,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2019, 7, 1),
@@ -189,7 +195,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="KELO" ,
                         Cost = 907,
                         Impressions = 5467,
-                        SpotLenthId = 09,
+                        SpotLengthId = 09,
                         AudienceId = 427,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2021, 8, 6),
@@ -209,7 +215,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="KXMC" ,
                         Cost = 453,
                         Impressions = 8795,
-                        SpotLenthId = 08,
+                        SpotLengthId = 08,
                         AudienceId = 426,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2020, 8, 2),
@@ -229,7 +235,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="WTTV" ,
                         Cost = 987,
                         Impressions = 8767,
-                        SpotLenthId = 07,
+                        SpotLengthId = 07,
                         AudienceId = 425,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2020, 6, 6),
@@ -249,7 +255,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         StationLegacyCallLetters="WCCO" ,
                         Cost = 767,
                         Impressions = 9832,
-                        SpotLenthId = 06,
+                        SpotLengthId = 06,
                         AudienceId = 424,
                         Product = "Nike",
                         FlightStartDate = new DateTime(2020, 5, 6),
@@ -675,5 +681,37 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
             return spotExceptionsOutOfSpecPostsResult;
         }
 
+        /// <inheritdoc />
+        public List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
+        {
+            var spotExceptionsRecommendedPlansResult = new List<SpotExceptionsRecommendedPlansResultDto>();
+            const string programAirDateFormat = "MM/dd/yyyy";
+            const string programAirTimeFormat = "hh:mm:ss tt";
+
+            var spotExceptionsRecommendedPlans = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
+            if (spotExceptionsRecommendedPlans?.Any() ?? false)
+            {
+                spotExceptionsRecommendedPlansResult = spotExceptionsRecommendedPlans.Select(spotExceptionsRecommendedPlan => new SpotExceptionsRecommendedPlansResultDto
+                {
+                    Id = spotExceptionsRecommendedPlan.Id,
+                    Status = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDecisionId != null,
+                    EstimateId = spotExceptionsRecommendedPlan.EstimateId,
+                    IsciName = spotExceptionsRecommendedPlan.IsciName,
+                    RecommendedPlan = spotExceptionsRecommendedPlan.RecommendedPlanName,
+                    Affiliate = spotExceptionsRecommendedPlan.Affiliate,
+                    Market = spotExceptionsRecommendedPlan.Market,
+                    Station = spotExceptionsRecommendedPlan.StationLegacyCallLetters,
+                    Cost = spotExceptionsRecommendedPlan.Cost ?? 0,
+                    Impressions = spotExceptionsRecommendedPlan.Impressions ?? 0,
+                    SpotLengthString = spotExceptionsRecommendedPlan.SpotLengthString,
+                    AudienceName = spotExceptionsRecommendedPlan.AudienceName,
+                    ProductName = spotExceptionsRecommendedPlan.Product,
+                    ProgramName = spotExceptionsRecommendedPlan.ProgramName,
+                    ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
+                    ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat)
+                }).ToList();
+            }
+            return spotExceptionsRecommendedPlansResult;
+        }
     }
 }

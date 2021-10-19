@@ -469,6 +469,7 @@
     <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Repositories\ReelIsciProductRepositoryTests.cs" />
     <Compile Include="Repositories\ReelIsciRepositoryTests.cs" />
+    <Compile Include="Repositories\SpotExceptionRepositoryTests.cs" />
     <Compile Include="Repositories\StationMappingRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\AgencyAdvertiserBrandApiClientStub.cs" />
@@ -522,6 +523,7 @@
     <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ReelIsciIngestServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\SpotExceptionServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\VpvhServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\AabEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\CreativeLengthEngineUnitTests.cs" />
