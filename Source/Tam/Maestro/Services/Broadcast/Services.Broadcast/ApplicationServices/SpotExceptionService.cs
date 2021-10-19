@@ -21,6 +21,12 @@ namespace Services.Broadcast.ApplicationServices
         /// Clear data from spot exceptions tables.
         /// </summary>   
         bool ClearSpotExceptionData();
+        /// <summary>
+        /// Gets the available outofspecPost within the start and end week
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecPostsRequest">The media week start and end date</param>
+        /// <returns>List of SpotExceptionsOutOfSpecPostsResultDto object</returns>
+        List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest);
     }
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
     {
@@ -368,7 +374,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                 new SpotExceptionsOutOfSpecDecisionsDto
                 {
                   Id = 1,
-                  SpotExceptionsRecommendedPlanId=1,
+                  SpotExceptionsOutOfSpecId=1,
                   AcceptedAsInSpec=true,
                   DecisionNotes="",
                   UserName = "MockData",
@@ -393,7 +399,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 215,
                   ProgramName="Q13 news at 10",
                   StationLegacyCallLetters="KOB",
-                  SpotLenthId= 12,
+                  SpotLengthId= 12,
                   AudienceId= 431,
                   Product="Pizza Hut",
                   FlightStartDate =  new DateTime(2020, 6, 2),
@@ -418,7 +424,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 216,
                   ProgramName="FOX 13 10:00 News",
                   StationLegacyCallLetters="KSTP",
-                  SpotLenthId= 11,
+                  SpotLengthId= 11,
                   AudienceId= 430,
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
@@ -443,7 +449,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 217,
                   ProgramName="TEN O'CLOCK NEWS",
                   StationLegacyCallLetters="KHGI",
-                  SpotLenthId= 12,
+                  SpotLengthId= 12,
                   AudienceId= 430,
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
@@ -468,7 +474,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 218,
                   ProgramName="Product1",
                   StationLegacyCallLetters="KWCH",
-                  SpotLenthId= 11,
+                  SpotLengthId= 11,
                   AudienceId= 430,
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 3, 6),
@@ -493,7 +499,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 219,
                   ProgramName="TProduct2",
                   StationLegacyCallLetters="WDAY",
-                  SpotLenthId= 10,
+                  SpotLengthId= 10,
                   AudienceId= 429,
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 3, 6),
@@ -518,7 +524,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 220,
                   ProgramName="TEN O'CLOCK NEWS",
                   StationLegacyCallLetters="KPNX",
-                  SpotLenthId= 10,
+                  SpotLengthId= 10,
                   AudienceId= 428,
                   Product="Nike",
                   FlightStartDate =  new DateTime(2019, 7, 1),
@@ -543,7 +549,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 221,
                   ProgramName="Product4",
                   StationLegacyCallLetters="KELO",
-                  SpotLenthId= 09,
+                  SpotLengthId= 09,
                   AudienceId= 427,
                   Product="Nike",
                   FlightStartDate =  new DateTime(2021, 8, 6),
@@ -568,7 +574,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 222,
                   ProgramName="Product3",
                   StationLegacyCallLetters="KXMC",
-                  SpotLenthId= 08,
+                  SpotLengthId= 08,
                   AudienceId= 426,
                   Product="Nike",
                   FlightStartDate =  new DateTime(2020, 8, 2),
@@ -593,7 +599,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 223,
                   ProgramName="Product6",
                   StationLegacyCallLetters="WTTV",
-                  SpotLenthId= 07,
+                  SpotLengthId= 07,
                   AudienceId= 425,
                   Product="Nike",
                   FlightStartDate =  new DateTime(2020, 6, 6),
@@ -618,7 +624,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   RecommendedPlanId= 224,
                   ProgramName="Product8",
                   StationLegacyCallLetters="WCCO",
-                  SpotLenthId= 06,
+                  SpotLengthId= 06,
                   AudienceId= 424,
                   Product="Nike",
                   FlightStartDate =  new DateTime(2020, 5, 6),
@@ -636,6 +642,37 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
             };
 
             return spotExceptionsOutOfSpecs;
+        }
+        public List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest)
+        {
+            var spotExceptionsOutOfSpecPostsResult = new List<SpotExceptionsOutOfSpecPostsResultDto>();
+            const string programAirDateFormat = "MM/dd/yyyy";
+            const string programAirTimeFormat = "hh:mm:ss tt";
+
+            var spotExceptionsoutOfSpecsPosts = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutOfSpecPostsRequest.WeekStartDate, spotExceptionsOutOfSpecPostsRequest.WeekEndDate);
+            if (spotExceptionsoutOfSpecsPosts?.Any() ?? false)
+            {
+                spotExceptionsOutOfSpecPostsResult = spotExceptionsoutOfSpecsPosts.Select(spotExceptionsOutOfSpecs => new SpotExceptionsOutOfSpecPostsResultDto
+                {
+                    Id = spotExceptionsOutOfSpecs.Id,
+                    Status = spotExceptionsOutOfSpecs.SpotExceptionsOutOfSpecId != null,
+                    EstimateId = spotExceptionsOutOfSpecs.EstimateId,
+                    IsciName = spotExceptionsOutOfSpecs.IsciName,
+                    RecommendedPlan = spotExceptionsOutOfSpecs.RecommendedPlanName, 
+                    Reason=spotExceptionsOutOfSpecs.ReasonCodeMessage,
+                    Station = spotExceptionsOutOfSpecs.StationLegacyCallLetters,                  
+                    SpotLengthString = spotExceptionsOutOfSpecs.SpotLengthString,
+                    AudienceName = spotExceptionsOutOfSpecs.AudienceName,
+                    ProductName = spotExceptionsOutOfSpecs.Product,
+                    DaypartCode=spotExceptionsOutOfSpecs.DaypartCode,
+                    FlightStartDate=spotExceptionsOutOfSpecs.ProgramFlightStartDate.ToString(),
+                    FlightEndDate=spotExceptionsOutOfSpecs.ProgramFlightEndDate.ToString(),
+                    ProgramName = spotExceptionsOutOfSpecs.ProgramName,
+                    ProgramAirDate = spotExceptionsOutOfSpecs.ProgramAirTime.ToString(programAirDateFormat),
+                    ProgramAirTime = spotExceptionsOutOfSpecs.ProgramAirTime.ToString(programAirTimeFormat)
+                }).ToList();
+            }
+            return spotExceptionsOutOfSpecPostsResult;
         }
 
     }
