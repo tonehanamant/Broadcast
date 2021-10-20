@@ -215,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(savedFileGuid);
 
             _SharedFolderService.Setup(s => s.GetFile(It.IsAny<Guid>()))
-                .Returns(new SharedFolderFile { FileName = "fileTwo.txt", FileContent = new MemoryStream()});
+                .Returns(new SharedFolderFile { FileName = "fileTwo", FileExtension = ".txt", FileContent = new MemoryStream()});
 
             var tc = _GetTestClass();
 

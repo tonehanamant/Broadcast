@@ -243,7 +243,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
                     var file = _SharedFolderService.GetFile(sharedFileId.Value);
-                    result = _BuildPackageReturn(file.FileContent, file.FileName);
+                    result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
                     return result;
                 }
 
