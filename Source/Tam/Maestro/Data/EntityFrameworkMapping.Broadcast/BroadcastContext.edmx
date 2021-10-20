@@ -2193,6 +2193,7 @@
           <Property Name="start_date" Type="datetime" Nullable="false" />
           <Property Name="end_date" Type="datetime" Nullable="false" />
           <Property Name="unit_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="shared_folder_files_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="scx_generation_job_units">
           <Key>
@@ -5957,6 +5958,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_scx_generation_job_files_shared_folder_files_id">
+          <End Role="shared_folder_files" Type="Self.shared_folder_files" Multiplicity="0..1" />
+          <End Role="scx_generation_job_files" Type="Self.scx_generation_job_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_job_files">
+              <PropertyRef Name="shared_folder_files_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_scx_generation_job_files_standard_dayparts">
           <End Role="standard_dayparts" Type="Self.standard_dayparts" Multiplicity="1" />
           <End Role="scx_generation_job_files" Type="Self.scx_generation_job_files" Multiplicity="*" />
@@ -8159,6 +8172,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="scx_generation_jobs" EntitySet="scx_generation_jobs" />
             <End Role="scx_generation_job_files" EntitySet="scx_generation_job_files" />
           </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_job_files_shared_folder_files_id" Association="Self.FK_scx_generation_job_files_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="scx_generation_job_files" EntitySet="scx_generation_job_files" />
+          </AssociationSet>
           <AssociationSet Name="FK_scx_generation_job_files_standard_dayparts" Association="Self.FK_scx_generation_job_files_standard_dayparts">
             <End Role="standard_dayparts" EntitySet="standard_dayparts" />
             <End Role="scx_generation_job_files" EntitySet="scx_generation_job_files" />
@@ -9986,6 +10003,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_spot_exceptions_recommended_plans_spot_lengths" Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_job_files_shared_folder_files_id" Association="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="scx_generation_job_files" EntitySet="scx_generation_job_files" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -13823,6 +13844,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="scx_generation_jobs" Relationship="BroadcastModel.FK_scx_generation_job_files_scx_generation_job" FromRole="scx_generation_job_files" ToRole="scx_generation_jobs" />
           <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_scx_generation_job_files_standard_dayparts" FromRole="scx_generation_job_files" ToRole="standard_dayparts" />
+          <Property Name="shared_folder_files_id" Type="Guid" />
+          <NavigationProperty Name="shared_folder_files" Relationship="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" FromRole="scx_generation_job_files" ToRole="shared_folder_files" />
         </EntityType>
         <EntityType Name="scx_generation_jobs">
           <Key>
@@ -14375,6 +14398,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="file_usage" Type="Int32" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="scx_generation_job_files" />
         </EntityType>
         <EntityType Name="nti_universe_audience_mappings">
           <Key>
@@ -17478,6 +17502,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_scx_generation_job_files_shared_folder_files_id">
+          <End Type="BroadcastModel.shared_folder_files" Role="shared_folder_files" Multiplicity="0..1" />
+          <End Type="BroadcastModel.scx_generation_job_files" Role="scx_generation_job_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_job_files">
+              <PropertyRef Name="shared_folder_files_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19165,6 +19201,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="scx_generation_job_files">
             <EntityTypeMapping TypeName="BroadcastModel.scx_generation_job_files">
               <MappingFragment StoreEntitySet="scx_generation_job_files">
+                <ScalarProperty Name="shared_folder_files_id" ColumnName="shared_folder_files_id" />
                 <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
                 <ScalarProperty Name="unit_name" ColumnName="unit_name" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />

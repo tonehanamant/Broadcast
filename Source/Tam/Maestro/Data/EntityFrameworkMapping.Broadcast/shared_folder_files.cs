@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class shared_folder_files
     {
+        public shared_folder_files()
+        {
+            this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
+        }
+    
         public System.Guid id { get; set; }
         public string folder_path { get; set; }
         public string file_name { get; set; }
@@ -22,5 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int file_usage { get; set; }
         public System.DateTime created_date { get; set; }
         public string created_by { get; set; }
+    
+        public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
     }
 }

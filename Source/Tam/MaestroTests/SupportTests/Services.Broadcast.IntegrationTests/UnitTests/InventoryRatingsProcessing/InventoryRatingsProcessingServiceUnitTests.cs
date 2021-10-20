@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Services;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.States;
@@ -13,11 +7,9 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration;
 using Services.Broadcast.Repositories;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.InventoryRatingsProcessing
 {

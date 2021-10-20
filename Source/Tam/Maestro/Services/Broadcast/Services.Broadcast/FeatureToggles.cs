@@ -3,7 +3,6 @@
     public static class FeatureToggles
     {
         public static string USE_TRUE_INDEPENDENT_STATIONS = "broadcast-use-true-independent-stations";
-     
         public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";     
         public static string DISPLAY_CAMPAIGN_LINK = "broadcast-display-campaign-link";
         public static string DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
@@ -27,5 +26,6 @@
         public static string ENABLE_LOCAL_CADENT_LOGO = "broadcast-enable-local-cadent-logo";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
         public static string ENABLE_RESTRICTIONS_PROGRAM_OR = "broadcast-restrictions-enable-program-or";
+        public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
     }
 }

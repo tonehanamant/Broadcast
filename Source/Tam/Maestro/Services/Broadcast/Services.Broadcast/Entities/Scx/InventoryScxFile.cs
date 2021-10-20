@@ -11,6 +11,7 @@ namespace Services.Broadcast.Entities.Scx
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string UnitName { get; set; }
+        public Guid? SharedFolderFileId { get; set; }
 
         public string FileName
         {

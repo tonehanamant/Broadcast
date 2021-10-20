@@ -14,7 +14,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -49,21 +48,31 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IScxGenerationJobRepository _ScxGenerationJobRepository;
         private readonly IProprietaryInventoryService _ProprietaryInventoryService;
-        private readonly IFileService _FileService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly IBackgroundJobClient _BackgroundJobClient;        
+        private readonly IBackgroundJobClient _BackgroundJobClient;
+
+        private readonly IFileService _FileService;
+        private readonly ISharedFolderService _SharedFolderService;
+        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
 
         public ScxGenerationService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
             IProprietaryInventoryService proprietaryInventoryService, 
             IFileService fileService,
+            ISharedFolderService sharedFolderService,
             IQuarterCalculationEngine quarterCalculationEngine,
-            IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            IBackgroundJobClient backgroundJobClient,
+            IFeatureToggleHelper featureToggleHelper, 
+            IConfigurationSettingsHelper configurationSettingsHelper) 
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ScxGenerationJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
             _ProprietaryInventoryService = proprietaryInventoryService;
-            _FileService = fileService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _BackgroundJobClient = backgroundJobClient;
+
+            _FileService = fileService;
+            _SharedFolderService = sharedFolderService;
+            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
 
         public int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate)
@@ -115,8 +124,17 @@ namespace Services.Broadcast.ApplicationServices
                 try
                 {
                     var files = _ProprietaryInventoryService.GenerateScxFiles(job.InventoryScxDownloadRequest);
+
+                    _SaveFiles(files, job.RequestedBy, currentDate);
                     _ScxGenerationJobRepository.SaveScxJobFiles(files, job);
-                    _SaveToFolder(files);
+
+                    // Save to the original folder until the feature is released.
+                    // Delete this once the feature has been released.
+                    if (!_EnableSharedFileServiceConsolidation.Value)
+                    {
+                        _SaveToFolder(files);
+                    }
+
                     job.Complete(currentDate);
                 }
                 catch (Exception ex)
@@ -134,6 +152,39 @@ namespace Services.Broadcast.ApplicationServices
                     throw caught;
                 }
             }
+        }
+
+        private void _SaveFiles(List<InventoryScxFile> files, string createdBy, DateTime createdAt)
+        {
+            var dropFolderPath = GetDropFolderPath();
+            const string fileMediaType = "application/xml";
+            foreach (var file in files)
+            {
+                // have to copy the stream until we migrate to the SharedFileServiceand stop saving to the FileService.
+                // Delete this once the feature has been released.
+                var scxStreamCopy = _GetStreamCopy(file.ScxStream);
+
+                var sharedFile = new SharedFolderFile
+                {
+                    FolderPath = dropFolderPath,
+                    FileNameWithExtension = file.FileName,
+                    FileMediaType = fileMediaType,
+                    FileUsage = SharedFolderFileUsage.InventoryScx,
+                    CreatedDate = createdAt,
+                    CreatedBy = createdBy,
+                    FileContent = scxStreamCopy
+                };
+
+                var savedId = _SharedFolderService.SaveFile(sharedFile);
+                file.SharedFolderFileId = savedId;
+            }
+        }
+
+        private Stream _GetStreamCopy(Stream originalStream)
+        {
+            var copiedStream = new MemoryStream();
+            originalStream.CopyTo(copiedStream);
+            return copiedStream;
         }
 
         public List<ScxGenerationJob> GetQueuedJobs(int limit)
@@ -182,18 +233,45 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("No file id was supplied!");
             }
 
+            Tuple<string, Stream, string> result;
+
+            if (_EnableSharedFileServiceConsolidation.Value)
+            {
+                var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderFileIdForFile(fileId);
+
+                if (sharedFileId.HasValue)
+                {
+                    _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
+                    var file = _SharedFolderService.GetFile(sharedFileId.Value);
+                    result = _BuildPackageReturn(file.FileContent, file.FileName);
+                    return result;
+                }
+
+                _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
+            }
+
+            result = _GetFileFromFileService(fileId);
+            return result;
+        }
+
+        private Tuple<string, Stream, string> _GetFileFromFileService(int fileId)
+        {
             var fileName = _ScxGenerationJobRepository.GetScxFileName(fileId);
-
             var dropFolderPath = GetDropFolderPath();
-
             var filePaths = _FileService.GetFiles(dropFolderPath);
             var filePath = filePaths.FirstOrDefault(x => Path.GetFileName(x) == fileName);
             if (String.IsNullOrWhiteSpace(filePath))
             {
-                throw new Exception($"File not found!");
+                throw new Exception("File not found.  Please regenerate.");
             }
 
-            Stream fileStream = _FileService.GetFileStream(filePath);
+            var fileStream = _FileService.GetFileStream(filePath);
+            var result = _BuildPackageReturn(fileStream, fileName);
+            return result;
+        }
+
+        private Tuple<string, Stream, string> _BuildPackageReturn(Stream fileStream, string fileName)
+        {
             var fileMimeType = MimeMapping.GetMimeMapping(fileName);
             var result = new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
             return result;
@@ -202,26 +280,26 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveToFolder(List<InventoryScxFile> scxFiles)
         {
             var dropFolderPath = GetDropFolderPath();
-			_FileService.CreateDirectory(dropFolderPath);
-            foreach (var scxFile in scxFiles)
+            if (!_EnableSharedFileServiceConsolidation.Value)
             {
-                var path = Path.Combine(
-                    dropFolderPath, 
-                    scxFile.FileName);
+                _FileService.CreateDirectory(dropFolderPath);
+                foreach (var scxFile in scxFiles)
+                {
+                    var path = Path.Combine(
+                        dropFolderPath,
+                        scxFile.FileName);
 
-                _FileService.Create(path, scxFile.ScxStream);
+                    _FileService.Create(path, scxFile.ScxStream);
+                }
             }
         }
 
         #region Helpers
 
-        /// <summary>
-        /// Gets the drop folder path.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetDropFolderPath()
+        private string GetDropFolderPath()
 		{
-            return Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.SCX_EXPORT_DIRECTORY);
+            var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.SCX_EXPORT_DIRECTORY);
+            return path;
 		}
 
         /// <summary>
@@ -229,7 +307,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="dto">The dto.</param>
         /// <returns><see cref="ScxFileGenerationDetail"/></returns>
-        protected ScxFileGenerationDetail TransformFromDtoToEntity(ScxFileGenerationDetailDto dto)
+        internal ScxFileGenerationDetail TransformFromDtoToEntity(ScxFileGenerationDetailDto dto)
         {
             var processingStatus = EnumHelper.GetEnum<BackgroundJobProcessingStatus>(dto.ProcessingStatusId);
             var quarters = new List<QuarterDetailDto>();
@@ -248,6 +326,12 @@ namespace Services.Broadcast.ApplicationServices
                 FileName = dto.Filename
             };
             return item;
+        }
+
+        private bool _GetEnableSharedFileServiceConsolidation()
+        {
+            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
+            return result;
         }
 
         #endregion // #region Helpers

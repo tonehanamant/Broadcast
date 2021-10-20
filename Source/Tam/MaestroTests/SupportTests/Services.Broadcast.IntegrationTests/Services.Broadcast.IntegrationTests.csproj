@@ -640,8 +640,7 @@
     <Compile Include="UnitTests\ProposalMathTests.cs" />
     <Compile Include="UnitTests\ProposalTotalsCalculationEngineTests.cs" />
     <Compile Include="UnitTests\InventoryFileValidatorUnitTests.cs" />
-    <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTestClass.cs" />
-    <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\ScxGenerationServiceUnitTests.cs" />
     <Compile Include="UnitTests\Validators\InventoryFileValidatorUnitTests.cs" />
     <Compile Include="UnitTests\Validators\PlanValidatorUnitTests.cs" />
   </ItemGroup>

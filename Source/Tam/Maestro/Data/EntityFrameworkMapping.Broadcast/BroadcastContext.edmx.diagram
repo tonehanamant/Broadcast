@@ -546,6 +546,7 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

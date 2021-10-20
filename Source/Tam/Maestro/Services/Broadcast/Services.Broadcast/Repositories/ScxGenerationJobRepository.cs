@@ -1,4 +1,5 @@
-﻿using Common.Services.Extensions;
+﻿using System;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
@@ -36,6 +37,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="fileId">The file identifier.</param>
         /// <returns></returns>
         string GetScxFileName(int fileId);
+
+        /// <summary>
+        /// Gets the shared folder file identifier for the given file id.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        Guid? GetSharedFolderFileIdForFile(int fileId);
     }
 
     public class ScxGenerationJobRepository : BroadcastRepositoryBase, IScxGenerationJobRepository
@@ -157,7 +164,8 @@ namespace Services.Broadcast.Repositories
                             standard_daypart_id = file.DaypartCodeId,
                             start_date = file.StartDate,
                             end_date = file.EndDate,
-                            unit_name = file.UnitName
+                            unit_name = file.UnitName,
+                            shared_folder_files_id = file.SharedFolderFileId
                         });
                     }
 
@@ -214,6 +222,19 @@ namespace Services.Broadcast.Repositories
                 }
             );
              return fileName;
+        }
+
+        /// <inheritdoc />
+        public Guid? GetSharedFolderFileIdForFile(int fileId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entity = context.scx_generation_job_files
+                    .Single(s => s.id == fileId,
+                        $"File with Id {fileId} not found.");
+
+                return entity.shared_folder_files_id;
+            });
         }
     }
 }

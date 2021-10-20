@@ -5,6 +5,7 @@
         CampaignExport = 1,
         ProgramLineup = 2,
         Quote = 3,
-        PlanBuyingScx = 4
+        PlanBuyingScx = 4,
+        InventoryScx = 5
     }
 }
