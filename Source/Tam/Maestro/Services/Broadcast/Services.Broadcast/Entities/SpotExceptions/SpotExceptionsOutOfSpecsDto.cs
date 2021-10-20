@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Services.Broadcast.Entities.SpotExceptions
 {
     public class SpotExceptionsOutOfSpecsDto
-    {     
+    {      
         public int Id { get; set; }
         public string ReasonCode { get; set; }
         public string ReasonCodeMessage { get; set; }
@@ -32,9 +32,9 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string AudienceName { get; set; }
         public DateTime ProgramAirTime { get; set; }
         public string IngestedBy { get; set; }
-        public DateTime IngestedAt { get; set; }      
-        public int? SpotExceptionsOutOfSpecId { get; set; }
-     
+        public DateTime IngestedAt { get; set; }
+        public int? SpotExceptionsOutOfSpecId { get; set; }       
+
     }
 }
 

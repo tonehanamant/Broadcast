@@ -55,6 +55,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotExceptionsRecommendedPlans">The list of spot exceptions recommended plans to be inserted</param>
         /// <returns>Total number of inserted spot exceptions recommended plans</returns>
         int AddSpotExceptionsRecommendedPlans(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans);
+
+        /// <summary>
+        /// Adds spot exceptions OutOfSpecPosts
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecs">The list of spot exceptions OutofSpecsPosts to be inserted</param>
+        /// <returns>Total number of inserted spot exceptions OutofSpecs</returns> 
+        int AddOutOfSpecs(List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -167,9 +174,12 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.plan)
                     .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.spot_lengths)
                     .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.daypart)
+                    //the reason daypart1 is two foreign key referring to same daypart table
                     .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.daypart1)
                     .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.audience)
-                    .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.audience1).GroupJoin(
+                    //the reason audience1 is two foreign key referring to same audience table
+                    .Include(spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.audience1)
+                    .GroupJoin(
                         context.stations
                         .Include(station => station.market),
                         spotExceptionsoutOfSpec => spotExceptionsoutOfSpec.station_legacy_call_letters,
@@ -196,10 +206,10 @@ namespace Services.Broadcast.Repositories
                         Market = spotExceptionsOutOfSpecEntity.Station?.market?.geography_name,
                         SpotLengthId = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.spot_length_id,
                         SpotLengthString = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.spot_lengths.length.ToString(),
-                        AudienceId = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.program_audience_id,
+                        AudienceId = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.program_audience_id,                                         
                         Product = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.product,
                         FlightStartDate = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.flight_start_date,
-                        FlightEndDate = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.flight_end_date,
+                        FlightEndDate = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.flight_end_date,                
                         DaypartId = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.daypart_id,
                         ProgramDaypartId = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.program_daypart_id,
                         DaypartCode = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.daypart1.code,
@@ -210,7 +220,7 @@ namespace Services.Broadcast.Repositories
                         ProgramAirTime = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.program_air_time,
                         IngestedBy = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.ingested_by,
                         IngestedAt = spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.ingested_at,
-                        SpotExceptionsOutOfSpecId = spotExceptionsOutSpecDecison?.id,
+                        SpotExceptionsOutOfSpecId = spotExceptionsOutSpecDecison?.id,                        
                     };
                     return spotExceptionsOutOfSpec;
                 }).ToList();
@@ -315,6 +325,40 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
 
                 var addedCount = spotExceptionsRecommendedPlans.Count();
+                return addedCount;
+            });
+        }
+        public int AddOutOfSpecs(List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs => new spot_exceptions_out_of_specs()
+                {
+                    reason_code = outOfSpecs.ReasonCode,
+                    reason_code_message = outOfSpecs.ReasonCodeMessage,
+                    estimate_id = outOfSpecs.EstimateId,
+                    isci_name = outOfSpecs.IsciName,
+                    recommended_plan_id = outOfSpecs.RecommendedPlanId,
+                    program_name = outOfSpecs.ProgramName,
+                    station_legacy_call_letters = outOfSpecs.StationLegacyCallLetters,
+                    spot_length_id = outOfSpecs.SpotLengthId,
+                    audience_id = outOfSpecs.AudienceId,
+                    product = outOfSpecs.Product,
+                    flight_start_date = outOfSpecs.FlightStartDate,
+                    flight_end_date = outOfSpecs.FlightEndDate,
+                    program_flight_start_date = outOfSpecs.ProgramFlightStartDate,
+                    program_flight_end_date = outOfSpecs.ProgramFlightEndDate,
+                    program_network = outOfSpecs.ProgramNetwork,
+                    program_audience_id = outOfSpecs.ProgramAudienceId,
+                    program_air_time = outOfSpecs.ProgramAirTime,
+                    program_daypart_id = outOfSpecs.ProgramDaypartId,
+                    ingested_by = outOfSpecs.IngestedBy,
+                    ingested_at = outOfSpecs.IngestedAt,    
+                }).ToList();
+                context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
+                context.SaveChanges();
+
+                var addedCount = spotExceptionsOutOfSpecs.Count();
                 return addedCount;
             });
         }

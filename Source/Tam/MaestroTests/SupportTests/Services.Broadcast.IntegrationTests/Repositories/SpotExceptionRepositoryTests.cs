@@ -219,5 +219,130 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, settings));
         }
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPosts_OutOfSpec_DoesNotExist()
+        {
+            // Arrange
+            DateTime weekStartDate = new DateTime(2017, 01, 02);
+            DateTime weekEndDate = new DateTime(2017, 01, 08);
+            var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+
+            // Act
+            var result = spotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(weekStartDate, weekEndDate);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPosts_OutOfSpec_Exist()
+        {
+            // Arrange
+            var ingestedDateTime = new DateTime(2010, 10, 12);
+            var ingestedBy = "Repository Test User";
+            var createdDateTime = new DateTime(2010, 10, 12);
+
+            DateTime weekStartDate = new DateTime(2010, 01, 04);
+            DateTime weekEndDate = new DateTime(2010, 01, 10);
+
+            var spotExceptionOutOfspec = new List<SpotExceptionsOutOfSpecsDto>
+             {
+                 new SpotExceptionsOutOfSpecsDto
+                 {
+                      Id=1,
+                      ReasonCode="",
+                      ReasonCodeMessage="",
+                      EstimateId= 191756,
+                      IsciName="AB82TXT2H",
+                      RecommendedPlanId= 1196,
+                      ProgramName="Q13 news at 10",
+                      StationLegacyCallLetters="KOB",
+                      SpotLengthId= 1,
+                      AudienceId= 4,
+                      Product="Pizza Hut",
+                      FlightStartDate =  new DateTime(2020, 6, 2),
+                      FlightEndDate = new DateTime(2020, 7, 2),
+                      DaypartId= 57,
+                      ProgramDaypartId= 28,
+                      ProgramFlightStartDate= new DateTime(2020, 6, 2),
+                      ProgramFlightEndDate = new DateTime(2020, 7, 2),
+                      ProgramNetwork = "",
+                      ProgramAudienceId = 4,
+                      ProgramAirTime = new DateTime(2010,1,4,8,7,15),
+                      IngestedBy=ingestedBy,
+                      IngestedAt=ingestedDateTime,                    
+                 },
+                 new SpotExceptionsOutOfSpecsDto
+                 {
+                      Id = 2,
+                      ReasonCode="",
+                      ReasonCodeMessage="",
+                      EstimateId= 191757,
+                      IsciName="AB82VR58",
+                      RecommendedPlanId= 1197,
+                      ProgramName="FOX 13 10:00 News",
+                      StationLegacyCallLetters="KSTP",
+                      SpotLengthId= 2,
+                      AudienceId= 5,
+                      Product="Spotify",
+                      FlightStartDate =  new DateTime(2018, 7, 2),
+                      FlightEndDate = new DateTime(2018, 8, 2),
+                      DaypartId= 28,
+                      ProgramDaypartId= 56,
+                      ProgramFlightStartDate= new DateTime(2018, 7, 2),
+                      ProgramFlightEndDate = new DateTime(2018, 8, 2),
+                      ProgramNetwork = "",
+                      ProgramAudienceId = 5,
+                      ProgramAirTime = new DateTime(2010,1,4,8,7,15),
+                      IngestedBy=ingestedBy,
+                      IngestedAt=ingestedDateTime,                      
+                 },
+                 new SpotExceptionsOutOfSpecsDto
+                 {
+                      Id = 3,
+                      ReasonCode="",
+                      ReasonCodeMessage="",
+                      EstimateId= 191758,
+                      IsciName="AB44NR58",
+                      RecommendedPlanId= 1198,
+                      ProgramName="TEN O'CLOCK NEWS",
+                      StationLegacyCallLetters="KHGI",
+                      SpotLengthId= 3,
+                      AudienceId= 6,
+                      Product="Spotify",
+                      FlightStartDate =  new DateTime(2018, 7, 2),
+                      FlightEndDate = new DateTime(2018, 8, 2),
+                      DaypartId= 56,
+                      ProgramDaypartId= 57,
+                      ProgramFlightStartDate= new DateTime(2018, 7, 2),
+                      ProgramFlightEndDate = new DateTime(2018, 8, 2),
+                      ProgramNetwork = "",
+                      ProgramAudienceId = 6,
+                      ProgramAirTime = new DateTime(2010,1,11,8,7,15),
+                      IngestedBy=ingestedBy,
+                      IngestedAt=ingestedDateTime,
+                      
+                 }
+            };
+            List<SpotExceptionsOutOfSpecsDto> result;
+
+            var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                spotExceptionRepository.AddOutOfSpecs(spotExceptionOutOfspec);
+                result = spotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(weekStartDate, weekEndDate);
+            }
+
+            // Assert
+            var settings = IntegrationTestHelper._GetJsonSettings();
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsOutOfSpecsDto), "Id");
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, settings));
+            Assert.AreEqual(2, result.Count);
+
+        }
     }
 }
+
+
