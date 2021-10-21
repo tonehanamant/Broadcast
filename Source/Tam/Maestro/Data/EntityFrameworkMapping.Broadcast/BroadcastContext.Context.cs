@@ -175,7 +175,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
         public virtual DbSet<inventory_export_jobs> inventory_export_jobs { get; set; }
-        public virtual DbSet<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual DbSet<vpvh_files> vpvh_files { get; set; }
         public virtual DbSet<vpvh> vpvhs { get; set; }
         public virtual DbSet<plan_version_pricing_band_details> plan_version_pricing_band_details { get; set; }
@@ -235,5 +234,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
+        public virtual DbSet<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
     }
 }

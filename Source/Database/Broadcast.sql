@@ -1212,6 +1212,16 @@ GO
 
 /*************************************** END BP-3266 ***************************************/
 
+/*************************************** START BP-3244 ***************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'is_locked'
+          AND Object_ID = Object_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+    ALTER TABLE plan_version_weekly_breakdown
+		ADD is_locked bit NULL	
+END
+
+/*************************************** END BP-3244 ***************************************/
 
 /*************************************** START BP-3128 ***************************************/
 

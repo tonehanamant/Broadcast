@@ -13,6 +13,7 @@
     [adu_impressions]        FLOAT (53)      NOT NULL,
     [unit_impressions]       FLOAT (53)      NULL,
     [standard_daypart_id]    INT             NULL,
+    [is_locked] BIT NULL, 
     CONSTRAINT [PK_plan_version_weekly_breakdown] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_version_weekly_breakdown_media_weeks] FOREIGN KEY ([media_week_id]) REFERENCES [dbo].[media_weeks] ([id]),
     CONSTRAINT [FK_plan_version_weekly_breakdown_plan_versions] FOREIGN KEY ([plan_version_id]) REFERENCES [dbo].[plan_versions] ([id]) ON DELETE CASCADE,

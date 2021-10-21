@@ -24,11 +24,11 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_buying_api_result_spots = new HashSet<plan_version_buying_api_result_spots>();
             this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
             this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
-            this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
             this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
             this.scx_generation_jobs = new HashSet<scx_generation_jobs>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.plan_version_pricing_results_dayparts = new HashSet<plan_version_pricing_results_dayparts>();
+            this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
         }
     
         public int id { get; set; }
@@ -47,10 +47,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
-        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<plan_version_pricing_results_dayparts> plan_version_pricing_results_dayparts { get; set; }
+        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
     }
 }

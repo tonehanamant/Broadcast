@@ -378,9 +378,6 @@
         <EntityTypeShape EntityType="BroadcastModel.program_name_exceptions" Width="1.5" PointX="30.25" PointY="50.75" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_show_types" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_weekly_breakdown" Width="1.5" PointX="24.25" PointY="45.25" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.plan_versions" Width="1.5" PointX="12.25" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_hut_media_months" />
@@ -393,7 +390,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_hiatus_days_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_audience_daypart_vpvh" Width="1.5" PointX="20.25" PointY="37.625" />
@@ -493,7 +489,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults1" />
         <AssociationConnector Association="BroadcastModel.FK_plan_dayparts_standard_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults1" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_standard_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_jobs_standard_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_standard_dayparts" />
@@ -547,6 +542,11 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_weekly_breakdown" Width="1.5" PointX="38.25" PointY="33.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
