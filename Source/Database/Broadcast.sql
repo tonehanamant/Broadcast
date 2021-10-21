@@ -1284,6 +1284,115 @@ END
 GO
 /*************************************** END BP-3163 ***************************************/
 
+/*************************************** START BP-3387 ***************************************/
+
+DECLARE @MetaData TABLE
+(
+	plan_version_id INT,
+	audience_id INT,
+	standard_daypart_id INT,
+	vpvh_type INT,
+	starting_point DATETIME
+)
+
+DECLARE @DefaultVpvhs TABLE
+(
+	audience_id INT,
+	standard_daypart_id INT,
+	default_vpvh_value FLOAT
+)
+
+DECLARE @RecordsToAdd TABLE
+(
+	plan_version_id INT,
+	audience_id INT,
+	standard_daypart_id INT,
+	vpvh_type INT,
+	starting_point DATETIME,
+	default_vpvh_value FLOAT
+)
+
+INSERT INTO @MetaData (plan_version_id, audience_id, standard_daypart_id, vpvh_type, starting_point) 
+	SELECT DISTINCT
+		v.id AS plan_version_id
+		, v.target_audience_id AS audience_id 
+		, pd.standard_daypart_id AS standard_daypart_id
+		, CASE 
+			WHEN v.target_audience_id = 46 THEN 1 
+			ELSE 2 
+		END AS vpvh_type -- Custom=1;FourBookAverage=2;PreviousQuarter=3;LastYear=4;		
+		, v.created_date AS starting_point
+	FROM plans p
+	JOIN plan_versions v
+		ON p.latest_version_id = v.id
+	JOIN plan_version_dayparts pd
+		ON pd.plan_version_id = v.id
+	JOIN standard_dayparts sd
+		ON sd.id = pd.standard_daypart_id
+	LEFT OUTER JOIN plan_version_audience_daypart_vpvh dv
+		ON dv.plan_version_id = v.id
+		AND dv.standard_daypart_id = pd.standard_daypart_id
+	WHERE dv.id IS NULL
+	ORDER BY v.id DESC
+
+INSERT INTO @DefaultVpvhs (audience_id, standard_daypart_id, default_vpvh_value) VALUES
+	(37,1,0.363749999999999)
+	,(40,1,0.6365)
+	,(56,1,0.1565)
+	,(277,1,0.475)
+	,(31,2,1)
+	,(31,3,1)
+	,(37,3,0.34)
+	,(40,3,0.599)
+	,(37,4,0.34)
+	,(33,6,0.34025)
+	,(37,8,0.424)
+	,(57,8,0.177499999999999)
+	,(31,10,1)
+	,(33,10,0.34025)
+	,(46,10,0.0219540383568287) 
+	,(56,10,0.19525)
+	,(58,10,0.24675)
+	,(62,10,0.49825)
+	,(31,11,1)
+	,(31,12,1)
+	,(37,12,0.424)
+	,(56,12,0.19525)
+	,(277,12,0.474)
+	,(37,14,0.424)
+	,(56,14,0.19525)
+	,(37,15,0.363749999999999)
+	,(37,17,0.35175)
+	,(40,17,0.618)
+	,(58,17,0.200249999999999)
+	,(277,17,0.505)
+	,(37,19,0.424)
+	,(48,19,0.05025)
+	,(58,19,0.24675)
+	,(36,22,0.264)
+	,(40,22,0.63025)
+	,(58,22,0.2155)
+
+INSERT INTO @RecordsToAdd (plan_version_id, audience_id, standard_daypart_id, vpvh_type, starting_point, default_vpvh_value) 
+	SELECT p.plan_version_id, p.audience_id, p.standard_daypart_id, p.vpvh_type, p.starting_point
+		, v.default_vpvh_value
+	FROM @MetaData p
+	LEFT OUTER JOIN @DefaultVpvhs v
+		ON v.audience_id = p.audience_id
+		AND v.standard_daypart_id = p.standard_daypart_id
+
+INSERT INTO plan_version_audience_daypart_vpvh (plan_version_id, audience_id, standard_daypart_id, vpvh_type, starting_point, vpvh_value)
+	SELECT a.plan_version_id, a.audience_id, a.standard_daypart_id, a.vpvh_type, a.starting_point, a.default_vpvh_value
+	FROM @RecordsToAdd a
+	LEFT OUTER JOIN plan_version_audience_daypart_vpvh p
+		ON p.plan_version_id = a.plan_version_id
+		AND p.audience_id = a.audience_id
+		AND p.standard_daypart_id = a.standard_daypart_id
+	WHERE p.id IS NULL
+
+GO
+/*************************************** END BP-3387 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
