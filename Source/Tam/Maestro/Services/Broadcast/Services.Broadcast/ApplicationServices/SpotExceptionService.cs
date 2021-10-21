@@ -1,5 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -32,14 +33,24 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsRecommendedPlansRequest">The spot exceptions recommended plans request parameters</param>
         /// <returns>The spot exceptions recommended plans</returns>
         List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest);
+        
+        /// <summary>
+        /// Save SpotExceptionsOutOfSpecs Decisions data
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecDecisionsPostsRequest">The SpotExceptionsOutOfSpecDecisions Request</param>
+        /// <param name="userName">User Name</param>
+        /// <returns>true or false</returns>
+        bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
     {
         private readonly ISpotExceptionRepository _SpotExceptionRepository;
-        public SpotExceptionService(IDataRepositoryFactory dataRepositoryFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        private readonly IDateTimeEngine _DateTimeEngine;
+        public SpotExceptionService(IDataRepositoryFactory dataRepositoryFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, IDateTimeEngine dateTimeEngine) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+            _DateTimeEngine = dateTimeEngine;
         }
 
         public bool AddSpotExceptionData()
@@ -712,6 +723,15 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                 }).ToList();
             }
             return spotExceptionsRecommendedPlansResult;
+        }
+
+        public bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName)
+        {
+            var createdAt = _DateTimeEngine.GetCurrentMoment();
+
+            var isSpotExceptionsOutOfSpecDecision = _SpotExceptionRepository.SaveSpotExceptionsOutOfSpecsDecisions(spotExceptionsOutOfSpecDecisionsPostsRequest, userName, createdAt);
+
+            return isSpotExceptionsOutOfSpecDecision;
         }
     }
 }

@@ -536,6 +536,7 @@
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramInventoryDaypart.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecsDto.cs" />

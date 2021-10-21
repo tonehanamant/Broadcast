@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -21,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ISpotExceptionRepository> _SpotExceptionRepositoryMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
+        private Mock<IDateTimeEngine> _DateTimeEngine;
 
         [SetUp]
         public void SetUp()
@@ -29,12 +31,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotExceptionRepositoryMock = new Mock<ISpotExceptionRepository>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
-
+            _DateTimeEngine = new Mock<IDateTimeEngine>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionRepository>())
                 .Returns(_SpotExceptionRepositoryMock.Object);
 
-            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object);
+            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object, _DateTimeEngine.Object);
         }
 
         [Test]
@@ -346,5 +348,53 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
         }
 
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecDecisionsPostsRequestDto
+            {
+                Id = 14,
+                AcceptAsInSpec = true,
+                DecisionNotes = "Test Case execution"
+            };
+            string userName = "Test User";
+            bool result = false;
+            bool expectedResult = true;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecsDecisions(It.IsAny<SpotExceptionsOutOfSpecDecisionsPostsRequestDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            result = _SpotExceptionService.SaveSpotExceptionsOutOfSpecsDecisions(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_ThrowsException()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecDecisionsPostsRequestDto
+            {
+                Id = 14,
+                AcceptAsInSpec = true,
+                DecisionNotes = "Test Case execution"
+            };
+            string userName = "Test User";
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecsDecisions(It.IsAny<SpotExceptionsOutOfSpecDecisionsPostsRequestDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.SaveSpotExceptionsOutOfSpecsDecisions(spotExceptionsOutOfSpecDecisionsPostsRequest, userName));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
     }
 }

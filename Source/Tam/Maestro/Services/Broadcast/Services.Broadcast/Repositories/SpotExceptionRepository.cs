@@ -62,6 +62,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotExceptionsOutOfSpecs">The list of spot exceptions OutofSpecsPosts to be inserted</param>
         /// <returns>Total number of inserted spot exceptions OutofSpecs</returns> 
         int AddOutOfSpecs(List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs);
+
+        /// <summary>
+        /// <param name="userName">The User Name</param>
+        /// <param name="createdAt">Created at Date</param>
+        /// <returns>true or false</returns>
+        bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName, DateTime createdAt);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -361,6 +367,42 @@ namespace Services.Broadcast.Repositories
                 var addedCount = spotExceptionsOutOfSpecs.Count();
                 return addedCount;
             });
+        }
+
+        /// <inheritdoc />
+        public bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName, DateTime createdAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                bool isSpotExceptionsOutOfSpecDecisionSaved = false;
+                int recordCount = 0;
+                var alreadyRecordExists = context.spot_exceptions_out_of_spec_decisions.SingleOrDefault(x => x.spot_exceptions_out_of_spec_id == spotExceptionsOutOfSpecDecisionsPostsRequest.Id);
+                if (alreadyRecordExists == null)
+                {
+                    context.spot_exceptions_out_of_spec_decisions.Add(new spot_exceptions_out_of_spec_decisions
+                    {
+                        spot_exceptions_out_of_spec_id = spotExceptionsOutOfSpecDecisionsPostsRequest.Id,
+                        accepted_as_in_spec = spotExceptionsOutOfSpecDecisionsPostsRequest.AcceptAsInSpec,
+                        decision_notes = spotExceptionsOutOfSpecDecisionsPostsRequest.DecisionNotes,
+                        username = userName,
+                        created_at = createdAt
+                    });
+                }
+                else
+                {
+                    alreadyRecordExists.accepted_as_in_spec = spotExceptionsOutOfSpecDecisionsPostsRequest.AcceptAsInSpec;
+                    alreadyRecordExists.decision_notes = spotExceptionsOutOfSpecDecisionsPostsRequest.DecisionNotes;
+                    alreadyRecordExists.username = userName;
+                    alreadyRecordExists.created_at = createdAt;
+                }
+                recordCount = context.SaveChanges();
+                if (recordCount > 0)
+                {
+                    isSpotExceptionsOutOfSpecDecisionSaved = true;
+                }
+                return isSpotExceptionsOutOfSpecDecisionSaved;
+            });
+
         }
     }
 }
