@@ -51,6 +51,12 @@
 		public static readonly string LaunchDarklySdkKey = "LaunchDarklySdkKey";
         public static readonly string ReelIsciIngestNumberOfDays = "ReelIsciIngestNumberOfDays";
         public static readonly string BroadcastNotificationEmail = "BroadcastNotificationEmail";
+        public static readonly string DaypartCacheSlidingExpirationSeconds = "DaypartCacheSlidingExpirationSeconds";
+		public static readonly string TrackerServiceFtpDirectory = "TrackerService:FtpDirector";
+        public static readonly string TrackerServiceFtpPassword = "TrackerService:FtpPassword";
+        public static readonly string TrackerServiceFtpSaveFolder = "TrackerService:SaveFolder";
+        public static readonly string TrackerServiceFtpUrl = "TrackerService:FtpUrl";
+        public static readonly string TrackerServiceFtpUserName = "TrackerService:UserName";
 	}
 }
 

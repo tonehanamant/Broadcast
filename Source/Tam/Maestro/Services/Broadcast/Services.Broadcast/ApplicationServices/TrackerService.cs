@@ -72,7 +72,13 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IFileService _FileService;
         private readonly IProposalRepository _ProposalRepository;
-        
+
+        private readonly Lazy<string> _FtpDirectory;
+        private readonly Lazy<string> _FtpSaveFolder;
+        private readonly Lazy<string> _FtpUrl;
+        private readonly Lazy<string> _FtpUserName;
+        private readonly Lazy<string> _FtpPassword;
+
         public TrackerService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IDetectionPostingEngine detectionPostingEngine
             , ITrackingEngine trackingEngine
@@ -104,7 +110,44 @@ namespace Services.Broadcast.ApplicationServices
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _NsiPostingBookService = nsiPostingBookService;
             _FileService = fileService;
-            _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();            
+            _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+
+            _FtpDirectory = new Lazy<string>(_GetFtpDirectory);
+            _FtpSaveFolder = new Lazy<string>(_GetFtpSaveFolder);
+            _FtpUrl = new Lazy<string>(_GetFtpUrl);
+            _FtpUserName = new Lazy<string>(_GetFtpUserName);
+            _FtpPassword = new Lazy<string>(_GetFtpPassword);
+        }
+
+        private string _GetFtpDirectory()
+        {
+            var result = _ConfigurationSettingsHelper.GetConfigValueWithDefault<string>(ConfigKeys.TrackerServiceFtpDirectory, string.Empty);
+            return result;
+        }
+
+        private string _GetFtpSaveFolder()
+        {
+            var result = _ConfigurationSettingsHelper.GetConfigValueWithDefault<string>(ConfigKeys.TrackerServiceFtpSaveFolder, string.Empty);
+            return result;
+        }
+
+        private string _GetFtpUrl()
+        {
+            var result = _ConfigurationSettingsHelper.GetConfigValueWithDefault<string>(ConfigKeys.TrackerServiceFtpUrl, string.Empty);
+            return result;
+        }
+
+        private string _GetFtpUserName()
+        {
+            var result = _ConfigurationSettingsHelper.GetConfigValueWithDefault<string>(ConfigKeys.TrackerServiceFtpUserName, string.Empty);
+            return result;
+        }
+
+        private string _GetFtpPassword()
+        {
+            var rawResult = _ConfigurationSettingsHelper.GetConfigValueWithDefault<string>(ConfigKeys.TrackerServiceFtpPassword, string.Empty);
+            var result = EncryptionHelper.DecryptString(rawResult, EncryptionHelper.EncryptionKey);
+            return result;
         }
 
         public LoadSchedulesDto GetSchedulesByDate(DateTime? startDate, DateTime? endDate)
@@ -634,19 +677,18 @@ namespace Services.Broadcast.ApplicationServices
             return fullMessage;
         }
 
-        private static NetworkCredential _GetCredentials()
+        private NetworkCredential _GetCredentials()
         {
-            var pwd = EncryptionHelper.DecryptString(TrackerServiceSystemParameter.FtpPassword, EncryptionHelper.EncryptionKey);
-            return new NetworkCredential(TrackerServiceSystemParameter.FtpUserName, pwd);
+            return new NetworkCredential(_FtpUserName.Value, _FtpPassword.Value);
         }
 
-        private static IEnumerable<string> _GetFtpFilesAndNames()
+        private IEnumerable<string> _GetFtpFilesAndNames()
         {
             var fileList = new List<string>();
 
             // Get the object used to communicate with the server.
-            var ftp = (FtpWebRequest)WebRequest.Create(TrackerServiceSystemParameter.FtpUrl + "/" +
-                                  TrackerServiceSystemParameter.FtpDirectory);
+            var ftp = (FtpWebRequest)WebRequest.Create(_FtpUrl.Value + "/" +
+                                                       _FtpDirectory.Value);
 
             ftp.Method = WebRequestMethods.Ftp.ListDirectory;
             ftp.Credentials = _GetCredentials();
@@ -667,9 +709,9 @@ namespace Services.Broadcast.ApplicationServices
             return fileList;
         }
 
-        private static MemoryStream _GetFileStream(string fileName)
+        private MemoryStream _GetFileStream(string fileName)
         {
-            var path = TrackerServiceSystemParameter.FtpUrl + "/" + TrackerServiceSystemParameter.FtpDirectory + "/" + fileName;
+            var path = _FtpUrl.Value + "/" + _FtpDirectory.Value + "/" + fileName;
             using (var ftpClient = new WebClient())
             {
                 ftpClient.Credentials = _GetCredentials();
@@ -680,15 +722,15 @@ namespace Services.Broadcast.ApplicationServices
 
         public void _CleanupFile(MemoryStream memoryStream, string fileName)
         {
-            var path = TrackerServiceSystemParameter.FtpSaveFolder + "\\" + fileName;
+            var path = _FtpSaveFolder.Value + "\\" + fileName;
             var fileStream = File.OpenWrite(path);
             memoryStream.WriteTo(fileStream);
 
-            var fileUrl = TrackerServiceSystemParameter.FtpUrl + "/" + TrackerServiceSystemParameter.FtpDirectory + "/" + fileName;
+            var fileUrl = _FtpUrl.Value + "/" + _FtpDirectory.Value + "/" + fileName;
             _DeleteFtpFile(fileUrl);
         }
 
-        private static void _DeleteFtpFile(string fileUrl)
+        private void _DeleteFtpFile(string fileUrl)
         {
             var ftp = (FtpWebRequest)WebRequest.Create(fileUrl);
 

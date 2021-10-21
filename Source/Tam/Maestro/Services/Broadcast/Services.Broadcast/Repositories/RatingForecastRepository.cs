@@ -345,8 +345,8 @@ namespace Services.Broadcast.Repositories
 
         public IEnumerable<ManifestDetailDaypart> AdjustDayparts(List<ManifestDetailDaypart> stationDetails)
         {
-            var timeAdjust = BroadcastComposerWebSystemParameter.ImpressionStartEndTimeAdjustment;
-            var startOfNextDay = BroadcastComposerWebSystemParameter.ImpressionStartOfDayForAdjustment;
+            const int timeAdjust = 420;
+            const int startOfNextDay = 18000;
             var neilsonTimeSlotInSeconds = BroadcastConstants.NeilsonTimeSlotInSeconds;
 
             List<ManifestDetailDaypart> adjustedDetails = new List<ManifestDetailDaypart>();

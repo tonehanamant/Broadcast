@@ -4,9 +4,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
+using Services.Broadcast;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Unity;
 
 namespace Common.Services
 {
@@ -20,7 +23,7 @@ namespace Common.Services
     }
 
     //this is a singleton implementation
-    public class DaypartCache : IDaypartCache
+    public class DaypartCache : BroadcastBaseClass, IDaypartCache
     {
         public static IDaypartCache DaypartCacheInstance;
 
@@ -29,7 +32,11 @@ namespace Common.Services
             {
                 if (DaypartCacheInstance == null)
                 {
-                    DaypartCacheInstance = new DaypartCache(new BroadcastDataDataRepositoryFactory().GetDataRepository<IDisplayDaypartRepository>());
+                    var daypartRepo = BroadcastDataDataRepositoryFactory.Instance.Resolve<IDisplayDaypartRepository>();
+                    var featureToggleHelper = BroadcastApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>();
+                    var configHelper = BroadcastApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
+
+                    DaypartCacheInstance = new DaypartCache(daypartRepo, featureToggleHelper, configHelper);
                 }
                 return DaypartCacheInstance;
             });
@@ -48,13 +55,14 @@ namespace Common.Services
         private readonly IDisplayDaypartRepository _DisplayDaypartRepository;
 
         //This is only public so that the class can be tested.
-        public DaypartCache(IDisplayDaypartRepository displayDaypartRepository)
+        public DaypartCache(IDisplayDaypartRepository displayDaypartRepository, 
+            IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        : base(featureToggleHelper, configurationSettingsHelper)
         {
             _DisplayDaypartRepository = displayDaypartRepository;
-
             try
             {
-                _CacheTimeoutInSeconds = Convert.ToInt32(Releases2ServiceSystemParameter.DaypartCacheSlidingExpirationSeconds);
+                _CacheTimeoutInSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault<int>(ConfigKeys.DaypartCacheSlidingExpirationSeconds, 300);
                 if (_CacheTimeoutInSeconds <= 0)
                     throw new ApplicationException(string.Format("The value of the DaypartCacheSlidingExpirationSeconds is {0}.  It must be greater than zero.", _CacheTimeoutInSeconds));
             }

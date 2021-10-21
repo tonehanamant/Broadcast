@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Services.Broadcast.Helpers;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests
 {
@@ -20,7 +22,10 @@ namespace Services.Broadcast.IntegrationTests
         {
             var daypartRepo = new MockDisplayDaypartRepo();
             daypartRepo.CallCount = 0;
-            var daypartCache = new DaypartCache(daypartRepo);
+
+            var featureToggleHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>();
+            var configHelper = IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
+            var daypartCache = new DaypartCache(daypartRepo, featureToggleHelper, configHelper);
 
             var daypartList = new List<DisplayDaypart>();
             for(int i = 0; i < 10; i++)
