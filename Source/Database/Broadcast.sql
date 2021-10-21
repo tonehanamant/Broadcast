@@ -1390,6 +1390,8 @@ INSERT INTO plan_version_audience_daypart_vpvh (plan_version_id, audience_id, st
 		AND p.standard_daypart_id = a.standard_daypart_id
 	WHERE p.id IS NULL
 
+UPDATE plan_versions SET impressions_per_unit = 1 WHERE impressions_per_unit = 0 
+
 GO
 /*************************************** END BP-3387 ***************************************/
 
