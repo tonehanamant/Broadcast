@@ -71,7 +71,8 @@ namespace Services.Broadcast.Clients
         {
             var encryptedAccessKeyId =
                 _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PricingRequestLogAccessKeyId);
-            return encryptedAccessKeyId;
+            var accessKeyId = EncryptionHelper.DecryptString(encryptedAccessKeyId, EncryptionHelper.EncryptionKey);
+            return accessKeyId;
         }
         private string _GetBucketRegion()
         {
