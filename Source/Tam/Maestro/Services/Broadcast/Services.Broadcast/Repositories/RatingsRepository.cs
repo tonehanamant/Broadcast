@@ -2,14 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigurationService.Client;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Helpers;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -22,9 +18,8 @@ namespace Services.Broadcast.Repositories
     public class RatingsRepository : BroadcastForecastRepositoryBase, IRatingsRepository
     {
         public RatingsRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<Tuple<MediaMonth, int>> GetNielsonMarkets(List<MediaMonth> mediaMonths)
         {

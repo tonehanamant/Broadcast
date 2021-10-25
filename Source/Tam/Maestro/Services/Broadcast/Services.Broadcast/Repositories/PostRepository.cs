@@ -3,16 +3,10 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using ConfigurationService.Client;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -99,8 +93,8 @@ namespace Services.Broadcast.Repositories
     public class PostRepository : BroadcastRepositoryBase, IPostRepository
     {
         public PostRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<PostedContract> GetAllPostedProposals()
         {

@@ -22,9 +22,7 @@ using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
-using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 

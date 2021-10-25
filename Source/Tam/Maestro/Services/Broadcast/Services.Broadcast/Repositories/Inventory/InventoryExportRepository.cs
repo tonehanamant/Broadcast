@@ -1,14 +1,12 @@
 ﻿using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
-using System.Collections.Generic;
-using System.Linq;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Inventory;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories.Inventory
 {
@@ -30,8 +28,8 @@ namespace Services.Broadcast.Repositories.Inventory
 	public class InventoryExportRepository : BroadcastRepositoryBase, IInventoryExportRepository
 	{
 		public InventoryExportRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-			ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-			: base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+			ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+			: base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
 		{
 		}
 

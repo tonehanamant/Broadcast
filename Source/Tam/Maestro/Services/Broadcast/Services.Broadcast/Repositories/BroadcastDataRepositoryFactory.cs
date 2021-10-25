@@ -1,5 +1,4 @@
 ﻿using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
@@ -33,7 +32,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IContextFactory<QueryHintBroadcastForecastContext>, BroadcastForecastContextFactory>();
 
             instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
-            instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IAudienceRepository, AudienceRepository>();
             instance.RegisterType<IScheduleRepository, ScheduleRepository>();

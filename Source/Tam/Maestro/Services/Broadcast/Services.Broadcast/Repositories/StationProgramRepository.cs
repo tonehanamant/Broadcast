@@ -1,10 +1,14 @@
-﻿using Common.Services.Repositories;
-using ConfigurationService.Client;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,13 +17,7 @@ using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Common.Services.Extensions;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Services.Broadcast.Extensions;
-using Services.Broadcast.Entities.QuoteReport;
-using Services.Broadcast.Entities.Plan.Buying;
-using Services.Broadcast.Entities.Plan.CommonPricingEntities;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -58,8 +56,8 @@ namespace Services.Broadcast.Repositories
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
     {
         public StationProgramRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<ProposalProgramDto> GetPrograms(DateTime flightStart, DateTime flightEnd,
             int spotLengthId, int inventorySourceId, List<int> marketIds)

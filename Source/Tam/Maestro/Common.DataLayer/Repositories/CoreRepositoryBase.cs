@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Threading;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using IsolationLevel = System.Data.IsolationLevel;
@@ -21,7 +20,7 @@ namespace Common.Services.Repositories
         public static bool CodeExecutingForIntegegrationTest = false;
     }
 
-    public class CoreRepositoryBase<CT> : IRepositoryBase where CT : DbContext
+    public abstract class CoreRepositoryBase<CT> : IRepositoryBase where CT : DbContext
     {
         private static readonly int _Timeout;
         MemoryCache _Cache = MemoryCache.Default;
@@ -39,17 +38,14 @@ namespace Common.Services.Repositories
             }
         }
 
-        private readonly IConfigurationWebApiClient _configurationWebApiClient;
         private readonly IContextFactory<CT> _ContextFactory;
         private readonly ITransactionHelper _TransactionHelper;
-        private readonly string _ConnectionStringType;
 
-        public CoreRepositoryBase(IConfigurationWebApiClient configurationWebApiClient, IContextFactory<CT> pContextFactory, ITransactionHelper pTransactionHelper, string connectionStringType)
+        public CoreRepositoryBase(
+            IContextFactory<CT> pContextFactory, ITransactionHelper pTransactionHelper)
         {
-            _configurationWebApiClient = configurationWebApiClient;
             _ContextFactory = pContextFactory;
             _TransactionHelper = pTransactionHelper;
-            _ConnectionStringType = connectionStringType;
         }
 
         public void WarmupEntityFramework()
@@ -157,19 +153,7 @@ namespace Common.Services.Repositories
             return context;
         }
 
-        protected virtual string GetConnectionString()
-        {
-            if (_Cache.Contains(_ConnectionStringType))
-            {
-                return _Cache[_ConnectionStringType] as string;
-            }
-
-            string connectionString = _configurationWebApiClient.GetResource(_ConnectionStringType);
-
-            _Cache.Set(_ConnectionStringType, connectionString, new CacheItemPolicy()
-                { AbsoluteExpiration = DateTime.UtcNow.AddSeconds(30) });
-            return connectionString;
-        }
+        protected abstract string GetConnectionString();
 
         public void BulkInsert<T>(System.Data.Entity.DbContext context, List<T> list)
         {

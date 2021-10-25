@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using Common.Services.Repositories;
-using ConfigurationService.Client;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.Helpers;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories
 {
-	public interface IProgramNameExceptionsRepository : IDataRepository
+    public interface IProgramNameExceptionsRepository : IDataRepository
 	{
 		List<ProgramNameExceptionDto> GetProgramExceptions();
 	}
@@ -21,8 +18,8 @@ namespace Services.Broadcast.Repositories
 	public class ProgramNameExceptionsRepository : BroadcastRepositoryBase, IProgramNameExceptionsRepository
 	{
 		public ProgramNameExceptionsRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-			ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-			: base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+			ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+			: base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
 		{
 		}
 

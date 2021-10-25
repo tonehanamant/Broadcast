@@ -1,10 +1,13 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
 using Services.Broadcast.Extensions;
@@ -14,13 +17,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Entities;
-using Tam.Maestro.Data.Entities;
-using Services.Broadcast.Entities.Plan.CommonPricingEntities;
-using Services.Broadcast.Entities.Plan.Buying;
-using Services.Broadcast.Entities.Campaign;
 
 namespace Services.Broadcast.Repositories
 {
@@ -232,8 +231,8 @@ namespace Services.Broadcast.Repositories
     {
         public PlanRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
         }
 

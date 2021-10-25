@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -28,15 +27,12 @@ namespace Services.Broadcast.BusinessEngines
         List<FileDetailProblem> GetMatchingProblems();
     }
 
-    public class MatchingEngine : IMatchingEngine
+    public class MatchingEngine : BroadcastBaseClass, IMatchingEngine
     {
         public List<MatchingProposalWeek> _MatchingProposalWeeks;
         public List<FileDetailProblem> _MatchingProblems;
         private Lazy<int> _BroadcastMatchingBuffer;
         private readonly IDaypartCache _DaypartCache;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
         ///<inheritdoc/>
         public List<FileDetailProblem> GetMatchingProblems()
@@ -45,12 +41,10 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public MatchingEngine(IDaypartCache daypartCache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        : base(featureToggleHelper, configurationSettingsHelper)
         {
             _DaypartCache = daypartCache;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
             _BroadcastMatchingBuffer = new Lazy<int>(_GetBroadcastMatchingBuffer);
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
         }
 
         ///<inheritdoc/>
@@ -228,9 +222,8 @@ namespace Services.Broadcast.BusinessEngines
 
         private int _GetBroadcastMatchingBuffer()
         {
-            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            var broadcastMatchingBuffer = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120);
             return broadcastMatchingBuffer;
-
         }
     }
 }

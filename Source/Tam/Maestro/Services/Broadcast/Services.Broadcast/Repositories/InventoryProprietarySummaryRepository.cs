@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventoryProprietary;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Common.Services.Extensions;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -102,8 +100,8 @@ namespace Services.Broadcast.Repositories
     {
         public InventoryProprietarySummaryRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
         }
 

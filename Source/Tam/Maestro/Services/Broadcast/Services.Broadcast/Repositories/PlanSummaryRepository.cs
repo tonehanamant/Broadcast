@@ -1,14 +1,12 @@
-﻿using System.Data.Entity;
-using Common.Services.Extensions;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -53,8 +51,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="configurationSettingsHelper">The p configuration key.</param>
         public PlanSummaryRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
         }
 

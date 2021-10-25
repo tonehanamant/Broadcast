@@ -1,7 +1,5 @@
-﻿using System;
-using Services.Broadcast.ApplicationServices;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
+﻿using Services.Broadcast.ApplicationServices;
+using System;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.Services

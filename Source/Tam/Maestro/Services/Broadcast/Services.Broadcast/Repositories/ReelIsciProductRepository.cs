@@ -1,8 +1,5 @@
 ﻿using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Helpers;
-using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -20,8 +17,8 @@ namespace Services.Broadcast.Repositories
     public class ReelIsciProductRepository :  BroadcastRepositoryBase, IReelIsciProductRepository
     {
         public ReelIsciProductRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         /// <inheritdoc />
         public int DeleteReelIsciProductsNotExistInReelIsci()

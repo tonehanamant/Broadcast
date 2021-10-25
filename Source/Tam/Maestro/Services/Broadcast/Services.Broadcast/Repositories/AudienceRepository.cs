@@ -2,16 +2,13 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using System.Data.Entity;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -26,8 +23,8 @@ namespace Services.Broadcast.Repositories
     public class AudienceRepository : BroadcastRepositoryBase, IAudienceRepository
     {
         public AudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
         
 
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)

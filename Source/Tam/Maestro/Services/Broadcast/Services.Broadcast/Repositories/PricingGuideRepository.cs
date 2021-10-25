@@ -11,12 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -60,8 +57,8 @@ namespace Services.Broadcast.Repositories
     public class PricingGuideRepository : BroadcastRepositoryBase, IPricingGuideRepository
     {
         public PricingGuideRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public PricingGuideOpenMarketInventory GetProposalDetailPricingGuideInventory(int proposalDetailId)
         {

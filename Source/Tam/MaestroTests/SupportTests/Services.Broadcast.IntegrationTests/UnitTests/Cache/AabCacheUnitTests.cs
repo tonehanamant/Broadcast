@@ -5,7 +5,6 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using System.Collections.Generic;
 
@@ -14,13 +13,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
     [TestFixture]
     public class AabCacheUnitTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
-        }
-
         [Test]
         public void GetAgencies()
         {
@@ -55,6 +47,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s =>
+                    s.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds, It.IsAny<int>()))
+                .Returns(300);
             aabApiClient.Setup(s => s.GetAgencies())
                 .Returns(agencies);
 
@@ -129,6 +124,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s =>
+                    s.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds, It.IsAny<int>()))
+                .Returns(300);
             aabApiClient.Setup(s => s.GetAdvertisers())
                 .Returns(advertisers);
 
@@ -205,6 +203,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var aabApiClient = new Mock<IAgencyAdvertiserBrandApiClient>();
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s =>
+                    s.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds, It.IsAny<int>()))
+                .Returns(300);
             aabApiClient.Setup(s => s.GetAdvertiserProducts(testAdvertiserMasterId))
                 .Returns(advertiserProducts);
 

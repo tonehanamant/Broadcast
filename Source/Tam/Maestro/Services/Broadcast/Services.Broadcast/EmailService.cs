@@ -1,7 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
-using ConfigurationService.Client;
 using Services.Broadcast;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +7,6 @@ using System.Net;
 using System.Net.Mail;
 using System.ServiceModel;
 using Tam.Maestro.Common;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Common.Services
 {
@@ -21,18 +18,11 @@ namespace Common.Services
 
     public class EmailerService : BroadcastBaseClass, IEmailerService
     {
-        private IConfigurationWebApiClient _configurationWebApiClient;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
 
-        public EmailerService(IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        public EmailerService(IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper) 
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
-            _configurationWebApiClient = configurationWebApiClient;
-            _FeatureToggleHelper = featureToggleHelper;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
 
@@ -49,7 +39,7 @@ namespace Common.Services
 
         public bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, List<MailAddress> pTos, List<string> attachFileNames = null)
         {
-            if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+            if (_IsEmailNotificationsEnabled.Value)
                 return false;              
 
             _LogInfo("Attempting to send email.");
@@ -63,14 +53,14 @@ namespace Common.Services
 
                 using (SmtpClient lSmtpClient = new SmtpClient())
                 {
-                    lSmtpClient.Host= _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailHost, "smtp.office365.com") : BroadcastServiceSystemParameter.EmailHost;                                      
+                    lSmtpClient.Host = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailHost, "smtp.office365.com");
                     lSmtpClient.EnableSsl = true;
                     lSmtpClient.Port = 587;
                     lSmtpClient.Credentials = GetSMTPNetworkCredential();
 
                     var lMessage = BuildEmailMessage(pIsHtmlBody, pBody, pSubject, pPriority, fromEmail, pTos, attachFileNames);
 
-                    var whiteList = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.EmailWhiteList) : BroadcastServiceSystemParameter.EmailWhiteList;
+                    var whiteList = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.EmailWhiteList);
                     if (string.IsNullOrEmpty(whiteList))
                     {
                         lSmtpClient.Send(lMessage);
@@ -139,14 +129,14 @@ namespace Common.Services
         {
             // office365 requires the 'from' email to be for the credentialed account.
             // in office365 the username is the same as the 'from' email.
-            var account = BroadcastServiceSystemParameter.EmailUsername;
+            var account = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailUsername, "broadcastsmtp@crossmw.com");
             return new MailAddress(account);
         }
 
         public NetworkCredential GetSMTPNetworkCredential()
         {
-            var pwd = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailPassword, "7TUCE+HAp3LDexQ6JIvaEA==") : BroadcastServiceSystemParameter.EmailPassword;
-            var usr = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailUsername, "broadcastsmtp@crossmw.com") : BroadcastServiceSystemParameter.EmailUsername;
+            var pwd = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.EmailPassword);
+            var usr = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.EmailUsername, "broadcastsmtp@crossmw.com");
 
             if (!string.IsNullOrEmpty(pwd))
                 pwd = EncryptionHelper.DecryptString(pwd, BroadcastConstants.EMAIL_PROFILE_SEED).Replace("\n", "\\n");

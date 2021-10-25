@@ -1,6 +1,5 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Buying;
@@ -8,7 +7,6 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
-using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -301,8 +299,8 @@ namespace Services.Broadcast.Repositories
     {
         public PlanBuyingRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
         }
 

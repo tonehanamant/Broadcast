@@ -26,7 +26,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -183,8 +182,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
@@ -237,8 +234,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
@@ -1987,13 +1982,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = new List<InventorySourceTypeEnum>();
 
-            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelOpenMarketInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableOpenMarketInventoryForPricingModel)
+            if (_IsPricingModelOpenMarketInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.OpenMarket);
 
-            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelBarterInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableBarterInventoryForPricingModel)
+            if (_IsPricingModelBarterInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.Barter);
 
-            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelProprietaryOAndOInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableProprietaryOAndOInventoryForPricingModel)
+            if (_IsPricingModelProprietaryOAndOInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.ProprietaryOAndO);
 
             return result;

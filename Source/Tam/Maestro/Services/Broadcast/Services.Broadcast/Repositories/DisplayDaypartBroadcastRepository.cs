@@ -1,19 +1,16 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using IsolationLevel = System.Transactions.IsolationLevel;
-using Services.Broadcast.Entities;
-using Common.Services.Extensions;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -57,8 +54,8 @@ namespace Services.Broadcast.Repositories
     public class DisplayDaypartBroadcastRepository : BroadcastRepositoryBase, IDisplayDaypartRepository
     {
         public DisplayDaypartBroadcastRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public int SaveDaypart(DisplayDaypart pDaypart)
         {

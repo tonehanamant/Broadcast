@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using System.Linq;
-using ConfigurationService.Client;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -19,8 +16,8 @@ namespace Services.Broadcast.Repositories
     public class NsiComponentAudienceRepository : BroadcastRepositoryBase, INsiComponentAudienceRepository
     {
         public NsiComponentAudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<BroadcastAudience> GetAllNsiComponentAudiences()
         {

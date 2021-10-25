@@ -282,40 +282,12 @@ namespace Tam.Maestro.Services.Clients
 
         public string GetSystemComponentParameterValue(string pSystemComponentID, string pSystemParameterID)
         {
-            try
-            {
-                CheckAndRecreateSMSProxy();
-                TAMResult2<string> lResult = this._SMSProxy.RemoteContract.GetSystemComponentParameterValue(pSystemComponentID, pSystemParameterID);
-                if (lResult.Status == ResultStatus.Error)
-                {
-                    throw new Exception(lResult.Message);
-                }
-                return lResult.Result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw;
-            }
+            throw new InvalidOperationException("The configuration service should not be used.  Use the appsettings.json file instead.");
         }
 
         public bool ClearSystemComponentParameterCache(string pSystemComponentID, string pSystemParameterID)
         {
-            try
-            {
-                CheckAndRecreateSMSProxy();
-                TAMResult2<bool> lResult = this._SMSProxy.RemoteContract.ClearSystemComponentParameterCache(pSystemComponentID, pSystemParameterID);
-                if (lResult.Status == ResultStatus.Error)
-                {
-                    throw new Exception(lResult.Message);
-                }
-                return lResult.Result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw;
-            }
+            throw new InvalidOperationException("The configuration service should not be used.  Use the appsettings.json file instead.");
         }
 
         public TAMResult2<string> TestConnection(string pTamResource)

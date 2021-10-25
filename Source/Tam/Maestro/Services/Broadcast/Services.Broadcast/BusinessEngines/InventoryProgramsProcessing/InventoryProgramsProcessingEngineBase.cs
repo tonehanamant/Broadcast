@@ -9,7 +9,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
@@ -128,7 +127,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected virtual int _GetSaveBatchSize()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineSaveBatchSize, 5000) : BroadcastServiceSystemParameter.InventoryProgramsEngineSaveBatchSize;
+            var result =
+                _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.InventoryProgramsEngineSaveBatchSize,
+                    5000);
+            return result;
         }
     }
 }

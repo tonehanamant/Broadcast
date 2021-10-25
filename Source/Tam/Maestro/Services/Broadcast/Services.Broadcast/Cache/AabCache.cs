@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Cache
 {
@@ -45,7 +44,7 @@ namespace Services.Broadcast.Cache
     /// <summary>
     /// Caches Aab data
     /// </summary>
-    public class AabCache : IAabCache
+    public class AabCache : BroadcastBaseClass, IAabCache
     {
         private const string CACHE_NAME_AGENCIES = "Agencies";
         private readonly BaseMemoryCache<List<AgencyDto>> _AgenciesCache = new BaseMemoryCache<List<AgencyDto>>(CACHE_NAME_AGENCIES);
@@ -56,9 +55,6 @@ namespace Services.Broadcast.Cache
         private const string CACHE_NAME_ADVERTISER_PRODUCTS = "AdvertiserProducts";
         private readonly BaseMemoryCache<List<ProductDto>> _AdvertiserProductsCache = new BaseMemoryCache<List<ProductDto>>(CACHE_NAME_ADVERTISER_PRODUCTS);
 
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        internal static Lazy<bool> _IsPipelineVariablesEnabled;
         private IAgencyAdvertiserBrandApiClient _AabApiClient;
         private Lazy<int> _CacheItemTtlSeconds;
 
@@ -69,12 +65,10 @@ namespace Services.Broadcast.Cache
         /// <param name="featureToggleHelper"> Feature Toggle Helper.</param>
         /// <param name="configurationSettingsHelper">Configuration Settings Helper.</param>
         public AabCache(IAgencyAdvertiserBrandApiClient aabApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _AabApiClient = aabApiClient;
             _CacheItemTtlSeconds = new Lazy<int>(_GetCacheItemTtlSeconds);
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }      
 
         /// <inheritdoc />
@@ -118,22 +112,12 @@ namespace Services.Broadcast.Cache
         }
 
         private int _GetCacheItemTtlSeconds()
-        {        
-           if (_IsPipelineVariablesEnabled.Value)
-            {
-                var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds,300);
-                var result =AABCacheExpirationSeconds < 0
-               ? 300 //default to 5 minutes
-               : AABCacheExpirationSeconds;
-                return result;
-            }
-            else
-            {
-                var result = BroadcastServiceSystemParameter.AABCacheExpirationSeconds < 0
+        {
+            var AABCacheExpirationSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.AABCacheExpirationSeconds, 300);
+            var result = AABCacheExpirationSeconds < 0
                 ? 300 //default to 5 minutes
-                : BroadcastServiceSystemParameter.AABCacheExpirationSeconds;
-                return result;
-            }
+                : AABCacheExpirationSeconds;
+            return result;
         }
 
         private CacheItemPolicy _GetCacheItemPolicy()

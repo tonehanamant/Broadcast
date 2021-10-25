@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Clients
 {
@@ -23,14 +21,10 @@ namespace Services.Broadcast.Clients
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
         private readonly HttpClient _HttpClient;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public PricingApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+        public PricingApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
             _HttpClient = httpClient;
@@ -82,11 +76,11 @@ namespace Services.Broadcast.Clients
         }
         private string _GetPlanPricingAllocationsEfficiencyModelUrl()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsEfficiencyModelUrl) : BroadcastServiceSystemParameter.PlanPricingAllocationsEfficiencyModelUrl;
+            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsEfficiencyModelUrl);
         }
         private string _GetOpenMarketSpotsAllocationUrl()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsUrl) : BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
+            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsUrl);
         }
     }
 

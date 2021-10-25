@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Helpers
 {
@@ -27,20 +26,15 @@ namespace Services.Broadcast.Helpers
         void SendEmail(string emailBody, string subject);
     }
 
-    public class FileTransferEmailHelper : IFileTransferEmailHelper
+    public class FileTransferEmailHelper : BroadcastBaseClass, IFileTransferEmailHelper
     {
         private readonly IEmailerService _EmailerService;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly Lazy<bool> _IsEmailNotificationsEnabled;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         public FileTransferEmailHelper(IEmailerService emailerService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        : base(featureToggleHelper, configurationSettingsHelper)
         {
             _EmailerService = emailerService;
-            _FeatureToggleHelper = featureToggleHelper;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _IsEmailNotificationsEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EMAIL_NOTIFICATIONS));
         }
 
@@ -74,7 +68,7 @@ namespace Services.Broadcast.Helpers
         /// <param name="subject">Email subject</param>
         public void SendEmail(string emailBody, string subject)
         {
-            if (_IsPipelineVariablesEnabled.Value ? !_IsEmailNotificationsEnabled.Value : !BroadcastServiceSystemParameter.EmailNotificationsEnabled)
+            if (!_IsEmailNotificationsEnabled.Value)
                 return;
 
             var to = new List<MailAddress>() { new MailAddress(_ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastNotificationEmail)) };

@@ -588,7 +588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //we don't care where the file is saved
 #else
             fileServiceMock.Verify(x => x.Create(
-                @"\\cadfs11\Broadcast\Dev\CampaignExportReports",
+                @"c:\temp\Broadcast\IntegrationTests\CampaignExportReports",
                 fileId + ".xlsx",
                 It.Is<Stream>(y => y != null && y.Length > 0)), Times.Once);
 #endif

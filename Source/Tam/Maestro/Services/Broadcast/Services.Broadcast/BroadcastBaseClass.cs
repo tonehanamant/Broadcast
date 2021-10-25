@@ -5,7 +5,6 @@ using Services.Broadcast.Helpers;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast
 {
@@ -14,14 +13,12 @@ namespace Services.Broadcast
         private readonly ILog _Log;
         protected readonly IFeatureToggleHelper _FeatureToggleHelper;
         protected readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        protected readonly Lazy<bool> _IsPipelineVariablesEnabled;
         
         protected BroadcastBaseClass(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _Log = LogManager.GetLogger(GetType());
             _FeatureToggleHelper = featureToggleHelper;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         #region Logging Methods
@@ -94,8 +91,8 @@ namespace Services.Broadcast
 #if DEBUG
              return Path.GetTempPath();         
  #else
-           return _IsPipelineVariablesEnabled.Value 
-               ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder): BroadcastServiceSystemParameter.BroadcastAppFolder;
+            var result = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder);
+            return result;
 #endif
         }
 

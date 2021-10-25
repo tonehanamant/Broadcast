@@ -1,17 +1,13 @@
 ﻿using Common.Services.Repositories;
+using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
-using EntityFrameworkMapping.Broadcast;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -25,9 +21,8 @@ namespace Services.Broadcast.Repositories
     public class NsiMarketRepository : BroadcastForecastRepositoryBase, INsiMarketRepository
     {
         public NsiMarketRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public Dictionary<int, int> GetMarketRankingsByMediaMonth(int mediaMonthId)
         {

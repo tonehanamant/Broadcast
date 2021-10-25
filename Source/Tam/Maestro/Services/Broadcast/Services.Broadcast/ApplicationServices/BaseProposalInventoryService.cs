@@ -11,7 +11,6 @@ using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {

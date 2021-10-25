@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Common.Services
 {
@@ -32,8 +31,6 @@ namespace Common.Services
 
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
 
@@ -48,18 +45,15 @@ namespace Common.Services
             });
 
         //This is only public so that the class can be tested.
-        public MediaMonthCrunchCache(IDataRepositoryFactory dataRepositoryFactory,IMediaMonthAndWeekAggregateCache cache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public MediaMonthCrunchCache(IDataRepositoryFactory dataRepositoryFactory,IMediaMonthAndWeekAggregateCache cache, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _DataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = cache;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _ConfigurationSettingsHelper = configurationSettingsHelper;
 
             try
             {
-                _CacheTimeoutInSeconds =
-                    _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.MediaMonthCrunchCacheSlidingExpirationSeconds, 7200) : Convert.ToInt32(BroadcastServiceSystemParameter.MediaMonthCruchCacheSlidingExpirationSeconds);
+                _CacheTimeoutInSeconds = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.MediaMonthCrunchCacheSlidingExpirationSeconds, 7200);
                 if (_CacheTimeoutInSeconds <= 0)
                     _CacheTimeoutInSeconds = 24 * 60 * 60; //24 hours;
             }

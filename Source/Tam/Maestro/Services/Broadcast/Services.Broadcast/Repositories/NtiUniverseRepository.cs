@@ -1,17 +1,14 @@
 ﻿using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Nti;
+using System;
 using System.Collections.Generic;
-using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.EntityFrameworkMapping;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using Services.Broadcast.Entities;
-using System;
-using System.Transactions;
-using System.Data;
-using Services.Broadcast.Helpers;
+using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories
 {
@@ -30,9 +27,8 @@ namespace Services.Broadcast.Repositories
     {
         public NtiUniverseRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper,
-            IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public NtiUniverseHeader GetLatestLoadedNsiUniverses()
         {

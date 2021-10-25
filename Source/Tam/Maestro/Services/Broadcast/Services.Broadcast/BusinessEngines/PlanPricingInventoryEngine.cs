@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
@@ -978,13 +977,13 @@ namespace Services.Broadcast.BusinessEngines
 
         private int _GetNumberOfFallbackQuartersForPricing()
         {
-            var result = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.NumberOfFallbackQuartersForPricing, 8) : BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
+            var result = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.NumberOfFallbackQuartersForPricing, 8);
             return result;  
         }
 
         private int _GetThresholdInSecondsForProgramIntersectInPricing()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ThresholdInSecondsForProgramIntersectInPricing, 1800) : BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
+            return _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.ThresholdInSecondsForProgramIntersectInPricing, 1800);
         }
     }
 }

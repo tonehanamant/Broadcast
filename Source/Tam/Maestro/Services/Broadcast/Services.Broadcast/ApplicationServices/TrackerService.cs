@@ -18,7 +18,6 @@ using System.Linq;
 using System.Net;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices

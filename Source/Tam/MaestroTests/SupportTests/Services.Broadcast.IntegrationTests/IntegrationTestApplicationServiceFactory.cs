@@ -1,10 +1,8 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using Hangfire;
 using Moq;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -53,17 +51,8 @@ namespace Services.Broadcast.IntegrationTests
                     BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance<ILaunchDarklyClient>(launchDarklyClientStub);
                     _instance.RegisterInstance<IDataRepositoryFactory>(BroadcastDataRepositoryFactory);
 
-                    CommonRepositoryFactory.Instance.RegisterInstance<IConfigurationWebApiClient>(new StubbedConfigurationWebApiClient());
 
                     var stubbedSmsClient = new StubbedSMSClient();
-                    var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-
-                    
-                    
-                    _instance.RegisterInstance<IConfigurationWebApiClient>(stubbedConfigurationClient);
-                    
-
-                    SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
                     
                     _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
                     _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
@@ -113,7 +102,6 @@ namespace Services.Broadcast.IntegrationTests
         {
             /*** These are set as they are in production. ***/
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, true);
             launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = true;
             launchDarklyClientStub.FeatureToggles[FeatureToggles.EMAIL_NOTIFICATIONS] = true;
 
@@ -135,7 +123,6 @@ namespace Services.Broadcast.IntegrationTests
             _Old = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<T>();
             IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetUnityContainer().RegisterInstance(mock.Object);
         }
-
 
         public void Dispose()
         {

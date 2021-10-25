@@ -6,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -30,9 +29,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _DaypartCacheMock = new Mock<IDaypartCache>();
              _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
              _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
-
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
 
             _TrackingEngine = new TrackingEngine(_DataRepositoryFactoryMock.Object, _DaypartCacheMock.Object,_FeatureToggleHelper.Object,_ConfigurationSettingsHelper.Object);
         }

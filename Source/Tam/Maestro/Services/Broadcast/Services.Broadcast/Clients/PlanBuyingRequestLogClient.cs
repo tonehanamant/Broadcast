@@ -2,7 +2,6 @@
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Helpers;
 using System;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Clients
@@ -19,17 +18,13 @@ namespace Services.Broadcast.Clients
         private Lazy<string> _BucketName;
         private readonly ILogToAmazonS3 _LogToAmazonS3;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public PlanBuyingRequestLogClientAmazonS3(ILogToAmazonS3 requestLogClientAmazonS3, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public PlanBuyingRequestLogClientAmazonS3(ILogToAmazonS3 requestLogClientAmazonS3, IConfigurationSettingsHelper configurationSettingsHelper)
         {
           
             _BucketName = new Lazy<string>(_GetBucketName);
             _LogToAmazonS3 = requestLogClientAmazonS3;
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto planBuyingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
@@ -63,7 +58,7 @@ namespace Services.Broadcast.Clients
         }
         private string _GetBucketName()
         {
-            var bucketName = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogBucket, "ds-api-logs") : BroadcastServiceSystemParameter.PricingRequestLogBucket;
+            var bucketName = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.PricingRequestLogBucket, "ds-api-logs");
             return bucketName;
         }
     }

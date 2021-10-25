@@ -1,17 +1,11 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using System;
+using Services.Broadcast.Entities.ProgramMapping;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConfigurationService.Client;
-using Services.Broadcast.Entities.ProgramMapping;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -42,8 +36,8 @@ namespace Services.Broadcast.Repositories
     public class ProgramNameRepository : BroadcastRepositoryBase, IProgramNameRepository
     {
         public ProgramNameRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         /// <inheritdoc />
         public List<LookupDto> FindPrograms(string programSearchString, int start, int limit)

@@ -1,6 +1,5 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Helpers;

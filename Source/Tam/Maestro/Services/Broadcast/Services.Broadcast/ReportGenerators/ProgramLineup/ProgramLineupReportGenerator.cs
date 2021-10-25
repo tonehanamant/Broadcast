@@ -4,7 +4,6 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.ReportGenerators.CampaignExport;
 using System.IO;
 using System.Linq;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ReportGenerators.ProgramLineup
 {

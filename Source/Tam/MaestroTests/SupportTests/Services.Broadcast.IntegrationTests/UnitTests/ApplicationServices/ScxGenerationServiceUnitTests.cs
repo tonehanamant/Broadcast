@@ -44,6 +44,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _BackgroundJobClient = new Mock<IBackgroundJobClient>();
             _FeatureToggle = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            _ConfigurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"c:\TempFolder");
 
             _ScxGenerationJobRepository = new Mock<IScxGenerationJobRepository>();
 

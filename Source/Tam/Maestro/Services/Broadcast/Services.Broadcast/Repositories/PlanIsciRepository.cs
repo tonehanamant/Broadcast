@@ -1,17 +1,15 @@
-﻿using System;
-using Common.Services.Extensions;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Isci;
-using Services.Broadcast.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Entities.Enums;
-using System.Data.Entity;
-using System.Data.SqlClient;
 
 namespace Services.Broadcast.Repositories
 {
@@ -97,8 +95,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="configurationSettingsHelper">The p configuration web API client.</param>
         public PlanIsciRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
         public List<IsciAdvertiserDto> GetAvailableIscis(DateTime startDate, DateTime endDate)
         {
             return _InReadUncommitedTransaction(context =>

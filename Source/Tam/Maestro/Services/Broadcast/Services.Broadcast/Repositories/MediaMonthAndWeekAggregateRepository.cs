@@ -1,14 +1,11 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using media_months = EntityFrameworkMapping.Broadcast.media_months;
 using media_weeks = EntityFrameworkMapping.Broadcast.media_weeks;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -20,8 +17,8 @@ namespace Services.Broadcast.Repositories
     public class MediaMonthAndWeekAggregateAndWeekAggregateRepository : BroadcastRepositoryBase, IMediaMonthAndWeekAggregateRepository
     {
         public MediaMonthAndWeekAggregateAndWeekAggregateRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public MediaMonthAndWeekAggregate GetMediaMonthAggregate()
         {

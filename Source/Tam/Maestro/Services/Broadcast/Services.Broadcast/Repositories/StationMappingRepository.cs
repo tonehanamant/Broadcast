@@ -1,10 +1,8 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -72,8 +70,8 @@ namespace Services.Broadcast.Repositories
     public class StationMappingRepository : BroadcastRepositoryBase, IStationMappingRepository
     {
         public StationMappingRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) 
-            : base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper) 
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         { }
 
         /// <inheritdoc />

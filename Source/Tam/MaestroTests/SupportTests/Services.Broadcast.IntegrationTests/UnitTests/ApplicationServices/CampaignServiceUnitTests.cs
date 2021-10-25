@@ -6,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
@@ -24,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Services.Broadcast.Entities.DTO.Program;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -119,9 +117,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_SpotLengthRepositoryMock.Object);
-
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
         }
 
         [Test]

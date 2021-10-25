@@ -21,7 +21,6 @@ using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Formatters;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Unity;

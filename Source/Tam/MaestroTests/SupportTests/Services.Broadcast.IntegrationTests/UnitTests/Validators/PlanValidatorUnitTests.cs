@@ -9,7 +9,6 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -41,9 +40,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [SetUp]
         public void Init()
         {
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
-
             _creativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _ratingForecastServiceMock = new Mock<IRatingForecastService>();
             _broadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();

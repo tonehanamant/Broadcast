@@ -1,10 +1,8 @@
 ﻿using Hangfire;
 using Hangfire.SqlServer;
 using Services.Broadcast;
-using Services.Broadcast.Helpers;
 using System;
 using Tam.Maestro.Common;
-using Tam.Maestro.Services.Clients;
 using Unity;
 
 namespace BroadcastJobScheduler
@@ -25,14 +23,10 @@ namespace BroadcastJobScheduler
     public class JobServiceHostsGlobalConfigurator : BroadcastJobSchedulerBaseClass, IJobServiceHostsGlobalConfigurator
     {
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public JobServiceHostsGlobalConfigurator(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public JobServiceHostsGlobalConfigurator( IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         public void Configure(string applicationName, UnityContainer container)
@@ -64,8 +58,7 @@ namespace BroadcastJobScheduler
         /// <returns></returns>
         private string GetConnectionString(string applicationName)
         {
-            var resource = TAMResource.BroadcastConnectionString.ToString();
-            var connectionString = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConnectionStringConfigKeys.CONNECTIONSTRINGS_BROADCAST) : ConfigurationClientSwitch.Handler.GetResource(resource);
+            var connectionString = _ConfigurationSettingsHelper.GetConfigValue<string>(ConnectionStringConfigKeys.CONNECTIONSTRINGS_BROADCAST);
 
             return ConnectionStringHelper.BuildConnectionString(connectionString, applicationName);
         }

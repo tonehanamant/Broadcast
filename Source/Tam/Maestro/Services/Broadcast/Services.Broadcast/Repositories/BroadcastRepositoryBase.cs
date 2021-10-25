@@ -1,5 +1,4 @@
 ﻿using BroadcastLogging;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using log4net;
 using Services.Broadcast;
@@ -20,17 +19,13 @@ namespace Common.Services.Repositories
     public class BroadcastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastContext>
     {
         private readonly ILog _Log;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
-        public BroadcastRepositoryBase(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastConnectionString.ToString())
+        public BroadcastRepositoryBase(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper)
         {
             _Log = LogManager.GetLogger(GetType());
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
        
@@ -114,15 +109,7 @@ namespace Common.Services.Repositories
         }
         protected override string GetConnectionString()
         {
-            string connectionString = string.Empty;
-            if (_IsPipelineVariablesEnabled.Value)
-            {
-                connectionString = _ConfigurationSettingsHelper.GetConfigValue<string>(ConnectionStringConfigKeys.CONNECTIONSTRINGS_BROADCAST);
-            }
-            else
-            {
-                connectionString = base.GetConnectionString();
-            }
+            string connectionString = _ConfigurationSettingsHelper.GetConfigValue<string>(ConnectionStringConfigKeys.CONNECTIONSTRINGS_BROADCAST);
             return connectionString;
         }
     }

@@ -1,21 +1,18 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Common.Services.Extensions;
-using System;
-using ConfigurationService.Client;
-using Tam.Maestro.Common;
-using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter.ProposalVersionDetailQuarterWeek;
-using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter;
-using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot;
-using Services.Broadcast.Helpers;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter;
+using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnapshot.ProposalVersionDetail.ProposalVersionDetailQuarter.ProposalVersionDetailQuarterWeek;
 
 namespace Services.Broadcast.Repositories
 {
@@ -32,8 +29,8 @@ namespace Services.Broadcast.Repositories
     public class ProposalOpenMarketInventoryRepository : BroadcastRepositoryBase, IProposalOpenMarketInventoryRepository
     {
         public ProposalOpenMarketInventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<OpenMarketInventoryAllocation> GetProposalDetailAllocations(int proposalVersionDetailId)
         {

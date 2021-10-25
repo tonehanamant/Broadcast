@@ -1,18 +1,10 @@
-﻿using Common.Services.ApplicationServices;
-using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Exceptions;
-using Services.Broadcast.Repositories;
-using System;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Common.Services;
-using Tam.Maestro.Common;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices
 {

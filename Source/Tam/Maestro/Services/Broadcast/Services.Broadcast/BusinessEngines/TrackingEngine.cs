@@ -8,10 +8,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -25,13 +22,10 @@ namespace Services.Broadcast.BusinessEngines
         ProgramMappingDto GetProgramMappingDto(int bvsDetailId);
     }
 
-    public class TrackingEngine : ITrackingEngine
+    public class TrackingEngine : BroadcastBaseClass, ITrackingEngine
     {
         private readonly IDataRepositoryFactory _DataRepositoryFactory;
         private readonly IDaypartCache _DaypartCache;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
         private enum DetectionMapTypes
         {
@@ -44,13 +38,11 @@ namespace Services.Broadcast.BusinessEngines
 
         private Lazy<int> _BroadcastMatchingBuffer;
         public TrackingEngine(IDataRepositoryFactory broadcastDataRepositoryFactory, IDaypartCache daypartCache, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        : base(featureToggleHelper, configurationSettingsHelper)
         {
             _DataRepositoryFactory = broadcastDataRepositoryFactory;
             _DaypartCache = daypartCache;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
             _BroadcastMatchingBuffer = new Lazy<int>(_GetBroadcastMatchingBuffer);
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));          
         }
 
         public DetectionTrackingDetail AcceptScheduleLeadIn(AcceptScheduleLeadinRequest request)
@@ -474,10 +466,8 @@ namespace Services.Broadcast.BusinessEngines
         }
         private int _GetBroadcastMatchingBuffer()
         {
-            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            var broadcastMatchingBuffer = _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120);
             return broadcastMatchingBuffer;
-
         }
-
     }
 }

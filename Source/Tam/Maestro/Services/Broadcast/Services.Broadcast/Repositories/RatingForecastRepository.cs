@@ -5,23 +5,19 @@ using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using IsolationLevel = System.Transactions.IsolationLevel;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using System.Data.Common;
-using Services.Broadcast.Helpers;
+using IsolationLevel = System.Transactions.IsolationLevel;
 
 namespace Services.Broadcast.Repositories
 {
@@ -39,9 +35,8 @@ namespace Services.Broadcast.Repositories
     public class RatingForecastRepository : BroadcastForecastRepositoryBase, IRatingForecastRepository
     {
         public RatingForecastRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public ImpressionsPointInTimeResult GetImpressionsPointInTime(
             int postingBookId, 

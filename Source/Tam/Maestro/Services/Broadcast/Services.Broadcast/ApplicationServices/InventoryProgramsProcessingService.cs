@@ -10,12 +10,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
 using System.Threading;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Tam.Maestro.Services.Cable.Entities;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -43,20 +42,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProposalRepository _ProposalRepository;
         private readonly INsiComponentAudienceRepository _NsiComponentAudienceRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
         private Lazy<string> _BroadcastNTIUploadApiUrl;
 
-        public NtiTransmittalsService(IDataRepositoryFactory broadcastDataRepositoryFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public NtiTransmittalsService(IDataRepositoryFactory broadcastDataRepositoryFactory, IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _NtiTransmittalsRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiTransmittalsRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
             _ProposalRepository = broadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
             _NsiComponentAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<INsiComponentAudienceRepository>();
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
             _BroadcastNTIUploadApiUrl = new Lazy<string>(_GetBroadcastNTIUploadApiUrl);
         }
 
@@ -307,7 +302,7 @@ namespace Services.Broadcast.ApplicationServices
         }
         private string _GetBroadcastNTIUploadApiUrl()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastNTIUploadApiUrl) : BroadcastServiceSystemParameter.BroadcastNTIUploadApiUrl;
+            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastNTIUploadApiUrl);
         }
     }
 }

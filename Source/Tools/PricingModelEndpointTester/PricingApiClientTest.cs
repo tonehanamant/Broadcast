@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Services.Broadcast;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.Plan.Pricing;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Services.Broadcast;
-using Services.Broadcast.Clients;
-using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Helpers;
 
 namespace PricingModelEndpointTester
 {
@@ -15,10 +14,8 @@ namespace PricingModelEndpointTester
     {
         public async Task<bool> Run()
         {
-            var toggles = new Dictionary<string, bool>();
             var settings = new Dictionary<string, object>();
 
-            toggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = true;
             settings[ConfigKeys.PlanPricingAllocationsEfficiencyModelUrl] = @"https://datascience-uat.cadent.tv/broadcast-openmarket-allocations/v4/allocation";
             settings[ConfigKeys.PlanPricingAllocationsUrl] = @"https://datascience-qa.cadent.tv/broadcast-openmarket-allocations/v2/allocation";
 
@@ -37,7 +34,7 @@ namespace PricingModelEndpointTester
             var request = Utilities.GetFromFile<PlanPricingApiRequestDto_v3>(requestFilePath);
             Console.WriteLine("Request loaded.");
 
-            var client = _GetClient(toggles, settings);
+            var client = _GetClient(settings);
             Console.WriteLine("Client loaded.");
 
             Console.WriteLine("Making the request...");
@@ -60,13 +57,12 @@ namespace PricingModelEndpointTester
             return true;
         }
 
-        private PricingApiClient _GetClient(Dictionary<string, bool> togglesDict, Dictionary<string, object> settingsDict)
+        private PricingApiClient _GetClient(Dictionary<string, object> settingsDict)
         {
-            var ftHelper = new TestFeatureToggleHelper(togglesDict);
             var csHelper = new TestConfigurationSettingsHelper(settingsDict);
             var httpClient = new HttpClient();
 
-            var client = new PricingApiClient(ftHelper, csHelper, httpClient);
+            var client = new PricingApiClient(csHelper, httpClient);
 
             return client;
         }

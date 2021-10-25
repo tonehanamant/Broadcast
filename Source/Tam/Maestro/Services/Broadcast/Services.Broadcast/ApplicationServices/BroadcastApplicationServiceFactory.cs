@@ -1,7 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using Hangfire;
 using Hangfire.Client;
 using Hangfire.Common;
@@ -60,7 +59,6 @@ namespace Services.Broadcast.ApplicationServices
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
                         _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
                         _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
-                        _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
                         _instance.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
 
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
@@ -76,7 +74,6 @@ namespace Services.Broadcast.ApplicationServices
 
                         _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelper>();
 
-                        SystemComponentParameterHelper.SetConfigurationClient(ConfigurationClientSwitch.Handler);
                         RegisterApplicationServices(_instance);
                     }
                 }
@@ -311,7 +308,7 @@ namespace Services.Broadcast.ApplicationServices
         private static void _SetupMEdiaMonthCrunchCache(UnityContainer unityContainer)
         {
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
-            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>(), unityContainer.Resolve<IFeatureToggleHelper>(), unityContainer.Resolve<IConfigurationSettingsHelper>());
+            MediaMonthCrunchCache.MediaMonthCrunchCacheInstance = new MediaMonthCrunchCache(repoFactory, unityContainer.Resolve<IMediaMonthAndWeekAggregateCache>(), unityContainer.Resolve<IConfigurationSettingsHelper>());
             unityContainer.RegisterInstance<IMediaMonthCrunchCache>(MediaMonthCrunchCache.MediaMonthCrunchCacheInstance);
         }
 

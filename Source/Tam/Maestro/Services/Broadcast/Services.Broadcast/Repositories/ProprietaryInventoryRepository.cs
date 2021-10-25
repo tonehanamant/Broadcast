@@ -1,19 +1,16 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.ProprietaryInventory;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Entities.ProprietaryInventory;
-using System.Collections.Generic;
-using System.Linq;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities;
-using Common.Services.Extensions;
-using ConfigurationService.Client;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using System.Data.Entity;
-using System;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -38,8 +35,8 @@ namespace Services.Broadcast.Repositories
     public class ProprietaryInventoryRepository : BroadcastRepositoryBase, IProprietaryRepository
     {
         public ProprietaryInventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public ProprietaryInventoryFile GetInventoryFileWithHeaderById(int fileId)
         {

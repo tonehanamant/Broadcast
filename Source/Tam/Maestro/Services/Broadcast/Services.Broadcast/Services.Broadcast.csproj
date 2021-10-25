@@ -204,12 +204,6 @@
     <Reference Include="CadentLoggingStdCommon, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Logging.Standard.Common.0.1.1\lib\netstandard2.0\CadentLoggingStdCommon.dll</HintPath>
     </Reference>
-    <Reference Include="ConfigurationService.Client, Version=1.0.0.45, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Client.1.0.0.46\lib\net45\ConfigurationService.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="ConfigurationService.Interfaces, Version=1.0.0.45, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Interfaces.1.0.0.46\lib\net45\ConfigurationService.Interfaces.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -671,7 +665,6 @@
     <Compile Include="Entities\AdvertiserDto.cs" />
     <Compile Include="ApplicationServices\SpotLengthService.cs" />
     <Compile Include="Entities\AgencyDto.cs" />
-    <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Day.cs" />
@@ -945,7 +938,6 @@
     <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
-    <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="ConfigKeys.cs" />
     <Compile Include="ReportGenerators\CampaignExport\ContractReportGenerator.cs" />
@@ -1457,17 +1449,6 @@
     <Compile Include="Service\ScheduledWindowsServiceMethodRunner.cs" />
     <Compile Include="Service\WindowsServiceBase.cs" />
     <Compile Include="TemporalApplicationSettings.cs" />
-    <Compile Include="SystemComponentParameters\SystemComponentParameter.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SystemComponentParameter.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SystemComponentParameters\SystemComponentParameterNames.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SystemComponentParameterNames.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TAMResource.cs" />
     <Compile Include="Validators\CampaignValidator.cs" />
     <Compile Include="Validators\InventoryFileValidator.cs" />
     <Compile Include="Validators\PlanValidator.cs" />
@@ -1475,14 +1456,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Schemas\SpotTVCableProposalSample.xml" />
-    <Content Include="SystemComponentParameters\SystemComponentParameter.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SystemComponentParameter.cs</LastGenOutput>
-    </Content>
-    <Content Include="SystemComponentParameters\SystemComponentParameterNames.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SystemComponentParameterNames.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BroadcastLogging\BroadcastLogging.csproj">

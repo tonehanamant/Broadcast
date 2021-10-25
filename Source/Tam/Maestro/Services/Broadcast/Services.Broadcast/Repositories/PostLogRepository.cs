@@ -1,21 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Extensions;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Common.Services.Extensions;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using System;
-using System.Diagnostics;
-using ConfigurationService.Client;
-using Tam.Maestro.Common;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Extensions;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -174,8 +170,8 @@ namespace Services.Broadcast.Repositories
     public class PostLogRepository : BroadcastRepositoryBase, IPostLogRepository
     {
         public PostLogRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         ///<inheritdoc/>
         public void SavePreprocessingValidationResults(List<WWTVOutboundFileValidationResult> validationResults)

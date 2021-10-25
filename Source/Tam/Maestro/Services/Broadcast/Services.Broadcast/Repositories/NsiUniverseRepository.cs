@@ -1,15 +1,11 @@
 ﻿using Common.Services.Repositories;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
-using System.Data;
-using Services.Broadcast.Converters;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -27,9 +23,8 @@ namespace Services.Broadcast.Repositories
     public class NsiUniverseRepository : BroadcastForecastRepositoryBase, INsiUniverseRepository
     {
         public NsiUniverseRepository(IContextFactory<QueryHintBroadcastForecastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient
-            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         /// <summary>
         /// Returns a dictionary with market codes and subscribers for specified audiences

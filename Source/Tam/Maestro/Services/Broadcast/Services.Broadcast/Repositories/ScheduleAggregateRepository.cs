@@ -2,17 +2,14 @@
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Aggregates;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -28,8 +25,8 @@ namespace Services.Broadcast.Repositories
         public ScheduleAggregateRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper,
-            IStationProcessingEngine stationProcessingEngine, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            IStationProcessingEngine stationProcessingEngine, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
             _StationProcessingEngine = stationProcessingEngine;
         }

@@ -1,16 +1,13 @@
 ﻿using Common.Services;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
-using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -195,8 +192,8 @@ namespace Services.Broadcast.Repositories
         private static object _ProgramsBulkInsertLock = new object();
       
         public InventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public void RemoveManifestGroups(List<int> groupIds)
         {

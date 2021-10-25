@@ -136,12 +136,6 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ConfigurationService.Client, Version=1.0.0.45, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Client.1.0.0.46\lib\net45\ConfigurationService.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="ConfigurationService.Interfaces, Version=1.0.0.45, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Interfaces.1.0.0.46\lib\net45\ConfigurationService.Interfaces.dll</HintPath>
-    </Reference>
     <Reference Include="DiffEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c7a34512ecd69090, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\DiffEngine.4.4.0\lib\net461\DiffEngine.dll</HintPath>
     </Reference>
@@ -488,7 +482,6 @@
     <Compile Include="Stubs\Plan\PlanBuyingApiClientStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
     <Compile Include="Stubs\ShowTypeCacheStub.cs" />
-    <Compile Include="Stubs\StubbedConfigurationWebApiClient.cs" />
     <Compile Include="Stubs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />

@@ -58,52 +58,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetsInventoryForBuying()
         {
-            try
+            using (new TransactionScopeWrapper())
             {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanBuyingEndpointVersion"] = "3";
+                var diagnostic = new PlanBuyingJobDiagnostic();
+                var plan = _PlanRepository.GetPlan(1198);
 
-                using (new TransactionScopeWrapper())
+                plan.CreativeLengths = new List<CreativeLength>
                 {
-                    var diagnostic = new PlanBuyingJobDiagnostic();
-                    var plan = _PlanRepository.GetPlan(1198);
-
-                    plan.CreativeLengths = new List<CreativeLength>
+                    new CreativeLength
                     {
-                        new CreativeLength
-                        {
-                            SpotLengthId = 1,
-                            Weight = 50
-                        },
-                        new CreativeLength
-                        {
-                            SpotLengthId = 2,
-                            Weight = 50
-                        }
-                    };
-
-                    var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
-                        plan,
-                        new ProgramInventoryOptionalParametersDto(),
-                        _GetAvailableInventorySources(),
-                        diagnostic);
-
-                    var jsonResolver = new IgnorableSerializerContractResolver();
-                    jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram), "ManifestId");
-                    jsonResolver.Ignore(typeof(BasePlanInventoryProgram.ManifestDaypart), "Id");
-                    jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram.ManifestWeek), "Id");
-                    var jsonSettings = new JsonSerializerSettings()
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
                     {
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                        ContractResolver = jsonResolver
-                    };
-                    var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                        SpotLengthId = 2,
+                        Weight = 50
+                    }
+                };
 
-                    Approvals.Verify(json);
-                }
-            }
-            finally
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanBuyingEndpointVersion"] = "2";
+                var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    new ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources(),
+                    diagnostic);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram), "ManifestId");
+                jsonResolver.Ignore(typeof(BasePlanInventoryProgram.ManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram.ManifestWeek), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                Approvals.Verify(json);
             }
         }
 

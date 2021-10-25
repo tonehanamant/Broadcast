@@ -2,10 +2,8 @@
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
 using System;
 using System.Linq;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -17,16 +15,11 @@ namespace Services.Broadcast.BusinessEngines
     {
         private Lazy<int> _BroadcastMatchingBuffer;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        internal static Lazy<bool> _IsPipelineVariablesEnabled;
 
-        public ProgramScrubbingEngine(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public ProgramScrubbingEngine( IConfigurationSettingsHelper configurationSettingsHelper)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
             _BroadcastMatchingBuffer = new Lazy<int>(_GetBroadcastMatchingBuffer);
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
-                      
         }
 
         public void Scrub(ProposalDetailDto proposalDetail, ScrubbingFileDetail affidavitDetail, ClientScrub scrub)
@@ -170,7 +163,7 @@ namespace Services.Broadcast.BusinessEngines
         }
         private int _GetBroadcastMatchingBuffer()
         {
-            var broadcastMatchingBuffer = _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120) : BroadcastServiceSystemParameter.BroadcastMatchingBuffer;
+            var broadcastMatchingBuffer =_ConfigurationSettingsHelper.GetConfigValueWithDefault(ConfigKeys.BroadcastMatchingBuffer, 120);
             return broadcastMatchingBuffer;
 
         }

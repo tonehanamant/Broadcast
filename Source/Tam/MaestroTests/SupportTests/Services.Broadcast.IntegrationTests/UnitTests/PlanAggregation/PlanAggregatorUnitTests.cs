@@ -1,18 +1,16 @@
 ﻿using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Services.Broadcast.ApplicationServices.Plan;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.IntegrationTests.Stubs;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 {
@@ -20,13 +18,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
     [Category("short_running")]
     public class PlanAggregatorUnitTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
-        }
-
         [Test]
         public void ConstructorTest()
         {

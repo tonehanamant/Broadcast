@@ -27,7 +27,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -1954,13 +1953,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = new List<InventorySourceTypeEnum>();
 
-            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelOpenMarketInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableOpenMarketInventoryForPricingModel)
+            if (_IsPricingModelOpenMarketInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.OpenMarket);
 
-            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelBarterInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableBarterInventoryForPricingModel)
+            if (_IsPricingModelBarterInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.Barter);
 
-            if (_IsPipelineVariablesEnabled.Value ? _IsPricingModelProprietaryOAndOInventoryEnabled.Value : BroadcastServiceSystemParameter.EnableProprietaryOAndOInventoryForPricingModel)
+            if (_IsPricingModelProprietaryOAndOInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.ProprietaryOAndO);
 
             return result;

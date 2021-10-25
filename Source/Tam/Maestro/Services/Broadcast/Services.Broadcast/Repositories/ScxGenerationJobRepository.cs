@@ -1,18 +1,15 @@
-﻿using System;
-using Common.Services.Extensions;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
-using Services.Broadcast.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -49,9 +46,8 @@ namespace Services.Broadcast.Repositories
     {
         public ScxGenerationJobRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
-            ITransactionHelper pTransactionHelper, 
-            IConfigurationWebApiClient configurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : 
-            base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient, featureToggleHelper, configurationSettingsHelper)
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper) : 
+            base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
         }
 

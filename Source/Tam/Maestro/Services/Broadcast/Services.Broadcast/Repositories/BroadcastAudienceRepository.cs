@@ -3,12 +3,10 @@ using EntityFrameworkMapping.Broadcast;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using audience_audiences = EntityFrameworkMapping.Broadcast.audience_audiences;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -24,8 +22,8 @@ namespace Services.Broadcast.Repositories
     {
 
         public BroadcastAudienceRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<audience_audiences> GetRatingsAudiencesByMaestroAudience(List<int> maestroAudiences)
         {

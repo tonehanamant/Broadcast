@@ -3,23 +3,20 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using ConfigurationService.Client;
-using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using proposal = EntityFrameworkMapping.Broadcast.proposal;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -87,8 +84,8 @@ namespace Services.Broadcast.Repositories
     {
 
         public ProposalRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public void CreateProposal(ProposalDto proposalDto, string userName)
         {

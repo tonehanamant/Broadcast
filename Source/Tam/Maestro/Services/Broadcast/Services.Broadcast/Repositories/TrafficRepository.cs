@@ -1,20 +1,11 @@
-﻿using System.Data.Entity;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Microsoft.PowerShell.Commands;
 using Services.Broadcast.Entities;
-using System;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConfigurationService.Client;
-using Services.Broadcast.Entities.spotcableXML;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -28,8 +19,8 @@ namespace Services.Broadcast.Repositories
     {
 
         public TrafficRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public TrafficDisplayDto GetTrafficProposals(List<int> weekIds, ProposalEnums.ProposalStatusType? proposalStatus)
         {

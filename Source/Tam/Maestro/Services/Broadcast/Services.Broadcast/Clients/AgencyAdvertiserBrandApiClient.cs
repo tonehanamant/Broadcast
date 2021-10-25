@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Clients
 {
@@ -38,24 +37,19 @@ namespace Services.Broadcast.Clients
     /// <summary>
     /// A client for retrieving the data.
     /// </summary>
-    public class AgencyAdvertiserBrandApiClient : IAgencyAdvertiserBrandApiClient
+    public class AgencyAdvertiserBrandApiClient : BroadcastBaseClass, IAgencyAdvertiserBrandApiClient
     {
         private readonly Lazy<string> _AABApiUrl;
         private readonly HttpClient _HttpClient;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly Lazy<bool> _IsPipelineVariablesEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgencyAdvertiserBrandApiClient"/> class.
         /// </summary>
         public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+                : base(featureToggleHelper, configurationSettingsHelper)
         {              
             _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
              _HttpClient = httpClient;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsPipelineVariablesEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PIPELINE_VARIABLES));
         }
 
         /// <inheritdoc/>
@@ -128,7 +122,8 @@ namespace Services.Broadcast.Clients
         }
         private string _GetAgencyAdvertiserBrandApiUrl()
         {
-            return _IsPipelineVariablesEnabled.Value ? _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl) : BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl;
+            var result = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl);
+            return result;
         }
     }
 }

@@ -7,24 +7,20 @@ using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Plan.Pricing;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
-using Services.Broadcast.Helpers;
-using Services.Broadcast.Clients;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -33,16 +29,12 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public MaintenanceController(
             BroadcastApplicationServiceFactory applicationServiceFactory)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
             _BroadcastDataRepositoryFactory = BroadcastApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>();
-            _FeatureToggleHelper = BroadcastApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>();
-            _ConfigurationSettingsHelper = BroadcastApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>();
         }
 
         protected string _GetCurrentUserFullName() =>

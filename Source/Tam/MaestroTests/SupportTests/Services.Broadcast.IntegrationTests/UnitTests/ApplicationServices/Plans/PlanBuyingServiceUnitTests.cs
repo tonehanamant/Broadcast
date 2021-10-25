@@ -89,11 +89,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.BUY_EXP_REP_ORG, false);
+
+            _IConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)).Returns("c:\\TempFolder");
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
@@ -235,9 +236,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
                .Returns(_SpotLengthRepositoryMock.Object);
-
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
         }
 
         [Test]
@@ -4995,16 +4993,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, false, false, false, 3)]
-        [TestCase(true, true, false, false, 1)]
-        [TestCase(true, true, true, false, 2)]
-        [TestCase(true, true, true, true, 3)]
-        public void GetSupportedInventorySourceTypes(bool isPipelineVariablesEnabled, bool isPricingModelOpenMarketInventoryEnabled, bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
+        [TestCase(false, false, false, 0)]
+        [TestCase(true, false, false, 1)]
+        [TestCase(true, true, false, 2)]
+        [TestCase(true, true, true, 3)]
+        public void GetSupportedInventorySourceTypes(bool isPricingModelOpenMarketInventoryEnabled, bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
         {
             // Arrange
             var service = _GetService();
 
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = isPipelineVariablesEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = isPricingModelOpenMarketInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = isPricingModelBarterInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = isPricingModelProprietaryOAndOInventoryEnabled;

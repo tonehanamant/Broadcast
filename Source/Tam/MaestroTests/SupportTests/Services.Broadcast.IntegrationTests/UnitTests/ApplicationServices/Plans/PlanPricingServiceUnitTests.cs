@@ -7,7 +7,6 @@ using Hangfire.States;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
@@ -159,9 +158,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PricingRequestLogClient
                 .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto_v3>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
-
-            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
-            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
         }
 
         private List<StandardDaypartDto> _GetStandardDayparts()
@@ -1109,7 +1105,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PIPELINE_VARIABLES, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
@@ -1739,18 +1734,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
                 var service = _GetService();
 
-                if (_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES])
-                {
-                    _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = false;
-                    _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = true;
-                    _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = false;
-                }
-                else
-                {
-                    StubbedConfigurationWebApiClient.RunTimeParameters["EnableOpenMarketInventoryForPricingModel"] = "False";
-                    StubbedConfigurationWebApiClient.RunTimeParameters["EnableBarterInventoryForPricingModel"] = "True";
-                    StubbedConfigurationWebApiClient.RunTimeParameters["EnableProprietaryOAndOInventoryForPricingModel"] = "False";
-                }
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = false;
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = true;
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = false;
                 // Act
                 await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
 
@@ -1759,18 +1745,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             }
             finally
             {
-                if (_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES])
-                {
-                    _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = true;
-                    _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = true;
-                    _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = true;
-                }
-                else
-                {
-                    StubbedConfigurationWebApiClient.RunTimeParameters["EnableOpenMarketInventoryForPricingModel"] = "True";
-                    StubbedConfigurationWebApiClient.RunTimeParameters["EnableBarterInventoryForPricingModel"] = "True";
-                    StubbedConfigurationWebApiClient.RunTimeParameters["EnableProprietaryOAndOInventoryForPricingModel"] = "True";
-                }
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = true;
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = true;
+                _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = true;
             }
         }
 
@@ -12428,16 +12405,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, false, false, false, 3)]
-        [TestCase(true, true, false, false, 1)]
-        [TestCase(true, true, true, false, 2)]
-        [TestCase(true, true, true, true, 3)]
-        public void GetSupportedInventorySourceTypes(bool isPipelineVariablesEnabled, bool isPricingModelOpenMarketInventoryEnabled, bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
+        [TestCase(false, false, false, 0)]
+        [TestCase(true, false, false, 1)]
+        [TestCase(true, true, false, 2)]
+        [TestCase(true, true, true, 3)]
+        public void GetSupportedInventorySourceTypes(bool isPricingModelOpenMarketInventoryEnabled, bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
         {
             // Arrange
             var service = _GetService();
 
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PIPELINE_VARIABLES] = isPipelineVariablesEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = isPricingModelOpenMarketInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = isPricingModelBarterInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = isPricingModelProprietaryOAndOInventoryEnabled;

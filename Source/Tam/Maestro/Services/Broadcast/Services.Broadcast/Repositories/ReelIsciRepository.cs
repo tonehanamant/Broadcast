@@ -1,9 +1,7 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
-using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Isci;
-using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -40,8 +38,8 @@ namespace Services.Broadcast.Repositories
     public class ReelIsciRepository : BroadcastRepositoryBase, IReelIsciRepository
     {
         public ReelIsciRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
         
         /// <inheritdoc />
         public int DeleteReelIscisBetweenRange(DateTime startDate, DateTime endDate)

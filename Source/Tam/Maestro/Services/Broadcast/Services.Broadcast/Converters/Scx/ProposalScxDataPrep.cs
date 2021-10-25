@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.OpenMarketInventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Repositories;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Services.Clients;
-using static Services.Broadcast.Entities.Scx.ScxMarketDto;
 
 namespace Services.Broadcast.Converters.Scx
 {
@@ -26,7 +21,6 @@ namespace Services.Broadcast.Converters.Scx
         private readonly IDaypartCache _DaypartCache;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
-        private readonly ISMSClient _SmsClient;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekCache;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
 
@@ -37,7 +31,6 @@ namespace Services.Broadcast.Converters.Scx
             , IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
-            _SmsClient = smsClient;
             _MediaMonthAndWeekCache = mediaMonthAndWeekAggregateCache;
             _AudienceCache = audienceCache;
             _DaypartCache = daypartCache;

@@ -1,15 +1,12 @@
-﻿using System;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 using market = EntityFrameworkMapping.Broadcast.market;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Repositories
 {
@@ -29,8 +26,8 @@ namespace Services.Broadcast.Repositories
     public class MarketRepository : BroadcastRepositoryBase, IMarketRepository
     {
         public MarketRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
-            ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
-            : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient, featureToggleHelper, configurationSettingsHelper) { }
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
         public List<market> GetMarkets()
         {

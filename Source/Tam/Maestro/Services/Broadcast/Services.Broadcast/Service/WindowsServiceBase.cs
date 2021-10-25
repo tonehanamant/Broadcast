@@ -1,13 +1,9 @@
-﻿using BroadcastLogging;
-using log4net;
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
-using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks;
+﻿using log4net;
 using Services.Broadcast.Helpers;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
@@ -27,7 +23,8 @@ namespace Services.Broadcast.Services
 
         public static string TamEnvironment
         {
-            get => ConfigurationClientSwitch.Handler.TAMEnvironment; 
+            // TODO SDE : Is this right?  It's how the environment service is doing it...
+            get => new AppSettings().Environment.ToString(); 
         }
 
         protected void TimeResultsNoReturn(String methodName, Action func)
