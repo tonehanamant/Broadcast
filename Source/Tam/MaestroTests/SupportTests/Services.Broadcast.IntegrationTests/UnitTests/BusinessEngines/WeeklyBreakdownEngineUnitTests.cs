@@ -18,7 +18,7 @@ using CreativeLength = Services.Broadcast.Entities.CreativeLength;
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 {
     [TestFixture]
-    [Category("short_running")]
+    [NUnit.Framework.Category("short_running")]
     public class WeeklyBreakdownEngineUnitTests
     {
         private IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
@@ -41,11 +41,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
-            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(true))
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium: true));
+            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(It.IsAny<bool>()))
+                .Returns<bool>(SpotLengthTestData.GetCostMultipliersBySpotLengthId);
 
-            _SpotLengthEngineMock.Setup(x => x.GetCostMultipliers(false))
-                .Returns(SpotLengthTestData.GetCostMultipliersBySpotLengthId(applyInventoryPremium: false));
+            _SpotLengthEngineMock.Setup(x => x.GetSpotLengthValueById(It.IsAny<int>()))
+                .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
 
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,

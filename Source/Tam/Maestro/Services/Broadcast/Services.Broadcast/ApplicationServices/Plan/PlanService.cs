@@ -674,7 +674,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // we need to group them back based on the plan delivery type
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
 
-            _WeeklyBreakdownEngine.SetWeekNumber(plan.WeeklyBreakdownWeeks);
+            _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.WeeklyBreakdownWeeks);
             _SetWeeklyBreakdownTotals(plan);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
 

@@ -18,6 +18,7 @@ namespace Services.Broadcast.Entities.Plan
         public int WeeklyAdu { get; set; }
         public double AduImpressions { get; set; }
         public int? SpotLengthId { get; set; }
+        public int? SpotLengthDuration { get; set; }
         public int? DaypartCodeId { get; set; }
         public double? PercentageOfWeek { get; set; }
         public bool IsUpdated { get; set; }

@@ -28,7 +28,7 @@ namespace Services.Broadcast.BusinessEngines
 
         void RecalculatePercentageOfWeekBasedOnImpressions(List<WeeklyBreakdownWeek> weeks);
 
-        void SetWeekNumber(IEnumerable<WeeklyBreakdownWeek> weeks);
+        void SetWeekNumberAndSpotLengthDuration(IEnumerable<WeeklyBreakdownWeek> weeks);
 
         /// <summary>
         /// Calculates the adu Impressions
@@ -186,6 +186,7 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = weeklyBreakdown.NumberOfActiveDays,
                         ActiveDays = weeklyBreakdown.ActiveDays,
                         SpotLengthId = distributedSpotLength.SpotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(distributedSpotLength.SpotLengthId),
                         DaypartCodeId = weeklyBreakdown.DaypartCodeId,
                         AduImpressions = aduImpressionsForBreakdownItem * weighting,
                         UnitImpressions = unitsImpressionsForBreakdownItem * weighting
@@ -248,6 +249,7 @@ namespace Services.Broadcast.BusinessEngines
                             NumberOfActiveDays = week.NumberOfActiveDays,
                             ActiveDays = week.ActiveDays,
                             SpotLengthId = breakdownItem.SpotLengthId,
+                            SpotLengthDuration = _GetWeeklySpotLengthDuration(breakdownItem.SpotLengthId),
                             DaypartCodeId = item.StandardDaypartId,
                             AduImpressions = aduImpressionsForBreakdownItem * weighting,
                             UnitImpressions = unitsImpressionsForBreakdownItem * weighting
@@ -310,6 +312,7 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = week.NumberOfActiveDays,
                         ActiveDays = week.ActiveDays,
                         SpotLengthId = combination.SpotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(combination.SpotLengthId),
                         DaypartCodeId = combination.DaypartCodeId,
                         AduImpressions = weeklyAduImpressions * combination.Weighting,
                         UnitImpressions = unitsImpressions * combination.Weighting
@@ -410,6 +413,7 @@ namespace Services.Broadcast.BusinessEngines
                     NumberOfActiveDays = item.NumberOfActiveDays,
                     ActiveDays = item.ActiveDays,
                     SpotLengthId = item.SpotLengthId,
+                    SpotLengthDuration = _GetWeeklySpotLengthDuration(item.SpotLengthId),
                     WeeklyAdu = item.Adu,
                     WeeklyUnits = item.Units,
                 };
@@ -530,7 +534,7 @@ namespace Services.Broadcast.BusinessEngines
             _AdjustSpotLengthBudget(response.Weeks, request.DeliveryType, request.Equivalized, request.TotalBudget);
             _CalculateWeeklyGoalBreakdownTotals(response, request);
             _OrderWeeks(request, response);
-            SetWeekNumber(response.Weeks);
+            SetWeekNumberAndSpotLengthDuration(response.Weeks);
 
             return response;
         }
@@ -825,14 +829,24 @@ namespace Services.Broadcast.BusinessEngines
             weeksToRemove.ForEach(x => requestWeeks.Remove(x));
         }
 
-        public void SetWeekNumber(IEnumerable<WeeklyBreakdownWeek> weeks)
+        public void SetWeekNumberAndSpotLengthDuration(IEnumerable<WeeklyBreakdownWeek> weeks)
         {
             var weekNumberByMediaWeek = GetWeekNumberByMediaWeekDictionary(weeks);
 
             foreach (var week in weeks)
             {
                 week.WeekNumber = weekNumberByMediaWeek[week.MediaWeekId];
+                week.SpotLengthDuration = _GetWeeklySpotLengthDuration(week.SpotLengthId);
             }
+        }
+
+        private int? _GetWeeklySpotLengthDuration(int? weeklySpotLengthId)
+        {
+            var spotLengthDuration = weeklySpotLengthId.HasValue
+                ? _SpotLengthEngine.GetSpotLengthValueById(weeklySpotLengthId.Value)
+                : (int?)null;
+
+            return spotLengthDuration;
         }
 
         /// <summary>
@@ -1039,6 +1053,7 @@ namespace Services.Broadcast.BusinessEngines
                         EndDate = week.WeekEndDate,
                         MediaWeekId = week.Id,
                         SpotLengthId = creativeLength.SpotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(creativeLength.SpotLengthId),
                         PercentageOfWeek = creativeLength.Weight
                     });
                 }
@@ -1125,6 +1140,7 @@ namespace Services.Broadcast.BusinessEngines
                         EndDate = existingWeek.EndDate,
                         MediaWeekId = existingWeek.MediaWeekId,
                         SpotLengthId = creativeLength.SpotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(creativeLength.SpotLengthId),
                         PercentageOfWeek = creativeLength.Weight
                     });
                 }
