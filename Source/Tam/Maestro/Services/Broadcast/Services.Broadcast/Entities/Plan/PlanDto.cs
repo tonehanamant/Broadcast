@@ -491,6 +491,34 @@ namespace Services.Broadcast.Entities.Plan
         /// The committed spot allocation model mode.
         /// </value>
         public SpotAllocationModelMode SpotAllocationModelMode { get; set; } = SpotAllocationModelMode.Quality;
+
+        /// <summary>
+        /// Gets the pricing budget CPM lever.
+        /// </summary>
+        /// <value>
+        /// The pricing budget CPM lever.
+        /// </value>
+        public BudgetCpmLeverEnum PricingBudgetCpmLever => _GetPricingPlanBudgetCpmLever();
+
+        /// <summary>
+        /// Gets the buying budget CPM lever.
+        /// </summary>
+        /// <value>
+        /// The buying budget CPM lever.
+        /// </value>
+        public BudgetCpmLeverEnum BuyingBudgetCpmLever => _GetBuyingPlanBudgetCpmLever();
+
+        protected virtual BudgetCpmLeverEnum _GetPricingPlanBudgetCpmLever()
+        {
+            var result = PricingParameters?.BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
+            return result;
+        }
+
+        protected virtual BudgetCpmLeverEnum _GetBuyingPlanBudgetCpmLever()
+        {
+            var result = BuyingParameters?.BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
+            return result;
+        }
     }
 
     public class PlanDto_v2 : PlanDto
@@ -499,5 +527,11 @@ namespace Services.Broadcast.Entities.Plan
         /// The plan pricing parameters NSI and NTI.
         /// </summary>
         public new IList<PlanPricingParametersDto> PricingParameters { get; set; }
+
+        protected override BudgetCpmLeverEnum _GetPricingPlanBudgetCpmLever()
+        {
+            var result = PricingParameters?[0].BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
+            return result;
+        }
     }
 }

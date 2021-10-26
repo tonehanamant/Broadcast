@@ -42,6 +42,7 @@
   ],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 222.0000,
+  "BuyingBudgetCpmLever": 1,
   "BuyingParameters": {
     "AdjustedBudget": 177.6000,
     "AdjustedCPM": 1.7760,
@@ -296,6 +297,7 @@
   "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
+  "PricingBudgetCpmLever": 1,
   "PricingParameters": {
     "AdjustedBudget": 177.6000,
     "AdjustedCPM": 1.7760,

@@ -46,6 +46,7 @@
   ],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 100.0,
+  "BuyingBudgetCpmLever": 1,
   "BuyingParameters": null,
   "CampaignId": 1,
   "CampaignName": null,
@@ -95,6 +96,7 @@
   "ModifiedDate": "2019-01-12T12:30:29",
   "Name": "New Plan",
   "PostingType": 2,
+  "PricingBudgetCpmLever": 1,
   "PricingParameters": {
     "AdjustedBudget": 80.0,
     "AdjustedCPM": 10.0,

@@ -46,6 +46,7 @@
       "BlackoutMarkets": [],
       "BlackoutMarketTotalUsCoveragePercent": null,
       "Budget": null,
+      "BuyingBudgetCpmLever": 1,
       "BuyingParameters": null,
       "CampaignId": 0,
       "CampaignName": null,
@@ -149,6 +150,7 @@
       "ModifiedDate": "0001-01-01T00:00:00",
       "Name": null,
       "PostingType": 1,
+      "PricingBudgetCpmLever": 1,
       "PricingParameters": {
         "AdjustedBudget": 0.0,
         "AdjustedCPM": 0.0,
@@ -814,6 +816,7 @@
       "BlackoutMarkets": [],
       "BlackoutMarketTotalUsCoveragePercent": null,
       "Budget": null,
+      "BuyingBudgetCpmLever": 1,
       "BuyingParameters": null,
       "CampaignId": 0,
       "CampaignName": null,
@@ -917,6 +920,7 @@
       "ModifiedDate": "0001-01-01T00:00:00",
       "Name": null,
       "PostingType": 1,
+      "PricingBudgetCpmLever": 1,
       "PricingParameters": {
         "AdjustedBudget": 0.0,
         "AdjustedCPM": 0.0,
@@ -1582,6 +1586,7 @@
       "BlackoutMarkets": [],
       "BlackoutMarketTotalUsCoveragePercent": null,
       "Budget": null,
+      "BuyingBudgetCpmLever": 1,
       "BuyingParameters": null,
       "CampaignId": 0,
       "CampaignName": null,
@@ -1685,6 +1690,7 @@
       "ModifiedDate": "0001-01-01T00:00:00",
       "Name": null,
       "PostingType": 1,
+      "PricingBudgetCpmLever": 1,
       "PricingParameters": {
         "AdjustedBudget": 0.0,
         "AdjustedCPM": 0.0,
