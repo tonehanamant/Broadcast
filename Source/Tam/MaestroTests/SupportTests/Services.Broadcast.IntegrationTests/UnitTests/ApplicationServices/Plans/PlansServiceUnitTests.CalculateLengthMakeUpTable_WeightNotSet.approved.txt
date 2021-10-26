@@ -5,6 +5,7 @@
     "GoalPercentage": 20,
     "Impressions": 25000.0,
     "ImpressionsPercentage": 25.0,
+    "SpotLengthDuration": 60,
     "SpotLengthId": 2
   },
   {
@@ -13,6 +14,7 @@
     "GoalPercentage": 50,
     "Impressions": 50000.0,
     "ImpressionsPercentage": 50.0,
+    "SpotLengthDuration": 30,
     "SpotLengthId": 1
   },
   {
@@ -21,6 +23,7 @@
     "GoalPercentage": 30,
     "Impressions": 25000.0,
     "ImpressionsPercentage": 25.0,
+    "SpotLengthDuration": 15,
     "SpotLengthId": 3
   }
 ]

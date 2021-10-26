@@ -207,6 +207,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _PlanMarketSovCalculator.Object,
                     _ConfigurationSettingsHelperMock.Object
                 );
+
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration);
+
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengthValueById(It.IsAny<int>()))
+                .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
+
+            _SpotLengthEngineMock.Setup(a => a.GetSpotLengthIdByValue(It.IsAny<int>()))
+                .Returns<int>(SpotLengthTestData.GetSpotLengthIdByDuration);
+            //.Returns(1);
         }
 
         [Test]
@@ -865,9 +877,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     planToReturn.VersionId = versionId;
                     return planToReturn;
                 });
-            _SpotLengthEngineMock
-                .Setup(a => a.GetSpotLengths())
-                .Returns(new Dictionary<int, int> { { 30, 1 } });
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(
@@ -912,10 +921,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(s => s.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
                 .Returns(.85d);
-
-            _SpotLengthEngineMock
-                .Setup(a => a.GetSpotLengths())
-                .Returns(new Dictionary<int, int> { { 30, 1 } });
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(
@@ -1774,9 +1779,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<List<CreativeLength>>()))
                 .Callback(() => distributeWeightCallCount++)
                 .Returns(request.CreativeLengths);
-            _SpotLengthEngineMock
-                .Setup(a => a.GetSpotLengths())
-                .Returns(new Dictionary<int, int> { { 30, 1 }, { 15, 2 }, { 45, 3 } });
 
             // Act
             var results = _PlanService.CalculateLengthMakeUpTable(request);

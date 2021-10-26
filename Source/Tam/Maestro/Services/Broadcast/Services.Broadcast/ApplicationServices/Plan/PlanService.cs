@@ -1478,9 +1478,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var creativeLength in request.CreativeLengths)
             {
                 var impressions = request.Weeks.Where(x => x.SpotLengthId == creativeLength.SpotLengthId).Sum(x => x.WeeklyImpressions);
+                var spotLengthDuration = _SpotLengthEngine.GetSpotLengthValueById(creativeLength.SpotLengthId);
                 result.Add(new LengthMakeUpTableRow
                 {
                     SpotLengthId = creativeLength.SpotLengthId,
+                    SpotLengthDuration = spotLengthDuration,
                     GoalPercentage = creativeLength.Weight.Value,
                     Budget = Math.Round(request.Weeks.Where(x => x.SpotLengthId == creativeLength.SpotLengthId).Sum(x => x.WeeklyBudget)),
                     Impressions = impressions,

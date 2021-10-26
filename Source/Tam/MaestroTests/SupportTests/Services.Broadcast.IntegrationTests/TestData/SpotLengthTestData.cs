@@ -30,6 +30,13 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return result;
         }
 
+        public static int GetSpotLengthIdByDuration(int duration)
+        {
+            var dict = GetSpotLengthIdsByDuration();
+            var result = dict[duration];
+            return result;
+        }
+
         private static List<LookupDto> _SpotLengths = new List<LookupDto>
         {
             new LookupDto { Id = 1, Display = "30" },
