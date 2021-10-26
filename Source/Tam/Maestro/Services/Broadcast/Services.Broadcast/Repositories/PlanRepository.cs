@@ -760,7 +760,8 @@ namespace Services.Broadcast.Repositories
                 SpotLengthId = arg.spot_length_id,
                 DaypartCodeId = arg.standard_daypart_id,
                 PercentageOfWeek = arg.percentage_of_week,
-                UnitImpressions = arg.unit_impressions ?? 0
+                UnitImpressions = arg.unit_impressions ?? 0,
+                IsLocked = arg.is_locked ?? false
             };
         }
 
@@ -856,7 +857,8 @@ namespace Services.Broadcast.Repositories
                     spot_length_id = d.SpotLengthId,
                     standard_daypart_id = d.DaypartCodeId,
                     percentage_of_week = d.PercentageOfWeek,
-                    unit_impressions = d.UnitImpressions
+                    unit_impressions = d.UnitImpressions,
+                    is_locked = d.IsLocked
                 });
             });
         }

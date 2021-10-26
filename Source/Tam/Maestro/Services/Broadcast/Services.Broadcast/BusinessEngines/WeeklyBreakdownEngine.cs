@@ -189,7 +189,8 @@ namespace Services.Broadcast.BusinessEngines
                         SpotLengthDuration = _GetWeeklySpotLengthDuration(distributedSpotLength.SpotLengthId),
                         DaypartCodeId = weeklyBreakdown.DaypartCodeId,
                         AduImpressions = aduImpressionsForBreakdownItem * weighting,
-                        UnitImpressions = unitsImpressionsForBreakdownItem * weighting
+                        UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
+                        IsLocked = weeklyBreakdown.IsLocked
                     };
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
@@ -252,7 +253,8 @@ namespace Services.Broadcast.BusinessEngines
                             SpotLengthDuration = _GetWeeklySpotLengthDuration(breakdownItem.SpotLengthId),
                             DaypartCodeId = item.StandardDaypartId,
                             AduImpressions = aduImpressionsForBreakdownItem * weighting,
-                            UnitImpressions = unitsImpressionsForBreakdownItem * weighting
+                            UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
+                            IsLocked = week.IsLocked
                         };
 
                         var impressions = breakdownItem.WeeklyImpressions * weighting;
@@ -315,7 +317,8 @@ namespace Services.Broadcast.BusinessEngines
                         SpotLengthDuration = _GetWeeklySpotLengthDuration(combination.SpotLengthId),
                         DaypartCodeId = combination.DaypartCodeId,
                         AduImpressions = weeklyAduImpressions * combination.Weighting,
-                        UnitImpressions = unitsImpressions * combination.Weighting
+                        UnitImpressions = unitsImpressions * combination.Weighting,
+                        IsLocked = week.IsLocked
                     };
 
                     var impressions = week.WeeklyImpressions * combination.Weighting;
@@ -1306,7 +1309,8 @@ namespace Services.Broadcast.BusinessEngines
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Units = unitsImpressions == 0
                             ? 0
-                            : weeklyImpressions / unitsImpressions
+                            : weeklyImpressions / unitsImpressions,
+                        IsLocked = first.IsLocked
                     };
                     if (!creativeLengths.IsNullOrEmpty())
                     {
