@@ -1,10 +1,20 @@
 [
   {
     "Affiliate": "NBC",
-    "AudienceId": 431,
-    "AudienceName": "Women 21-54",
+    "Audience": {
+      "Code": "W21-54",
+      "Id": 431,
+      "Name": "Women 21-54"
+    },
+    "AudienceId": null,
     "Cost": 675.0000,
-    "DaypartId": 70615,
+    "DaypartDetail": {
+      "Code": "CUS",
+      "DaypartText": "M-F 11AM-12:59PM",
+      "Id": 70615,
+      "Name": "Custom"
+    },
+    "DaypartId": null,
     "EstimateId": 191756,
     "FlightEndDate": "2010-03-01T00:00:00",
     "FlightStartDate": "2010-01-01T00:00:00",
@@ -18,18 +28,75 @@
     "ProgramName": "Q13 news at 10",
     "RecommendedPlanId": 1848,
     "RecommendedPlanName": "Plan in Scenario",
-    "SpotExceptionsRecommendedPlanDecisionId": null,
-    "SpotExceptionsRecommendedPlanDetails": [],
-    "SpotLengthId": 12,
-    "SpotLengthString": "5",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "IsRecommendedPlan": true,
+        "MetricPercent": 20.0,
+        "RecommendedPlanDetail": {
+          "FlightEndDate": "2019-12-29T23:59:59",
+          "FlightStartDate": "2019-12-23T00:00:00",
+          "Id": 1848,
+          "Name": "Plan in Scenario",
+          "SpotLengths": [
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 0,
+        "SpotExceptionsRecommendedPlanDecision": null
+      },
+      {
+        "IsRecommendedPlan": false,
+        "MetricPercent": 40.0,
+        "RecommendedPlanDetail": {
+          "FlightEndDate": "2020-04-12T00:00:00",
+          "FlightStartDate": "2020-03-14T00:00:00",
+          "Id": 1853,
+          "Name": "Plan in live",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            },
+            {
+              "Id": 2,
+              "Length": 60
+            }
+          ]
+        },
+        "RecommendedPlanId": 0,
+        "SpotExceptionsRecommendedPlanDecision": null
+      }
+    ],
+    "SpotLength": {
+      "Id": 12,
+      "Length": 5
+    },
+    "SpotLengthId": null,
     "StationLegacyCallLetters": "KOB"
   },
   {
     "Affiliate": "ABC",
-    "AudienceId": 431,
-    "AudienceName": "Women 21-54",
+    "Audience": {
+      "Code": "W21-54",
+      "Id": 431,
+      "Name": "Women 21-54"
+    },
+    "AudienceId": null,
     "Cost": 0.0000,
-    "DaypartId": 70616,
+    "DaypartDetail": {
+      "Code": "CUS",
+      "DaypartText": "SA-SU 6AM-8:59AM",
+      "Id": 70616,
+      "Name": "Custom"
+    },
+    "DaypartId": null,
     "EstimateId": 191758,
     "FlightEndDate": "2020-03-01T00:00:00",
     "FlightStartDate": "2010-01-02T00:00:00",
@@ -43,18 +110,67 @@
     "ProgramName": "TEN O'CLOCK NEWS",
     "RecommendedPlanId": 1850,
     "RecommendedPlanName": "Plan in reserved",
-    "SpotExceptionsRecommendedPlanDecisionId": null,
-    "SpotExceptionsRecommendedPlanDetails": [],
-    "SpotLengthId": 12,
-    "SpotLengthString": "5",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "IsRecommendedPlan": true,
+        "MetricPercent": 70.0,
+        "RecommendedPlanDetail": {
+          "FlightEndDate": "2020-06-28T00:00:00",
+          "FlightStartDate": "2019-12-30T00:00:00",
+          "Id": 1850,
+          "Name": "Plan in reserved",
+          "SpotLengths": [
+            {
+              "Id": 7,
+              "Length": 90
+            }
+          ]
+        },
+        "RecommendedPlanId": 0,
+        "SpotExceptionsRecommendedPlanDecision": null
+      },
+      {
+        "IsRecommendedPlan": false,
+        "MetricPercent": 40.0,
+        "RecommendedPlanDetail": {
+          "FlightEndDate": "2020-06-28T23:59:59",
+          "FlightStartDate": "2020-03-30T00:00:00",
+          "Id": 1855,
+          "Name": "Plan in canceled",
+          "SpotLengths": [
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 0,
+        "SpotExceptionsRecommendedPlanDecision": null
+      }
+    ],
+    "SpotLength": {
+      "Id": 12,
+      "Length": 5
+    },
+    "SpotLengthId": null,
     "StationLegacyCallLetters": "KHGI"
   },
   {
     "Affiliate": "ABC",
-    "AudienceId": 429,
-    "AudienceName": "Adults 21-54",
+    "Audience": {
+      "Code": "A21-54",
+      "Id": 429,
+      "Name": "Adults 21-54"
+    },
+    "AudienceId": null,
     "Cost": 555.0000,
-    "DaypartId": 70618,
+    "DaypartDetail": {
+      "Code": "CUS",
+      "DaypartText": "M-F 4PM-4:59PM",
+      "Id": 70618,
+      "Name": "Custom"
+    },
+    "DaypartId": null,
     "EstimateId": 191760,
     "FlightEndDate": "2010-03-03T00:00:00",
     "FlightStartDate": "2010-01-05T00:00:00",
@@ -68,10 +184,12 @@
     "ProgramName": "TProduct2",
     "RecommendedPlanId": null,
     "RecommendedPlanName": null,
-    "SpotExceptionsRecommendedPlanDecisionId": null,
     "SpotExceptionsRecommendedPlanDetails": [],
-    "SpotLengthId": 10,
-    "SpotLengthString": "150",
+    "SpotLength": {
+      "Id": 10,
+      "Length": 150
+    },
+    "SpotLengthId": null,
     "StationLegacyCallLetters": "WDAY"
   }
 ]

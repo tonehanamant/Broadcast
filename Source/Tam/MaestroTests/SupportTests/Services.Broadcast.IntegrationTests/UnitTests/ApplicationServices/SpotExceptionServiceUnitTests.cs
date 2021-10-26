@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -88,17 +89,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Market = "Lincoln & Hastings-Krny",
                         Cost = 700,
                         Impressions = 1000,
-                        SpotLengthId = 14,
-                        SpotLengthString ="15",
-                        AudienceId = 425,
-                        AudienceName = "Men 18-24",
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 14,
+                            Length = 15
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 425,
+                            Code = "M18-24",
+                            Name = "Men 18-24"
+                        },
                         Product = "Spotify",
                         FlightStartDate = new DateTime(2019, 12, 1),
                         FlightEndDate = new DateTime(2020, 2, 1),
-                        DaypartId = 71646,
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71657,
+                            Code = "PMN"
+                        },
                         IngestedAt = new DateTime(2019,1,1),
                         IngestedBy = "Repository Test User",
-                        SpotExceptionsRecommendedPlanDecisionId = null
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -114,17 +126,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Market = "Phoenix (Prescott)",
                         Cost = 800,
                         Impressions = 1500,
-                        SpotLengthId = 15,
-                        SpotLengthString ="30",
-                        AudienceId = 425,
-                        AudienceName = "Women 18-24",
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 15,
+                            Length = 30
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 426,
+                            Code = "W18-24",
+                            Name = "Women 18-24"
+                        },
                         Product = "Spotify",
                         FlightStartDate = new DateTime(2019, 12, 1),
                         FlightEndDate = new DateTime(2020, 2, 1),
-                        DaypartId = 71646,
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71658,
+                            Code = "EN"
+                        },
                         IngestedAt = new DateTime(2019,1,1),
                         IngestedBy = "Repository Test User",
-                        SpotExceptionsRecommendedPlanDecisionId = 1
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 101,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                IsRecommendedPlan = true,
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 201,
+                                    SpotExceptionsRecommendedPlanDetailId = 101,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            }
+                        }
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -140,17 +178,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                         Cost = 450,
                         Impressions = 1752,
-                        SpotLengthId = 16,
-                        SpotLengthString ="45",
-                        AudienceId = 426,
-                        AudienceName = "Men 50-64",
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 427,
+                            Code = "M50-64",
+                            Name = "Men 50-64"
+                        },
                         Product = "Nike",
                         FlightStartDate = new DateTime(2019, 12, 1),
                         FlightEndDate = new DateTime(2020, 2, 1),
-                        DaypartId = 71646,
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71659,
+                            Code = "PMN"
+                        },
                         IngestedAt = new DateTime(2019,1,1),
                         IngestedBy = "Repository Test User",
-                        SpotExceptionsRecommendedPlanDecisionId = 1
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 4,
+                                IsRecommendedPlan = false,
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 103,
+                                SpotExceptionsRecommendedPlanId = 4,
+                                IsRecommendedPlan = true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
                     }
                 });
 
@@ -184,6 +255,164 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlanDetails_RecommendedPlanDetails_DoesNotExist()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlanDetailsRequest = new SpotExceptionsRecommendedPlanDetailsRequestDto
+            {
+                Id = 1
+            };
+
+            SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans = null;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlanById(It.IsAny<int>()))
+                .Returns(spotExceptionsRecommendedPlans);
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanDetailsRequest);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlanDetails_RecommendedPlanDetails_Exist()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlanDetailsRequest = new SpotExceptionsRecommendedPlanDetailsRequestDto
+            {
+                Id = 1
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlanById(It.IsAny<int>()))
+                .Returns(new SpotExceptionsRecommendedPlansDto
+                {
+                    Id = 1,
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 11728,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    ProgramAirTime = new DateTime(2020, 1, 10, 23, 45, 00),
+                    StationLegacyCallLetters = "KXMC",
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    Cost = 450,
+                    Impressions = 1752,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    Audience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2020, 2, 1),
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71659,
+                        Code = "PMN"
+                    },
+                    IngestedAt = new DateTime(2019, 1, 1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            Id = 102,
+                            SpotExceptionsRecommendedPlanId = 1,
+                            RecommendedPlanDetail = new RecommendedPlanDetailDto
+                            { 
+                                Id = 301,
+                                Name = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                                FlightStartDate = new DateTime(2019, 12, 1),
+                                FlightEndDate = new DateTime(2020, 2, 1),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 16,
+                                        Length = 45
+                                    }
+                                }
+                            },
+                            IsRecommendedPlan = false,
+                            SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                            {
+                                Id = 202,
+                                SpotExceptionsRecommendedPlanDetailId = 102,
+                                UserName = "Test User",
+                                CreatedAt = new DateTime(2020,10,25)
+                            }
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            Id = 103,
+                            SpotExceptionsRecommendedPlanId = 1,
+                            RecommendedPlanDetail = new RecommendedPlanDetailDto
+                            {
+                                Id = 302,
+                                Name = "2Q' 21 Reynolds",
+                                FlightStartDate = new DateTime(2019, 12, 1),
+                                FlightEndDate = new DateTime(2020, 2, 1),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 14,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 15,
+                                        Length = 30
+                                    }
+                                }
+                            },
+                            IsRecommendedPlan = true,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
+                });
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanDetailsRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlanDetails_ThrowsException()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlanDetailsRequest = new SpotExceptionsRecommendedPlanDetailsRequestDto
+            {
+                Id = 1
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlanById(It.IsAny<int>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanDetailsRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
         [Test]
         public void GetSpotExceptionsOutOfSpecsPosts_OutOfSpecExist()
         {
@@ -260,13 +489,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     IsciName = "CC44ZZPT4",
                     RecommendedPlanId = 11728,
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
-                    ProgramName = "Reckitt HYHO",                   
+                    ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
                     Affiliate = "CBS",
-                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",                       
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                     SpotLengthId = 16,
                     SpotLengthString ="45",
-                    AudienceId = 426,                   
+                    AudienceId = 426,
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2020, 2, 1),
@@ -344,7 +573,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
                   SpotExceptionsOutOfSpecId=null,
-                },               
+                },
             };
         }
 

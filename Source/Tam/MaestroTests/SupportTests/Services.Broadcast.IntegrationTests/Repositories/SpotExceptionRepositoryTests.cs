@@ -216,6 +216,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Assert
             var settings = IntegrationTestHelper._GetJsonSettings();
             ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlansDto), "Id");
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlanDetailsDto), "Id");
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlanDetailsDto), "SpotExceptionsRecommendedPlanId");
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, settings));
         }

@@ -7,6 +7,9 @@ namespace Services.Broadcast.Entities.SpotExceptions
     {
         public SpotExceptionsRecommendedPlansDto()
         {
+            SpotLength = new SpotLengthDto();
+            Audience = new AudienceDto();
+            DaypartDetail = new DaypartDetailDto();
             SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>();
         }
         public int Id { get; set; }
@@ -22,17 +25,17 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public decimal? Cost { get; set; }
         public double? Impressions { get; set; }
         public int? SpotLengthId { get; set; }
-        public string SpotLengthString { get; set; }
+        public SpotLengthDto SpotLength { get; set; }
         public int? AudienceId { get; set; }
-        public string AudienceName { get; set; }
+        public AudienceDto Audience { get; set; }
         public string Product { get; set; }
         public DateTime? FlightStartDate { get; set; }
         public DateTime? FlightEndDate { get; set; }
         public int? DaypartId { get; set; }
+        public DaypartDetailDto DaypartDetail { get; set; }
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
         public List<SpotExceptionsRecommendedPlanDetailsDto> SpotExceptionsRecommendedPlanDetails { get; set; }
-        public int? SpotExceptionsRecommendedPlanDecisionId { get; set; }
     }
 }
 		

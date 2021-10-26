@@ -33,7 +33,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsRecommendedPlansRequest">The spot exceptions recommended plans request parameters</param>
         /// <returns>The spot exceptions recommended plans</returns>
         List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest);
-        
+
+        /// <summary>
+        /// Gets spot exceptions recommended plan details
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlanDetailsRequest">The spot exceptions recommended plan detail request parameters</param>
+        /// <returns>The spot exceptions recommended plan details</returns>
+        SpotExceptionsRecommendedPlanDetailsResultDto GetSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanDetailsRequestDto spotExceptionsRecommendedPlanDetailsRequest);
+
         /// <summary>
         /// Save SpotExceptionsOutOfSpecs Decisions data
         /// </summary>
@@ -376,7 +383,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                 new SpotExceptionsRecommendedPlanDecisionDto
                 {
                   Id = 1,
-                  SelectedDetailsId=1,
+                  SpotExceptionsRecommendedPlanDetailId=1,
                   UserName="MockData",
                   CreatedAt=DateTime.Now
                 }
@@ -695,34 +702,78 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
         /// <inheritdoc />
         public List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
         {
-            var spotExceptionsRecommendedPlansResult = new List<SpotExceptionsRecommendedPlansResultDto>();
+            var spotExceptionsRecommendedPlansResults = new List<SpotExceptionsRecommendedPlansResultDto>();
             const string programAirDateFormat = "MM/dd/yyyy";
             const string programAirTimeFormat = "hh:mm:ss tt";
 
             var spotExceptionsRecommendedPlans = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
             if (spotExceptionsRecommendedPlans?.Any() ?? false)
             {
-                spotExceptionsRecommendedPlansResult = spotExceptionsRecommendedPlans.Select(spotExceptionsRecommendedPlan => new SpotExceptionsRecommendedPlansResultDto
+                spotExceptionsRecommendedPlansResults = spotExceptionsRecommendedPlans.Select(spotExceptionsRecommendedPlan =>
                 {
-                    Id = spotExceptionsRecommendedPlan.Id,
-                    Status = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDecisionId != null,
-                    EstimateId = spotExceptionsRecommendedPlan.EstimateId,
-                    IsciName = spotExceptionsRecommendedPlan.IsciName,
-                    RecommendedPlan = spotExceptionsRecommendedPlan.RecommendedPlanName,
-                    Affiliate = spotExceptionsRecommendedPlan.Affiliate,
-                    Market = spotExceptionsRecommendedPlan.Market,
-                    Station = spotExceptionsRecommendedPlan.StationLegacyCallLetters,
-                    Cost = spotExceptionsRecommendedPlan.Cost ?? 0,
-                    Impressions = spotExceptionsRecommendedPlan.Impressions ?? 0,
-                    SpotLengthString = spotExceptionsRecommendedPlan.SpotLengthString,
-                    AudienceName = spotExceptionsRecommendedPlan.AudienceName,
-                    ProductName = spotExceptionsRecommendedPlan.Product,
-                    ProgramName = spotExceptionsRecommendedPlan.ProgramName,
-                    ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
-                    ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat)
+                    var spotExceptionsRecommendedPlanDetailWithDecision = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.SingleOrDefault(spotExceptionsRecommendedPlanDetail => spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null);
+
+                    var spotExceptionsRecommendedPlansResult = new SpotExceptionsRecommendedPlansResultDto
+                    {
+                        Id = spotExceptionsRecommendedPlan.Id,
+                        Status = spotExceptionsRecommendedPlanDetailWithDecision != null,
+                        EstimateId = spotExceptionsRecommendedPlan.EstimateId,
+                        IsciName = spotExceptionsRecommendedPlan.IsciName,
+                        RecommendedPlan = spotExceptionsRecommendedPlan.RecommendedPlanName,
+                        Affiliate = spotExceptionsRecommendedPlan.Affiliate,
+                        Market = spotExceptionsRecommendedPlan.Market,
+                        Station = spotExceptionsRecommendedPlan.StationLegacyCallLetters,
+                        Cost = spotExceptionsRecommendedPlan.Cost ?? 0,
+                        Impressions = spotExceptionsRecommendedPlan.Impressions ?? 0,
+                        SpotLengthString = spotExceptionsRecommendedPlan.SpotLength != null ? $":{spotExceptionsRecommendedPlan.SpotLength.Length}" : null,
+                        AudienceName = spotExceptionsRecommendedPlan.Audience?.Name,
+                        ProductName = spotExceptionsRecommendedPlan.Product,
+                        ProgramName = spotExceptionsRecommendedPlan.ProgramName,
+                        ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
+                        ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat)
+                    };
+                    return spotExceptionsRecommendedPlansResult;
                 }).ToList();
             }
-            return spotExceptionsRecommendedPlansResult;
+            return spotExceptionsRecommendedPlansResults;
+        }
+
+        /// <inheritdoc />
+        public SpotExceptionsRecommendedPlanDetailsResultDto GetSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanDetailsRequestDto spotExceptionsRecommendedPlanDetailsRequest)
+        {
+            var spotExceptionsRecommendedPlan = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlanById(spotExceptionsRecommendedPlanDetailsRequest.Id);
+            if (spotExceptionsRecommendedPlan == null)
+            {
+                return null;
+            }
+
+            const string programAirDateFormat = "MM/dd/yyyy";
+            const string programAirTimeFormat = "hh:mm:ss tt";
+
+            var spotExceptionsRecommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
+            {
+                Id = spotExceptionsRecommendedPlan.Id,
+                EstimateId = spotExceptionsRecommendedPlan.EstimateId,
+                SpotLengthString = spotExceptionsRecommendedPlan.SpotLength != null ? $":{spotExceptionsRecommendedPlan.SpotLength.Length}" : null,
+                DaypartCode = spotExceptionsRecommendedPlan.DaypartDetail?.Code,
+                AudienceName = spotExceptionsRecommendedPlan.Audience?.Name,
+                Product = spotExceptionsRecommendedPlan.Product,
+                FlightStartDate = spotExceptionsRecommendedPlan.FlightStartDate?.ToString(),
+                FlightEndDate = spotExceptionsRecommendedPlan.FlightEndDate?.ToString(),
+                ProgramName = spotExceptionsRecommendedPlan.ProgramName,
+                ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
+                ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat),
+                Plans = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(spotExceptionsRecommendedPlanDetail => new RecommendedPlanDetailResultDto
+                {
+                    Name = spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.Name,
+                    SpotLengthString = string.Join(", ", spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.SpotLengths.Select(spotLength => $":{spotLength.Length}")),
+                    FlightStartDate = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightStartDate}",
+                    FlightEndDate = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightEndDate}",
+                    IsRecommendedPlan = spotExceptionsRecommendedPlanDetail.IsRecommendedPlan,
+                    IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null
+                }).ToList()
+            };
+            return spotExceptionsRecommendedPlanDetailsResult;
         }
 
         public bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName)
@@ -732,6 +783,6 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
             var isSpotExceptionsOutOfSpecDecision = _SpotExceptionRepository.SaveSpotExceptionsOutOfSpecsDecisions(spotExceptionsOutOfSpecDecisionsPostsRequest, userName, createdAt);
 
             return isSpotExceptionsOutOfSpecDecision;
-        }
+        }        
     }
 }

@@ -33,6 +33,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest));
         }
 
+        [HttpPost]
+        [Route("recommended-plans-details")]
+        public BaseResponse<SpotExceptionsRecommendedPlanDetailsResultDto> GetSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanDetailsRequestDto spotExceptionsRecommendedPlanDetailsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanDetailsRequest));
+        }
+
         /// <summary>
         /// Save the OutofSpecDecisions Post Data for the Slide Out Drawer page
         /// </summary>       
