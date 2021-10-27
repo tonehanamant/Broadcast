@@ -13,12 +13,12 @@
     "ProgramName": "Reckitt HYHO",
     "Reason": "",
     "RecommendedPlan": "3Q' 21 Reckitt HYHO Early Morning Upfront",
-    "SpotLengthString": "45",
+    "SpotLengthString": ":45",
     "Station": "KXMC",
     "Status": true
   },
   {
-    "AudienceName": "Women 18-24",
+    "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191757,
     "FlightEndDate": "8/2/2018 12:00:00 AM",
@@ -31,12 +31,12 @@
     "ProgramName": "Reynolds Foil @9",
     "Reason": "",
     "RecommendedPlan": "4Q' 21 Reynolds Foil TDN and SYN Upfront",
-    "SpotLengthString": "30",
+    "SpotLengthString": ":45",
     "Station": "KSTP",
     "Status": true
   },
   {
-    "AudienceName": "Men 18-24",
+    "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191758,
     "FlightEndDate": "8/2/2018 12:00:00 AM",
@@ -49,8 +49,8 @@
     "ProgramName": "TEN O'CLOCK NEWS",
     "Reason": "",
     "RecommendedPlan": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
-    "SpotLengthString": "15",
+    "SpotLengthString": ":45",
     "Station": "KSTP",
-    "Status": false
+    "Status": true
   }
 ]

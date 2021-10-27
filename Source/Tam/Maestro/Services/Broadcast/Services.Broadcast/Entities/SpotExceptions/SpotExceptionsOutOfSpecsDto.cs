@@ -5,6 +5,17 @@ namespace Services.Broadcast.Entities.SpotExceptions
 {
     public class SpotExceptionsOutOfSpecsDto
     {      
+        public SpotExceptionsOutOfSpecsDto()
+        {
+            {
+                SpotLength = new SpotLengthDto();
+                ProgramAudience = new AudienceDto();
+                Audience = new AudienceDto();
+                DaypartDetail = new DaypartDetailDto();
+                ProgramDaypartDetail = new DaypartDetailDto();
+                SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto();
+            }
+        }
         public int Id { get; set; }
         public string ReasonCode { get; set; }
         public string ReasonCodeMessage { get; set; }
@@ -17,23 +28,25 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Affiliate { get; set; }
         public string Market { get; set; }
         public int? SpotLengthId { get; set; }
-        public string SpotLengthString { get; set; }
-        public int? AudienceId { get; set; }   
+        public SpotLengthDto SpotLength { get; set; }       
+        public int? AudienceId { get; set; }
+        public AudienceDto Audience { get; set; }
         public string Product { get; set; }
         public DateTime? FlightStartDate { get; set; }
         public DateTime? FlightEndDate { get; set; }
         public int? DaypartId { get; set; }
+        public DaypartDetailDto DaypartDetail { get; set; }
         public int ProgramDaypartId { get; set; }
-        public string DaypartCode { get; set; }
+        public DaypartDetailDto ProgramDaypartDetail { get; set; }
         public DateTime ProgramFlightStartDate { get; set; }
         public DateTime ProgramFlightEndDate { get; set; }
         public string ProgramNetwork { get; set; }
         public int? ProgramAudienceId { get; set; }
-        public string AudienceName { get; set; }
+        public AudienceDto ProgramAudience { get; set; }
         public DateTime ProgramAirTime { get; set; }
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
-        public int? SpotExceptionsOutOfSpecId { get; set; }       
+        public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; }
 
     }
 }

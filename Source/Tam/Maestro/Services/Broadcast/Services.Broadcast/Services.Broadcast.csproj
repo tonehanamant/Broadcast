@@ -534,6 +534,7 @@
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsPostsRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDetailsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecsDto.cs" />

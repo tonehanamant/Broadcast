@@ -25,6 +25,17 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecsPosts(spotExceptionsOutOfSpecPostsRequest));
         }
+        /// <summary>
+        /// Gets the OutofSpecPosts Data for Slide Out Drawer on selected row.
+        /// </summary>       
+        /// <param name="spotExceptionsOutOfSpecDetailsRequest">The OutOfSpec Id</param>
+        /// <returns>SpotExceptionsOutOfSpecDetailsResultDto object</returns>
+        [HttpPost]
+        [Route("out-of-spec-details")]
+        public BaseResponse<SpotExceptionsOutOfSpecDetailsResultDto> GetSpotExceptionOutofSpecsDetails(int spotExceptionsOutOfSpecDetailsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecDetailsRequest));
+        }
 
         [HttpPost]
         [Route("recommended-plans")]
@@ -53,5 +64,6 @@ namespace BroadcastComposerWeb.Controllers
             var userName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().SaveSpotExceptionsOutOfSpecsDecisions(spotExceptionsOutOfSpecDecisionsPostsRequest, userName));
         }
+
     }
 }

@@ -1,9 +1,13 @@
 [
   {
     "Affiliate": "NBC",
-    "AudienceId": 4,
-    "AudienceName": "Women 12-14",
-    "DaypartCode": "WEA",
+    "Audience": {
+      "Code": "W12-14",
+      "Id": 4,
+      "Name": "Women 12-14"
+    },
+    "AudienceId": null,
+    "DaypartDetail": null,
     "DaypartId": null,
     "EstimateId": 191756,
     "FlightEndDate": "2020-07-02T00:00:00",
@@ -14,8 +18,19 @@
     "Market": "Albuquerque-Santa Fe",
     "Product": "Pizza Hut",
     "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramAudienceId": 4,
-    "ProgramDaypartId": 28,
+    "ProgramAudience": {
+      "Code": "W12-14",
+      "Id": 4,
+      "Name": "Women 12-14"
+    },
+    "ProgramAudienceId": null,
+    "ProgramDaypartDetail": {
+      "Code": "WEA",
+      "DaypartText": "SA-SU 6AM-9AM",
+      "Id": 28,
+      "Name": "Weekend AM"
+    },
+    "ProgramDaypartId": 0,
     "ProgramFlightEndDate": "2020-07-02T00:00:00",
     "ProgramFlightStartDate": "2020-06-02T00:00:00",
     "ProgramName": "Q13 news at 10",
@@ -24,16 +39,23 @@
     "ReasonCodeMessage": "",
     "RecommendedPlanId": 1196,
     "RecommendedPlanName": "Plan Pricing 1",
-    "SpotExceptionsOutOfSpecId": null,
-    "SpotLengthId": 1,
-    "SpotLengthString": "30",
+    "SpotExceptionsOutOfSpecDecision": null,
+    "SpotLength": {
+      "Id": 1,
+      "Length": 30
+    },
+    "SpotLengthId": null,
     "StationLegacyCallLetters": "KOB"
   },
   {
     "Affiliate": "ABC",
-    "AudienceId": 5,
-    "AudienceName": "Women 15-17",
-    "DaypartCode": "CUS",
+    "Audience": {
+      "Code": "W15-17",
+      "Id": 5,
+      "Name": "Women 15-17"
+    },
+    "AudienceId": null,
+    "DaypartDetail": null,
     "DaypartId": null,
     "EstimateId": 191757,
     "FlightEndDate": "2018-08-02T00:00:00",
@@ -44,8 +66,19 @@
     "Market": "Minneapolis-St. Paul",
     "Product": "Spotify",
     "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramAudienceId": 5,
-    "ProgramDaypartId": 56,
+    "ProgramAudience": {
+      "Code": "W15-17",
+      "Id": 5,
+      "Name": "Women 15-17"
+    },
+    "ProgramAudienceId": null,
+    "ProgramDaypartDetail": {
+      "Code": "CUS",
+      "DaypartText": "W-F 6AM-9AM",
+      "Id": 56,
+      "Name": "Custom"
+    },
+    "ProgramDaypartId": 0,
     "ProgramFlightEndDate": "2018-08-02T00:00:00",
     "ProgramFlightStartDate": "2018-07-02T00:00:00",
     "ProgramName": "FOX 13 10:00 News",
@@ -54,9 +87,12 @@
     "ReasonCodeMessage": "",
     "RecommendedPlanId": 1197,
     "RecommendedPlanName": "Plan Pricing 2",
-    "SpotExceptionsOutOfSpecId": null,
-    "SpotLengthId": 2,
-    "SpotLengthString": "60",
+    "SpotExceptionsOutOfSpecDecision": null,
+    "SpotLength": {
+      "Id": 2,
+      "Length": 60
+    },
+    "SpotLengthId": null,
     "StationLegacyCallLetters": "KSTP"
   }
 ]

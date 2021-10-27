@@ -475,7 +475,104 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+        [Test]
+        public void GetSpotExceptionOutofSpecsDetails_DoesNotExist()
+        {
+            // Arrange
+            int spotExceptionsOutOfSpecDetailsRequestId = 1;
 
+            SpotExceptionsOutOfSpecsDto spotExceptionsOutOfSpecs = null;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecById(It.IsAny<int>()))
+                .Returns(spotExceptionsOutOfSpecs);
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecDetailsRequestId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+        [Test]
+        public void GetSpotExceptionOutofSpecsDetails_Exist()
+        {
+            // Arrange
+            int spotExceptionsOutOfSpecDetailsRequestId = 1;
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecById(It.IsAny<int>()))
+                .Returns(new SpotExceptionsOutOfSpecsDto
+                {
+                    Id = 1,
+                    ReasonCode = "Code",
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 11728,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2020, 2, 1),
+                    ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
+                    ProgramFlightEndDate = new DateTime(2020, 2, 1),
+                    ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    ProgramAirTime = new DateTime(2020, 1, 10, 23, 45, 00),
+                    IngestedAt = new DateTime(2019, 1, 1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
+                    {
+                        SpotExceptionsOutOfSpecId = 1,
+                        AcceptedAsInSpec = true,
+                        DecisionNotes = "TestDecisionNotes",
+                        UserName = "TestUser",
+                        CreatedAt = new DateTime(2020, 2, 1)
+                    }
+                });
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecDetailsRequestId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+
+        }
+        [Test]
+        public void GetSpotExceptionOutofSpecsDetails_ThrowsException()
+        {
+            // Arrange
+            int spotExceptionsOutOfSpecDetailsRequestId = 1;
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecById(It.IsAny<int>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecDetailsRequestId));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
         private List<SpotExceptionsOutOfSpecsDto> _GetOutOfSpecData()
         {
             return new List<SpotExceptionsOutOfSpecsDto>()
@@ -483,7 +580,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new SpotExceptionsOutOfSpecsDto
                 {
                     Id = 1,
-                    ReasonCode="",
+                    ReasonCode="Code",
                     ReasonCodeMessage="",
                     EstimateId =191760,
                     IsciName = "CC44ZZPT4",
@@ -493,22 +590,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     StationLegacyCallLetters = "KXMC",
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
-                    SpotLengthId = 16,
-                    SpotLengthString ="45",
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },                   
                     AudienceId = 426,
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2020, 2, 1),
-                    DaypartId = 71646,
-                    DaypartCode="CUS",
+                    ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },                   
                     ProgramFlightStartDate=new DateTime(2019, 12, 1),
                     ProgramFlightEndDate=new DateTime(2020, 2, 1),
-                    ProgramAudienceId=426,
-                    AudienceName = "Men 50-64",
+                    ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
-                    SpotExceptionsOutOfSpecId = 1
+                    SpotExceptionsOutOfSpecDecision =  new SpotExceptionsOutOfSpecDecisionsDto
+                   {
+                       SpotExceptionsOutOfSpecId=1,
+                       AcceptedAsInSpec=true,
+                       DecisionNotes="TestDecisionNotes",
+                       UserName = "TestUser",
+                       CreatedAt = new DateTime(2020, 2, 1)
+                   }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -523,24 +637,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   StationLegacyCallLetters="KSTP",
                   Affiliate = "NBC",
                   Market = "Phoenix (Prescott)",
-                  SpotLengthId= 15,
-                  SpotLengthString="30",
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
                   AudienceId= 430,
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70642,
-                  ProgramDaypartId= 70613,
-                  DaypartCode="CUS",
+                  ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
                   ProgramFlightStartDate= new DateTime(2018, 7, 2),
                   ProgramFlightEndDate = new DateTime(2018, 8, 2),
                   ProgramNetwork = "",
-                  ProgramAudienceId = 425,
-                  AudienceName="Women 18-24",
+                   ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
-                  SpotExceptionsOutOfSpecId=2
+                  SpotExceptionsOutOfSpecDecision =  new SpotExceptionsOutOfSpecDecisionsDto
+                   {
+                       SpotExceptionsOutOfSpecId=2,
+                       AcceptedAsInSpec=true,
+                       DecisionNotes="",
+                       UserName = "MockData",
+                       CreatedAt = new DateTime(2020, 2, 1)
+                   }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -555,24 +686,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   StationLegacyCallLetters = "KSTP",
                   Affiliate = "ABC",
                   Market = "Lincoln & Hastings-Krny",
-                  SpotLengthId = 14,
-                  SpotLengthString ="15",
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
                   AudienceId= 430,
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70643,
-                  ProgramDaypartId= 70614,
-                  DaypartCode="CUS",
+                  ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
                   ProgramFlightStartDate= new DateTime(2018, 7, 2),
                   ProgramFlightEndDate = new DateTime(2018, 8, 2),
                   ProgramNetwork = "",
-                  ProgramAudienceId = 425,
-                  AudienceName = "Men 18-24",
+                   ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
-                  SpotExceptionsOutOfSpecId=null,
+                  SpotExceptionsOutOfSpecDecision =  new SpotExceptionsOutOfSpecDecisionsDto
+                   {
+                       SpotExceptionsOutOfSpecId=3,
+                       AcceptedAsInSpec=true,
+                       DecisionNotes="",
+                       UserName = "MockData",
+                       CreatedAt = new DateTime(2020, 2, 1)
+                   }                   
                 },
             };
         }

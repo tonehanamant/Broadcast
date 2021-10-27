@@ -28,6 +28,13 @@ namespace Services.Broadcast.ApplicationServices
         List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest);
 
         /// <summary>
+        /// Gets spot exceptions out of specs details
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecDetailsRequest">The spot exceptions out of Spec detail request parameter</param>
+        /// <returns>The spot exceptions Out of Spec details</returns>
+        SpotExceptionsOutOfSpecDetailsResultDto GetSpotExceptionOutofSpecsDetails(int spotExceptionsOutOfSpecDetailsRequest);
+
+        /// <summary>
         /// Gets spot exceptions recommended plans
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlansRequest">The spot exceptions recommended plans request parameters</param>
@@ -669,34 +676,66 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
         }
         public List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest)
         {
-            var spotExceptionsOutOfSpecPostsResult = new List<SpotExceptionsOutOfSpecPostsResultDto>();
+            var spotExceptionsOutOfSpecPostsResults = new List<SpotExceptionsOutOfSpecPostsResultDto>();
             const string programAirDateFormat = "MM/dd/yyyy";
             const string programAirTimeFormat = "hh:mm:ss tt";
 
             var spotExceptionsoutOfSpecsPosts = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutOfSpecPostsRequest.WeekStartDate, spotExceptionsOutOfSpecPostsRequest.WeekEndDate);
             if (spotExceptionsoutOfSpecsPosts?.Any() ?? false)
             {
-                spotExceptionsOutOfSpecPostsResult = spotExceptionsoutOfSpecsPosts.Select(spotExceptionsOutOfSpecs => new SpotExceptionsOutOfSpecPostsResultDto
-                {
-                    Id = spotExceptionsOutOfSpecs.Id,
-                    Status = spotExceptionsOutOfSpecs.SpotExceptionsOutOfSpecId != null,
-                    EstimateId = spotExceptionsOutOfSpecs.EstimateId,
-                    IsciName = spotExceptionsOutOfSpecs.IsciName,
-                    RecommendedPlan = spotExceptionsOutOfSpecs.RecommendedPlanName, 
-                    Reason=spotExceptionsOutOfSpecs.ReasonCodeMessage,
-                    Station = spotExceptionsOutOfSpecs.StationLegacyCallLetters,                  
-                    SpotLengthString = spotExceptionsOutOfSpecs.SpotLengthString,
-                    AudienceName = spotExceptionsOutOfSpecs.AudienceName,
-                    ProductName = spotExceptionsOutOfSpecs.Product,
-                    DaypartCode=spotExceptionsOutOfSpecs.DaypartCode,
-                    FlightStartDate=spotExceptionsOutOfSpecs.ProgramFlightStartDate.ToString(),
-                    FlightEndDate=spotExceptionsOutOfSpecs.ProgramFlightEndDate.ToString(),
-                    ProgramName = spotExceptionsOutOfSpecs.ProgramName,
-                    ProgramAirDate = spotExceptionsOutOfSpecs.ProgramAirTime.ToString(programAirDateFormat),
-                    ProgramAirTime = spotExceptionsOutOfSpecs.ProgramAirTime.ToString(programAirTimeFormat)
+                spotExceptionsOutOfSpecPostsResults = spotExceptionsoutOfSpecsPosts.Select(spotExceptionsOutOfSpec =>
+                {                  
+                    var spotExceptionsOutOfSpecPostsResult = new SpotExceptionsOutOfSpecPostsResultDto
+                    {
+                        Id = spotExceptionsOutOfSpec.Id,
+                        Status = spotExceptionsOutOfSpec.SpotExceptionsOutOfSpecDecision != null,
+                        EstimateId = spotExceptionsOutOfSpec.EstimateId,
+                        IsciName = spotExceptionsOutOfSpec.IsciName,
+                        RecommendedPlan = spotExceptionsOutOfSpec.RecommendedPlanName,
+                        Reason = spotExceptionsOutOfSpec.ReasonCodeMessage,
+                        Station = spotExceptionsOutOfSpec.StationLegacyCallLetters,
+                        SpotLengthString = spotExceptionsOutOfSpec.SpotLength !=null? $":{spotExceptionsOutOfSpec.SpotLength.Length}": null,
+                        AudienceName = spotExceptionsOutOfSpec.ProgramAudience!=null? spotExceptionsOutOfSpec.ProgramAudience.Name : null,
+                        ProductName = spotExceptionsOutOfSpec.Product,
+                        DaypartCode = spotExceptionsOutOfSpec.ProgramDaypartDetail!= null ? spotExceptionsOutOfSpec.ProgramDaypartDetail.Code:null,
+                        FlightStartDate = spotExceptionsOutOfSpec.ProgramFlightStartDate.ToString(),
+                        FlightEndDate = spotExceptionsOutOfSpec.ProgramFlightEndDate.ToString(),
+                        ProgramName = spotExceptionsOutOfSpec.ProgramName,
+                        ProgramAirDate = spotExceptionsOutOfSpec.ProgramAirTime.ToString(programAirDateFormat),
+                        ProgramAirTime = spotExceptionsOutOfSpec.ProgramAirTime.ToString(programAirTimeFormat)
+                    };
+                    return spotExceptionsOutOfSpecPostsResult;
                 }).ToList();
             }
-            return spotExceptionsOutOfSpecPostsResult;
+            return spotExceptionsOutOfSpecPostsResults;
+        }
+        public SpotExceptionsOutOfSpecDetailsResultDto GetSpotExceptionOutofSpecsDetails(int spotExceptionsOutOfSpecDetailsRequest)
+        {
+            const string programAirDateFormat = "MM/dd/yyyy";
+            const string programAirTimeFormat = "hh:mm:ss tt";
+            var spotExceptionsOutOfSpecDetail = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecById(spotExceptionsOutOfSpecDetailsRequest);
+            
+            if(spotExceptionsOutOfSpecDetail==null)
+            {
+                return null;
+            }
+
+            var spotExceptionsOutOfSpecDetailResult = new SpotExceptionsOutOfSpecDetailsResultDto
+            {
+                Id = spotExceptionsOutOfSpecDetail.Id,
+                ReasonCode = spotExceptionsOutOfSpecDetail.ReasonCode,
+                DaypartCode = spotExceptionsOutOfSpecDetail.ProgramDaypartDetail!=null ? spotExceptionsOutOfSpecDetail.ProgramDaypartDetail.Code : null,
+                Network = spotExceptionsOutOfSpecDetail.ProgramNetwork,
+                AudienceName = spotExceptionsOutOfSpecDetail.ProgramAudience!=null ? spotExceptionsOutOfSpecDetail.ProgramAudience.Name : null,
+                FlightStartDate = spotExceptionsOutOfSpecDetail.ProgramFlightStartDate.ToString(),
+                FlightEndDate = spotExceptionsOutOfSpecDetail.ProgramFlightEndDate.ToString(),
+                AcceptedAsInSpec = spotExceptionsOutOfSpecDetail.SpotExceptionsOutOfSpecDecision?.AcceptedAsInSpec,
+                DecisionNotes = spotExceptionsOutOfSpecDetail.SpotExceptionsOutOfSpecDecision?.DecisionNotes,
+                ProgramName = spotExceptionsOutOfSpecDetail.ProgramName,
+                ProgramAirDate = spotExceptionsOutOfSpecDetail.ProgramAirTime.ToString(programAirDateFormat),
+                ProgramAirTime = spotExceptionsOutOfSpecDetail.ProgramAirTime.ToString(programAirTimeFormat)
+            };
+            return spotExceptionsOutOfSpecDetailResult;
         }
 
         /// <inheritdoc />
