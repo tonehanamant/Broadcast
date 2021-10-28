@@ -60,6 +60,13 @@ namespace Services.Broadcast.Repositories
         SpotExceptionsRecommendedPlansDto GetSpotExceptionsRecommendedPlanById(int spotExceptionsRecommendedPlanId);
 
         /// <summary>
+        /// Saves spot exception recommended plan decision
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlanDecision">The spot exceptions recommended plan decision parameters</param>
+        /// <returns>True if spot exception recommended plan decision saves successfully otherwise false</returns>
+        bool SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecisionDto spotExceptionsRecommendedPlanDecision);
+
+        /// <summary>
         /// Adds spot exceptions recommended plans
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlans">The list of spot exceptions recommended plans to be inserted</param>
@@ -455,6 +462,33 @@ namespace Services.Broadcast.Repositories
                 DaypartText = daypartEntity.daypart_text
             };
             return daypart;
+        }
+
+        /// <inheritdoc />
+        public bool SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecisionDto spotExceptionsRecommendedPlanDecision)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var existSpotExceptionsRecommendedPlanDecision = context.spot_exceptions_recommended_plan_decision
+                .SingleOrDefault(x => x.spot_exceptions_recommended_plan_details.spot_exceptions_recommended_plan_id == spotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanId);
+                if (existSpotExceptionsRecommendedPlanDecision == null)
+                {
+                    context.spot_exceptions_recommended_plan_decision.Add(new spot_exceptions_recommended_plan_decision
+                    {
+                        spot_exceptions_recommended_plan_detail_id = spotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId,
+                        username = spotExceptionsRecommendedPlanDecision.UserName,
+                        created_at = spotExceptionsRecommendedPlanDecision.CreatedAt
+                    });
+                }
+                else
+                {
+                    existSpotExceptionsRecommendedPlanDecision.spot_exceptions_recommended_plan_detail_id = spotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId;
+                    existSpotExceptionsRecommendedPlanDecision.username = spotExceptionsRecommendedPlanDecision.UserName;
+                    existSpotExceptionsRecommendedPlanDecision.created_at = spotExceptionsRecommendedPlanDecision.CreatedAt;
+                }
+                bool isSpotExceptionsRecommendedPlanDecisionSaved = context.SaveChanges() > 0;
+                return isSpotExceptionsRecommendedPlanDecisionSaved;
+            });
         }
 
         /// <inheritdoc />

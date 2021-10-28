@@ -23,7 +23,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ISpotExceptionRepository> _SpotExceptionRepositoryMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
-        private Mock<IDateTimeEngine> _DateTimeEngine;
+        private Mock<IDateTimeEngine> _DateTimeEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -32,12 +32,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotExceptionRepositoryMock = new Mock<ISpotExceptionRepository>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
-            _DateTimeEngine = new Mock<IDateTimeEngine>();
+            _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionRepository>())
                 .Returns(_SpotExceptionRepositoryMock.Object);
 
-            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object, _DateTimeEngine.Object);
+            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
         }
 
         [Test]
@@ -408,6 +408,63 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Act
             var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanDetailsRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsRecommendedPlan_SaveSpotExceptionsRecommendedPlanDecision()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlanSaveRequest = new SpotExceptionsRecommendedPlanSaveRequestDto
+            {
+                Id = 1,
+                SelectedPlanId = 101
+            };
+            var userName = "Test User";
+            var currentDateTime = new DateTime(2020, 10, 30, 12, 15, 23);
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsRecommendedPlanDecision(It.IsAny<SpotExceptionsRecommendedPlanDecisionDto>()))
+                .Returns(true);
+
+            var expectedResult = true;
+
+            // Act
+            var result = _SpotExceptionService.SaveSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsRecommendedPlan_ThrowsException()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlanSaveRequest = new SpotExceptionsRecommendedPlanSaveRequestDto
+            {
+                Id = 1,
+                SelectedPlanId = 101
+            };
+            var userName = "Test User";
+            var currentDateTime = new DateTime(2020, 10, 30, 12, 15, 23);
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsRecommendedPlanDecision(It.IsAny<SpotExceptionsRecommendedPlanDecisionDto>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.SaveSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanSaveRequest, userName));
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);

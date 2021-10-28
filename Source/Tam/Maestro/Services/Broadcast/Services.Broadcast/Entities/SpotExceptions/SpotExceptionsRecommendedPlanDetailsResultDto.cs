@@ -24,6 +24,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
 
     public class RecommendedPlanDetailResultDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string SpotLengthString { get; set; }
         public string FlightStartDate { get; set; }

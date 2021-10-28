@@ -49,6 +49,14 @@ namespace Services.Broadcast.ApplicationServices
         SpotExceptionsRecommendedPlanDetailsResultDto GetSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanDetailsRequestDto spotExceptionsRecommendedPlanDetailsRequest);
 
         /// <summary>
+        /// Saves spot exception recommended plan
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlanSaveRequest">The spot exceptions recommended plan save request parameters</param>
+        /// <param name="userName">The user name</param>
+        /// <returns>True if spot exception recommended plan saves successfully otherwise false</returns>
+        bool SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveRequestDto spotExceptionsRecommendedPlanSaveRequest, string userName);
+
+        /// <summary>
         /// Save SpotExceptionsOutOfSpecs Decisions data
         /// </summary>
         /// <param name="spotExceptionsOutOfSpecDecisionsPostsRequest">The SpotExceptionsOutOfSpecDecisions Request</param>
@@ -804,6 +812,7 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                 ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat),
                 Plans = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(spotExceptionsRecommendedPlanDetail => new RecommendedPlanDetailResultDto
                 {
+                    Id = spotExceptionsRecommendedPlanDetail.Id,
                     Name = spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.Name,
                     SpotLengthString = string.Join(", ", spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.SpotLengths.Select(spotLength => $":{spotLength.Length}")),
                     FlightStartDate = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightStartDate}",
@@ -813,6 +822,21 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                 }).ToList()
             };
             return spotExceptionsRecommendedPlanDetailsResult;
+        }
+
+        /// <inheritdoc />
+        public bool SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveRequestDto spotExceptionsRecommendedPlanSaveRequest, string userName)
+        {
+            var spotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+            {
+                SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlanSaveRequest.Id,
+                SpotExceptionsRecommendedPlanDetailId = spotExceptionsRecommendedPlanSaveRequest.SelectedPlanId,
+                UserName = userName,
+                CreatedAt = _DateTimeEngine.GetCurrentMoment()
+            };
+
+            bool isSpotExceptionsRecommendedPlanDecisionSaved = _SpotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(spotExceptionsRecommendedPlanDecision);
+            return isSpotExceptionsRecommendedPlanDecisionSaved;
         }
 
         public bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName)
