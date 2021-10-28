@@ -2089,6 +2089,7 @@
   "BlackoutMarkets": [],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 500000.0000,
+  "BuyingBudgetCpmLever": 1,
   "BuyingParameters": {
     "AdjustedBudget": 1200.0000,
     "AdjustedCPM": 25.0000,
@@ -2195,6 +2196,7 @@
   "ModifiedDate": "2020-06-19T01:02:14.207",
   "Name": "Plan in working",
   "PostingType": 2,
+  "PricingBudgetCpmLever": 1,
   "PricingParameters": {
     "AdjustedBudget": 400000.0000,
     "AdjustedCPM": 20.0000,

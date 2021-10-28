@@ -68,6 +68,7 @@ namespace Services.Broadcast.Entities.Plan
         public int SpotLengthId { get; set; }
         public int Adu { get; set; }
         public double Units { get; set; }
+        public bool IsLocked { get; set; }
     }
 
     public class WeeklyBreakdownByWeekByDaypart
@@ -83,6 +84,7 @@ namespace Services.Broadcast.Entities.Plan
         public int DaypartCodeId { get; set; }
         public int Adu { get; set; }
         public double Units { get; set; }
+        public bool IsLocked { get; set; }
     }
 
     public class WeeklyBreakdownByStandardDaypart

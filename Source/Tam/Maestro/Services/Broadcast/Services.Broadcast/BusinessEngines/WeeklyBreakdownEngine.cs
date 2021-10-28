@@ -379,6 +379,7 @@ namespace Services.Broadcast.BusinessEngines
                     DaypartCodeId = item.DaypartCodeId,
                     WeeklyAdu = item.Adu,
                     WeeklyUnits = item.Units,
+                    IsLocked = item.IsLocked
                 };
 
                 _UpdateGoalsForWeeklyBreakdownItem(
@@ -419,6 +420,7 @@ namespace Services.Broadcast.BusinessEngines
                     SpotLengthDuration = _GetWeeklySpotLengthDuration(item.SpotLengthId),
                     WeeklyAdu = item.Adu,
                     WeeklyUnits = item.Units,
+                    IsLocked = item.IsLocked
                 };
 
                 _UpdateGoalsForWeeklyBreakdownItem(
@@ -461,7 +463,8 @@ namespace Services.Broadcast.BusinessEngines
                     NumberOfActiveDays = week.NumberOfActiveDays,
                     ActiveDays = week.ActiveDays,
                     WeeklyAdu = week.Adu,
-                    WeeklyUnits = week.Units
+                    WeeklyUnits = week.Units,
+                    IsLocked = week.IsLocked
                 };
 
                 _UpdateGoalsForWeeklyBreakdownItem(
@@ -1347,7 +1350,8 @@ namespace Services.Broadcast.BusinessEngines
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Adu = _CalculateADU(impressionsPerUnit
                                 , allItems.Sum(x => x.AduImpressions), equivalized, grouping.Key.SpotLengthId.Value),
-                        Units = unitsImpressions == 0 ? 0 : weekImpressions / unitsImpressions
+                        Units = unitsImpressions == 0 ? 0 : weekImpressions / unitsImpressions,
+                        IsLocked = first.IsLocked
                     };
                 }).ToList();
         }
@@ -1376,7 +1380,8 @@ namespace Services.Broadcast.BusinessEngines
                         Impressions = weekImpressions,
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Adu = _CalculateADU(impressionsPerUnit, allItems.Sum(x => x.AduImpressions), equivalized, null, creativeLengths),
-                        Units = unitsImpressions == 0 ? 0 : weekImpressions / unitsImpressions
+                        Units = unitsImpressions == 0 ? 0 : weekImpressions / unitsImpressions,
+                        IsLocked = first.IsLocked
                     };
                 }).ToList();
         }
