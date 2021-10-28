@@ -58,5 +58,13 @@ namespace Services.Broadcast.Entities.Inventory
         /// The username who created the job.
         /// </summary>
         public string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the shared folder file identifier.
+        /// </summary>
+        /// <value>
+        /// The shared folder file identifier.
+        /// </value>
+        public Guid? SharedFolderFileId { get; set; }
     }
 }

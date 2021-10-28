@@ -1395,6 +1395,26 @@ UPDATE plan_versions SET impressions_per_unit = 1 WHERE impressions_per_unit = 0
 GO
 /*************************************** END BP-3387 ***************************************/
 
+/*************************************** START BP-3164 ***************************************/
+
+DECLARE @AddSql VARCHAR(MAX) = 
+'ALTER TABLE inventory_export_jobs 
+	ADD shared_folder_files_id UNIQUEIDENTIFIER NULL'
+
+DECLARE @IndexSql VARCHAR(MAX) = 
+'ALTER TABLE inventory_export_jobs
+	ADD CONSTRAINT FK_inventory_export_job_files_shared_folder_files_id
+	FOREIGN KEY (shared_folder_files_id) REFERENCES shared_folder_files(id)'
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[inventory_export_jobs]') AND name = 'shared_folder_files_id')
+BEGIN 
+	EXEC(@AddSql)
+	EXEC(@IndexSql)
+END
+
+GO
+/*************************************** END BP-3164 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

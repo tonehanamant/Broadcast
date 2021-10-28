@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Inventory;
@@ -58,21 +59,31 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IInventoryExportEngine _InventoryExportEngine;
-        private readonly IFileService _FileService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IDaypartCache _DaypartCache;
         private readonly IMarketService _MarketService;
         private readonly INsiPostingBookService _NsiPostingBookService;
+
+        private readonly IFileService _FileService;
+        private readonly ISharedFolderService _SharedFolderService;
+        private readonly IDateTimeEngine _DateTimeEngine;
+
+        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
 
         public InventoryExportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IQuarterCalculationEngine quarterCalculationEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IInventoryExportEngine inventoryExportEngine,
             IFileService fileService,
+            ISharedFolderService sharedFolderService,
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
             IMarketService marketService,
-            INsiPostingBookService nsiPostingBookService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            INsiPostingBookService nsiPostingBookService, 
+            IDateTimeEngine dateTimeEngine,
+            IFeatureToggleHelper featureToggleHelper, 
+            IConfigurationSettingsHelper configurationSettingsHelper) 
+                : base(featureToggleHelper, configurationSettingsHelper)
         {
             _InventoryExportRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
             _InventoryExportJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportJobRepository>();
@@ -85,10 +96,14 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryExportEngine = inventoryExportEngine;
             _FileService = fileService;
+            _SharedFolderService = sharedFolderService;
             _SpotLengthEngine = spotLengthEngine;
             _DaypartCache = daypartCache;
             _MarketService = marketService;
             _NsiPostingBookService = nsiPostingBookService;
+            _DateTimeEngine = dateTimeEngine;
+
+            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
 
         /// <inheritdoc />
@@ -166,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 var calculated = _InventoryExportEngine.Calculate(inScopeInventory);
 
                 // generate the file
-                var generatedTimeStampValue = _InventoryExportEngine.GetExportGeneratedTimestamp(_GetCurrentDateTime());
+                var generatedTimeStampValue = _InventoryExportEngine.GetExportGeneratedTimestamp(_DateTimeEngine.GetCurrentMoment());
                 var fileName = _InventoryExportEngine.GetInventoryExportFileName(request.Genre, request.Quarter);
 
                 var relevantAudienceIds = inScopeInventory.SelectMany(i => i.ProvidedAudiences.Select(s => s.AudienceId))
@@ -211,17 +226,15 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 _LogInfo($"Export job {job.Id} processed {inventory.Count} records to {tableData.Length} file lines in {processingSw.ElapsedMilliseconds} ms", userName);
 
                 // save the file
-                var saveDirectory = _GetExportFileSaveDirectory();
-                var filePath = Path.Combine(saveDirectory, reportData.ExportFileName);
-                _LogInfo($"Export job {job.Id} beginning file save to path '{filePath}'.", userName);
 
-                _FileService.CreateDirectory(saveDirectory);
-                _FileService.Create(saveDirectory, reportData.ExportFileName, reportOutput.Stream);
+                _LogInfo($"Export job {job.Id} beginning file '{reportData.ExportFileName}'.", userName);
+                var savedFileId = _SaveFile(reportData.ExportFileName, reportOutput.Stream, userName);
 
                 // update the jobs object to completed.
                 job.FileName = reportData.ExportFileName;
+                job.SharedFolderFileId = savedFileId;
                 job.Status = BackgroundJobProcessingStatus.Succeeded;
-                job.CompletedAt = _GetCurrentDateTime();
+                job.CompletedAt = _DateTimeEngine.GetCurrentMoment();
 
                 _InventoryExportJobRepository.UpdateJob(job);
 
@@ -234,29 +247,76 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
                 job.StatusMessage = ex.Message;
                 job.Status = BackgroundJobProcessingStatus.Failed;
-                job.CompletedAt = _GetCurrentDateTime();
+                job.CompletedAt = _DateTimeEngine.GetCurrentMoment();
                 _InventoryExportJobRepository.UpdateJob(job);
 
                 throw;
             }
         }
 
+        private Guid? _SaveFile(string fileName, Stream fileStream, string userName)
+        {
+            var folderPath = _GetExportFileSaveDirectory();
+            const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = folderPath,
+                FileNameWithExtension = fileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.InventoryExport,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = userName,
+                FileContent = fileStream
+            };
+            var fileId = _SharedFolderService.SaveFile(sharedFolderFile);
+
+            // Save to the File Service until the toggle is enabled and then we can remove it.
+            if (!_EnableSharedFileServiceConsolidation.Value)
+            {
+                _FileService.CreateDirectory(folderPath);
+                _FileService.Create(folderPath, fileName, fileStream);
+            }
+            
+            return fileId;
+        }
+
         /// <inheritdoc />
         public Tuple<string, Stream, string> DownloadOpenMarketExportFile(int jobId)
         {
+            Tuple<string, Stream, string> result;
             var job = _InventoryExportJobRepository.GetJob(jobId);
 
-            var saveDirectory = _GetExportFileSaveDirectory();
-            var fileName = job.FileName;
+            if (_EnableSharedFileServiceConsolidation.Value && job.SharedFolderFileId.HasValue)
+            {
+                _LogInfo($"Translated jobId '{job.Id}' as sharedFolderFileId '{job.SharedFolderFileId.Value}'");
+                var file = _SharedFolderService.GetFile(job.SharedFolderFileId.Value);
+                result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                return result;
+            }
 
-            var fileMimeType = MimeMapping.GetMimeMapping(fileName);
-            Stream fileStream = _FileService.GetFileStream(saveDirectory, fileName);
-
-            var response = new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
-            return response;
+            result = _GetFileFromFileService(job);
+            return result;
         }
 
-        protected List<int> _GetExportGenreIds(InventoryExportGenreTypeEnum genreType, List<LookupDto> genres)
+        private Tuple<string, Stream, string> _BuildPackageReturn(Stream fileStream, string fileName)
+        {
+            var fileMimeType = MimeMapping.GetMimeMapping(fileName);
+            var result = new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
+            return result;
+        }
+
+        private Tuple<string, Stream, string> _GetFileFromFileService(InventoryExportJobDto job)
+        {
+            var saveDirectory = _GetExportFileSaveDirectory();
+            var fileName = job.FileName;
+            var fileStream = _FileService.GetFileStream(saveDirectory, fileName);
+
+            var result = _BuildPackageReturn(fileStream, fileName);
+            return result;
+        }
+
+        internal List<int> _GetExportGenreIds(InventoryExportGenreTypeEnum genreType, List<LookupDto> genres)
         {
             const string newsGenreName = "NEWS";
             var result = genreType == InventoryExportGenreTypeEnum.News
@@ -269,6 +329,12 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.INVENTORY_EXPORTS);
             return path;
+        }
+
+        private bool _GetEnableSharedFileServiceConsolidation()
+        {
+            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
+            return result;
         }
     }
 }

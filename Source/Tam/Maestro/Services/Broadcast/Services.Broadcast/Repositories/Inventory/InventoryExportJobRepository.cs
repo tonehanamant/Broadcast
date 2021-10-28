@@ -42,8 +42,9 @@ namespace Services.Broadcast.Repositories.Inventory
                     export_genre_type_id = (int)jobDto.ExportGenreType,
                     status = (int)jobDto.Status,
                     created_at = DateTime.Now,
-                    created_by = userName
-                };
+                    created_by = userName,
+                    shared_folder_files_id = jobDto.SharedFolderFileId
+            };
 
                 context.inventory_export_jobs.Add(entity);
                 context.SaveChanges();
@@ -68,6 +69,7 @@ namespace Services.Broadcast.Repositories.Inventory
                 entity.status_message = jobDto.StatusMessage;
                 entity.file_name = jobDto.FileName;
                 entity.completed_at = jobDto.CompletedAt;
+                entity.shared_folder_files_id = jobDto.SharedFolderFileId;
 
                 context.SaveChanges();
             });
@@ -91,7 +93,8 @@ namespace Services.Broadcast.Repositories.Inventory
                     FileName = entity.file_name,
                     CompletedAt = entity.completed_at,
                     CreatedAt = entity.created_at,
-                    CreatedBy = entity.created_by
+                    CreatedBy = entity.created_by,
+                    SharedFolderFileId = entity.shared_folder_files_id
                 };
 
                 return dto;

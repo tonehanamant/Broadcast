@@ -12,6 +12,7 @@
     "StartDate": "2020-03-30T00:00:00",
     "Year": 2020
   },
+  "SharedFolderFileId": null,
   "Status": 4,
   "StatusMessage": "No 'News' inventory found to export for Q2 2020."
 }

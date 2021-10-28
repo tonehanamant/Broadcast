@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public shared_folder_files()
         {
             this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
+            this.inventory_export_jobs = new HashSet<inventory_export_jobs>();
         }
     
         public System.Guid id { get; set; }
@@ -29,5 +30,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
     
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
+        public virtual ICollection<inventory_export_jobs> inventory_export_jobs { get; set; }
     }
 }

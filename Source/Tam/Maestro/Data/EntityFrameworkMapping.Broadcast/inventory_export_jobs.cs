@@ -25,7 +25,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> completed_at { get; set; }
         public System.DateTime created_at { get; set; }
         public string created_by { get; set; }
+        public Nullable<System.Guid> shared_folder_files_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
+        public virtual shared_folder_files shared_folder_files { get; set; }
     }
 }

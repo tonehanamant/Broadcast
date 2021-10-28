@@ -10,8 +10,10 @@
     [completed_at]         DATETIME      NULL,
     [created_at]           DATETIME      NOT NULL,
     [created_by]           VARCHAR (63)  NOT NULL,
+    [shared_folder_files_id] UNIQUEIDENTIFIER NULL, 
     CONSTRAINT [PK_inventory_export_jobs] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_inventory_export_jobs_inventory_source] FOREIGN KEY ([inventory_source_id]) REFERENCES [dbo].[inventory_sources] ([id])
+    CONSTRAINT [FK_inventory_export_jobs_inventory_source] FOREIGN KEY ([inventory_source_id]) REFERENCES [dbo].[inventory_sources] ([id]),
+    CONSTRAINT [FK_inventory_export_job_files_shared_folder_files_id] FOREIGN KEY ([shared_folder_files_id]) REFERENCES [dbo].[shared_folder_files] ([id])
 );
 
 

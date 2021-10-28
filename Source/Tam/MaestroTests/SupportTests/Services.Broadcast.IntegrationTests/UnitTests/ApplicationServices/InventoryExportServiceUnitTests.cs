@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.ApplicationServices.Inventory;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -34,7 +35,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private const string TEST_TEMPLATE_PATH = @".\Files\Excel templates";
 
         [Test]
-        public void GenerateExportForOpenMarket()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GenerateExportForOpenMarket(bool enableSharedFileServiceConsolidation)
         {
             /*** Arrange ***/
             var request = new InventoryExportRequestDto
@@ -68,6 +71,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var audienceRepository = new Mock<IBroadcastAudienceRepository>();
             var featureToggle = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -172,9 +177,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             inventoryExportEngine.Setup(s => s.GetInventoryExportFileName(It.IsAny<InventoryExportGenreTypeEnum>(), It.IsAny<QuarterDetailDto>()))
                 .Returns("TestFileName.xlsx");
 
-            var createFilesCalled = new List<Tuple<string, string, Stream>>();
+            var fileServiceCreateFilesCalled = new List<Tuple<string, string, Stream>>();
             fileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, string, Stream>((sd, fn, st) => createFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
+                .Callback<string, string, Stream>((sd, fn, st) => fileServiceCreateFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
 
             var updatedJobs = new List<InventoryExportJobDto>();
             inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
@@ -201,20 +206,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(stationRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IBroadcastAudienceRepository>())
                 .Returns(audienceRepository.Object);
+            
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+            dateTimeEngine.Setup(s => s.GetCurrentMoment())
+                .Returns(testCurrentTimestamp);
+
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var savedSharedFolderFiles = new List<SharedFolderFile>();
+            var savedSharedFolderFileId = new Guid("F2ABCE13-CA61-4323-8D87-D347E9F102DD");
+            sharedFolderService.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
+                .Callback<SharedFolderFile>((f) => savedSharedFolderFiles.Add(f))
+                .Returns(savedSharedFolderFileId);
+
+            featureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+                .Returns(enableSharedFileServiceConsolidation);
 
             // instantiate our test server with all our setup mocks.
-            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
                 fileService.Object,
+                sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object)
-            {
-                UT_DateTimeNow = testCurrentTimestamp
-            };
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object, configurationSettingsHelper.Object);
 
             // *** ACT ***/
             var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH);
@@ -234,21 +254,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(34, getInventoryForExportOpenMarketCalls[0].Item2[0]); // genre id should be news only
             // verify the calculated call
             Assert.AreEqual(1, calculateCalledCount);
+            
             // verify the saved job
             //updatedJobs
             Assert.AreEqual(1, updatedJobs.Count);
             Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, updatedJobs[0].Status);
             Assert.IsNotNull(updatedJobs[0].CompletedAt);
+            Assert.AreEqual(savedSharedFolderFileId, updatedJobs[0].SharedFolderFileId);
 
             // verify the saved file
-            Assert.AreEqual(1, createFilesCalled.Count);
-            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", createFilesCalled[0].Item1);
-            Assert.AreEqual("TestFileName.xlsx", createFilesCalled[0].Item2);
-            Assert.IsNotNull(createFilesCalled[0].Item3);
+            Assert.AreEqual(1, savedSharedFolderFiles.Count);
+            Assert.IsTrue(savedSharedFolderFiles[0].FolderPath.EndsWith(@"\InventoryExports"));
+            Assert.AreEqual("TestFileName.xlsx", savedSharedFolderFiles[0].FileNameWithExtension);
+            Assert.IsNotNull(savedSharedFolderFiles[0].FileContent);
+            Assert.AreEqual(SharedFolderFileUsage.InventoryExport, savedSharedFolderFiles[0].FileUsage);
+
+            if (enableSharedFileServiceConsolidation)
+            {
+                Assert.AreEqual(0, fileServiceCreateFilesCalled.Count);
+            }
+            else
+            {
+                Assert.AreEqual(1, fileServiceCreateFilesCalled.Count);
+                Assert.IsTrue(fileServiceCreateFilesCalled[0].Item1.EndsWith(@"\InventoryExports"));
+                Assert.AreEqual("TestFileName.xlsx", fileServiceCreateFilesCalled[0].Item2);
+                Assert.IsNotNull(fileServiceCreateFilesCalled[0].Item3);
+            }
         }
 
         [Test]
-        public void GenerateExportForOpenMarket_Unenriched()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GenerateExportForOpenMarket_Unenriched(bool enableSharedFileServiceConsolidation)
         {
             /*** Arrange ***/
             var request = new InventoryExportRequestDto
@@ -283,6 +320,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var audienceRepository = new Mock<IBroadcastAudienceRepository>();
             var featureToggle = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -394,9 +433,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             inventoryExportEngine.Setup(s => s.GetInventoryExportFileName(It.IsAny<InventoryExportGenreTypeEnum>(), It.IsAny<QuarterDetailDto>()))
                 .Returns("TestFileName.xlsx");
 
-            var createFilesCalled = new List<Tuple<string, string, Stream>>();
+            var fileServiceCreateFilesCalled = new List<Tuple<string, string, Stream>>();
             fileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, string, Stream>((sd, fn, st) => createFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
+                .Callback<string, string, Stream>((sd, fn, st) => fileServiceCreateFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
 
             var updatedJobs = new List<InventoryExportJobDto>();
             inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
@@ -423,19 +462,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IBroadcastAudienceRepository>())
                 .Returns(audienceRepository.Object);
 
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var savedSharedFolderFiles = new List<SharedFolderFile>();
+            var savedSharedFolderFileId = new Guid("F2ABCE13-CA61-4323-8D87-D347E9F102DD");
+            sharedFolderService.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
+                .Callback<SharedFolderFile>((f) => savedSharedFolderFiles.Add(f))
+                .Returns(savedSharedFolderFileId);
+
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+            dateTimeEngine.Setup(s => s.GetCurrentMoment())
+                .Returns(testCurrentTimestamp);
+
+            featureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+                .Returns(enableSharedFileServiceConsolidation);
+
             // instantiate our test server with all our setup mocks.
-            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
                 fileService.Object,
+                sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object)
-            {
-                UT_DateTimeNow = testCurrentTimestamp
-            };
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object, configurationSettingsHelper.Object);
 
             // *** ACT ***/
             var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH);
@@ -461,12 +515,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, updatedJobs.Count);
             Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, updatedJobs[0].Status);
             Assert.IsNotNull(updatedJobs[0].CompletedAt);
+            Assert.AreEqual(savedSharedFolderFileId, updatedJobs[0].SharedFolderFileId);
 
             // verify the saved file
-            Assert.AreEqual(1, createFilesCalled.Count);
-            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", createFilesCalled[0].Item1);
-            Assert.AreEqual("TestFileName.xlsx", createFilesCalled[0].Item2);
-            Assert.IsNotNull(createFilesCalled[0].Item3);
+            Assert.AreEqual(1, savedSharedFolderFiles.Count);
+            Assert.IsTrue(savedSharedFolderFiles[0].FolderPath.EndsWith(@"\InventoryExports"));
+            Assert.AreEqual("TestFileName.xlsx", savedSharedFolderFiles[0].FileNameWithExtension);
+            Assert.IsNotNull(savedSharedFolderFiles[0].FileContent);
+            Assert.AreEqual(SharedFolderFileUsage.InventoryExport, savedSharedFolderFiles[0].FileUsage);
+
+            if (enableSharedFileServiceConsolidation)
+            {
+                Assert.AreEqual(0, fileServiceCreateFilesCalled.Count);
+            }
+            else
+            {
+                Assert.AreEqual(1, fileServiceCreateFilesCalled.Count);
+                Assert.IsTrue(fileServiceCreateFilesCalled[0].Item1.EndsWith(@"\InventoryExports"));
+                Assert.AreEqual("TestFileName.xlsx", fileServiceCreateFilesCalled[0].Item2);
+                Assert.IsNotNull(fileServiceCreateFilesCalled[0].Item3);
+            }
         }
 
         [Test]
@@ -484,24 +552,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var nsiPostingBooksService = new Mock<INsiPostingBookService>();
             var featureToggle = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
 
-            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
                 fileService.Object,
+                sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object);
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object,configurationSettingsHelper.Object);
 
             var genres = _GetAllGenres();
 
-            var result = service.UT_GetExportGenreIds(InventoryExportGenreTypeEnum.NonNews, genres);
+            var result = service._GetExportGenreIds(InventoryExportGenreTypeEnum.NonNews, genres);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-
 
         private InventoryExportDto _GetInventoryExportDto(int inventoryId, int mediaWeekId, int stationId, int daypartId, string programNameSeed, string inventoryProgramNameSeed)
         {
@@ -558,7 +630,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     EndDate = new DateTime(2020, 6, 28)
                 }
             };
-            var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);
+            var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);            
 
             // instantiate our mocks.
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
@@ -577,6 +649,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var stationRepository = new Mock<IStationRepository>();
             var featureToggle = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -586,7 +660,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             inventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
-                .Returns(inventorySource);
+                .Returns(inventorySource);            
 
             const int createdJobId = 1;
             var jobsCreated = new List<Tuple<InventoryExportJobDto, string>>();
@@ -650,18 +724,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStationRepository>())
                 .Returns(stationRepository.Object);
 
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+            dateTimeEngine.Setup(s => s.GetCurrentMoment())
+                .Returns(testCurrentTimestamp);
+
             // instantiate our test server with all our setup mocks.
-            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
                 fileService.Object,
+                sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object);
-
-            service.UT_DateTimeNow = testCurrentTimestamp;
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object,configurationSettingsHelper.Object);
 
             // *** ACT ***/
             var caught = Assert.Throws<InvalidOperationException>(() => service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH));
@@ -675,7 +755,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void DownloadOpenMarketExportFile()
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public void DownloadOpenMarketExportFile(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
         {
             /*** Arrange ***/
             // instantiate our mocks.
@@ -695,10 +778,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var stationRepository = new Mock<IStationRepository>();
             var featureToggle = new Mock<IFeatureToggleHelper>();
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
+
+            var savedFileGuid = existInSharedFolderService
+                ? new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5")
+                : (Guid?)null;
 
             // load our mocks with our test data.
             inventoryExportJobRepository.Setup(s => s.GetJob(It.IsAny<int>()))
-                .Returns(new InventoryExportJobDto {FileName = "TestFileName.xlsx" });
+                .Returns(new InventoryExportJobDto {FileName = "TestFileName.xlsx", SharedFolderFileId = savedFileGuid });
 
             var getFileStreamCalls = new List<Tuple<string,string>>();
             fileService.Setup(s => s.GetFileStream(It.IsAny<string>(), It.IsAny<string>()))
@@ -722,28 +811,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStationRepository>())
                 .Returns(stationRepository.Object);
 
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+
+            featureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+                .Returns(enableSharedFileServiceConsolidation);
+
+            sharedFolderService.Setup(s => s.GetFile(It.IsAny<Guid>()))
+                .Returns(new SharedFolderFile { FileName = "TestFileName", FileExtension = ".xlsx", FileContent = new MemoryStream() });
+
             // instantiate our test server with all our setup mocks.
-            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
                 fileService.Object,
+                sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
                 marketService.Object,
-                nsiPostingBooksService.Object,featureToggle.Object,configurationSettingsHelper.Object);
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object,
+                configurationSettingsHelper.Object);
 
             // *** ACT ***/
             var result = service.DownloadOpenMarketExportFile(1);
 
             // *** ASSERT ***/
-            Assert.AreEqual(1, getFileStreamCalls.Count);
-            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", getFileStreamCalls[0].Item1);
-            Assert.AreEqual("TestFileName.xlsx", getFileStreamCalls[0].Item2);
             Assert.IsNotNull(result);
             Assert.AreEqual("TestFileName.xlsx", result.Item1);
             Assert.IsNotNull(result.Item2);
             Assert.AreEqual("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Item3);
+
+            inventoryExportJobRepository.Verify(s => s.GetJob(It.IsAny<int>()), Times.Once);
+
+            var shouldCheckSharedFolderService = enableSharedFileServiceConsolidation;
+            var sharedFolderServiceGetFileTimesCalled = shouldCheckSharedFolderService && existInSharedFolderService ? Times.Once() : Times.Never();
+            sharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), sharedFolderServiceGetFileTimesCalled);
+
+            var shouldHaveCheckedFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+            var fileServiceGetFileStreamTimesCalled = shouldHaveCheckedFileService ? Times.Once() : Times.Never();
+            fileService.Verify(s => s.GetFileStream(It.IsAny<string>(), It.IsAny<string>()), fileServiceGetFileStreamTimesCalled);
+
+            // verify correct path.
+            if (shouldHaveCheckedFileService)
+            {
+                Assert.IsTrue(getFileStreamCalls[0].Item1.EndsWith(@"\InventoryExports"));
+                Assert.AreEqual("TestFileName.xlsx", getFileStreamCalls[0].Item2);
+            }
         }
 
         private List<LookupDto> _GetAllGenres()

@@ -501,7 +501,6 @@
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\ImpressionsServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />
-    <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTestClass.cs" />

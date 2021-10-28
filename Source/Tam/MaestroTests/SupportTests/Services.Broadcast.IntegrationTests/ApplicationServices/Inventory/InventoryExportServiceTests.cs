@@ -3,11 +3,13 @@ using ApprovalTests.Reporters;
 using Common.Services;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.Inventory;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.Inventory;
 using System;
@@ -30,6 +32,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
         private readonly InMemoryFileServiceStubb _FileService;
 
         private readonly int openMarket_InventorySourceId = 1;
+
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+        }
 
         public InventoryExportServiceTests()
         {
@@ -66,10 +76,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
         }
 
         [Test]
-        public void GenerateExportForOpenMarketAndDownloadIt()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GenerateExportForOpenMarketAndDownloadIt(bool enableSharedFileServiceConsolidation)
         {
             const string testUser = "TestUser";
             const string templatePath = @".\Files\Excel templates";
+
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION] = enableSharedFileServiceConsolidation;
+
             var testRequest = new InventoryExportRequestDto
             {
                 Genre = InventoryExportGenreTypeEnum.News,

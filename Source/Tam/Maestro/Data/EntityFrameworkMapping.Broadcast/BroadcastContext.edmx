@@ -374,6 +374,7 @@
           <Property Name="completed_at" Type="datetime" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="shared_folder_files_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="inventory_file_problems">
           <Key>
@@ -3126,6 +3127,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="genres">
               <PropertyRef Name="program_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_export_job_files_shared_folder_files_id">
+          <End Role="shared_folder_files" Type="Self.shared_folder_files" Multiplicity="0..1" />
+          <End Role="inventory_export_jobs" Type="Self.inventory_export_jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_export_jobs">
+              <PropertyRef Name="shared_folder_files_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7297,6 +7310,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="program_sources" EntitySet="program_sources" />
             <End Role="genres" EntitySet="genres" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_export_job_files_shared_folder_files_id" Association="Self.FK_inventory_export_job_files_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_export_jobs_inventory_source" Association="Self.FK_inventory_export_jobs_inventory_source">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
@@ -10008,6 +10025,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_weekly_breakdown_standard_dayparts" Association="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts">
             <End Role="standard_dayparts" EntitySet="standard_dayparts" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_export_job_files_shared_folder_files_id" Association="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -14400,6 +14421,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="scx_generation_job_files" />
+          <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_export_jobs" />
         </EntityType>
         <EntityType Name="nti_universe_audience_mappings">
           <Key>
@@ -14979,6 +15001,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_export_jobs_inventory_source" FromRole="inventory_export_jobs" ToRole="inventory_sources" />
+          <Property Name="shared_folder_files_id" Type="Guid" />
+          <NavigationProperty Name="shared_folder_files" Relationship="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" FromRole="inventory_export_jobs" ToRole="shared_folder_files" />
         </EntityType>
         <Association Name="FK_inventory_export_jobs_inventory_source">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -17516,6 +17540,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_inventory_export_job_files_shared_folder_files_id">
+          <End Type="BroadcastModel.shared_folder_files" Role="shared_folder_files" Multiplicity="0..1" />
+          <End Type="BroadcastModel.inventory_export_jobs" Role="inventory_export_jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_export_jobs">
+              <PropertyRef Name="shared_folder_files_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19587,6 +19623,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_export_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_export_jobs">
               <MappingFragment StoreEntitySet="inventory_export_jobs">
+                <ScalarProperty Name="shared_folder_files_id" ColumnName="shared_folder_files_id" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />
