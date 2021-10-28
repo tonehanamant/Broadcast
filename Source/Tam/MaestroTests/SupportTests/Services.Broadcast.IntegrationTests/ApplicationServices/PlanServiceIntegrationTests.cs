@@ -2659,7 +2659,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 TotalBudget = 75000,
                 FlightHiatusDays = new List<DateTime>(),
-                Weeks = null,
                 ImpressionsPerUnit = 1
             };
 
@@ -2684,7 +2683,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 TotalBudget = 75000,
                 FlightHiatusDays = new List<DateTime>(),
-                Weeks = null,
                 ImpressionsPerUnit = 1
             };
 
