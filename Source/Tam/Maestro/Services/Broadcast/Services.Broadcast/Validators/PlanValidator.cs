@@ -201,13 +201,15 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_FLIGHT_DAYS);
             }
 
+            var isClearAll = request.Weeks.All(x => x.IsUpdated);
+
             if (request.DeliveryType != PlanGoalBreakdownTypeEnum.EvenDelivery &&
-                request.Weeks.Count(w => w.IsUpdated) > 1)
+                request.Weeks.Count(w => w.IsUpdated) > 1 && !isClearAll)
             {
                 throw new Exception("More than one updated week found.");
             }
 
-            if (request.TotalImpressions <= 0)
+            if (request.TotalImpressions <= 0 && !isClearAll)
             {
                 throw new Exception("Total impressions must be more than zero");
             }

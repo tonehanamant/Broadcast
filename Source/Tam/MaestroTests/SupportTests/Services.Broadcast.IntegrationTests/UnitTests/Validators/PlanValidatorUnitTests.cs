@@ -1096,47 +1096,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidateWeeklyBreakdown_MoreThanOneUpdatedWeekFound()
-        {
-            var request = new WeeklyBreakdownRequest
-            {
-                FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019, 9, 1),
-                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                Weeks = new List<WeeklyBreakdownWeek> {
-                    new WeeklyBreakdownWeek {
-                      ActiveDays= "",
-                      EndDate= new DateTime(2019,10,6),
-                      WeeklyImpressions= 500,
-                      MediaWeekId= 814,
-                      NumberOfActiveDays= 7,
-                      WeeklyImpressionsPercentage = 50,
-                      WeeklyRatings = 0.00045364591593469400,
-                      StartDate= new DateTime(2019,09,30),
-                      WeekNumber= 1,
-                      IsUpdated = true
-                    },
-                    new WeeklyBreakdownWeek {
-                      ActiveDays= "",
-                      EndDate= new DateTime(2019,10,13),
-                      WeeklyImpressions= 500,
-                      MediaWeekId= 814,
-                      NumberOfActiveDays= 7,
-                      WeeklyImpressionsPercentage = 50,
-                      WeeklyRatings = 0.00045364591593469400,
-                      StartDate= new DateTime(2019,10,7),
-                      WeekNumber= 2,
-                      IsUpdated = true
-                    },
-                }
-            };
-
-            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("More than one updated week found."));
-        }
-
-        [Test]
         public void ValidateWeeklyBreakdown_ZeroTotalImpressions()
         {
             var request = new WeeklyBreakdownRequest
@@ -1365,6 +1324,114 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
                 Throws.TypeOf<Exception>().With.Message
                     .EqualTo("For the chosen delivery type, each week and spot Length combination must be unique"));
+        }
+
+        [Test]
+        public void WeeklyBreakdownItems_Validation_WhenAllWeeksUpdated_NoValidationError()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 10,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 1,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true,
+                      SpotLengthId = 1,
+                      PercentageOfWeek = 50,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = true,
+                      SpotLengthId = 2,
+                      PercentageOfWeek = 50,
+                    },
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.Nothing);
+        }
+
+        [Test]
+        public void WeeklyBreakdownItems_Validation_WhenAllWeeksUpdated_ValidationError()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 10,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 1,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true,
+                      SpotLengthId = 1,
+                      PercentageOfWeek = 50,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = true,
+                      SpotLengthId = 2,
+                      PercentageOfWeek = 50,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 3,
+                      IsUpdated = false,
+                      SpotLengthId = 3,
+                      PercentageOfWeek = 50,
+                    },
+                }
+            };
+            
+             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("More than one updated week found."));
         }
 
         [Test]
