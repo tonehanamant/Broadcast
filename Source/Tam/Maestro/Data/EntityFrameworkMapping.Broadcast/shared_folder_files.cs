@@ -18,6 +18,8 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
             this.inventory_export_jobs = new HashSet<inventory_export_jobs>();
+            this.inventory_files = new HashSet<inventory_files>();
+            this.inventory_files1 = new HashSet<inventory_files>();
         }
     
         public System.Guid id { get; set; }
@@ -31,5 +33,7 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<inventory_export_jobs> inventory_export_jobs { get; set; }
+        public virtual ICollection<inventory_files> inventory_files { get; set; }
+        public virtual ICollection<inventory_files> inventory_files1 { get; set; }
     }
 }

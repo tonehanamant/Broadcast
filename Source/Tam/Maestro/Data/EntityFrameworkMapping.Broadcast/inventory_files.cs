@@ -37,6 +37,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> rows_processed { get; set; }
         public Nullable<System.DateTime> effective_date { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
+        public Nullable<System.Guid> shared_folder_files_id { get; set; }
+        public Nullable<System.Guid> error_file_shared_folder_files_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<station_contacts> station_contacts { get; set; }
@@ -47,5 +49,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<inventory_programs_by_file_jobs> inventory_programs_by_file_jobs { get; set; }
+        public virtual shared_folder_files shared_folder_files { get; set; }
+        public virtual shared_folder_files shared_folder_files1 { get; set; }
     }
 }

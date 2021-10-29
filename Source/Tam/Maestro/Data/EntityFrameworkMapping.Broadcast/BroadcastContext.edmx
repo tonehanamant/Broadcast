@@ -435,6 +435,8 @@
           <Property Name="rows_processed" Type="int" />
           <Property Name="effective_date" Type="datetime2" Precision="7" />
           <Property Name="end_date" Type="datetime2" Precision="7" />
+          <Property Name="shared_folder_files_id" Type="uniqueidentifier" />
+          <Property Name="error_file_shared_folder_files_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="inventory_programs_by_file_job_notes">
           <Key>
@@ -3262,6 +3264,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_inventory_files_error_file_shared_folder_files_id">
+          <End Role="shared_folder_files" Type="Self.shared_folder_files" Multiplicity="0..1" />
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_files">
+              <PropertyRef Name="error_file_shared_folder_files_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_files_inventory_source">
           <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
           <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="*" />
@@ -3271,6 +3285,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_files">
               <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_files_shared_folder_files_id">
+          <End Role="shared_folder_files" Type="Self.shared_folder_files" Multiplicity="0..1" />
+          <End Role="inventory_files" Type="Self.inventory_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_files">
+              <PropertyRef Name="shared_folder_files_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7354,8 +7380,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_files" EntitySet="inventory_files" />
             <End Role="inventory_file_ratings_jobs" EntitySet="inventory_file_ratings_jobs" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_files_error_file_shared_folder_files_id" Association="Self.FK_inventory_files_error_file_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="inventory_files" EntitySet="inventory_files" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_files_inventory_source" Association="Self.FK_inventory_files_inventory_source">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_files" EntitySet="inventory_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_files_shared_folder_files_id" Association="Self.FK_inventory_files_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
             <End Role="inventory_files" EntitySet="inventory_files" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_programs_by_file_job_notes_job" Association="Self.FK_inventory_programs_by_file_job_notes_job">
@@ -10029,6 +10063,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_export_job_files_shared_folder_files_id" Association="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id">
             <End Role="shared_folder_files" EntitySet="shared_folder_files" />
             <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_files_error_file_shared_folder_files_id" Association="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="inventory_files" EntitySet="inventory_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_files_shared_folder_files_id" Association="BroadcastModel.FK_inventory_files_shared_folder_files_id">
+            <End Role="shared_folder_files" EntitySet="shared_folder_files" />
+            <End Role="inventory_files" EntitySet="inventory_files" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -13035,6 +13077,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="end_date" Type="DateTime" Precision="7" />
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_inventory_files" FromRole="inventory_files" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="inventory_programs_by_file_jobs" Relationship="BroadcastModel.FK_inventory_programs_by_file_jobs_inventory_file" FromRole="inventory_files" ToRole="inventory_programs_by_file_jobs" />
+          <Property Name="shared_folder_files_id" Type="Guid" />
+          <Property Name="error_file_shared_folder_files_id" Type="Guid" />
+          <NavigationProperty Name="shared_folder_files" Relationship="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id" FromRole="inventory_files" ToRole="shared_folder_files" />
+          <NavigationProperty Name="shared_folder_files1" Relationship="BroadcastModel.FK_inventory_files_shared_folder_files_id" FromRole="inventory_files" ToRole="shared_folder_files" />
         </EntityType>
         <Association Name="FK_inventory_files_inventory_source">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -14422,6 +14468,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="scx_generation_job_files" Relationship="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="scx_generation_job_files" />
           <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_export_jobs" />
+          <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_files" />
+          <NavigationProperty Name="inventory_files1" Relationship="BroadcastModel.FK_inventory_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_files" />
         </EntityType>
         <EntityType Name="nti_universe_audience_mappings">
           <Key>
@@ -17552,6 +17600,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_inventory_files_error_file_shared_folder_files_id">
+          <End Type="BroadcastModel.shared_folder_files" Role="shared_folder_files" Multiplicity="0..1" />
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_files">
+              <PropertyRef Name="error_file_shared_folder_files_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_files_shared_folder_files_id">
+          <End Type="BroadcastModel.shared_folder_files" Role="shared_folder_files" Multiplicity="0..1" />
+          <End Type="BroadcastModel.inventory_files" Role="inventory_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shared_folder_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_files">
+              <PropertyRef Name="shared_folder_files_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -18841,6 +18913,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="inventory_files">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_files">
               <MappingFragment StoreEntitySet="inventory_files">
+                <ScalarProperty Name="error_file_shared_folder_files_id" ColumnName="error_file_shared_folder_files_id" />
+                <ScalarProperty Name="shared_folder_files_id" ColumnName="shared_folder_files_id" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="effective_date" ColumnName="effective_date" />
                 <ScalarProperty Name="rows_processed" ColumnName="rows_processed" />

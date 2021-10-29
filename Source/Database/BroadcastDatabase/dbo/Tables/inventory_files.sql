@@ -10,8 +10,12 @@
     [rows_processed]      INT           NULL,
     [effective_date]      DATETIME      NULL,
     [end_date]            DATETIME      NULL,
+    [shared_folder_files_id] UNIQUEIDENTIFIER NULL, 
+    [error_file_shared_folder_files_id] UNIQUEIDENTIFIER NULL, 
     CONSTRAINT [PK_inventory_files] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_inventory_files_inventory_source] FOREIGN KEY ([inventory_source_id]) REFERENCES [dbo].[inventory_sources] ([id])
+    CONSTRAINT [FK_inventory_files_inventory_source] FOREIGN KEY ([inventory_source_id]) REFERENCES [dbo].[inventory_sources] ([id]),
+    CONSTRAINT [FK_inventory_files_shared_folder_files_id] FOREIGN KEY ([shared_folder_files_id]) REFERENCES [dbo].[shared_folder_files] ([id]),
+    CONSTRAINT [FK_inventory_files_error_file_shared_folder_files_id] FOREIGN KEY ([error_file_shared_folder_files_id]) REFERENCES [dbo].[shared_folder_files] ([id])
 );
 
 

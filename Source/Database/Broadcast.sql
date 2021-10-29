@@ -1415,6 +1415,33 @@ END
 GO
 /*************************************** END BP-3164 ***************************************/
 
+/*************************************** START BP-3165 ***************************************/
+
+DECLARE @AddSql VARCHAR(MAX) = 
+'ALTER TABLE inventory_files 
+	ADD shared_folder_files_id UNIQUEIDENTIFIER NULL;
+
+ALTER TABLE inventory_files 
+	ADD error_file_shared_folder_files_id UNIQUEIDENTIFIER NULL;'
+
+DECLARE @IndexSql VARCHAR(MAX) = 
+'ALTER TABLE inventory_files
+	ADD CONSTRAINT FK_inventory_files_shared_folder_files_id
+	FOREIGN KEY (shared_folder_files_id) REFERENCES shared_folder_files(id);
+
+ALTER TABLE inventory_files
+	ADD CONSTRAINT FK_inventory_files_error_file_shared_folder_files_id
+	FOREIGN KEY (error_file_shared_folder_files_id) REFERENCES shared_folder_files(id);'
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[inventory_files]') AND name = 'shared_folder_files_id')
+BEGIN 
+	EXEC(@AddSql)
+	EXEC(@IndexSql)
+END
+
+GO
+/*************************************** END BP-3165 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

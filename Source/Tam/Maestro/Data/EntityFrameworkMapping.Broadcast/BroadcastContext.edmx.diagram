@@ -548,6 +548,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_files_shared_folder_files_id" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
