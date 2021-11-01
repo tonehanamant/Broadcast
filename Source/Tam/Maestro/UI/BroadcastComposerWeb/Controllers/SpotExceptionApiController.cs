@@ -26,15 +26,15 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecsPosts(spotExceptionsOutOfSpecPostsRequest));
         }
         /// <summary>
-        /// Gets the OutofSpecPosts Data for Slide Out Drawer on selected row.
+        /// Gets spot exceptions out of specs details
         /// </summary>       
-        /// <param name="spotExceptionsOutOfSpecDetailsRequest">The OutOfSpec Id</param>
-        /// <returns>SpotExceptionsOutOfSpecDetailsResultDto object</returns>
-        [HttpPost]
+        /// <param name="spotExceptionsOutOfSpecId">The spot exceptions out of spec id</param>
+        /// <returns>The spot exceptions out of spec details</returns>
+        [HttpGet]
         [Route("out-of-spec-details")]
-        public BaseResponse<SpotExceptionsOutOfSpecDetailsResultDto> GetSpotExceptionOutofSpecsDetails(int spotExceptionsOutOfSpecDetailsRequest)
+        public BaseResponse<SpotExceptionsOutOfSpecDetailsResultDto> GetSpotExceptionOutofSpecsDetails(int spotExceptionsOutOfSpecId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecDetailsRequest));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecId));
         }
 
         [HttpPost]
@@ -44,11 +44,11 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("recommended-plans-details")]
-        public BaseResponse<SpotExceptionsRecommendedPlanDetailsResultDto> GetSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanDetailsRequestDto spotExceptionsRecommendedPlanDetailsRequest)
+        public BaseResponse<SpotExceptionsRecommendedPlanDetailsResultDto> GetSpotExceptionsRecommendedPlanDetails(int spotExceptionsRecommendedPlanId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanDetailsRequest));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanId));
         }
 
         [Authorize]

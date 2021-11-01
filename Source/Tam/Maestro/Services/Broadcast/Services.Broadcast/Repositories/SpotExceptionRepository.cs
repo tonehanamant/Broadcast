@@ -67,6 +67,13 @@ namespace Services.Broadcast.Repositories
         bool SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecisionDto spotExceptionsRecommendedPlanDecision);
 
         /// <summary>
+        /// Updates recommended plan of spot exceptions recommended plan
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlanDetail">The spot exceptoins recommended plan detail parameter</param>
+        /// <returns>True if recommended plan of spot exception recommended plan updates successfully otherwise false</returns>
+        bool UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanDetailsDto spotExceptionsRecommendedPlanDetail);
+
+        /// <summary>
         /// Adds spot exceptions recommended plans
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlans">The list of spot exceptions recommended plans to be inserted</param>
@@ -488,6 +495,38 @@ namespace Services.Broadcast.Repositories
                 }
                 bool isSpotExceptionsRecommendedPlanDecisionSaved = context.SaveChanges() > 0;
                 return isSpotExceptionsRecommendedPlanDecisionSaved;
+            });
+        }
+
+        /// <inheritdoc />
+        public bool UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanDetailsDto spotExceptionsRecommendedPlanDetail)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsRecommendedPlanEntity = context.spot_exceptions_recommended_plans
+                .Include(x => x.spot_exceptions_recommended_plan_details)
+                .SingleOrDefault(x => x.id == spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanId);
+                if (spotExceptionsRecommendedPlanEntity == null)
+                {
+                    return false;
+                }
+
+                var spotExceptionsRecommendedPlanDetailEntity = spotExceptionsRecommendedPlanEntity.spot_exceptions_recommended_plan_details
+                .SingleOrDefault(x => x.id == spotExceptionsRecommendedPlanDetail.Id);
+                if (spotExceptionsRecommendedPlanDetailEntity == null)
+                {
+                    return false;
+                }
+
+                if (spotExceptionsRecommendedPlanEntity.recommended_plan_id == spotExceptionsRecommendedPlanDetailEntity.recommended_plan_id)
+                { 
+                    return true;
+                }
+
+                spotExceptionsRecommendedPlanEntity.recommended_plan_id = spotExceptionsRecommendedPlanDetailEntity.recommended_plan_id;
+
+                bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = context.SaveChanges() > 0;
+                return isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated;
             });
         }
 

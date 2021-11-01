@@ -9,6 +9,7 @@
         public string AudienceName { get; set; }
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }
+        public string FlightDateString { get; set; }
         public bool? AcceptedAsInSpec { get; set; }
         public string DecisionNotes { get; set; }
         public string ProgramName { get; set; }

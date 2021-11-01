@@ -21,6 +21,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string DaypartCode { get; set; }
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }
+        public string FlightDateString { get; set; }
         public string ProgramName { get; set; }
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }

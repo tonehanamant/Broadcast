@@ -16,6 +16,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Product { get; set; }
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }
+        public string FlightDateString { get; set; }
         public string ProgramName { get; set; }
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
@@ -29,6 +30,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string SpotLengthString { get; set; }
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }
+        public string FlightDateString { get; set; }
         public bool IsRecommendedPlan { get; set; }        
         public bool IsSelected { get; set; }
     }
