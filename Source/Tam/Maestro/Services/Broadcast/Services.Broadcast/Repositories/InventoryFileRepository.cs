@@ -4,6 +4,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -15,6 +16,13 @@ namespace Services.Broadcast.Repositories
         int GetInventoryFileIdByHash(string hash);
         int CreateInventoryFile(InventoryFileBase file, string userName, DateTime nowDate);
         void UpdateInventoryFile(InventoryFile inventoryFile);
+
+        void SaveUploadedFileId(int fileId, Guid uploadedSharedFolderFileId);
+
+        void SaveErrorFileId(int fileId, Guid errorSharedFolderFileId);
+
+        List<Guid> GetErrorFileSharedFolderFileIds(List<int> fileIds);
+
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
         InventoryFile GetInventoryFileById(int fileId);
@@ -35,7 +43,8 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var file = context.inventory_files.Single(x => x.id == fileId, $"Could not find existing file with id={fileId}");
+                var file = context.inventory_files
+                    .Single(x => x.id == fileId, $"Could not find existing file with id={fileId}");
 
                 var result = new InventoryFile
                 {
@@ -54,7 +63,9 @@ namespace Services.Broadcast.Repositories
                         InventoryType = (InventorySourceTypeEnum)file.inventory_sources.inventory_source_type,
                         IsActive = file.inventory_sources.is_active,
                         Name = file.inventory_sources.name
-                    }
+                    },
+                    UploadedFileSharedFolderFileId = file.shared_folder_files_id,
+                    ErrorFileSharedFolderFileId = file.error_file_shared_folder_files_id
                 };
 
                 return result;
@@ -75,7 +86,6 @@ namespace Services.Broadcast.Repositories
                 return latestId;
             });
         }
-
 
         public int GetInventoryFileIdByHash(string hash)
         {
@@ -153,6 +163,41 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
 
                 });
+        }
+
+        public void SaveUploadedFileId(int fileId, Guid uploadedSharedFolderFileId)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var inventoryFile = context.inventory_files.Where(f => f.id == fileId).Single();
+                    inventoryFile.shared_folder_files_id = uploadedSharedFolderFileId;
+                    context.SaveChanges();
+                });
+        }
+
+        public void SaveErrorFileId(int fileId, Guid errorSharedFolderFileId)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var inventoryFile = context.inventory_files.Where(f => f.id == fileId).Single();
+                    inventoryFile.error_file_shared_folder_files_id = errorSharedFolderFileId;
+                    context.SaveChanges();
+                });
+        }
+
+        public List<Guid> GetErrorFileSharedFolderFileIds(List<int> fileIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.inventory_files
+                    .Where(f => fileIds.Contains(f.id) && f.error_file_shared_folder_files_id.HasValue)
+                    .Select(f => f.error_file_shared_folder_files_id.Value)
+                    .ToList();
+
+                return result;
+            });
         }
     }
 }

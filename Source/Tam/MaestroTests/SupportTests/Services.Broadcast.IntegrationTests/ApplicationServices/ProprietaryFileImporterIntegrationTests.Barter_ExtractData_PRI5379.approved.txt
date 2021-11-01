@@ -124,6 +124,7 @@
   ],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5379.xlsx",
   "FileStatus": 1,
   "Hash": "2D-B5-78-42-C1-66-1E-4F-E2-C1-9C-42-34-98-67-1F-3F-0C-E6-B8",
@@ -159,6 +160,7 @@
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": [
     "Not acceptable daypart code is specified",
     "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",

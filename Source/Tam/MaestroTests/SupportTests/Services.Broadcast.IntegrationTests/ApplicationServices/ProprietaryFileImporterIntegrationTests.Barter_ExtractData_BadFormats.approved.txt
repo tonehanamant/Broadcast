@@ -3,6 +3,7 @@
   "DataLines": [],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats.xlsx",
   "FileStatus": 1,
   "Hash": "21-A2-1E-54-82-EB-DD-C5-4F-44-D4-78-3C-70-CC-CC-BD-81-98-BC",
@@ -28,6 +29,7 @@
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": [
     "Effective date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",
     "End date is not in the correct format (MM/dd/yyyy, M/dd/yyyy, M/d/yyyy)",

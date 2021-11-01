@@ -4,6 +4,7 @@
   "DataLines": [],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "Barter_CNN.xlsx",
   "FileStatus": 0,
   "Hash": null,
@@ -41,5 +42,6 @@
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": []
 }

@@ -3,6 +3,7 @@
   "DataLines": [],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "ProprietaryDataFiles\\Diginet_ValidFile1.xlsx",
   "FileStatus": 2,
   "Hash": "71-00-E2-07-16-C4-4E-F6-F9-80-45-32-3C-9B-D6-BA-11-DD-6A-D9",
@@ -28,5 +29,6 @@
   },
   "RowsProcessed": 0,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": []
 }

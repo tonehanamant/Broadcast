@@ -3,6 +3,7 @@
   "DataLines": [],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats3.xlsx",
   "FileStatus": 1,
   "Hash": "91-1F-0E-9B-6C-52-EC-89-FC-2D-5B-6F-19-4C-18-23-4A-4C-A4-71",
@@ -38,6 +39,7 @@
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": [
     "End date (01/30/2019) should be greater then effective date (01/31/2019)",
     "HUT Book must be prior to the Share book"

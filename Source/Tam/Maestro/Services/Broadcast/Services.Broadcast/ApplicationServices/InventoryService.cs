@@ -18,7 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel.Security;
 using System.Web;
+using log4net.Appender;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -60,7 +62,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="filepath">File path to check</param>
         /// <returns>True or false</returns>
         bool IsProprietaryFile(string filepath);
-        
+
         /// <summary>
         /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
         /// </summary>
@@ -93,9 +95,13 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IOpenMarketFileImporter _OpenMarketFileImporter;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IFileService _FileService;
+        private readonly ISharedFolderService _SharedFolderService;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
+        private readonly IDateTimeEngine _DateTimeEngine;
+
         private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
+        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
 
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -112,8 +118,12 @@ namespace Services.Broadcast.ApplicationServices
             IImpressionsService impressionsService,
             IOpenMarketFileImporter openMarketFileImporter,
             IFileService fileService,
+            ISharedFolderService sharedFolderService,
             IInventoryRatingsProcessingService inventoryRatingsService,
-            IInventoryProgramsProcessingService inventoryProgramsProcessingService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            IInventoryProgramsProcessingService inventoryProgramsProcessingService,
+            IDateTimeEngine dateTimeEngine,
+            IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+                : base(featureToggleHelper, configurationSettingsHelper)
         {
             _broadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -137,10 +147,13 @@ namespace Services.Broadcast.ApplicationServices
             _OpenMarketFileImporter = openMarketFileImporter;
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _FileService = fileService;
+            _SharedFolderService = sharedFolderService;
             _InventoryRatingsService = inventoryRatingsService;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
+            _DateTimeEngine = dateTimeEngine;
 
             _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
+            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
 
         private bool _GetEnableSaveIngestedInventoryFile()
@@ -215,13 +228,13 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (_OpenMarketFileImporter.FileProblems.Any())
                 {
-                    _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
+                    _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems), userName);
                 }
                 else
                 {
                     if (!inventoryFile.HasManifests())
                     {
-                        _ProcessFileWithProblems(inventoryFile, "Unable to parse any file records.");
+                        _ProcessFileWithProblems(inventoryFile, new []{ "Unable to parse any file records."}, userName);
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
@@ -229,7 +242,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (_OpenMarketFileImporter.FileProblems.Any())
                     {
-                        _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems));
+                        _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems), userName);
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
@@ -287,20 +300,48 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (_EnableSaveIngestedInventoryFile.Value)
                 {
-                    _SaveInventoryFileToFileStore(request);
+                    _SaveUploadedInventoryFileToFileStore(request, inventoryFile.Id, userName);
                 }
             }
 
             return _SetInventoryFileSaveResult(inventoryFile);
         }
 
-        private void _SaveInventoryFileToFileStore(InventoryFileSaveRequest request)
+        internal void _SaveUploadedInventoryFileToFileStore(InventoryFileSaveRequest request, int inventoryFileId, string userName)
+        {
+            // Once the feature is enabled this can be removed.
+            if (!_EnableSharedFileServiceConsolidation.Value)
+            {
+                _SaveUploadedInventoryFileWithFileService(request);
+            }
+
+            const string fileMediaType = "application/xml";
+            var folderPath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = folderPath,
+                FileNameWithExtension = request.FileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.UploadedInventory,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = userName,
+                FileContent = request.StreamData
+            };
+
+            _LogInfo($"Saving uploaded inventory file '{request.FileName}'...");
+            var sharedFolderFileId = _SharedFolderService.SaveFile(sharedFolderFile);
+            _LogInfo($"Saved uploaded inventory file '{request.FileName}' as ID '{sharedFolderFileId}'");
+
+            _InventoryFileRepository.SaveUploadedFileId(inventoryFileId, sharedFolderFileId);
+        }
+
+        private void _SaveUploadedInventoryFileWithFileService(InventoryFileSaveRequest request)
         {
             try
             {
                 var filePath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
                 _CreateDirectoryIfNotExists(filePath);
-                _FileService.Copy(request.StreamData, filePath, overwriteExisting:true);
+                _FileService.Copy(request.StreamData, filePath, overwriteExisting: true);
             }
             catch (Exception ex)
             {
@@ -309,7 +350,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _ProcessFileWithProblems(InventoryFile inventoryFile, params string[] problems)
+        private void _ProcessFileWithProblems(InventoryFile inventoryFile, string[] problems, string userName)
         {
             inventoryFile.FileStatus = FileStatusEnum.Failed;
             inventoryFile.ValidationProblems.AddRange(problems);
@@ -317,14 +358,50 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository.AddValidationProblems(inventoryFile);
             _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
 
-            _WriteErrorFileToDisk(inventoryFile.Id, inventoryFile.FileName, inventoryFile.ValidationProblems);
+            _WriteErrorFileToDisk(inventoryFile.Id, inventoryFile.FileName, inventoryFile.ValidationProblems, userName);
         }
 
-        private void _WriteErrorFileToDisk(int fileId, string fileName, List<string> validationErrors)
+        internal void _WriteErrorFileToDisk(int inventoryFileId, string fileName, List<string> validationErrors, string userName)
         {
-			var saveDirectory = _GetInventoryUploadErrorsFolder();
-			string fullFileName = $@"{fileId}_{fileName}.txt";
-			string path = Path.Combine(saveDirectory, fullFileName);
+            // Once the feature is enabled this can be removed.
+            if (!_EnableSharedFileServiceConsolidation.Value)
+            {
+                _SaveErrorInventoryFileWithFileService(inventoryFileId, fileName, validationErrors);
+            }
+
+            // create the text file
+            var errorFileName = $"{fileName}.txt";
+            var errorFileContent = new MemoryStream();
+            var writer = new StreamWriter(errorFileContent);
+            validationErrors.ForEach(l => writer.WriteLine(l));
+            writer.Flush();
+            errorFileContent.Seek(0, SeekOrigin.Begin);
+
+            const string fileMediaType = "text/plain";
+            var folderPath = Path.Combine(_GetInventoryUploadErrorsFolder(), errorFileName);
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = folderPath,
+                FileNameWithExtension = errorFileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.InventoryErrorFile,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = userName,
+                FileContent = errorFileContent
+            };
+
+            _LogInfo($"Saving error file '{errorFileName}' for inventory file '{fileName}'...");
+            var sharedFolderFileId = _SharedFolderService.SaveFile(sharedFolderFile);
+            _LogInfo($"Saved error file '{errorFileName}' for inventory file '{fileName}' as ID '{sharedFolderFileId}'");
+
+            _InventoryFileRepository.SaveErrorFileId(inventoryFileId, sharedFolderFileId);
+        }
+
+        private void _SaveErrorInventoryFileWithFileService(int fileId, string fileName, List<string> validationErrors)
+        {
+            var saveDirectory = _GetInventoryUploadErrorsFolder();
+            string fullFileName = $@"{fileId}_{fileName}.txt";
+            string path = Path.Combine(saveDirectory, fullFileName);
             _CreateDirectoryIfNotExists(path);
             _FileService.CreateTextFile(path, validationErrors);
         }
@@ -776,12 +853,44 @@ namespace Services.Broadcast.ApplicationServices
 
         public Tuple<string, Stream, string> DownloadErrorFile(int fileId)
         {
+            Tuple<string, Stream, string> result;
+            if (_EnableSharedFileServiceConsolidation.Value)
+            {
+                // get the file 
+                var inventoryFileDetails = _GetInventoryFileById(fileId);
+                if (inventoryFileDetails.ErrorFileSharedFolderFileId.HasValue)
+                {
+                    _LogInfo($"Translated fileId '{fileId}' as errorFileSharedFolderFileId '{inventoryFileDetails.ErrorFileSharedFolderFileId.Value}'");
+                    var file = _SharedFolderService.GetFile(inventoryFileDetails.ErrorFileSharedFolderFileId.Value);
+                    result = _BuildPackageReturnForSingleFile(file.FileContent, file.FileNameWithExtension);
+                    return result;
+                }
+            }
+            
+            result = _RetrieveErrorFileWithFileService(fileId);
+            return result;
+        }
+
+        private Tuple<string, Stream, string> _RetrieveErrorFileWithFileService(int fileId)
+        {
             var fileInfo = _GetExistingInventoryErrorFileInfo(fileId);
-            var fileMimeType = MimeMapping.GetMimeMapping(fileInfo.FriendlyFileName);
             Stream fileStream = _FileService.GetFileStream(fileInfo.FilePath);
 
-            var response = new Tuple<string, Stream, string>(fileInfo.FriendlyFileName, fileStream, fileMimeType);
-            return response;
+            var result = _BuildPackageReturnForSingleFile(fileStream, fileInfo.FriendlyFileName);
+            return result;
+        }
+
+        private Tuple<string, Stream, string> _BuildPackageReturnForSingleFile(Stream fileStream, string fileName)
+        {
+            var fileMimeType = MimeMapping.GetMimeMapping(fileName);
+            var result = new Tuple<string, Stream, string>(fileName, fileStream, fileMimeType);
+            return result;
+        }
+
+        private Tuple<string, Stream> _BuildPackageReturnForArchiveFile(string archiveFileName, Stream archiveFile)
+        {
+            var result = new Tuple<string, Stream>(archiveFileName, archiveFile);;
+            return result;
         }
 
         /// <summary>
@@ -791,8 +900,23 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
         {
-            string archiveFileName = $"InventoryErrorFiles_{_GetDateTimeNow().ToString("MMddyyyyhhmmss")}.zip";
+            var archiveFileName = $"InventoryErrorFiles_{_DateTimeEngine.GetCurrentMoment().ToString("MMddyyyyhhmmss")}.zip";
+            Tuple<string, Stream> result;
 
+            if (_EnableSharedFileServiceConsolidation.Value)
+            {
+                var sharedFolderFileIds = _InventoryFileRepository.GetErrorFileSharedFolderFileIds(fileIds);
+                var archiveStream = _SharedFolderService.CreateZipArchive(sharedFolderFileIds);
+                result = _BuildPackageReturnForArchiveFile(archiveFileName, archiveStream);
+                return result;
+            }
+
+            result = _DownloadErrorFilesFromFileService(archiveFileName, fileIds);
+            return result;
+        }
+
+        private Tuple<string, Stream> _DownloadErrorFilesFromFileService(string archiveFileName, List<int> fileIds)
+        {
             var errorsFilesToProcess = fileIds.Select(_GetExistingInventoryErrorFileInfo).ToDictionary(fi => fi.FilePath, fi => fi.FriendlyFileName);
 
             Stream archiveFile = _FileService.CreateZipArchive(errorsFilesToProcess);
@@ -800,12 +924,12 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private ExistingInventoryErrorFileInfo _GetExistingInventoryErrorFileInfo(int fileId)
+        private InventoryFile _GetInventoryFileById(int fileId)
         {
-            InventoryFile fileDetails;
             try
             {
-                fileDetails = _InventoryFileRepository.GetInventoryFileById(fileId);
+                var fileDetails = _InventoryFileRepository.GetInventoryFileById(fileId);
+                return fileDetails;
             }
             catch (Exception ex)
             {
@@ -813,6 +937,11 @@ namespace Services.Broadcast.ApplicationServices
                 _LogError(message, ex);
                 throw new InvalidOperationException(message, ex);
             }
+        }
+
+        private ExistingInventoryErrorFileInfo _GetExistingInventoryErrorFileInfo(int fileId)
+        {
+            var fileDetails = _GetInventoryFileById(fileId);
 
             var fileNameSuffix = string.Empty;
             if (Path.GetExtension(fileDetails.FileName)?.Equals(".XML", StringComparison.OrdinalIgnoreCase) == true)
@@ -860,10 +989,10 @@ namespace Services.Broadcast.ApplicationServices
         /// For unit testing.  Abstracts from the static Configuration Service.
         /// </summary>
         protected virtual string _GetInventoryUploadErrorsFolder()
-        {	        
-			var path = Path.Combine(_GetInventoryUploadFolder()
+        {
+            var path = Path.Combine(_GetInventoryUploadFolder()
                 , BroadcastConstants.FolderNames.INVENTORY_UPLOAD_ERRORS);
-	        return path;
+            return path;
         }
 
         protected virtual string _GetInventoryUploadFolder()
@@ -882,12 +1011,10 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// For unit testing.  To control the "now".
-        /// </summary>
-        protected virtual DateTime _GetDateTimeNow()
+        private bool _GetEnableSharedFileServiceConsolidation()
         {
-            return DateTime.Now;
+            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
+            return result;
         }
 
         private class ExistingInventoryErrorFileInfo

@@ -194,6 +194,7 @@
   ],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": null,
   "FileStatus": 0,
   "Hash": null,
@@ -203,6 +204,7 @@
   "InventorySource": null,
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": [
     "Line 18 contains an empty station cell",
     "Line 21 contains an empty daypart cell"

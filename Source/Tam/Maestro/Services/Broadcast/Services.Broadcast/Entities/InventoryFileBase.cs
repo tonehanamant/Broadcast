@@ -19,6 +19,10 @@ namespace Services.Broadcast.Entities
         public List<string> ValidationProblems { get; set; } = new List<string>();
         public int? RowsProcessed { get; set; }
 
+        public Guid? UploadedFileSharedFolderFileId { get; set; }
+        
+        public Guid? ErrorFileSharedFolderFileId { get; set; }
+
         /// <summary>
         /// The start date of the inventory uploaded from the file
         /// </summary>

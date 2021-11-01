@@ -6296,6 +6296,7 @@
   ],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": null,
   "FileStatus": 0,
   "Hash": null,
@@ -6316,5 +6317,6 @@
   "InventorySource": null,
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": []
 }

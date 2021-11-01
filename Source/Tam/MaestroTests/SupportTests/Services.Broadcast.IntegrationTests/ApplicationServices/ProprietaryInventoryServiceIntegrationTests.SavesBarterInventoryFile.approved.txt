@@ -4,6 +4,7 @@
   "DataLines": [],
   "EffectiveDate": "2019-01-28T00:00:00",
   "EndDate": "2020-01-05T00:00:00",
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "ProprietaryDataFiles\\Barter_ValidFormat.xlsx",
   "FileStatus": 2,
   "Hash": "4F-F7-53-58-7C-11-B5-3C-8F-1C-BE-7D-14-AE-87-FA-95-B1-81-4C",
@@ -40,5 +41,6 @@
   },
   "RowsProcessed": 2,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": []
 }

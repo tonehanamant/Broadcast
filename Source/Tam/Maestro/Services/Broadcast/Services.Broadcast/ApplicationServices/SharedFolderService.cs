@@ -6,7 +6,10 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -19,6 +22,8 @@ namespace Services.Broadcast.ApplicationServices
         void RemoveFile(Guid fileId);
 
         SharedFolderFile GetAndRemoveFile(Guid fileId);
+
+        Stream CreateZipArchive(List<Guid> fileIdsToArchive);
     }
 
     public class SharedFolderService : ISharedFolderService
@@ -74,6 +79,22 @@ namespace Services.Broadcast.ApplicationServices
 
                 return file.Id;
             }
+        }
+
+        public Stream CreateZipArchive(List<Guid> fileIdsToArchive)
+        {
+            var fileInfos = fileIdsToArchive.Select(_GetFileInfo).ToList();
+            var filePaths = fileInfos.ToDictionary(f => Path.Combine(f.FolderPath, f.Id.ToString()), f=> f.FileNameWithExtension);
+            var archiveFile = new MemoryStream();
+            using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, leaveOpen: true))
+            {
+                foreach (var pair in filePaths)
+                {
+                    archive.CreateEntryFromFile(pair.Key, pair.Value, CompressionLevel.Fastest);
+                }
+            }
+            archiveFile.Seek(0, SeekOrigin.Begin);
+            return archiveFile;
         }
 
         private SharedFolderFile _GetFileInfo(Guid fileId)

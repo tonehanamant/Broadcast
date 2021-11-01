@@ -2,6 +2,7 @@
   "CreatedBy": "integration test",
   "EffectiveDate": "2018-11-05T00:00:00",
   "EndDate": "2018-12-30T00:00:00",
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "Fresno_4Q18_ValidFile.xml",
   "FileStatus": 1,
   "Hash": "3F-84-57-94-7B-F9-80-87-E5-6B-24-B5-43-F5-84-65-41-5E-A8-76",
@@ -13052,5 +13053,6 @@
     }
   ],
   "UniqueIdentifier": "c3d87419-f5f2-4eb3-abc6-dfa20bdac54e",
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": []
 }

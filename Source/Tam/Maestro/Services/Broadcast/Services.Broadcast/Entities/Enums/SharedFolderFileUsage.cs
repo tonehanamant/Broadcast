@@ -7,6 +7,8 @@
         Quote = 3,
         PlanBuyingScx = 4,
         InventoryScx = 5,
-        InventoryExport = 6
+        InventoryExport = 6,
+        UploadedInventory = 7,
+        InventoryErrorFile = 8
     }
 }

@@ -82,6 +82,7 @@
   ],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5980.xlsx",
   "FileStatus": 1,
   "Hash": "32-FB-D8-EA-5A-09-8D-1B-56-88-2A-AB-3E-7C-6E-EA-7A-84-82-5D",
@@ -117,5 +118,6 @@
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": []
 }

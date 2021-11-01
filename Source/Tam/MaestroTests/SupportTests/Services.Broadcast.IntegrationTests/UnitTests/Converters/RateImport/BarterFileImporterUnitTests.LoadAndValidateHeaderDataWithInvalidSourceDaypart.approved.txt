@@ -4,6 +4,7 @@
   "DataLines": [],
   "EffectiveDate": null,
   "EndDate": null,
+  "ErrorFileSharedFolderFileId": null,
   "FileName": "Barter_CNN_InvalidDaypart.xlsx",
   "FileStatus": 0,
   "Hash": null,
@@ -41,6 +42,7 @@
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
+  "UploadedFileSharedFolderFileId": null,
   "ValidationProblems": [
     "Not acceptable daypart code is specified",
     "Share book (2/1/808) is not in the correct format (MMM yy, MMM-yy, MMM/yy, yy-MMM, yy/MMM, MMM yyyy)",
