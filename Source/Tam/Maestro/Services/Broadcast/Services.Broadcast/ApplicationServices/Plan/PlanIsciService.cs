@@ -347,6 +347,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         internal List<IsciPlanMappingIsciDetailsDto> _ResolvePlanMappedIscis(DateTime planStartDate, DateTime planEndDate, List<IsciPlanMappingIsciDetailsDto> iscis)
         {
             var result = new List<IsciPlanMappingIsciDetailsDto>();
+
+            var unknowns = new List<IsciPlanMappingIsciDetailsDto>();
             foreach (var isci in iscis)
             {
                 var overlap = _GetOverlappingDateRange(new DateRange(planStartDate, planEndDate), 
@@ -355,14 +357,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 // it's mapped, but doesn't overlap
                 if (overlap.IsEmpty())
                 {
-                    // only add it once
-                    if (result.Select(s => s.Isci).ToList().Contains(isci.Isci))
-                    {
-                        continue;
-                    }
-                    // set it per the plan's dimensions
-                    isci.FlightStartDate = planStartDate;
-                    isci.FlightEndDate = planEndDate;
+                    unknowns.Add(isci);
+                    continue;
                 }
                 else
                 {
@@ -370,6 +366,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     isci.FlightEndDate = overlap.End.Value;
                 }
                 
+                result.Add(isci);
+            }
+
+            foreach (var isci in unknowns)
+            {
+                // only add it once
+                if (result.Select(s => s.Isci).ToList().Contains(isci.Isci))
+                {
+                    continue;
+                }
+                // set it per the plan's dimensions
+                isci.FlightStartDate = planStartDate;
+                isci.FlightEndDate = planEndDate;
                 result.Add(isci);
             }
 
