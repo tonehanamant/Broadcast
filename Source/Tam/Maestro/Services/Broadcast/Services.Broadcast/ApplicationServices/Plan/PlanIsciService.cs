@@ -1,14 +1,14 @@
-﻿using System;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -41,6 +41,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// /// <param name="createdBy">Created By</param>
         /// <returns>true or false</returns>
         bool SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductMapping, string createdBy);
+
+        IsciPlanMappingDetailsDto GetPlanIsciMappingsDetails(int planId);
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -52,6 +54,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
+        private readonly IPlanService _PlanService;
+        private readonly IStandardDaypartService _StandardDaypartService;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
+        private readonly IAudienceRepository _AudienceRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
@@ -64,13 +70,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="configurationSettingsHelper"></param>
         public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IPlanService planService,
+            IStandardDaypartService standardDaypartService,
+            ISpotLengthEngine spotLengthEngine,
             IDateTimeEngine dateTimeEngine,
-            IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper, 
+            IConfigurationSettingsHelper configurationSettingsHelper) 
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();
+
+            _StandardDaypartService = standardDaypartService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
+            _PlanService = planService;
+            _SpotLengthEngine = spotLengthEngine;
         }
 
         /// <inheritdoc />
@@ -280,6 +296,98 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }).ToList();
 
             return isciPlanMappingResult;
+        }
+
+        public IsciPlanMappingDetailsDto GetPlanIsciMappingsDetails(int planId)
+        {
+            var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId);
+
+            var plan = _PlanService.GetPlan(planId);
+            var daypartsString = _GetDaypartCodesString(plan.Dayparts);
+            var spotLengthsString = _GetSpotLengthsString(plan.CreativeLengths);
+            var demoString = _GetAudienceString(plan.AudienceId);
+            var flightString = _GetFlightString(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
+
+            var mappingsDetails = new IsciPlanMappingDetailsDto
+            {
+                PlanId =  plan.Id,
+                PlanName = plan.Name,
+                SpotLengthString = spotLengthsString,
+                DaypartCode = daypartsString,
+                DemoString = demoString,
+                FlightStartDate = plan.FlightStartDate.Value,
+                FlightEndDate = plan.FlightEndDate.Value,
+                FlightString = flightString,
+                MappedIscis = mappedIscis
+            };
+
+            return mappingsDetails;
+        }
+
+        private List<IsciPlanMappingIsciDetailsDto> _GetIsciPlanMappingIsciDetailsDto(int planId)
+        {
+            var planIscis = _PlanIsciRepository.GetPlanIscis(planId);
+            var iscis = planIscis.Select(s => s.Isci).ToList();
+            var mappedIscis = _PlanIsciRepository.GetIsciDetails(iscis);
+            var isciProducts = _PlanIsciRepository.GetIsciProductMappings(iscis);
+
+            mappedIscis.ForEach(s =>
+            {
+                s.SpotLengthString = _GetSpotLengthsString(s.SpotLengthId);
+                s.FlightString = _GetFlightString(s.FlightStartDate, s.FlightEndDate);
+                s.ProductName = isciProducts.Where(p => p.Isci == s.Isci)
+                    .Select(p => p.ProductName).FirstOrDefault();
+            });
+
+            return mappedIscis;
+        }
+
+        internal string _GetFlightString(DateTime startDate, DateTime endDate)
+        {
+            const string fullFormat = "MM/dd/yyyy";
+            const string shortFormat = "MM/dd";
+            var startDateString = startDate.Year == endDate.Year 
+                ? startDate.ToString(shortFormat)
+                : startDate.ToString(fullFormat);
+            var endDateString = endDate.ToString(fullFormat);
+
+            var result = $"{startDateString} - {endDateString}";
+            return result;
+        }
+
+        private string _GetAudienceString(int audienceId)
+        {
+            var audience = _AudienceRepository.GetAudiencesByIds(new List<int> {audienceId}).First();
+            return audience.Display;
+        }
+
+        private string _GetDaypartCodesString(List<PlanDaypartDto> planDayparts)
+        {
+            var planDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
+
+            var allStandardDayparts = _StandardDaypartService.GetAllStandardDayparts();
+            var daypartCodes = allStandardDayparts
+                .Where(d => planDaypartIds.Contains(d.Id))
+                .ToList();
+
+            var result = string.Join(",", daypartCodes);
+            return result;
+        }
+
+        private string _GetSpotLengthsString(List<CreativeLength> spotLengths)
+        {
+            var formattedLengths = spotLengths
+                .Select(s => _GetSpotLengthsString(s.SpotLengthId))
+                .ToList();
+
+            var result = string.Join(",", formattedLengths);
+            return result;
+        }
+
+        private string _GetSpotLengthsString(int spotLengthId)
+        {
+            var result = $":{_SpotLengthEngine.GetSpotLengthValueById(spotLengthId)}";
+            return result;
         }
     }
 }

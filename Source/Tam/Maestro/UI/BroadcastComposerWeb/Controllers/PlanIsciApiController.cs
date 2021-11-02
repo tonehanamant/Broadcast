@@ -69,5 +69,14 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().SaveIsciMappings(isciPlanProductsMapping, createdBy));
         }
+
+        [HttpGet]
+        [Route("plan-iscis-details")]
+        public BaseResponse<IsciPlanMappingDetailsDto> GetPlanIsciMappingsDetails(int planId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetPlanIsciMappingsDetails(planId));
+        }
     }
 }

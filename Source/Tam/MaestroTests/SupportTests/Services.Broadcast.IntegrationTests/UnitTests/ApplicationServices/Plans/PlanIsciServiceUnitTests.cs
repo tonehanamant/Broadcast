@@ -13,7 +13,11 @@ using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Castle.Components.DictionaryAdapter;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -31,6 +35,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private AgencyAdvertiserBrandApiClientStub _AgencyAdvertiserBrandApiClientStub;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
+        private Mock<IPlanService> _PlanService;
+        private Mock<IStandardDaypartService> _StandardDaypartService;
+        private Mock<ISpotLengthEngine> _SpotLengthEngine;
+        private Mock<IAudienceRepository> _AudienceRepository;
 
         [SetUp]
         public void SetUp()
@@ -42,14 +50,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock = new Mock<IAabEngine>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
+            _AgencyAdvertiserBrandApiClientStub = new AgencyAdvertiserBrandApiClientStub();
+            _PlanService = new Mock<IPlanService>();
+            _StandardDaypartService = new Mock<IStandardDaypartService>();
+            _SpotLengthEngine = new Mock<ISpotLengthEngine>();
+            _AudienceRepository = new Mock<IAudienceRepository>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
                 .Returns(_PlanIsciRepositoryMock.Object);
 
-            _AgencyAdvertiserBrandApiClientStub = new AgencyAdvertiserBrandApiClientStub();
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IAudienceRepository>())
+                .Returns(_AudienceRepository.Object);
 
-            _PlanIsciService = new PlanIsciService(_DataRepositoryFactoryMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object, _DateTimeEngineMock.Object, _AabEngineMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object);
+            _SpotLengthEngine.Setup(s => s.GetSpotLengthValueById(It.IsAny<int>()))
+                .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
+
+            _AudienceRepository.Setup(s => s.GetAudiencesByIds(It.IsAny<List<int>>()))
+                .Returns<List<int>>(AudienceTestData.GetAudiencesByIds);
+
+            _StandardDaypartService.Setup(s => s.GetAllStandardDayparts())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
+
+            _PlanIsciService = new PlanIsciService(
+                _DataRepositoryFactoryMock.Object, 
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _PlanService.Object,
+                _StandardDaypartService.Object,
+                _SpotLengthEngine.Object,
+                _DateTimeEngineMock.Object, 
+                _AabEngineMock.Object,
+                _FeatureToggleMock.Object, 
+                _ConfigurationSettingsHelperMock.Object);
         }
 
         [Test]
@@ -1178,6 +1211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+
         [Test]
         public void GetAvailableIscis_WithoutDuplication()
         {
@@ -1244,6 +1278,135 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 PlanIsci=1
                 }
             };
+        }
+
+        [Test]
+        public void GetPlanIsciMappingsDetails()
+        {
+            // Arrange
+            var planId = 23;
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<int>()))
+                .Returns(new List<IsciPlanMappingDto>
+                {
+                    new IsciPlanMappingDto
+                    {
+                        PlanId = planId,
+                        Isci = "Isci123"
+                    },
+                    new IsciPlanMappingDto
+                    {
+                        PlanId = planId,
+                        Isci = "Isci456"
+                    },
+                    new IsciPlanMappingDto
+                    {
+                        PlanId = planId,
+                        Isci = "Isci789"
+                    }
+                });
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Returns(new List<IsciProductMappingDto>
+                {
+                    new IsciProductMappingDto
+                    {
+                        Isci = "Isci123",
+                        ProductName = "KaBlam!"
+                    },
+                    new IsciProductMappingDto
+                    {
+                        Isci = "Isci456",
+                        ProductName = "KaBlam!"
+                    },
+                    new IsciProductMappingDto
+                    {
+                        Isci = "Isci789",
+                        ProductName = "KaBlam!"
+                    }
+                });
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciDetails(It.IsAny<List<string>>()))
+                .Returns(new List<IsciPlanMappingIsciDetailsDto>
+                {
+                    new IsciPlanMappingIsciDetailsDto
+                    {
+                        Isci = "Isci123",
+                        SpotLengthId = 1,
+                        AdvertiserName = "Blamco",
+                        ProductName = "KaBlam!",
+                        FlightStartDate = DateTime.Parse("11/1/2021"),
+                        FlightEndDate = DateTime.Parse("11/10/2021")
+                    },
+                    new IsciPlanMappingIsciDetailsDto
+                    {
+                        Isci = "Isci456",
+                        SpotLengthId = 1,
+                        AdvertiserName = "Blamco",
+                        ProductName = "KaBlam!",
+                        FlightStartDate = DateTime.Parse("11/1/2021"),
+                        FlightEndDate = DateTime.Parse("11/10/2021")
+                    },
+                    new IsciPlanMappingIsciDetailsDto
+                    {
+                        Isci = "Isci789",
+                        SpotLengthId = 1,
+                        AdvertiserName = "Blamco",
+                        ProductName = "KaBlam!",
+                        FlightStartDate = DateTime.Parse("11/1/2021"),
+                        FlightEndDate = DateTime.Parse("11/10/2021")
+                    },
+                });
+
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    Name = "TestPlanForGetPlanIsciMappingsDetails",
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto {DaypartCodeId = 1 },
+                        new PlanDaypartDto {DaypartCodeId = 2 }
+                    },
+                    FlightStartDate = DateTime.Parse("11/1/2021"),
+                    FlightEndDate = DateTime.Parse("11/10/2021"),
+                    AudienceId = 13,
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = 1,
+                            Weight = 25
+                        },
+                        new CreativeLength
+                        {
+                            SpotLengthId = 3,
+                            Weight = 75
+                        }
+                    }
+                });
+
+            // Act
+            var result = _PlanIsciService.GetPlanIsciMappingsDetails(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        
+        [Test]
+        [TestCase("11/1/2021", "11/10/2021", "11/01 - 11/10/2021")]
+        [TestCase("11/1/2021", "11/10/2022", "11/01/2021 - 11/10/2022")]
+        public void GetFlightString(string startDateString, string endDateString, string expectedFlightString)
+        {
+            // Arrange
+            var startDate = DateTime.Parse(startDateString);
+            var endDate = DateTime.Parse(endDateString);
+
+            // Act
+            var result = _PlanIsciService._GetFlightString(startDate, endDate);
+
+            // Assert
+            Assert.AreEqual(expectedFlightString, result);
         }
     }
 }

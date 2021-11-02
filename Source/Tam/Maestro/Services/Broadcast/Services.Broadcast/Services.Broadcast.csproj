@@ -527,6 +527,8 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
     <Compile Include="Entities\DaypartDetailDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanMappingDetailsDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanMappingIsciDetailsDto.cs" />
     <Compile Include="Entities\LogoResultDto.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />

@@ -62,6 +62,13 @@ namespace Services.Broadcast.Repositories
         List<IsciPlanMappingDto> GetPlanIscis();
 
         /// <summary>
+        /// Gets the plan iscis.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        List<IsciPlanMappingDto> GetPlanIscis(int planId);
+
+        /// <summary>
         /// Delete Plan Isci mappings
         /// </summary>
         /// <param name="isciPlanMappingsDeleted">The List which contains save parameters</param>
@@ -77,6 +84,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="deletedBy">The user who deletes plan isci</param>
         /// <returns>Total number of deleted plan isci</returns>
         int DeletePlanIscisNotExistInReelIsci(DateTime deletedAt, string deletedBy);
+
+        List<IsciPlanMappingIsciDetailsDto> GetIsciDetails(List<string> iscis);
     }
     /// <summary>
     /// Data operations for the PlanIsci Repository.
@@ -234,6 +243,20 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public List<IsciPlanMappingDto> GetPlanIscis(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = (from planIsci in context.plan_iscis.Where(x => x.plan_id == planId && x.deleted_at == null)
+                    select new IsciPlanMappingDto
+                    {
+                        PlanId = planIsci.plan_id,
+                        Isci = planIsci.isci
+                    }).ToList();
+                return result;
+            });
+        }
+
         public int DeleteIsciPlanMappings(List<IsciPlanMappingDto> isciPlanMappingsDeleted, string deletedBy, DateTime deletedAt)
         {
             return _InReadUncommitedTransaction(context =>
@@ -277,5 +300,26 @@ namespace Services.Broadcast.Repositories
                 return deletedCount;
             });
         }
+
+        public List<IsciPlanMappingIsciDetailsDto> GetIsciDetails(List<string> iscis)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var isciDetails = context.reel_iscis
+                    .Where(s => iscis.Contains(s.isci))
+                    .Select(s => new IsciPlanMappingIsciDetailsDto
+                    {
+                        Isci = s.isci,
+                        SpotLengthId = s.spot_length_id,
+                        AdvertiserName = s.reel_isci_advertiser_name_references.First().advertiser_name_reference,
+                        FlightStartDate = s.active_start_date,
+                        FlightEndDate = s.active_end_date
+                    })
+                    .ToList();
+
+                return isciDetails;
+            });
+        }
+
     }
 }

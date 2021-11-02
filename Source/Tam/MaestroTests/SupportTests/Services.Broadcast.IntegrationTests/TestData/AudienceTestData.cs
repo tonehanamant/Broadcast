@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
@@ -110,6 +111,17 @@ namespace Services.Broadcast.IntegrationTests.TestData
             var audiences = GetAudiences();
             var found = audiences.First(a => a.Id == id);
             return found;
+        }
+
+        public static List<LookupDto> GetAudiencesByIds(List<int> audienceIds)
+        {
+            var audiences = GetAudiences().Where(s => audienceIds.Contains(s.Id)).ToList();
+            var result = audiences.Select(s => new LookupDto
+            {
+                Id = s.Id,
+                Display = s.Display
+            }).ToList();
+            return result;
         }
 
         public static BroadcastAudience GetBroadcastAudienceById(int id)
