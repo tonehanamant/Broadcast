@@ -307,19 +307,19 @@ namespace Services.Broadcast.Repositories
             {
                 var isciDetails = context.reel_iscis
                     .Where(s => iscis.Contains(s.isci))
+                    .ToList()
                     .Select(s => new IsciPlanMappingIsciDetailsDto
                     {
                         Isci = s.isci,
                         SpotLengthId = s.spot_length_id,
-                        AdvertiserName = s.reel_isci_advertiser_name_references.First().advertiser_name_reference,
-                        FlightStartDate = s.active_start_date,
-                        FlightEndDate = s.active_end_date
+                        AdvertiserName = s.reel_isci_advertiser_name_references.FirstOrDefault()?.advertiser_name_reference,
+                        ActiveStartDate = s.active_start_date,
+                        ActiveEndDate = s.active_end_date
                     })
                     .ToList();
 
                 return isciDetails;
             });
         }
-
     }
 }

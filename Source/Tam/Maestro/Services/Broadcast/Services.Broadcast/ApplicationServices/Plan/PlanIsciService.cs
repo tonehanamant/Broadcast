@@ -9,6 +9,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Extensions;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -300,17 +301,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public IsciPlanMappingDetailsDto GetPlanIsciMappingsDetails(int planId)
         {
-            var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId);
-
             var plan = _PlanService.GetPlan(planId);
             var daypartsString = _GetDaypartCodesString(plan.Dayparts);
             var spotLengthsString = _GetSpotLengthsString(plan.CreativeLengths);
             var demoString = _GetAudienceString(plan.AudienceId);
             var flightString = _GetFlightString(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
+            var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
+
             var mappingsDetails = new IsciPlanMappingDetailsDto
             {
-                PlanId =  plan.Id,
+                PlanId = plan.Id,
                 PlanName = plan.Name,
                 SpotLengthString = spotLengthsString,
                 DaypartCode = daypartsString,
@@ -320,18 +321,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FlightString = flightString,
                 MappedIscis = mappedIscis
             };
-
             return mappingsDetails;
         }
 
-        private List<IsciPlanMappingIsciDetailsDto> _GetIsciPlanMappingIsciDetailsDto(int planId)
+        private List<IsciPlanMappingIsciDetailsDto> _GetIsciPlanMappingIsciDetailsDto(int planId, DateTime planStartDate, DateTime planEndDate)
         {
             var planIscis = _PlanIsciRepository.GetPlanIscis(planId);
             var iscis = planIscis.Select(s => s.Isci).ToList();
-            var mappedIscis = _PlanIsciRepository.GetIsciDetails(iscis);
+            var isciDetails = _PlanIsciRepository.GetIsciDetails(iscis);
+            var mappedIsciDetails = _ResolvePlanMappedIscis(planStartDate, planEndDate, isciDetails);
+
             var isciProducts = _PlanIsciRepository.GetIsciProductMappings(iscis);
 
-            mappedIscis.ForEach(s =>
+            mappedIsciDetails.ForEach(s =>
             {
                 s.SpotLengthString = _GetSpotLengthsString(s.SpotLengthId);
                 s.FlightString = _GetFlightString(s.FlightStartDate, s.FlightEndDate);
@@ -339,7 +341,60 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .Select(p => p.ProductName).FirstOrDefault();
             });
 
-            return mappedIscis;
+            return mappedIsciDetails;
+        }
+
+        internal List<IsciPlanMappingIsciDetailsDto> _ResolvePlanMappedIscis(DateTime planStartDate, DateTime planEndDate, List<IsciPlanMappingIsciDetailsDto> iscis)
+        {
+            var result = new List<IsciPlanMappingIsciDetailsDto>();
+            foreach (var isci in iscis)
+            {
+                var overlap = _GetOverlappingDateRange(new DateRange(planStartDate, planEndDate), 
+                    new DateRange(isci.ActiveStartDate, isci.ActiveEndDate));
+
+                // it's mapped, but doesn't overlap
+                if (overlap.IsEmpty())
+                {
+                    // only add it once
+                    if (result.Select(s => s.Isci).ToList().Contains(isci.Isci))
+                    {
+                        continue;
+                    }
+                    // set it per the plan's dimensions
+                    isci.FlightStartDate = planStartDate;
+                    isci.FlightEndDate = planEndDate;
+                }
+                else
+                {
+                    isci.FlightStartDate = overlap.Start.Value;
+                    isci.FlightEndDate = overlap.End.Value;
+                }
+                
+                result.Add(isci);
+            }
+
+            return result;
+        }
+
+        internal static DateRange _GetOverlappingDateRange(DateRange planFlightDateRange, DateRange isciActiveDateRange)
+        {
+            var result = new DateRange();
+
+            if (isciActiveDateRange.Start > planFlightDateRange.End ||
+                isciActiveDateRange.End < planFlightDateRange.Start)
+            {
+                return result;
+            }
+
+            result.Start = planFlightDateRange.Start >= isciActiveDateRange.Start
+                ? planFlightDateRange.Start
+                : isciActiveDateRange.Start;
+
+            result.End = planFlightDateRange.End <= isciActiveDateRange.End
+                ? planFlightDateRange.End
+                : isciActiveDateRange.End;
+
+            return result;
         }
 
         internal string _GetFlightString(DateTime startDate, DateTime endDate)

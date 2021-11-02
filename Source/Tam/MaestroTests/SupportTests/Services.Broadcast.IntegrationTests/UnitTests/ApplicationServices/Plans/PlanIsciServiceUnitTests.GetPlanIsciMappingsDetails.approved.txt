@@ -6,6 +6,8 @@
   "FlightString": "11/01 - 11/10/2021",
   "MappedIscis": [
     {
+      "ActiveEndDate": "0001-01-01T00:00:00",
+      "ActiveStartDate": "0001-01-01T00:00:00",
       "AdvertiserName": "Blamco",
       "FlightEndDate": "2021-11-10T00:00:00",
       "FlightStartDate": "2021-11-01T00:00:00",
@@ -16,6 +18,8 @@
       "SpotLengthString": ":30"
     },
     {
+      "ActiveEndDate": "0001-01-01T00:00:00",
+      "ActiveStartDate": "0001-01-01T00:00:00",
       "AdvertiserName": "Blamco",
       "FlightEndDate": "2021-11-10T00:00:00",
       "FlightStartDate": "2021-11-01T00:00:00",
@@ -26,6 +30,8 @@
       "SpotLengthString": ":30"
     },
     {
+      "ActiveEndDate": "0001-01-01T00:00:00",
+      "ActiveStartDate": "0001-01-01T00:00:00",
       "AdvertiserName": "Blamco",
       "FlightEndDate": "2021-11-10T00:00:00",
       "FlightStartDate": "2021-11-01T00:00:00",
