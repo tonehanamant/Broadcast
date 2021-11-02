@@ -78,13 +78,9 @@ namespace Services.Broadcast.ApplicationServices
         public bool AddSpotExceptionData()
         {
             List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans = _GetSpotExceptionsRecommendedPlansMock();
-            List<SpotExceptionsRecommendedPlanDetailsDto> spotExceptionsRecommendedPlanDetails = _GetSpotExceptionsRecommendedPlanDetailsMock();
-            List<SpotExceptionsRecommendedPlanDecisionDto> spotExceptionsRecommendedPlanDecision = _GetSpotExceptionsRecommendedPlanDecisionMock();
-            List<SpotExceptionsOutOfSpecDecisionsDto> spotExceptionsOutOfSpecDecisions = _GetSpotExceptionsOutOfSpecDecisionsMock();
             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs = _GetSpotExceptionsOutOfSpecsMock();
 
-            var result = _SpotExceptionRepository.AddSpotExceptionData(spotExceptionsRecommendedPlans, spotExceptionsRecommendedPlanDetails,
-spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsOutOfSpecDecisions);
+            var result = _SpotExceptionRepository.AddSpotExceptionData(spotExceptionsRecommendedPlans, spotExceptionsOutOfSpecs);
             return result;
         }
         public bool ClearSpotExceptionData()
@@ -92,18 +88,18 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
             var result = _SpotExceptionRepository.ClearSpotExceptionData();
             return result;
         }
+
         private List<SpotExceptionsRecommendedPlansDto> _GetSpotExceptionsRecommendedPlansMock()
         {
             var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDto>
             {
                 new SpotExceptionsRecommendedPlansDto
                 {
-                        Id = 1,
                         EstimateId =191756,
                         IsciName = "AB82TXT2H",
                         RecommendedPlanId = 215,
                         ProgramName = "Q13 news at 10",
-                        ProgramAirTime = new DateTime(2020, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 10, 4),
                         StationLegacyCallLetters = "KOB",
                         Cost = 675,
                         Impressions = 765,
@@ -114,17 +110,50 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2019, 9, 1),
                         DaypartId = 70615,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId=215,
+                                MetricPercent=20,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    UserName = "MockData",
+                                    CreatedAt = DateTime.Now
+                                }
+                            },
+                                new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId=221,
+                                MetricPercent=22,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                                new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId=222,
+                                MetricPercent=24,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId=223,
+                                MetricPercent=26,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                        Id = 2,
                         EstimateId =191757,
                         IsciName = "AB82VR58",
                         RecommendedPlanId = 216,
                         ProgramName = "FOX 13 10:00 News",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 10, 04),
                         StationLegacyCallLetters = "KSTP",
                         Cost = 700,
                         Impressions = 879,
@@ -135,36 +164,68 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2018, 8, 2),
                         DaypartId = 70615,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                                new SpotExceptionsRecommendedPlanDetailsDto
+                                {
+                                  RecommendedPlanId=216,
+                                  MetricPercent=45,
+                                  IsRecommendedPlan=true,
+                                  SpotExceptionsRecommendedPlanDecision = null
+                                },
+                                 new SpotExceptionsRecommendedPlanDetailsDto
+                                {
+                                  RecommendedPlanId=224,
+                                  MetricPercent=50,
+                                  IsRecommendedPlan=false,
+                                  SpotExceptionsRecommendedPlanDecision = null
+                                }
+                        }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                        Id = 3,
-                        EstimateId =191758,
-                        IsciName = "AB44NR58",
-                        RecommendedPlanId = 217,
-                        ProgramName = "TEN O'CLOCK NEWS",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
-                        StationLegacyCallLetters="KHGI",
-                        Cost = 0,
-                        Impressions = 877,
-                        SpotLengthId = 12,
-                        AudienceId = 431,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2021, 3, 6),
-                        FlightEndDate = new DateTime(2021, 4, 6),
-                        DaypartId = 70616,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
+                    EstimateId =191758,
+                    IsciName = "AB44NR58",
+                    RecommendedPlanId = 217,
+                    ProgramName = "TEN O'CLOCK NEWS",
+                    ProgramAirTime = new DateTime(2021, 10, 10),
+                    StationLegacyCallLetters="KHGI",
+                    Cost = 0,
+                    Impressions = 877,
+                    SpotLengthId = 12,
+                    AudienceId = 431,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2021, 3, 6),
+                    FlightEndDate = new DateTime(2021, 4, 6),
+                    DaypartId = 70616,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 217,
+                            MetricPercent=28,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 225,
+                            MetricPercent=38,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                        Id = 4,
                         EstimateId =191759,
                         IsciName = "AB21QR58",
                         RecommendedPlanId = 218,
                         ProgramName = "Product1",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 06),
                         StationLegacyCallLetters="KWCH" ,
                         Cost = 987,
                         Impressions = 987,
@@ -175,16 +236,32 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2018, 4, 6),
                         DaypartId = 70617,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        Id = 5,
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 218,
+                                MetricPercent=56,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 226,
+                                MetricPercent=60,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
                         EstimateId =191760,
                         IsciName = "AB44NR58",
                         RecommendedPlanId = 219,
                         ProgramName = "TProduct2",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 13),
                         StationLegacyCallLetters="WDAY" ,
                         Cost = 555,
                         Impressions = 9878,
@@ -195,16 +272,32 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2019, 8, 3),
                         DaypartId = 70618,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        Id = 6,
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 219,
+                                MetricPercent=76,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 227,
+                                MetricPercent=80,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
                         EstimateId =191761,
                         IsciName = "AB33PR58",
                         RecommendedPlanId = 220,
                         ProgramName = "TEN O'CLOCK NEWS",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 20),
                         StationLegacyCallLetters="KPNX" ,
                         Cost = 987,
                         Impressions = 999,
@@ -215,16 +308,32 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2019, 8, 1),
                         DaypartId = 70619,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        Id = 7,
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 220,
+                                MetricPercent=87,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                                new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 228,
+                                MetricPercent=70,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
                         EstimateId =191762,
                         IsciName = "AB79PR58",
                         RecommendedPlanId = 221,
                         ProgramName = "Product4",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 27),
                         StationLegacyCallLetters="KELO" ,
                         Cost = 907,
                         Impressions = 5467,
@@ -235,16 +344,32 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2021, 9, 6),
                         DaypartId = 70620,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        Id = 8,
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 221,
+                                MetricPercent=82,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 229,
+                                MetricPercent=50,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
                         EstimateId =191763,
                         IsciName = "AB81GR58",
                         RecommendedPlanId = 222,
                         ProgramName = "Product3",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 27),
                         StationLegacyCallLetters="KXMC" ,
                         Cost = 453,
                         Impressions = 8795,
@@ -255,16 +380,32 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2020, 9, 2),
                         DaypartId = 70621,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        Id = 9,
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 222,
+                                MetricPercent=75,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 230,
+                                MetricPercent=79,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
                         EstimateId =191764,
                         IsciName = "AB87GR58",
                         RecommendedPlanId = 223,
                         ProgramName = "Product6",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 13),
                         StationLegacyCallLetters="WTTV" ,
                         Cost = 987,
                         Impressions = 8767,
@@ -275,16 +416,46 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2020, 7, 6),
                         DaypartId = 70622,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        Id = 10,
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 223,
+                                MetricPercent=90,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 231,
+                                MetricPercent=92,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 232,
+                                MetricPercent=94,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 233,
+                                MetricPercent=96,
+                                IsRecommendedPlan=false,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
                         EstimateId =191765,
                         IsciName = "AB83PR58",
                         RecommendedPlanId = 224,
                         ProgramName = "Product8",
-                        ProgramAirTime = new DateTime(2021, 10, 10),
+                        ProgramAirTime = new DateTime(2021, 09, 06),
                         StationLegacyCallLetters="WCCO" ,
                         Cost = 767,
                         Impressions = 9832,
@@ -295,133 +466,21 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                         FlightEndDate = new DateTime(2020, 6, 6),
                         DaypartId = 70623,
                         IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now
-                }
-            };
+                        IngestedAt=DateTime.Now,
+                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                                new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                RecommendedPlanId = 224,
+                                MetricPercent=96,
+                                IsRecommendedPlan=true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    }
+                };
 
             return spotExceptionsRecommendedPlans;
-        }
-
-        private List<SpotExceptionsRecommendedPlanDetailsDto> _GetSpotExceptionsRecommendedPlanDetailsMock()
-        {
-            var spotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
-            {
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                  Id = 1,
-                  SpotExceptionsRecommendedPlanId=1,
-                  RecommendedPlanId=215,
-                  MetricPercent=20,
-                  IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                  Id = 2,
-                  SpotExceptionsRecommendedPlanId=2,
-                  RecommendedPlanId=216,
-                  MetricPercent=45,
-                  IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 3,
-                        SpotExceptionsRecommendedPlanId=3,
-                        RecommendedPlanId = 217,
-                        MetricPercent=28,
-                        IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 4,
-                        SpotExceptionsRecommendedPlanId=4,
-                        RecommendedPlanId = 218,
-                        MetricPercent=56,
-                        IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 5,
-                        SpotExceptionsRecommendedPlanId=5,
-                        RecommendedPlanId = 219,
-                        MetricPercent=76,
-                        IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 6,
-                        SpotExceptionsRecommendedPlanId=6,
-                        RecommendedPlanId = 220,
-                        MetricPercent=87,
-                        IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                           Id = 7,
-                        SpotExceptionsRecommendedPlanId=7,
-                        RecommendedPlanId = 221,
-                        MetricPercent=82,
-                  IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 8,
-                        SpotExceptionsRecommendedPlanId=8,
-                        RecommendedPlanId = 222,
-                        MetricPercent=79,
-                        IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 9,
-                        SpotExceptionsRecommendedPlanId=9,
-                        RecommendedPlanId = 223,
-                        MetricPercent=91,
-                        IsRecommendedPlan=true
-                },
-                new SpotExceptionsRecommendedPlanDetailsDto
-                {
-                        Id = 10,
-                        SpotExceptionsRecommendedPlanId=10,
-                        RecommendedPlanId = 224,
-                        MetricPercent=96,
-                        IsRecommendedPlan=true
-                }
-            };
-
-            return spotExceptionsRecommendedPlanDetails;
-        }
-
-        private List<SpotExceptionsRecommendedPlanDecisionDto> _GetSpotExceptionsRecommendedPlanDecisionMock()
-        {
-            var spotExceptionsRecommendedPlanDecision = new List<SpotExceptionsRecommendedPlanDecisionDto>
-            {
-                new SpotExceptionsRecommendedPlanDecisionDto
-                {
-                  Id = 1,
-                  SpotExceptionsRecommendedPlanDetailId=1,
-                  UserName="MockData",
-                  CreatedAt=DateTime.Now
-                }
-            };
-
-            return spotExceptionsRecommendedPlanDecision;
-        }
-        private List<SpotExceptionsOutOfSpecDecisionsDto> _GetSpotExceptionsOutOfSpecDecisionsMock()
-        {
-            var spotExceptionsOutOfSpecDecisions = new List<SpotExceptionsOutOfSpecDecisionsDto>
-            {
-                new SpotExceptionsOutOfSpecDecisionsDto
-                {
-                  Id = 1,
-                  SpotExceptionsOutOfSpecId=1,
-                  AcceptedAsInSpec=true,
-                  DecisionNotes="",
-                  UserName = "MockData",
-                  CreatedAt = DateTime.Now
-                }
-            };
-
-            return spotExceptionsOutOfSpecDecisions;
         }
 
         private List<SpotExceptionsOutOfSpecsDto> _GetSpotExceptionsOutOfSpecsMock()
@@ -430,7 +489,6 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
             {
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 1,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191756,
@@ -451,11 +509,17 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 431,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
+                    {
+                      AcceptedAsInSpec=true,
+                      DecisionNotes="",
+                      UserName = "MockData",
+                      CreatedAt = DateTime.Now
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 2,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191757,
@@ -476,11 +540,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 430,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 3,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191758,
@@ -501,11 +565,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 431,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 4,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191759,
@@ -526,11 +590,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 430,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 5,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191760,
@@ -551,11 +615,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 429,
                   ProgramAirTime = new DateTime(2020, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 6,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191761,
@@ -576,11 +640,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 428,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 7,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191762,
@@ -601,11 +665,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 427,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 8,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191763,
@@ -626,11 +690,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 426,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 9,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191764,
@@ -651,11 +715,11 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 425,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  Id = 10,
                   ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191765,
@@ -676,7 +740,8 @@ spotExceptionsRecommendedPlanDecision, spotExceptionsOutOfSpecs, spotExceptionsO
                   ProgramAudienceId = 424,
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
-                  IngestedAt=DateTime.Now
+                  IngestedAt=DateTime.Now,
+                  SpotExceptionsOutOfSpecDecision = null
                 }
             };
 

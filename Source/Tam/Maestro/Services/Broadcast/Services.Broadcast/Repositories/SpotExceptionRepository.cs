@@ -17,15 +17,9 @@ namespace Services.Broadcast.Repositories
         /// Add mock data to spot exceptions tables.
         /// </summary>   
         ///  <param name="spotExceptionsRecommendedPlans">Mock data collection for ExceptionsRecommendedPlans table.</param>
-        ///  <param name="spotExceptionsRecommendedPlanDetails">Mock data collection for ExceptionsRecommendedPlanDetails table.</param>
-        ///  <param name="spotExceptionsRecommendedPlanDecision">Mock data collection for ExceptionsRecommendedPlanDecision table.</param>
         ///  <param name="spotExceptionsOutOfSpecs">Mock data collection for ExceptionsOutOfSpecs table.</param>
-        ///  <param name="spotExceptionsOutOfSpecDecisions">Mock data collection for ExceptionsOutOfSpecDecisions table.</param>
-        bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans
-             , List<SpotExceptionsRecommendedPlanDetailsDto> spotExceptionsRecommendedPlanDetails
-             , List<SpotExceptionsRecommendedPlanDecisionDto> spotExceptionsRecommendedPlanDecision,
-             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs,
-             List<SpotExceptionsOutOfSpecDecisionsDto> spotExceptionsOutOfSpecDecisions);
+        bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans,
+             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs);
         /// <summary>
         /// Clear data from spot exceptions tables.
         /// </summary>   
@@ -101,11 +95,8 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
             : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper) { }
 
-        public bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans
-            , List<SpotExceptionsRecommendedPlanDetailsDto> spotExceptionsRecommendedPlanDetails
-            , List<SpotExceptionsRecommendedPlanDecisionDto> spotExceptionsRecommendedPlanDecision,
-            List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs,
-            List<SpotExceptionsOutOfSpecDecisionsDto> spotExceptionsOutOfSpecDecisions)
+        public bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans,
+            List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs)
         {
             _InReadUncommitedTransaction(context =>
            {
@@ -127,52 +118,72 @@ namespace Services.Broadcast.Repositories
                    daypart_id = recommendedPlan.DaypartId,
                    ingested_by = recommendedPlan.IngestedBy,
                    ingested_at = recommendedPlan.IngestedAt,
-                   spot_exceptions_recommended_plan_details = spotExceptionsRecommendedPlanDetails.Select(recommendedPlanDetails => new spot_exceptions_recommended_plan_details()
+                   spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(recommendedPlanDetails =>
                    {
-                       spot_exceptions_recommended_plan_id = recommendedPlanDetails.SpotExceptionsRecommendedPlanId,
-                       recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
-                       metric_percent = recommendedPlanDetails.MetricPercent,
-                       is_recommended_plan = recommendedPlanDetails.IsRecommendedPlan,
-                       spot_exceptions_recommended_plan_decision = spotExceptionsRecommendedPlanDecision.Select(recommendedPlanDecision => new spot_exceptions_recommended_plan_decision()
+                       var spotExceptionsRecommendedPlanDetail = new spot_exceptions_recommended_plan_details()
                        {
-                           spot_exceptions_recommended_plan_detail_id = recommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId,
-                           created_at = recommendedPlanDecision.CreatedAt,
-                           username = recommendedPlanDecision.UserName
-                       }).ToList()
+
+                           recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
+                           metric_percent = recommendedPlanDetails.MetricPercent,
+                           is_recommended_plan = recommendedPlanDetails.IsRecommendedPlan
+                       };
+                       if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
+                       {
+                         spotExceptionsRecommendedPlanDetail.spot_exceptions_recommended_plan_decision = new List<spot_exceptions_recommended_plan_decision>
+                            {
+                            new spot_exceptions_recommended_plan_decision
+                            {
+                            created_at = recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision.CreatedAt,
+                            username = recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision.UserName
+                            }
+                            };
+                       };
+                       return spotExceptionsRecommendedPlanDetail;
                    }).ToList()
                }).ToList();
+
                context.spot_exceptions_recommended_plans.AddRange(spotExceptionsRecommendedPlansToAdd);
 
-               var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs => new spot_exceptions_out_of_specs()
+               var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs => 
                {
-                   reason_code = outOfSpecs.ReasonCode,
-                   reason_code_message = outOfSpecs.ReasonCodeMessage,
-                   estimate_id = outOfSpecs.EstimateId,
-                   isci_name = outOfSpecs.IsciName,
-                   recommended_plan_id = outOfSpecs.RecommendedPlanId,
-                   program_name = outOfSpecs.ProgramName,
-                   station_legacy_call_letters = outOfSpecs.StationLegacyCallLetters,
-                   spot_length_id = outOfSpecs.SpotLengthId,
-                   audience_id = outOfSpecs.AudienceId,
-                   product = outOfSpecs.Product,
-                   flight_start_date = outOfSpecs.FlightStartDate,
-                   flight_end_date = outOfSpecs.FlightEndDate,
-                   program_flight_start_date = outOfSpecs.ProgramFlightStartDate,
-                   program_flight_end_date = outOfSpecs.ProgramFlightEndDate,
-                   program_network = outOfSpecs.ProgramNetwork,
-                   program_audience_id = outOfSpecs.ProgramAudienceId,
-                   program_air_time = outOfSpecs.ProgramAirTime,
-                   program_daypart_id = outOfSpecs.ProgramDaypartId,
-                   ingested_by = outOfSpecs.IngestedBy,
-                   ingested_at = outOfSpecs.IngestedAt,
-                   spot_exceptions_out_of_spec_decisions = spotExceptionsOutOfSpecDecisions.Select(outOfSpecsDecision => new spot_exceptions_out_of_spec_decisions()
+                   var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs()
                    {
-                       spot_exceptions_out_of_spec_id = outOfSpecsDecision.SpotExceptionsOutOfSpecId,
-                       accepted_as_in_spec = outOfSpecsDecision.AcceptedAsInSpec,
-                       decision_notes = outOfSpecsDecision.DecisionNotes,
-                       created_at = outOfSpecsDecision.CreatedAt,
-                       username = outOfSpecsDecision.UserName
-                   }).ToList()
+                       reason_code = outOfSpecs.ReasonCode,
+                       reason_code_message = outOfSpecs.ReasonCodeMessage,
+                       estimate_id = outOfSpecs.EstimateId,
+                       isci_name = outOfSpecs.IsciName,
+                       recommended_plan_id = outOfSpecs.RecommendedPlanId,
+                       program_name = outOfSpecs.ProgramName,
+                       station_legacy_call_letters = outOfSpecs.StationLegacyCallLetters,
+                       spot_length_id = outOfSpecs.SpotLengthId,
+                       audience_id = outOfSpecs.AudienceId,
+                       product = outOfSpecs.Product,
+                       flight_start_date = outOfSpecs.FlightStartDate,
+                       flight_end_date = outOfSpecs.FlightEndDate,
+                       program_flight_start_date = outOfSpecs.ProgramFlightStartDate,
+                       program_flight_end_date = outOfSpecs.ProgramFlightEndDate,
+                       program_network = outOfSpecs.ProgramNetwork,
+                       program_audience_id = outOfSpecs.ProgramAudienceId,
+                       program_air_time = outOfSpecs.ProgramAirTime,
+                       program_daypart_id = outOfSpecs.ProgramDaypartId,
+                       ingested_by = outOfSpecs.IngestedBy,
+                       ingested_at = outOfSpecs.IngestedAt
+                   };
+                   if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
+                   {
+                       spotExceptionsOutOfSpec.spot_exceptions_out_of_spec_decisions = new List<spot_exceptions_out_of_spec_decisions>
+                           {
+                               new spot_exceptions_out_of_spec_decisions()
+                               {
+                                   spot_exceptions_out_of_spec_id = outOfSpecs.SpotExceptionsOutOfSpecDecision.SpotExceptionsOutOfSpecId,
+                                   accepted_as_in_spec = outOfSpecs.SpotExceptionsOutOfSpecDecision.AcceptedAsInSpec,
+                                   decision_notes = outOfSpecs.SpotExceptionsOutOfSpecDecision.DecisionNotes,
+                                   created_at = outOfSpecs.SpotExceptionsOutOfSpecDecision.CreatedAt,
+                                   username = outOfSpecs.SpotExceptionsOutOfSpecDecision.UserName
+                               }
+                            };
+                   }
+                   return spotExceptionsOutOfSpec;
                }).ToList();
                context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
                context.SaveChanges();
@@ -252,7 +263,7 @@ namespace Services.Broadcast.Repositories
                     return null;
                 }
 
-                var spotExceptionsoutOfSpec =  _MapSpotExceptionsOutOfSpecToDto(spotExceptionsOutOfSpecsEntity.SpotExceptionsoutOfSpec, spotExceptionsOutOfSpecsEntity.Station);
+                var spotExceptionsoutOfSpec = _MapSpotExceptionsOutOfSpecToDto(spotExceptionsOutOfSpecsEntity.SpotExceptionsoutOfSpec, spotExceptionsOutOfSpecsEntity.Station);
                 return spotExceptionsoutOfSpec;
 
             });
@@ -271,9 +282,9 @@ namespace Services.Broadcast.Repositories
                 ProgramName = spotExceptionsOutOfSpecEntity.program_name,
                 StationLegacyCallLetters = spotExceptionsOutOfSpecEntity.station_legacy_call_letters,
                 Affiliate = stationEntity?.affiliation,
-                Market = stationEntity?.market?.geography_name,             
+                Market = stationEntity?.market?.geography_name,
                 SpotLength = _MapSpotLengthToDto(spotExceptionsOutOfSpecEntity.spot_lengths),
-                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience),                
+                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience),
                 Product = spotExceptionsOutOfSpecEntity.product,
                 FlightStartDate = spotExceptionsOutOfSpecEntity.flight_start_date,
                 FlightEndDate = spotExceptionsOutOfSpecEntity.flight_end_date,
@@ -290,10 +301,10 @@ namespace Services.Broadcast.Repositories
                     Id = spotExceptionsOutOfSpecsDecisionDb.id,
                     SpotExceptionsOutOfSpecId = spotExceptionsOutOfSpecsDecisionDb.spot_exceptions_out_of_spec_id,
                     AcceptedAsInSpec = spotExceptionsOutOfSpecsDecisionDb.accepted_as_in_spec,
-                    DecisionNotes= spotExceptionsOutOfSpecsDecisionDb.decision_notes,
+                    DecisionNotes = spotExceptionsOutOfSpecsDecisionDb.decision_notes,
                     UserName = spotExceptionsOutOfSpecsDecisionDb.username,
                     CreatedAt = spotExceptionsOutOfSpecsDecisionDb.created_at
-                }).SingleOrDefault()              
+                }).SingleOrDefault()
             };
             return spotExceptionsOutOfSpec;
         }
@@ -592,7 +603,7 @@ namespace Services.Broadcast.Repositories
                     program_air_time = outOfSpecs.ProgramAirTime,
                     program_daypart_id = outOfSpecs.ProgramDaypartId,
                     ingested_by = outOfSpecs.IngestedBy,
-                    ingested_at = outOfSpecs.IngestedAt,    
+                    ingested_at = outOfSpecs.IngestedAt,
                 }).ToList();
                 context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
                 context.SaveChanges();
