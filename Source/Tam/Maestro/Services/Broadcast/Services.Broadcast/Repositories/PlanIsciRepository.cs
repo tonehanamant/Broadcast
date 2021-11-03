@@ -312,7 +312,6 @@ namespace Services.Broadcast.Repositories
                     {
                         Isci = s.isci,
                         SpotLengthId = s.spot_length_id,
-                        AdvertiserName = s.reel_isci_advertiser_name_references.FirstOrDefault()?.advertiser_name_reference,
                         ActiveStartDate = s.active_start_date,
                         ActiveEndDate = s.active_end_date
                     })

@@ -56,6 +56,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
         private readonly IPlanService _PlanService;
+        private readonly ICampaignService _CampaignService;
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
@@ -65,13 +66,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="dataRepositoryFactory">The data repository factory.</param>
         /// <param name="mediaMonthAndWeekAggregateCache">The media month and week aggregate cache.</param>
+        /// <param name="planService">The plan service.</param>
+        /// <param name="campaignService">The campaign service.</param>
+        /// <param name="standardDaypartService">The standard daypart service.</param>
+        /// <param name="spotLengthEngine">The spot length engine.</param>
         /// <param name="dateTimeEngine">The date time engine.</param>
-        /// <param name="aabEngine">The Aab engine.</param>
-        /// <param name="featureToggleHelper"></param>
-        /// <param name="configurationSettingsHelper"></param>
+        /// <param name="aabEngine">The aab engine.</param>
+        /// <param name="featureToggleHelper">The feature toggle helper.</param>
+        /// <param name="configurationSettingsHelper">The configuration settings helper.</param>
         public PlanIsciService(IDataRepositoryFactory dataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IPlanService planService,
+            ICampaignService campaignService,
             IStandardDaypartService standardDaypartService,
             ISpotLengthEngine spotLengthEngine,
             IDateTimeEngine dateTimeEngine,
@@ -87,6 +93,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
             _PlanService = planService;
+            _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
         }
 
@@ -302,6 +309,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public IsciPlanMappingDetailsDto GetPlanIsciMappingsDetails(int planId)
         {
             var plan = _PlanService.GetPlan(planId);
+            var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
+            var productName = _GetProductName(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
             var daypartsString = _GetDaypartCodesString(plan.Dayparts);
             var spotLengthsString = _GetSpotLengthsString(plan.CreativeLengths);
             var demoString = _GetAudienceString(plan.AudienceId);
@@ -313,6 +322,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 PlanId = plan.Id,
                 PlanName = plan.Name,
+                ProductName = productName,
                 SpotLengthString = spotLengthsString,
                 DaypartCode = daypartsString,
                 DemoString = demoString,
@@ -324,6 +334,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return mappingsDetails;
         }
 
+        private string _GetProductName(Guid advertiserMasterId, Guid productMasterId)
+        {
+            var product = _AabEngine.GetAdvertiserProduct(advertiserMasterId, productMasterId);
+            return product.Name;
+        }
+
         private List<IsciPlanMappingIsciDetailsDto> _GetIsciPlanMappingIsciDetailsDto(int planId, DateTime planStartDate, DateTime planEndDate)
         {
             var planIscis = _PlanIsciRepository.GetPlanIscis(planId);
@@ -331,14 +347,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var isciDetails = _PlanIsciRepository.GetIsciDetails(iscis);
             var mappedIsciDetails = _ResolvePlanMappedIscis(planStartDate, planEndDate, isciDetails);
 
-            var isciProducts = _PlanIsciRepository.GetIsciProductMappings(iscis);
-
             mappedIsciDetails.ForEach(s =>
             {
                 s.SpotLengthString = _GetSpotLengthsString(s.SpotLengthId);
                 s.FlightString = _GetFlightString(s.FlightStartDate, s.FlightEndDate);
-                s.ProductName = isciProducts.Where(p => p.Isci == s.Isci)
-                    .Select(p => p.ProductName).FirstOrDefault();
             });
 
             return mappedIsciDetails;
@@ -432,6 +444,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var allStandardDayparts = _StandardDaypartService.GetAllStandardDayparts();
             var daypartCodes = allStandardDayparts
                 .Where(d => planDaypartIds.Contains(d.Id))
+                .Select(d => d.Code)
                 .ToList();
 
             var result = string.Join(",", daypartCodes);
