@@ -61,8 +61,9 @@ namespace PricingModelEndpointTester
         {
             var csHelper = new TestConfigurationSettingsHelper(settingsDict);
             var httpClient = new HttpClient();
+            var featureToggleHelper = new TestFeatureToggleHelper(new Dictionary<string, bool>());
 
-            var client = new PricingApiClient(csHelper, httpClient);
+            var client = new PricingApiClient(csHelper, httpClient, featureToggleHelper);
 
             return client;
         }

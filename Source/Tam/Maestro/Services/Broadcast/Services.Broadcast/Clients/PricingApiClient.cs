@@ -20,20 +20,29 @@ namespace Services.Broadcast.Clients
         private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
         private readonly HttpClient _HttpClient;
+        private readonly Lazy<bool> _AreQueuedPricingRequestsEnabled;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
-        public PricingApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+        public PricingApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient, IFeatureToggleHelper featureToggleHelper)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
             _HttpClient = httpClient;
+            _AreQueuedPricingRequestsEnabled = new Lazy<bool>(() => featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS));
         }
 
         public async Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request)
         {
+            if (_AreQueuedPricingRequestsEnabled.Value)
+            {
+                var client = new PricingJobQueueApiClient(_ConfigurationSettingsHelper, _HttpClient);
+                return await client.GetPricingSpotsResultAsync(request);
+            }
+
             var url = $"{_PlanPricingAllocationsEfficiencyModelUrl.Value}";
             return await _PostAsync<PlanPricingApiSpotsResponseDto_v3>(url, request);
+
         }
 
         protected async virtual Task<T> _PostAsync<T>(string url, object data)

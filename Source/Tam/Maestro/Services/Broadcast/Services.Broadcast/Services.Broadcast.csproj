@@ -529,6 +529,7 @@
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanMappingDetailsDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanMappingIsciDetailsDto.cs" />
+    <Compile Include="Clients\PricingJobQueueApiClient.cs" />
     <Compile Include="Entities\LogoResultDto.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
@@ -936,6 +937,7 @@
     <Compile Include="Helpers\FrequencyCapHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\BroadcastStreamHelper.cs" />
+    <Compile Include="Helpers\CompressionHelper.cs" />
     <Compile Include="Helpers\Json\IgnorableSerializerContractResolver.cs" />
     <Compile Include="Helpers\Json\IJsonIgnorignator.cs" />
     <Compile Include="Helpers\Json\JsonSerializerHelper.cs" />

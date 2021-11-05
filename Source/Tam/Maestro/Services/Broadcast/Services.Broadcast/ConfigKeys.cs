@@ -57,6 +57,9 @@
         public static readonly string TrackerServiceFtpSaveFolder = "TrackerService:SaveFolder";
         public static readonly string TrackerServiceFtpUrl = "TrackerService:FtpUrl";
         public static readonly string TrackerServiceFtpUserName = "TrackerService:UserName";
+
+		public static readonly string PlanPricingAllocationsEfficiencyModelSubmitUrl = "PlanPricingAllocationsEfficiencyModelSubmitUrl";
+		public static readonly string PlanPricingAllocationsEfficiencyModelFetchUrl = "PlanPricingAllocationsEfficiencyModelFetchUrl";
 	}
 }
 

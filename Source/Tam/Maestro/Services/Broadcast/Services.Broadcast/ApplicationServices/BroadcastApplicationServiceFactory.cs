@@ -99,10 +99,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDetectionConverter, DetectionConverter>();
             unityContainer.RegisterType<ISigmaConverter, SigmaConverter>();
             unityContainer.RegisterType<IDefaultScheduleConverter, DefaultScheduleConverter>();
-            unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();            
+            unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();
             unityContainer.RegisterType<IInventoryExportService, InventoryExportService>();
-			unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
+            unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();
             unityContainer.RegisterType<IScheduleAggregateFactoryService, ScheduleAggregateFactoryService>();
@@ -125,7 +125,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProposalCalculationEngine, ProposalCalculationEngine>();
             unityContainer.RegisterType<IQuarterCalculationEngine, QuarterCalculationEngine>();
             unityContainer.RegisterType<INsiUniverseService, NsiUniverseService>(new ContainerControlledLifetimeManager()); // singleton
-            unityContainer.RegisterType<INtiUniverseService, NtiUniverseService>();            
+            unityContainer.RegisterType<INtiUniverseService, NtiUniverseService>();
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateRepository, MediaMonthAndWeekAggregateAndWeekAggregateRepository>();
 
             //unityContainer.RegisterType<fill, fill>();
@@ -146,7 +146,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostPrePostingService, PostPrePostingService>();
             unityContainer.RegisterType<IProprietarySpotCostCalculationEngine, ProprietarySpotCostCalculationEngine>();
             unityContainer.RegisterType<IImpressionAdjustmentEngine, ImpressionAdjustmentEngine>();
-			unityContainer.RegisterType<IProjectionBooksService, ProjectionBooksService>();
+            unityContainer.RegisterType<IProjectionBooksService, ProjectionBooksService>();
             unityContainer.RegisterType<IProposalDetailHeaderTotalsCalculationEngine, ProposalDetailHeaderTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalDetailWeekTotalsCalculationEngine, ProposalDetailWeekTotalsCalculationEngine>();
             unityContainer.RegisterType<IProposalTotalsCalculationEngine, ProposalTotalsCalculationEngine>();
@@ -156,7 +156,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProprietaryFileImporterFactory, ProprietaryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
-            
+
             unityContainer.RegisterType<IPostLogService, PostLogService>();
             unityContainer.RegisterType<IAffidavitService, AffidavitService>();
             unityContainer.RegisterType<IMatchingEngine, MatchingEngine>();
@@ -180,7 +180,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IImpersonateUser, ImpersonateUser>();
             unityContainer.RegisterType<IExcelHelper, ExcelHelper>();
 
-            unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();            
+            unityContainer.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             unityContainer.RegisterType<IInventoryDaypartParsingEngine, InventoryDaypartParsingEngine>();
             unityContainer.RegisterType<ILockingEngine, LockingEngine>();
             unityContainer.RegisterType<IInventoryRatingsProcessingService, InventoryRatingsProcessingService>();
@@ -192,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();
             unityContainer.RegisterType<ISpotExceptionService, SpotExceptionService>();
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
-			unityContainer.RegisterType<IInventoryProprietarySummaryService, InventoryProprietarySummaryService>();
+            unityContainer.RegisterType<IInventoryProprietarySummaryService, InventoryProprietarySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
             unityContainer.RegisterType<IInventoryExportEngine, InventoryExportEngine>();
 
@@ -202,7 +202,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAgencyService, AgencyService>();
             unityContainer.RegisterType<IAdvertiserService, AdvertiserService>();
             unityContainer.RegisterType<IProductService, ProductService>();
-            
+
             unityContainer.RegisterType<IStandardDaypartService, StandardDaypartService>();
             unityContainer.RegisterType<IShowTypeService, ShowTypeService>();
             unityContainer.RegisterType<IContainTypeService, ContainTypeService>();
@@ -242,7 +242,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProgramService, ProgramService>();
 
             unityContainer.RegisterType<IPlanPricingService, PlanPricingService>();
+
+            //unityContainer.RegisterType<IPricingApiClient, PricingJobQueueApiClient>();
             unityContainer.RegisterType<IPricingApiClient, PricingApiClient>();
+
             unityContainer.RegisterType<IPricingRequestLogClient, PricingRequestLogClientAmazonS3>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
             unityContainer.RegisterType<ILogToAmazonS3, LogToAmazonS3>();
@@ -274,7 +277,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingScxDataConverter, PlanBuyingScxDataConverter>();
 
             unityContainer.RegisterType<IPlanMarketSovCalculator, PlanMarketSovCalculator>();
-            
+
             unityContainer.RegisterType<IReelIsciIngestService, ReelIsciIngestService>();
             unityContainer.RegisterType<IReelIsciApiClient, ReelIsciApiClient>();
             // Aab Related
@@ -300,7 +303,7 @@ namespace Services.Broadcast.ApplicationServices
 
             //@todo This is temporary to control the daypart source for Broadcast
             _SetupDaypartCache(unityContainer);
-            
+
             //RestClient
             unityContainer.RegisterFactory<HttpClient>(x => new HttpClient() { Timeout = Timeout.InfiniteTimeSpan }, FactoryLifetime.Singleton);
         }
@@ -330,5 +333,6 @@ namespace Services.Broadcast.ApplicationServices
                 new InterfaceInterceptor(),
                 new IInterceptionBehavior[] { });
         }
+
     }
 }
