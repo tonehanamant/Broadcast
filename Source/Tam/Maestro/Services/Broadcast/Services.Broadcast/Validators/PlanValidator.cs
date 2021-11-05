@@ -201,7 +201,7 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_FLIGHT_DAYS);
             }
 
-            var isClearAll = request.Weeks.All(x => x.IsUpdated);
+            var isClearAll = request.Weeks.All(x => x.IsUpdated || x.IsLocked);
 
             if (request.DeliveryType != PlanGoalBreakdownTypeEnum.EvenDelivery &&
                 request.Weeks.Count(w => w.IsUpdated) > 1 && !isClearAll)

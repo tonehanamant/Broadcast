@@ -6,6 +6,8 @@ using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
@@ -25,7 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private Mock<IPlanValidator> _PlanValidatorMock;
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
-        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
+        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;       
 
         public WeeklyBreakdownEngineUnitTests()
         {
@@ -47,12 +49,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock.Setup(x => x.GetSpotLengthValueById(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
 
+            var launchDarklyClientStub = new LaunchDarklyClientStub();           
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 _SpotLengthEngineMock.Object,
-                dataRepositoryFactory.Object);
+                dataRepositoryFactory.Object, featureToggleHelper);
         }
 
         private Mock<IStandardDaypartRepository> _GetMockStandardDaypartRepository()
@@ -397,6 +401,118 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PlanWeeklyGoalBreakdown_ClearAll_When_SomeWeeks_AreLocked_Test()
+        {
+            //Arrange
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
+
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
+                .Returns(_SpotLengthMultiplier);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLED_WEEKLY_BREAKDOWN_LOCK, true);
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
+            var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
+                _PlanValidatorMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _CreativeLengthEngineMock.Object,
+                spotLengthEngine.Object,
+                dataRepositoryFactory.Object, featureToggleHelper);
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightStartDate = new DateTime(2020, 2, 24),
+                FlightEndDate = new DateTime(2020, 3, 29),
+                FlightHiatusDays = new List<DateTime>(),
+                TotalImpressions = 30000,
+                ImpressionsPerUnit = 5000,
+                TotalRatings = 28.041170045861335,
+                TotalBudget = 300000,
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 844,
+                        StartDate = new DateTime(2020, 2, 24),
+                        EndDate = new DateTime(2020, 3, 1),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 6000,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 5.608234009172268,
+                        WeeklyBudget = 60000,
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 1,
+                        IsLocked=true
+
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2,
+                        MediaWeekId = 845,
+                        StartDate = new DateTime(2020, 3, 2),
+                        EndDate = new DateTime(2020, 3, 8),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 6000,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 5.608234009172268,
+                        WeeklyBudget = 60000,
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 1,
+                        IsLocked=true
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4,
+                        MediaWeekId = 847,
+                        StartDate = new DateTime(2020, 3, 16),
+                        EndDate = new DateTime(2020, 3, 22),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 6000,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 5.608234009172268,
+                        WeeklyBudget = 60000,
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 1,
+                        IsLocked=false
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 6,
+                        MediaWeekId = 848,
+                        StartDate = new DateTime(2020, 3, 23),
+                        EndDate = new DateTime(2020, 3, 29),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 6000,
+                        WeeklyImpressionsPercentage = 20,
+                        WeeklyRatings = 5.608234009172268,
+                        WeeklyBudget = 60000,
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 1,
+                        IsLocked=false
+                    }
+                },
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+            }; 
+            request.DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery;
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetDisplayMediaWeeks());
+           
+            //Act
+            var result = weeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request);
+
+            //Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -409,12 +525,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();          
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 spotLengthEngine.Object,
-                dataRepositoryFactory.Object);
+                dataRepositoryFactory.Object,featureToggleHelper);
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(_WeeklyBreakdown, _ImpressionsPerUnit, _CreativeLengths);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -430,12 +548,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();            
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 spotLengthEngine.Object,
-                dataRepositoryFactory.Object);
+                dataRepositoryFactory.Object,featureToggleHelper);
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown, _ImpressionsPerUnit, true);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -451,12 +571,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 spotLengthEngine.Object,
-                dataRepositoryFactory.Object);
+                dataRepositoryFactory.Object,featureToggleHelper);
 
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekByDaypart(_WeeklyBreakdown, _ImpressionsPerUnit, true, _CreativeLengths);
 
@@ -1030,12 +1152,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<IEnumerable<CreativeLength>>()))
                 .Returns(creativeLengths);
 
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
+
             var testClass = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 _SpotLengthEngineMock.Object,
-                dataRepositoryFactory.Object);
+                dataRepositoryFactory.Object, featureToggleHelper);
 
             return testClass;
         }
@@ -2117,7 +2242,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyRatings = 5.608234009172268,
                         WeeklyBudget = 60000,
                         WeeklyAdu = 0,
-                        WeeklyUnits = 1
+                        WeeklyUnits = 1,
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2132,7 +2257,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyRatings = 5.608234009172268,
                         WeeklyBudget = 60000,
                         WeeklyAdu = 0,
-                        WeeklyUnits = 1
+                        WeeklyUnits = 1,
                     },
                     new WeeklyBreakdownWeek
                     {

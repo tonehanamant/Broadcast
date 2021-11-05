@@ -26,5 +26,6 @@
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
         public static string ENABLE_RESTRICTIONS_PROGRAM_OR = "broadcast-restrictions-enable-program-or";
         public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
+        public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
     }
 }

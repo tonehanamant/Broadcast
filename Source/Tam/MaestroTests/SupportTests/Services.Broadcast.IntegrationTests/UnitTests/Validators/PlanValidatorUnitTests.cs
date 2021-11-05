@@ -1371,6 +1371,53 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.Nothing);
         }
+        [Test]
+        public void WeeklyBreakdownItems_Validation_WhenWeeksUpdatedOrLocked_NoValidationError()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 10,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 1,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true,
+                      SpotLengthId = 1,
+                      PercentageOfWeek = 50,
+                      IsLocked=false,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = false,
+                      SpotLengthId = 2,
+                      PercentageOfWeek = 50,
+                      IsLocked=true
+                    },
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request), Throws.Nothing);
+        }
 
         [Test]
         public void WeeklyBreakdownItems_Validation_WhenAllWeeksUpdated_ValidationError()

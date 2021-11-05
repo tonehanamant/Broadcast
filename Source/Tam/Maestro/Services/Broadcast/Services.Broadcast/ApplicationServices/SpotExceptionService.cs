@@ -771,6 +771,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlan = spotExceptionsOutOfSpec.RecommendedPlanName,
                         Reason = spotExceptionsOutOfSpec.ReasonCodeMessage,
                         Station = spotExceptionsOutOfSpec.StationLegacyCallLetters,
+                        Market= spotExceptionsOutOfSpec.Market,
                         SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
                         AudienceName = spotExceptionsOutOfSpec.ProgramAudience?.Name,
                         ProductName = spotExceptionsOutOfSpec.Product,

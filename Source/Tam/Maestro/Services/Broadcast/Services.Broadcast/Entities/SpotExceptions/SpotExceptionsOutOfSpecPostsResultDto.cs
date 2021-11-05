@@ -15,6 +15,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string RecommendedPlan { get; set; }
         public string Reason { get; set; }
         public string Station { get; set; }
+        public string Market { get; set; }
         public string SpotLengthString { get; set; }
         public string AudienceName { get; set; }
         public string ProductName { get; set; }

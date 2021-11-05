@@ -91,13 +91,15 @@ namespace Services.Broadcast.BusinessEngines
         private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
-        private IStandardDaypartRepository _StandardDaypartRepository; 
+        private IStandardDaypartRepository _StandardDaypartRepository;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsWeeklyBreakdownLockEnabled;
 
         public WeeklyBreakdownEngine(IPlanValidator planValidator,
                                          IMediaMonthAndWeekAggregateCache mediaWeekCache,
                                          ICreativeLengthEngine creativeLengthEngine,
                                          ISpotLengthEngine spotLengthEngine,
-                                         IDataRepositoryFactory broadcastDataRepositoryFactory)
+                                         IDataRepositoryFactory broadcastDataRepositoryFactory, IFeatureToggleHelper featureToggleHelper) 
         {
             _PlanValidator = planValidator;
             _MediaWeekCache = mediaWeekCache;
@@ -107,6 +109,8 @@ namespace Services.Broadcast.BusinessEngines
 
             _SpotLengthDeliveryMultipliers = new Lazy<Dictionary<int, double>>(_GetSpotDeliveryMultipliers);
             _SpotLengthCostMultipliers = new Lazy<Dictionary<int,decimal>>(_GetSpotCostMultipliers);
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsWeeklyBreakdownLockEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLED_WEEKLY_BREAKDOWN_LOCK));
         }
 
         private Dictionary<int, double> _GetSpotDeliveryMultipliers()
@@ -547,24 +551,43 @@ namespace Services.Broadcast.BusinessEngines
 
 
         public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
-        {
-            //TODO: Add check for lock
+        {         
 
             //Switch delivery type if it is even to prevent redestribution          
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
                 request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
 
-            foreach (var week in request.Weeks)
+            if(_IsWeeklyBreakdownLockEnabled.Value)
             {
-                week.WeeklyBudget = 0;
-                week.WeeklyUnits = 0;
-                week.WeeklyRatings = 0;
-                week.WeeklyImpressions = 0;
-                week.WeeklyImpressionsPercentage = 0;
-                week.WeeklyAdu = 0;
-                week.IsUpdated = true;
+                foreach (var week in request.Weeks)
+                {
+                    //Checking whether locked is not true then clear the week
+                    if (week.IsLocked != true)
+                    {
+                        week.WeeklyBudget = 0;
+                        week.WeeklyUnits = 0;
+                        week.WeeklyRatings = 0;
+                        week.WeeklyImpressions = 0;
+                        week.WeeklyImpressionsPercentage = 0;
+                        week.WeeklyAdu = 0;
+                        week.IsUpdated = true;
+                    }
+                }
             }
-
+            else
+            {
+                foreach (var week in request.Weeks)
+                {
+                     week.WeeklyBudget = 0;
+                     week.WeeklyUnits = 0;
+                     week.WeeklyRatings = 0;
+                     week.WeeklyImpressions = 0;
+                     week.WeeklyImpressionsPercentage = 0;
+                     week.WeeklyAdu = 0;
+                     week.IsUpdated = true;                   
+                }
+            }
+            
             var response = CalculatePlanWeeklyGoalBreakdown(request);
 
             return response;
@@ -884,8 +907,8 @@ namespace Services.Broadcast.BusinessEngines
         {
             redistributeCustom = false;
 
-            //All weeks have been updated do not redistribute
-            if (request.Weeks.All(x => x.IsUpdated))
+            //All weeks have been updated or Locked do not redistribute
+            if (request.Weeks.All(x => x.IsUpdated||x.IsLocked))
             {
                 //reset update flag
                 foreach(var week in request.Weeks)
