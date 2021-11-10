@@ -41,6 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime program_air_time { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
+        public string advertiser_name { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual audience audience1 { get; set; }

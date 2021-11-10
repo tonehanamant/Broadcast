@@ -36,6 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> daypart_id { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
+        public string advertiser_name { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }

@@ -1223,6 +1223,25 @@ END
 
 /*************************************** END BP-3244 ***************************************/
 
+/*************************************** START BP-3216 ***************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'advertiser_name'
+          AND Object_ID = Object_ID(N'spot_exceptions_recommended_plans'))
+BEGIN
+    ALTER TABLE spot_exceptions_recommended_plans
+		ADD advertiser_name NVARCHAR(100) NULL	
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'advertiser_name'
+          AND Object_ID = Object_ID(N'spot_exceptions_out_of_specs'))
+BEGIN
+    ALTER TABLE spot_exceptions_out_of_specs
+		ADD advertiser_name NVARCHAR(100) NULL	
+END
+/*************************************** START BP-3216 ***************************************/
+
+
 /*************************************** START BP-3128 ***************************************/
 
 DECLARE @pricingAddColumnSql VARCHAR(MAX) = 
