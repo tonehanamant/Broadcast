@@ -26,7 +26,7 @@ namespace Services.Broadcast.Entities.Plan
         public double WeeklyUnits { get; set; }
         // assumes that the WeeklyImpressions have been formatted for (000)
         public decimal WeeklyCpm => ProposalMath.CalculateCpm(WeeklyBudget, (WeeklyImpressions * 1000));
-        public bool IsLocked { get; set; }
+        public bool IsLocked { get; set; } = false;
     }
 
     public class WeeklyBreakdownTotals

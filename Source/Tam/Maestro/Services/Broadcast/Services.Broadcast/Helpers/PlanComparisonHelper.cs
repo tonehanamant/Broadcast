@@ -32,7 +32,8 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "GoalBreakdownType"),
             // ignored - out of scope for this compare
             new ComparisonMinorProperty(typeof(PlanDto), "PricingParameters"),
-            new ComparisonMinorProperty(typeof(PlanDto), "BuyingParameters")
+            new ComparisonMinorProperty(typeof(PlanDto), "BuyingParameters"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "IsLocked")
         };
 
         public static bool DidPlanPricingInputsChange(PlanDto beforePlan, PlanDto afterPlan)

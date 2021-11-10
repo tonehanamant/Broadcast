@@ -78,5 +78,9 @@
   {
     "ClassTypeName": "PlanDto",
     "PropertyName": "BuyingParameters"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "IsLocked"
   }
 ]
