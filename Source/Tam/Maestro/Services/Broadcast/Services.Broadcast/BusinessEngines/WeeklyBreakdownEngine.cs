@@ -918,7 +918,7 @@ namespace Services.Broadcast.BusinessEngines
             redistributeCustom = false;
 
             //All weeks have been updated or Locked do not redistribute
-            if (request.Weeks.All(x => x.IsUpdated||x.IsLocked))
+            if (request.Weeks.Count > 1 && request.Weeks.All(x => x.IsUpdated||x.IsLocked))
             {
                 //reset update flag
                 foreach(var week in request.Weeks)
