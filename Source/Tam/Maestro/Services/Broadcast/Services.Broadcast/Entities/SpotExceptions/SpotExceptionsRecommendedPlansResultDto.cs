@@ -18,5 +18,6 @@
         public string ProgramName { get; set; }
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
+        public string AdvertiserName { get; set; }
     }
 }

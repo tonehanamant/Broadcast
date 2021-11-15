@@ -63,6 +63,21 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">User Name</param>
         /// <returns>true or false</returns>
         bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName);
+
+        /// <summary>
+        /// Get the result of recommended plans advertiser. 
+        /// </summary>       
+        /// <param name="spotExceptionsRecommendedPlansAdvertisersRequest">The spot exceptions recommended plans request parameters</param>     
+        /// <returns>The list of advertiser name from recommended plans result</returns>
+        List<string> GetSpotExceptionsRecommendedPlansAdvertisers(SpotExceptionsRecommendedPlansAdvertisersRequestDto spotExceptionsRecommendedPlansAdvertisersRequest);
+
+        /// <summary>
+        /// Get the result of Out of Spec advertiser. 
+        /// </summary>       
+        /// <param name="spotExceptionsOutofSpecAdvertisersRequest">The spot exceptions recommended plans request parameters</param>     
+        /// <returns>The list of advertiser name from  Out of Spec result</returns>
+        List<string> GetSpotExceptionsOutofSpecAdvertisers(SpotExceptionsOutofSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest);
+
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -100,6 +115,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 215,
                         ProgramName = "Q13 news at 10",
                         ProgramAirTime = new DateTime(2021, 10, 4),
+                        AdvertiserName="Abbott Labs (Original)",
                         StationLegacyCallLetters = "KOB",
                         Cost = 675,
                         Impressions = 765,
@@ -154,6 +170,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 216,
                         ProgramName = "FOX 13 10:00 News",
                         ProgramAirTime = new DateTime(2021, 10, 04),
+                        AdvertiserName="Allergan",
                         StationLegacyCallLetters = "KSTP",
                         Cost = 700,
                         Impressions = 879,
@@ -190,6 +207,7 @@ namespace Services.Broadcast.ApplicationServices
                     RecommendedPlanId = 217,
                     ProgramName = "TEN O'CLOCK NEWS",
                     ProgramAirTime = new DateTime(2021, 10, 10),
+                    AdvertiserName="Ally Bank",
                     StationLegacyCallLetters="KHGI",
                     Cost = 0,
                     Impressions = 877,
@@ -226,6 +244,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 218,
                         ProgramName = "Product1",
                         ProgramAirTime = new DateTime(2021, 09, 06),
+                        AdvertiserName="Ally Bank",
                         StationLegacyCallLetters="KWCH" ,
                         Cost = 987,
                         Impressions = 987,
@@ -262,6 +281,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 219,
                         ProgramName = "TProduct2",
                         ProgramAirTime = new DateTime(2021, 09, 13),
+                        AdvertiserName="Amgen",
                         StationLegacyCallLetters="WDAY" ,
                         Cost = 555,
                         Impressions = 9878,
@@ -298,6 +318,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 220,
                         ProgramName = "TEN O'CLOCK NEWS",
                         ProgramAirTime = new DateTime(2021, 09, 20),
+                        AdvertiserName="Boston Scientific",
                         StationLegacyCallLetters="KPNX" ,
                         Cost = 987,
                         Impressions = 999,
@@ -334,6 +355,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 221,
                         ProgramName = "Product4",
                         ProgramAirTime = new DateTime(2021, 09, 27),
+                        AdvertiserName="Chattem",
                         StationLegacyCallLetters="KELO" ,
                         Cost = 907,
                         Impressions = 5467,
@@ -370,6 +392,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 222,
                         ProgramName = "Product3",
                         ProgramAirTime = new DateTime(2021, 09, 27),
+                        AdvertiserName=null,
                         StationLegacyCallLetters="KXMC" ,
                         Cost = 453,
                         Impressions = 8795,
@@ -406,6 +429,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 223,
                         ProgramName = "Product6",
                         ProgramAirTime = new DateTime(2021, 09, 13),
+                        AdvertiserName=null,
                         StationLegacyCallLetters="WTTV" ,
                         Cost = 987,
                         Impressions = 8767,
@@ -456,6 +480,7 @@ namespace Services.Broadcast.ApplicationServices
                         RecommendedPlanId = 224,
                         ProgramName = "Product8",
                         ProgramAirTime = new DateTime(2021, 09, 06),
+                        AdvertiserName=null,
                         StationLegacyCallLetters="WCCO" ,
                         Cost = 767,
                         Impressions = 9832,
@@ -489,12 +514,13 @@ namespace Services.Broadcast.ApplicationServices
             {
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="1",
                   ReasonCodeMessage="",
                   EstimateId= 191756,
                   IsciName="AB82TXT2H",
                   RecommendedPlanId= 215,
                   ProgramName="Q13 news at 10",
+                  AdvertiserName="Chattem",
                   StationLegacyCallLetters="KOB",
                   SpotLengthId= 12,
                   AudienceId= 431,
@@ -520,12 +546,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="2",
                   ReasonCodeMessage="",
                   EstimateId= 191757,
                   IsciName="AB82VR58",
                   RecommendedPlanId= 216,
                   ProgramName="FOX 13 10:00 News",
+                  AdvertiserName="Chattem",
                   StationLegacyCallLetters="KSTP",
                   SpotLengthId= 11,
                   AudienceId= 430,
@@ -545,12 +572,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="3",
                   ReasonCodeMessage="",
                   EstimateId= 191758,
                   IsciName="AB44NR58",
                   RecommendedPlanId= 217,
                   ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserName="Costant Contact",
                   StationLegacyCallLetters="KHGI",
                   SpotLengthId= 12,
                   AudienceId= 430,
@@ -570,12 +598,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="4",
                   ReasonCodeMessage="",
                   EstimateId= 191759,
                   IsciName="AB21QR58",
                   RecommendedPlanId= 218,
                   ProgramName="Product1",
+                  AdvertiserName="Curiosity Stream",
                   StationLegacyCallLetters="KWCH",
                   SpotLengthId= 11,
                   AudienceId= 430,
@@ -595,12 +624,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="5",
                   ReasonCodeMessage="",
                   EstimateId= 191760,
                   IsciName="AB44NR58",
                   RecommendedPlanId= 219,
                   ProgramName="TProduct2",
+                  AdvertiserName="Dupixent",
                   StationLegacyCallLetters="WDAY",
                   SpotLengthId= 10,
                   AudienceId= 429,
@@ -620,12 +650,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="6",
                   ReasonCodeMessage="",
                   EstimateId= 191761,
                   IsciName="AB33PR58",
                   RecommendedPlanId= 220,
                   ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserName="Eli Lilly - Trulicity (EN)",
                   StationLegacyCallLetters="KPNX",
                   SpotLengthId= 10,
                   AudienceId= 428,
@@ -645,12 +676,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="7",
                   ReasonCodeMessage="",
                   EstimateId= 191762,
                   IsciName="AB79PR58",
                   RecommendedPlanId= 221,
                   ProgramName="Product4",
+                  AdvertiserName="Eli Lilly - Trulicity (EN)",
                   StationLegacyCallLetters="KELO",
                   SpotLengthId= 09,
                   AudienceId= 427,
@@ -670,12 +702,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="8",
                   ReasonCodeMessage="",
                   EstimateId= 191763,
                   IsciName="AB81GR58",
                   RecommendedPlanId= 222,
                   ProgramName="Product3",
+                  AdvertiserName="GAP (EM)",
                   StationLegacyCallLetters="KXMC",
                   SpotLengthId= 08,
                   AudienceId= 426,
@@ -695,12 +728,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="9",
                   ReasonCodeMessage="",
                   EstimateId= 191764,
                   IsciName="AB87GR58",
                   RecommendedPlanId= 223,
                   ProgramName="Product6",
+                  AdvertiserName="Hershey - DA",
                   StationLegacyCallLetters="WTTV",
                   SpotLengthId= 07,
                   AudienceId= 425,
@@ -720,12 +754,13 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="",
+                  ReasonCode="10",
                   ReasonCodeMessage="",
                   EstimateId= 191765,
                   IsciName="AB83PR58",
                   RecommendedPlanId= 224,
                   ProgramName="Product8",
+                  AdvertiserName=null,
                   StationLegacyCallLetters="WCCO",
                   SpotLengthId= 06,
                   AudienceId= 424,
@@ -775,6 +810,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
                         AudienceName = spotExceptionsOutOfSpec.ProgramAudience?.Name,
                         ProductName = spotExceptionsOutOfSpec.Product,
+                        AdvertiserName= spotExceptionsOutOfSpec.AdvertiserName,
                         DaypartCode = spotExceptionsOutOfSpec.ProgramDaypartDetail?.Code,
                         FlightStartDate = spotExceptionsOutOfSpec.FlightStartDate?.ToString(),
                         FlightEndDate = spotExceptionsOutOfSpec.FlightEndDate?.ToString(),
@@ -821,6 +857,18 @@ namespace Services.Broadcast.ApplicationServices
             };
             return spotExceptionsOutOfSpecDetailResult;
         }
+        
+        /// <inheritdoc />
+        public List<string> GetSpotExceptionsOutofSpecAdvertisers(SpotExceptionsOutofSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest)
+        {            
+            SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest = new SpotExceptionsOutOfSpecPostsRequestDto();
+            spotExceptionsOutOfSpecPostsRequest.WeekStartDate = spotExceptionsOutofSpecAdvertisersRequest.WeekStartDate;
+            spotExceptionsOutOfSpecPostsRequest.WeekEndDate = spotExceptionsOutofSpecAdvertisersRequest.WeekEndDate;
+
+            var advertisers = GetSpotExceptionsOutOfSpecsPosts(spotExceptionsOutOfSpecPostsRequest).Select(s=>s.AdvertiserName ?? "Unknown").Distinct().ToList();
+
+            return advertisers;
+        }
 
         /// <inheritdoc />
         public List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
@@ -851,6 +899,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthString = spotExceptionsRecommendedPlan.SpotLength != null ? $":{spotExceptionsRecommendedPlan.SpotLength.Length}" : null,
                         AudienceName = spotExceptionsRecommendedPlan.Audience?.Name,
                         ProductName = spotExceptionsRecommendedPlan.Product,
+                        AdvertiserName = spotExceptionsRecommendedPlan.AdvertiserName,
                         ProgramName = spotExceptionsRecommendedPlan.ProgramName,
                         ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
                         ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat)
@@ -903,7 +952,17 @@ namespace Services.Broadcast.ApplicationServices
             };
             return spotExceptionsRecommendedPlanDetailsResult;
         }
+        
+        /// <inheritdoc />
+        public List<string> GetSpotExceptionsRecommendedPlansAdvertisers(SpotExceptionsRecommendedPlansAdvertisersRequestDto spotExceptionsRecommendedPlansAdvertisersRequest)
+        {
+            SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto();
+            spotExceptionsRecommendedPlansRequest.WeekStartDate = spotExceptionsRecommendedPlansAdvertisersRequest.WeekStartDate;
+            spotExceptionsRecommendedPlansRequest.WeekEndDate = spotExceptionsRecommendedPlansAdvertisersRequest.WeekEndDate;
+            var advertisers = GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest).Select(s => s.AdvertiserName ?? "Unknown").Distinct().ToList();
 
+            return advertisers;
+        }
         /// <inheritdoc />
         public bool SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveRequestDto spotExceptionsRecommendedPlanSaveRequest, string userName)
         {

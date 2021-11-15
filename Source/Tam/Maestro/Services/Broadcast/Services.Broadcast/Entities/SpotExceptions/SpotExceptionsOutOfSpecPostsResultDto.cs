@@ -19,6 +19,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string SpotLengthString { get; set; }
         public string AudienceName { get; set; }
         public string ProductName { get; set; }
+        public string AdvertiserName { get; set; }
         public string DaypartCode { get; set; }
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }

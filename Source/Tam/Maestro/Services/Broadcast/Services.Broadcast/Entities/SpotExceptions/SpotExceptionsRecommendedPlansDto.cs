@@ -18,6 +18,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int? RecommendedPlanId { get; set; }
         public string RecommendedPlanName { get; set; }
         public string ProgramName { get; set; }
+        public string AdvertiserName { get; set; }
         public DateTime ProgramAirTime { get; set; }
         public string StationLegacyCallLetters { get; set; }
         public string Affiliate { get; set; }

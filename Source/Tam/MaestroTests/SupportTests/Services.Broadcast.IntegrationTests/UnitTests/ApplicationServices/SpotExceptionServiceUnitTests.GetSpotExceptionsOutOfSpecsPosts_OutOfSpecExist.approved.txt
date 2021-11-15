@@ -1,5 +1,6 @@
 [
   {
+    "AdvertiserName": "MyBite",
     "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191760,
@@ -20,6 +21,7 @@
     "Status": true
   },
   {
+    "AdvertiserName": null,
     "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191757,
@@ -40,6 +42,7 @@
     "Status": true
   },
   {
+    "AdvertiserName": "MyBite",
     "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191758,

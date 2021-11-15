@@ -1,5 +1,6 @@
 [
   {
+    "AdvertiserName": "Beachbody",
     "Affiliate": "ABC",
     "AudienceName": "Men 18-24",
     "Cost": 700.0,
@@ -18,6 +19,7 @@
     "Status": false
   },
   {
+    "AdvertiserName": null,
     "Affiliate": "NBC",
     "AudienceName": "Women 18-24",
     "Cost": 800.0,
@@ -36,6 +38,7 @@
     "Status": true
   },
   {
+    "AdvertiserName": null,
     "Affiliate": "CBS",
     "AudienceName": "Men 50-64",
     "Cost": 450.0,

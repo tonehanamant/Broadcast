@@ -83,6 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         RecommendedPlanId = 11725,
                         RecommendedPlanName = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
                         ProgramName = "FOX 13 10:00 News",
+                        AdvertiserName="Beachbody",
                         ProgramAirTime = new DateTime(2020,1,4,8,7,15),
                         StationLegacyCallLetters = "KSTP",
                         Affiliate = "ABC",
@@ -119,6 +120,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         IsciName = "CC42TXT4P",
                         RecommendedPlanId = 11726,
                         RecommendedPlanName = "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        AdvertiserName=null,
                         ProgramName = "Reynolds Foil @9",
                         ProgramAirTime = new DateTime(2020,1,6,11,15,30),
                         StationLegacyCallLetters = "WDAY",
@@ -171,6 +173,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         IsciName = "CC44ZZPT4",
                         RecommendedPlanId = 11728,
                         RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                        AdvertiserName=null,
                         ProgramName = "Reckitt HYHO",
                         ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                         StationLegacyCallLetters = "KXMC",
@@ -706,6 +709,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
                     ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
+                    AdvertiserName="MyBite",
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                      SpotLength = new SpotLengthDto
@@ -752,6 +756,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 11726,
                   RecommendedPlanName="4Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="Reynolds Foil @9",
+                  AdvertiserName=null,
                   StationLegacyCallLetters="KSTP",
                   Affiliate = "NBC",
                   Market = "Phoenix (Prescott)",
@@ -801,6 +806,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 11725,
                   RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserName="MyBite",
                   StationLegacyCallLetters = "KSTP",
                   Affiliate = "ABC",
                   Market = "Lincoln & Hastings-Krny",
@@ -890,6 +896,240 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]       
+        public void GetSpotExceptionsRecommendedPlansAdvertisers_Advertisers_Exist()
+        { 
+            // Arrange
+            var spotExceptionsRecommendedPlansAdvertisersRequest = new SpotExceptionsRecommendedPlansAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>
+                {
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 2,
+                        EstimateId =191757,
+                        IsciName = "BB82TXT4P",
+                        RecommendedPlanId = 11725,
+                        RecommendedPlanName = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        ProgramName = "FOX 13 10:00 News",
+                        AdvertiserName="Beachbody",
+                        ProgramAirTime = new DateTime(2020,1,4,8,7,15),
+                        StationLegacyCallLetters = "KSTP",
+                        Affiliate = "ABC",
+                        Market = "Lincoln & Hastings-Krny",
+                        Cost = 700,
+                        Impressions = 1000,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 14,
+                            Length = 15
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 425,
+                            Code = "M18-24",
+                            Name = "Men 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71657,
+                            Code = "PMN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        EstimateId =191758,
+                        IsciName = "CC42TXT4P",
+                        RecommendedPlanId = 11726,
+                        RecommendedPlanName = "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reynolds Foil @9",
+                        ProgramAirTime = new DateTime(2020,1,6,11,15,30),
+                        StationLegacyCallLetters = "WDAY",
+                        Affiliate = "NBC",
+                        Market = "Phoenix (Prescott)",
+                        Cost = 800,
+                        Impressions = 1500,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 15,
+                            Length = 30
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 426,
+                            Code = "W18-24",
+                            Name = "Women 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71658,
+                            Code = "EN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 101,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                IsRecommendedPlan = true,
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 201,
+                                    SpotExceptionsRecommendedPlanDetailId = 101,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 4,
+                        EstimateId =191760,
+                        IsciName = "CC44ZZPT4",
+                        RecommendedPlanId = 11728,
+                        RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reckitt HYHO",
+                        ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                        StationLegacyCallLetters = "KXMC",
+                        Affiliate = "CBS",
+                        Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                        Cost = 450,
+                        Impressions = 1752,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 427,
+                            Code = "M50-64",
+                            Name = "Men 50-64"
+                        },
+                        Product = "Nike",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71659,
+                            Code = "PMN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 4,
+                                IsRecommendedPlan = false,
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 103,
+                                SpotExceptionsRecommendedPlanId = 4,
+                                IsRecommendedPlan = true,
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    }
+                });
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlansAdvertisers(spotExceptionsRecommendedPlansAdvertisersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));            
+        }
+        
+        [Test]
+        public void GetSpotExceptionsRecommendedPlansAdvertisers_Advertisers_DoesNotExist()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlansAdvertisersRequest = new SpotExceptionsRecommendedPlansAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>());
+
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlansAdvertisers(spotExceptionsRecommendedPlansAdvertisersRequest);
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetSpotExceptionsOutofSpecAdvertisers_Advertisers_Exist()
+        {
+            // Arrange
+            SpotExceptionsOutofSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest = new SpotExceptionsOutofSpecAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetOutOfSpecData());
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecAdvertisers(spotExceptionsOutofSpecAdvertisersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));            
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutofSpecAdvertisers_Advertisers_DoesNotExist()
+        {
+            // Arrange
+            var spotExceptionsOutofSpecAdvertisersRequest = new SpotExceptionsOutofSpecAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsOutOfSpecsDto>());
+
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecAdvertisers(spotExceptionsOutofSpecAdvertisersRequest);
+            // Assert
+            Assert.AreEqual(0, result.Count);
         }
     }
 }

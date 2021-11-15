@@ -37,6 +37,18 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecId));
         }
 
+        /// <summary>
+        /// Get the result of out-of-spec advertiser. 
+        /// </summary>       
+        /// <param name="spotExceptionsOutofSpecAdvertisersRequest">The media week start and end date</param>     
+        /// <returns>The list of advertiser name from out-of-spec result</returns>
+        [HttpPost]
+        [Route("out-of-spec-advertisers")]
+        public BaseResponse<List<string>> GetSpotExceptionsOutofSpecAdvertisers(SpotExceptionsOutofSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutofSpecAdvertisers(spotExceptionsOutofSpecAdvertisersRequest));
+        }
+
         [HttpPost]
         [Route("recommended-plans")]
         public BaseResponse<List<SpotExceptionsRecommendedPlansResultDto>> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
@@ -51,6 +63,17 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanId));
         }
 
+        /// <summary>
+        /// Get the result of recommended plans advertiser. 
+        /// </summary>       
+        /// <param name="spotExceptionsRecommendedPlansAdvertisersRequest">The media week start and end date</param>     
+        /// <returns>The list of advertiser name from recommended plans result</returns>
+        [HttpPost]
+        [Route("recommended-plans-advertisers")]
+        public BaseResponse<List<string>> GetSpotExceptionsRecommendedPlansAdvertisers(SpotExceptionsRecommendedPlansAdvertisersRequestDto spotExceptionsRecommendedPlansAdvertisersRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlansAdvertisers(spotExceptionsRecommendedPlansAdvertisersRequest));
+        }
         [Authorize]
         [HttpPost]
         [Route("recommended-plans-save")]
