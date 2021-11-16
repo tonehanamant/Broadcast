@@ -11,5 +11,5 @@
   "ProgramAirDate": "01/10/2020",
   "ProgramAirTime": "11:45:00 PM",
   "ProgramName": "Reckitt HYHO",
-  "ReasonCode": "Code"
+  "Reason": "Daypart"
 }

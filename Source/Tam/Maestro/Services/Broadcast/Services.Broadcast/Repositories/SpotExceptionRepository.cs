@@ -86,6 +86,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="createdAt">Created at Date</param>
         /// <returns>true or false</returns>
         bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName, DateTime createdAt);
+
+        /// <summary>
+        /// Gets spot exceptions out of spec reason codes
+        /// </summary>
+        /// <returns>The spot exceptions out of spec reason codes</returns>
+        List<SpotExceptionsOutOfSpecReasonCodeDto> GetSpotExceptionsOutOfSpecReasonCodes();
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -149,7 +155,6 @@ namespace Services.Broadcast.Repositories
                {
                    var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs()
                    {
-                       reason_code = outOfSpecs.ReasonCode,
                        reason_code_message = outOfSpecs.ReasonCodeMessage,
                        estimate_id = outOfSpecs.EstimateId,
                        isci_name = outOfSpecs.IsciName,
@@ -169,7 +174,8 @@ namespace Services.Broadcast.Repositories
                        program_air_time = outOfSpecs.ProgramAirTime,
                        program_daypart_id = outOfSpecs.ProgramDaypartId,
                        ingested_by = outOfSpecs.IngestedBy,
-                       ingested_at = outOfSpecs.IngestedAt
+                       ingested_at = outOfSpecs.IngestedAt,
+                       reason_code_id = outOfSpecs.SpotExceptionsOutOfSpecReasonCode.Id
                    };
                    if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
                    {
@@ -223,6 +229,7 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     //the reason audience1 is two foreign key referring to same audience table
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience1)
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
                         context.stations
                         .Include(stationDb => stationDb.market),
@@ -252,6 +259,7 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     //the reason audience1 is two foreign key referring to same audience table
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience1)
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
                         context.stations
                         .Include(stationDb => stationDb.market),
@@ -275,7 +283,6 @@ namespace Services.Broadcast.Repositories
             var spotExceptionsOutOfSpec = new SpotExceptionsOutOfSpecsDto
             {
                 Id = spotExceptionsOutOfSpecEntity.id,
-                ReasonCode = spotExceptionsOutOfSpecEntity.reason_code,
                 ReasonCodeMessage = spotExceptionsOutOfSpecEntity.reason_code_message,
                 EstimateId = spotExceptionsOutOfSpecEntity.estimate_id,
                 IsciName = spotExceptionsOutOfSpecEntity.isci_name,
@@ -307,7 +314,8 @@ namespace Services.Broadcast.Repositories
                     DecisionNotes = spotExceptionsOutOfSpecsDecisionDb.decision_notes,
                     UserName = spotExceptionsOutOfSpecsDecisionDb.username,
                     CreatedAt = spotExceptionsOutOfSpecsDecisionDb.created_at
-                }).SingleOrDefault()
+                }).SingleOrDefault(),
+                SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_reason_codes)
             };
             return spotExceptionsOutOfSpec;
         }
@@ -486,6 +494,23 @@ namespace Services.Broadcast.Repositories
             return daypart;
         }
 
+        private SpotExceptionsOutOfSpecReasonCodeDto _MapSpotExceptionsOutOfSpecReasonCodeToDto(spot_exceptions_out_of_spec_reason_codes spotExceptionsOutOfSpecReasonCodesEntity)
+        { 
+            if (spotExceptionsOutOfSpecReasonCodesEntity == null)
+            {
+                return null;
+            }
+
+            var spotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+            {
+                Id = spotExceptionsOutOfSpecReasonCodesEntity.id,
+                ReasonCode = spotExceptionsOutOfSpecReasonCodesEntity.reason_code,
+                Reason = spotExceptionsOutOfSpecReasonCodesEntity.reason,
+                Label = spotExceptionsOutOfSpecReasonCodesEntity.label
+            };
+            return spotExceptionsOutOfSpecReasonCode;
+        }
+
         /// <inheritdoc />
         public bool SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecisionDto spotExceptionsRecommendedPlanDecision)
         {
@@ -588,7 +613,7 @@ namespace Services.Broadcast.Repositories
             {
                 var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs => new spot_exceptions_out_of_specs()
                 {
-                    reason_code = outOfSpecs.ReasonCode,
+                    reason_code_id = outOfSpecs.SpotExceptionsOutOfSpecReasonCode.Id,
                     reason_code_message = outOfSpecs.ReasonCodeMessage,
                     estimate_id = outOfSpecs.EstimateId,
                     isci_name = outOfSpecs.IsciName,
@@ -651,6 +676,24 @@ namespace Services.Broadcast.Repositories
                 return isSpotExceptionsOutOfSpecDecisionSaved;
             });
 
+        }
+
+        /// <inheritdoc />
+        public List<SpotExceptionsOutOfSpecReasonCodeDto> GetSpotExceptionsOutOfSpecReasonCodes()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsOutOfSpecReasonCodesEntities = context.spot_exceptions_out_of_spec_reason_codes.ToList();
+
+                var spotExceptionsOutOfSpecReasonCodes = spotExceptionsOutOfSpecReasonCodesEntities.Select(spotExceptionsOutOfSpecReasonCodesEntity => new SpotExceptionsOutOfSpecReasonCodeDto
+                {
+                    Id = spotExceptionsOutOfSpecReasonCodesEntity.id,
+                    ReasonCode = spotExceptionsOutOfSpecReasonCodesEntity.reason_code,
+                    Reason = spotExceptionsOutOfSpecReasonCodesEntity.reason,
+                    Label = spotExceptionsOutOfSpecReasonCodesEntity.label
+                }).ToList();
+                return spotExceptionsOutOfSpecReasonCodes;
+            });
         }
     }
 }

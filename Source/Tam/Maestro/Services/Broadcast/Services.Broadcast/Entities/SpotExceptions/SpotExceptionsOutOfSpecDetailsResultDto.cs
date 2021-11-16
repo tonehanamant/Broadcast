@@ -3,7 +3,7 @@
     public class SpotExceptionsOutOfSpecDetailsResultDto
     {
         public int Id { get; set; }
-        public string ReasonCode { get; set; }
+        public string Reason { get; set; }
         public string DaypartCode { get; set; }
         public string Network { get; set; }
         public string AudienceName { get; set; }

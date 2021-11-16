@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions
 {
     public class SpotExceptionsOutOfSpecsDto
-    {      
+    {
         public SpotExceptionsOutOfSpecsDto()
         {
-            {
-                SpotLength = new SpotLengthDto();
-                ProgramAudience = new AudienceDto();
-                Audience = new AudienceDto();
-                DaypartDetail = new DaypartDetailDto();
-                ProgramDaypartDetail = new DaypartDetailDto();
-                SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto();
-            }
+            SpotLength = new SpotLengthDto();
+            ProgramAudience = new AudienceDto();
+            Audience = new AudienceDto();
+            DaypartDetail = new DaypartDetailDto();
+            ProgramDaypartDetail = new DaypartDetailDto();
+            SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto();
+            SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto();
         }
         public int Id { get; set; }
-        public string ReasonCode { get; set; }
         public string ReasonCodeMessage { get; set; }
         public int EstimateId { get; set; }
         public string IsciName { get; set; }
@@ -29,7 +26,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Market { get; set; }
         public string AdvertiserName { get; set; }        
         public int? SpotLengthId { get; set; }
-        public SpotLengthDto SpotLength { get; set; }       
+        public SpotLengthDto SpotLength { get; set; }
         public int? AudienceId { get; set; }
         public AudienceDto Audience { get; set; }
         public string Product { get; set; }
@@ -48,7 +45,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
         public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; }
-
+        public SpotExceptionsOutOfSpecReasonCodeDto SpotExceptionsOutOfSpecReasonCode { get; set; }
     }
 }
 

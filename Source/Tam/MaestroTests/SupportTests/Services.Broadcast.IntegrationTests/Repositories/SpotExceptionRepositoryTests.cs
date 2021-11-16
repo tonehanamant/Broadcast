@@ -247,11 +247,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             DateTime weekEndDate = new DateTime(2010, 01, 10);
 
             var spotExceptionOutOfspec = new List<SpotExceptionsOutOfSpecsDto>
-             {
+            {
                  new SpotExceptionsOutOfSpecsDto
                  {
                       Id=1,
-                      ReasonCode="",
                       ReasonCodeMessage="",
                       EstimateId= 191756,
                       IsciName="AB82TXT2H",
@@ -271,12 +270,18 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       ProgramAudienceId = 4,
                       ProgramAirTime = new DateTime(2010,1,4,8,7,15),
                       IngestedBy=ingestedBy,
-                      IngestedAt=ingestedDateTime,                    
+                      IngestedAt=ingestedDateTime,
+                      SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                      {
+                          Id = 2,
+                          ReasonCode = 1,
+                          Reason = "spot aired outside daypart",
+                          Label = "Daypart"
+                      }
                  },
                  new SpotExceptionsOutOfSpecsDto
                  {
                       Id = 2,
-                      ReasonCode="",
                       ReasonCodeMessage="",
                       EstimateId= 191757,
                       IsciName="AB82VR58",
@@ -296,12 +301,18 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       ProgramAudienceId = 5,
                       ProgramAirTime = new DateTime(2010,1,4,8,7,15),
                       IngestedBy=ingestedBy,
-                      IngestedAt=ingestedDateTime,                      
+                      IngestedAt=ingestedDateTime,
+                      SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                      {
+                          Id = 3,
+                          ReasonCode = 2,
+                          Reason = "genre content restriction",
+                          Label = "Genre"
+                      }
                  },
                  new SpotExceptionsOutOfSpecsDto
                  {
                       Id = 3,
-                      ReasonCode="",
                       ReasonCodeMessage="",
                       EstimateId= 191758,
                       IsciName="AB44NR58",
@@ -322,7 +333,13 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       ProgramAirTime = new DateTime(2010,1,11,8,7,15),
                       IngestedBy=ingestedBy,
                       IngestedAt=ingestedDateTime,
-                      
+                      SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                      {
+                          Id = 4,
+                          ReasonCode = 3,
+                          Reason = "affiliate content restriction",
+                          Label = "Affiliate"
+                      }
                  }
             };
             List<SpotExceptionsOutOfSpecsDto> result;

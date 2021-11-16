@@ -536,20 +536,22 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_files_shared_folder_files_id" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="36" PointY="38.125" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans" Width="1.5" PointX="28" PointY="0.75" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Width="1.5" PointX="38.375" PointY="0.875" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.625" PointY="17.5" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -78,6 +78,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>The list of advertiser name from  Out of Spec result</returns>
         List<string> GetSpotExceptionsOutofSpecAdvertisers(SpotExceptionsOutofSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest);
 
+        /// <summary>
+        /// Gets spot exceptions out of spec reason codes
+        /// </summary>
+        /// <returns>The spot exceptions out of spec reason codes</returns>
+        List<SpotExceptionsOutOfSpecReasonCodeResultDto> GetSpotExceptionsOutOfSpecReasonCodes();
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -514,7 +519,6 @@ namespace Services.Broadcast.ApplicationServices
             {
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="1",
                   ReasonCodeMessage="",
                   EstimateId= 191756,
                   IsciName="AB82TXT2H",
@@ -542,11 +546,17 @@ namespace Services.Broadcast.ApplicationServices
                       DecisionNotes="",
                       UserName = "MockData",
                       CreatedAt = DateTime.Now
+                    },
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
                     }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="2",
                   ReasonCodeMessage="",
                   EstimateId= 191757,
                   IsciName="AB82VR58",
@@ -568,11 +578,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="3",
                   ReasonCodeMessage="",
                   EstimateId= 191758,
                   IsciName="AB44NR58",
@@ -594,11 +610,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="4",
                   ReasonCodeMessage="",
                   EstimateId= 191759,
                   IsciName="AB21QR58",
@@ -620,11 +642,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 5,
+                        ReasonCode = 4,
+                        Reason = "program content restriction",
+                        Label = "Program"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="5",
                   ReasonCodeMessage="",
                   EstimateId= 191760,
                   IsciName="AB44NR58",
@@ -646,11 +674,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2020, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="6",
                   ReasonCodeMessage="",
                   EstimateId= 191761,
                   IsciName="AB33PR58",
@@ -672,11 +706,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="7",
                   ReasonCodeMessage="",
                   EstimateId= 191762,
                   IsciName="AB79PR58",
@@ -698,11 +738,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="8",
                   ReasonCodeMessage="",
                   EstimateId= 191763,
                   IsciName="AB81GR58",
@@ -724,11 +770,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="9",
                   ReasonCodeMessage="",
                   EstimateId= 191764,
                   IsciName="AB87GR58",
@@ -750,11 +802,17 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 5,
+                        ReasonCode = 4,
+                        Reason = "program content restriction",
+                        Label = "Program"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
-                  ReasonCode="10",
                   ReasonCodeMessage="",
                   EstimateId= 191765,
                   IsciName="AB83PR58",
@@ -776,7 +834,14 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
-                  SpotExceptionsOutOfSpecDecision = null
+                  SpotExceptionsOutOfSpecDecision = null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    }
                 }
             };
 
@@ -804,7 +869,7 @@ namespace Services.Broadcast.ApplicationServices
                         EstimateId = spotExceptionsOutOfSpec.EstimateId,
                         IsciName = spotExceptionsOutOfSpec.IsciName,
                         RecommendedPlan = spotExceptionsOutOfSpec.RecommendedPlanName,
-                        Reason = spotExceptionsOutOfSpec.ReasonCodeMessage,
+                        Reason = spotExceptionsOutOfSpec.SpotExceptionsOutOfSpecReasonCode.Label,
                         Station = spotExceptionsOutOfSpec.StationLegacyCallLetters,
                         Market= spotExceptionsOutOfSpec.Market,
                         SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
@@ -842,7 +907,7 @@ namespace Services.Broadcast.ApplicationServices
             var spotExceptionsOutOfSpecDetailResult = new SpotExceptionsOutOfSpecDetailsResultDto
             {
                 Id = spotExceptionsOutOfSpecDetail.Id,
-                ReasonCode = spotExceptionsOutOfSpecDetail.ReasonCode,
+                Reason = spotExceptionsOutOfSpecDetail.SpotExceptionsOutOfSpecReasonCode.Label,
                 DaypartCode = spotExceptionsOutOfSpecDetail.ProgramDaypartDetail?.Code,
                 Network = spotExceptionsOutOfSpecDetail.ProgramNetwork,
                 AudienceName = spotExceptionsOutOfSpecDetail.ProgramAudience?.Name,
@@ -995,6 +1060,21 @@ namespace Services.Broadcast.ApplicationServices
             var isSpotExceptionsOutOfSpecDecision = _SpotExceptionRepository.SaveSpotExceptionsOutOfSpecsDecisions(spotExceptionsOutOfSpecDecisionsPostsRequest, userName, createdAt);
 
             return isSpotExceptionsOutOfSpecDecision;
+        }
+
+        /// <inheritdoc />
+        public List<SpotExceptionsOutOfSpecReasonCodeResultDto> GetSpotExceptionsOutOfSpecReasonCodes()
+        {
+            var spotExceptionsOutOfSpecReasonCodes = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecReasonCodes();
+
+            var spotExceptionsOutOfSpecReasonCodeResults = spotExceptionsOutOfSpecReasonCodes.Select(spotExceptionsOutOfSpecReasonCode => new SpotExceptionsOutOfSpecReasonCodeResultDto
+            {
+                Id = spotExceptionsOutOfSpecReasonCode.Id,
+                ReasonCode = spotExceptionsOutOfSpecReasonCode.ReasonCode,
+                Description = spotExceptionsOutOfSpecReasonCode.Reason,
+                Label = spotExceptionsOutOfSpecReasonCode.Label
+            }).ToList();
+            return spotExceptionsOutOfSpecReasonCodeResults;
         }
     }
 }

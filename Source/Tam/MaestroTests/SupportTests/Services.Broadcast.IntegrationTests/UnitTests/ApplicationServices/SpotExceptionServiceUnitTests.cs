@@ -624,7 +624,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(new SpotExceptionsOutOfSpecsDto
                 {
                     Id = 1,
-                    ReasonCode = "Code",
                     ReasonCodeMessage = "",
                     EstimateId = 191760,
                     IsciName = "CC44ZZPT4",
@@ -666,6 +665,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         DecisionNotes = "TestDecisionNotes",
                         UserName = "TestUser",
                         CreatedAt = new DateTime(2020, 2, 1)
+                    },
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
                     }
                 });
             // Act
@@ -701,7 +706,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new SpotExceptionsOutOfSpecsDto
                 {
                     Id = 1,
-                    ReasonCode="Code",
                     ReasonCodeMessage="",
                     EstimateId =191760,
                     IsciName = "CC44ZZPT4",
@@ -744,12 +748,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                        DecisionNotes="TestDecisionNotes",
                        UserName = "TestUser",
                        CreatedAt = new DateTime(2020, 2, 1)
-                   }
+                   },
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   Id = 2,
-                  ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191757,
                   IsciName="AB82VR58",
@@ -794,12 +804,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                        DecisionNotes="",
                        UserName = "MockData",
                        CreatedAt = new DateTime(2020, 2, 1)
-                   }
+                   },
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    }
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   Id = 3,
-                  ReasonCode="",
                   ReasonCodeMessage="",
                   EstimateId= 191758,
                   IsciName="AB44NR58",
@@ -844,7 +860,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                        DecisionNotes="",
                        UserName = "MockData",
                        CreatedAt = new DateTime(2020, 2, 1)
-                   }                   
+                   },
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    }
                 },
             };
         }
@@ -1130,6 +1153,77 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = _SpotExceptionService.GetSpotExceptionsOutofSpecAdvertisers(spotExceptionsOutofSpecAdvertisersRequest);
             // Assert
             Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecReasonCodes_ReasonCodes_DoNotExist()
+        {
+            // Arrange
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecReasonCodes())
+                .Returns(new List<SpotExceptionsOutOfSpecReasonCodeDto>());
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecReasonCodes();
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecReasonCodes_ReasonCodes_Exist()
+        {
+            // Arrange
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecReasonCodes())
+                .Returns(new List<SpotExceptionsOutOfSpecReasonCodeDto>
+                {
+                    new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                    new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    },
+                    new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    }
+                });
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecReasonCodes();
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecReasonCodes_ThrowsException()
+        {
+            // Arrange
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecReasonCodes())
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsOutOfSpecReasonCodes());
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }

@@ -285,6 +285,7 @@
     <Build Include="dbo\Tables\spot_exceptions_recommended_plan_decision.sql" />
     <Build Include="dbo\Tables\spot_exceptions_out_of_specs.sql" />
     <Build Include="dbo\Tables\spot_exceptions_out_of_spec_decisions.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_out_of_spec_reason_codes.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

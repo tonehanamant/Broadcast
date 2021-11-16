@@ -1,5 +1,6 @@
 [
   {
+    "AdvertiserName": null,
     "Affiliate": "NBC",
     "Audience": {
       "Code": "W12-14",
@@ -35,11 +36,16 @@
     "ProgramFlightStartDate": "2020-06-02T00:00:00",
     "ProgramName": "Q13 news at 10",
     "ProgramNetwork": null,
-    "ReasonCode": "",
     "ReasonCodeMessage": "",
     "RecommendedPlanId": 1196,
     "RecommendedPlanName": "Plan Pricing 1",
     "SpotExceptionsOutOfSpecDecision": null,
+    "SpotExceptionsOutOfSpecReasonCode": {
+      "Id": 2,
+      "Label": "Daypart",
+      "Reason": "spot aired outside daypart",
+      "ReasonCode": 1
+    },
     "SpotLength": {
       "Id": 1,
       "Length": 30
@@ -48,6 +54,7 @@
     "StationLegacyCallLetters": "KOB"
   },
   {
+    "AdvertiserName": null,
     "Affiliate": "ABC",
     "Audience": {
       "Code": "W15-17",
@@ -83,11 +90,16 @@
     "ProgramFlightStartDate": "2018-07-02T00:00:00",
     "ProgramName": "FOX 13 10:00 News",
     "ProgramNetwork": null,
-    "ReasonCode": "",
     "ReasonCodeMessage": "",
     "RecommendedPlanId": 1197,
     "RecommendedPlanName": "Plan Pricing 2",
     "SpotExceptionsOutOfSpecDecision": null,
+    "SpotExceptionsOutOfSpecReasonCode": {
+      "Id": 3,
+      "Label": "Genre",
+      "Reason": "genre content restriction",
+      "ReasonCode": 2
+    },
     "SpotLength": {
       "Id": 2,
       "Length": 60

@@ -20,7 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public string reason_code { get; set; }
         public string reason_code_message { get; set; }
         public int estimate_id { get; set; }
         public string isci_name { get; set; }
@@ -42,6 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
         public string advertiser_name { get; set; }
+        public int reason_code_id { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual audience audience1 { get; set; }
@@ -49,6 +49,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual daypart daypart1 { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
+        public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
     }
 }

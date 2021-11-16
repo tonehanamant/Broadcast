@@ -1,5 +1,6 @@
 [
   {
+    "AdvertiserName": null,
     "Affiliate": "NBC",
     "Audience": {
       "Code": "W21-54",
@@ -82,6 +83,7 @@
     "StationLegacyCallLetters": "KOB"
   },
   {
+    "AdvertiserName": null,
     "Affiliate": "ABC",
     "Audience": {
       "Code": "W21-54",
@@ -156,6 +158,7 @@
     "StationLegacyCallLetters": "KHGI"
   },
   {
+    "AdvertiserName": null,
     "Affiliate": "ABC",
     "Audience": {
       "Code": "A21-54",

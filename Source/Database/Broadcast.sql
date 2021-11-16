@@ -1461,6 +1461,91 @@ END
 GO
 /*************************************** END BP-3165 ***************************************/
 
+/*************************************** START BP-3504 ***************************************/
+GO
+
+IF OBJECT_ID('spot_exceptions_out_of_spec_reason_codes') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[spot_exceptions_out_of_spec_reason_codes](
+		[id] [int] NOT NULL PRIMARY KEY IDENTITY(1,1),
+		[reason_code] [int] NOT NULL,
+		[reason] [nvarchar](200) NOT NULL,
+		[label] [nvarchar](200) NULL
+	)
+END
+
+GO
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 0)
+BEGIN
+	INSERT INTO [dbo].[spot_exceptions_out_of_spec_reason_codes]([reason_code],[reason],[label])
+		 VALUES (0,'spot aired on hiatus day','Hiatus')
+END
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 1)
+BEGIN
+	INSERT INTO [dbo].[spot_exceptions_out_of_spec_reason_codes]([reason_code],[reason],[label])
+		 VALUES (1,'spot aired outside daypart','Daypart')
+END
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 2)
+BEGIN
+	INSERT INTO [dbo].[spot_exceptions_out_of_spec_reason_codes]([reason_code],[reason],[label])
+		 VALUES (2,'genre content restriction','Genre')
+END
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 3)
+BEGIN
+	INSERT INTO [dbo].[spot_exceptions_out_of_spec_reason_codes]([reason_code],[reason],[label])
+		 VALUES (3,'affiliate content restriction','Affiliate')
+END
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 4)
+BEGIN
+	INSERT INTO [dbo].[spot_exceptions_out_of_spec_reason_codes]([reason_code],[reason],[label])
+		 VALUES (4,'program content restriction','Program')
+END
+
+GO
+
+DECLARE @SpotExceptionsOutOfSpecsAddColumnSql VARCHAR(MAX) = 
+'ALTER TABLE spot_exceptions_out_of_specs
+		ADD reason_code_id INT NULL'
+
+DECLARE @SpotExceptionsOutOfSpecsUpdateColumnSql VARCHAR(MAX) = 
+'UPDATE spot_exceptions_out_of_specs
+		SET reason_code_id = 1
+	WHERE reason_code_id IS NULL'
+
+DECLARE @SpotExceptionsOutOfSpecsAlterColumnSql VARCHAR(MAX) = 
+'ALTER TABLE spot_exceptions_out_of_specs 
+		ALTER COLUMN reason_code_id INT NOT NULL'
+
+DECLARE @SpotExceptionsOutOfSpecsAddConstraintSql VARCHAR(MAX) = 
+'ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes
+		FOREIGN KEY (reason_code_id) REFERENCES spot_exceptions_out_of_spec_reason_codes(id)'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'reason_code_id' AND Object_ID = Object_ID(N'spot_exceptions_out_of_specs'))
+BEGIN
+	EXEC (@SpotExceptionsOutOfSpecsAddColumnSql)
+	EXEC (@SpotExceptionsOutOfSpecsUpdateColumnSql)
+	EXEC (@SpotExceptionsOutOfSpecsAlterColumnSql)
+	EXEC (@SpotExceptionsOutOfSpecsAddConstraintSql)
+END
+
+GO
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'reason_code' AND Object_ID = Object_ID(N'spot_exceptions_out_of_specs'))
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs 
+			DROP COLUMN reason_code
+END
+
+GO
+
+/*************************************** END BP-3504 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
