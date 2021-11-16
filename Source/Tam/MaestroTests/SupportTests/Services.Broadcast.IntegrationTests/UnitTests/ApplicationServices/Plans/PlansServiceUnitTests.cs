@@ -1764,6 +1764,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void CalculateLengthMakeUpTable()
         {
+            var requestWeeks = _GetWeeklyBreakdownWeeks();
+            // make the budgets more believable for a better CPM
+            requestWeeks.ForEach(w => w.WeeklyBudget *= 1000);
             var request = new LengthMakeUpRequest
             {
                 CreativeLengths = new List<CreativeLength>{
@@ -1772,7 +1775,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new CreativeLength{ SpotLengthId = 3, Weight = 30}
                 },
                 TotalImpressions = 100000,
-                Weeks = _GetWeeklyBreakdownWeeks()
+                Weeks = requestWeeks
             };
 
             var distributeWeightCallCount = 0;
@@ -1792,6 +1795,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void CalculateLengthMakeUpTable_WeightNotSet()
         {
+            var requestWeeks = _GetWeeklyBreakdownWeeks();
+            // make the budgets more believable for a better CPM
+            requestWeeks.ForEach(w => w.WeeklyBudget *= 1000);
+
             var request = new LengthMakeUpRequest
             {
                 CreativeLengths = new List<CreativeLength>{
@@ -1800,7 +1807,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new CreativeLength{ SpotLengthId = 3}
                 },
                 TotalImpressions = 100000,
-                Weeks = _GetWeeklyBreakdownWeeks()
+                Weeks = requestWeeks
             };
 
             _CreativeLengthEngineMock

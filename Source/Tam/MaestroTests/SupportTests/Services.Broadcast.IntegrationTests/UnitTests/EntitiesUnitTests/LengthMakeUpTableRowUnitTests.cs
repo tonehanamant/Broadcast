@@ -6,11 +6,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
     class LengthMakeUpTableRowUnitTests
     {
         [Test]
-        [TestCase(0, 1000, 0.0)]
+        [TestCase(0, 1, 0.0)]
         [TestCase(1000, 0, 0.0)]
-        [TestCase(2760, 460000, 6)]
-        [TestCase(3000, 500000, 6)]
-        [TestCase(38450.00, 3076000, 12.5)]
+        [TestCase(2760, 460, 6)]
+        [TestCase(3000, 500, 6)]
+        [TestCase(38450.00, 3076, 12.5)]
         public void LengthMakeUpTableRow_WeeklyCpm(decimal budget, double impressions, decimal expectedCpm)
         {
             var testWeek = new LengthMakeUpTableRow

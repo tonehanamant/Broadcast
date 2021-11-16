@@ -11,6 +11,7 @@ namespace Services.Broadcast.Entities.Plan
         public decimal Budget { get; set; }
         public double Impressions { get; set; }
 
-        public decimal Cpm => ProposalMath.CalculateCpm(Budget, Impressions);
+        // assumes that the Impressions have been formatted for (000)
+        public decimal Cpm => ProposalMath.CalculateCpm(Budget, (Impressions * 1000));
     }
 }
