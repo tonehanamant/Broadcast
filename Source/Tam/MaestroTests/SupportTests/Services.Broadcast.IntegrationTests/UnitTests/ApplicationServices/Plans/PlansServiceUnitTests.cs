@@ -1037,33 +1037,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CanLockPlan()
-        {
-            // Arrange
-            _BroadcastLockingManagerApplicationServiceMock
-                .Setup(x => x.LockObject(It.IsAny<string>()))
-                .Returns((string key) => new LockResponse
-                {
-                    Success = true,
-                    Key = key,
-                    LockedUserName = "IntegrationUser",
-                    LockedUserId = "IntegrationUserId",
-                    LockTimeoutInSeconds = 900
-                });
-
-            _PlanRepositoryMock
-                .Setup(s => s.GetPlanNameById(It.IsAny<int>()))
-                .Returns("Test Plan");
-
-            // Act
-            var lockingResponse = _PlanService.LockPlan(1);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(lockingResponse));
-        }
-
-        [Test]
         public void CanNotUpdateLockedPlan()
         {
             const string expectedMessage = "The chosen plan has been locked by IntegrationUser";
