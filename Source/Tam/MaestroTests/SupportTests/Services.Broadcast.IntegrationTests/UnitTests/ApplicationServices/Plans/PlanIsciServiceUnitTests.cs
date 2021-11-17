@@ -3,22 +3,19 @@ using ApprovalTests.Reporters;
 using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Castle.Components.DictionaryAdapter;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -76,6 +73,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _StandardDaypartService.Setup(s => s.GetAllStandardDayparts())
                 .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
 
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
+                .Returns(true);
+
             _PlanIsciService = new PlanIsciService(
                 _DataRepositoryFactoryMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
@@ -108,19 +111,98 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetAvailableIscis_DatesPerToggle(bool toggleEnabled)
+        {
+            // Arrange
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
+                .Returns(toggleEnabled);
+
+            IsciSearchDto isciSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021,11,01),
+                WeekEndDate = new DateTime(2021, 11, 7),
+                UnmappedOnly = false
+            };
+
+            var passedDateRange = new DateRange();
+            _PlanIsciRepositoryMock
+                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback<DateTime,DateTime>((start,end) => passedDateRange = new DateRange(start, end))
+                .Returns(_GetAvailableIscis());
+
+            // Act
+            _PlanIsciService.GetAvailableIscis(isciSearch);
+
+            // Assert
+            const string DateFormat = "yyyy-MM-dd";
+            var expectedStartDateTime = "2021-11-01";
+            var expectedendDateTime = "2021-11-07";
+
+            if (!toggleEnabled)
+            {
+                expectedStartDateTime = "2021-07-26";
+                expectedendDateTime = "2021-08-29";
+            }
+            Assert.AreEqual(expectedStartDateTime, passedDateRange.Start.Value.ToString(DateFormat));
+            Assert.AreEqual(expectedendDateTime, passedDateRange.End.Value.ToString(DateFormat));
+            _PlanIsciRepositoryMock.Verify(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetAvailableIsciPlans_DatesPerToggle(bool toggleEnabled)
+        {
+            // Arrange
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
+                .Returns(toggleEnabled);
+            var isciPlanSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
+                UnmappedOnly = false
+            };
+
+            var passedDateRange = new DateRange();
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback<DateTime, DateTime>((start, end) => passedDateRange = new DateRange(start, end))
+                .Returns(new List<IsciPlanDetailDto>());
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+
+            const string DateFormat = "yyyy-MM-dd";
+            var expectedStartDateTime = "2021-11-01";
+            var expectedendDateTime = "2021-11-07";
+
+            if (!toggleEnabled)
+            {
+                expectedStartDateTime = "2021-07-26";
+                expectedendDateTime = "2021-08-29";
+            }
+            Assert.AreEqual(expectedStartDateTime, passedDateRange.Start.Value.ToString(DateFormat));
+            Assert.AreEqual(expectedendDateTime, passedDateRange.End.Value.ToString(DateFormat));
+            _PlanIsciRepositoryMock.Verify(x => x.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
+        }
+
+
+        [Test]
         public void GetAvailableIscis()
         {
             // Arrange
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                UnmappedOnly = false,
-
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
+                UnmappedOnly = false
             };
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns(
-                new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
-                );
 
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -131,20 +213,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
         [Test]
         public void GetAvailableIscis_WithoutPlansOnly()
         {
             // Arrange
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = true,
-
             };
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns(
-                new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
-                );
 
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -162,14 +241,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             List<IsciAdvertiserDto> availableIscis = null;
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false,
 
             };
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-              .Returns(
-              new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
-              );
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(availableIscis);
@@ -187,14 +263,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange           
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false,
 
             };
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-              .Returns(
-              new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
-              );
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(
@@ -230,14 +303,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange           
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = true,
 
             };
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-              .Returns(
-              new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
-              );
+            
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(
@@ -275,14 +346,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange           
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false,
 
             };
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-             .Returns(
-             new MediaMonth { Id = 479, StartDate = new DateTime(2021, 01, 01), EndDate = new DateTime(2024, 08, 08) }
-             );
+            
             _PlanIsciRepositoryMock
                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
@@ -398,13 +467,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false
             };
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
 
             _PlanIsciRepositoryMock
                 .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -423,13 +489,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false
             };
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
 
             _PlanIsciRepositoryMock
                 .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -505,13 +568,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false
             };
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
 
             _PlanIsciRepositoryMock
                 .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -575,13 +635,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = true
             };
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
 
             _PlanIsciRepositoryMock
                 .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -649,13 +706,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 8, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false
             };
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
 
             _PlanIsciRepositoryMock
                 .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -1222,7 +1276,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             IsciSearchDto isciSearch = new IsciSearchDto
             {
-                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false,
 
             };

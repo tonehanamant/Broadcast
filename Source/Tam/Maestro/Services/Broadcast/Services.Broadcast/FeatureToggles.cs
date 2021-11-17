@@ -28,5 +28,6 @@
         public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
         public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
         public static string ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-queued-pricing-requests";
+        public static string ENABLE_PLAN_ISCI_BY_WEEK = "broadcast-enable-plan-isci-by-week";
     }
 }

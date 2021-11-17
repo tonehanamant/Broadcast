@@ -61,6 +61,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
 
+        private Lazy<bool> _EnablePlanIsciByWeek;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
         /// </summary>
@@ -95,15 +97,42 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
+
+            _EnablePlanIsciByWeek = new Lazy<bool>(_GetEnablePlanIsciByWeek);
+        }
+
+        private bool _GetEnablePlanIsciByWeek()
+        {
+            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK);
+            return result;
         }
 
         /// <inheritdoc />
-        public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
-        {
-            List<IsciListItemDto> isciListDto = new List<IsciListItemDto>();
-            List<IsciAdvertiserDto> isciAdvertiserListDto = new List<IsciAdvertiserDto>();
-            var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
-            isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(mediaMonthsDates.StartDate, mediaMonthsDates.EndDate);
+        public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch) {
+            var isciListDto = new List<IsciListItemDto>();
+            var isciAdvertiserListDto = new List<IsciAdvertiserDto>();
+
+            DateTime queryStartDate;
+            DateTime queryEndDate;
+
+            if (_EnablePlanIsciByWeek.Value)
+            {
+                if (!isciSearch.WeekStartDate.HasValue || !isciSearch.WeekEndDate.HasValue)
+                {
+                    throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
+                }
+
+                queryStartDate = isciSearch.WeekStartDate.Value;
+                queryEndDate = isciSearch.WeekEndDate.Value;
+            }
+            else
+            {
+                var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
+                queryStartDate = mediaMonthsDates.StartDate;
+                queryEndDate = mediaMonthsDates.EndDate;
+            }
+                
+            isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(queryStartDate, queryEndDate);
             if (isciAdvertiserListDto?.Any() ?? false)
             {
                 if (isciSearch.UnmappedOnly)
@@ -162,14 +191,33 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const string flightStartDateFormat = "MM/dd";
             const string flightEndDateFormat = "MM/dd/yyyy";
 
-            var searchedMediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciPlanSearch.MediaMonth.Id);
-            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(searchedMediaMonth.StartDate, searchedMediaMonth.EndDate);
+            DateTime queryStartDate;
+            DateTime queryEndDate;
+
+            if (_EnablePlanIsciByWeek.Value)
+            {
+                if (!isciPlanSearch.WeekStartDate.HasValue || !isciPlanSearch.WeekEndDate.HasValue)
+                {
+                    throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
+                }
+
+                queryStartDate = isciPlanSearch.WeekStartDate.Value;
+                queryEndDate = isciPlanSearch.WeekEndDate.Value;
+            }
+            else
+            {
+                var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciPlanSearch.MediaMonth.Id);
+                queryStartDate = mediaMonthsDates.StartDate;
+                queryEndDate = mediaMonthsDates.EndDate;
+            }
+            
+            var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(queryStartDate, queryEndDate);
             if (isciPlans?.Any() ?? false)
             {
                 if (isciPlanSearch.UnmappedOnly)
                 {
-                    var IsciPlanDetailsDtoWithoutPlan = isciPlans.Where(x => x.Iscis.Count == 0).ToList();
-                    isciPlans = IsciPlanDetailsDtoWithoutPlan;
+                    var isciPlanDetailsDtoWithoutPlan = isciPlans.Where(x => x.Iscis.Count == 0).ToList();
+                    isciPlans = isciPlanDetailsDtoWithoutPlan;
                 }
                 if (isciPlans?.Any() ?? false)
                 {
