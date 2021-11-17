@@ -55,6 +55,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IMarketCoverageRepository> _MarketCoverageRepository;
         private Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepository;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
+        private Mock<ILockingEngine> _LockingEngineMock;
 
         [SetUp]
         public void CreatePlanService()
@@ -82,7 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketCoverageRepository = new Mock<IMarketCoverageRepository>();
             _NtiToNsiConversionRepository = new Mock<INtiToNsiConversionRepository>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
-
+            _LockingEngineMock = new Mock<ILockingEngine>();
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -205,7 +206,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _CreativeLengthEngineMock.Object,
                     featureToggleHelper,
                     _PlanMarketSovCalculator.Object,
-                    _ConfigurationSettingsHelperMock.Object
+                    _ConfigurationSettingsHelperMock.Object,
+                    _LockingEngineMock.Object
                 );
 
             _SpotLengthEngineMock
@@ -3214,5 +3216,48 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
+        [Test]
+        public void LockPlan_ToggleOn()
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_LOCKING_CONSOLIDATION] = true;
+            int planId = 291;
+            bool expectedResult = true;
+             _LockingEngineMock
+              .Setup(s => s.LockPlan(It.IsAny<int>()))
+            .Returns(new PlanLockResponse
+            {
+                PlanName = "plan - 2345_AfterChange",
+                Key = "broadcast_plan : 298",
+                Success = true,
+                LockTimeoutInSeconds = 109,
+                LockedUserId = null,
+                LockedUserName = null,
+                Error = null
+            });
+            var result = _PlanService.LockPlan(planId);
+            // Assert
+            Assert.AreEqual(expectedResult,result.Success);
+        }
+
+        [Test]
+        public void UnlockPlan_ToggleOn()
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_LOCKING_CONSOLIDATION] = true;
+            int planId = 291;
+            bool expectedResult = true;
+            _LockingEngineMock
+             .Setup(s => s.UnlockPlan(It.IsAny<int>()))
+           .Returns(new BroadcastReleaseLockResponse
+           {
+               Key = "broadcast_plan : 298",
+               Success = true,
+               Error = null
+           });
+            var result = _PlanService.UnlockPlan(planId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
     }
 }

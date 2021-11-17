@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -211,6 +212,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns>True if the operation was successful, otherwise false.</returns>
         bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType,
             string username, bool aggregatePlanSynchronously = false);
+
+        /// <summary>
+        /// Unlocks the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        BroadcastReleaseLockResponse UnlockPlan(int planId);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -239,7 +247,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
         private readonly IPlanBuyingRepository _PlanBuyingRepository;
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
-
+        private readonly ILockingEngine _LockingEngine;
         private Lazy<bool> _IsMarketSovCalculationEnabled;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -257,7 +265,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
             , ICreativeLengthEngine creativeLengthEngine
             , IFeatureToggleHelper featureToggleHelper
-            , IPlanMarketSovCalculator planMarketSovCalculator, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            , IPlanMarketSovCalculator planMarketSovCalculator, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -285,6 +293,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
             _IsMarketSovCalculationEnabled = new Lazy<bool>(() =>
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
+            _LockingEngine = lockingEngine;
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -1428,20 +1437,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public PlanLockResponse LockPlan(int planId)
         {
-            var key = KeyHelper.GetPlanLockingKey(planId);
-            var lockingResponse = _LockingManagerApplicationService.LockObject(key);
-            var planName = _PlanRepository.GetPlanNameById(planId);
+            var planLockResponse = _LockingEngine.LockPlan(planId);
 
-            return new PlanLockResponse
-            {
-                Key = lockingResponse.Key,
-                Success = lockingResponse.Success,
-                LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
-                LockedUserId = lockingResponse.LockedUserId,
-                LockedUserName = lockingResponse.LockedUserName,
-                Error = lockingResponse.Error,
-                PlanName = planName
-            };
+            return planLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockPlan(int planId)
+        {
+            var broadcastReleaseLockResponse = _LockingEngine.UnlockPlan(planId);
+
+            return broadcastReleaseLockResponse;
         }
 
         /// <inheritdoc/>

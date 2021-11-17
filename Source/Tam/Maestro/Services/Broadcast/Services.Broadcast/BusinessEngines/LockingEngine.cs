@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Services.ContractInterfaces;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Repositories;
+using Common.Services.Repositories;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -20,6 +23,10 @@ namespace Services.Broadcast.BusinessEngines
         BroadcastLockResponse LockStation(int stationId);
 
         BroadcastReleaseLockResponse UnlockStation(int stationId);
+
+        PlanLockResponse LockPlan(int planId);
+
+        BroadcastReleaseLockResponse UnlockPlan(int planId);
     }
 
     public class LockingEngine : ILockingEngine
@@ -28,15 +35,18 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IBroadcastLockingService _LockingService;
         internal static Lazy<bool> _IsLockingConsolidationEnabled;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-
+        private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
+        private readonly IPlanRepository _PlanRepository;
         public LockingEngine(
             IBroadcastLockingManagerApplicationService lockingManager,
-            IBroadcastLockingService lockingService, IFeatureToggleHelper featureToggleHelper)
+            IBroadcastLockingService lockingService, IFeatureToggleHelper featureToggleHelper, IBroadcastLockingManagerApplicationService lockingManagerApplicationService, IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _LockingManager = lockingManager;
             _LockingService = lockingService;
             _FeatureToggleHelper = featureToggleHelper;
             _IsLockingConsolidationEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION));
+            _LockingManagerApplicationService = lockingManagerApplicationService;
+            _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         }
 
         public void LockStations(
@@ -105,6 +115,73 @@ namespace Services.Broadcast.BusinessEngines
             else
             {
                 var releaseLockResponse = _LockingManager.ReleaseObject(key);
+                if (releaseLockResponse != null)
+                {
+                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                    {
+                        Error = releaseLockResponse.Error,
+                        Key = releaseLockResponse.Key,
+                        Success = releaseLockResponse.Success
+                    };
+                }
+            }
+            return broadcastReleaseLockResponse;
+        }
+
+        public PlanLockResponse LockPlan(int planId)
+        {
+            PlanLockResponse planLockResponse = null;
+            var key = KeyHelper.GetStationLockingKey(planId);
+            var planName = _PlanRepository.GetPlanNameById(planId);
+            if (_IsLockingConsolidationEnabled.Value)
+            {
+              var  broadcastLockResponse = _LockingService.LockObject(key);
+                if (broadcastLockResponse != null)
+                {
+                    planLockResponse = new PlanLockResponse
+                    {
+                        Key = broadcastLockResponse.Key,
+                        Success = broadcastLockResponse.Success,
+                        LockTimeoutInSeconds = broadcastLockResponse.LockTimeoutInSeconds,
+                        LockedUserId = broadcastLockResponse.LockedUserId,
+                        Error = broadcastLockResponse.Error,
+                        PlanName = planName
+                    };
+                }
+
+            }
+            else
+            {
+                var lockingResponse = _LockingManagerApplicationService.LockObject(key);
+                if (lockingResponse != null)
+                {
+                    planLockResponse = new PlanLockResponse
+                    {
+                        Key = lockingResponse.Key,
+                        Success = lockingResponse.Success,
+                        LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
+                        LockedUserId = lockingResponse.LockedUserId,
+                        LockedUserName = lockingResponse.LockedUserName,
+                        Error = lockingResponse.Error,
+                        PlanName = planName
+                    };
+                }
+            }
+            return planLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockPlan(int planId)
+        {
+            BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
+            var key = KeyHelper.GetStationLockingKey(planId);
+            if (_IsLockingConsolidationEnabled.Value)
+            {
+              broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
+            }
+            else
+            {
+                var releaseLockResponse = _LockingManager.ReleaseObject(key);
+
                 if (releaseLockResponse != null)
                 {
                     broadcastReleaseLockResponse = new BroadcastReleaseLockResponse

@@ -191,10 +191,10 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("{planId}/Unlock")]
         [Authorize]
-        public BaseResponse<ReleaseLockResponse> UnlockPlan(int planId)
+        public BaseResponse<BroadcastReleaseLockResponse> UnlockPlan(int planId)
         {
             var key = KeyHelper.GetPlanLockingKey(planId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().UnlockPlan(planId));
         }
 
         /// <summary>
