@@ -103,5 +103,19 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecReasonCodes());
         }
+
+        [HttpPost]
+        [Route("recommended-plans-stations")]
+        public BaseResponse<List<string>> GetSpotExceptionsRecommendedPlansStations(SpotExceptionsRecommendedPlansStationRequestDto spotExceptionsRecommendedPlansStationRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlansStations(spotExceptionsRecommendedPlansStationRequest));
+        }
+
+        [HttpPost]
+        [Route("out-of-spec-stations")]
+        public BaseResponse<List<string>> GetSpotExceptionsOutofSpecsStations(SpotExceptionsOutofSpecsStationRequestDto spotExceptionsOutofSpecsStationRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutofSpecsStations(spotExceptionsOutofSpecsStationRequest));
+        }
     }
 }

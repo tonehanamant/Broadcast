@@ -83,6 +83,20 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>The spot exceptions out of spec reason codes</returns>
         List<SpotExceptionsOutOfSpecReasonCodeResultDto> GetSpotExceptionsOutOfSpecReasonCodes();
+
+        /// <summary>
+        /// Gets spot exceptions recommended plans stations
+        /// </summary>       
+        /// <param name="spotExceptionsRecommendedPlansStationRequest">The spot exceptions recommended plans station request parameters</param>     
+        /// <returns>The spot exceptions recommended plans stations</returns>
+        List<string> GetSpotExceptionsRecommendedPlansStations(SpotExceptionsRecommendedPlansStationRequestDto spotExceptionsRecommendedPlansStationRequest);
+
+        /// <summary>
+        /// Gets spot exceptions out of specs stations
+        /// </summary>       
+        /// <param name="spotExceptionsOutofSpecsStationRequest">The spot exceptions out of specs station request parameters</param>     
+        /// <returns>The spot exceptions out of specs stations</returns>
+        List<string> GetSpotExceptionsOutofSpecsStations(SpotExceptionsOutofSpecsStationRequestDto spotExceptionsOutofSpecsStationRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1075,6 +1089,42 @@ namespace Services.Broadcast.ApplicationServices
                 Label = spotExceptionsOutOfSpecReasonCode.Label
             }).ToList();
             return spotExceptionsOutOfSpecReasonCodeResults;
+        }
+
+        /// <inheritdoc />
+        public List<string> GetSpotExceptionsRecommendedPlansStations(SpotExceptionsRecommendedPlansStationRequestDto spotExceptionsRecommendedPlansStationRequest)
+        {
+            var spotExceptionsRecommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto()
+            {
+                WeekStartDate = spotExceptionsRecommendedPlansStationRequest.WeekStartDate,
+                WeekEndDate = spotExceptionsRecommendedPlansStationRequest.WeekEndDate
+            };
+            var spotExceptionsRecommendedPlansResults = GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest);
+            if (spotExceptionsRecommendedPlansResults == null)
+            {
+                return null;
+            }
+
+            var stations = spotExceptionsRecommendedPlansResults.Select(spotExceptionsRecommendedPlansResult => spotExceptionsRecommendedPlansResult.Station ?? "Unknown").Distinct().OrderBy(station => station).ToList();
+            return stations;
+        }
+
+        /// <inheritdoc />
+        public List<string> GetSpotExceptionsOutofSpecsStations(SpotExceptionsOutofSpecsStationRequestDto spotExceptionsOutofSpecsStationRequest)
+        {
+            var spotExceptionsOutOfSpecPostsRequest = new SpotExceptionsOutOfSpecPostsRequestDto()
+            {
+                WeekStartDate = spotExceptionsOutofSpecsStationRequest.WeekStartDate,
+                WeekEndDate = spotExceptionsOutofSpecsStationRequest.WeekEndDate
+            };
+            var spotExceptionsOutOfSpecPostsResults = GetSpotExceptionsOutOfSpecsPosts(spotExceptionsOutOfSpecPostsRequest);
+            if (spotExceptionsOutOfSpecPostsResults == null)
+            {
+                return null;
+            }
+
+            var stations = spotExceptionsOutOfSpecPostsResults.Select(spotExceptionsOutOfSpecPostsResult => spotExceptionsOutOfSpecPostsResult.Station ?? "Unknown").Distinct().OrderBy(station => station).ToList();
+            return stations;
         }
     }
 }

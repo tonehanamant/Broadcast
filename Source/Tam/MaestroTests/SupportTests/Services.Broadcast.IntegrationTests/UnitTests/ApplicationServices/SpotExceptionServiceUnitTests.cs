@@ -1225,5 +1225,123 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlansStations_Stations_DoNotExist()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlansStationRequest = new SpotExceptionsRecommendedPlansStationRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>());
+
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlansStations(spotExceptionsRecommendedPlansStationRequest);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlansStations_Stations_Exist()
+        {
+            // Arrange
+            var spotExceptionsRecommendedPlansStationRequest = new SpotExceptionsRecommendedPlansStationRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>
+                {
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 2,
+                        StationLegacyCallLetters = "WDAY"                        
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        StationLegacyCallLetters = "KSTP"
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 4,
+                        StationLegacyCallLetters = null
+                    }
+                });
+
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlansStations(spotExceptionsRecommendedPlansStationRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutofSpecsStations_Stations_DoNotExist()
+        {
+            // Arrange
+            var spotExceptionsOutofSpecsStationRequest = new SpotExceptionsOutofSpecsStationRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsOutOfSpecsDto>());
+
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsStations(spotExceptionsOutofSpecsStationRequest);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutofSpecsStations_Stations_Exist()
+        {
+            // Arrange
+            var spotExceptionsOutofSpecsStationRequest = new SpotExceptionsOutofSpecsStationRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsOutOfSpecsDto>()
+                {
+                    new SpotExceptionsOutOfSpecsDto
+                    {
+                        Id = 1,
+                        StationLegacyCallLetters = "WDAY"
+                    },
+                    new SpotExceptionsOutOfSpecsDto
+                    {
+                        Id = 2,
+                        StationLegacyCallLetters = "KSTP"
+                    },
+                    new SpotExceptionsOutOfSpecsDto
+                    {
+                        Id = 3,
+                        StationLegacyCallLetters = null
+                    }
+                });
+
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsStations(spotExceptionsOutofSpecsStationRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }
