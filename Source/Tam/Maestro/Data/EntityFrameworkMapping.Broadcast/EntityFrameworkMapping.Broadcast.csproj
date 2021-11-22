@@ -357,6 +357,9 @@
     <Compile Include="campaign_summaries.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="custom_daypart_organizations.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="day.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

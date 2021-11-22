@@ -1545,6 +1545,33 @@ END
 GO
 
 /*************************************** END BP-3504 ***************************************/
+/*************************************** START BP-3567 ***************************************/
+IF OBJECT_ID('custom_daypart_organizations') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[custom_daypart_organizations]
+	(
+		[id] INT NOT NULL PRIMARY KEY IDENTITY (1, 1), 
+		[organization_name] NVARCHAR(100) NOT NULL,
+	)	
+END
+
+IF NOT EXISTS (SELECT top 1 * FROM [custom_daypart_organizations])
+BEGIN	
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NFL')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('MLB')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('MLS')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NBA')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('PGA')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('LPGA')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NHL')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NCAA')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NCAA Football')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NCAA Basketball')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('NASCAR')
+INSERT INTO [dbo].[custom_daypart_organizations]([organization_name])VALUES('Other')
+END
+GO
+/*************************************** END BP-3567 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
