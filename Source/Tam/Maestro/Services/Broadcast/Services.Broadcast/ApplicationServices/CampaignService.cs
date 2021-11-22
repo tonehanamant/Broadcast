@@ -122,6 +122,20 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="currentDate"></param>
         /// <returns>ProgramLineupReportData object</returns>
         ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate);
+
+        /// <summary>
+        /// Locks the Campaign.
+        /// </summary>
+        /// <param name="campaignId">The Campaign identifier.</param>
+        /// <returns></returns>
+        BroadcastLockResponse LockCampaigns(int campaignId);
+
+        /// <summary>
+        /// Unlocks the Campaign.
+        /// </summary>
+        /// <param name="campaignId">The Campaign identifier.</param>
+        /// <returns></returns>
+        BroadcastReleaseLockResponse UnlockCampaigns(int campaignId);
     }
 
     /// <summary>
@@ -150,6 +164,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IDaypartCache _DaypartCache;
         private readonly IAabEngine _AabEngine;
+        private readonly ILockingEngine _LockingEngine;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -166,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices
             IWeeklyBreakdownEngine weeklyBreakdownEngine,
             IDaypartCache daypartCache,
             IFeatureToggleHelper featureToggleHelper,
-            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -188,6 +203,7 @@ namespace Services.Broadcast.ApplicationServices
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _DaypartCache = daypartCache;
             _AabEngine = aabEngine;
+            _LockingEngine = lockingEngine;
         }
 
         /// <inheritdoc />
@@ -856,6 +872,20 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             return planPricingResultsDayparts;
+        }
+
+        public BroadcastLockResponse LockCampaigns(int campaignId)
+        {
+            var broadcastLockResponse = _LockingEngine.LockCampaigns(campaignId);
+
+            return broadcastLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockCampaigns(int campaignId)
+        {
+            var broadcastReleaseLockResponse = _LockingEngine.UnlockCampaigns(campaignId);
+
+            return broadcastReleaseLockResponse;
         }
     }
 }

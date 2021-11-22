@@ -27,6 +27,9 @@ namespace Services.Broadcast.BusinessEngines
         PlanLockResponse LockPlan(int planId);
 
         BroadcastReleaseLockResponse UnlockPlan(int planId);
+        BroadcastLockResponse LockCampaigns(int campaignId);
+
+        BroadcastReleaseLockResponse UnlockCampaigns(int campaignId);
     }
 
     public class LockingEngine : ILockingEngine
@@ -177,6 +180,57 @@ namespace Services.Broadcast.BusinessEngines
             if (_IsLockingConsolidationEnabled.Value)
             {
               broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
+            }
+            else
+            {
+                var releaseLockResponse = _LockingManager.ReleaseObject(key);
+
+                if (releaseLockResponse != null)
+                {
+                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                    {
+                        Error = releaseLockResponse.Error,
+                        Key = releaseLockResponse.Key,
+                        Success = releaseLockResponse.Success
+                    };
+                }
+            }
+            return broadcastReleaseLockResponse;
+        }
+
+        public BroadcastLockResponse LockCampaigns(int campaignId)
+        {
+            BroadcastLockResponse broadcastLockResponse = null;
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            if (_IsLockingConsolidationEnabled.Value)
+            {
+               broadcastLockResponse = _LockingService.LockObject(key);
+            }
+            else
+            {
+                var lockingResponse = _LockingManagerApplicationService.LockObject(key);
+                if (lockingResponse != null)
+                {
+                    broadcastLockResponse = new BroadcastLockResponse
+                    {
+                        Key = lockingResponse.Key,
+                        Success = lockingResponse.Success,
+                        LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
+                        LockedUserId = lockingResponse.LockedUserId,
+                        Error = lockingResponse.Error
+                    };
+                }
+            }
+            return broadcastLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockCampaigns(int campaignId)
+        {
+            BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            if (_IsLockingConsolidationEnabled.Value)
+            {
+                broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
             }
             else
             {

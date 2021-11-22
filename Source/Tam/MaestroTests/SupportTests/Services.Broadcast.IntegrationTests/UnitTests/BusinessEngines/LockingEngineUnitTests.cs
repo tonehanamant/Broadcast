@@ -133,6 +133,52 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             Assert.AreEqual(expectedResult, result.Success);
         }
 
+        [Test]
+        public void LockCampaign_ToggleOn()
+        {
+            // Arrange
+            var service = _GetService(true);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            int campaignId = 271;
+            bool expectedResult = true;
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            _LockingService
+             .Setup(s => s.LockObject(It.IsAny<string>()))
+           .Returns(new BroadcastLockResponse
+           {
+               Key = "broadcast_plan : 298",
+               LockTimeoutInSeconds = 900,
+               LockedUserId = null,
+               Success = true,
+               Error = null
+           });
+            var result = service.LockCampaigns(campaignId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
+
+        [Test]
+        public void UnlockCampaign_ToggleOn()
+        {
+            // Arrange
+            var service = _GetService(true);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            int campaignId = 2711;
+            bool expectedResult = true;
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            _LockingService
+             .Setup(s => s.ReleaseObject(It.IsAny<string>()))
+           .Returns(new BroadcastReleaseLockResponse
+           {
+               Key = "broadcast_campaign : 171",
+               Success = true,
+               Error = null
+           });
+            var result = service.UnlockCampaigns(campaignId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
+
 
     }
 }

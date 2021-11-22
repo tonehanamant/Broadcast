@@ -63,6 +63,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private Mock<ILockingEngine> _LockingEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -89,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine = new Mock<IAabEngine>();
             _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
-
+            _LockingEngineMock = new Mock<ILockingEngine>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
                 .Returns(_StationProgramRepositoryMock.Object);
@@ -2528,8 +2529,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                 };
         }
-
-        private CampaignService _BuildCampaignService(bool isAabEnabled = false)
+        
+        private CampaignService _BuildCampaignService(bool isAabEnabled = false, bool isLockingConsolidationEnabled = false)
         {
             // Tie in base data.
             _AudienceServiceMock.Setup(s => s.GetAudienceById(It.IsAny<int>()))
@@ -2562,6 +2563,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeeksByMediaMonth);
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();            
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION, false);
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
             return new CampaignService(
@@ -2580,7 +2582,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _DaypartCacheMock.Object,
                 featureToggleHelper,
                 _AabEngine.Object,
-                _ConfigurationSettingsHelperMock.Object
+                _ConfigurationSettingsHelperMock.Object,
+                _LockingEngineMock.Object
                 );
         }
 
@@ -2812,6 +2815,48 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     EndTimeSeconds = 299
                 }
             };
+        }
+
+        [Test]
+        public void LockCampaign_ToggleOn()
+        {
+            // Arrange
+            int campainId = 271;
+            bool expectedResult = true;
+            _LockingEngineMock
+             .Setup(s => s.LockCampaigns(It.IsAny<int>()))
+           .Returns(new BroadcastLockResponse
+           {
+               Key = "broadcast_campaign : 171",
+               Success = true,
+               LockTimeoutInSeconds = 109,
+               LockedUserId = null,
+               Error = null
+           });
+            var tc = _BuildCampaignService(false, true);
+            var result = tc.LockCampaigns(campainId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
+
+        [Test]
+        public void UnlockCampaign_ToggleOn()
+        {
+            // Arrange
+            int campainId = 271;
+            bool expectedResult = true;
+            _LockingEngineMock
+             .Setup(s => s.UnlockCampaigns(It.IsAny<int>()))
+           .Returns(new BroadcastReleaseLockResponse
+           {
+               Key = "broadcast_campaign : 171",
+               Success = true,
+               Error = null
+           });
+            var tc = _BuildCampaignService(false, true);
+            var result = tc.UnlockCampaigns(campainId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
         }
     }
 }

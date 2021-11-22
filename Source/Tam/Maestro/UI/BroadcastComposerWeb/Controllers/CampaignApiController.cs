@@ -107,19 +107,17 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("{campaignId}/Lock")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<LockResponse> LockCampaign(int campaignId)
+        public BaseResponse<BroadcastLockResponse> LockCampaign(int campaignId)
         {
-            var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().LockObject(key));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().LockCampaigns(campaignId));
         }
 
         [HttpPost]
         [Route("{campaignId}/Unlock")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
+        public BaseResponse<BroadcastReleaseLockResponse> UnlockCampaign(int campaignId)
         {
-            var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().UnlockCampaigns(campaignId));
         }
 
         [HttpPost]
