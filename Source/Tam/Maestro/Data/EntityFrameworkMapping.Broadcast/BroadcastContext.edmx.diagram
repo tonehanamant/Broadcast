@@ -553,6 +553,8 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.custom_daypart_organizations" Width="1.5" PointX="30.375" PointY="4.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_dayparts" Width="1.5" PointX="32.625" PointY="59.375" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_dayparts_custom_daypart_organizations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

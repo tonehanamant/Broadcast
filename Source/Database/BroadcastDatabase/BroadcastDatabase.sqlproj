@@ -287,6 +287,7 @@
     <Build Include="dbo\Tables\spot_exceptions_out_of_spec_decisions.sql" />
     <Build Include="dbo\Tables\spot_exceptions_out_of_spec_reason_codes.sql" />
     <Build Include="dbo\Tables\custom_daypart_organizations.sql" />
+    <Build Include="dbo\Tables\plan_version_custom_dayparts.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
