@@ -26,6 +26,16 @@ namespace Services.Broadcast.Helpers
                     return null;
             }
         }
+        public static bool IsCustomDaypart(string daypartType)
+        {
+            switch (daypartType)
+            {               
+                case "Sports":
+                    return true;
+                default:
+                    return false;
+            }
+        }
 
         public static string GetDescriptionAttribute<T>(this T source)
         {

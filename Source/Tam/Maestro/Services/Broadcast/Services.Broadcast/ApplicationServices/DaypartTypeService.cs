@@ -27,6 +27,18 @@ namespace Services.Broadcast.ApplicationServices
     /// <seealso cref="IDaypartTypeService" />
     public class DaypartTypeService : IDaypartTypeService
     {
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsCustomDaypartEnabled;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DaypartTypeService"/> class.
+        /// </summary>        
+        /// <param name="featureToggleHelper">The feature toggle helper.</param>      
+        public DaypartTypeService(IFeatureToggleHelper featureToggleHelper)
+        {
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsCustomDaypartEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART));
+        }
         ///<inheritdoc/>
         public List<LookupDto> GetDaypartTypes()
         {
@@ -37,8 +49,12 @@ namespace Services.Broadcast.ApplicationServices
                     Id = (int)e,
                     Display = e.GetDescriptionAttribute()
                 })
-                .OrderBy(x=>x.Display)
+                .OrderBy(x => x.Display)
                 .ToList();
+            if(!_IsCustomDaypartEnabled.Value)
+            {
+                types = types.Where(x => EnumHelper.IsCustomDaypart(x.Display) !=true).ToList();
+            }            
             return types;
         }
     }

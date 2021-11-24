@@ -23,6 +23,12 @@ namespace Services.Broadcast.Entities.Enums
         /// The type for ROS
         /// </summary>
         [Description("ROS")]
-        ROS = 3
+        ROS = 3,
+
+        /// <summary>
+        /// The type for Sports
+        /// </summary>
+        [Description("Sports")]
+        Sports = 4
     }
 }

@@ -29,5 +29,6 @@
         public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
         public static string ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-queued-pricing-requests";
         public static string ENABLE_PLAN_ISCI_BY_WEEK = "broadcast-enable-plan-isci-by-week";
+        public static string ENABLE_CUSTOM_DAYPART = "broadcast-enable-custom-daypart";
     }
 }
