@@ -3196,18 +3196,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_LOCKING_CONSOLIDATION] = true;
             int planId = 291;
             bool expectedResult = true;
-             _LockingEngineMock
-              .Setup(s => s.LockPlan(It.IsAny<int>()))
-            .Returns(new PlanLockResponse
-            {
-                PlanName = "plan - 2345_AfterChange",
-                Key = "broadcast_plan : 298",
-                Success = true,
-                LockTimeoutInSeconds = 109,
-                LockedUserId = null,
-                LockedUserName = null,
-                Error = null
-            });
+            _LockingEngineMock
+             .Setup(s => s.LockPlan(It.IsAny<int>()))
+           .Returns(new PlanLockResponse
+           {
+               PlanName = "plan - 2345_AfterChange",
+               Key = "broadcast_plan : 298",
+               Success = true,
+               LockTimeoutInSeconds = 109,
+               LockedUserId = null,
+               LockedUserName = null,
+               Error = null
+           });
             var result = _PlanService.LockPlan(planId);
             // Assert
             Assert.AreEqual(expectedResult,result.Success);
@@ -3231,6 +3231,87 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = _PlanService.UnlockPlan(planId);
             // Assert
             Assert.AreEqual(expectedResult, result.Success);
+        }
+
+        [Test]
+        public void GetCustomDaypartOrganizations_Organizations_DoesNotExist()
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>());
+
+            // Act
+            var result = _PlanService.GetCustomDaypartOrganizations();
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        public void GetCustomDaypartOrganizations_Organizations_Exist()
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },                     
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
+
+            // Act
+            var result = _PlanService.GetCustomDaypartOrganizations();
+
+            // Assert          
+            Assert.AreEqual(5, result.Count);
+
+        }
+
+        [Test]
+        public void GetCustomDaypartOrganizations_ThrowsException()
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _PlanService.GetCustomDaypartOrganizations());
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }

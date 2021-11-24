@@ -219,6 +219,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <returns></returns>
         BroadcastReleaseLockResponse UnlockPlan(int planId);
+
+        List<CustomDaypartOrganizationDto> GetCustomDaypartOrganizations();
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -1653,6 +1655,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 planDto.Vpvh = planPricingResultsDayparts.Average(x => x.CalculatedVpvh);
             }
+        }
+        public List<CustomDaypartOrganizationDto> GetCustomDaypartOrganizations()
+        {
+            var customDaypartOrganizations = _PlanRepository.GetAllCustomDaypartOrganizations();
+
+            if (customDaypartOrganizations == null)
+                return null;;
+
+            var result = customDaypartOrganizations.GroupBy(x=>x.OrganizationName).Select(x=>x.FirstOrDefault()).OrderBy(x=>x.OrganizationName).ToList();
+
+            return result;
+
         }
     }
 }

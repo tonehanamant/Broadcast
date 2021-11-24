@@ -225,6 +225,7 @@ namespace Services.Broadcast.Repositories
 
         double GetNsiToNtiConversionRate(List<PlanDaypartDto> planDayparts);
         List<PlanPricingResultsDaypartDto> GetPlanPricingResultsDaypartsByPlanPricingResultId(int planPricingResultId);
+        List<CustomDaypartOrganizationDto> GetAllCustomDaypartOrganizations();
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -2713,6 +2714,21 @@ namespace Services.Broadcast.Repositories
                     }).ToList();
 
                 return result;
+            });
+        }
+        public List<CustomDaypartOrganizationDto> GetAllCustomDaypartOrganizations()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var customDaypartOrganizationEntities = context.custom_daypart_organizations.ToList();
+
+                var customDaypartorganizations = customDaypartOrganizationEntities.Select(customDaypartOrganizationEntity => new CustomDaypartOrganizationDto
+                {
+                    Id = customDaypartOrganizationEntity.id,
+                    OrganizationName = customDaypartOrganizationEntity.organization_name
+                }).ToList();
+
+                return customDaypartorganizations;
             });
         }
     }

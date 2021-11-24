@@ -335,5 +335,15 @@ namespace BroadcastComposerWeb.Controllers
 
             return result;
         }
+        /// <summary>
+        /// Gets the Custom daypart organizations Name.
+        /// </summary>
+        /// <returns>List of string organizations Name</returns>
+        [HttpGet]
+        [Route("custom-daypart-organizations")]
+        public BaseResponse<List<CustomDaypartOrganizationDto>> GetCustomDaypartOrganizations()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetCustomDaypartOrganizations());
+        }
     }
 }
