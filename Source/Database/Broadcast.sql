@@ -1633,6 +1633,10 @@ INSERT INTO plan_iscis (plan_id, isci, created_at, created_by, flight_start_date
 		AND CAST(pid.plan_isci_flight_start_date AS DATE) = CAST(pip.flight_start_date AS DATE)
 		AND CAST(pid.plan_isci_flight_end_date AS DATE) = CAST(pip.flight_end_date AS DATE)
 	WHERE pip.plan_id IS NULL
+
+DELETE FROM plan_iscis 
+WHERE flight_start_date is null 
+OR flight_end_date is null
 '
 
 DECLARE @Sql_FinalizeColumns VARCHAR(MAX) = '
