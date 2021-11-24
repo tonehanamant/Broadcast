@@ -137,7 +137,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var isciMappings = _GetIsciMappings();
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             int result = 0;
-            List<IsciPlanMappingDto> saveResult;
+            List<PlanIsciDto> saveResult;
             // Act
             using (new TransactionScopeWrapper())
             {
@@ -147,6 +147,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Assert.AreEqual(2, result);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanIsciDto), "Id");
 
             var jsonSettings = new JsonSerializerSettings()
             {
@@ -154,8 +155,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 ContractResolver = jsonResolver
             };
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult, jsonSettings));
         }
+
         [Test]
         public void SaveIsciPlanMappings()
         {
@@ -165,17 +167,27 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var isciMappings = _GetIsciMappings();
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             int result = 0;
-            List<IsciPlanMappingDto> saveResult;
+            List<PlanIsciDto> saveResult;
+
+            var itemsToSave = isciMappings.IsciPlanMappings.Select(s => new PlanIsciDto
+            {
+                PlanId = s.PlanId,
+                Isci = s.Isci,
+                FlightStartDate = new DateTime(2020, 2, 17),
+                FlightEndDate = new DateTime(2020, 3, 2),
+            }).ToList();
+
             // Act
             using (new TransactionScopeWrapper())
             {
-                result = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
+                result = planIsciRepository.SaveIsciPlanMappings(itemsToSave, createdBy, createdAt);
                 saveResult = planIsciRepository.GetPlanIscis();
             }
             Assert.AreEqual(1, result);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            
+            jsonResolver.Ignore(typeof(PlanIsciDto), "Id");
+
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -196,20 +208,28 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             Exception caught = null;
 
+            var itemsToSave = isciMappings.IsciPlanMappings.Select(s => new PlanIsciDto
+            {
+                PlanId = s.PlanId,
+                Isci = s.Isci,
+                FlightStartDate = new DateTime(2020, 2, 17),
+                FlightEndDate = new DateTime(2020, 3, 2),
+            }).ToList();
+
             // Act
             using (new TransactionScopeWrapper())
             {
                 caught = Assert.Throws<Exception>(() =>
-                    planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt));
+                    planIsciRepository.SaveIsciPlanMappings(itemsToSave, createdBy, createdAt));
             }
 
             // Assert
             Assert.IsTrue(caught.InnerException.InnerException.InnerException.Message.Contains("Cannot insert duplicate key"));
         }
 
-        private IsciPlanProductMappingDto _GetIsciMappings()
+        private IsciPlanMappingsSaveRequestDto _GetIsciMappings()
         {
-            return new IsciPlanProductMappingDto()
+            return new IsciPlanMappingsSaveRequestDto()
             {
                 IsciPlanMappings = new List<IsciPlanMappingDto>
                     {
@@ -235,9 +255,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             };
         }
 
-        private IsciPlanProductMappingDto _GetIsciMappings_DuplicatePlan()
+        private IsciPlanMappingsSaveRequestDto _GetIsciMappings_DuplicatePlan()
         {
-            return new IsciPlanProductMappingDto()
+            return new IsciPlanMappingsSaveRequestDto()
             {
                 IsciPlanMappings = new List<IsciPlanMappingDto>
                     {
@@ -267,33 +287,58 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 }
             };
         }
+
         [Test]
         public void DeleteIsciPlanMappings()
         {
             // Arrange
             string deletedBy = "Test User";
             DateTime deletedAt = DateTime.Now;
-            var isciMappings = _GetIsciMappingsForDelete();
+            var isciMappings = new List<PlanIsciDto>
+            {
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci1",
+                    FlightStartDate = new DateTime(2020, 2, 17),
+                    FlightEndDate = new DateTime(2020, 3, 2),
+                },
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci2",
+                    FlightStartDate = new DateTime(2020, 2, 17),
+                    FlightEndDate = new DateTime(2020, 3, 2),
+                }
+            };
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-            int result = 0;
-            List<IsciPlanMappingDto> deletedResult;
+            var before = new List<PlanIsciDto>();
+            var after = new List<PlanIsciDto>();
+            var deletedCount = 0;
             // Act
             using (new TransactionScopeWrapper())
             {
-                result = planIsciRepository.DeleteIsciPlanMappings(isciMappings.IsciPlanMappings, deletedBy, deletedAt);
-                deletedResult = planIsciRepository.GetPlanIscis();
+                var addedCount = planIsciRepository.SaveIsciPlanMappings(isciMappings, deletedBy, deletedAt);
+                before = planIsciRepository.GetPlanIscis(7009);
+                var idToDelete = new List<int>{ before.First().Id };
+                deletedCount = planIsciRepository.DeleteIsciPlanMappings(idToDelete, deletedBy, deletedAt);
+                after = planIsciRepository.GetPlanIscis(7009);
             }
-            Assert.AreEqual(1, result);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-
+            jsonResolver.Ignore(typeof(PlanIsciDto), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(deletedResult, jsonSettings));
+            var resultToVerify = new
+            {
+                deletedCount,
+                before,
+                after
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(resultToVerify, jsonSettings));
         }
 
         [Test]
@@ -304,62 +349,51 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var createdAt = DateTime.Now;
             var deletedAt = DateTime.Now;
             var deletedBy = "TestUser";
-            var isciMappings = new IsciPlanProductMappingDto()
+            var isciMappings = new List<PlanIsciDto>
             {
-                IsciPlanMappings = new List<IsciPlanMappingDto>
+                new PlanIsciDto()
                 {
-                    new IsciPlanMappingDto()
-                    {
-                        PlanId = 7009,
-                        Isci= "UniqueIsci1"
-                    },
-                    new IsciPlanMappingDto()
-                    {
-                        PlanId = 7009,
-                        Isci= "UniqueIsci2"
-                    }
+                    PlanId = 7009,
+                    Isci = "UniqueIsci1",
+                    FlightStartDate = new DateTime(2020, 2, 17),
+                    FlightEndDate = new DateTime(2020, 3, 2),
+                },
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci2",
+                    FlightStartDate = new DateTime(2020, 2, 17),
+                    FlightEndDate = new DateTime(2020, 3, 2),
                 }
             };
-            var result = 0;
-            var expectedDeleteCount = 2;
+            var deletedCount = 0;
+            var before = new List<PlanIsciDto>();
+            var after = new List<PlanIsciDto>();
 
             // Act
             using (new TransactionScopeWrapper())
             {
-                var addedCount = planIsciRepository.SaveIsciPlanMappings(isciMappings.IsciPlanMappings, createdBy, createdAt);
-                result = planIsciRepository.DeletePlanIscisNotExistInReelIsci(deletedAt, deletedBy);
+                planIsciRepository.SaveIsciPlanMappings(isciMappings, createdBy, createdAt);
+                before = planIsciRepository.GetPlanIscis(7009);
+                deletedCount = planIsciRepository.DeletePlanIscisNotExistInReelIsci(deletedAt, deletedBy);
+                after = planIsciRepository.GetPlanIscis(7009);
             }
 
             // Assert
-            Assert.IsTrue(result >= expectedDeleteCount);
-        }
-
-        private IsciPlanProductMappingDto _GetIsciMappingsForDelete()
-        {
-            return new IsciPlanProductMappingDto()
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanIsciDto), "Id");
+            var jsonSettings = new JsonSerializerSettings()
             {
-                IsciPlanMappings = new List<IsciPlanMappingDto>
-                    {
-                        new IsciPlanMappingDto()
-                        {
-                            PlanId = 1540,
-                            Isci= "AB82TXT2H"
-                        }
-                    },
-                IsciProductMappings = new List<IsciProductMappingDto>
-                {
-                    new IsciProductMappingDto()
-                        {
-                            ProductName = "Femoston",
-                            Isci= "AE67VR14"
-                        },
-                        new IsciProductMappingDto()
-                        {
-                            ProductName = "Abbot Labs",
-                            Isci= "AE67VR14"
-                        }
-                }
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
             };
+            var resultToVerify = new
+            {
+                deletedCount,
+                before,
+                after
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(resultToVerify, jsonSettings));
         }
     }
 }

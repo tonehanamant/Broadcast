@@ -18,7 +18,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             var createdBy = "Test User";
             var createdAt = DateTime.Now;
-            var isciMappings = new IsciPlanProductMappingDto()
+            var isciMappings = new IsciPlanMappingsSaveRequestDto()
             {
                 IsciProductMappings = new List<IsciProductMappingDto>
                 {

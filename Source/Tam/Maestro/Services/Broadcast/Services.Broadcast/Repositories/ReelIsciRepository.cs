@@ -33,6 +33,12 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns></returns>
         List<ReelIsciDto> GetReelIscis();
+
+        /// <summary>
+        /// Gets the reel isci details for the given iscis.
+        /// </summary>
+        /// <param name="iscis">Given list of iscis.</param>
+        List<ReelIsciDto> GetReelIscis(List<string> iscis);
     }
 
     public class ReelIsciRepository : BroadcastRepositoryBase, IReelIsciRepository
@@ -120,6 +126,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc />
         public List<ReelIsciDto> GetReelIscis()
         {
             return _InReadUncommitedTransaction(context =>
@@ -141,6 +148,35 @@ namespace Services.Broadcast.Repositories
                             AdvertiserNameReference = a.advertiser_name_reference
                         }).ToList()
                     })
+                    .ToList();
+
+                return result;
+            });
+        }
+
+        /// <inheritdoc />
+        public List<ReelIsciDto> GetReelIscis(List<string> iscis)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.reel_iscis
+                .Where(s => iscis.Contains(s.isci))
+                .Select(s => new ReelIsciDto
+                    {
+                        Id = s.id,
+                        Isci = s.isci,
+                        SpotLengthId = s.spot_length_id,
+                        ActiveStartDate = s.active_start_date,
+                        ActiveEndDate = s.active_end_date,
+                        IngestedAt = s.ingested_at,
+                        ReelIsciAdvertiserNameReferences = s.reel_isci_advertiser_name_references
+                           .Select(a => new ReelIsciAdvertiserNameReferenceDto
+                           {
+                               Id = a.id,
+                               ReelIsciId = a.reel_isci_id,
+                               AdvertiserNameReference = a.advertiser_name_reference
+                           }).ToList()
+                    })                    
                     .ToList();
 
                 return result;

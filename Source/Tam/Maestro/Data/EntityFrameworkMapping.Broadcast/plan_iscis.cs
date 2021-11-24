@@ -21,6 +21,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string created_by { get; set; }
         public Nullable<System.DateTime> deleted_at { get; set; }
         public string deleted_by { get; set; }
+        public System.DateTime flight_start_date { get; set; }
+        public System.DateTime flight_end_date { get; set; }
     
         public virtual plan plan { get; set; }
     }

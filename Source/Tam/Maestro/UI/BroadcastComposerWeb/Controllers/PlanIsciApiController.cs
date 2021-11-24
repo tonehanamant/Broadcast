@@ -62,7 +62,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("plan-iscis")]
         [Authorize]
-        public BaseResponse<bool> SaveIsciMappings(IsciPlanProductMappingDto isciPlanProductsMapping)
+        public BaseResponse<bool> SaveIsciMappings(IsciPlanMappingsSaveRequestDto isciPlanProductsMapping)
         {
             var createdBy = _GetCurrentUserFullName();
             return
@@ -72,7 +72,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("plan-iscis-details")]
-        public BaseResponse<IsciPlanMappingDetailsDto> GetPlanIsciMappingsDetails(int planId)
+        public BaseResponse<PlanIsciMappingsDetailsDto> GetPlanIsciMappingsDetails(int planId)
         {
             return
                 _ConvertToBaseResponse(

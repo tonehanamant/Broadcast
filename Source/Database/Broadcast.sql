@@ -905,23 +905,6 @@ GO
 
 /*************************************** End BP-2920 *****************************************************/
 
-/*************************************** Start BP-2920 *****************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('plan_iscis') AND name='UX_plan_iscis_plan_id_isci') 
-BEGIN
-
-	CREATE UNIQUE NONCLUSTERED INDEX [UX_plan_iscis_plan_id_isci] ON [dbo].[plan_iscis]
-	(
-		[plan_id] ASC,
-		[isci] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-
-END 
-
-GO
-
-/*************************************** End BP-2920 *****************************************************/
-
 /*************************************** START BP-1101 ***************************************/
 GO
 IF OBJECT_ID('plan_version_buying_band_stations') IS NULL
@@ -1599,6 +1582,86 @@ BEGIN
 END
 Go
 /*************************************** END BP-3568 ***************************************/
+
+/*************************************** START BP-3156 ***************************************/
+
+DECLARE @Sql_RemoveUniqueConstraint VARCHAR(MAX) = '
+DROP INDEX [UX_plan_iscis_plan_id_isci] ON [dbo].[plan_iscis]
+'
+
+DECLARE @Sql_AddColumns VARCHAR(MAX) = '
+ALTER TABLE plan_iscis ADD flight_start_date DATE NULL
+ALTER TABLE plan_iscis ADD flight_end_date DATE NULL
+'
+
+DECLARE @Sql_PopulateColumns VARCHAR(MAX) = '
+SELECT DISTINCT pip.plan_id, pip.isci			
+	, CASE 
+		WHEN v.flight_start_date >= r.active_start_date THEN v.flight_start_date
+		ELSE r.active_start_date
+	END AS plan_isci_flight_start_date
+	, CASE 
+		WHEN v.flight_end_date <= r.active_end_date THEN v.flight_end_date
+		ELSE r.active_end_date
+	END AS plan_isci_flight_end_date
+	INTO #plan_isci_flight_dates
+FROM plan_iscis pip
+JOIN plans p
+	ON pip.plan_id = p.id
+JOIN plan_versions v
+	ON p.latest_version_id = v.id
+JOIN reel_iscis r
+	ON r.isci = pip.isci
+WHERE r.active_start_date <= v.flight_end_date
+AND r.active_end_date >= v.flight_start_date
+
+UPDATE pip SET 
+	flight_start_date = pid.plan_isci_flight_start_date
+	, flight_end_date = pid.plan_isci_flight_end_date
+FROM plan_iscis pip	
+JOIN #plan_isci_flight_dates pid
+	ON pip.plan_id = pid.plan_id
+	AND pip.isci = pid.isci
+WHERE pip.flight_start_date IS NULL
+
+INSERT INTO plan_iscis (plan_id, isci, created_at, created_by, flight_start_date, flight_end_date)
+	SELECT pid.plan_id, pid.isci, SYSDATETIME(), ''system_migration_script'', pid.plan_isci_flight_start_date, pid.plan_isci_flight_end_date
+	FROM #plan_isci_flight_dates pid
+	LEFT OUTER JOIN plan_iscis pip
+		ON pid.plan_id = pip.plan_id
+		AND pid.isci = pip.isci
+		AND CAST(pid.plan_isci_flight_start_date AS DATE) = CAST(pip.flight_start_date AS DATE)
+		AND CAST(pid.plan_isci_flight_end_date AS DATE) = CAST(pip.flight_end_date AS DATE)
+	WHERE pip.plan_id IS NULL
+'
+
+DECLARE @Sql_FinalizeColumns VARCHAR(MAX) = '
+ALTER TABLE plan_iscis ALTER COLUMN flight_start_date DATE NOT NULL
+ALTER TABLE plan_iscis ALTER COLUMN flight_end_date DATE NOT NULL
+'
+
+DECLARE @Sql_ReplaceUniqueConstraint VARCHAR(MAX) = '
+CREATE UNIQUE NONCLUSTERED INDEX [UX_plan_iscis_plan_id_isci] ON [dbo].[plan_iscis]
+(
+	[plan_id] ASC,
+	[isci] ASC,
+	[flight_start_date] ASC,
+	[flight_end_date] ASC
+)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'flight_start_date' AND OBJECT_ID = OBJECT_ID(N'plan_iscis'))
+BEGIN
+	EXEC (@Sql_RemoveUniqueConstraint)
+	EXEC (@Sql_AddColumns)
+	EXEC (@Sql_PopulateColumns)
+	EXEC (@Sql_FinalizeColumns)
+	EXEC (@Sql_ReplaceUniqueConstraint)
+END
+
+GO
+/*************************************** END BP-3156 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

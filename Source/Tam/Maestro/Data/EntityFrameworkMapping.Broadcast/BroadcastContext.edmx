@@ -837,6 +837,8 @@
           <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="deleted_at" Type="datetime2" Precision="7" />
           <Property Name="deleted_by" Type="varchar" MaxLength="100" />
+          <Property Name="flight_start_date" Type="date" Nullable="false" />
+          <Property Name="flight_end_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_audience_daypart_vpvh">
           <Key>
@@ -17133,6 +17135,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="deleted_at" Type="DateTime" Precision="7" />
           <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
+          <Property Name="flight_start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="flight_end_date" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="reel_isci_advertiser_name_references">
           <Key>
@@ -20519,6 +20523,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_iscis">
             <EntityTypeMapping TypeName="BroadcastModel.plan_iscis">
               <MappingFragment StoreEntitySet="plan_iscis">
+                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
+                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
                 <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
                 <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />

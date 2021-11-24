@@ -527,8 +527,11 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
     <Compile Include="Entities\DaypartDetailDto.cs" />
-    <Compile Include="Entities\Isci\IsciPlanMappingDetailsDto.cs" />
-    <Compile Include="Entities\Isci\IsciPlanMappingIsciDetailsDto.cs" />
+    <Compile Include="Entities\Isci\PlanIsciMappingsDetailsDto.cs" />
+    <Compile Include="Entities\Isci\PlanIsciDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanModifiedMappingDto.cs" />
+    <Compile Include="Entities\Isci\IsciSpotLengthDto.cs" />
+    <Compile Include="Entities\Isci\PlanMappedIsciDetailsDto.cs" />
     <Compile Include="Clients\PricingJobQueueApiClient.cs" />
     <Compile Include="Entities\LogoResultDto.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
@@ -585,7 +588,7 @@
     <Compile Include="Entities\Isci\IsciListItemDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanMappingDto.cs" />
-    <Compile Include="Entities\Isci\IsciPlanProductMappingDto.cs" />
+    <Compile Include="Entities\Isci\IsciPlanMappingsSaveRequestDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanResultDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanDetailDto.cs" />
     <Compile Include="Entities\Isci\IsciProductMappingDto.cs" />

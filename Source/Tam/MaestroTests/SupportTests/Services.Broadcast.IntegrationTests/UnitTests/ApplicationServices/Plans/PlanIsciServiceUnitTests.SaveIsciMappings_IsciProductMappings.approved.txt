@@ -1,0 +1,17 @@
+{
+  "getIsciProductMappingsCalls": [
+    "NewIsci",
+    "ListDuplicateIsci",
+    "DbDuplicateIsci"
+  ],
+  "savedProductMappings": [
+    {
+      "Isci": "NewIsci",
+      "ProductName": "NewProduct1"
+    },
+    {
+      "Isci": "ListDuplicateIsci",
+      "ProductName": "ListDuplicateProduct1"
+    }
+  ]
+}
