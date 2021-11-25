@@ -14,6 +14,14 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class plan_version_custom_dayparts
     {
+        public plan_version_custom_dayparts()
+        {
+            this.plan_version_custom_daypart_affiliate_restrictions = new HashSet<plan_version_custom_daypart_affiliate_restrictions>();
+            this.plan_version_custom_daypart_genre_restrictions = new HashSet<plan_version_custom_daypart_genre_restrictions>();
+            this.plan_version_custom_daypart_program_restrictions = new HashSet<plan_version_custom_daypart_program_restrictions>();
+            this.plan_version_custom_daypart_show_type_restrictions = new HashSet<plan_version_custom_daypart_show_type_restrictions>();
+        }
+    
         public int id { get; set; }
         public int custom_daypart_organization_id { get; set; }
         public string custom_daypart_name { get; set; }
@@ -32,5 +40,10 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> weekend_weighting { get; set; }
     
         public virtual custom_daypart_organizations custom_daypart_organizations { get; set; }
+        public virtual ICollection<plan_version_custom_daypart_affiliate_restrictions> plan_version_custom_daypart_affiliate_restrictions { get; set; }
+        public virtual ICollection<plan_version_custom_daypart_genre_restrictions> plan_version_custom_daypart_genre_restrictions { get; set; }
+        public virtual ICollection<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
+        public virtual ICollection<plan_version_custom_daypart_show_type_restrictions> plan_version_custom_daypart_show_type_restrictions { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

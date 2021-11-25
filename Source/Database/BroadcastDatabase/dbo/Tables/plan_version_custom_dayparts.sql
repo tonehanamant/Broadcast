@@ -16,5 +16,6 @@
 		[affiliate_restrictions_contain_type] [int] NULL,
 		[weekdays_weighting] [float] NULL,
 		[weekend_weighting] [float] NULL,
-		CONSTRAINT [FK_plan_version_custom_dayparts_custom_daypart_organizations] FOREIGN KEY ([custom_daypart_organization_id]) REFERENCES [dbo].[custom_daypart_organizations]([ID])
+		CONSTRAINT [FK_plan_version_custom_dayparts_custom_daypart_organizations] FOREIGN KEY ([custom_daypart_organization_id]) REFERENCES [dbo].[custom_daypart_organizations]([ID]),
+		CONSTRAINT [FK_plan_version_custom_dayparts_plan_versions]FOREIGN KEY (plan_version_id) REFERENCES plan_versions(id)
 	)	

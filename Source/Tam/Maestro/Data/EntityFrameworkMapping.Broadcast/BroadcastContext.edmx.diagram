@@ -553,8 +553,20 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.custom_daypart_organizations" Width="1.5" PointX="30.375" PointY="4.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_dayparts" Width="1.5" PointX="32.625" PointY="59.375" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_affiliate_restrictions" Width="1.5" PointX="41.875" PointY="4.125" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_genre_restrictions" Width="1.5" PointX="41.875" PointY="34.875" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_program_restrictions" Width="1.5" PointX="41.875" PointY="8.25" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_show_type_restrictions" Width="1.5" PointX="42.875" PointY="17.375" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_dayparts" Width="1.5" PointX="39.625" PointY="3.875" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_affiliate_restrictions_affiliates" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_dayparts_custom_daypart_organizations" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_genre_restrictions_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_affiliate_restrictions_plan_version_custom_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_genre_restrictions_plan_version_custom_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_show_type_restrictions_plan_version_custom_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_show_type_restrictions_show_types" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_dayparts_plan_versions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

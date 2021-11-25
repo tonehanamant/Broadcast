@@ -237,6 +237,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_out_of_spec_reason_codes> spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<custom_daypart_organizations> custom_daypart_organizations { get; set; }
+        public virtual DbSet<plan_version_custom_daypart_affiliate_restrictions> plan_version_custom_daypart_affiliate_restrictions { get; set; }
+        public virtual DbSet<plan_version_custom_daypart_genre_restrictions> plan_version_custom_daypart_genre_restrictions { get; set; }
+        public virtual DbSet<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
+        public virtual DbSet<plan_version_custom_daypart_show_type_restrictions> plan_version_custom_daypart_show_type_restrictions { get; set; }
         public virtual DbSet<plan_version_custom_dayparts> plan_version_custom_dayparts { get; set; }
     }
 }

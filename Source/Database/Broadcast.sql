@@ -1582,6 +1582,77 @@ BEGIN
 END
 Go
 /*************************************** END BP-3568 ***************************************/
+/*************************************** START BP-3612 ***************************************/
+IF OBJECT_ID('plan_version_custom_daypart_affiliate_restrictions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_custom_daypart_affiliate_restrictions]
+	(
+		[id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+		[plan_version_custom_daypart_id] [int] NOT NULL,
+		[affiliate_id] [int] NOT NULL,
+		CONSTRAINT [FK_plan_version_custom_daypart_affiliate_restrictions_affiliates] FOREIGN KEY ([affiliate_id]) REFERENCES [dbo].[affiliates]([ID]),
+		CONSTRAINT [FK_plan_version_custom_daypart_affiliate_restrictions_plan_version_custom_dayparts] FOREIGN KEY([plan_version_custom_daypart_id])REFERENCES [dbo].[plan_version_custom_dayparts] ([id])
+		
+	)	
+END
+
+IF OBJECT_ID('plan_version_custom_daypart_genre_restrictions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_custom_daypart_genre_restrictions]
+	(
+		[id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+		[plan_version_custom_daypart_id] [int] NOT NULL,
+		[genre_id] [int] NOT NULL,
+		CONSTRAINT UQ_plan_version_custom_daypart_genre_restrictions UNIQUE (plan_version_custom_daypart_id,genre_id),
+		CONSTRAINT [FK_plan_version_custom_daypart_genre_restrictions_genres] FOREIGN KEY([genre_id]) REFERENCES [dbo].[genres] ([id]),
+		CONSTRAINT [FK_plan_version_custom_daypart_genre_restrictions_plan_version_custom_dayparts] FOREIGN KEY([plan_version_custom_daypart_id]) REFERENCES [dbo].[plan_version_custom_dayparts] ([id])
+		
+	)	
+END
+
+
+IF OBJECT_ID('plan_version_custom_daypart_program_restrictions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_custom_daypart_program_restrictions]
+	(
+		[id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+		[plan_version_custom_daypart_id] [int] NOT NULL,
+		[program_name] [varchar](255) NULL,
+		[genre_id] [int] NULL,
+		[content_rating] [varchar](15) NULL,
+		CONSTRAINT UC_plan_version_custom_daypart_program_restrictions UNIQUE (plan_version_custom_daypart_id,[program_name],genre_id),
+		CONSTRAINT [FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts] FOREIGN KEY([plan_version_custom_daypart_id])REFERENCES [dbo].[plan_version_custom_dayparts] ([id])
+		
+	)	
+END
+
+IF OBJECT_ID('plan_version_custom_daypart_show_type_restrictions') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_custom_daypart_show_type_restrictions]
+	(
+		[id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+		[plan_version_custom_daypart_id] [int] NOT NULL,
+		[show_type_id] [int] NOT NULL,
+		CONSTRAINT UQ_plan_version_custom_daypart_show_type_restrictions UNIQUE (plan_version_custom_daypart_id,show_type_id),
+		CONSTRAINT [FK_plan_version_custom_daypart_show_type_restrictions_plan_version_custom_dayparts] FOREIGN KEY([plan_version_custom_daypart_id])REFERENCES [dbo].[plan_version_custom_dayparts] ([id]),
+		CONSTRAINT [FK_plan_version_custom_daypart_show_type_restrictions_show_types] FOREIGN KEY([show_type_id])REFERENCES [dbo].[show_types] ([id])
+		
+	)	
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'plan_version_id' AND Object_ID = Object_ID(N'plan_version_custom_dayparts'))
+BEGIN
+	
+	IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_plan_version_custom_dayparts_plan_versions')
+	    BEGIN
+		   ALTER TABLE plan_version_custom_dayparts
+			ADD CONSTRAINT FK_plan_version_custom_dayparts_plan_versions
+			FOREIGN KEY (plan_version_id) REFERENCES plan_versions(id)
+		END
+	
+END
+
+GO
+/*************************************** END BP-3612 ***************************************/
 
 /*************************************** START BP-3156 ***************************************/
 
