@@ -6,6 +6,8 @@
 		[genre_id] [int] NULL,
 		[content_rating] [varchar](15) NULL,
 		CONSTRAINT UC_plan_version_custom_daypart_program_restrictions UNIQUE (plan_version_custom_daypart_id,[program_name],genre_id),
-		CONSTRAINT [FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts] FOREIGN KEY([plan_version_custom_daypart_id])
-REFERENCES [dbo].[plan_version_custom_dayparts] ([id])
+		CONSTRAINT [FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts] FOREIGN KEY([plan_version_custom_daypart_id])		
+REFERENCES [dbo].[plan_version_custom_dayparts] ([id]),
+CONSTRAINT FK_plan_version_daypart_program_restrictions_genres FOREIGN KEY([genre_id])REFERENCES [dbo].[genres] ([id])
+
 )

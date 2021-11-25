@@ -18,8 +18,8 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.plan_version_custom_daypart_affiliate_restrictions = new HashSet<plan_version_custom_daypart_affiliate_restrictions>();
             this.plan_version_custom_daypart_genre_restrictions = new HashSet<plan_version_custom_daypart_genre_restrictions>();
-            this.plan_version_custom_daypart_program_restrictions = new HashSet<plan_version_custom_daypart_program_restrictions>();
             this.plan_version_custom_daypart_show_type_restrictions = new HashSet<plan_version_custom_daypart_show_type_restrictions>();
+            this.plan_version_custom_daypart_program_restrictions = new HashSet<plan_version_custom_daypart_program_restrictions>();
         }
     
         public int id { get; set; }
@@ -42,8 +42,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual custom_daypart_organizations custom_daypart_organizations { get; set; }
         public virtual ICollection<plan_version_custom_daypart_affiliate_restrictions> plan_version_custom_daypart_affiliate_restrictions { get; set; }
         public virtual ICollection<plan_version_custom_daypart_genre_restrictions> plan_version_custom_daypart_genre_restrictions { get; set; }
-        public virtual ICollection<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
         public virtual ICollection<plan_version_custom_daypart_show_type_restrictions> plan_version_custom_daypart_show_type_restrictions { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
     }
 }

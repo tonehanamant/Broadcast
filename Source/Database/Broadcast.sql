@@ -1651,6 +1651,17 @@ BEGIN
 	
 END
 
+IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'genre_id' AND Object_ID = Object_ID(N'plan_version_daypart_program_restrictions'))
+BEGIN
+	
+	IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_plan_version_daypart_program_restrictions_genres')
+	    BEGIN
+		   ALTER TABLE plan_version_daypart_program_restrictions
+		   ADD CONSTRAINT FK_plan_version_daypart_program_restrictions_genres
+			FOREIGN KEY([genre_id])REFERENCES [dbo].[genres] ([id])
+		END
+	
+END
 GO
 /*************************************** END BP-3612 ***************************************/
 

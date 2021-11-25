@@ -219,7 +219,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<standard_dayparts> standard_dayparts { get; set; }
         public virtual DbSet<plan_version_pricing_results_dayparts> plan_version_pricing_results_dayparts { get; set; }
         public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
-        public virtual DbSet<plan_iscis> plan_iscis { get; set; }
         public virtual DbSet<reel_isci_advertiser_name_references> reel_isci_advertiser_name_references { get; set; }
         public virtual DbSet<reel_isci_products> reel_isci_products { get; set; }
         public virtual DbSet<reel_iscis> reel_iscis { get; set; }
@@ -239,8 +238,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<custom_daypart_organizations> custom_daypart_organizations { get; set; }
         public virtual DbSet<plan_version_custom_daypart_affiliate_restrictions> plan_version_custom_daypart_affiliate_restrictions { get; set; }
         public virtual DbSet<plan_version_custom_daypart_genre_restrictions> plan_version_custom_daypart_genre_restrictions { get; set; }
-        public virtual DbSet<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
         public virtual DbSet<plan_version_custom_daypart_show_type_restrictions> plan_version_custom_daypart_show_type_restrictions { get; set; }
         public virtual DbSet<plan_version_custom_dayparts> plan_version_custom_dayparts { get; set; }
+        public virtual DbSet<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
+        public virtual DbSet<plan_iscis> plan_iscis { get; set; }
     }
 }

@@ -505,11 +505,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_dayparts_plan_version_pricing_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="34.125" />
         <EntityTypeShape EntityType="BroadcastModel.reel_isci_advertiser_name_references" Width="1.5" PointX="5.25" PointY="89.5" />
         <EntityTypeShape EntityType="BroadcastModel.reel_isci_products" Width="1.5" PointX="32.375" PointY="0.75" />
         <EntityTypeShape EntityType="BroadcastModel.reel_iscis" Width="1.5" PointX="3" PointY="89.125" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         <AssociationConnector Association="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis" />
         <AssociationConnector Association="BroadcastModel.FK_reel_iscis_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.export_unmapped_program_names_jobs" Width="1.5" PointX="36.375" PointY="0.75" />
@@ -555,7 +553,6 @@
         <EntityTypeShape EntityType="BroadcastModel.custom_daypart_organizations" Width="1.5" PointX="30.375" PointY="4.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_affiliate_restrictions" Width="1.5" PointX="41.875" PointY="4.125" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_genre_restrictions" Width="1.5" PointX="41.875" PointY="34.875" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_program_restrictions" Width="1.5" PointX="41.875" PointY="8.25" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_show_type_restrictions" Width="1.5" PointX="42.875" PointY="17.375" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_dayparts" Width="1.5" PointX="39.625" PointY="3.875" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_affiliate_restrictions_affiliates" />
@@ -563,10 +560,13 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_genre_restrictions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_affiliate_restrictions_plan_version_custom_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_genre_restrictions_plan_version_custom_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_show_type_restrictions_plan_version_custom_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_show_type_restrictions_show_types" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_dayparts_plan_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_program_restrictions" Width="1.5" PointX="41.875" PointY="7.375" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="34.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
