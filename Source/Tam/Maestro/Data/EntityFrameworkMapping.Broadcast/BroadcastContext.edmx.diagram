@@ -563,7 +563,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_show_type_restrictions_plan_version_custom_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_show_type_restrictions_show_types" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_dayparts_plan_versions" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_program_restrictions" Width="1.5" PointX="41.875" PointY="7.375" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_custom_daypart_program_restrictions" Width="1.5" PointX="41.875" PointY="31.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" />
         <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="34.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />

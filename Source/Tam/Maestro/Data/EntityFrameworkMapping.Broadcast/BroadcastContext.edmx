@@ -4411,6 +4411,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_version_custom_daypart_program_restrictions_genres">
+          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
+          <End Role="plan_version_custom_daypart_program_restrictions" Type="Self.plan_version_custom_daypart_program_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_custom_daypart_program_restrictions">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts">
           <End Role="plan_version_custom_dayparts" Type="Self.plan_version_custom_dayparts" Multiplicity="1" />
           <End Role="plan_version_custom_daypart_program_restrictions" Type="Self.plan_version_custom_daypart_program_restrictions" Multiplicity="*" />
@@ -4520,18 +4532,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_daypart_genre_restrictions">
               <PropertyRef Name="plan_version_daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_daypart_program_restrictions_genres">
-          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
-          <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_daypart_program_restrictions">
-              <PropertyRef Name="genre_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7930,6 +7930,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_custom_dayparts" EntitySet="plan_version_custom_dayparts" />
             <End Role="plan_version_custom_daypart_genre_restrictions" EntitySet="plan_version_custom_daypart_genre_restrictions" />
           </AssociationSet>
+          <AssociationSet Name="FK_plan_version_custom_daypart_program_restrictions_genres" Association="Self.FK_plan_version_custom_daypart_program_restrictions_genres">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="plan_version_custom_daypart_program_restrictions" EntitySet="plan_version_custom_daypart_program_restrictions" />
+          </AssociationSet>
           <AssociationSet Name="FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" Association="Self.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts">
             <End Role="plan_version_custom_dayparts" EntitySet="plan_version_custom_dayparts" />
             <End Role="plan_version_custom_daypart_program_restrictions" EntitySet="plan_version_custom_daypart_program_restrictions" />
@@ -7965,10 +7969,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_daypart_genre_restrictions_plan_version_dayparts" Association="Self.FK_plan_version_daypart_genre_restrictions_plan_version_dayparts">
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
             <End Role="plan_version_daypart_genre_restrictions" EntitySet="plan_version_daypart_genre_restrictions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_daypart_program_restrictions_genres" Association="Self.FK_plan_version_daypart_program_restrictions_genres">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_daypart_program_restrictions_plan_version_dayparts" Association="Self.FK_plan_version_daypart_program_restrictions_plan_version_dayparts">
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
@@ -10368,6 +10368,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_custom_dayparts" EntitySet="plan_version_custom_dayparts" />
           </AssociationSet>
           <EntitySet Name="plan_version_custom_daypart_program_restrictions" EntityType="BroadcastModel.plan_version_custom_daypart_program_restrictions" />
+          <AssociationSet Name="FK_plan_version_custom_daypart_program_restrictions_genres" Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_genres">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="plan_version_custom_daypart_program_restrictions" EntitySet="plan_version_custom_daypart_program_restrictions" />
+          </AssociationSet>
           <AssociationSet Name="FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" Association="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts">
             <End Role="plan_version_custom_dayparts" EntitySet="plan_version_custom_dayparts" />
             <End Role="plan_version_custom_daypart_program_restrictions" EntitySet="plan_version_custom_daypart_program_restrictions" />
@@ -15476,6 +15480,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="program_name_mapping_keywords" Relationship="BroadcastModel.FK_program_name_mapping_keywords_genres" FromRole="genre" ToRole="program_name_mapping_keywords" />
           <NavigationProperty Name="inventory_proprietary_daypart_programs" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_programs_genres" FromRole="genre" ToRole="inventory_proprietary_daypart_programs" />
           <NavigationProperty Name="plan_version_custom_daypart_genre_restrictions" Relationship="BroadcastModel.FK_plan_version_custom_daypart_genre_restrictions_genres" FromRole="genre" ToRole="plan_version_custom_daypart_genre_restrictions" />
+          <NavigationProperty Name="plan_version_custom_daypart_program_restrictions" Relationship="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_genres" FromRole="genre" ToRole="plan_version_custom_daypart_program_restrictions" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_daypart_programs">
           <Key>
@@ -18103,8 +18108,21 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="program_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="genre_id" Type="Int32" />
           <Property Name="content_rating" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_genres" FromRole="plan_version_custom_daypart_program_restrictions" ToRole="genre" />
           <NavigationProperty Name="plan_version_custom_dayparts" Relationship="BroadcastModel.FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts" FromRole="plan_version_custom_daypart_program_restrictions" ToRole="plan_version_custom_dayparts" />
         </EntityType>
+        <Association Name="FK_plan_version_custom_daypart_program_restrictions_genres">
+          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_custom_daypart_program_restrictions" Role="plan_version_custom_daypart_program_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_custom_daypart_program_restrictions">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_custom_daypart_program_restrictions_plan_version_custom_dayparts">
           <End Type="BroadcastModel.plan_version_custom_dayparts" Role="plan_version_custom_dayparts" Multiplicity="1" />
           <End Type="BroadcastModel.plan_version_custom_daypart_program_restrictions" Role="plan_version_custom_daypart_program_restrictions" Multiplicity="*" />
