@@ -1198,7 +1198,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
-        /*
         [Test]
         public void GetPlanIsciMappingsDetails()
         {
@@ -1208,67 +1207,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
 
             _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<int>()))
-                .Returns(new List<IsciPlanMapping>
+                .Returns(new List<PlanIsciDto>
                 {
-                    new IsciPlanMapping
+                    new PlanIsciDto
                     {
+                        Id = 1,
                         PlanId = planId,
-                        Isci = "Isci123"
+                        Isci = "Isci123",
+                        FlightStartDate = DateTime.Parse("11/1/2021"),
+                        FlightEndDate = DateTime.Parse("11/10/2021")
                     },
-                    new IsciPlanMapping
+                    new PlanIsciDto
                     {
+                        Id = 2,
                         PlanId = planId,
-                        Isci = "Isci456"
+                        Isci = "Isci456",
+                        FlightStartDate = DateTime.Parse("11/1/2021"),
+                        FlightEndDate = DateTime.Parse("11/10/2021")
                     },
-                    new IsciPlanMapping
+                    new PlanIsciDto
                     {
+                        Id = 3,
                         PlanId = planId,
-                        Isci = "Isci789"
+                        Isci = "Isci789",
+                        FlightStartDate = DateTime.Parse("11/1/2021"),
+                        FlightEndDate = DateTime.Parse("11/10/2021")
                     }
                 });
 
-            _PlanIsciRepositoryMock.Setup(s => s.GetIsciDetails(It.IsAny<List<string>>()))
-                .Returns(new List<IsciPlanMappingIsciDetailsDto>
-                {
-                    new IsciPlanMappingIsciDetailsDto
-                    {
-                        Isci = "Isci123",
-                        SpotLengthId = 1,
-                        ActiveStartDate = DateTime.Parse("11/1/2021"),
-                        ActiveEndDate = DateTime.Parse("11/10/2021")
-                    },
-                    new IsciPlanMappingIsciDetailsDto
-                    {
-                        Isci = "Isci456",
-                        SpotLengthId = 1,
-                        ActiveStartDate = DateTime.Parse("11/1/2021"),
-                        ActiveEndDate = DateTime.Parse("11/10/2021")
-                    },
-                    new IsciPlanMappingIsciDetailsDto
-                    {
-                        Isci = "Isci789",
-                        SpotLengthId = 1,
-                        ActiveStartDate = DateTime.Parse("11/1/2021"),
-                        ActiveEndDate = DateTime.Parse("11/10/2021")
-                    },
-
-                    // This is before the plan flight
-                    new IsciPlanMappingIsciDetailsDto
-                    {
-                        Isci = "Isci789",
-                        SpotLengthId = 1,
-                        ActiveStartDate = DateTime.Parse("10/1/2021"),
-                        ActiveEndDate = DateTime.Parse("10/10/2021")
-                    },
-                    // This is after the plan flight
-                    new IsciPlanMappingIsciDetailsDto
-                    {
-                        Isci = "Isci456",
-                        SpotLengthId = 1,
-                        ActiveStartDate = DateTime.Parse("11/21/2021"),
-                        ActiveEndDate = DateTime.Parse("11/28/2021")
-                    },
-                });
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciSpotLengths(It.IsAny<List<string>>()))
+                .Returns<List<string>>((iscis) => iscis
+                    .Select(i => new IsciSpotLengthDto {Isci = i, SpotLengthId = 1})
+                    .ToList());
 
             _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto
@@ -1307,6 +1277,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460")
                 });
 
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(new AdvertiserDto() { Name = "Acme" });
+
             _AabEngineMock.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
                 .Returns(new ProductDto {Name = "KaBlam!!!" });
 
@@ -1316,8 +1289,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
-        */
 
         [Test]
         [TestCase("11/1/2021", "11/10/2021", "11/01 - 11/10/2021")]

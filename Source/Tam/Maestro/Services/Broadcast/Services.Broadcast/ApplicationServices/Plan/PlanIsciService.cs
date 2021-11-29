@@ -464,18 +464,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var plan = _PlanService.GetPlan(planId);
             var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
+            var advertiserName = _GetAdvertiserName(campaign.AdvertiserMasterId.Value);
             var productName = _GetProductName(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
             var daypartsString = _GetDaypartCodesString(plan.Dayparts);
             var spotLengthsString = _GetSpotLengthsString(plan.CreativeLengths);
             var demoString = _GetAudienceString(plan.AudienceId);
             var flightString = _GetFlightString(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
-
+            
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
             var mappingsDetails = new PlanIsciMappingsDetailsDto
             {
                 PlanId = plan.Id,
                 PlanName = plan.Name,
+                AdvertiserName = advertiserName,
                 ProductName = productName,
                 SpotLengthString = spotLengthsString,
                 DaypartCode = daypartsString,
@@ -492,6 +494,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var product = _AabEngine.GetAdvertiserProduct(advertiserMasterId, productMasterId);
             return product.Name;
+        }
+
+        private string _GetAdvertiserName(Guid advertiserMasterId)
+        {
+            var advertiser = _AabEngine.GetAdvertiser(advertiserMasterId);
+            return advertiser.Name;
         }
 
         private List<PlanMappedIsciDetailsDto> _GetIsciPlanMappingIsciDetailsDto(int planId, DateTime planStartDate, DateTime planEndDate)
