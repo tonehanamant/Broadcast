@@ -401,6 +401,16 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions.Select(r => r.affiliate))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.custom_daypart_organizations)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_show_type_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_show_type_restrictions.Select(r => r.show_types))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_genre_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_genre_restrictions.Select(r => r.genre))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_program_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_program_restrictions.Select(r => r.genre))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_affiliate_restrictions)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_custom_dayparts.Select(d => d.plan_version_custom_daypart_affiliate_restrictions.Select(r => r.affiliate))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
@@ -634,6 +644,7 @@ namespace Services.Broadcast.Repositories
                 GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(planVersion.goal_breakdown_type),
                 SecondaryAudiences = planVersion.plan_version_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
                 Dayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanDaypartDto(d, planVersion)).ToList(),
+                CustomDayparts= planVersion.plan_version_custom_dayparts.Select(d => _MapPlanCustomDaypartDto(d)).ToList(),
                 CoverageGoalPercent = planVersion.coverage_goal_percent,
                 AvailableMarkets = planVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
                 BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
@@ -966,6 +977,63 @@ namespace Services.Broadcast.Repositories
 
             return dto;
         }
+        private static PlanCustomDaypartDto _MapPlanCustomDaypartDto(plan_version_custom_dayparts entity)
+        {
+            var dto = new PlanCustomDaypartDto
+            {
+                Id = entity.id,
+                CustomDaypartOrganizationId=entity.custom_daypart_organization_id,
+                CustomDaypartOrganizationName = entity.custom_daypart_organizations.organization_name,             
+                CustomDaypartName=entity.custom_daypart_name,
+                DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
+                StartTimeSeconds = entity.start_time_seconds,        
+                EndTimeSeconds = entity.end_time_seconds,
+                WeightingGoalPercent = entity.weighting_goal_percent,
+                WeekdaysWeighting = entity.weekdays_weighting,
+                WeekendWeighting = entity.weekend_weighting,
+                
+            };
+
+            // if the contain type has ever been set
+            if (entity.show_type_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                {
+                    ContainType = (ContainTypeEnum)entity.show_type_restrictions_contain_type.Value,
+                    ShowTypes = entity.plan_version_custom_daypart_show_type_restrictions.Select(x => _MapToLookupDto(x.show_types)).ToList()
+                };
+            }
+
+            // if the contain type has ever been set
+            if (entity.genre_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                {
+                    ContainType = (ContainTypeEnum)entity.genre_restrictions_contain_type.Value,
+                    Genres = entity.plan_version_custom_daypart_genre_restrictions.Select(x => _MapToLookupDto(x.genre)).ToList()
+                };
+            }
+
+            if (entity.program_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.ProgramRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                {
+                    ContainType = (ContainTypeEnum)entity.program_restrictions_contain_type.Value,
+                    Programs = entity.plan_version_custom_daypart_program_restrictions.Select(_MapToCustomDaypartProgramDto).ToList()
+                };
+            }
+
+            if (entity.affiliate_restrictions_contain_type.HasValue)
+            {
+                dto.Restrictions.AffiliateRestrictions = new PlanCustomDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                {
+                    ContainType = (ContainTypeEnum)entity.affiliate_restrictions_contain_type.Value,
+                    Affiliates = entity.plan_version_custom_daypart_affiliate_restrictions.Select(x => _MapToLookupDto(x.affiliate)).ToList()
+                };
+            }
+
+            return dto;
+        }
 
         private static LookupDto _MapToLookupDto(show_types show_Type)
         {
@@ -986,6 +1054,19 @@ namespace Services.Broadcast.Repositories
         }
 
         private static ProgramDto _MapToProgramDto(plan_version_daypart_program_restrictions programRestriction)
+        {
+            return new ProgramDto
+            {
+                Genre = new LookupDto
+                {
+                    Id = programRestriction.genre.id,
+                    Display = programRestriction.genre.name
+                },
+                ContentRating = programRestriction.content_rating,
+                Name = programRestriction.program_name
+            };
+        }
+        private static ProgramDto _MapToCustomDaypartProgramDto(plan_version_custom_daypart_program_restrictions programRestriction)
         {
             return new ProgramDto
             {

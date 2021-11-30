@@ -196,6 +196,13 @@ namespace Services.Broadcast.Entities.Plan
         /// The dayparts.
         /// </value>
         public List<PlanDaypartDto> Dayparts { get; set; } = new List<PlanDaypartDto>();
+        /// <summary>
+        /// Gets or sets the Custom dayparts.
+        /// </summary>
+        /// <value>
+        /// The Custom dayparts.
+        /// </value>
+        public List<PlanCustomDaypartDto> CustomDayparts { get; set; } = new List<PlanCustomDaypartDto>();
 
         /// <summary>
         /// Gets or sets the secondary audiences.

@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
 using System.Collections.Generic;
+using static Services.Broadcast.Entities.Plan.PlanCustomDaypartDto;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Extensions
 {
@@ -53,6 +54,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Extensions
             };
 
             var orderedPlanDayparts = planDayparts.OrderDayparts(standardDayparts);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedPlanDayparts));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OrderPlanCustomDaypartsCorrectly()
+        {
+            var planCustomDayparts = new List<PlanCustomDaypart>
+            {
+                new PlanCustomDaypart { CustomDaypartOrganizationId=1, CustomDaypartOrganizationName = "NFL", StartTimeSeconds = 0, EndTimeSeconds = 2000, FlightDays = new List<int> { 1 }, WeekdaysWeighting = 60, WeekendWeighting = 40 },
+                new PlanCustomDaypart { CustomDaypartOrganizationId=2, CustomDaypartOrganizationName = "MLB", StartTimeSeconds = 1500, EndTimeSeconds = 2788, FlightDays = new List<int> { 1 } },
+                new PlanCustomDaypart { CustomDaypartOrganizationId=3,CustomDaypartOrganizationName = "PGA", StartTimeSeconds = 2788, EndTimeSeconds = 3500, FlightDays = new List<int> { 1 } },
+                new PlanCustomDaypart { CustomDaypartOrganizationId=4,CustomDaypartOrganizationName = "LPGA", StartTimeSeconds = 3500, EndTimeSeconds = 3600, FlightDays = new List<int> { 1 } },
+                new PlanCustomDaypart { CustomDaypartOrganizationId=4,CustomDaypartOrganizationName = "LPGA", StartTimeSeconds = 1500, EndTimeSeconds = 3500, FlightDays = new List<int> { 1 } },
+                new PlanCustomDaypart { CustomDaypartOrganizationId=4,CustomDaypartOrganizationName = "LPGA", StartTimeSeconds = 1499, EndTimeSeconds = 2788, FlightDays = new List<int> { 3 } },
+                new PlanCustomDaypart { CustomDaypartOrganizationId=4, CustomDaypartOrganizationName= "LPGA", StartTimeSeconds = 1500, EndTimeSeconds = 2788, FlightDays = new List<int> { 2 } }
+            };
+
+            var customDaypartOrganizations = new List<CustomDaypartOrganizationDto>
+            {
+                new CustomDaypartOrganizationDto { Id = 1,OrganizationName="NFL" },
+                new CustomDaypartOrganizationDto { Id = 2,OrganizationName="MLB" },
+                new CustomDaypartOrganizationDto { Id = 3,OrganizationName="PGA" },
+                new CustomDaypartOrganizationDto { Id = 4,OrganizationName="LPGA" },
+            };
+
+            var orderedPlanDayparts = planCustomDayparts.OrderCustomDayparts(customDaypartOrganizations);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedPlanDayparts));
         }

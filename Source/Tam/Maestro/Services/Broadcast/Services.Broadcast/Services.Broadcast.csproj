@@ -538,6 +538,7 @@
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramInventoryDaypart.cs" />
     <Compile Include="Entities\Plan\CustomDaypartOrganizationDto.cs" />
+    <Compile Include="Entities\Plan\PlanCustomDaypartDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecAdvertisersRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsDto.cs" />

@@ -15,7 +15,8 @@ namespace Services.Broadcast.Helpers
         private static readonly Dictionary<Type,string> _RegisteredTypesAndProperties = new Dictionary<Type, string>
         {
             { typeof(StandardDaypartFullDto), nameof(StandardDaypartFullDto.DefaultEndTimeSeconds) },
-            { typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds) }
+            { typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds) },
+             { typeof(PlanCustomDaypartDto), nameof(PlanCustomDaypartDto.EndTimeSeconds) },
         };
 
         /// <summary>

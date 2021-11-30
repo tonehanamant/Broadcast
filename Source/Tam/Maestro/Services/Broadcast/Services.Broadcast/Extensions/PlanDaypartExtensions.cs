@@ -4,6 +4,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using static Services.Broadcast.Entities.Plan.PlanCustomDaypartDto;
 
 namespace Services.Broadcast.Extensions
 {
@@ -60,6 +61,65 @@ namespace Services.Broadcast.Extensions
                     EndTimeSeconds = item.EndTimeSeconds,
                     IsEndTimeModified = item.IsEndTimeModified,
                     IsStartTimeModified = item.IsStartTimeModified,
+                    Restrictions = item.Restrictions,
+                    WeightingGoalPercent = item.WeightingGoalPercent,
+                    WeekdaysWeighting = item.WeekdaysWeighting,
+                    WeekendWeighting = item.WeekendWeighting,
+                    VpvhForAudiences = item.VpvhForAudiences
+                }).ToList();
+        }
+        public static List<PlanCustomDaypartDto> OrderCustomDayparts(this List<PlanCustomDaypart> planCustomDaypartList, List<CustomDaypartOrganizationDto> customDaypartOrganizationList)
+        {
+            const int MONDAY = 1;
+            const int TUESDAY = 2;
+            const int WEDNESDAY = 3;
+            const int THURSDAY = 4;
+            const int FRIDAY = 5;
+            const int SATURDAY = 6;
+
+            // join the plans custom dayparts with custom daypart organization, so that later we can order them
+            var mappedPlanCustomDaypartList = planCustomDaypartList.Join(
+                customDaypartOrganizationList,
+                planCustomDaypart => planCustomDaypart.CustomDaypartOrganizationId,
+                customDaypartOrganization => customDaypartOrganization.Id,
+                (planCustomDaypart, customDaypartOrganization) => new
+                {
+                    planCustomDaypart.Id,
+                    planCustomDaypart.CustomDaypartOrganizationId,
+                    customDaypartOrganization.OrganizationName,
+                    planCustomDaypart.CustomDaypartName,
+                    planCustomDaypart.DaypartTypeId,
+                    planCustomDaypart.StartTimeSeconds,
+                    planCustomDaypart.EndTimeSeconds,
+                    planCustomDaypart.Restrictions,
+                    planCustomDaypart.WeightingGoalPercent,
+                    planCustomDaypart.WeekdaysWeighting,
+                    planCustomDaypart.WeekendWeighting,
+                    planCustomDaypart.FlightDays,
+                    planCustomDaypart.VpvhForAudiences
+                }).ToList();
+            
+            // return the ordered list
+            return mappedPlanCustomDaypartList
+                .OrderBy(customDaypartOrganization => customDaypartOrganization.OrganizationName)
+                .ThenBy(customDaypartOrganization => customDaypartOrganization.CustomDaypartName)
+                .ThenByDescending(planCustomDaypart => planCustomDaypart.FlightDays.Contains(MONDAY))
+                .ThenByDescending(planCustomDaypart => planCustomDaypart.FlightDays.Contains(TUESDAY))
+                .ThenByDescending(planCustomDaypart => planCustomDaypart.FlightDays.Contains(WEDNESDAY))
+                .ThenByDescending(planCustomDaypart => planCustomDaypart.FlightDays.Contains(THURSDAY))
+                .ThenByDescending(planCustomDaypart => planCustomDaypart.FlightDays.Contains(FRIDAY))
+                .ThenByDescending(planCustomDaypart => planCustomDaypart.FlightDays.Contains(SATURDAY))
+                .ThenBy(planCustomDaypart => planCustomDaypart.StartTimeSeconds)
+                .ThenBy(planCustomDaypart => planCustomDaypart.EndTimeSeconds)
+                .Select(item => new PlanCustomDaypartDto
+                {
+                    Id = item.Id,
+                    CustomDaypartOrganizationId=item.CustomDaypartOrganizationId,
+                    CustomDaypartOrganizationName=item.OrganizationName,
+                    CustomDaypartName = item.CustomDaypartName,
+                    DaypartTypeId = item.DaypartTypeId,
+                    StartTimeSeconds = item.StartTimeSeconds,
+                    EndTimeSeconds = item.EndTimeSeconds,                   
                     Restrictions = item.Restrictions,
                     WeightingGoalPercent = item.WeightingGoalPercent,
                     WeekdaysWeighting = item.WeekdaysWeighting,

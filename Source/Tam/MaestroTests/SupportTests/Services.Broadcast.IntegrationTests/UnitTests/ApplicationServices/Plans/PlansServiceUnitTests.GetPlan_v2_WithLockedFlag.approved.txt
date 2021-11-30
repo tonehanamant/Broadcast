@@ -58,6 +58,7 @@
     }
   ],
   "Currency": 0,
+  "CustomDayparts": [],
   "Dayparts": [],
   "Equivalized": true,
   "FlightDays": [

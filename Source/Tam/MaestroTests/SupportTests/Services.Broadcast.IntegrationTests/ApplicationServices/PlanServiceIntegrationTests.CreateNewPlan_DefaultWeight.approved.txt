@@ -75,6 +75,7 @@
     }
   ],
   "Currency": 1,
+  "CustomDayparts": [],
   "Dayparts": [
     {
       "DaypartCodeId": 3,

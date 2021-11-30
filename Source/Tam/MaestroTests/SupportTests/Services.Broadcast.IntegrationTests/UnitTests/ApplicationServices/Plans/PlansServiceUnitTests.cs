@@ -879,7 +879,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     planToReturn.VersionId = versionId;
                     return planToReturn;
                 });
-
+            _PlanRepositoryMock
+                 .Setup(s => s.GetAllCustomDaypartOrganizations())
+                 .Returns(new List<CustomDaypartOrganizationDto>
+                 {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                 });
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(
                     It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(),
@@ -918,6 +952,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     planToReturn.VersionId = versionId;
                     planToReturn.PricingParameters.PostingType = PostingTypeEnum.NSI;
                     return planToReturn;
+                });
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
                 });
 
             _PlanRepositoryMock
@@ -1514,6 +1583,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
                             }
                         }
+                    }
+                },
+                CustomDayparts = new List<PlanCustomDaypartDto>
+                {
+                    new PlanCustomDaypartDto
+                    {                       
+                        CustomDaypartOrganizationId=1,
+                        CustomDaypartOrganizationName="NFL",
+                        CustomDaypartName="Test 1",
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 2000,
+                        WeightingGoalPercent = 28.0,                       
+                    },
+                    new PlanCustomDaypartDto
+                    {
+                        CustomDaypartOrganizationId=2,
+                        CustomDaypartOrganizationName="MLB",
+                        CustomDaypartName="Test 2",
+                        StartTimeSeconds = 1500,
+                        EndTimeSeconds = 2788,
+                        WeightingGoalPercent = 33.2,                        
                     }
                 },
                 Vpvh = 0.234543,
@@ -2402,6 +2492,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
                 .Returns(beforePlan);
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
 
             _SpotLengthEngineMock.Setup(s => s.GetSpotLengths())
                 .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
@@ -2441,6 +2566,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), null))
                 .Returns(beforePlan);
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
+
 
             _SpotLengthEngineMock.Setup(s => s.GetSpotLengths())
                 .Returns(SpotLengthTestData.GetSpotLengthIdsByDuration());
@@ -2503,6 +2664,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock.SetupSequence(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(beforePlan)
                 .Returns(afterPlanDto);
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
+
 
             _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
                 .Returns(new List<WeeklyBreakdownWeek>());
@@ -2704,6 +2901,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
                 .Returns(.85d);
 
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
+
             _SpotLengthEngineMock
                 .Setup(a => a.GetSpotLengths())
                 .Returns(new Dictionary<int, int> { { 30, 1 } });
@@ -2787,6 +3020,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(s => s.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
                 .Returns(.85d);
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
 
             _SpotLengthEngineMock
                 .Setup(a => a.GetSpotLengths())
@@ -2959,6 +3228,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(s => s.GetNsiToNtiConversionRate(It.IsAny<List<PlanDaypartDto>>()))
                 .Returns(.85d);
+            _PlanRepositoryMock
+                .Setup(s => s.GetAllCustomDaypartOrganizations())
+                .Returns(new List<CustomDaypartOrganizationDto>
+                {
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 1,
+                        OrganizationName = "NFL"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 2,
+                        OrganizationName = "MLB"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 3,
+                        OrganizationName = "MLS"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 4,
+                        OrganizationName = "NBA"
+                     },
+                     new CustomDaypartOrganizationDto
+                     {
+                        Id = 5,
+                        OrganizationName = "PGA"
+                     },
+                      new CustomDaypartOrganizationDto
+                     {
+                        Id = 6,
+                        OrganizationName = "PGA"
+                     },
+                });
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(
