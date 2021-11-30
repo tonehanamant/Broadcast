@@ -16,7 +16,7 @@ namespace Services.Broadcast.Helpers
         {
             { typeof(StandardDaypartFullDto), nameof(StandardDaypartFullDto.DefaultEndTimeSeconds) },
             { typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds) },
-             { typeof(PlanCustomDaypartDto), nameof(PlanCustomDaypartDto.EndTimeSeconds) },
+            { typeof(PlanCustomDaypartDto), nameof(PlanCustomDaypartDto.EndTimeSeconds) }
         };
 
         /// <summary>

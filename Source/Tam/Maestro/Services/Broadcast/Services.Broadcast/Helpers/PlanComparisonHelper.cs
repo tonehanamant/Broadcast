@@ -22,6 +22,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketCount"),
             new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketTotalUsCoveragePercent"),
             new ComparisonMinorProperty(typeof(PlanDto), "IsDraft"),
+            new ComparisonMinorProperty(typeof(PlanDto), "CustomDayparts"),
             new ComparisonMinorProperty(typeof(PlanMarketDto), "Id"),
             // ignored - not pricing inputs
             new ComparisonMinorProperty(typeof(PlanDto), "Name"),

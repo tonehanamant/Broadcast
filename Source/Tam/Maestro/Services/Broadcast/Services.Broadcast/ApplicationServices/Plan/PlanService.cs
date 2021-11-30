@@ -367,6 +367,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
             }
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
+            DaypartTimeHelper.SubtractOneSecondToEndTime(plan.CustomDayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
             _OnSaveHandlePlanAvailableMarketSovFeature(plan);

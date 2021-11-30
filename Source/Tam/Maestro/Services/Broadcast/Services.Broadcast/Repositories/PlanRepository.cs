@@ -825,6 +825,7 @@ namespace Services.Broadcast.Repositories
             _MapPlanFlightDays(version, planDto, context);
             _MapPlanFlightHiatus(version, planDto, context);
             _MapDayparts(version, planDto, context);
+            _MapCustomDayparts(version, planDto, context);
             _MapAudienceDaypartVpvh(version, planDto, context);
             _MapPlanSecondaryAudiences(version, planDto, context);
             _MapPlanMarkets(version, planDto, context);
@@ -1120,6 +1121,38 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        private static void _MapCustomDayparts(plan_versions planVersion, PlanDto plan, QueryHintBroadcastContext context)
+        {
+            context.plan_version_custom_dayparts.RemoveRange(planVersion.plan_version_custom_dayparts);
+
+            foreach (var customDaypart in plan.CustomDayparts)
+            {
+                var newCustomDaypart = new plan_version_custom_dayparts
+                {
+                    custom_daypart_organization_id = customDaypart.CustomDaypartOrganizationId,
+                    custom_daypart_name = customDaypart.CustomDaypartName,
+                    daypart_type = (int)customDaypart.DaypartTypeId,
+                    start_time_seconds = customDaypart.StartTimeSeconds,
+                    is_start_time_modified = customDaypart.IsStartTimeModified,
+                    end_time_seconds = customDaypart.EndTimeSeconds,
+                    is_end_time_modified = customDaypart.IsEndTimeModified,
+                    weighting_goal_percent = customDaypart.WeightingGoalPercent,
+                    weekdays_weighting = customDaypart.WeekdaysWeighting,
+                    weekend_weighting = customDaypart.WeekendWeighting
+                };
+
+                if (customDaypart.Restrictions != null)
+                {
+                    _HydrateShowTypeRestrictions(newCustomDaypart, customDaypart.Restrictions.ShowTypeRestrictions);
+                    _HydrateGenreRestrictions(newCustomDaypart, customDaypart.Restrictions.GenreRestrictions);
+                    _HydrateProgramRestrictions(newCustomDaypart, customDaypart.Restrictions.ProgramRestrictions);
+                    _HydrateAffiliateRestrictions(newCustomDaypart, customDaypart.Restrictions.AffiliateRestrictions);
+                }
+
+                planVersion.plan_version_custom_dayparts.Add(newCustomDaypart);
+            }
+        }
+
         private static void _MapAudienceDaypartVpvh(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_audience_daypart_vpvh.RemoveRange(entity.plan_version_audience_daypart_vpvh);
@@ -1161,6 +1194,27 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        private static void _HydrateShowTypeRestrictions(
+            plan_version_custom_dayparts customDaypart,
+            PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto showTypeRestrictions)
+        {
+            if (showTypeRestrictions == null)
+                return;
+
+            customDaypart.show_type_restrictions_contain_type = (int)showTypeRestrictions.ContainType;
+
+            if (!showTypeRestrictions.ShowTypes.IsEmpty())
+            {
+                foreach (var showTypeRestriction in showTypeRestrictions.ShowTypes)
+                {
+                    customDaypart.plan_version_custom_daypart_show_type_restrictions.Add(new plan_version_custom_daypart_show_type_restrictions
+                    {
+                        show_type_id = showTypeRestriction.Id
+                    });
+                }
+            }
+        }
+
         private static void _HydrateGenreRestrictions(
             plan_version_dayparts daypart,
             PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto genreRestrictions)
@@ -1175,6 +1229,27 @@ namespace Services.Broadcast.Repositories
                 foreach (var genreRestriction in genreRestrictions.Genres)
                 {
                     daypart.plan_version_daypart_genre_restrictions.Add(new plan_version_daypart_genre_restrictions
+                    {
+                        genre_id = genreRestriction.Id
+                    });
+                }
+            }
+        }
+
+        private static void _HydrateGenreRestrictions(
+            plan_version_custom_dayparts customDaypart,
+            PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto genreRestrictions)
+        {
+            if (genreRestrictions == null)
+                return;
+
+            customDaypart.genre_restrictions_contain_type = (int)genreRestrictions.ContainType;
+
+            if (!genreRestrictions.Genres.IsEmpty())
+            {
+                foreach (var genreRestriction in genreRestrictions.Genres)
+                {
+                    customDaypart.plan_version_custom_daypart_genre_restrictions.Add(new plan_version_custom_daypart_genre_restrictions
                     {
                         genre_id = genreRestriction.Id
                     });
@@ -1205,6 +1280,29 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        private static void _HydrateProgramRestrictions(
+            plan_version_custom_dayparts customDaypart,
+            PlanCustomDaypartDto.RestrictionsDto.ProgramRestrictionDto programRestrictions)
+        {
+            if (programRestrictions == null)
+                return;
+
+            customDaypart.program_restrictions_contain_type = (int)programRestrictions.ContainType;
+
+            if (!programRestrictions.Programs.IsEmpty())
+            {
+                foreach (var programRestriction in programRestrictions.Programs)
+                {
+                    customDaypart.plan_version_custom_daypart_program_restrictions.Add(new plan_version_custom_daypart_program_restrictions
+                    {
+                        genre_id = programRestriction.Genre?.Id,
+                        content_rating = programRestriction.ContentRating,
+                        program_name = programRestriction.Name
+                    });
+                }
+            }
+        }
+
         private static void _HydrateAffiliateRestrictions(
             plan_version_dayparts newDaypart,
             PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto affiliateRestrictions)
@@ -1219,6 +1317,27 @@ namespace Services.Broadcast.Repositories
                 foreach (var affiliateRestriction in affiliateRestrictions.Affiliates)
                 {
                     newDaypart.plan_version_daypart_affiliate_restrictions.Add(new plan_version_daypart_affiliate_restrictions
+                    {
+                        affiliate_id = affiliateRestriction.Id
+                    });
+                }
+            }
+        }
+
+        private static void _HydrateAffiliateRestrictions(
+            plan_version_custom_dayparts customDaypart,
+            PlanCustomDaypartDto.RestrictionsDto.AffiliateRestrictionsDto affiliateRestrictions)
+        {
+            if (affiliateRestrictions == null)
+                return;
+
+            customDaypart.affiliate_restrictions_contain_type = (int)affiliateRestrictions.ContainType;
+
+            if (!affiliateRestrictions.Affiliates.IsEmpty())
+            {
+                foreach (var affiliateRestriction in affiliateRestrictions.Affiliates)
+                {
+                    customDaypart.plan_version_custom_daypart_affiliate_restrictions.Add(new plan_version_custom_daypart_affiliate_restrictions
                     {
                         affiliate_id = affiliateRestriction.Id
                     });

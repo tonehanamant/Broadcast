@@ -58,6 +58,7 @@ namespace Services.Broadcast.Validators
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsCustomDaypartEnabled;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_PRODUCT = "Invalid product";
@@ -101,6 +102,8 @@ namespace Services.Broadcast.Validators
         const string PROGRAM_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the program restrictions is not valid";
         const string AFFILIATE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the affiliate restrictions is not valid";
 
+        const string INVALID_CUSTOM_DAYPART_NAME = "Invalid daypart name";
+
         public PlanValidator(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
             , IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -120,6 +123,7 @@ namespace Services.Broadcast.Validators
 
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
+            _IsCustomDaypartEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART));
         }
 
         /// <inheritdoc/>
@@ -314,12 +318,29 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateDayparts(PlanDto plan)
         {
-            const int daySecondsMin = 0;
-            const int daySecondsMax = BroadcastConstants.OneDayInSeconds - 1;
-            if (plan.Dayparts?.Any() != true)
+            _ExistenceCheckOfDayparts(plan);
+            _StandardDaypartCheck(plan);
+            _CustomDaypartCheck(plan);
+        }
+        private void _ExistenceCheckOfDayparts(PlanDto plan)
+        {
+            if (_IsCustomDaypartEnabled.Value)
+            {
+                if (plan.Dayparts?.Any() != true && plan.CustomDayparts?.Any() != true)
+                {
+                    throw new Exception(INVALID_DAYPART_NUMBER);
+                }
+            }
+            else if (plan.Dayparts?.Any() != true)
             {
                 throw new Exception(INVALID_DAYPART_NUMBER);
             }
+        }
+
+        private void _StandardDaypartCheck(PlanDto plan)
+        {
+            const int daySecondsMin = 0;
+            const int daySecondsMax = BroadcastConstants.OneDayInSeconds - 1;
 
             if (plan.Dayparts.GroupBy(d => d.DaypartCodeId).Any(g => g.Count() > 1))
             {
@@ -371,9 +392,92 @@ namespace Services.Broadcast.Validators
             }
         }
 
+        private void _CustomDaypartCheck(PlanDto plan)
+        {
+            if (plan.CustomDayparts.Any(n => string.IsNullOrWhiteSpace(n.CustomDaypartName)))
+            {
+                throw new Exception(INVALID_CUSTOM_DAYPART_NAME);
+            }
+
+            if (plan.CustomDayparts.GroupBy(d => new { d.CustomDaypartOrganizationId, d.CustomDaypartName }).Any(g => g.Count() > 1))
+            {
+                throw new Exception(INVALID_DAYPART_DUPLICATE_DAYPART);
+            }
+
+            const int daySecondsMin = 0;
+            const int daySecondsMax = BroadcastConstants.OneDayInSeconds - 1;
+            const double minWeightingGoalPercent = 0.1;
+            const double maxWeightingGoalPercent = 100.0;
+            foreach (var customDaypart in plan.CustomDayparts)
+            {
+                if (customDaypart.StartTimeSeconds < daySecondsMin || customDaypart.StartTimeSeconds > daySecondsMax)
+                {
+                    throw new Exception(INVALID_DAYPART_TIMES);
+                }
+
+                if (customDaypart.EndTimeSeconds < daySecondsMin || customDaypart.EndTimeSeconds > daySecondsMax)
+                {
+                    throw new Exception(INVALID_DAYPART_TIMES);
+                }
+
+                if (customDaypart.WeightingGoalPercent.HasValue &&
+                    (customDaypart.WeightingGoalPercent.Value < minWeightingGoalPercent
+                     || customDaypart.WeightingGoalPercent.Value > maxWeightingGoalPercent))
+                {
+                    throw new Exception(INVALID_DAYPART_WEIGHTING_GOAL);
+                }
+
+                if ((customDaypart.WeekdaysWeighting.HasValue && !customDaypart.WeekendWeighting.HasValue) ||
+                    (!customDaypart.WeekdaysWeighting.HasValue && customDaypart.WeekendWeighting.HasValue))
+                {
+                    throw new Exception("Weekdays weighting and weekend weighting must be either both set or both must be nulls");
+                }
+
+                if (customDaypart.WeekdaysWeighting.HasValue &&
+                    customDaypart.WeekendWeighting.HasValue &&
+                    (customDaypart.WeekdaysWeighting.Value + customDaypart.WeekendWeighting.Value) != 100)
+                {
+                    throw new Exception("Weekdays weighting and weekend weighting must sum up to 100");
+                }
+
+                _ValidatePlanDaypartRestrictions(customDaypart);
+                _ValidatePlanDaypartAudienceVpvh(customDaypart);
+            }
+
+            var sumOfDaypartWeighting = plan.CustomDayparts.Aggregate(0d, (sumOfWeighting, dayPart) => sumOfWeighting + dayPart.WeightingGoalPercent.GetValueOrDefault());
+            if (sumOfDaypartWeighting > 100)
+            {
+                throw new Exception(SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT);
+            }
+        }
+
         private void _ValidatePlanDaypartAudienceVpvh(PlanDaypartDto planDaypartDto)
         {
             var vpvhForAudiences = planDaypartDto.VpvhForAudiences;
+
+            foreach (var vpvhForAudience in vpvhForAudiences)
+            {
+                if (vpvhForAudience.Vpvh < 0)
+                    throw new Exception("VPVH can not be less than zero");
+
+                if (!EnumHelper.IsDefined(vpvhForAudience.VpvhType))
+                    throw new Exception("Unknown VPVH type was discovered");
+
+                if (vpvhForAudience.StartingPoint == default)
+                    throw new Exception("StartingPoint is a required property");
+
+                if (vpvhForAudience.VpvhType == VpvhTypeEnum.Custom)
+                {
+                    if (vpvhForAudience.Vpvh < 0.001 || vpvhForAudience.Vpvh > 10)
+                    {
+                        throw new Exception("VPVH must be between 0.001 and 10");
+                    }
+                }
+            }
+        }
+        private void _ValidatePlanDaypartAudienceVpvh(PlanCustomDaypartDto planCustomDaypart)
+        {
+            var vpvhForAudiences = planCustomDaypart.VpvhForAudiences;
 
             foreach (var vpvhForAudience in vpvhForAudiences)
             {
@@ -408,8 +512,29 @@ namespace Services.Broadcast.Validators
                 _ValidateAffiliateRestrictions(restrictions);
             }
         }
+        private void _ValidatePlanDaypartRestrictions(PlanCustomDaypartDto planCustomDaypart)
+        {
+            var restrictions = planCustomDaypart.Restrictions;
+
+            if (restrictions != null)
+            {
+                _ValidateShowTypeRestrictions(restrictions);
+                _ValidateGenreRestrictions(restrictions);
+                _ValidateProgramRestrictions(restrictions);
+                _ValidateAffiliateRestrictions(restrictions);
+            }
+        }
 
         private void _ValidateShowTypeRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
+        {
+            var showTypeRestrictions = restrictions.ShowTypeRestrictions;
+
+            if (showTypeRestrictions != null && !EnumHelper.IsDefined(showTypeRestrictions.ContainType))
+            {
+                throw new Exception(SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID);
+            }
+        }
+        private void _ValidateShowTypeRestrictions(PlanCustomDaypartDto.RestrictionsDto restrictions)
         {
             var showTypeRestrictions = restrictions.ShowTypeRestrictions;
 
@@ -428,6 +553,15 @@ namespace Services.Broadcast.Validators
                 throw new Exception(GENRE_CONTAIN_TYPE_IS_NOT_VALID);
             }
         }
+        private void _ValidateGenreRestrictions(PlanCustomDaypartDto.RestrictionsDto restrictions)
+        {
+            var genreRestrictions = restrictions.GenreRestrictions;
+
+            if (genreRestrictions != null && !EnumHelper.IsDefined(genreRestrictions.ContainType))
+            {
+                throw new Exception(GENRE_CONTAIN_TYPE_IS_NOT_VALID);
+            }
+        }
 
         private void _ValidateProgramRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
         {
@@ -438,8 +572,26 @@ namespace Services.Broadcast.Validators
                 throw new Exception(PROGRAM_CONTAIN_TYPE_IS_NOT_VALID);
             }
         }
+        private void _ValidateProgramRestrictions(PlanCustomDaypartDto.RestrictionsDto restrictions)
+        {
+            var programRestrictions = restrictions.ProgramRestrictions;
+
+            if (programRestrictions != null && !EnumHelper.IsDefined(programRestrictions.ContainType))
+            {
+                throw new Exception(PROGRAM_CONTAIN_TYPE_IS_NOT_VALID);
+            }
+        }
 
         private void _ValidateAffiliateRestrictions(PlanDaypartDto.RestrictionsDto restrictions)
+        {
+            var affiliateRestrictions = restrictions.AffiliateRestrictions;
+
+            if (affiliateRestrictions != null && !EnumHelper.IsDefined(affiliateRestrictions.ContainType))
+            {
+                throw new Exception(AFFILIATE_CONTAIN_TYPE_IS_NOT_VALID);
+            }
+        }
+        private void _ValidateAffiliateRestrictions(PlanCustomDaypartDto.RestrictionsDto restrictions)
         {
             var affiliateRestrictions = restrictions.AffiliateRestrictions;
 

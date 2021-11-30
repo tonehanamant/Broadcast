@@ -361,6 +361,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithoutCustomDayparts()
+        {
+            var plan = _GetPlan();
+            plan.Dayparts = null;
+            plan.CustomDayparts = null;
+
+            _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART))
+                .Returns(true);
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("There should be at least one daypart selected."));
+        }
+
+        [Test]
+        public void ValidatePlan_EmptyCustomDaypartName()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].CustomDaypartName = string.Empty;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart name"));
+        }
+
+        [Test]
         public void ValidatePlan_VpvhLessThanZero()
         {
             var plan = _GetPlan();
@@ -1660,6 +1684,48 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                         }
                     }
                 },
+                CustomDayparts = new List<PlanCustomDaypartDto>
+                {
+                    new PlanCustomDaypartDto
+                    {
+                        CustomDaypartOrganizationId = 1,
+                        CustomDaypartName = "Nets vs Bulls",
+                        StartTimeSeconds = 50,
+                        EndTimeSeconds = 70,
+                        WeightingGoalPercent = 50,
+                        Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                            },
+                            GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                            },
+                            ProgramRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "G",
+                                        Genre = new LookupDto{ Id = 25},
+                                        Name = "Pimp My Ride"
+                                    }
+                                }
+                            },
+                            AffiliateRestrictions = new PlanCustomDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Affiliates = new List<LookupDto> { new LookupDto { Id = 1, Display = "NBC" } }
+                            }
+                        }
+                    }
+                },
                 ShareBookId = SHARE_BOOK_ID,
                 HUTBookId = HUT_BOOK_ID,
                 Vpvh = 0.35,
@@ -1729,6 +1795,283 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Weekdays weighting and weekend weighting must sum up to 100"));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDaypart_WithWrongShowTypeRestrictionsContainType()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].Restrictions.ShowTypeRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the show types restrictions is not valid"));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDaypart_WithWrongGenreRestrictionsContainType()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].Restrictions.GenreRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the genres restrictions is not valid"));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDaypart_WithWrongProgramRestrictionsContainType()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].Restrictions.ProgramRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the program restrictions is not valid"));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDaypart_WithWrongAffiliateRestrictionsContainType()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].Restrictions.AffiliateRestrictions.ContainType = 0;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Contain type of the affiliate restrictions is not valid"));
+        }
+
+        [Test]
+        public void ValidatePlan_DuplicateCustomDaypart()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts = new List<PlanCustomDaypartDto>
+            {
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 1,
+                    CustomDaypartName = "Bulls"
+                },
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 1,
+                    CustomDaypartName = "Bulls"
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid dayparts.  Each daypart can be entered only once."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDayPartStartLessThanSecondsMinimum()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].StartTimeSeconds = -1;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDayPartStartLargerThanSecondsMaximum()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].StartTimeSeconds = 86420;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDayPartEndLessThanSecondsMinimum()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].StartTimeSeconds = 50;
+            plan.CustomDayparts[0].EndTimeSeconds = -1;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDayPartEndLargerThanSecondsMaximum()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].StartTimeSeconds = 50;
+            plan.CustomDayparts[0].EndTimeSeconds = 86420;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomWeightingGoalPercentLessThanMinimum()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].StartTimeSeconds = 50;
+            plan.CustomDayparts[0].EndTimeSeconds = 70;
+            plan.CustomDayparts[0].WeightingGoalPercent = -1;                
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomWeightingGoalLargerThanMaximum()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts[0].StartTimeSeconds = 50;
+            plan.CustomDayparts[0].EndTimeSeconds = 70;
+            plan.CustomDayparts[0].WeightingGoalPercent = 110;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDaypart_SumofWeightingGoalPercentsExceeds100()
+        {
+            var plan = _GetPlan();
+            plan.CustomDayparts = new List<PlanCustomDaypartDto>
+            {
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 1,
+                    CustomDaypartName = "Nets vs Bulls",
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
+                    WeightingGoalPercent = 80,
+                    Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
+                },
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 2,
+                    CustomDaypartName = "Nets",
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
+                    WeightingGoalPercent = 90,
+                    Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Sum of weighting is greater than 100%"));
+        }
+
+        [Test]
+        public void ValidatePlan_CustomDaypart_SumofWeightingGoalPercentsIsInBounds()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.CustomDayparts = new List<PlanCustomDaypartDto>
+            {
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 2,
+                    CustomDaypartName = "Nets",
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
+                    WeightingGoalPercent = 20,
+                    Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
+                },
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 1,
+                    CustomDaypartName = "Nets vs Bulls",
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
+                    Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
+                },
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 3,
+                    CustomDaypartName = "Bulls",
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
+                    WeightingGoalPercent = 25,
+                    Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
+                },
+                new PlanCustomDaypartDto
+                {
+                    CustomDaypartOrganizationId = 4,
+                    CustomDaypartName = "NetBull",
+                    StartTimeSeconds = 50000,
+                    EndTimeSeconds = 54000,
+                    WeightingGoalPercent = 50,
+                    Restrictions = new PlanCustomDaypartDto.RestrictionsDto
+                    {
+                        ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            ShowTypes = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        },
+                        GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                        {
+                            ContainType = ContainTypeEnum.Exclude,
+                            Genres = new List<LookupDto> { new LookupDto { Id = 1, Display = "Lorem" } }
+                        }
+                    }
+                },
+            };
+
+            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
         }
     }
 }
