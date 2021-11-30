@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Unity;
 
@@ -67,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanBuyingService.QueueBuyingJob(new PlanBuyingParametersDto
+                var result = _PlanBuyingService.QueueBuyingJobAsync(new PlanBuyingParametersDto
                 {
                     PlanId = 1196,
                     Margin = 20,
@@ -95,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         {
             using (new TransactionScopeWrapper())
             {
-                _PlanBuyingService.QueueBuyingJob(new PlanBuyingParametersDto
+                _PlanBuyingService.QueueBuyingJobAsync(new PlanBuyingParametersDto
                 {
                     PlanId = 1196,
                     Budget = 1000,
@@ -172,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     UnitCapsType = UnitCapEnum.Per30Min
                 };
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "integration test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "integration test user");
 
                 var result = _PlanBuyingService.GetBuyingApiRequestPrograms_v3(1197, new BuyingInventoryGetRequestParametersDto());
 
@@ -309,16 +310,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     PostingType =PostingTypeEnum.NTI
                 };
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 planBuyingRequestDto.Budget = 1200;
                 planBuyingRequestDto.UnitCapsType = UnitCapEnum.Per30Min;
 
-                var job2 = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job2 = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job2.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job2.Id, CancellationToken.None);
 
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(1197, PostingTypeEnum.NTI);
 
@@ -374,14 +375,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     MarketGroup = MarketGroupEnum.None
                 };
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 planBuyingRequestDto.UnitCapsType = UnitCapEnum.PerWeek;
                 planBuyingRequestDto.Budget = 1200;
 
-                _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 var result = _PlanService.GetPlan(1849);
 
@@ -405,9 +406,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var bands = _PlanBuyingService.GetBuyingBands(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -425,9 +426,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var stations = _PlanBuyingService.GetStations(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -445,9 +446,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var repFirms = _PlanBuyingService.GetBuyingRepFirms(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -465,9 +466,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var programs = _PlanBuyingService.GetPrograms(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -486,9 +487,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
@@ -504,13 +505,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var secondJob = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var secondJob = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, secondJob.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, secondJob.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
 
@@ -531,9 +532,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // and verified by eye that the counts are different between the tests.
                 planBuyingRequestDto.Margin = null;
 
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
@@ -548,9 +549,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
-                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetBuyingOwnershipGroups(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultOwnershipGroupDto>();
@@ -603,9 +604,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     MarketGroup = MarketGroupEnum.Top25
                 };
 
-                var job = planBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                planBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                planBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var sentParameters = apiClient.LastSentRequest;
 
@@ -695,9 +696,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
                 };
 
-                var job = planBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                planBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+                planBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var request = apiClient.LastSentRequest;
 
@@ -737,7 +738,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         #region Allocation Model Versions
 
-        private PlanBuyingJob _SavePlanAndRunBuyingJob(PlanDto plan)
+        private async Task<PlanBuyingJob> _SavePlanAndRunBuyingJob(PlanDto plan)
         {
             var savedDate = new DateTime(2019, 11, 4);
             var planId = _PlanService.SavePlan(plan, "testUser", savedDate, true);
@@ -761,9 +762,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 PostingType = PostingTypeEnum.NSI
             };
 
-            var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequest, savedDate, "test user");
+            var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequest, savedDate, "test user");
 
-            _PlanBuyingService.RunBuyingJob(planBuyingRequest, job.Id, CancellationToken.None);
+            await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequest, job.Id, CancellationToken.None);
 
             return job;
         }

@@ -2,16 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.Clients
 {
     public interface IPlanBuyingApiClient
     {
-        PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request);
+        Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request);
     }
 
     public class PlanBuyingApiClient : IPlanBuyingApiClient
     {
+        private const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
+
         private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
@@ -25,35 +29,41 @@ namespace Services.Broadcast.Clients
             _HttpClient = httpClient;
         }
 
-        public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)
+        public async Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
         {
             var url = $"{_PlanPricingAllocationsEfficiencyModelUrl.Value}";
-            return _Post<PlanBuyingApiSpotsResponseDto_v3>(url, request);
+            var result = await _PostAsync<PlanBuyingApiSpotsResponseDto_v3>(url, request);
+            return result;
         }
 
-        protected virtual T _Post<T>(string url, object data)
+        protected virtual async Task<T> _PostAsync<T>(string url, object data)
         {
             T output;
 
             try
             {
-                var serviceResponse = _HttpClient.PostAsJsonAsync(url, data).Result;
+                var serviceResponse = await _HttpClient.PostAsJsonAsync(url, data, new CancellationTokenSource(ASYNC_API_TIMEOUT_MILLISECONDS).Token);
 
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
+                    if (serviceResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        throw new InvalidOperationException($"The end point responded with code 404 NotFound.  Url '{url}'");
+                    }
+
                     try
                     {
-                        output = serviceResponse.Content.ReadAsAsync<T>().Result;
-                        return output;
+                        output = await serviceResponse.Content.ReadAsAsync<T>();
                     }
                     catch
                     {
                         throw new Exception($"Error connecting to Buying API for post data. : {serviceResponse}");
                     }
 
+                    return output;
                 }
-                output = serviceResponse.Content.ReadAsAsync<T>().Result;
 
+                output = await serviceResponse.Content.ReadAsAsync<T>();
             }
             catch (Exception e)
             {
@@ -69,37 +79,6 @@ namespace Services.Broadcast.Clients
         private string _GetOpenMarketSpotsAllocationUrl()
         {
             return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsUrl);
-        }
-    }
-
-    public class BuyingApiMockClient : IPlanBuyingApiClient
-    {
-        public PlanBuyingApiSpotsResponseDto GetBuyingSpotsResult(PlanBuyingApiRequestDto request)
-        {
-            var results = new List<PlanBuyingApiSpotsResultDto>();
-
-            foreach (var spot in request.Spots)
-            {
-                var result = new PlanBuyingApiSpotsResultDto
-                {
-                    ManifestId = spot.Id,
-                    MediaWeekId = spot.MediaWeekId,
-                    Frequency = 1
-                };
-
-                results.Add(result);
-            }
-
-            return new PlanBuyingApiSpotsResponseDto
-            {
-                RequestId = "djj4j4399fmmf1m212",
-                Results = results
-            };
-        }
-
-        public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)
-        {
-            throw new NotImplementedException();
         }
     }
 }

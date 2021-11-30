@@ -1,7 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +16,6 @@ namespace Services.Broadcast.Clients
     {
         private const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
 
-        private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
         private readonly HttpClient _HttpClient;
         private readonly Lazy<bool> _AreQueuedPricingRequestsEnabled;
@@ -26,7 +24,6 @@ namespace Services.Broadcast.Clients
         public PricingApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient, IFeatureToggleHelper featureToggleHelper)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
             _HttpClient = httpClient;
             _AreQueuedPricingRequestsEnabled = new Lazy<bool>(() => featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS));
@@ -45,14 +42,13 @@ namespace Services.Broadcast.Clients
 
         }
 
-        protected async virtual Task<T> _PostAsync<T>(string url, object data)
+        protected virtual async Task<T> _PostAsync<T>(string url, object data)
         {
             T output;
-            HttpResponseMessage serviceResponse;
 
             try
             {
-                serviceResponse = await _HttpClient.PostAsJsonAsync(url, data, new CancellationTokenSource(ASYNC_API_TIMEOUT_MILLISECONDS).Token);
+                var serviceResponse = await _HttpClient.PostAsJsonAsync(url, data, new CancellationTokenSource(ASYNC_API_TIMEOUT_MILLISECONDS).Token);
 
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
@@ -73,7 +69,6 @@ namespace Services.Broadcast.Clients
                     return output;
                 }
 
-
                 output = await serviceResponse.Content.ReadAsAsync<T>();
             }
             catch (Exception e)
@@ -90,38 +85,6 @@ namespace Services.Broadcast.Clients
         private string _GetOpenMarketSpotsAllocationUrl()
         {
             return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsUrl);
-        }
-    }
-
-    public class PricingApiMockClient : IPricingApiClient
-    {
-        public async Task<PlanPricingApiSpotsResponseDto> GetPricingSpotsResultAsync(PlanPricingApiRequestDto request)
-        {
-            var results = new List<PlanPricingApiSpotsResultDto>();
-
-            foreach (var spot in request.Spots)
-            {
-                var result = new PlanPricingApiSpotsResultDto
-                {
-                    ManifestId = spot.Id,
-                    MediaWeekId = spot.MediaWeekId,
-                    Frequency = 1
-                };
-
-                results.Add(result);
-            }
-
-            return await Task.FromResult(
-                new PlanPricingApiSpotsResponseDto
-                {
-                    RequestId = "djj4j4399fmmf1m212",
-                    Results = results
-                });
-        }
-
-        public Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request)
-        {
-            throw new NotImplementedException();
         }
     }
 }

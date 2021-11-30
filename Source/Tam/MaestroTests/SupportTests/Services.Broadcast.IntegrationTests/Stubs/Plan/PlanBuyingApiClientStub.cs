@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities.Plan.Buying;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 
 namespace Services.Broadcast.IntegrationTests.Stubs.Plan
@@ -10,7 +11,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs.Plan
     {
         public PlanBuyingApiRequestDto_v3 LastSentRequest;        
 
-        public PlanBuyingApiSpotsResponseDto_v3 GetBuyingSpotsResult(PlanBuyingApiRequestDto_v3 request)
+        public async Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
         {
             LastSentRequest = request;
 
@@ -34,11 +35,11 @@ namespace Services.Broadcast.IntegrationTests.Stubs.Plan
                 results.Add(result);
             }
 
-            return new PlanBuyingApiSpotsResponseDto_v3
+            return await Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
             {
                 RequestId = "djj4j4399fmmf1m212",
                 Results = results
-            };
+            });
         }
     }
 }

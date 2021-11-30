@@ -734,7 +734,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => updatePlanBuyingVersionIdCalled++);
 
             var queuePricingJobCalled = 0;
-            _PlanBuyingServiceMock.Setup(s => s.QueueBuyingJob(It.IsAny<PlanBuyingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+            _PlanBuyingServiceMock.Setup(s => s.QueueBuyingJobAsync(It.IsAny<PlanBuyingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCalled++);
 
             var savePlanBuyingParametersCallsed = 0;

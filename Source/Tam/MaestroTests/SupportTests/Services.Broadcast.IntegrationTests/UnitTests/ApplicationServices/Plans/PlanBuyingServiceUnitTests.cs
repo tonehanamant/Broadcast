@@ -31,6 +31,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -465,7 +466,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Ignore("SDE - BP-2260 : This fails on the build server as-if it's running the old PlanBuyingServiceCode.  The approval file is fine.  Setting this to ignore to allow checking of BP-2260.")]
-        public void RunBuyingJobWithProprietaryInventory()
+        public async void RunBuyingJobWithProprietaryInventory()
         {
             // Arrange
             const int jobId = 1;
@@ -519,18 +520,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanBuyingApiRequestDto>();
             _BuyingApiClientMock
-                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
-                .Returns(new PlanBuyingApiSpotsResponseDto_v3
-                {
-                    RequestId = "q1w2e3r4",
-                    Results = new List<PlanBuyingApiSpotsResultDto_v3>()
-                })
+                .Setup(x => x.GetBuyingSpotsResultAsync(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+                .Returns(
+                    Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
+                    {
+                        RequestId = "q1w2e3r4",
+                        Results = new List<PlanBuyingApiSpotsResultDto_v3>()
+                    }))
                 .Callback<PlanBuyingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -970,7 +972,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesBuyingApiResults_v3()
+        public async void SavesBuyingApiResults_v3()
         {
             // Arrange
             var allowMultipleCreativeLengths = true;
@@ -1180,7 +1182,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanBuyingApiRequestDto_v3>();
             _BuyingApiClientMock
-                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+                .Setup(x => x.GetBuyingSpotsResultAsync(It.IsAny<PlanBuyingApiRequestDto_v3>()))
                 .Returns<PlanBuyingApiRequestDto_v3>((request) =>
                 {
                     var results = new List<PlanBuyingApiSpotsResultDto_v3>();
@@ -1203,11 +1205,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         results.Add(result);
                     }
 
-                    return new PlanBuyingApiSpotsResponseDto_v3
+                    return Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
                     {
                         RequestId = "djj4j4399fmmf1m212",
                         Results = results
-                    };
+                    });
                 });
 
             _SpotLengthEngineMock
@@ -1309,14 +1311,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService(false, allowMultipleCreativeLengths);
 
             // Act
-            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
         }
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesBuyingAggregateResults_WhenRunningBuyingJob()
+        public async void SavesBuyingAggregateResults_WhenRunningBuyingJob()
         {
             // Arrange
             const int jobId = 1;
@@ -1740,53 +1742,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               .Returns(_GetLatestMarketCoverages());
 
             _BuyingApiClientMock
-             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
-             .Returns(new PlanBuyingApiSpotsResponseDto_v3
-             {
-                 RequestId = "#q1w2e3",
-                 Results = new List<PlanBuyingApiSpotsResultDto_v3>
-                 {
-                        new PlanBuyingApiSpotsResultDto_v3
-                        {
-                            ManifestId = 1,
-                            MediaWeekId = 100,
-                            Frequencies = new List<SpotFrequencyResponse>
-                            {
-                                new SpotFrequencyResponse
-                                {
-                                    SpotLengthId = 1,
-                                    Frequency = 1
-                                }
-                            }
-                        },
-                        new PlanBuyingApiSpotsResultDto_v3
-                        {
-                            ManifestId = 1,
-                            MediaWeekId = 101,
-                            Frequencies = new List<SpotFrequencyResponse>
-                            {
-                                new SpotFrequencyResponse
-                                {
-                                    SpotLengthId = 1,
-                                    Frequency = 2
-                                }
-                            }
-                        },
-                        new PlanBuyingApiSpotsResultDto_v3
-                        {
-                            ManifestId = 2,
-                            MediaWeekId = 100,
-                            Frequencies = new List<SpotFrequencyResponse>
-                            {
-                                new SpotFrequencyResponse
-                                {
-                                    SpotLengthId = 1,
-                                    Frequency = 3
-                                }
-                            }
-                        }
-                 }
-             });
+             .Setup(x => x.GetBuyingSpotsResultAsync(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+             .Returns(Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
+                     {
+                         RequestId = "#q1w2e3",
+                         Results = new List<PlanBuyingApiSpotsResultDto_v3>
+                         {
+                             new PlanBuyingApiSpotsResultDto_v3
+                             {
+                                 ManifestId = 1,
+                                 MediaWeekId = 100,
+                                 Frequencies = new List<SpotFrequencyResponse>
+                                 {
+                                     new SpotFrequencyResponse
+                                     {
+                                         SpotLengthId = 1,
+                                         Frequency = 1
+                                     }
+                                 }
+                             },
+                             new PlanBuyingApiSpotsResultDto_v3
+                             {
+                                 ManifestId = 1,
+                                 MediaWeekId = 101,
+                                 Frequencies = new List<SpotFrequencyResponse>
+                                 {
+                                     new SpotFrequencyResponse
+                                     {
+                                         SpotLengthId = 1,
+                                         Frequency = 2
+                                     }
+                                 }
+                             },
+                             new PlanBuyingApiSpotsResultDto_v3
+                             {
+                                 ManifestId = 2,
+                                 MediaWeekId = 100,
+                                 Frequencies = new List<SpotFrequencyResponse>
+                                 {
+                                     new SpotFrequencyResponse
+                                     {
+                                         SpotLengthId = 1,
+                                         Frequency = 3
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 )
+             );
 
             _MediaMonthAndWeekAggregateCacheMock
               .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
@@ -1903,7 +1907,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
             // Act
-            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Assert.IsTrue(planVersionBuyingResultIds.Count(x => x <= 100) == 0);
@@ -2603,7 +2607,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Ignore("SDE - BP-2358 : This fails on the build server as-if it's running the old PlanBuyingServiceCode.  The approval file is fine.  Setting this to ignore to allow checking of BP-2358.")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunBuyingJobWithProprietaryInventory_15Only()
+        public async void RunBuyingJobWithProprietaryInventory_15Only()
         {
             // Arrange
             const int jobId = 1;
@@ -2664,18 +2668,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanBuyingApiRequestDto>();
             _BuyingApiClientMock
-                .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
-                .Returns(new PlanBuyingApiSpotsResponseDto_v3
+                .Setup(x => x.GetBuyingSpotsResultAsync(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+                .Returns(Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
                 {
                     RequestId = "q1w2e3r4",
                     Results = new List<PlanBuyingApiSpotsResultDto_v3>()
-                })
+                }))
                 .Callback<PlanBuyingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();
 
             // Act
-            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
@@ -5097,7 +5101,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesBuyingAggregateResults_WhenRunningBuyingJob_SaveProgramStations()
+        public async void SavesBuyingAggregateResults_WhenRunningBuyingJob_SaveProgramStations()
         {
             // Arrange
             const int jobId = 1;
@@ -5522,8 +5526,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               .Returns(_GetLatestMarketCoverages());
 
             _BuyingApiClientMock
-             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
-             .Returns(new PlanBuyingApiSpotsResponseDto_v3
+             .Setup(x => x.GetBuyingSpotsResultAsync(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+             .Returns(Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
              {
                  RequestId = "#q1w2e3",
                  Results = new List<PlanBuyingApiSpotsResultDto_v3>
@@ -5568,7 +5572,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                  }
-             });
+             }));
 
             _MediaMonthAndWeekAggregateCacheMock
               .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
@@ -5709,7 +5713,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
             // Act
-            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Assert.IsTrue(planVersionBuyingResultIds.Count(x => x <= 100) == 0);
@@ -6897,7 +6901,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesBuyingAggregateResults_WhenRunningBuyingJob_SaveBandStations()
+        public async void SavesBuyingAggregateResults_WhenRunningBuyingJob_SaveBandStations()
         {
             // Arrange
             const int jobId = 1;
@@ -7322,8 +7326,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               .Returns(_GetLatestMarketCoverages());
 
             _BuyingApiClientMock
-             .Setup(x => x.GetBuyingSpotsResult(It.IsAny<PlanBuyingApiRequestDto_v3>()))
-             .Returns(new PlanBuyingApiSpotsResponseDto_v3
+             .Setup(x => x.GetBuyingSpotsResultAsync(It.IsAny<PlanBuyingApiRequestDto_v3>()))
+             .Returns(Task.FromResult(new PlanBuyingApiSpotsResponseDto_v3
              {
                  RequestId = "#q1w2e3",
                  Results = new List<PlanBuyingApiSpotsResultDto_v3>
@@ -7368,7 +7372,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         }
                  }
-             });
+             }));
 
             _MediaMonthAndWeekAggregateCacheMock
               .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
@@ -7465,7 +7469,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
             // Act
-            service.RunBuyingJob(parameters, jobId, CancellationToken.None);
+            await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));

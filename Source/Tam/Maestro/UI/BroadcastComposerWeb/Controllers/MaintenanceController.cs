@@ -663,10 +663,10 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public ActionResult RerunPlanBuyingJob(int jobId)
+        public async Task<ActionResult> RerunPlanBuyingJob(int jobId)
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
-            var results = service.ReRunBuyingJob(jobId);
+            var results = await service.ReRunBuyingJobAsync(jobId);
             TempData["Message"] = $"Reprocessed job {jobId} as job {results}";
             TempData["TabId"] = "planning";
             return RedirectToAction("Index");

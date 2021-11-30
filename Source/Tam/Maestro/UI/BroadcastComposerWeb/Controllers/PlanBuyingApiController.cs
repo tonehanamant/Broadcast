@@ -5,6 +5,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -31,11 +32,12 @@ namespace BroadcastComposerWeb.Controllers
         /// </param>
         [HttpPost]
         [Route("queue")]
-        public BaseResponse<PlanBuyingJob> Queue(PlanBuyingParametersDto planBuyingRequestDto)
+        public async Task<BaseResponse<PlanBuyingJob>> Queue(PlanBuyingParametersDto planBuyingRequestDto)
         {
-            return _ConvertToBaseResponse(() =>
-                _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>()
-                    .QueueBuyingJob(planBuyingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
+            var result = (await _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>()
+                    .QueueBuyingJobAsync(planBuyingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
+
+            return _ConvertToBaseResponse(() => result);
         }
 
         [HttpPost]

@@ -32,7 +32,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 {
     public interface IPlanBuyingService : IApplicationService
     {
-        PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, DateTime currentDate, string username);
+        Task<PlanBuyingJob> QueueBuyingJobAsync(PlanBuyingParametersDto planBuyingParametersDto, DateTime currentDate, string username);
 
         CurrentBuyingExecution GetCurrentBuyingExecution(int planId, PostingTypeEnum postingType);
 
@@ -56,7 +56,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         [Queue("planbuying")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, int jobId, CancellationToken token);
+        Task RunBuyingJobAsync(PlanBuyingParametersDto planBuyingParametersDto, int jobId, CancellationToken token);
 
         /// <summary>
         /// For troubleshooting
@@ -126,7 +126,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="jobId">The id of the job to rerun.</param>
         /// <returns>The new JobId</returns>
-        int ReRunBuyingJob(int jobId);
+        Task<int> ReRunBuyingJobAsync(int jobId);
 
         /// <summary>
         /// For troubleshooting.  Generate a buying results report for the chosen plan and version
@@ -404,7 +404,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto
+        public async Task<PlanBuyingJob> QueueBuyingJobAsync(PlanBuyingParametersDto planBuyingParametersDto
             , DateTime currentDate, string username)
         {
             // lock the plan so that two requests for the same plan can not get in this area concurrently
@@ -436,7 +436,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     transaction.Complete();
                 }
 
-                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => x.RunBuyingJob(planBuyingParametersDto, job.Id
+                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => x.RunBuyingJobAsync(planBuyingParametersDto, job.Id
                     , CancellationToken.None));
 
                 _PlanBuyingRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
@@ -906,7 +906,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public int ReRunBuyingJob(int jobId)
+        public async Task<int> ReRunBuyingJobAsync(int jobId)
         {
             var originalJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
             // get the plan params
@@ -922,20 +922,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var newJobId = _SaveBuyingJobAndParameters(newJob, jobParams);
 
             // call the job directly
-            RunBuyingJob(jobParams, newJobId, CancellationToken.None);
+            await RunBuyingJobAsync(jobParams, newJobId, CancellationToken.None);
 
             return newJobId;
         }
 
-        private List<PlanBuyingAllocationResult> _SendBuyingRequests(int jobId, PlanDto plan, List<PlanBuyingInventoryProgram> inventory,
+        private async Task<List<PlanBuyingAllocationResult>> _SendBuyingRequestsAsync(int jobId, PlanDto plan, List<PlanBuyingInventoryProgram> inventory,
             PlanBuyingParametersDto planBuyingParametersDto, ProprietaryInventoryData proprietaryInventoryData,
             CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
             PlanBuyingJobDiagnostic diagnostic)
         {
 
             var results = new List<PlanBuyingAllocationResult>();
-
-
 
             results.Add(new PlanBuyingAllocationResult
             {
@@ -969,7 +967,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 foreach (var allocationResult in results)
                 {
-                    _SendBuyingRequest(
+                    await _SendBuyingRequestAsync(
                         allocationResult,
                         plan,
                         jobId,
@@ -984,7 +982,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
-        private void _RunBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, PlanDto plan, int jobId, CancellationToken token)
+        private async Task _RunBuyingJobAsync(PlanBuyingParametersDto planBuyingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
             var diagnostic = new PlanBuyingJobDiagnostic();
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
@@ -1040,7 +1038,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 token.ThrowIfCancellationRequested();
 
-                var modelAllocationResults = _SendBuyingRequests(jobId, plan, inventory, planBuyingParametersDto, proprietaryInventoryData,
+                var modelAllocationResults = await _SendBuyingRequestsAsync(jobId, plan, inventory, planBuyingParametersDto, proprietaryInventoryData,
                     token, goalsFulfilledByProprietaryInventory, isPricingEfficiencyModelEnabled, diagnostic);
 
                 token.ThrowIfCancellationRequested();
@@ -1513,7 +1511,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _SendBuyingRequest(
+        private async Task _SendBuyingRequestAsync(
             PlanBuyingAllocationResult allocationResult,
             PlanDto plan,
             int jobId,
@@ -1523,7 +1521,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanBuyingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            _SendBuyingRequest_v3(
+            await _SendBuyingRequest_v3Async(
                 allocationResult,
                 plan,
                 jobId,
@@ -1534,7 +1532,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 proprietaryInventoryData);
         }
 
-        private void _SendBuyingRequest_v3(
+        private async Task _SendBuyingRequest_v3Async(
             PlanBuyingAllocationResult allocationResult,
             PlanDto plan,
             int jobId,
@@ -1566,7 +1564,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
-            var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
+            var apiAllocationResult = await _BuyingApiClient.GetBuyingSpotsResultAsync(buyingApiRequest);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
 
             token.ThrowIfCancellationRequested();
@@ -1702,11 +1700,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return results;
         }
 
-        public void RunBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, int jobId, CancellationToken token)
+        public async Task RunBuyingJobAsync(PlanBuyingParametersDto planBuyingParametersDto, int jobId, CancellationToken token)
         {
             var plan = _PlanRepository.GetPlan(planBuyingParametersDto.PlanId.Value, planBuyingParametersDto.PlanVersionId);
 
-            _RunBuyingJob(planBuyingParametersDto, plan, jobId, token);
+            await _RunBuyingJobAsync(planBuyingParametersDto, plan, jobId, token);
         }
 
         private List<PlanBuyingApiRequestWeekDto_v3> _GetBuyingModelWeeks_v3(
