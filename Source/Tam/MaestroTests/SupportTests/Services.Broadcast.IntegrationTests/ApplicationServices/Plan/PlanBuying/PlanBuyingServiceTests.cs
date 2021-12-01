@@ -64,11 +64,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("short_running")]
-        public void QueueBuyingJobTest()
+        public async void QueueBuyingJobTest()
         {
             using (new TransactionScopeWrapper())
             {
-                var result = _PlanBuyingService.QueueBuyingJobAsync(new PlanBuyingParametersDto
+                var result = await _PlanBuyingService.QueueBuyingJobAsync(new PlanBuyingParametersDto
                 {
                     PlanId = 1196,
                     Margin = 20,
@@ -288,7 +288,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void RunBuyingJobTwiceOnSamePlanTest()
+        public async void RunBuyingJobTwiceOnSamePlanTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -310,16 +310,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     PostingType =PostingTypeEnum.NTI
                 };
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 planBuyingRequestDto.Budget = 1200;
                 planBuyingRequestDto.UnitCapsType = UnitCapEnum.Per30Min;
 
-                var job2 = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job2 = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job2.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job2.Id, CancellationToken.None);
 
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(1197, PostingTypeEnum.NTI);
 
@@ -351,7 +351,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetLastestPlanBuyingParametersTest()
+        public async void GetLastestPlanBuyingParametersTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -375,14 +375,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     MarketGroup = MarketGroupEnum.None
                 };
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 planBuyingRequestDto.UnitCapsType = UnitCapEnum.PerWeek;
                 planBuyingRequestDto.Budget = 1200;
 
-                _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 var result = _PlanService.GetPlan(1849);
 
@@ -400,15 +400,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingBandsTest()
+        public async void GetBuyingBandsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var bands = _PlanBuyingService.GetBuyingBands(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -420,15 +420,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingStationsTest()
+        public async void GetBuyingStationsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var stations = _PlanBuyingService.GetStations(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -440,15 +440,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingRepFirmsTest()
+        public async void GetBuyingRepFirmsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var repFirms = _PlanBuyingService.GetBuyingRepFirms(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -460,15 +460,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetProgramsTest()
+        public async void GetProgramsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var programs = _PlanBuyingService.GetPrograms(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
@@ -481,15 +481,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingResultsMarketsTest()
+        public async void GetBuyingResultsMarketsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
@@ -499,19 +499,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingResultsMarketsBuyingExecutedTwiceTest()
+        public async void GetBuyingResultsMarketsBuyingExecutedTwiceTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
-                var secondJob = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var secondJob = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, secondJob.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, secondJob.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
 
@@ -522,7 +522,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingResultsMarketsTest_VerifyMargin()
+        public async void GetBuyingResultsMarketsTest_VerifyMargin()
         {
             using (new TransactionScopeWrapper())
             {
@@ -532,9 +532,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // and verified by eye that the counts are different between the tests.
                 planBuyingRequestDto.Margin = null;
 
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
@@ -544,14 +544,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         [Test]
         [Category("long_running")]
-        public void GetBuyingResultsOwnershipGroupsTest()
+        public async void GetBuyingResultsOwnershipGroupsTest()
         {
             using (new TransactionScopeWrapper())
             {
                 var planBuyingRequestDto = _GetBuyingRequestDto();
-                var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await _PlanBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetBuyingOwnershipGroups(planBuyingRequestDto.PlanId.Value, null);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultOwnershipGroupDto>();
@@ -576,7 +576,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void MarketCoveragesAreSentDividedBy100ToBuyingApiTest()
+        public async void MarketCoveragesAreSentDividedBy100ToBuyingApiTest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -604,9 +604,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     MarketGroup = MarketGroupEnum.Top25
                 };
 
-                var job = planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                planBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await planBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var sentParameters = apiClient.LastSentRequest;
 
@@ -669,7 +669,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void WeeklyValuesAreUpdatedForBuyingRequest()
+        public async void WeeklyValuesAreUpdatedForBuyingRequest()
         {
             using (new TransactionScopeWrapper())
             {
@@ -696,9 +696,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
                 };
 
-                var job = planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = await planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                planBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
+                await planBuyingService.RunBuyingJobAsync(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var request = apiClient.LastSentRequest;
 
@@ -738,7 +738,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
         #region Allocation Model Versions
 
-        private async Task<PlanBuyingJob> _SavePlanAndRunBuyingJob(PlanDto plan)
+        private async Task<PlanBuyingJob> _SavePlanAndRunBuyingJobAsync(PlanDto plan)
         {
             var savedDate = new DateTime(2019, 11, 4);
             var planId = _PlanService.SavePlan(plan, "testUser", savedDate, true);
@@ -806,7 +806,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SaveBuyingResultsTest()
+        public async void SaveBuyingResultsTest()
         {
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
@@ -814,7 +814,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = await _SavePlanAndRunBuyingJobAsync(plan);
 
                 var apiResult = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
                 var executionResult = _PlanBuyingService.GetCurrentBuyingExecutionByJobId(job.Id);
@@ -829,7 +829,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePricingResultsTestWithMultiLengthAndEfficiency()
+        public async void SavePricingResultsTestWithMultiLengthAndEfficiency()
         {
             _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
@@ -839,7 +839,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = await _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
                 var resultQ = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality);
@@ -873,7 +873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetBuyingBands(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Quality);
@@ -907,7 +907,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetStations(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Quality);
@@ -941,7 +941,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetMarkets(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Quality);
@@ -975,7 +975,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetPrograms(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Quality);
@@ -1009,7 +1009,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Quality);
@@ -1043,7 +1043,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
             using (new TransactionScopeWrapper())
             {
-                var job = _SavePlanAndRunBuyingJob(plan);
+                var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null);
                 var resultQ = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Quality);

@@ -3104,7 +3104,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void CalculatePlanWeeklyGoalBreakdown_WithClearAllFlag_CallsClearMethod()
         {
             //arrange
-            var request = new WeeklyBreakdownRequest();
+            var request = new WeeklyBreakdownRequest
+            {
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 3,
+                        Weight = 50
+                    },
+                }
+            };
 
             //act
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request, true);
@@ -3117,13 +3132,82 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void CalculatePlanWeeklyGoalBreakdown_CallsCalculateMethod()
         {
             //arrange
-            var request = new WeeklyBreakdownRequest();
+            var request = new WeeklyBreakdownRequest
+            {
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 3,
+                        Weight = 50
+                    },
+                }
+            };
 
             //act
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //assert
             _WeeklyBreakdownEngineMock.Verify(x => x.CalculatePlanWeeklyGoalBreakdown(request), Times.Once);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CalculatePlanWeeklyGoalBreakdown_PopulateDefaultCreativeWeights(bool hasEmptyCreativeWeights)
+        {
+            //arrange
+            var request = new WeeklyBreakdownRequest
+            {
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 1,
+                        Weight = hasEmptyCreativeWeights ? 100 : 50
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 3,
+                        Weight = hasEmptyCreativeWeights ? (int?)null : 50
+                    },
+                }
+            };
+            WeeklyBreakdownRequest calculatedRequest = null;
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Callback<WeeklyBreakdownRequest>((r) => calculatedRequest = r)
+                .Returns(new WeeklyBreakdownResponseDto());
+
+            _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<List<CreativeLength>>()))
+                .Returns(new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 3,
+                        Weight = 50
+                    },
+                });
+
+            //act
+            _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            //assert
+            var hasCreativeLengthsWithoutWeights = calculatedRequest.CreativeLengths.Any(s => !s.Weight.HasValue);
+            Assert.IsFalse(hasCreativeLengthsWithoutWeights);
+
+            var timesShouldHaveDistributed = hasEmptyCreativeWeights ? Times.Once() : Times.Never();
+            _CreativeLengthEngineMock.Verify(s => s.DistributeWeight(It.IsAny<List<CreativeLength>>()), timesShouldHaveDistributed);
         }
 
         [Test]

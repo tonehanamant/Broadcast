@@ -1301,6 +1301,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, bool clearAll = false)
         {
+            // Hack Alert - Bg BP-3402
+            // The FE sometimes sends the creative lengths with null weights.
+            // This has been happening when the user has not manually entered a spot length weight value yet and only the "place holders" are visible.
+            // Detect this scenario and do the default balancing.
+            if ((request?.CreativeLengths?.Any(s => !s.Weight.HasValue) ?? false))
+            {
+                var weightedLengths = CalculateCreativeLengthWeight(request.CreativeLengths);
+                if (weightedLengths != null)
+                {
+                    request.CreativeLengths = weightedLengths;
+                }
+            }
+
             var result = clearAll ? _WeeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request) 
                 : _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
             return result;
