@@ -1,0 +1,21 @@
+{
+  "saved": [
+    {
+      "FlightEndDate": "2021-11-28T00:00:00",
+      "FlightStartDate": "2021-11-22T00:00:00",
+      "Id": 0,
+      "Isci": "MyIsci1",
+      "PlanId": 1
+    },
+    {
+      "FlightEndDate": "2021-11-20T00:00:00",
+      "FlightStartDate": "2021-11-01T00:00:00",
+      "Id": 0,
+      "Isci": "MyIsci2",
+      "PlanId": 1
+    }
+  ],
+  "unDeletedIds": [
+    5
+  ]
+}

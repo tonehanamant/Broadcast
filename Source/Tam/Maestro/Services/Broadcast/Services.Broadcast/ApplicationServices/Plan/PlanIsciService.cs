@@ -9,8 +9,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Services.Broadcast.Extensions;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -297,14 +295,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return 0;
             }
 
-            // remove list item duplicates
             var dedupedListMappings = _RemoveDuplicateListItemMappings(mappings);
             var flightedMappings = _PopulateIsciPlanMappingFlights(dedupedListMappings);
             var toSaveMappings = _RemoveDuplicateDatabaseMappings(flightedMappings);
+            var separatedMappings = _SeparateSoftDeletedIsciMappings(toSaveMappings);
 
-            var savedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSaveMappings, createdBy, createdAt);
+            var unDeletedCount = 0;
+            if (separatedMappings.ToUnDeleteIds.Any())
+            {
+                unDeletedCount = _PlanIsciRepository.UnDeleteIsciPlanMappings(separatedMappings.ToUnDeleteIds);
+            }
 
-            return savedCount;
+            var savedCount = 0;
+            if (separatedMappings.ToSave.Any())
+            {
+                savedCount = _PlanIsciRepository.SaveIsciPlanMappings(separatedMappings.ToSave, createdBy, createdAt);
+            }
+
+            var totalChangedCount = unDeletedCount + savedCount;
+            return totalChangedCount;
         }
 
         private int _HandleModifiedIsciPlanMappings(List<IsciPlanModifiedMappingDto> modified)
@@ -383,6 +392,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
             });
             return result;
+        }
+
+        private SeparatedMappings _SeparateSoftDeletedIsciMappings(List<PlanIsciDto> flightedMappings)
+        {
+            var result = new SeparatedMappings();
+            var planIds = flightedMappings.Select(m => m.PlanId).Distinct().ToList();
+            var softDeletedIscis = _PlanIsciRepository.GetDeletedPlanIscis(planIds);
+
+            foreach (var candidate in softDeletedIscis)
+            {
+                foreach (var mapping in flightedMappings)
+                {
+                    if (mapping.Equals(candidate))
+                    {
+                        result.ToUnDeleteIds.Add(candidate.Id);
+                        // set the id to indicate we can soft delete it
+                        mapping.Id = candidate.Id;
+                    }
+                }
+            }
+
+            result.ToSave = flightedMappings;
+            result.ToSave.RemoveAll(s => s.Id > 0);
+            return result;
+        }
+
+        private class SeparatedMappings
+        {
+            public List<PlanIsciDto> ToSave { get; set; } = new List<PlanIsciDto>();
+            public List<int> ToUnDeleteIds { get; set; } = new List<int>();
         }
 
         /// <summary>

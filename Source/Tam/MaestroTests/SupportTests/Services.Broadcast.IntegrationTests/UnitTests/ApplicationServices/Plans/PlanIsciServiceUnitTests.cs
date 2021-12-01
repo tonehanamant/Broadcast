@@ -17,7 +17,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using IsciPlanMappingDto = Services.Broadcast.Entities.Isci.IsciPlanMappingDto;
 
@@ -919,7 +918,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<List<PlanIsciDto>, string, DateTime>((a, b, c) => saved = a)
                 .Returns(2);
-            
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
+
             var saveRequest = new IsciPlanMappingsSaveRequestDto()
             {
                 IsciPlanMappings  = mappings
@@ -933,6 +935,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanIsciRepositoryMock.Verify(s =>
                 s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
             _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Once);
+            _PlanIsciRepositoryMock.Verify(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()), Times.Once);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(saved));
         }
 
@@ -974,6 +977,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     FlightEndDate = new DateTime(2021, 11, 30)
                 });
             _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
+            _PlanIsciRepositoryMock.Setup(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()))
                 .Returns(new List<PlanIsciDto>());
 
             var saved = new List<PlanIsciDto>();
@@ -1044,6 +1049,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<List<PlanIsciDto>, string, DateTime>((a, b, c) => saved = a)
                 .Returns(2);
+            _PlanIsciRepositoryMock.Setup(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
 
             var saveRequest = new IsciPlanMappingsSaveRequestDto()
             {
@@ -1115,6 +1122,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback<List<PlanIsciDto>, string, DateTime>((a, b, c) => saved = a)
                 .Returns(2);
+            _PlanIsciRepositoryMock.Setup(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
 
             var saveRequest = new IsciPlanMappingsSaveRequestDto()
             {
@@ -1288,6 +1297,105 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void SaveIsciMappings_NewWithAnUnDelete()
+        {
+            var createdBy = "Test User";
+
+            var mappings = new List<IsciPlanMappingDto>
+            {
+                new IsciPlanMappingDto { PlanId = 1, Isci = "MyIsci1"},
+                new IsciPlanMappingDto { PlanId = 1, Isci = "MyIsci2"},
+                new IsciPlanMappingDto { PlanId = 1, Isci = "MyIsci3"},
+            };
+
+            _ReelIsciRepository.Setup(s => s.GetReelIscis(It.IsAny<List<string>>()))
+                .Returns(new List<ReelIsciDto>
+                {
+                    new ReelIsciDto
+                    {
+                        Id = 1,
+                        Isci = "MyIsci1",
+                        SpotLengthId = 1,
+                        ActiveStartDate = new DateTime(2021,11,22),
+                        ActiveEndDate = new DateTime(2021, 11, 28)
+                    },
+                    new ReelIsciDto
+                    {
+                        Id = 2,
+                        Isci = "MyIsci2",
+                        SpotLengthId = 1,
+                        ActiveStartDate = new DateTime(2021,10,15),
+                        ActiveEndDate = new DateTime(2021, 11, 20)
+                    },
+                    new ReelIsciDto
+                    {
+                        Id = 3,
+                        Isci = "MyIsci3",
+                        SpotLengthId = 1,
+                        ActiveStartDate = new DateTime(2021,11,22),
+                        ActiveEndDate = new DateTime(2021, 12, 15)
+                    }
+                });
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns<int, int?>((a, b) => new PlanDto()
+                {
+                    Id = a,
+                    FlightStartDate = new DateTime(2021, 11, 1),
+                    FlightEndDate = new DateTime(2021, 11, 30)
+                });
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
+
+            var saved = new List<PlanIsciDto>();
+            _PlanIsciRepositoryMock.Setup(s =>
+                    s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<List<PlanIsciDto>, string, DateTime>((a, b, c) => saved = a)
+                .Returns(2);
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>
+                {
+                    new PlanIsciDto
+                    {
+                        Id = 5,
+                        PlanId = 1,
+                        Isci = "MyIsci3",
+                        FlightStartDate = new DateTime(2021,11,22),
+                        FlightEndDate = new DateTime(2021, 11, 30)
+                    }
+                });
+
+            var unDeletedIds = new List<int>();
+            _PlanIsciRepositoryMock.Setup(s => s.UnDeleteIsciPlanMappings(It.IsAny<List<int>>()))
+                .Callback<List<int>>((l) => unDeletedIds.AddRange(l))
+                .Returns<List<int>>((l) => l.Count());
+
+            var saveRequest = new IsciPlanMappingsSaveRequestDto()
+            {
+                IsciPlanMappings = mappings
+            };
+
+            //Act
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
+
+            //Assert
+            Assert.IsTrue(result);
+            _PlanIsciRepositoryMock.Verify(s =>
+                s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Once);
+            _PlanIsciRepositoryMock.Verify(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()), Times.Once);
+            _PlanIsciRepositoryMock.Verify(s => s.UnDeleteIsciPlanMappings(It.IsAny<List<int>>()), Times.Once);
+
+            var toVerify = new
+            {
+                unDeletedIds,
+                saved
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
         }
 
         [Test]

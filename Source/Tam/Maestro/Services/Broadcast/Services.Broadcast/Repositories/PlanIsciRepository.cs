@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -70,6 +69,13 @@ namespace Services.Broadcast.Repositories
         List<PlanIsciDto> GetPlanIscis(List<int> planIds);
 
         /// <summary>
+        /// Gets the deleted plan iscis.
+        /// </summary>
+        /// <param name="planIds">The plan ids.</param>
+        /// <returns></returns>
+        List<PlanIsciDto> GetDeletedPlanIscis(List<int> planIds);
+
+        /// <summary>
         /// Gets the plan iscis.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -106,6 +112,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="isciPlanMappings">The isci plan mappings.</param>
         /// <returns></returns>
         int UpdateIsciPlanMappings(List<IsciPlanModifiedMappingDto> isciPlanMappings);
+
+        /// <summary>
+        /// Uns the delete isci plan mappings.
+        /// </summary>
+        /// <param name="idsToUnDelete">The ids to un delete.</param>
+        /// <returns></returns>
+        int UnDeleteIsciPlanMappings(List<int> idsToUnDelete);
     }
 
     /// <summary>
@@ -239,6 +252,23 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
+        public int UnDeleteIsciPlanMappings(List<int> idsToUnDelete)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                idsToUnDelete.ForEach(id =>
+                {
+                    var found = context.plan_iscis.Single(m => m.id == id);
+                    found.deleted_at = null;
+                    found.deleted_by = null;
+                });
+
+                var savedCount = context.SaveChanges();
+                return savedCount;
+            });
+        }
+
+        /// <inheritdoc />
         public List<IsciProductMappingDto> GetIsciProductMappings(List<string> iscis)
         {
             return _InReadUncommitedTransaction(context =>
@@ -300,6 +330,26 @@ namespace Services.Broadcast.Repositories
             {
                 var result = context.plan_iscis
                     .Where(x => planIds.Contains(x.plan_id) && x.deleted_at == null)
+                    .Select(x => new PlanIsciDto
+                    {
+                        Id = x.id,
+                        PlanId = x.plan_id,
+                        Isci = x.isci,
+                        FlightStartDate = x.flight_start_date,
+                        FlightEndDate = x.flight_end_date
+                    })
+                    .ToList();
+                return result;
+            });
+        }
+
+        /// <inheritdoc />
+        public List<PlanIsciDto> GetDeletedPlanIscis(List<int> planIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_iscis
+                    .Where(x => planIds.Contains(x.plan_id) && x.deleted_at != null)
                     .Select(x => new PlanIsciDto
                     {
                         Id = x.id,

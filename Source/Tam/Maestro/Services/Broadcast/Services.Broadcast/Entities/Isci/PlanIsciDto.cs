@@ -12,5 +12,25 @@ namespace Services.Broadcast.Entities.Isci
         public string Isci { get; set; }
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var candidate = (PlanIsciDto)obj;
+            var result = candidate.PlanId == PlanId &&
+                         candidate.Isci == Isci && 
+                         candidate.FlightStartDate.Date.Equals(FlightStartDate.Date) && 
+                         candidate.FlightEndDate.Date.Equals(FlightEndDate.Date);
+            return result;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
