@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Services.Clients;
+using static Services.Broadcast.Entities.StationContact;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -47,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private Mock<ISharedFolderService> _SharedFolderService;
         private Mock<IDateTimeEngine> _DateTimeEngine;
-
+        private Mock<IStationRepository> _StationRepositoryMock;
         private InventoryService _InventoryService;
 
         [SetUp]
@@ -77,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _SharedFolderService = new Mock<ISharedFolderService>();
             _DateTimeEngine = new Mock<IDateTimeEngine>();
-
+            _StationRepositoryMock = new Mock<IStationRepository>();
             _SpotLengthRepository
                 .Setup(x => x.GetSpotLengthIdsByDuration())
                 .Returns(new Dictionary<int, int>());
@@ -97,6 +98,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _BroadcastDataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IInventoryFileRepository>())
                 .Returns(_InventoryFileRepositoryMock.Object);
+
+            _BroadcastDataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IStationRepository>())
+                .Returns(_StationRepositoryMock.Object);
 
             _InventoryService = new InventoryService(
                 _BroadcastDataRepositoryFactoryMock.Object,

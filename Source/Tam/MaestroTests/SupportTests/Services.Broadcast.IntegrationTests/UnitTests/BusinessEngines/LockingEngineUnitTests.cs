@@ -11,6 +11,8 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Services.Clients;
+using static Services.Broadcast.Entities.StationContact;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 {
@@ -31,7 +33,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION, isEnableLockingConsolidation);
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
-
             return new LockingEngine(
                     _LockingManager.Object,
                     _LockingService.Object,
@@ -179,6 +180,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             Assert.AreEqual(expectedResult, result.Success);
         }
 
+        [Test]
+        public void LockStationContact_ToggleOn()
+        {
+            // Arrange
+            var service = _GetService(true);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            int stationCode = 9089;
+            bool expectedResult = true;
+            var key = KeyHelper.GetStationLockingKey(stationCode);
+            _LockingService
+             .Setup(s => s.LockObject(It.IsAny<string>()))
+           .Returns(new BroadcastLockResponse
+           {
+               Key = "broadcast_StationContact : 9089",
+               LockTimeoutInSeconds = 900,
+               LockedUserId = null,
+               Success = true,
+               Error = null
+           });
+            var result = service.LockStationContact(stationCode);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
+
+        [Test]
+        public void UnlockStationContact_ToggleOn()
+        {
+            // Arrange
+            var service = _GetService(true);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            int stationCode = 9089;
+            bool expectedResult = true;
+            var key = KeyHelper.GetStationLockingKey(stationCode);
+            _LockingService
+             .Setup(s => s.ReleaseObject(It.IsAny<string>()))
+           .Returns(new BroadcastReleaseLockResponse
+           {
+               Key = "broadcast_StationContact : 9089",
+               Success = true,
+               Error = null
+           });
+            var result = service.UnlockStationContact(stationCode);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
 
     }
 }

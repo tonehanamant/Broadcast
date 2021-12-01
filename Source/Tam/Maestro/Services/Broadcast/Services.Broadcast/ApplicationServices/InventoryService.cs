@@ -18,9 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.ServiceModel.Security;
 using System.Web;
-using log4net.Appender;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -99,7 +97,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IDateTimeEngine _DateTimeEngine;
-
         private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
 
@@ -151,7 +148,6 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRatingsService = inventoryRatingsService;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _DateTimeEngine = dateTimeEngine;
-
             _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
@@ -579,78 +575,103 @@ namespace Services.Broadcast.ApplicationServices
 
         public bool SaveStationContact(StationContact stationContact, string userName)
         {
+            bool isStationContactUpdated = false;
             if (stationContact == null)
                 throw new Exception("Cannot save station contact with invalid data.");
-
-            using (new BomsLockManager(_SmsClient, new StationToken(stationContact.StationCode.Value)))
-            {
-                if (string.IsNullOrWhiteSpace(stationContact.Name))
-                    throw new Exception("Cannot save station contact without specifying name value.");
-
-                if (string.IsNullOrWhiteSpace(stationContact.Phone))
-                    throw new Exception("Cannot save station contact without specifying phone value.");
-
-                if (string.IsNullOrWhiteSpace(stationContact.Email))
-                    throw new Exception("Cannot save station contact without specifying email value.");
-
-                if (stationContact.Type <= 0)
-                    throw new Exception("Cannot save station contact without specifying valid type value.");
-
-                using (var transaction = new TransactionScopeWrapper())
+            _LockingEngine.LockStationContact(stationContact.StationCode.Value);
+            try
                 {
-                    if (stationContact.Id <= 0)
-                    {
-                        _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-                            .CreateNewStationContacts(
-                                new List<StationContact>()
-                                {
-                                    stationContact
-                                },
-                                userName,
-                                null);
-                    }
-                    else
-                    {
-                        _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-                            .UpdateExistingStationContacts(
-                                new List<StationContact>()
-                                {
-                                    stationContact
-                                },
-                                userName,
-                                null);
-                    }
+                    if (stationContact.StationId <= 0)
+                        throw new Exception("Cannot save station contact with invalid station Id.");
 
-                    _StationRepository.UpdateStation(stationContact.StationCode.Value, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
+                    if (string.IsNullOrWhiteSpace(stationContact.Name))
+                        throw new Exception("Cannot save station contact without specifying name value.");
 
-                    transaction.Complete();
+                    if (string.IsNullOrWhiteSpace(stationContact.Phone))
+                        throw new Exception("Cannot save station contact without specifying phone value.");
+
+                    if (string.IsNullOrWhiteSpace(stationContact.Email))
+                        throw new Exception("Cannot save station contact without specifying email value.");
+
+                    if (stationContact.Type <= 0)
+                        throw new Exception("Cannot save station contact without specifying valid type value.");
+
+                    using (var transaction = new TransactionScopeWrapper())
+                    {
+                        if (stationContact.Id <= 0)
+                        {
+                            _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                                .CreateNewStationContacts(
+                                    new List<StationContact>()
+                                    {
+                                    stationContact
+                                    },
+                                    userName,
+                                    null);
+                        }
+                        else
+                        {
+                            _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                                .UpdateExistingStationContacts(
+                                    new List<StationContact>()
+                                    {
+                                    stationContact
+                                    },
+                                    userName,
+                                    null);
+                        }
+                        _StationRepository.UpdateStation(stationContact.StationCode.Value, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
+
+                        transaction.Complete();
+                    }
+                    isStationContactUpdated = true;
                 }
-
-                return true;
-            }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    _LockingEngine.UnlockStationContact(stationContact.StationCode.Value);
+                }
+            return isStationContactUpdated;
         }
 
         public bool DeleteStationContact(string inventorySourceString, int stationContactId, string userName)
         {
+            bool isStationContactDeleted = false;
             if (stationContactId <= 0)
                 throw new Exception("Cannot delete station contact with invalid data.");
-
+            
             var stationCode = _StationRepository.GetBroadcastStationCodeByContactId(stationContactId);
+            _LockingEngine.LockStationContact(stationCode);
+            try
+                {
+                    if (stationCode <= 0)
+                        throw new Exception("Cannot delete station contact with invalid station code.");
+                    
+                    using (var transaction = new TransactionScopeWrapper())
+                    {
 
-            using (new BomsLockManager(_SmsClient, new StationToken(stationCode)))
-            using (var transaction = new TransactionScopeWrapper())
-            {
+                        _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                            .DeleteStationContact(stationContactId);
 
-                _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-                    .DeleteStationContact(stationContactId);
+                        // update staion modified date
+                        _StationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
 
-                // update staion modified date
-                _StationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
-
-                transaction.Complete();
-            }
-
-            return true;
+                        transaction.Complete();
+                    }
+                    isStationContactDeleted = true;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    _LockingEngine.UnlockStationContact(stationCode);
+                }
+            return isStationContactDeleted;
         }
 
         public List<LookupDto> GetAllMaestroGenres()

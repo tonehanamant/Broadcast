@@ -11,6 +11,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
 using Common.Services.Repositories;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.BusinessEngines
 {
@@ -30,6 +31,8 @@ namespace Services.Broadcast.BusinessEngines
         BroadcastLockResponse LockCampaigns(int campaignId);
 
         BroadcastReleaseLockResponse UnlockCampaigns(int campaignId);
+        BroadcastLockResponse LockStationContact(int stationCode);
+        BroadcastReleaseLockResponse UnlockStationContact(int stationCode);
     }
 
     public class LockingEngine : ILockingEngine
@@ -246,6 +249,20 @@ namespace Services.Broadcast.BusinessEngines
                     };
                 }
             }
+            return broadcastReleaseLockResponse;
+        }
+
+        public BroadcastLockResponse LockStationContact(int stationCode)
+        {
+            var key = KeyHelper.GetStationLockingKey(stationCode);
+            BroadcastLockResponse broadcastLockResponse = _LockingService.LockObject(key);
+            return broadcastLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockStationContact(int stationCode)
+        {
+            var key = KeyHelper.GetStationLockingKey(stationCode);
+            BroadcastReleaseLockResponse broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
             return broadcastReleaseLockResponse;
         }
     }
