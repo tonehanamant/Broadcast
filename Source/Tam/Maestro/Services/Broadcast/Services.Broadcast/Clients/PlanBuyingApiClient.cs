@@ -1,6 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,21 +16,28 @@ namespace Services.Broadcast.Clients
     {
         private const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
 
-        private readonly Lazy<string> _OpenMarketSpotsAllocationUrl;
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelUrl;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly HttpClient _HttpClient;
+        private readonly Lazy<bool> _AreQueuedPricingRequestsEnabled;
 
-        public PlanBuyingApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+        public PlanBuyingApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient, IFeatureToggleHelper featureToggleHelper)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _OpenMarketSpotsAllocationUrl = new Lazy<string>(_GetOpenMarketSpotsAllocationUrl);
             _PlanPricingAllocationsEfficiencyModelUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelUrl);
             _HttpClient = httpClient;
+            _AreQueuedPricingRequestsEnabled = new Lazy<bool>(() => featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS));
         }
 
         public async Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
         {
+            if (_AreQueuedPricingRequestsEnabled.Value)
+            {
+                var client = new PlanBuyingJobQueueApiClient(_ConfigurationSettingsHelper, _HttpClient);
+                var queuedResult = await client.GetBuyingSpotsResultAsync(request);
+                return queuedResult;
+            }
+
             var url = $"{_PlanPricingAllocationsEfficiencyModelUrl.Value}";
             var result = await _PostAsync<PlanBuyingApiSpotsResponseDto_v3>(url, request);
             return result;

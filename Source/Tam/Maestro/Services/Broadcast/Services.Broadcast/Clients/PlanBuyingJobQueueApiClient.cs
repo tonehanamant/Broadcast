@@ -1,38 +1,36 @@
 ﻿using Newtonsoft.Json;
-using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Helpers;
+using Services.Broadcast.Entities.Plan.Buying;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Services.Broadcast.Entities.Plan.Buying;
 
 namespace Services.Broadcast.Clients
 {
-    //public class PricingJobSubmitResponse
-    //{
-    //    public string request_id { get; set; }
-    //    public string task_id { get; set; }
-    //}
-
-    //public class PricingJobFetchRequest
-    //{
-    //    public string task_id { get; set; }
-    //}
-
-    //public class PricingJobFetchResponse<T>
-    //{
-    //    public string request_id { get; set; }
-    //    public string task_id { get; set; }
-    //    public string task_status { get; set; }
-    //    public List<T> results { get; set; }
-    //}
-
-    public class PlanBuyingJobQueueApiClient // : IPlanBuyingApiClient
+    public class BuyingJobSubmitResponse
     {
-        /*
+        public string request_id { get; set; }
+        public string task_id { get; set; }
+    }
+
+    public class BuyingJobFetchRequest
+    {
+        public string task_id { get; set; }
+    }
+
+    public class BuyingJobFetchResponse<T>
+    {
+        public string request_id { get; set; }
+        public string task_id { get; set; }
+        public string task_status { get; set; }
+        public List<T> results { get; set; }
+    }
+
+    public class PlanBuyingJobQueueApiClient : IPlanBuyingApiClient
+    {
+        
         private readonly Lazy<string> _SubmitUrl;
         private readonly Lazy<string> _FetchUrl;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
@@ -43,17 +41,17 @@ namespace Services.Broadcast.Clients
         public PlanBuyingJobQueueApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _SubmitUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelSubmitUrl);
-            _FetchUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelFetchUrl);
+            _SubmitUrl = new Lazy<string>(_GetSubmitUrl);
+            _FetchUrl = new Lazy<string>(_GetFetchUrl);
             _HttpClient = httpClient;
         }
 
-        public async Task<PlanBuyingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
+        public async Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
         {
             var submitResponse = await SubmitRequestAsync(request);
 
             const int fetchPauseMs = 3000;
-            PricingJobFetchResponse<PlanBuyingApiSpotsResponseDto_v3> fetchResponse;
+            BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3> fetchResponse;
             bool continueFetch;
 
             do
@@ -63,7 +61,7 @@ namespace Services.Broadcast.Clients
                 Thread.Sleep(fetchPauseMs);
             } while (continueFetch);
 
-            var result = new PlanPricingApiSpotsResponseDto_v3
+            var result = new PlanBuyingApiSpotsResponseDto_v3
             {
                 RequestId = fetchResponse.request_id,
                 Results = fetchResponse.results
@@ -71,17 +69,17 @@ namespace Services.Broadcast.Clients
             return result;
         }
 
-        private string _GetPlanPricingAllocationsEfficiencyModelSubmitUrl()
+        private string _GetSubmitUrl()
         {
             return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsEfficiencyModelSubmitUrl);
         }
 
-        private string _GetPlanPricingAllocationsEfficiencyModelFetchUrl()
+        private string _GetFetchUrl()
         {
             return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.PlanPricingAllocationsEfficiencyModelFetchUrl);
         }
 
-        private async Task<PricingJobSubmitResponse> SubmitRequestAsync(PlanBuyingApiRequestDto_v3 request)
+        private async Task<BuyingJobSubmitResponse> SubmitRequestAsync(PlanBuyingApiRequestDto_v3 request)
         {
             var requestSerialized = JsonConvert.SerializeObject(request);
                //.ToGZipCompressed();
@@ -90,18 +88,17 @@ namespace Services.Broadcast.Clients
             //content.Headers.ContentEncoding.Add(gZipHeader); 
 
             var submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
-            var submitResponse = await submitResult.Content.ReadAsAsync<PricingJobSubmitResponse>();
+            var submitResponse = await submitResult.Content.ReadAsAsync<BuyingJobSubmitResponse>();
             return submitResponse;
         }
 
-        private async Task<PricingJobFetchResponse<PlanBuyingApiSpotsResponseDto_v3>> FetchResultAsync(string taskId)
+        private async Task<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
-            var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
+            var fetchRequest = new BuyingJobFetchRequest { task_id = taskId };
             var fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
 
-            var result = await fetchResult.Content.ReadAsAsync<PricingJobFetchResponse<PlanBuyingApiSpotsResponseDto_v3>>();
+            var result = await fetchResult.Content.ReadAsAsync<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>();
             return result;
         }
-        */
     }
 }
