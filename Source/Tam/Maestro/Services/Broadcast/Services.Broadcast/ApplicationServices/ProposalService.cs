@@ -59,6 +59,8 @@ namespace Services.Broadcast.ApplicationServices
         //Tuple<string, Stream> GenerateScxFileArchive(int proposalIds);
 
         string AlignProposalDaypartsToZeroSeconds();
+        BroadcastLockResponse LockProposal(int proposalId);
+        BroadcastReleaseLockResponse UnlockProposal(int proposalId);
     }
 
     public class ProposalService : BroadcastBaseClass, IProposalService
@@ -85,6 +87,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMyEventsReportNamingEngine _MyEventsReportNamingEngine;
         private readonly IImpressionsService _AffidavitImpressionsService;
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService;
+        private readonly ILockingEngine _LockingEngine;
         const char ISCI_DAYS_DELIMITER = '-';
 
         public ProposalService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -101,7 +104,7 @@ namespace Services.Broadcast.ApplicationServices
             IProposalProprietaryInventoryService proposalProprietaryInventoryService,
             IImpressionsService affidavitImpressionsService,
             IMyEventsReportNamingEngine myEventsReportNamingEngine,
-            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            IProposalOpenMarketInventoryService proposalOpenMarketInventoryService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine)
         : base(featureToggleHelper, configurationSettingsHelper)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
@@ -127,6 +130,7 @@ namespace Services.Broadcast.ApplicationServices
             _AffidavitImpressionsService = affidavitImpressionsService;
             _MyEventsReportNamingEngine = myEventsReportNamingEngine;
             _ProposalOpenMarketInventoryService = proposalOpenMarketInventoryService;
+            _LockingEngine = lockingEngine;
         }
 
         public List<DisplayProposal> GetAllProposals()
@@ -149,7 +153,9 @@ namespace Services.Broadcast.ApplicationServices
 
         public ProposalDto SaveProposal(ProposalDto saveRequest, string userName, DateTime? currentDateTime)
         {
-            using (saveRequest.Id.HasValue ? new BomsLockManager(_SmsClient, new ProposalToken(saveRequest.Id.Value)) : null)
+
+            _LockingEngine.LockProposal(saveRequest.Id.Value);
+            try
             {
                 _ValidateProposalDtoBeforeSave(saveRequest, userName);
 
@@ -209,6 +215,14 @@ namespace Services.Broadcast.ApplicationServices
                 return saveRequest.Version.HasValue
                     ? GetProposalByIdWithVersion(proposalId, saveRequest.Version.Value)
                     : GetProposalById(proposalId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                _LockingEngine.UnlockProposal(saveRequest.Id.Value);
             }
         }
 
@@ -1528,6 +1542,20 @@ namespace Services.Broadcast.ApplicationServices
             }
             _ProposalRepository.UpdateProposalDetailDayparts(updateProposalDetailDaypartMap);
             return messageBuilder.ToString();
+        }
+
+        public BroadcastLockResponse LockProposal(int proposalId)
+        {
+            var broadcastLockResponse = _LockingEngine.LockProposal(proposalId);
+
+            return broadcastLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockProposal(int proposalId)
+        {
+            var broadcastReleaseLockResponse = _LockingEngine.UnlockProposal(proposalId);
+
+            return broadcastReleaseLockResponse;
         }
     }
 }

@@ -33,6 +33,8 @@ namespace Services.Broadcast.BusinessEngines
         BroadcastReleaseLockResponse UnlockCampaigns(int campaignId);
         BroadcastLockResponse LockStationContact(int stationCode);
         BroadcastReleaseLockResponse UnlockStationContact(int stationCode);
+        BroadcastLockResponse LockProposal(int proposalId);
+        BroadcastReleaseLockResponse UnlockProposal(int proposalId);
     }
 
     public class LockingEngine : ILockingEngine
@@ -263,6 +265,57 @@ namespace Services.Broadcast.BusinessEngines
         {
             var key = KeyHelper.GetStationLockingKey(stationCode);
             BroadcastReleaseLockResponse broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
+            return broadcastReleaseLockResponse;
+        }
+
+        public BroadcastLockResponse LockProposal(int proposalId)
+        {
+            BroadcastLockResponse broadcastLockResponse = null;
+            var key = KeyHelper.GetProposalLockingKey(proposalId);
+            if (_IsLockingConsolidationEnabled.Value)
+            {
+                broadcastLockResponse = _LockingService.LockObject(key);
+            }
+            else
+            {
+                var lockingResponse = _LockingManagerApplicationService.LockObject(key);
+                if (lockingResponse != null)
+                {
+                    broadcastLockResponse = new BroadcastLockResponse
+                    {
+                        Key = lockingResponse.Key,
+                        Success = lockingResponse.Success,
+                        LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
+                        LockedUserId = lockingResponse.LockedUserId,
+                        Error = lockingResponse.Error
+                    };
+                }
+            }
+            return broadcastLockResponse;
+        }
+
+        public BroadcastReleaseLockResponse UnlockProposal(int proposalId)
+        {
+            BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
+            var key = KeyHelper.GetProposalLockingKey(proposalId);
+            if (_IsLockingConsolidationEnabled.Value)
+            {
+                broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
+            }
+            else
+            {
+                var releaseLockResponse = _LockingManager.ReleaseObject(key);
+
+                if (releaseLockResponse != null)
+                {
+                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                    {
+                        Error = releaseLockResponse.Error,
+                        Key = releaseLockResponse.Key,
+                        Success = releaseLockResponse.Success
+                    };
+                }
+            }
             return broadcastReleaseLockResponse;
         }
     }

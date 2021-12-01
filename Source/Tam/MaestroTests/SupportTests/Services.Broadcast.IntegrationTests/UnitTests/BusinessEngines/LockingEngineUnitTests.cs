@@ -225,6 +225,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             // Assert
             Assert.AreEqual(expectedResult, result.Success);
         }
+        [Test]
+        public void LockProposal_ToggleOn()
+        {
+            // Arrange
+            var service = _GetService(true);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            int proposalId = 52;
+            bool expectedResult = true;
+            var key = KeyHelper.GetProposalLockingKey(proposalId);
+            _LockingService
+             .Setup(s => s.LockObject(It.IsAny<string>()))
+           .Returns(new BroadcastLockResponse
+           {
+               Key = "broadcast_proposal : 52",
+               LockTimeoutInSeconds = 900,
+               LockedUserId = null,
+               Success = true,
+               Error = null
+           });
+            var result = service.LockProposal(proposalId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
 
+        [Test]
+        public void UnlockProposal_ToggleOn()
+        {
+            // Arrange
+            var service = _GetService(true);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            int proposalId = 52;
+            bool expectedResult = true;
+            var key = KeyHelper.GetProposalLockingKey(proposalId);
+            _LockingService
+             .Setup(s => s.ReleaseObject(It.IsAny<string>()))
+           .Returns(new BroadcastReleaseLockResponse
+           {
+               Key = "broadcast_proposal : 52",
+               Success = true,
+               Error = null
+           });
+            var result = service.UnlockProposal(proposalId);
+            // Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
     }
 }

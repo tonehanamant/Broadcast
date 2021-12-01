@@ -189,23 +189,21 @@ namespace BroadcastComposerWeb.Controllers
         [HttpGet]
         [Route("Proposal/{proposalId}/Lock")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<LockResponse> LockProposal(int proposalId)
+        public BaseResponse<BroadcastLockResponse> LockProposal(int proposalId)
         {
-            var key = KeyHelper.GetProposalLockingKey(proposalId);
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>()
-                    .LockObject(key));
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                    .LockProposal(proposalId));
         }
 
         [HttpGet]
         [Route("Proposal/{proposalId}/UnLock")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<ReleaseLockResponse> UnlockProposal(int proposalId)
+        public BaseResponse<BroadcastReleaseLockResponse> UnlockProposal(int proposalId)
         {
-            var key = KeyHelper.GetProposalLockingKey(proposalId);
             return _ConvertToBaseResponse(
-                () => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>()
-                    .ReleaseObject(key));
+                () => _ApplicationServiceFactory.GetApplicationService<IProposalService>()
+                    .UnlockProposal(proposalId));
         }
 
         [HttpGet]
