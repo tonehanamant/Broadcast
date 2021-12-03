@@ -1137,7 +1137,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                result.Impressions = Math.Floor(result.Impressions.Value / 1000);
+                result.Impressions = Math.Round(result.Impressions.Value / 1000);
             }
             // BP-2482 : Found that the database plan_version.target_cpm, target_cpp and budget columns are Sql Type Money.
             // On insert their values will be rounded to the 4th decimal.
