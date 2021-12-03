@@ -1,8 +1,8 @@
-﻿using Services.Broadcast.Entities.DTO.Program;
+﻿using Amazon.Runtime.Internal;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
-using Amazon.Runtime.Internal;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.Plan
@@ -27,6 +27,30 @@ namespace Services.Broadcast.Entities.Plan
         /// The daypart type identifier.
         /// </value>
         public DaypartTypeEnum DaypartTypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the daypart organization identifier.
+        /// </summary>
+        /// <value>
+        /// The daypart organization identifier.
+        /// </value>
+        public int? DaypartOrganizationId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the daypart organization.
+        /// </summary>
+        /// <value>
+        /// The name of the daypart organization.
+        /// </value>
+        public string DaypartOrganizationName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the custom.
+        /// </summary>
+        /// <value>
+        /// The name of the custom.
+        /// </value>
+        public string CustomName { get; set; }
 
         /// <summary>
         /// Gets or sets the start time seconds from midnight ET.

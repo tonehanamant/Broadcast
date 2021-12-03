@@ -65,7 +65,10 @@
       "CustomDayparts": [],
       "Dayparts": [
         {
+          "CustomName": null,
           "DaypartCodeId": 1,
+          "DaypartOrganizationId": null,
+          "DaypartOrganizationName": null,
           "DaypartTypeId": 0,
           "EndTimeSeconds": 0,
           "IsEndTimeModified": false,
@@ -95,7 +98,10 @@
           "WeightingGoalPercent": 60.0
         },
         {
+          "CustomName": null,
           "DaypartCodeId": 2,
+          "DaypartOrganizationId": null,
+          "DaypartOrganizationName": null,
           "DaypartTypeId": 0,
           "EndTimeSeconds": 0,
           "IsEndTimeModified": false,
@@ -836,7 +842,10 @@
       "CustomDayparts": [],
       "Dayparts": [
         {
+          "CustomName": null,
           "DaypartCodeId": 1,
+          "DaypartOrganizationId": null,
+          "DaypartOrganizationName": null,
           "DaypartTypeId": 0,
           "EndTimeSeconds": 0,
           "IsEndTimeModified": false,
@@ -866,7 +875,10 @@
           "WeightingGoalPercent": 60.0
         },
         {
+          "CustomName": null,
           "DaypartCodeId": 2,
+          "DaypartOrganizationId": null,
+          "DaypartOrganizationName": null,
           "DaypartTypeId": 0,
           "EndTimeSeconds": 0,
           "IsEndTimeModified": false,
@@ -1607,7 +1619,10 @@
       "CustomDayparts": [],
       "Dayparts": [
         {
+          "CustomName": null,
           "DaypartCodeId": 1,
+          "DaypartOrganizationId": null,
+          "DaypartOrganizationName": null,
           "DaypartTypeId": 0,
           "EndTimeSeconds": 0,
           "IsEndTimeModified": false,
@@ -1637,7 +1652,10 @@
           "WeightingGoalPercent": 60.0
         },
         {
+          "CustomName": null,
           "DaypartCodeId": 2,
+          "DaypartOrganizationId": null,
+          "DaypartOrganizationName": null,
           "DaypartTypeId": 0,
           "EndTimeSeconds": 0,
           "IsEndTimeModified": false,

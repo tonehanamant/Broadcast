@@ -82,7 +82,10 @@
   "CustomDayparts": [],
   "Dayparts": [
     {
+      "CustomName": null,
       "DaypartCodeId": 15,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 2,
       "EndTimeSeconds": 2000,
       "IsEndTimeModified": true,
@@ -143,7 +146,10 @@
       "WeightingGoalPercent": 40.0
     },
     {
+      "CustomName": null,
       "DaypartCodeId": 20,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 2788,
       "IsEndTimeModified": true,

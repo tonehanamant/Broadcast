@@ -1896,7 +1896,10 @@
   "CustomDayparts": [],
   "Dayparts": [
     {
+      "CustomName": null,
       "DaypartCodeId": 1,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 36000,
       "IsEndTimeModified": false,
@@ -1938,7 +1941,10 @@
       "WeightingGoalPercent": null
     },
     {
+      "CustomName": null,
       "DaypartCodeId": 5,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 300,
       "IsEndTimeModified": false,
@@ -1975,7 +1981,10 @@
       "WeightingGoalPercent": null
     },
     {
+      "CustomName": null,
       "DaypartCodeId": 16,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 300,
       "IsEndTimeModified": false,

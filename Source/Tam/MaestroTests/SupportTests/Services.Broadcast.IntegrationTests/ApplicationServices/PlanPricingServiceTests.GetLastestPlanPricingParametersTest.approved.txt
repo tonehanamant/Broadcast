@@ -2104,7 +2104,10 @@
   "CustomDayparts": [],
   "Dayparts": [
     {
+      "CustomName": null,
       "DaypartCodeId": 2,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 46800,
       "IsEndTimeModified": false,

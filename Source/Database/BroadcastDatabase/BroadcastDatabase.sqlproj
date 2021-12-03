@@ -292,6 +292,7 @@
     <Build Include="dbo\Tables\plan_version_custom_daypart_genre_restrictions.sql" />
     <Build Include="dbo\Tables\plan_version_custom_daypart_program_restrictions.sql" />
     <Build Include="dbo\Tables\plan_version_custom_daypart_show_type_restrictions.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_customizations.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

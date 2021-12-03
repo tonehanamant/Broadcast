@@ -1749,6 +1749,38 @@ END
 GO
 /*************************************** END BP-3156 ***************************************/
 
+/*************************************** START BP-3657 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM standard_dayparts WHERE daypart_type = 4 AND code = 'CSP')
+BEGIN	
+	DECLARE @daypart_id INT = NULL
+	SELECT @daypart_id = id FROM dayparts WHERE daypart_text = 'M-SU 4AM-2AM'
+
+	INSERT INTO standard_dayparts (daypart_type, daypart_id, code, [name], vpvh_calculation_source_type) VALUES
+		(4, @daypart_id, 'CSP', 'Custom Sports', 1 )
+END
+
+GO
+
+IF OBJECT_ID('plan_version_daypart_customizations') IS NULL
+BEGIN
+	CREATE TABLE plan_version_daypart_customizations
+	(
+		id INT IDENTITY(1,1) ,
+		plan_version_daypart_id INT NOT NULL,
+		custom_daypart_organization_id INT NOT NULL, 
+		custom_daypart_name NVARCHAR(100) NOT NULL,
+		CONSTRAINT [FK_plan_version_daypart_customizations_plan_version_daypart] FOREIGN KEY([plan_version_daypart_id])REFERENCES [dbo].[plan_version_dayparts] ([id]) ON DELETE CASCADE,
+		CONSTRAINT [FK_plan_version_daypart_customizations_custom_daypart_organizations] FOREIGN KEY([custom_daypart_organization_id])REFERENCES [dbo].[custom_daypart_organizations] ([id]),
+		CONSTRAINT UQ_plan_version_daypart_customizations_plan_version_daypart_id UNIQUE (plan_version_daypart_id), 
+		PRIMARY KEY ([plan_version_daypart_id])
+	)
+END 
+
+GO
+
+/*************************************** END BP-3657 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

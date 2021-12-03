@@ -82,7 +82,10 @@
   "CustomDayparts": [],
   "Dayparts": [
     {
+      "CustomName": null,
       "DaypartCodeId": 2,
+      "DaypartOrganizationId": null,
+      "DaypartOrganizationName": null,
       "DaypartTypeId": 2,
       "EndTimeSeconds": 2000,
       "IsEndTimeModified": true,

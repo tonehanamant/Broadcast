@@ -242,5 +242,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_custom_dayparts> plan_version_custom_dayparts { get; set; }
         public virtual DbSet<plan_version_custom_daypart_program_restrictions> plan_version_custom_daypart_program_restrictions { get; set; }
         public virtual DbSet<plan_iscis> plan_iscis { get; set; }
+        public virtual DbSet<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
     }
 }
