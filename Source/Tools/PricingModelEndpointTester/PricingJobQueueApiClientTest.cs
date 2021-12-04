@@ -36,6 +36,12 @@ namespace PricingModelEndpointTester
             Console.WriteLine("Making the request...");
             var callSw = new Stopwatch();
             callSw.Start();
+
+            // budget : works
+            // cpm : not work
+            // impressions : works
+            request.Configuration.BudgetCpmLever = PlanPricingBudgetCpmLeverEnum.budget;
+
             var result = await client.GetPricingSpotsResultAsync(request);
             callSw.Stop();
             Console.WriteLine($"PricingJobQueueApiClientTest - Response Received. Duration : '{callSw.ElapsedMilliseconds}'ms");

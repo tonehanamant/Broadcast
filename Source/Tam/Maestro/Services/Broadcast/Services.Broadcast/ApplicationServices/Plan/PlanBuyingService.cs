@@ -1532,6 +1532,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 proprietaryInventoryData);
         }
 
+        private PlanBuyingBudgetCpmLeverEnum _GetPlanBuyingBudgetCpmLeverEnum(BudgetCpmLeverEnum budgetCpmLever)
+        {
+            switch (budgetCpmLever)
+            {
+                case BudgetCpmLeverEnum.Budget:
+                    return PlanBuyingBudgetCpmLeverEnum.budget;
+                case BudgetCpmLeverEnum.Cpm:
+                    return PlanBuyingBudgetCpmLeverEnum.impressions;
+                default:
+                    return PlanBuyingBudgetCpmLeverEnum.impressions;
+            }
+        }
+
         private async Task _SendBuyingRequest_v3Async(
             PlanBuyingAllocationResult allocationResult,
             PlanDto plan,
@@ -1550,12 +1563,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var spotsAndMappings = _GetBuyingModelSpots_v3(groupedInventory, skippedWeeksIds);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
+            var pricingConfiguration = new PlanBuyingApiRequestConfigurationDto
+            {
+                BudgetCpmLever = _GetPlanBuyingBudgetCpmLeverEnum(parameters.BudgetCpmLever)
+            };
+
             token.ThrowIfCancellationRequested();
 
             var buyingApiRequest = new PlanBuyingApiRequestDto_v3
             {
                 Weeks = buyingModelWeeks,
-                Spots = spotsAndMappings.Spots
+                Spots = spotsAndMappings.Spots,
+                Configuration = pricingConfiguration
             };
 
             var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();

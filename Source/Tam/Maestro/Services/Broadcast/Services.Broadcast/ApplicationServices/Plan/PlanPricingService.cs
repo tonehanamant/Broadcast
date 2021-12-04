@@ -1565,6 +1565,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        private PlanPricingBudgetCpmLeverEnum _GetPlanPricingBudgetCpmLeverEnum(BudgetCpmLeverEnum budgetCpmLever)
+        {
+            switch (budgetCpmLever)
+            {
+                case BudgetCpmLeverEnum.Budget:
+                    return PlanPricingBudgetCpmLeverEnum.budget;
+                case BudgetCpmLeverEnum.Cpm:
+                    return PlanPricingBudgetCpmLeverEnum.impressions;
+                default:
+                    return PlanPricingBudgetCpmLeverEnum.impressions;
+            }
+        }
+
         private async Task _SendPricingRequest_v3Async(
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
@@ -1589,12 +1602,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var spots = _GetPricingModelSpots_v3(groupedInventory, skippedWeeksIds);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
+            var pricingConfiguration = new PlanPricingApiRequestConfigurationDto
+            {
+                BudgetCpmLever = _GetPlanPricingBudgetCpmLeverEnum(parameters.BudgetCpmLever)
+            };
+
             token.ThrowIfCancellationRequested();
 
             var pricingApiRequest = new PlanPricingApiRequestDto_v3
             {
                 Weeks = pricingModelWeeks,
-                Spots = spots
+                Spots = spots,
+                Configuration = pricingConfiguration
             };
 
             var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();

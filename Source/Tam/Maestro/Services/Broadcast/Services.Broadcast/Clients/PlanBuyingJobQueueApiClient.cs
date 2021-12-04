@@ -13,6 +13,13 @@ namespace Services.Broadcast.Clients
     {
         public string request_id { get; set; }
         public string task_id { get; set; }
+        public BuyingApiErrorDto error { get; set; }
+    }
+
+    public class BuyingApiErrorDto
+    {
+        public List<string> Messages { get; set; } = new List<string>();
+        public string Name { get; set; }
     }
 
     public class BuyingJobFetchRequest
@@ -26,11 +33,11 @@ namespace Services.Broadcast.Clients
         public string task_id { get; set; }
         public string task_status { get; set; }
         public List<T> results { get; set; }
+        public BuyingApiErrorDto error { get; set; }
     }
 
     public class PlanBuyingJobQueueApiClient : IPlanBuyingApiClient
     {
-        
         private readonly Lazy<string> _SubmitUrl;
         private readonly Lazy<string> _FetchUrl;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
@@ -89,6 +96,13 @@ namespace Services.Broadcast.Clients
 
             var submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
             var submitResponse = await submitResult.Content.ReadAsAsync<BuyingJobSubmitResponse>();
+
+            if (submitResponse.error != null)
+            {
+                var msgs = string.Join(",", submitResponse.error.Messages);
+                throw new InvalidOperationException($"Error returned from the pricing api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
+            }
+
             return submitResponse;
         }
 
@@ -97,8 +111,15 @@ namespace Services.Broadcast.Clients
             var fetchRequest = new BuyingJobFetchRequest { task_id = taskId };
             var fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
 
-            var result = await fetchResult.Content.ReadAsAsync<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>();
-            return result;
+            var fetchResponse = await fetchResult.Content.ReadAsAsync<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>();
+
+            if (fetchResponse.error != null)
+            {
+                var msgs = string.Join(",", fetchResponse.error.Messages);
+                throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
+            }
+
+            return fetchResponse;
         }
     }
 }

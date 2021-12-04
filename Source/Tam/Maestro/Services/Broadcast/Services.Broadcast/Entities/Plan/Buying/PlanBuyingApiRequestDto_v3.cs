@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System.Collections.Generic;
 
@@ -11,6 +12,34 @@ namespace Services.Broadcast.Entities.Plan.Buying
 
         [JsonProperty("inventory")]
         public List<PlanBuyingApiRequestSpotsDto_v3> Spots { get; set; } = new List<PlanBuyingApiRequestSpotsDto_v3>();
+        
+        [JsonProperty("configuration")]
+        public PlanBuyingApiRequestConfigurationDto Configuration { get; set; } = new PlanBuyingApiRequestConfigurationDto();
+    }
+
+    public class PlanBuyingApiRequestConfigurationDto
+    {
+        [JsonProperty("requirement")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PlanBuyingBudgetCpmLeverEnum BudgetCpmLever { get; set; } = PlanBuyingBudgetCpmLeverEnum.impressions;
+    }
+
+    public enum PlanBuyingBudgetCpmLeverEnum
+    {
+        /// <summary>
+        /// "impressions" :  impressions must be greater than or equal to impression goal. Default.
+        /// </summary>
+        impressions,
+
+        /// <summary>
+        /// "budget" : budget must be less than or equal to budget goal
+        /// </summary>
+        budget,
+
+        /// <summary>
+        /// "cpm" : CPM must be less than or equal to CPM goal
+        /// </summary>
+        cpm
     }
 
     public class PlanBuyingApiRequestWeekDto_v3

@@ -581,6 +581,9 @@
       ]
     },
     "pricingApiRequest": {
+      "configuration": {
+        "requirement": "impressions"
+      },
       "contract": [
         {
           "cpm_goal": 80.00,
@@ -1358,6 +1361,9 @@
       ]
     },
     "pricingApiRequest": {
+      "configuration": {
+        "requirement": "impressions"
+      },
       "contract": [
         {
           "cpm_goal": 1.0,
@@ -2135,6 +2141,9 @@
       ]
     },
     "pricingApiRequest": {
+      "configuration": {
+        "requirement": "impressions"
+      },
       "contract": [
         {
           "cpm_goal": 1.0,

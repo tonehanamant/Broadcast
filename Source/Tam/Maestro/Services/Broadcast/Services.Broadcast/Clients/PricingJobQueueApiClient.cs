@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -14,6 +13,13 @@ namespace Services.Broadcast.Clients
     {
         public string request_id { get; set; }
         public string task_id { get; set; }
+        public PricingApiErrorDto error { get; set; }
+    }
+
+    public class PricingApiErrorDto
+    {
+        public List<string> Messages { get; set; } = new List<string>();
+        public string Name { get; set; }
     }
 
     public class PricingJobFetchRequest
@@ -27,6 +33,7 @@ namespace Services.Broadcast.Clients
         public string task_id { get; set; }
         public string task_status { get; set; }
         public List<T> results { get; set; }
+        public PricingApiErrorDto error { get; set; }
     }
 
     public class PricingJobQueueApiClient : IPricingApiClient
@@ -89,6 +96,14 @@ namespace Services.Broadcast.Clients
 
             var submitResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelSubmitUrl.Value, content);
             var submitResponse = await submitResult.Content.ReadAsAsync<PricingJobSubmitResponse>();
+
+            if (submitResponse.error != null)
+            {
+                var msgs = string.Join(",", submitResponse.error.Messages);
+
+                throw new InvalidOperationException($"Error returned from the pricing api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
+            }
+
             return submitResponse;
         }
 
@@ -97,8 +112,15 @@ namespace Services.Broadcast.Clients
             var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
             var fetchResult = await _HttpClient.PostAsJsonAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, fetchRequest);
 
-            var result = await fetchResult.Content.ReadAsAsync<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>();
-            return result;
+            var fetchResponse = await fetchResult.Content.ReadAsAsync<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>();
+
+            if (fetchResponse.error != null)
+            {
+                var msgs = string.Join(",", fetchResponse.error.Messages);
+                throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
+            }
+
+            return fetchResponse;
         }
     }
 }

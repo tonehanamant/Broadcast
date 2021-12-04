@@ -1,5 +1,8 @@
 [
   {
+    "configuration": {
+      "requirement": "impressions"
+    },
     "contract": [
       {
         "cpm_goal": 100.0,
