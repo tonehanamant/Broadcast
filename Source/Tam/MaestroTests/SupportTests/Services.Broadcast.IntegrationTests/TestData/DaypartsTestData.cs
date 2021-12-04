@@ -150,7 +150,20 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 Sunday = true,
                 StartTime = 32400, // 9am
                 EndTime = 71999 // 8pm
-            }
+            },
+            new DisplayDaypart
+            {
+                Id = 24,
+                Monday = true,
+                Tuesday = true,
+                Wednesday = true,
+                Thursday = true,
+                Friday = true,
+                Saturday = true,
+                Sunday = true,
+                StartTime = 14400, // 4am
+                EndTime = 7199 // 2am
+            },
         };
 
         private static List<StandardDaypartFullDto> _AllStandardDaypartsWithFullData = new List<StandardDaypartFullDto>
@@ -176,6 +189,7 @@ namespace Services.Broadcast.IntegrationTests.TestData
             new StandardDaypartFullDto  { Id = 21, Code = "ROSP", FullName = "ROS Programming", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
             new StandardDaypartFullDto  { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)5, DaypartType = (DaypartTypeEnum)3, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 7499},
             new StandardDaypartFullDto  { Id = 23, Code = "WKD", FullName = "Weekend", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 32400, DefaultEndTimeSeconds = 71999},
+            new StandardDaypartFullDto  { Id = 24, Code = "CSP", FullName = "Custom Sports", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)4, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 7199},
         };
 
         private static Dictionary<int, int> _StandardDaypartIdDaypartIds = new Dictionary<int, int>
@@ -200,7 +214,8 @@ namespace Services.Broadcast.IntegrationTests.TestData
             {20,73039},
             {21,73039},
             {22,73207},
-            {23,1546}
+            {23,1546},
+            {24,76379}
         };
 
         #endregion // #region Lists Data

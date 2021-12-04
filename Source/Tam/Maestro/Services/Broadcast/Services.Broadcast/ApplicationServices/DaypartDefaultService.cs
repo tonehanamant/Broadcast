@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -22,21 +23,30 @@ namespace Services.Broadcast.ApplicationServices
 
     public class StandardDaypartService : IStandardDaypartService
     {        
-        internal const string STANDARD_DAYPART_CODE_WEEKEND = "WKD";
+        internal const string CUSTOM_DAYPART_SPORTS_CODE = "CSP";
 
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
-      
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private Lazy<bool> _IsCustomDaypartEnabled;
 
-        public StandardDaypartService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+
+        public StandardDaypartService(IDataRepositoryFactory broadcastDataRepositoryFactory, IFeatureToggleHelper featureToggleHelper)
           
         {
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
-            
+            _FeatureToggleHelper = featureToggleHelper;
+            _IsCustomDaypartEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART));
         }
 
         public List<StandardDaypartDto> GetAllStandardDayparts()
         {
             var dayparts = _StandardDaypartRepository.GetAllStandardDayparts();
+
+            if (!_IsCustomDaypartEnabled.Value)
+            {
+                var filtered = dayparts.Where(s => !s.Code.Equals(CUSTOM_DAYPART_SPORTS_CODE)).ToList();
+                dayparts = filtered;
+            }
           
             return dayparts;
         }
@@ -45,11 +55,16 @@ namespace Services.Broadcast.ApplicationServices
         public List<StandardDaypartFullDto> GetAllStandardDaypartsWithAllData()
         {
             var standardDaypartDtos = _StandardDaypartRepository.GetAllStandardDaypartsWithAllData();
+
+            if (!_IsCustomDaypartEnabled.Value)
+            {
+                var filtered = standardDaypartDtos.Where(s => s.DaypartType != DaypartTypeEnum.Sports).ToList();
+                standardDaypartDtos = filtered;
+            }
+
             DaypartTimeHelper.AddOneSecondToEndTime(standardDaypartDtos);
-          
+
             return standardDaypartDtos;
         }
-
-       
     }
 }

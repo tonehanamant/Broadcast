@@ -2,7 +2,7 @@
   {
     "Code": "EMN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 35999,
+    "DefaultEndTimeSeconds": 36000,
     "DefaultStartTimeSeconds": 14400,
     "FullName": "Early Morning News",
     "Id": 1,
@@ -11,7 +11,7 @@
   {
     "Code": "MDN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 46799,
+    "DefaultEndTimeSeconds": 46800,
     "DefaultStartTimeSeconds": 39600,
     "FullName": "Midday News",
     "Id": 2,
@@ -20,7 +20,7 @@
   {
     "Code": "EN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 71999,
+    "DefaultEndTimeSeconds": 72000,
     "DefaultStartTimeSeconds": 57600,
     "FullName": "Evening News",
     "Id": 3,
@@ -29,7 +29,7 @@
   {
     "Code": "LN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 299,
+    "DefaultEndTimeSeconds": 300,
     "DefaultStartTimeSeconds": 72000,
     "FullName": "Late News",
     "Id": 4,
@@ -38,7 +38,7 @@
   {
     "Code": "ENLN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 299,
+    "DefaultEndTimeSeconds": 300,
     "DefaultStartTimeSeconds": 57600,
     "FullName": "Evening News/Late News",
     "Id": 5,
@@ -47,7 +47,7 @@
   {
     "Code": "EF",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 64799,
+    "DefaultEndTimeSeconds": 64800,
     "DefaultStartTimeSeconds": 54000,
     "FullName": "Early Fringe",
     "Id": 6,
@@ -56,7 +56,7 @@
   {
     "Code": "PA",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 71999,
+    "DefaultEndTimeSeconds": 72000,
     "DefaultStartTimeSeconds": 64800,
     "FullName": "Prime Access",
     "Id": 7,
@@ -65,7 +65,7 @@
   {
     "Code": "PT",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 82799,
+    "DefaultEndTimeSeconds": 82800,
     "DefaultStartTimeSeconds": 72000,
     "FullName": "Prime",
     "Id": 8,
@@ -74,7 +74,7 @@
   {
     "Code": "LF",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 7199,
+    "DefaultEndTimeSeconds": 7200,
     "DefaultStartTimeSeconds": 82800,
     "FullName": "Late Fringe",
     "Id": 9,
@@ -83,7 +83,7 @@
   {
     "Code": "SYN",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 7499,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "Total Day Syndication",
     "Id": 10,
@@ -92,7 +92,7 @@
   {
     "Code": "OVN",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 21599,
+    "DefaultEndTimeSeconds": 21600,
     "DefaultStartTimeSeconds": 7200,
     "FullName": "Overnights",
     "Id": 11,
@@ -101,7 +101,7 @@
   {
     "Code": "DAY",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 57599,
+    "DefaultEndTimeSeconds": 57600,
     "DefaultStartTimeSeconds": 32400,
     "FullName": "Daytime",
     "Id": 12,
@@ -110,7 +110,7 @@
   {
     "Code": "EM",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 35999,
+    "DefaultEndTimeSeconds": 36000,
     "DefaultStartTimeSeconds": 14400,
     "FullName": "Early morning",
     "Id": 14,
@@ -119,7 +119,7 @@
   {
     "Code": "AMN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 46799,
+    "DefaultEndTimeSeconds": 46800,
     "DefaultStartTimeSeconds": 14400,
     "FullName": "AM News",
     "Id": 15,
@@ -128,7 +128,7 @@
   {
     "Code": "PMN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 299,
+    "DefaultEndTimeSeconds": 300,
     "DefaultStartTimeSeconds": 57600,
     "FullName": "PM News",
     "Id": 16,
@@ -137,7 +137,7 @@
   {
     "Code": "TDN",
     "DaypartType": 1,
-    "DefaultEndTimeSeconds": 299,
+    "DefaultEndTimeSeconds": 300,
     "DefaultStartTimeSeconds": 14400,
     "FullName": "Total Day News",
     "Id": 17,
@@ -146,7 +146,7 @@
   {
     "Code": "ROSS",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 7499,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "ROS Syndication",
     "Id": 19,
@@ -155,7 +155,7 @@
   {
     "Code": "SPORTS",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 7499,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "ROS Sports",
     "Id": 20,
@@ -164,7 +164,7 @@
   {
     "Code": "ROSP",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 7499,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 21600,
     "FullName": "ROS Programming",
     "Id": 21,
@@ -173,7 +173,7 @@
   {
     "Code": "TDNS",
     "DaypartType": 3,
-    "DefaultEndTimeSeconds": 7499,
+    "DefaultEndTimeSeconds": 7500,
     "DefaultStartTimeSeconds": 14400,
     "FullName": "Total Day News and Syndication",
     "Id": 22,
@@ -182,19 +182,10 @@
   {
     "Code": "WKD",
     "DaypartType": 2,
-    "DefaultEndTimeSeconds": 71999,
+    "DefaultEndTimeSeconds": 72000,
     "DefaultStartTimeSeconds": 32400,
     "FullName": "Weekend",
     "Id": 23,
     "VpvhCalculationSourceType": 3
-  },
-  {
-    "Code": "CSP",
-    "DaypartType": 4,
-    "DefaultEndTimeSeconds": 7199,
-    "DefaultStartTimeSeconds": 14400,
-    "FullName": "Custom Sports",
-    "Id": 24,
-    "VpvhCalculationSourceType": 1
   }
 ]

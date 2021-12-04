@@ -187,14 +187,5 @@
     "FullName": "Weekend",
     "Id": 23,
     "VpvhCalculationSourceType": 3
-  },
-  {
-    "Code": "CSP",
-    "DaypartType": 4,
-    "DefaultEndTimeSeconds": 7199,
-    "DefaultStartTimeSeconds": 14400,
-    "FullName": "Custom Sports",
-    "Id": 24,
-    "VpvhCalculationSourceType": 1
   }
 ]

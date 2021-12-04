@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
 using Moq;
@@ -8,18 +6,18 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     [TestFixture]
     public class StandardDaypartServiceUnitTests
     {
-        private StandardDaypartService _GetService(bool enableDaypartWKD = true)
+        private StandardDaypartService _GetService(bool enableCustomDaypart = true)
         {
-
             // setup data repos
             var standardDaypartRepository = new Mock<IStandardDaypartRepository>();
             standardDaypartRepository.Setup(s => s.GetAllStandardDayparts())
@@ -30,9 +28,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var repoFactory  = new Mock<IDataRepositoryFactory>();
             repoFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(standardDaypartRepository.Object);
-            
+
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART))
+                .Returns(enableCustomDaypart);
+
             // create the service for return
-            var service = new StandardDaypartService(repoFactory.Object);
+            var service = new StandardDaypartService(repoFactory.Object, featureToggleHelper.Object);
             return service;
         }
 
@@ -63,7 +65,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
-        }
+        }        
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -71,6 +73,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             // Arrange
             var service = _GetService();
+
+            // Act
+            var results = service.GetAllStandardDaypartsWithAllData();
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetAllStandardDayparts_CustomDaypartsOff()
+        {
+            // Arrange
+            var service = _GetService(false);
+
+            // Act
+            var results = service.GetAllStandardDayparts();
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetAllStandardDaypartsWithAllData_CustomDaypartsOff()
+        {
+            // Arrange
+            var service = _GetService(false);
 
             // Act
             var results = service.GetAllStandardDaypartsWithAllData();
