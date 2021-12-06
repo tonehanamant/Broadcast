@@ -701,9 +701,13 @@ namespace Services.Broadcast.BusinessEngines
             var newWeeks = weeks.Where(x => !oldMediaWeekIds.Contains(x.Id)).ToList();
             _AddNewWeeksByDaypartToWeeklyBreakdownResult(result, newWeeks, request, standardDayparts);
 
+            var shouldRedistribute = _ShouldRedistribute(result, redistributeCustom);
+
             //only adjust first week if redistributing
-            if (result.Weeks.Where(w => w.NumberOfActiveDays > 0).Any() && redistributeCustom)
+            if (shouldRedistribute)
+            {
                 _UpdateFirstWeekAndBudgetAdjustment(request, result.Weeks, request.TotalImpressions);
+            }
 
             // Recalculate percentage of week
             RecalculatePercentageOfWeekBasedOnImpressions(result.Weeks);
@@ -770,13 +774,53 @@ namespace Services.Broadcast.BusinessEngines
             var newWeeks = weeks.Where(x => !oldMediaWeekIds.Contains(x.Id)).ToList();
             _AddNewWeeksToWeeklyBreakdownResult(result, newWeeks, request);
 
+            var shouldRedistribute = _ShouldRedistribute(result, redistributeCustom);
+
             //only adjust first week if redistributing
-            if (result.Weeks.Where(w => w.NumberOfActiveDays > 0).Any() && redistributeCustom)
+            if (shouldRedistribute)
             {
                 _UpdateFirstWeekAndBudgetAdjustment(request, result.Weeks, request.TotalImpressions);
             }
-
             return result;
+        }
+
+        private bool _ShouldRedistribute(WeeklyBreakdownResponseDto result, bool redistributeCustom)
+        {
+            // we don't want to redistribute if not yet touched since ClearAll
+            var tableWasUpdatedSinceLastClear = _GetTableWasUpdatedSinceLastClear(result.Weeks);
+            var hasActiveDays = result.Weeks.Any(w => w.NumberOfActiveDays > 0);
+            var shouldRedistribute = tableWasUpdatedSinceLastClear &&
+                                     hasActiveDays &&
+                                     redistributeCustom;
+
+            return shouldRedistribute;
+        }
+
+        private bool _GetTableWasUpdatedSinceLastClear(List<WeeklyBreakdownWeek> weeks)
+        {
+            var hasUpdatedRows = weeks.Any(w => w.IsUpdated);
+            if (hasUpdatedRows)
+            {
+                return true;
+            }
+
+            var unlockedRows = weeks.Where(w => !w.IsLocked).ToList();
+            if (!unlockedRows.Any())
+            {
+                return true;
+            }
+
+            foreach (var unlockedRow in unlockedRows)
+            {
+                var isCleared = unlockedRow.NumberOfActiveDays > 0 &&
+                                unlockedRow.WeeklyImpressions.Equals(0);
+                if (!isCleared)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -827,8 +871,10 @@ namespace Services.Broadcast.BusinessEngines
             _AddNewCreativeLengthsToResult(result, newCreativeLengths);
             _AddNewWeeksAndCreativeLengthsToWeeklyBreakdownResult(result, newWeeks, request, creativeLengths);
 
+            var shouldRedistribute = _ShouldRedistribute(result, redistributeCustom);
+
             //only adjust first week if redistributing
-            if (result.Weeks.Where(w => w.NumberOfActiveDays > 0).Any() && redistributeCustom)
+            if (shouldRedistribute)
             {
                 _UpdateFirstWeekAndBudgetAdjustment(request, result.Weeks, request.TotalImpressions);
             }

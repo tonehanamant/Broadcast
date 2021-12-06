@@ -14,6 +14,8 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Broadcast.Entities.DTO.Program;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using CreativeLength = Services.Broadcast.Entities.CreativeLength;
 
@@ -91,6 +93,168 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             //Arrange
             var request = _GetWeeklyBreakDownEvenRequest();
             var mockedListMediaWeeksByFlight = _GetDisplayMediaWeeks_Even();
+
+            _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(mockedListMediaWeeksByFlight);
+
+            //Act
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            //Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PlanWeeklyGoalBreakdown_AddHiatusAfterClear()
+        {
+            //Arrange
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightStartDate = new DateTime(2021, 12, 6),
+                FlightEndDate = new DateTime(2021, 12, 19),
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2021,12,15)
+                },
+                TotalImpressions = 22000,
+                TotalRatings = 18.2,
+                TotalBudget = 50000,
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
+                Equivalized = true,
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 937,
+                        StartDate = new DateTime(2021, 12,6),
+                        EndDate = new DateTime(2021,12,12),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0,
+                        WeeklyImpressionsPercentage = 0,
+                        WeeklyRatings = 0,
+                        WeeklyBudget = 0,
+                        WeeklyAdu = 0,
+                        AduImpressions = 0,
+                        SpotLengthId = null,
+                        SpotLengthDuration = null,
+                        DaypartCodeId = null,
+                        PercentageOfWeek = null,
+                        IsUpdated = false,
+                        UnitImpressions = 0,
+                        WeeklyUnits = 0,
+                        IsLocked = false
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2,
+                        MediaWeekId = 938,
+                        StartDate = new DateTime(2021, 12,13),
+                        EndDate = new DateTime(2021,12,19),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 0,
+                        WeeklyImpressionsPercentage = 0,
+                        WeeklyRatings = 0,
+                        WeeklyBudget = 0,
+                        WeeklyAdu = 0,
+                        AduImpressions = 0,
+                        SpotLengthId = null,
+                        SpotLengthDuration = null,
+                        DaypartCodeId = null,
+                        PercentageOfWeek = null,
+                        IsUpdated = false,
+                        UnitImpressions = 0,
+                        WeeklyUnits = 0,
+                        IsLocked = false
+                    }
+                },
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength{SpotLengthId = 1, Weight = 100}
+                },
+                ImpressionsPerUnit = 10,
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 12,
+                        DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                        StartTimeSeconds = 32400,
+                        IsStartTimeModified = false,
+                        EndTimeSeconds = 57600,
+                        IsEndTimeModified = false,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 1,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2021,12,1)
+                            }
+                        },
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto>()
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Genres = new List<LookupDto> {new LookupDto{Id = 33, Display = "News"}}
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Programs = new List<ProgramDto>()
+                            },
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Affiliates = new List<LookupDto>()
+                            }
+                        }
+
+                    }
+                },
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+            };
+
+            var mockedListMediaWeeksByFlight = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek
+                {
+                    Id = 937,
+                    IsHiatus = false,
+                    MediaMonthId = 483,
+                    Month = 12,
+                    MonthEndDate = new DateTime(2021, 12, 26),
+                    MonthStartDate = new DateTime(2021,11,29),
+                    Week = 2,
+                    WeekEndDate = new DateTime(2021,12,12),
+                    WeekStartDate = new DateTime(2021,12,6),
+                    Year = 2021
+                },
+                new DisplayMediaWeek
+                {
+                    Id = 938,
+                    IsHiatus = false,
+                    MediaMonthId = 483,
+                    Month = 12,
+                    MonthEndDate = new DateTime(2021, 12, 26),
+                    MonthStartDate = new DateTime(2021,11,29),
+                    Week = 3,
+                    WeekEndDate = new DateTime(2021,12,19),
+                    WeekStartDate = new DateTime(2021,12,13),
+                    Year = 2021
+                }
+            };
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
