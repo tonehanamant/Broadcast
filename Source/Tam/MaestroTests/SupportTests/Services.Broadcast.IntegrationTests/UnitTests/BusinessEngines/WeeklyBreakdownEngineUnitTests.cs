@@ -327,6 +327,93 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CalculatePlanWeeklyGoalBreakdown_WithWeeks_DaypartCodeIdisZero()
+        {
+            //Arrange
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightStartDate = new DateTime(2020, 09, 28, 0, 0, 0),
+                FlightEndDate = new DateTime(2020, 12, 27, 23, 59, 59),
+                FlightHiatusDays = new List<DateTime>(),
+                TotalImpressions = 70000,
+                TotalRatings = 58,
+                TotalBudget = 1070000,
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
+                Equivalized = true,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek
+                    {
+                        IsLocked=false,
+                        DaypartCodeId=0,
+                        StartDate=new DateTime(2020, 9, 28),
+                        EndDate=new DateTime(2020, 10, 4),
+                        WeekNumber=1,
+                        MediaWeekId=875
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        IsLocked=false,
+                        DaypartCodeId=0,
+                        StartDate=new DateTime(2020, 10, 5),
+                        EndDate=new DateTime(2020, 10, 11),
+                        WeekNumber=2,
+                        MediaWeekId=876
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        IsLocked=false,
+                        DaypartCodeId=0,
+                        StartDate=new DateTime(2020, 10, 12),
+                        EndDate=new DateTime(2020, 10, 18),
+                        WeekNumber=3,
+                        MediaWeekId=877
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        IsLocked=false,
+                        DaypartCodeId=0,
+                        StartDate=new DateTime(2020, 10, 19),
+                        EndDate=new DateTime(2020, 10, 25),
+                        WeekNumber=4,
+                        MediaWeekId=878
+                    },                   
+                },
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength {SpotLengthId = 1}
+                },
+                ImpressionsPerUnit = 1,
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { DaypartCodeId = 12,WeekdaysWeighting = 70, WeekendWeighting = 30}
+                },
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+            };
+            var mockedListMediaWeeksByFlight = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek { Id = 875, Week = 1, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 9, 28), WeekEndDate = new DateTime(2020, 10, 4), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 876, Week = 2, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 10, 5), WeekEndDate = new DateTime(2020, 10, 11), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 877, Week = 3, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 10, 12), WeekEndDate = new DateTime(2020, 10, 18), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 878, Week = 4, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 10, 19), WeekEndDate = new DateTime(2020, 10, 25), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(mockedListMediaWeeksByFlight);
+
+            _CreativeLengthEngineMock
+                .Setup(x => x.DistributeWeight(It.IsAny<List<CreativeLength>>()))
+                .Returns(new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 100 } });
+
+            //Act
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            //Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void WeeklyBreakdown_UpdatedImpressions_Success()
         {//CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Success_Test
             //Arrange
