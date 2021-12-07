@@ -129,36 +129,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
-        public void SaveIsciProductMappings()
-        {
-            // Arrange
-            string createdBy = "Test User";
-            DateTime createdAt = DateTime.Now;
-            var isciMappings = _GetIsciMappings();
-            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-            int result = 0;
-            List<PlanIsciDto> saveResult;
-            // Act
-            using (new TransactionScopeWrapper())
-            {
-                result = planIsciRepository.SaveIsciProductMappings(isciMappings.IsciProductMappings, createdBy, createdAt);
-                saveResult = planIsciRepository.GetPlanIscis();
-            }
-            Assert.AreEqual(2, result);
-
-            var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(PlanIsciDto), "Id");
-
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = jsonResolver
-            };
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saveResult, jsonSettings));
-        }
-
-        [Test]
         public void SaveIsciPlanMappings()
         {
             // Arrange

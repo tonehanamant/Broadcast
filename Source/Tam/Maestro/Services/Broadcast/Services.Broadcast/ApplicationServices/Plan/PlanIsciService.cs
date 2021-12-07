@@ -60,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IReelIsciRepository _ReelIsciRepository;
+        private readonly IReelIsciProductRepository _ReelIsciProductRepository;
 
         private Lazy<bool> _EnablePlanIsciByWeek;
 
@@ -90,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _ReelIsciRepository = dataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
+            _ReelIsciProductRepository = dataRepositoryFactory.GetDataRepository<IReelIsciProductRepository>();
 
             _StandardDaypartService = standardDaypartService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -273,7 +275,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return 0;
             }
 
-            var savedCount = _PlanIsciRepository.SaveIsciProductMappings(dedupedMappings, createdBy, createdAt);
+            var savedCount = _ReelIsciProductRepository.SaveIsciProductMappings(dedupedMappings, createdBy, createdAt);
             return savedCount;
         }
 
@@ -286,6 +288,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var deletedCount = _PlanIsciRepository.DeleteIsciPlanMappings(toDelete, deletedBy, deletedAt);
             return deletedCount;
+        }
+
+        private int _CleanupOrphanedIsciProductMappings(List<int> candidateIds)
+        {
+            if (!candidateIds.Any())
+            {
+                return 0;
+            }
+
+            var isciPlanCounts = _PlanIsciRepository.GetIsciPlanMappingCounts(candidateIds);
+            var toCleanup = isciPlanCounts.Where(i => i.MappedPlanCount == 0).Select(s => s.Isci).ToList();
+            if (!toCleanup.Any())
+            {
+                return 0;
+            }
+
+            var cleanedCount = _ReelIsciProductRepository.DeleteIsciProductMapping(toCleanup);
+            return cleanedCount;
         }
 
         private int _HandleNewIsciPlanMapping(List<IsciPlanMappingDto> mappings, string createdBy, DateTime createdAt)
@@ -343,6 +363,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var isciProductMappingCount = _HandleSaveIsciProduct(saveRequest.IsciProductMappings, createdBy, createdAt);
             _LogInfo($"{isciProductMappingCount } IsciProductMappings were saved.");
 
+            var orphanedProductMappingCount = _CleanupOrphanedIsciProductMappings(saveRequest.IsciPlanMappingsDeleted);
+            _LogInfo($"{orphanedProductMappingCount } OrphanedProductMappingCount were cleaned up.");
+
             return true;
         }
 
@@ -360,7 +383,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             // if already in the db then ignore
             var iscis = dedupped.Select(s => s.Isci).ToList();
-            var existing = _PlanIsciRepository.GetIsciProductMappings(iscis);
+            var existing = _ReelIsciProductRepository.GetIsciProductMappings(iscis);
             if (!existing.Any())
             {
                 return dedupped;

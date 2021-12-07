@@ -40,22 +40,6 @@ namespace Services.Broadcast.Repositories
         int SaveIsciPlanMappings(List<PlanIsciDto> isciPlanMappings, string createdBy, DateTime createdAt);
 
         /// <summary>
-        /// Save Product Isci mapping
-        /// </summary>
-        /// <param name="isciProductMappings">The List which contains save parameters</param>
-        /// /// <param name="createdBy">Created By</param>
-        /// /// <param name="createdAt">Created At</param>
-        /// <returns>Total number of inserted Product Mappings</returns>
-        int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt);
-
-        /// <summary>
-        /// Gets the isci product mappings for the given list of icsis.
-        /// </summary>
-        /// <param name="iscis">The iscis.</param>
-        /// <returns></returns>
-        List<IsciProductMappingDto> GetIsciProductMappings(List<string> iscis);
-
-        /// <summary>
         /// Get PlanIsci List
         /// </summary>
         /// <returns>List of IsciPlanMappingDto</returns>
@@ -98,6 +82,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="deletedBy">The user who deletes plan isci</param>
         /// <returns>Total number of deleted plan isci</returns>
         int DeletePlanIscisNotExistInReelIsci(DateTime deletedAt, string deletedBy);
+
+        /// <summary>
+        /// Given a list of mapping ids, will return the MappedPlanCount for each Isci.
+        /// </summary>
+        /// <param name="isciPlanMappingIds">The isci plan mapping ids.</param>
+        List<IsciMappedPlanCountDto> GetIsciPlanMappingCounts(List<int> isciPlanMappingIds);
 
         /// <summary>
         /// Gets the isci spot lengths.
@@ -269,41 +259,6 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public List<IsciProductMappingDto> GetIsciProductMappings(List<string> iscis)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var result = context.reel_isci_products
-                    .Where(i => iscis.Contains(i.isci))
-                    .Select(i => new IsciProductMappingDto
-                    {
-                        Isci = i.isci,
-                        ProductName = i.product_name
-                    })
-                    .ToList();
-                return result;
-            });
-        }
-
-        /// <inheritdoc />
-        public int SaveIsciProductMappings(List<IsciProductMappingDto> isciProductMappings, string createdBy, DateTime createdAt)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var isciProductMappingsToAdd = isciProductMappings.Select(isciProductMapping => new reel_isci_products()
-                {
-                    product_name = isciProductMapping.ProductName,
-                    isci = isciProductMapping.Isci,
-                    created_at = createdAt,
-                    created_by = createdBy
-                }).ToList();
-                var addedCount = context.reel_isci_products.AddRange(isciProductMappingsToAdd).Count();
-                context.SaveChanges();
-                return addedCount;
-            });
-        }
-
-        /// <inheritdoc />
         public List<PlanIsciDto> GetPlanIscis()
         {
             return _InReadUncommitedTransaction(context =>
@@ -447,6 +402,25 @@ namespace Services.Broadcast.Repositories
                     .ToList();
 
                 return isciDetails;
+            });
+        }
+
+        /// <inheritdoc />
+        public List<IsciMappedPlanCountDto> GetIsciPlanMappingCounts(List<int> isciPlanMappingIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var isciPlanCounts = context.plan_iscis
+                    .Where(d => isciPlanMappingIds.Contains(d.id) && !d.deleted_at.HasValue)
+                    .GroupBy(d => d.isci)
+                    .Select(d => new IsciMappedPlanCountDto
+                    {
+                        Isci = d.Key,
+                        MappedPlanCount = d.Count()
+                    })
+                    .ToList();
+
+                return isciPlanCounts;
             });
         }
     }
