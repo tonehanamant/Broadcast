@@ -411,12 +411,12 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var isciPlanCounts = context.plan_iscis
-                    .Where(d => isciPlanMappingIds.Contains(d.id) && !d.deleted_at.HasValue)
+                    .Where(d => isciPlanMappingIds.Contains(d.id))
                     .GroupBy(d => d.isci)
                     .Select(d => new IsciMappedPlanCountDto
                     {
                         Isci = d.Key,
-                        MappedPlanCount = d.Count()
+                        MappedPlanCount = d.Count(s => !s.deleted_at.HasValue)
                     })
                     .ToList();
 
