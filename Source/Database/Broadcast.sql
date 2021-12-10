@@ -1757,7 +1757,18 @@ BEGIN
 	SELECT @daypart_id = id FROM dayparts WHERE daypart_text = 'M-SU 4AM-2AM'
 
 	INSERT INTO standard_dayparts (daypart_type, daypart_id, code, [name], vpvh_calculation_source_type) VALUES
-		(4, @daypart_id, 'CSP', 'Custom Sports', 1 )
+		(4, @daypart_id, 'CSP', 'Custom Sports', 3)
+END
+
+-- originally was deployed with vpvh_calculation_source_type = 1.  This will correct the mistake.
+IF EXISTS (SELECT 1 FROM standard_dayparts WHERE daypart_type = 4 AND code = 'CSP' AND vpvh_calculation_source_type = 1)
+BEGIN 
+	UPDATE sd SET
+		vpvh_calculation_source_type = 3 -- SYS_ALL
+	FROM standard_dayparts sd 
+	WHERE daypart_type = 4 
+	AND code = 'CSP' 
+	AND vpvh_calculation_source_type = 1
 END
 
 GO
