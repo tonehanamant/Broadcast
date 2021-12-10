@@ -1929,6 +1929,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = new DateTime(2019, 03, 05),
                     FlightStartDate = new DateTime(2019, 02, 01),
                     FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                    Dayparts = new List<PlanDaypartDto> { },
                     DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                     FlightHiatusDays = new List<DateTime>(),
                     TotalImpressions = 10000,
@@ -2126,6 +2127,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 08, 27),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 1000,
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
@@ -2147,6 +2149,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 08, 27),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
                 FlightDays = new List<int> { 1, 2, 3, 4, 7 },
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 1000,
                 ImpressionsPerUnit = 250,
                 TotalRatings = 0.000907291831869388,
@@ -2168,6 +2171,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 09, 19),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 1000,
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
@@ -2189,6 +2193,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightEndDate = new DateTime(2019, 10, 13),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 10), new DateTime(2019, 10, 12), new DateTime(2019, 10, 4), new DateTime(2019, 10, 2) },
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 20095158400,
                 TotalRatings = 896090.698153806, // not accurate to the total impressions, but that doesn't matter for the test.
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
@@ -2208,6 +2213,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 08, 01),
                 FlightEndDate = new DateTime(2019, 08, 31),
+                Dayparts = new List<PlanDaypartDto> { },
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 5), new DateTime(2019, 8, 6), new DateTime(2019, 8, 7), new DateTime(2019, 8, 8),
                                                         new DateTime(2019, 8, 9), new DateTime(2019, 8, 10), new DateTime(2019, 8, 11)},
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
@@ -2228,6 +2234,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
                 DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.CustomByWeek,
+                Dayparts= new List<PlanDaypartDto> { },
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 20),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
@@ -2458,7 +2465,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 FlightStartDate = new DateTime(2019, 12, 30),
                 FlightEndDate = new DateTime(2020, 02, 02),
-                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },               
                 TotalImpressions = 3,
                 TotalRatings = 0.002721875495608163,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
@@ -3072,6 +3079,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return new WeeklyBreakdownRequest
             {
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
+                Dayparts = new List<PlanDaypartDto> { },
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 20),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },

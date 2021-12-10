@@ -327,7 +327,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_WithWeeks_DaypartCodeIdisZero()
+        public void CalculatePlanWeeklyGoalBreakdown_WithWeeks_DaypartCodeIdisZero_SingleDaypartisAdded()
         {
             //Arrange
             var request = new WeeklyBreakdownRequest
@@ -335,7 +335,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightStartDate = new DateTime(2020, 09, 28, 0, 0, 0),
                 FlightEndDate = new DateTime(2020, 12, 27, 23, 59, 59),
-                FlightHiatusDays = new List<DateTime>(),
+                FlightHiatusDays = new List<DateTime>(),             
                 TotalImpressions = 70000,
                 TotalRatings = 58,
                 TotalBudget = 1070000,
@@ -678,6 +678,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightStartDate = new DateTime(2020, 2, 24),
                 FlightEndDate = new DateTime(2020, 3, 29),
                 FlightHiatusDays = new List<DateTime>(),
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 30000,
                 ImpressionsPerUnit = 5000,
                 TotalRatings = 28.041170045861335,
@@ -2474,6 +2475,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightStartDate = new DateTime(2020, 2, 24),
                 FlightEndDate = new DateTime(2020, 3, 29),
                 FlightHiatusDays = new List<DateTime>(),
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 30000,
                 ImpressionsPerUnit = 5000,
                 TotalRatings = 28.041170045861335,
@@ -2552,6 +2554,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightStartDate = new DateTime(2020, 2, 25),
                 FlightEndDate = new DateTime(2020, 3, 15),
                 FlightHiatusDays = new List<DateTime>(),
+                Dayparts = new List<PlanDaypartDto> { },
                 TotalImpressions = 20,
                 ImpressionsPerUnit = 10,
                 TotalRatings = 0.00928868473742818,

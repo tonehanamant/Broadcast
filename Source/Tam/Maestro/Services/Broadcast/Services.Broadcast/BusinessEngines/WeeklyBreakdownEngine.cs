@@ -511,10 +511,9 @@ namespace Services.Broadcast.BusinessEngines
             //add all the days outside of the flight for the first and last week as hiatus days
             request.FlightHiatusDays.AddRange(_GetDaysOutsideOfTheFlight(request.FlightStartDate, request.FlightEndDate, weeks));
 
-            //making weeks null if the daypartcodeId is zero since it is getting assigned to weeks when we have no daypart
-            //this happens and we have changed the deliverytype to custom by daypart before selecting any daypart
-            var makeWeeksNull = request.Weeks.All(x => x.DaypartCodeId == 0);
-            if (makeWeeksNull)
+            //If the daypart count is one then calculate like the initial Custombydaypart calculation by making weeks null
+            //this is done resolve the issue when we select custom by dayaprt deleivery type before selecting any daypart -BP-3589   
+            if (request.DeliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart && request.Dayparts.Count == 1)
             {
                 request.Weeks = null;
             }
