@@ -1,11 +1,11 @@
 ﻿{
   "TotalActiveDays": 35,
-  "TotalBudget": 75000.0,
-  "TotalImpressions": 3.0,
-  "TotalImpressionsPercentage": 100.0,
+  "TotalBudget": 0.0,
+  "TotalImpressions": 0.0,
+  "TotalImpressionsPercentage": 0.0,
   "TotalRatingPoints": 0.0,
-  "TotalShareOfVoice": 100.0,
-  "TotalUnits": 3.0,
+  "TotalShareOfVoice": 0.0,
+  "TotalUnits": 0.0,
   "Weeks": [
     {
       "ActiveDays": "M-Su",
@@ -22,12 +22,12 @@
       "StartDate": "2019-12-30T00:00:00",
       "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
-      "WeeklyBudget": 75000.0,
-      "WeeklyCpm": 25000.0,
-      "WeeklyImpressions": 3.0,
-      "WeeklyImpressionsPercentage": 100.0,
+      "WeeklyBudget": 0.0,
+      "WeeklyCpm": 0.0,
+      "WeeklyImpressions": 0.0,
+      "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
-      "WeeklyUnits": 3.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 1
     },
     {

@@ -367,7 +367,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
             }
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
-            DaypartTimeHelper.SubtractOneSecondToEndTime(plan.CustomDayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
             _OnSaveHandlePlanAvailableMarketSovFeature(plan);
@@ -441,6 +440,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
             if (!plan.IsDraft)
             {
+                if (beforePlan?.Dayparts.Any() ?? false)
+                {
+                    beforePlan.Dayparts = beforePlan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+                }
+                if (afterPlan?.Dayparts.Any() ?? false)
+                {
+                    afterPlan.Dayparts = afterPlan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+                }
+
                 var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
                 if (!shouldPromotePricingResults)
                 {
@@ -690,7 +698,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.WeeklyBreakdownWeeks);
             _SetWeeklyBreakdownTotals(plan);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
-            DaypartTimeHelper.AddOneSecondToEndTime(plan.CustomDayparts);
 
             _SetDefaultDaypartRestrictions(plan);
             _SetDefaultCustomDaypartRestrictions(plan);

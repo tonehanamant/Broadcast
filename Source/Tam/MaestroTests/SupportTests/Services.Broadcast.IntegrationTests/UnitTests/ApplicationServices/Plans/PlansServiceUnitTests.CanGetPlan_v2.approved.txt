@@ -58,74 +58,7 @@
     }
   ],
   "Currency": 0,
-  "CustomDayparts": [
-    {
-      "CustomDaypartName": "Test 2",
-      "CustomDaypartOrganizationId": 2,
-      "CustomDaypartOrganizationName": "MLB",
-      "DaypartTypeId": 0,
-      "EndTimeSeconds": 2789,
-      "Id": 0,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
-        }
-      },
-      "StartTimeSeconds": 1500,
-      "VpvhForAudiences": [],
-      "WeekdaysWeighting": null,
-      "WeekendWeighting": null,
-      "WeightingGoalPercent": 33.2
-    },
-    {
-      "CustomDaypartName": "Test 1",
-      "CustomDaypartOrganizationId": 1,
-      "CustomDaypartOrganizationName": "NFL",
-      "DaypartTypeId": 0,
-      "EndTimeSeconds": 2001,
-      "Id": 0,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
-        }
-      },
-      "StartTimeSeconds": 0,
-      "VpvhForAudiences": [],
-      "WeekdaysWeighting": null,
-      "WeekendWeighting": null,
-      "WeightingGoalPercent": 28.0
-    }
-  ],
+  "CustomDayparts": [],
   "Dayparts": [],
   "Equivalized": true,
   "FlightDays": [

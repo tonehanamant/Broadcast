@@ -1229,7 +1229,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 4600, WeightingGoalPercent = 0.0 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 4600, WeightingGoalPercent = 0.0 });
 
                 Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), "Invalid daypart weighting goal.");
@@ -1243,7 +1243,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 4600, EndTimeSeconds = 8900, WeightingGoalPercent = 111.0 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 4600, EndTimeSeconds = 8900, WeightingGoalPercent = 111.0 });
 
                 Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart weighting goal."));
@@ -1692,7 +1692,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = -2, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = -2, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
                 Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
@@ -1706,7 +1706,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 999999999, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 999999999, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
                 Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
@@ -1720,7 +1720,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = -2, WeightingGoalPercent = 111.0 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = -2, WeightingGoalPercent = 111.0 });
 
                 Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));
@@ -1855,7 +1855,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 999999999, WeightingGoalPercent = 111.0 });
+                newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 999999999, WeightingGoalPercent = 111.0 });
 
                 Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid daypart times."));

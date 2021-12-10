@@ -44,10 +44,6 @@
     "PropertyName": "IsDraft"
   },
   {
-    "ClassTypeName": "PlanDto",
-    "PropertyName": "CustomDayparts"
-  },
-  {
     "ClassTypeName": "PlanMarketDto",
     "PropertyName": "Id"
   },

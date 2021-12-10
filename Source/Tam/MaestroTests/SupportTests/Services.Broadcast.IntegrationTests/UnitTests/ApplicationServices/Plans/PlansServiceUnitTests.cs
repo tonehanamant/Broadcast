@@ -1523,8 +1523,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightHiatusDays = new List<DateTime>
                 {
-                    new DateTime(2019,1,20),
-                    new DateTime(2019,4,15)
+                    new DateTime(2019, 1, 20),
+                    new DateTime(2019, 4, 15)
                 },
                 AudienceId = 31,        //HH
                 AudienceType = AudienceTypeEnum.Nielsen,
@@ -1537,14 +1537,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CoverageGoalPercent = 80.5,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true},
-                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true}
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true },
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true }
                 },
                 AvailableMarketsSovTotal = 56.7,
                 BlackoutMarkets = new List<PlanBlackoutMarketDto>
                 {
-                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
-                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
+                    new PlanBlackoutMarketDto { MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
+                    new PlanBlackoutMarketDto { MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
                 },
                 ModifiedBy = "Test User",
                 ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
@@ -1552,6 +1552,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     new PlanDaypartDto
                     {
+                        DaypartTypeId = DaypartTypeEnum.News,
                         DaypartCodeId = 2,
                         StartTimeSeconds = 0,
                         EndTimeSeconds = 2000,
@@ -1569,6 +1570,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     new PlanDaypartDto
                     {
+                        DaypartTypeId = DaypartTypeEnum.News,
                         DaypartCodeId = 11,
                         StartTimeSeconds = 1500,
                         EndTimeSeconds = 2788,
@@ -1583,27 +1585,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
                             }
                         }
-                    }
-                },
-                CustomDayparts = new List<PlanCustomDaypartDto>
-                {
-                    new PlanCustomDaypartDto
-                    {                       
-                        CustomDaypartOrganizationId=1,
-                        CustomDaypartOrganizationName="NFL",
-                        CustomDaypartName="Test 1",
-                        StartTimeSeconds = 0,
-                        EndTimeSeconds = 2000,
-                        WeightingGoalPercent = 28.0,                       
-                    },
-                    new PlanCustomDaypartDto
-                    {
-                        CustomDaypartOrganizationId=2,
-                        CustomDaypartOrganizationName="MLB",
-                        CustomDaypartName="Test 2",
-                        StartTimeSeconds = 1500,
-                        EndTimeSeconds = 2788,
-                        WeightingGoalPercent = 33.2,                        
                     }
                 },
                 Vpvh = 0.234543,
@@ -3700,6 +3681,145 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        [TestCase(0, 1, false, false, 0, 1)]
+        [TestCase(1, 0, false, false, 0, 1)]
+        [TestCase(1, 1, false, true, 2, 2)] 
+        [TestCase(1, 1, true, false, 1, 1)] 
+        [TestCase(1, 1, true, true, 2, 2)] 
+        [TestCase(1, 1, false, false, 1, 1)]
+        public void SavePlan_FilterCustomDaypart_BeforeVerifyingPlanPricingInputsChange(int planId, int planVersionId, bool isDraftBefore, bool isDraftNow, int expectedBeforePlanDaypartCount, int expectedAfterPlanDaypartCount)
+        {
+            // Arrange
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            var plan = _GetNewPlan();
+            plan.Id = planId;
+            plan.VersionId = planVersionId;
+            plan.IsDraft = isDraftNow;
+
+            // mock a before plan
+            var beforePlan = _GetNewPlan();
+            beforePlan.Id = plan.Id;
+            beforePlan.VersionId = plan.VersionId;
+            beforePlan.IsDraft = isDraftBefore;
+            beforePlan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.News,
+                    DaypartCodeId = 2,
+                    StartTimeSeconds = 0,
+                    EndTimeSeconds = 2000,
+                    WeightingGoalPercent = 28.0,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.5,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    }
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.Sports,
+                    DaypartCodeId = 24,
+                    StartTimeSeconds = 1500,
+                    EndTimeSeconds = 2788,
+                    WeightingGoalPercent = 33.2,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.5,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    }
+                }
+            };
+
+            // mock an after plan
+            var afterPlan = _GetNewPlan();
+            afterPlan.Id = plan.Id;
+            afterPlan.VersionId = plan.VersionId + 1;
+            afterPlan.IsDraft = plan.IsDraft;
+            afterPlan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.News,
+                    DaypartCodeId = 2,
+                    StartTimeSeconds = 0,
+                    EndTimeSeconds = 2000,
+                    WeightingGoalPercent = 28.0,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.5,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    }
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.Sports,
+                    DaypartCodeId = 24,
+                    StartTimeSeconds = 1500,
+                    EndTimeSeconds = 2788,
+                    WeightingGoalPercent = 33.2,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.5,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    }
+                }
+            };
+
+            var getPlanReturns = new Queue<PlanDto>();
+            if (plan.Id > 0 && planVersionId > 0)
+            {
+                getPlanReturns.Enqueue(beforePlan);
+
+                if (beforePlan.IsDraft && !plan.IsDraft)
+                {
+                    getPlanReturns.Enqueue(beforePlan);
+                }
+            }
+            else
+            {
+                beforePlan.Dayparts = new List<PlanDaypartDto>();
+            }
+            getPlanReturns.Enqueue(afterPlan);
+
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(() => getPlanReturns.Dequeue());
+
+            // Act
+            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
+
+            // Assert
+            Assert.AreEqual(expectedBeforePlanDaypartCount, beforePlan.Dayparts.Count);
+            Assert.AreEqual(expectedAfterPlanDaypartCount, afterPlan.Dayparts.Count);
         }
     }
 }
