@@ -410,8 +410,13 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var isciPlanCounts = context.plan_iscis
+                var iscis = context.plan_iscis
                     .Where(d => isciPlanMappingIds.Contains(d.id))
+                    .Select(s => s.isci)
+                    .Distinct();
+
+                var isciPlanCounts = context.plan_iscis
+                    .Where(d => iscis.Contains(d.isci))
                     .GroupBy(d => d.isci)
                     .Select(d => new IsciMappedPlanCountDto
                     {
