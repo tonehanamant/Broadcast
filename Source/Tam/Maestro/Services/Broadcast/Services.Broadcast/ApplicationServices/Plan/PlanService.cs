@@ -690,11 +690,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
             }
-
+            plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
             // we need to group them back based on the plan delivery type
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
-
+            
             _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.WeeklyBreakdownWeeks);
             _SetWeeklyBreakdownTotals(plan);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
@@ -772,6 +772,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 BlackoutMarkets = plan.BlackoutMarkets,
                 AvailableMarketsSovTotal = plan.AvailableMarketsSovTotal,
                 WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks,
+                RawWeeklyBreakdownWeeks= plan.RawWeeklyBreakdownWeeks,
                 WeeklyBreakdownTotals = plan.WeeklyBreakdownTotals,
                 ModifiedBy = plan.ModifiedBy,
                 ModifiedDate = plan.ModifiedDate,

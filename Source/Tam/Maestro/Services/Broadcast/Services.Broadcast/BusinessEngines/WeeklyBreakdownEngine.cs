@@ -559,7 +559,20 @@ namespace Services.Broadcast.BusinessEngines
             _CalculateWeeklyGoalBreakdownTotals(response, request);
             _OrderWeeks(request, response);
             SetWeekNumberAndSpotLengthDuration(response.Weeks);
-
+            PlanDto plan = new PlanDto();
+            plan.GoalBreakdownType = request.DeliveryType;
+            plan.CreativeLengths = request.CreativeLengths;
+            plan.Dayparts = request.Dayparts;
+            plan.WeeklyBreakdownWeeks = response.Weeks;
+            plan.TargetRatingPoints = request.TotalRatings;
+            plan.Budget = request.TotalBudget;
+            plan.Equivalized = request.Equivalized;
+            plan.ImpressionsPerUnit = request.ImpressionsPerUnit;
+            plan.TargetImpressions = request.TotalImpressions;
+            plan.FlightDays = request.FlightDays;
+            plan.FlightEndDate = request.FlightEndDate;
+            plan.FlightHiatusDays = request.FlightHiatusDays;
+            response.RawWeeklyBreakdownWeeks = DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
             return response;
         }
 

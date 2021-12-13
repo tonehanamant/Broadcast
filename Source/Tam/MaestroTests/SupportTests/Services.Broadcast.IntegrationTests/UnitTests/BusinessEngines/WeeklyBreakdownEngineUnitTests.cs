@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private Mock<IPlanValidator> _PlanValidatorMock;
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
-        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;       
+        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
 
         public WeeklyBreakdownEngineUnitTests()
         {
@@ -51,7 +51,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock.Setup(x => x.GetSpotLengthValueById(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
 
-            var launchDarklyClientStub = new LaunchDarklyClientStub();           
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -285,7 +285,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 Weeks = new List<WeeklyBreakdownWeek>(),
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1}
+                    new CreativeLength {SpotLengthId = 1,Weight = 0}
                 },
                 ImpressionsPerUnit = 1,
                 Dayparts = new List<PlanDaypartDto>
@@ -377,11 +377,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         EndDate=new DateTime(2020, 10, 25),
                         WeekNumber=4,
                         MediaWeekId=878
-                    },                   
+                    },
                 },
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1}
+                    new CreativeLength {SpotLengthId = 1,Weight = 60}
                 },
                 ImpressionsPerUnit = 1,
                 Dayparts = new List<PlanDaypartDto>
@@ -506,7 +506,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyRatings = 3.608234009172268,
                 WeeklyBudget = 60000,
                 WeeklyAdu = 0,
-                IsUpdated = true
+                IsUpdated = true,               
             });
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Ratings;
             request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
@@ -657,6 +657,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void PlanWeeklyGoalBreakdown_ClearAll_When_SomeWeeks_AreLocked_Test()
         {
             //Arrange
+            var sixtySpotWeight = 40;
+            var fifteenSpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var sixtySpotId = spotLengthsDict[60];
+            var fifteenSpotId = spotLengthsDict[15];
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = sixtySpotId, Weight = sixtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+            };
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(_GetMockStandardDaypartRepository().Object);
@@ -674,11 +687,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 spotLengthEngine.Object,
                 dataRepositoryFactory.Object, featureToggleHelper);
             var request = new WeeklyBreakdownRequest
-            {
+            {   CreativeLengths= creativeLengths,
                 FlightStartDate = new DateTime(2020, 2, 24),
                 FlightEndDate = new DateTime(2020, 3, 29),
                 FlightHiatusDays = new List<DateTime>(),
-                Dayparts = new List<PlanDaypartDto> { },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { DaypartCodeId = 0}
+                },
                 TotalImpressions = 30000,
                 ImpressionsPerUnit = 5000,
                 TotalRatings = 28.041170045861335,
@@ -752,13 +768,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     }
                 },
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
-            }; 
+            };
             request.DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery;
 
             _MediaMonthAndWeekAggregateCacheMock
                 .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetDisplayMediaWeeks());
-           
+
             //Act
             var result = weeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request);
 
@@ -777,14 +793,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
-            var launchDarklyClientStub = new LaunchDarklyClientStub();          
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 spotLengthEngine.Object,
-                dataRepositoryFactory.Object,featureToggleHelper);
+                dataRepositoryFactory.Object, featureToggleHelper);
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(_WeeklyBreakdown, _ImpressionsPerUnit, _CreativeLengths);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -800,14 +816,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
-            var launchDarklyClientStub = new LaunchDarklyClientStub();            
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 spotLengthEngine.Object,
-                dataRepositoryFactory.Object,featureToggleHelper);
+                dataRepositoryFactory.Object, featureToggleHelper);
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown, _ImpressionsPerUnit, true);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -830,7 +846,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
                 spotLengthEngine.Object,
-                dataRepositoryFactory.Object,featureToggleHelper);
+                dataRepositoryFactory.Object, featureToggleHelper);
 
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekByDaypart(_WeeklyBreakdown, _ImpressionsPerUnit, true, _CreativeLengths);
 
@@ -1435,7 +1451,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 FlightHiatusDays = new List<DateTime>(),
                 Weeks = new List<WeeklyBreakdownWeek>(),
-                Dayparts = new List<PlanDaypartDto>(),
+                Dayparts = new List<PlanDaypartDto>()
+                {
+                    new PlanDaypartDto { DaypartCodeId = 0 }
+                },
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
             };
             return request;
@@ -2032,6 +2051,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightStartDate = new DateTime(2020, 2, 25),
                 FlightEndDate = new DateTime(2020, 3, 29),
                 FlightDays = new List<int> { 1, 2, 3, 4, 5 },
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength {SpotLengthId = 1, Weight = 60 }
+                },
                 FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2020, 3, 2)
@@ -2470,12 +2493,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private WeeklyBreakdownRequest _GetWeeklyBreakDownRequest()
         {
             // spotLengthId should be null as this is not for ByAdLengthDeliveryType
+           
             return new WeeklyBreakdownRequest
             {
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength {SpotLengthId = 1, Weight = 60}
+                },
                 FlightStartDate = new DateTime(2020, 2, 24),
                 FlightEndDate = new DateTime(2020, 3, 29),
                 FlightHiatusDays = new List<DateTime>(),
-                Dayparts = new List<PlanDaypartDto> { },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { DaypartCodeId = 0}
+                },
                 TotalImpressions = 30000,
                 ImpressionsPerUnit = 5000,
                 TotalRatings = 28.041170045861335,
@@ -2554,7 +2585,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightStartDate = new DateTime(2020, 2, 25),
                 FlightEndDate = new DateTime(2020, 3, 15),
                 FlightHiatusDays = new List<DateTime>(),
-                Dayparts = new List<PlanDaypartDto> { },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { DaypartCodeId = 0}
+                },
                 TotalImpressions = 20,
                 ImpressionsPerUnit = 10,
                 TotalRatings = 0.00928868473742818,
@@ -2562,7 +2596,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 Weeks = new List<WeeklyBreakdownWeek>(),
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength {SpotLengthId = 1, Weight = 60 }
+                },
             };
         }
 
@@ -2826,6 +2864,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightHiatusDays = new List<DateTime>
                 {
                     new DateTime(2020, 3, 2)
+                },
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength {SpotLengthId = 1, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
                 TotalImpressions = 213,

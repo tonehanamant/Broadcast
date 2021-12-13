@@ -182,6 +182,7 @@
       },
       "ProductId": 1,
       "ProductMasterId": "ad71646f-2736-45da-bf65-71120da01221",
+      "RawWeeklyBreakdownWeeks": [],
       "SecondaryAudiences": [],
       "ShareBookId": 0,
       "SpotAllocationModelMode": 1,

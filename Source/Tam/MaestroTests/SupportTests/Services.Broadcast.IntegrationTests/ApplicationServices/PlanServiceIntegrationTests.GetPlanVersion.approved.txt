@@ -162,6 +162,7 @@
   "PricingParameters": null,
   "ProductId": 1,
   "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
+  "RawWeeklyBreakdownWeeks": [],
   "SecondaryAudiences": [],
   "ShareBookId": 430,
   "SpotAllocationModelMode": 1,

@@ -308,6 +308,13 @@ namespace Services.Broadcast.Entities.Plan
         /// </value>
         public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
         /// <summary>
+        /// Gets or sets the rawweekly breakdown weeks.
+        /// </summary>
+        /// <value>
+        /// The raw weekly breakdown weeks.
+        /// </value>
+        public List<WeeklyBreakdownWeek> RawWeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
+        /// <summary>
         /// 
         /// </summary>
         public WeeklyBreakdownTotals WeeklyBreakdownTotals { get; set; } = new WeeklyBreakdownTotals();
