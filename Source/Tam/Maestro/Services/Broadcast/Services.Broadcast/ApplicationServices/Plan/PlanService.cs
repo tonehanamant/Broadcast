@@ -700,14 +700,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
 
             _SetDefaultDaypartRestrictions(plan);
-            _SetDefaultCustomDaypartRestrictions(plan);
             _ConvertImpressionsToUserFormat(plan);
 
             _SortPlanDayparts(plan);
-            _SortCustomPlanDayparts(plan);
 
             _SortProgramRestrictions(plan);
-            _SortProgramRestrictionsForCustomDaypart(plan);
             _SortCreativeLengths(plan);
 
             _OnGetHandlePlanAvailableMarketSovFeature(plan);
@@ -842,7 +839,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SortPlanDayparts(PlanDto plan)
         {
             var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
-
             var planDayparts = plan.Dayparts.Select(x => new PlanDaypart
             {
                 DaypartCodeId = x.DaypartCodeId,
@@ -857,32 +853,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 WeekendWeighting = x.WeekendWeighting,
                 FlightDays = plan.FlightDays.ToList(),
                 VpvhForAudiences = x.VpvhForAudiences,
+                DaypartOrganizationId = x.DaypartOrganizationId,
+                CustomName = x.CustomName,
+                DaypartOrganizationName = x.DaypartOrganizationName
             }).ToList();
 
             plan.Dayparts = planDayparts.OrderDayparts(standardDayparts);
-        }
-        private void _SortCustomPlanDayparts(PlanDto plan)
-        {
-            var CustomDaypartOrganization = _PlanRepository.GetAllCustomDaypartOrganizations();
-
-            var planCustomDayparts = plan.CustomDayparts.Select(x => new PlanCustomDaypart
-            {
-                Id = x.Id,
-                CustomDaypartOrganizationId=x.CustomDaypartOrganizationId,
-                CustomDaypartOrganizationName=x.CustomDaypartOrganizationName,
-                CustomDaypartName=x.CustomDaypartName,
-                DaypartTypeId = x.DaypartTypeId,
-                StartTimeSeconds = x.StartTimeSeconds,
-                EndTimeSeconds = x.EndTimeSeconds,                
-                Restrictions = x.Restrictions,
-                WeightingGoalPercent = x.WeightingGoalPercent,
-                WeekdaysWeighting = x.WeekdaysWeighting,
-                WeekendWeighting = x.WeekendWeighting,
-                FlightDays = plan.FlightDays.ToList(),
-                VpvhForAudiences = x.VpvhForAudiences,
-            }).ToList();
-
-            plan.CustomDayparts = planCustomDayparts.OrderCustomDayparts(CustomDaypartOrganization);
         }
 
         private void _SortProgramRestrictions(PlanDto plan)
@@ -890,13 +866,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var daypart in plan.Dayparts)
             {
                 daypart.Restrictions.ProgramRestrictions.Programs = daypart.Restrictions.ProgramRestrictions.Programs.OrderBy(x => x.Name).ToList();
-            }
-        }
-        private void _SortProgramRestrictionsForCustomDaypart(PlanDto plan)
-        {
-            foreach (var customdaypart in plan.CustomDayparts)
-            {
-                customdaypart.Restrictions.ProgramRestrictions.Programs = customdaypart.Restrictions.ProgramRestrictions.Programs.OrderBy(x => x.Name).ToList();
             }
         }
 
@@ -1046,51 +1015,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (restrictions.AffiliateRestrictions == null)
                 {
                     restrictions.AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
-                    {
-                        ContainType = planDefaults.AffiliateContainType,
-                        Affiliates = new List<LookupDto>()
-                    };
-                }
-            }
-        }
-        private void _SetDefaultCustomDaypartRestrictions(PlanDto plan)
-        {
-            var planDefaults = GetPlanDefaults();
-
-            foreach (var customdaypart in plan.CustomDayparts)
-            {
-                var restrictions = customdaypart.Restrictions;
-
-                if (restrictions.ShowTypeRestrictions == null)
-                {
-                    restrictions.ShowTypeRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
-                    {
-                        ContainType = planDefaults.ShowTypeContainType,
-                        ShowTypes = new List<LookupDto>()
-                    };
-                }
-
-                if (restrictions.GenreRestrictions == null)
-                {
-                    restrictions.GenreRestrictions = new PlanCustomDaypartDto.RestrictionsDto.GenreRestrictionsDto
-                    {
-                        ContainType = planDefaults.GenreContainType,
-                        Genres = new List<LookupDto>()
-                    };
-                }
-
-                if (restrictions.ProgramRestrictions == null)
-                {
-                    restrictions.ProgramRestrictions = new PlanCustomDaypartDto.RestrictionsDto.ProgramRestrictionDto
-                    {
-                        ContainType = planDefaults.ProgramContainType,
-                        Programs = new List<ProgramDto>()
-                    };
-                }
-
-                if (restrictions.AffiliateRestrictions == null)
-                {
-                    restrictions.AffiliateRestrictions = new PlanCustomDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
                     {
                         ContainType = planDefaults.AffiliateContainType,
                         Affiliates = new List<LookupDto>()

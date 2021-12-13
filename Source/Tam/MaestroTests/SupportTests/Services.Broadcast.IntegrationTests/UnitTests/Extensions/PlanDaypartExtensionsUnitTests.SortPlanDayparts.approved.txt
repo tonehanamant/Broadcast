@@ -1,0 +1,266 @@
+[
+  {
+    "CustomName": null,
+    "DaypartCodeId": 2,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": null,
+    "DaypartCodeId": 3,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 3500,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 2788,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": null,
+    "DaypartCodeId": 1,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2000,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 0,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": 60.0,
+    "WeekendWeighting": 40.0,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": "sportsnhl",
+    "DaypartCodeId": 24,
+    "DaypartOrganizationId": 7,
+    "DaypartOrganizationName": "NHL",
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": null,
+    "DaypartCodeId": 4,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 3500,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": null,
+    "DaypartCodeId": 4,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 3600,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 3500,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": null,
+    "DaypartCodeId": 4,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  },
+  {
+    "CustomName": null,
+    "DaypartCodeId": 4,
+    "DaypartOrganizationId": null,
+    "DaypartOrganizationName": null,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": {
+        "Affiliates": [],
+        "ContainType": 2
+      },
+      "GenreRestrictions": {
+        "ContainType": 2,
+        "Genres": []
+      },
+      "ProgramRestrictions": {
+        "ContainType": 2,
+        "Programs": []
+      },
+      "ShowTypeRestrictions": {
+        "ContainType": 2,
+        "ShowTypes": []
+      }
+    },
+    "StartTimeSeconds": 1499,
+    "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
+    "WeightingGoalPercent": null
+  }
+]
