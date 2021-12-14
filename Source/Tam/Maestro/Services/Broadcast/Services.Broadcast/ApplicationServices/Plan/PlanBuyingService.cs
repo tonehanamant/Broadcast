@@ -984,6 +984,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private async Task _RunBuyingJobAsync(PlanBuyingParametersDto planBuyingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
+            // run buying will not use custom daypart
+            if (plan?.Dayparts.Any() ?? false)
+            {
+                plan.Dayparts = plan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+            }
+
             var diagnostic = new PlanBuyingJobDiagnostic();
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 

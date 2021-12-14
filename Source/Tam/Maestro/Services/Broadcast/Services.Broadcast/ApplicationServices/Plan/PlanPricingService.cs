@@ -1100,6 +1100,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private async Task _RunPricingJobAsync(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
+            // run pricing will not use custom daypart
+            if (plan?.Dayparts.Any() ?? false)
+            {
+                plan.Dayparts = plan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+            }
+
             // used to tie the logging messages together.
             var processingId = Guid.NewGuid();
             _LogInfo("Starting...", processingId);

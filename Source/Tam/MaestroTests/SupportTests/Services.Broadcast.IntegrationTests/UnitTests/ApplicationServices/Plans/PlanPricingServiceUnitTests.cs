@@ -859,12 +859,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = planParameters,
@@ -2212,12 +2214,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
@@ -2628,12 +2632,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
@@ -3102,12 +3108,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     FlightStartDate = new DateTime(2005, 11, 21),
@@ -3565,12 +3573,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
@@ -4025,12 +4035,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
@@ -4520,12 +4532,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
@@ -12289,12 +12303,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 1,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 2,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                 PricingParameters = _GetPlanPricingParametersDto(),
@@ -12361,12 +12377,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 15,
-                            WeightingGoalPercent = 60
+                            WeightingGoalPercent = 60,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 16,
-                            WeightingGoalPercent = 40
+                            WeightingGoalPercent = 40,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                 PricingParameters = _GetPlanPricingParametersDto(),
@@ -12423,6 +12441,71 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert            
             Assert.AreEqual(expectedResult, results.Count());
+        }
+
+        [Test]
+        public async Task RunPricingJobAsync_Verify_FilteredDaypart()
+        {
+            // Arrange
+            const int jobId = 1;
+            var parameters = _GetPlanPricingParametersDto();
+            var plan = _GetPlan();
+            plan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.News,
+                    DaypartCodeId = 2,
+                    StartTimeSeconds = 0,
+                    EndTimeSeconds = 2000,
+                    WeightingGoalPercent = 28.0,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.5,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    }
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.Sports,
+                    DaypartCodeId = 24,
+                    StartTimeSeconds = 1500,
+                    EndTimeSeconds = 2788,
+                    WeightingGoalPercent = 33.2,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.5,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    }
+                }
+            };
+            int expectedResult = 1;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
+
+            var service = _GetService(false, false);
+
+            // Act
+            await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Assert.AreEqual(expectedResult, plan.Dayparts.Count);
         }
     }
 }
