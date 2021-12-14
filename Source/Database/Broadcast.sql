@@ -1784,9 +1784,37 @@ BEGIN
 		CONSTRAINT [FK_plan_version_daypart_customizations_plan_version_daypart] FOREIGN KEY([plan_version_daypart_id])REFERENCES [dbo].[plan_version_dayparts] ([id]) ON DELETE CASCADE,
 		CONSTRAINT [FK_plan_version_daypart_customizations_custom_daypart_organizations] FOREIGN KEY([custom_daypart_organization_id])REFERENCES [dbo].[custom_daypart_organizations] ([id]),
 		CONSTRAINT UQ_plan_version_daypart_customizations_plan_version_daypart_id UNIQUE (plan_version_daypart_id), 
-		PRIMARY KEY ([plan_version_daypart_id])
+		PRIMARY KEY ([id])
 	)
 END 
+
+GO
+
+-- this is to correct a mistake in the original.
+IF OBJECT_ID('plan_version_daypart_customizations') IS NOT NULL
+BEGIN
+	DECLARE @pk_column VARCHAR(100),
+		@constraint_name VARCHAR(100)
+	
+	SELECT @pk_column = c.COLUMN_NAME, @constraint_name = c.CONSTRAINT_NAME
+	FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS t
+	JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE c
+		ON c.CONSTRAINT_NAME = t.CONSTRAINT_NAME  
+	WHERE c.TABLE_NAME='plan_version_daypart_customizations'  
+	AND t.CONSTRAINT_TYPE='PRIMARY KEY'
+
+	IF (@pk_column <> 'id')
+	BEGIN 
+		DECLARE @Sql_DropPrimaryKey VARCHAR(MAX) = 'ALTER TABLE plan_version_daypart_customizations 
+		DROP CONSTRAINT [' + @constraint_name + '];'
+
+		DECLARE @Sql_CreatePrimaryKey VARCHAR(MAX) = 'ALTER TABLE plan_version_daypart_customizations 
+		ADD PRIMARY KEY (ID);'
+
+		EXEC(@Sql_DropPrimaryKey)
+		EXEC(@Sql_CreatePrimaryKey)
+	END
+END
 
 GO
 
