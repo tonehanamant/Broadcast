@@ -2294,7 +2294,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
                 DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.CustomByWeek,
-                Dayparts= new List<PlanDaypartDto> { },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { DaypartCodeId = 0}
+                },
                 FlightStartDate = new DateTime(2019, 08, 03),
                 FlightEndDate = new DateTime(2019, 08, 20),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
