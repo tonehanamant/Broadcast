@@ -694,8 +694,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
             // we need to group them back based on the plan delivery type
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
-            
             _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.WeeklyBreakdownWeeks);
+            _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.RawWeeklyBreakdownWeeks);
             _SetWeeklyBreakdownTotals(plan);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
 

@@ -394,7 +394,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 630.0,
@@ -405,7 +405,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -417,7 +417,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 700.0,
@@ -428,7 +428,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -440,7 +440,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 825.0,
@@ -451,7 +451,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -463,7 +463,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 345.0,
@@ -474,7 +474,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -486,7 +486,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 630.0,
@@ -497,7 +497,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -509,7 +509,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 700.0,
@@ -520,7 +520,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -532,7 +532,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 825.0,
@@ -543,7 +543,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "Tu-Su",
@@ -555,7 +555,7 @@
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2018-12-31T00:00:00",
       "UnitImpressions": 345.0,
@@ -566,7 +566,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 1
     },
     {
       "ActiveDays": "M-Su",
@@ -578,7 +578,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 630.0,
@@ -589,7 +589,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -601,7 +601,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 700.0,
@@ -612,7 +612,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -624,7 +624,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 825.0,
@@ -635,7 +635,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -647,7 +647,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 345.0,
@@ -658,7 +658,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -670,7 +670,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 630.0,
@@ -681,7 +681,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -693,7 +693,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 700.0,
@@ -704,7 +704,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -716,7 +716,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 825.0,
@@ -727,7 +727,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Su",
@@ -739,7 +739,7 @@
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-07T00:00:00",
       "UnitImpressions": 345.0,
@@ -750,7 +750,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 2
     },
     {
       "ActiveDays": "M-Sa",
@@ -762,7 +762,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 630.0,
@@ -773,7 +773,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -785,7 +785,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 700.0,
@@ -796,7 +796,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -808,7 +808,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 825.0,
@@ -819,7 +819,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -831,7 +831,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 345.0,
@@ -842,7 +842,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -854,7 +854,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 630.0,
@@ -865,7 +865,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -877,7 +877,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 700.0,
@@ -888,7 +888,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -900,7 +900,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 825.0,
@@ -911,7 +911,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-Sa",
@@ -923,7 +923,7 @@
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-14T00:00:00",
       "UnitImpressions": 345.0,
@@ -934,7 +934,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 3
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -946,7 +946,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 630.0,
@@ -957,7 +957,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -969,7 +969,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 700.0,
@@ -980,7 +980,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -992,7 +992,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 825.0,
@@ -1003,7 +1003,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -1015,7 +1015,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 345.0,
@@ -1026,7 +1026,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -1038,7 +1038,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 630.0,
@@ -1049,7 +1049,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -1061,7 +1061,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 700.0,
@@ -1072,7 +1072,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -1084,7 +1084,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 825.0,
@@ -1095,7 +1095,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-W,F-Su",
@@ -1107,7 +1107,7 @@
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-21T00:00:00",
       "UnitImpressions": 345.0,
@@ -1118,7 +1118,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 4
     },
     {
       "ActiveDays": "M-Th",
@@ -1130,7 +1130,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 630.0,
@@ -1141,7 +1141,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1153,7 +1153,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 700.0,
@@ -1164,7 +1164,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1176,7 +1176,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 825.0,
@@ -1187,7 +1187,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1199,7 +1199,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 345.0,
@@ -1210,7 +1210,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1222,7 +1222,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 13.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 630.0,
@@ -1233,7 +1233,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.52,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1245,7 +1245,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 14.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 700.0,
@@ -1256,7 +1256,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 2.8,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1268,7 +1268,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 16.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 825.0,
@@ -1279,7 +1279,7 @@
       "WeeklyImpressionsPercentage": 3.0,
       "WeeklyRatings": 3.3,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     },
     {
       "ActiveDays": "M-Th",
@@ -1291,7 +1291,7 @@
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
       "PercentageOfWeek": 7.0,
-      "SpotLengthDuration": null,
+      "SpotLengthDuration": 60,
       "SpotLengthId": 2,
       "StartDate": "2019-01-28T00:00:00",
       "UnitImpressions": 345.0,
@@ -1302,7 +1302,7 @@
       "WeeklyImpressionsPercentage": 1.0,
       "WeeklyRatings": 1.38,
       "WeeklyUnits": 0.0,
-      "WeekNumber": 0
+      "WeekNumber": 5
     }
   ],
   "SecondaryAudiences": [],

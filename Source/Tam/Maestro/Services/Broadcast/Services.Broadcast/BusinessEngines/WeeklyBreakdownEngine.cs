@@ -214,6 +214,11 @@ namespace Services.Broadcast.BusinessEngines
                         result.Add(newWeeklyBreakdownItem);
                     }
                 }
+                else
+                {
+                    var lockedWeek = plan.WeeklyBreakdownWeeks.Where(x => x.DaypartCodeId == weeklyBreakdown.DaypartCodeId && x.SpotLengthId == weeklyBreakdown.SpotLengthId && x.WeekNumber == weeklyBreakdown.WeekNumber).ToList().SingleOrDefault();
+                    result.Add(lockedWeek);
+                }
             }
                 return result;
         }
@@ -281,6 +286,11 @@ namespace Services.Broadcast.BusinessEngines
                         }
                     }
                 }
+               else
+                {
+                    var lockedWeek = plan.WeeklyBreakdownWeeks.Where(x => x.DaypartCodeId == week.DaypartCodeId && x.SpotLengthId == week.SpotLengthId && x.WeekNumber == week.WeekNumber).ToList().SingleOrDefault();
+                    result.Add(lockedWeek);
+                }
             }
 
             _CalculateUnits(result, plan.Equivalized, plan.ImpressionsPerUnit, plan.CreativeLengths);
@@ -346,6 +356,11 @@ namespace Services.Broadcast.BusinessEngines
 
                         result.Add(newWeeklyBreakdownItem);
                     }
+                }
+                else
+                {
+                    var lockedWeek = plan.WeeklyBreakdownWeeks.Where(x => x.DaypartCodeId == week.DaypartCodeId && x.SpotLengthId == week.SpotLengthId && x.WeekNumber == week.WeekNumber).ToList().SingleOrDefault();
+                    result.Add(lockedWeek);
                 }
             }
             return result;
@@ -1414,7 +1429,9 @@ namespace Services.Broadcast.BusinessEngines
                         Units = unitsImpressions == 0
                             ? 0
                             : weeklyImpressions / unitsImpressions,
-                        IsLocked = first.IsLocked
+                        IsLocked = first.IsLocked,
+                        SpotLengthId=first.SpotLengthId,
+                        DaypartCodeId=first.DaypartCodeId
                     };
                     if (!creativeLengths.IsNullOrEmpty())
                     {
