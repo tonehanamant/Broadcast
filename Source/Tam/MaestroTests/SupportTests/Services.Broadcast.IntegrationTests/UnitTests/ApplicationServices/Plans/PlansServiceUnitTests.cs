@@ -2757,9 +2757,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
                 .Callback<int, int>((n, o) => pricingNewVersion = n);
 
-            int buyingNewVersion = -1;
-            _PlanRepositoryMock.Setup(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<int, int>((n, o) => buyingNewVersion = n);
 
             // Act
             var results = _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username,
@@ -2804,7 +2801,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Validate it tied in the results.
             Assert.AreEqual(testExpectedPlanVersionId, pricingNewVersion);
-            Assert.AreEqual(testExpectedPlanVersionId, buyingNewVersion);
+            _PlanRepositoryMock.Verify(s => s.UpdatePlanBuyingVersionId(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
 
         private static int _CalculateADU(double impressionsPerUnit, double aduImpressions

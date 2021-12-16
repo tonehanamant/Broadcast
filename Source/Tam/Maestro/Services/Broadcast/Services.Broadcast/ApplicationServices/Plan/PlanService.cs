@@ -331,11 +331,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
-            var result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, forceKeepModelResults: false);
+            var result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults:false);
             return result;
         }
 
-        private int _DoSavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool forceKeepModelResults)
+        private int _DoSavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool shouldPromotePlanPricingResults, bool shouldPromotePlanBuyingResults)
         {
             const string SW_KEY_TOTAL_DURATION = "Total duration";
             const string SW_KEY_PRE_PLAN_VALIDATION = "Pre Plan Validation";
@@ -449,14 +449,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     afterPlan.Dayparts = afterPlan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
                 }
 
-                var shouldPromotePricingResults = forceKeepModelResults ? true : _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
-                if (!shouldPromotePricingResults)
+                if (!shouldPromotePlanPricingResults && !shouldPromotePlanBuyingResults)
+                {
+                    shouldPromotePlanPricingResults = shouldPromotePlanBuyingResults = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
+                }
+
+                if (!shouldPromotePlanPricingResults && !shouldPromotePlanBuyingResults)
                 {
                     plan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
                     _PlanRepository.UpdateSpotAllocationModelMode(plan.Id, SpotAllocationModelMode.Quality);
                 }
-                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePricingResults);
-                _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePricingResults);
+                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePlanPricingResults);
+                _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePlanBuyingResults);
             }
             processTimers.End(SW_KEY_POST_PLAN_SAVE);
             processTimers.End(SW_KEY_TOTAL_DURATION);
@@ -1657,7 +1661,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             */
             var currentDateTime = _GetCurrentDateTime();
             // use the service, not the repo, so all validations, etc are used.
-            _DoSavePlan(beforePlan, username, currentDateTime, aggregatePlanSynchronously, forceKeepModelResults: true);
+            _DoSavePlan(beforePlan, username, currentDateTime, aggregatePlanSynchronously, shouldPromotePlanPricingResults: true, shouldPromotePlanBuyingResults: false);
 
             return true;
         }
