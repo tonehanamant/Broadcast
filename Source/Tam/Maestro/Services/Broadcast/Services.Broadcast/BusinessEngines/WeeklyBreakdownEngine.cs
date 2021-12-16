@@ -530,6 +530,7 @@ namespace Services.Broadcast.BusinessEngines
             //this is done resolve the issue when we select custom by dayaprt deleivery type before selecting any daypart -BP-3589   
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart && request.Dayparts.Count == 1)
             {
+                if(request.Dayparts[0].DaypartCodeId==0)
                 request.Weeks = null;
             }
 
