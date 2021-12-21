@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -544,7 +545,15 @@ namespace Services.Broadcast.Entities.Plan
 
         protected override BudgetCpmLeverEnum _GetPricingPlanBudgetCpmLever()
         {
-            var result = PricingParameters?[0].BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
+            BudgetCpmLeverEnum result;
+            if (PricingParameters?.Any() ?? false)
+            {
+                 result = PricingParameters?[0].BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
+            }
+            else
+            {
+                result= BudgetCpmLeverEnum.Cpm; 
+            }           
             return result;
         }
     }
