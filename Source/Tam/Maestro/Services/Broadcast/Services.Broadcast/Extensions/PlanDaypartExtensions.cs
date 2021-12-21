@@ -87,6 +87,8 @@ namespace Services.Broadcast.Extensions
             const string SATURDAY = "SA";
             return daypartList
                 .OrderBy(daypart => daypart.DaypartCode)
+                .ThenBy(daypart => daypart.CustomDayartOrganizationName)
+                .ThenBy(daypart => daypart.CustomDaypartName)
                 .ThenByDescending(daypart => daypart.FlightDays.StartsWith(MONDAY))
                 .ThenByDescending(daypart => daypart.FlightDays.StartsWith(TUESDAY))
                 .ThenByDescending(daypart => daypart.FlightDays.StartsWith(WEDNESDAY))

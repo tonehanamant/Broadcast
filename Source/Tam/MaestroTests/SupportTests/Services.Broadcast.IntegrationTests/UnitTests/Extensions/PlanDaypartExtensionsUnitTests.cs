@@ -29,6 +29,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Extensions
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void OrderDaypartDataswithCustomDaypart()
+        {
+            var dayparts = new List<DaypartData>
+            {
+                new DaypartData{ DaypartCode = "EMN", FlightDays = "W-F", StartTime = "8:00", EndTime= "9:00"},
+                new DaypartData{ DaypartCode = "EMN", FlightDays = "F", StartTime = "8:00", EndTime= "9:00"},
+                new DaypartData{ DaypartCode = "EMN", FlightDays = "M-F", StartTime = "11:00", EndTime= "12:00"},
+                new DaypartData{ DaypartCode = "EMN", FlightDays = "M-F", StartTime = "11:00", EndTime= "11:30"},
+                new DaypartData{ DaypartCode = "CSP",CustomDayartOrganizationName = "NBA", CustomDaypartName="Knicks Vs Bulls",FlightDays = "M-Su", StartTime = "8:00", EndTime= "9:00"},
+            };
+
+            var result = dayparts.OrderDayparts();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
 
         [Test]
         [UseReporter(typeof(DiffReporter))]

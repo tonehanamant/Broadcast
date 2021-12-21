@@ -10,6 +10,8 @@
   "ContractTotals": [],
   "DaypartsData": [
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EMN",
       "DaypartCodeId": 1,
       "EndTime": "10:00am",
@@ -27,6 +29,8 @@
       "StartTime": "04:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "ENLN",
       "DaypartCodeId": 5,
       "EndTime": "12:05am",
@@ -36,6 +40,8 @@
       "StartTime": "04:00pm"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "PMN",
       "DaypartCodeId": 16,
       "EndTime": "12:05am",

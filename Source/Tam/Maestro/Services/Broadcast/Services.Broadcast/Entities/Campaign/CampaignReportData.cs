@@ -173,6 +173,8 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartCode = x.DaypartCode,
                 EndTime = x.DaypartEndTime,
                 StartTime = x.DaypartStartTime,
+                CustomDayartOrganizationName = x.CustomDayartOrganizationName,
+                CustomDaypartName = x.CustomDaypartName,
                 FlightDays = GroupHelper.GroupWeekDays(x.FlightDays)
             }).Distinct(new DaypartDataEqualityComparer()).ToList().OrderDayparts();
         }
@@ -481,6 +483,8 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartCode = _StandardDaypartList.Single(y => y.Id == daypart.DaypartCodeId).Code,
                 DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds, "hh:mmtt"),
                 DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds, "hh:mmtt"),
+                CustomDayartOrganizationName = daypart.DaypartOrganizationName,
+                CustomDaypartName = daypart.CustomName,
                 SpotLengthId = spotLength.Id,
                 SpotLength = spotLength.Display,
                 //we set false for 30s on plans equivalized to group all the data together
@@ -1474,7 +1478,8 @@ namespace Services.Broadcast.Entities.Campaign
             public string DaypartStartTime { get; set; }
             public string DaypartEndTime { get; set; }
             public List<int> FlightDays { get; set; }
-
+            public string CustomDayartOrganizationName { get; set; }
+            public string CustomDaypartName { get; set; }
             public List<string> GuaranteedDemo { get; set; }
             public string SpotLength { get; set; }
             public int SpotLengthId { get; set; }
@@ -1582,6 +1587,8 @@ namespace Services.Broadcast.Entities.Campaign
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string FlightDays { get; set; }
+        public string CustomDayartOrganizationName { get; set; }
+        public string CustomDaypartName { get; set; }
         public List<DaypartRestrictionsData> GenreRestrictions { get; set; } = new List<DaypartRestrictionsData>();
         public List<DaypartRestrictionsData> ProgramRestrictions { get; set; } = new List<DaypartRestrictionsData>();
     }

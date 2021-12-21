@@ -49,6 +49,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private int currentRowIndex = 0;
         private int SecondaryAudiencesOffset;
         private bool HasSecondaryAudiences;
+        private const string customDaypartSportCode = "CSP";
+        private const string isCustomDaypartOrganizationNameisOther = "Other";
 
         public void PopulateProposalTab(CampaignReportData campaignReportData, ExcelWorksheet proposalWorksheet)
         {
@@ -99,10 +101,27 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex += 2;
             if (daypartsData.Any())
             {
-                Dayparts = string.Join(", ", daypartsData.Select(x => $"{x.DaypartCode} - {x.FlightDays} {x.StartTime} - {x.EndTime}").ToList());
+                Dayparts = string.Join(", ", daypartsData.Select(x => _FormatDaypart(x)).ToList());
                 WORKSHEET.Cells[$"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}"].Value = Dayparts;
             }
         }
+
+        private string _FormatDaypart(DaypartData daypart)
+        {
+            string format;
+            if(daypart.DaypartCode == customDaypartSportCode)
+            {
+                format = (daypart.CustomDayartOrganizationName != isCustomDaypartOrganizationNameisOther) ? $"{daypart.CustomDayartOrganizationName}: {daypart.CustomDaypartName}" :
+                    $" {daypart.CustomDaypartName}";
+            }
+            else
+            {
+                format = $" {daypart.DaypartCode}";
+            }
+            format += $" - {daypart.FlightDays} {daypart.StartTime} - {daypart.EndTime}";
+            return format;
+        }
+
 
         private void _PopulateMarketCoverage(MarketCoverageData data)
         {

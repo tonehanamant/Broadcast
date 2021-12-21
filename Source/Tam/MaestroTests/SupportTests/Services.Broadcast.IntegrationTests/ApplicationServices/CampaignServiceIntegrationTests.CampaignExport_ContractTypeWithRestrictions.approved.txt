@@ -1567,6 +1567,8 @@
   ],
   "DaypartsData": [
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
       "EndTime": "06:00pm",
@@ -1576,6 +1578,8 @@
       "StartTime": "03:00pm"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
       "EndTime": "06:00pm",
@@ -1598,6 +1602,8 @@
       "StartTime": "03:00pm"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
       "EndTime": "06:00pm",
@@ -1607,6 +1613,8 @@
       "StartTime": "03:00pm"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
       "EndTime": "09:00am",
@@ -1616,6 +1624,8 @@
       "StartTime": "06:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
       "EndTime": "09:00am",
@@ -1625,6 +1635,8 @@
       "StartTime": "06:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
       "EndTime": "09:00am",
@@ -1634,6 +1646,8 @@
       "StartTime": "06:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
       "EndTime": "01:00pm",
@@ -1662,6 +1676,8 @@
       "StartTime": "11:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
       "EndTime": "01:00pm",
@@ -1687,6 +1703,8 @@
       "StartTime": "11:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
       "EndTime": "01:00pm",
@@ -1696,6 +1714,8 @@
       "StartTime": "11:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
       "EndTime": "01:00pm",
@@ -1705,6 +1725,8 @@
       "StartTime": "11:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "PA",
       "DaypartCodeId": 7,
       "EndTime": "08:00pm",

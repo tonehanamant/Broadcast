@@ -12,6 +12,8 @@
   "CreatedDate": "01/01/01",
   "DaypartsData": [
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "DAY",
       "DaypartCodeId": 12,
       "EndTime": "11:00am",
@@ -39,6 +41,8 @@
       "StartTime": "09:00am"
     },
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "PA",
       "DaypartCodeId": 7,
       "EndTime": "08:00pm",

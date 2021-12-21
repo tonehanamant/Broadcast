@@ -10,6 +10,8 @@
   "ContractTotals": [],
   "DaypartsData": [
     {
+      "CustomDayartOrganizationName": null,
+      "CustomDaypartName": null,
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
       "EndTime": "06:00pm",

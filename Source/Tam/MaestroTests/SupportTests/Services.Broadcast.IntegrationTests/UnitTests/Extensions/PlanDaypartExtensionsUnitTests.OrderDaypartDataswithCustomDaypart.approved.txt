@@ -1,8 +1,8 @@
 [
   {
-    "CustomDayartOrganizationName": null,
-    "CustomDaypartName": null,
-    "DaypartCode": "AMN",
+    "CustomDayartOrganizationName": "NBA",
+    "CustomDaypartName": "Knicks Vs Bulls",
+    "DaypartCode": "CSP",
     "DaypartCodeId": 0,
     "EndTime": "9:00",
     "FlightDays": "M-Su",
