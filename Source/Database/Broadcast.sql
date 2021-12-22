@@ -404,6 +404,21 @@ Go
 	
 /*************************************** End BP-2074 *****************************************************/
 
+
+/*************************************** Start BP-3716 *****************************************************/
+
+IF NOT EXISTS(SELECT * FROM nti_to_nsi_conversion_rates WHERE [media_month_id]=474 and [standard_daypart_id]=24) 
+	 BEGIN
+	 INSERT [dbo].[nti_to_nsi_conversion_rates] ( [conversion_rate], [standard_daypart_id], [media_month_id]) VALUES (0.7, 24, 474)
+	 END
+ELSE
+	  BEGIN
+	  Update [dbo].[nti_to_nsi_conversion_rates] set [conversion_rate]=0.7 WHERE [media_month_id]=474 and [standard_daypart_id]=24
+	  END
+Go
+
+/*************************************** Start BP-3716 *****************************************************/
+
 /*************************************** Start BP-2275 *****************************************************/
 
 DECLARE @AddColumnSql VARCHAR(MAX) =
