@@ -420,6 +420,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 var plan = _PlanRepository.GetPlan(planBuyingParametersDto.PlanId.Value);
 
+                UsePlanForBuyingJob(planBuyingParametersDto, plan);
+
                 ValidateAndApplyMargin(planBuyingParametersDto);
 
                 var job = new PlanBuyingJob
@@ -2894,6 +2896,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = stations.Details.Select(x => x.OwnerName).Distinct().OrderByDescending(x => x).ToList();
 
             return result;
+        }
+
+        public void UsePlanForBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, PlanDto plan)
+        {
+            planBuyingParametersDto.Budget = plan.Budget.Value;
+            planBuyingParametersDto.CPM = plan.TargetCPM.Value;
+            planBuyingParametersDto.CPP = plan.TargetCPP.Value;
+            planBuyingParametersDto.Currency = plan.Currency;
+            planBuyingParametersDto.DeliveryImpressions = plan.TargetImpressions.Value / 1000;
+            planBuyingParametersDto.DeliveryRatingPoints = plan.TargetRatingPoints.Value;
+            planBuyingParametersDto.PostingType = plan.PostingType;
         }
     }
 }

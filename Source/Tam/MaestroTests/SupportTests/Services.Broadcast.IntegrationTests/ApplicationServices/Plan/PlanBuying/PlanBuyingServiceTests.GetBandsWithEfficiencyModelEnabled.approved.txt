@@ -7,7 +7,7 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 0.5000,
+        "MaxBand": 1.2000,
         "MinBand": null,
         "Spots": 0
       },
@@ -17,8 +17,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 1.8571,
-        "MinBand": 0.5000,
+        "MaxBand": 4.4571,
+        "MinBand": 1.2000,
         "Spots": 0
       },
       {
@@ -27,8 +27,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 3.2142,
-        "MinBand": 1.8571,
+        "MaxBand": 7.7142,
+        "MinBand": 4.4571,
         "Spots": 0
       },
       {
@@ -37,8 +37,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 4.5714,
-        "MinBand": 3.2142,
+        "MaxBand": 10.9714,
+        "MinBand": 7.7142,
         "Spots": 0
       },
       {
@@ -47,9 +47,29 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 5.9285,
-        "MinBand": 4.5714,
+        "MaxBand": 14.2285,
+        "MinBand": 10.9714,
         "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 3.0,
+        "Budget": 5653.1250,
+        "Cpm": 15.6055,
+        "Impressions": 362.25,
+        "ImpressionsPercentage": 38.93905192,
+        "MaxBand": 17.4857,
+        "MinBand": 14.2285,
+        "Spots": 10
+      },
+      {
+        "AvailableInventoryPercent": 26.62251656,
+        "Budget": 10552.5000,
+        "Cpm": 18.7500,
+        "Impressions": 562.8,
+        "ImpressionsPercentage": 60.496614,
+        "MaxBand": 20.7428,
+        "MinBand": 17.4857,
+        "Spots": 20
       },
       {
         "AvailableInventoryPercent": 0.0,
@@ -57,39 +77,19 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 7.2857,
-        "MinBand": 5.9285,
+        "MaxBand": 23.9999,
+        "MinBand": 20.7428,
         "Spots": 0
       },
       {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 8.6428,
-        "MinBand": 7.2857,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 10.0000,
-        "MinBand": 8.6428,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 7.69097222,
-        "Budget": 16386.5250,
-        "Cpm": 17.6142,
-        "Impressions": 930.3,
-        "ImpressionsPercentage": 100.0,
+        "AvailableInventoryPercent": 25.0,
+        "Budget": 180.9000,
+        "Cpm": 34.4571,
+        "Impressions": 5.25,
+        "ImpressionsPercentage": 0.56433409,
         "MaxBand": null,
-        "MinBand": 10.0000,
-        "Spots": 50
+        "MinBand": 24.0000,
+        "Spots": 20
       }
     ],
     "Id": 0,
@@ -116,7 +116,7 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 0.5000,
+        "MaxBand": 1.2000,
         "MinBand": null,
         "Spots": 0
       },
@@ -126,8 +126,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 1.8571,
-        "MinBand": 0.5000,
+        "MaxBand": 4.4571,
+        "MinBand": 1.2000,
         "Spots": 0
       },
       {
@@ -136,8 +136,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 3.2142,
-        "MinBand": 1.8571,
+        "MaxBand": 7.7142,
+        "MinBand": 4.4571,
         "Spots": 0
       },
       {
@@ -146,8 +146,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 4.5714,
-        "MinBand": 3.2142,
+        "MaxBand": 10.9714,
+        "MinBand": 7.7142,
         "Spots": 0
       },
       {
@@ -156,9 +156,29 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 5.9285,
-        "MinBand": 4.5714,
+        "MaxBand": 14.2285,
+        "MinBand": 10.9714,
         "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 3.0,
+        "Budget": 5653.1250,
+        "Cpm": 15.6055,
+        "Impressions": 362.25,
+        "ImpressionsPercentage": 38.93905192,
+        "MaxBand": 17.4857,
+        "MinBand": 14.2285,
+        "Spots": 10
+      },
+      {
+        "AvailableInventoryPercent": 26.62251656,
+        "Budget": 10552.5000,
+        "Cpm": 18.7500,
+        "Impressions": 562.8,
+        "ImpressionsPercentage": 60.496614,
+        "MaxBand": 20.7428,
+        "MinBand": 17.4857,
+        "Spots": 20
       },
       {
         "AvailableInventoryPercent": 0.0,
@@ -166,39 +186,19 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 7.2857,
-        "MinBand": 5.9285,
+        "MaxBand": 23.9999,
+        "MinBand": 20.7428,
         "Spots": 0
       },
       {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 8.6428,
-        "MinBand": 7.2857,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 10.0000,
-        "MinBand": 8.6428,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 7.69097222,
-        "Budget": 16386.5250,
-        "Cpm": 17.6142,
-        "Impressions": 930.3,
-        "ImpressionsPercentage": 100.0,
+        "AvailableInventoryPercent": 25.0,
+        "Budget": 180.9000,
+        "Cpm": 34.4571,
+        "Impressions": 5.25,
+        "ImpressionsPercentage": 0.56433409,
         "MaxBand": null,
-        "MinBand": 10.0000,
-        "Spots": 50
+        "MinBand": 24.0000,
+        "Spots": 20
       }
     ],
     "Id": 0,
@@ -225,7 +225,7 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 0.5000,
+        "MaxBand": 1.2000,
         "MinBand": null,
         "Spots": 0
       },
@@ -235,8 +235,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 1.8571,
-        "MinBand": 0.5000,
+        "MaxBand": 4.4571,
+        "MinBand": 1.2000,
         "Spots": 0
       },
       {
@@ -245,8 +245,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 3.2142,
-        "MinBand": 1.8571,
+        "MaxBand": 7.7142,
+        "MinBand": 4.4571,
         "Spots": 0
       },
       {
@@ -255,8 +255,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 4.5714,
-        "MinBand": 3.2142,
+        "MaxBand": 10.9714,
+        "MinBand": 7.7142,
         "Spots": 0
       },
       {
@@ -265,9 +265,29 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 5.9285,
-        "MinBand": 4.5714,
+        "MaxBand": 14.2285,
+        "MinBand": 10.9714,
         "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 3.0,
+        "Budget": 5653.1250,
+        "Cpm": 15.6055,
+        "Impressions": 362.25,
+        "ImpressionsPercentage": 38.93905192,
+        "MaxBand": 17.4857,
+        "MinBand": 14.2285,
+        "Spots": 10
+      },
+      {
+        "AvailableInventoryPercent": 26.62251656,
+        "Budget": 10552.5000,
+        "Cpm": 18.7500,
+        "Impressions": 562.8,
+        "ImpressionsPercentage": 60.496614,
+        "MaxBand": 20.7428,
+        "MinBand": 17.4857,
+        "Spots": 20
       },
       {
         "AvailableInventoryPercent": 0.0,
@@ -275,39 +295,19 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 7.2857,
-        "MinBand": 5.9285,
+        "MaxBand": 23.9999,
+        "MinBand": 20.7428,
         "Spots": 0
       },
       {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 8.6428,
-        "MinBand": 7.2857,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 10.0000,
-        "MinBand": 8.6428,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 7.69097222,
-        "Budget": 16386.5250,
-        "Cpm": 17.6142,
-        "Impressions": 930.3,
-        "ImpressionsPercentage": 100.0,
+        "AvailableInventoryPercent": 25.0,
+        "Budget": 180.9000,
+        "Cpm": 34.4571,
+        "Impressions": 5.25,
+        "ImpressionsPercentage": 0.56433409,
         "MaxBand": null,
-        "MinBand": 10.0000,
-        "Spots": 50
+        "MinBand": 24.0000,
+        "Spots": 20
       }
     ],
     "Id": 0,
@@ -334,7 +334,7 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 0.5000,
+        "MaxBand": 1.2000,
         "MinBand": null,
         "Spots": 0
       },
@@ -344,8 +344,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 1.8571,
-        "MinBand": 0.5000,
+        "MaxBand": 4.4571,
+        "MinBand": 1.2000,
         "Spots": 0
       },
       {
@@ -354,8 +354,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 3.2142,
-        "MinBand": 1.8571,
+        "MaxBand": 7.7142,
+        "MinBand": 4.4571,
         "Spots": 0
       },
       {
@@ -364,8 +364,8 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 4.5714,
-        "MinBand": 3.2142,
+        "MaxBand": 10.9714,
+        "MinBand": 7.7142,
         "Spots": 0
       },
       {
@@ -374,9 +374,29 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 5.9285,
-        "MinBand": 4.5714,
+        "MaxBand": 14.2285,
+        "MinBand": 10.9714,
         "Spots": 0
+      },
+      {
+        "AvailableInventoryPercent": 3.0,
+        "Budget": 5653.1250,
+        "Cpm": 15.6055,
+        "Impressions": 362.25,
+        "ImpressionsPercentage": 38.93905192,
+        "MaxBand": 17.4857,
+        "MinBand": 14.2285,
+        "Spots": 10
+      },
+      {
+        "AvailableInventoryPercent": 26.62251656,
+        "Budget": 10552.5000,
+        "Cpm": 18.7500,
+        "Impressions": 562.8,
+        "ImpressionsPercentage": 60.496614,
+        "MaxBand": 20.7428,
+        "MinBand": 17.4857,
+        "Spots": 20
       },
       {
         "AvailableInventoryPercent": 0.0,
@@ -384,39 +404,19 @@
         "Cpm": 0.0000,
         "Impressions": 0.0,
         "ImpressionsPercentage": 0.0,
-        "MaxBand": 7.2857,
-        "MinBand": 5.9285,
+        "MaxBand": 23.9999,
+        "MinBand": 20.7428,
         "Spots": 0
       },
       {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 8.6428,
-        "MinBand": 7.2857,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 0.0,
-        "Budget": 0.0000,
-        "Cpm": 0.0000,
-        "Impressions": 0.0,
-        "ImpressionsPercentage": 0.0,
-        "MaxBand": 10.0000,
-        "MinBand": 8.6428,
-        "Spots": 0
-      },
-      {
-        "AvailableInventoryPercent": 7.69097222,
-        "Budget": 16386.5250,
-        "Cpm": 17.6142,
-        "Impressions": 930.3,
-        "ImpressionsPercentage": 100.0,
+        "AvailableInventoryPercent": 25.0,
+        "Budget": 180.9000,
+        "Cpm": 34.4571,
+        "Impressions": 5.25,
+        "ImpressionsPercentage": 0.56433409,
         "MaxBand": null,
-        "MinBand": 10.0000,
-        "Spots": 50
+        "MinBand": 24.0000,
+        "Spots": 20
       }
     ],
     "Id": 0,

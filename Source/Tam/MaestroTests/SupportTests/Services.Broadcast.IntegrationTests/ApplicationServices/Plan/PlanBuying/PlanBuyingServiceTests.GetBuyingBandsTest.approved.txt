@@ -6,7 +6,7 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0016,
+      "MaxBand": 0.0800,
       "MinBand": null,
       "Spots": 0
     },
@@ -16,8 +16,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0059,
-      "MinBand": 0.0016,
+      "MaxBand": 0.2971,
+      "MinBand": 0.0800,
       "Spots": 0
     },
     {
@@ -26,8 +26,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0102,
-      "MinBand": 0.0059,
+      "MaxBand": 0.5142,
+      "MinBand": 0.2971,
       "Spots": 0
     },
     {
@@ -36,8 +36,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0146,
-      "MinBand": 0.0102,
+      "MaxBand": 0.7314,
+      "MinBand": 0.5142,
       "Spots": 0
     },
     {
@@ -46,8 +46,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0189,
-      "MinBand": 0.0146,
+      "MaxBand": 0.9485,
+      "MinBand": 0.7314,
       "Spots": 0
     },
     {
@@ -56,8 +56,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0233,
-      "MinBand": 0.0189,
+      "MaxBand": 1.1657,
+      "MinBand": 0.9485,
       "Spots": 0
     },
     {
@@ -66,8 +66,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0276,
-      "MinBand": 0.0233,
+      "MaxBand": 1.3828,
+      "MinBand": 1.1657,
       "Spots": 0
     },
     {
@@ -76,8 +76,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0319,
-      "MinBand": 0.0276,
+      "MaxBand": 1.5999,
+      "MinBand": 1.3828,
       "Spots": 0
     },
     {
@@ -87,7 +87,7 @@
       "Impressions": 620.2,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
-      "MinBand": 0.0320,
+      "MinBand": 1.6000,
       "Spots": 25
     }
   ],

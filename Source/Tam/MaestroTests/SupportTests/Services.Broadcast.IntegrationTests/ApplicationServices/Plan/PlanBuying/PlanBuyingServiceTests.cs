@@ -682,19 +682,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // New service with injected API client.
                 var planBuyingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
 
-                var planBuyingRequestDto = new PlanBuyingParametersDto
-                {
-                    PlanId = 1197,
-                    PlanVersionId = 47,
-                    Budget = 8000,
-                    CPM = 5m,
-                    DeliveryImpressions = 50000,
-                    ProprietaryBlend = 0.2,
-                    UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.Per30Min,
-                    MarketGroup = MarketGroupEnum.Top100,
-                    ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
-                };
+                var planBuyingRequestDto = _GetBuyingRequestDto();
 
                 var job = await planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
 

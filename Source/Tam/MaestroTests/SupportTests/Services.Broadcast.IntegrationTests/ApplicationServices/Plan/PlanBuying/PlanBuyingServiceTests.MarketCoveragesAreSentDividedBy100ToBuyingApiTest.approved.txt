@@ -12,7 +12,7 @@
         }
       ],
       "frequency_cap": 20,
-      "impression_goal": 10000000.0,
+      "impression_goal": 20000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
@@ -138,7 +138,7 @@
         }
       ],
       "frequency_cap": 20,
-      "impression_goal": 10000000.0,
+      "impression_goal": 20000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
@@ -264,7 +264,7 @@
         }
       ],
       "frequency_cap": 20,
-      "impression_goal": 10000000.0,
+      "impression_goal": 20000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
@@ -390,7 +390,7 @@
         }
       ],
       "frequency_cap": 20,
-      "impression_goal": 10000000.0,
+      "impression_goal": 20000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
@@ -516,7 +516,7 @@
         }
       ],
       "frequency_cap": 20,
-      "impression_goal": 10000000.0,
+      "impression_goal": 20000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
