@@ -11,7 +11,7 @@
     "AdvertiserName": "ReckittBenckiser",
     "Id": 2,
     "Isci": "AB82TXT2H",
-    "PlanIsci": 1,
+    "PlanIsci": 0,
     "ProductName": "Product2",
     "SpotLengthDuration": 30
   },
@@ -19,7 +19,7 @@
     "AdvertiserName": "ReckittBenckiser",
     "Id": 3,
     "Isci": "AB82VR58",
-    "PlanIsci": 1,
+    "PlanIsci": 0,
     "ProductName": "Product3",
     "SpotLengthDuration": 30
   },

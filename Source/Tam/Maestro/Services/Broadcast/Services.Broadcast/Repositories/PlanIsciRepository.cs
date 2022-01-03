@@ -147,7 +147,12 @@ namespace Services.Broadcast.Repositories
                                   SpotLengthDuration = sl.length,
                                   ProductName = pro.product_name,
                                   Isci = isci.isci,
-                                  PlanIsci = context.plan_iscis.Count(x => x.isci == isci.isci)
+                                  PlanIsci = context.plan_iscis
+                                                    .Where(planIsci => planIsci.deleted_at == null
+                                                            && (planIsci.flight_start_date <= startDate && planIsci.flight_end_date >= endDate 
+                                                                || planIsci.flight_start_date >= startDate && planIsci.flight_start_date <= endDate 
+                                                                || planIsci.flight_end_date >= startDate && planIsci.flight_end_date <= endDate))
+                                                    .Count(planIsci => planIsci.isci == isci.isci)
                               }).ToList();
                 return result;
             });
@@ -193,14 +198,19 @@ namespace Services.Broadcast.Repositories
                         FlightStartDate = planVersion.flight_start_date,
                         FlightEndDate = planVersion.flight_end_date,
                         ProductName = planVersionSummary.product_name,
-                        Iscis = plan.plan_iscis.Where(x => x.deleted_at == null).Select(x => x.isci).Distinct().ToList()
+                        Iscis = plan.plan_iscis
+                                        .Where(planIsci => planIsci.deleted_at == null 
+                                                && (planIsci.flight_start_date <= mediaMonthStartDate && planIsci.flight_end_date >= mediaMonthEndDate
+                                                    || planIsci.flight_start_date >= mediaMonthStartDate && planIsci.flight_start_date <= mediaMonthEndDate
+                                                    || planIsci.flight_end_date >= mediaMonthStartDate && planIsci.flight_end_date <= mediaMonthEndDate))
+                                        .Select(planIsci => planIsci.isci).Distinct().ToList()
                     };
                     return isciPlanDetail;
                 }).ToList();
                 return result;
             });
         }
-
+        
         /// <inheritdoc />
         public int SaveIsciPlanMappings(List<PlanIsciDto> isciPlanMappings, string createdBy, DateTime createdAt)
         {
