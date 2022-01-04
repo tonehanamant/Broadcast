@@ -96,47 +96,6 @@ namespace BroadcastComposerWeb
                 "~/Scripts/appTracker/TrackerUploadManager.js"
                 );
 
-
-
-            /* See revise directory - revisions for React intgration */
-            var planningBundle = new ScriptBundle("~/bundles/planning").Include(
-                /* Config */
-                "~/Scripts/appPlanning/config/PlanningConfig.js",
-
-                /* Controllers */
-                //"~/Scripts/appPlanning/controllers/PlanningMainController.js",
-                 "~/Scripts/appPlanning/revise/PlanningController.js",
-                //"~/Scripts/appPlanning/controllers/ProposalController.js",
-
-                /* View Models */
-                "~/Scripts/appPlanning/viewmodels/PlanningSearchViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/ProposalViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/CustomMarketsViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/CustomMarketsSelectorViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/ProposalDetailInventoryViewModel.js",
-                "~/Scripts/appPlanning/viewmodels/ProposalDetailOpenMarketViewModel.js",
-                 "~/Scripts/appPlanning/revise/CriteriaBuilderViewModel.js",
-                "~/Scripts/appPlanning/revise/FilterViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/CriteriaBuilderViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/FilterViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/SwitchProposalVersionViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/VersionCreatedOptionsViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/ProposalUpdateWarningViewModel.js",
-                //"~/Scripts/appPlanning/viewmodels/ManageRatingsViewModel.js",
-
-                /* Views */
-                "~/Scripts/appPlanning/views/PlanningMainView.js",
-                //"~/Scripts/appPlanning/views/ProposalView.js",
-                //"~/Scripts/appPlanning/views/ProposalDetailInventoryView.js",
-                "~/Scripts/appPlanning/revise/ProposalDetailInventoryView.js",
-                //"~/Scripts/appPlanning/views/ProposalDetailOpenMarketView.js",
-                 "~/Scripts/appPlanning/revise/ProposalDetailOpenMarketView.js"
-                //"~/Scripts/appPlanning/views/SwitchProposalVersionView.js",
-
-                /* Hybrid */
-                //"~/Scripts/appPlanning/ProposalDetailSet.js"
-                );
-
             var trackerScrubBundle = new ScriptBundle("~/bundles/trackerScrub").Include(
                 /* Config */
                 /* Controllers */
@@ -213,7 +172,6 @@ namespace BroadcastComposerWeb
             bundles.Add(librariesBundle);
             bundles.Add(appBundle);
             bundles.Add(trackerBundle);
-            bundles.Add(planningBundle);
             bundles.Add(trackerScrubBundle);
             bundles.Add(postingBundle);
             bundles.Add(trafficBundle);
