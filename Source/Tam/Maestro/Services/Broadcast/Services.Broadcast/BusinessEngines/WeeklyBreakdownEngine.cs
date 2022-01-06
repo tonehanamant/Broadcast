@@ -1032,8 +1032,6 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var week in weeksToUpdate)
             {
-                if (!week.IsLocked)
-                {
                     week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
                     week.ActiveDays = activeDaysString;
 
@@ -1085,7 +1083,7 @@ namespace Services.Broadcast.BusinessEngines
 
                             break;
                     }
-                }
+
                 _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
                     , request.TotalBudget, week, week.WeeklyImpressions, roundRatings: true);
             }
@@ -1236,8 +1234,9 @@ namespace Services.Broadcast.BusinessEngines
            List<WeeklyBreakdownWeek> weeks,
            double totalImpressions)
         {
-            var firstWeek = weeks.First();
-            var totalImpressionsRounded = weeks.Sum(w => w.WeeklyImpressions);
+            var unlockedWeeks = weeks.Where(w => w.IsLocked == false).ToList();
+            var firstWeek = unlockedWeeks.First();
+            var totalImpressionsRounded = unlockedWeeks.Sum(w => w.WeeklyImpressions);
             var roundedImpressionsDifference = totalImpressions - totalImpressionsRounded;
             var impressions = Math.Floor(firstWeek.WeeklyImpressions + roundedImpressionsDifference);
 
