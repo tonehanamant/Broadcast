@@ -16,7 +16,6 @@ namespace BroadcastComposerWeb.Controllers
         {
             var environmentInfo = _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().GetEnvironmentInfo();
 
-            ViewBag.DisplayCampaignLink = environmentInfo.DisplayCampaignLink;
             ViewBag.DisplayBuyingLink = environmentInfo.DisplayBuyingLink;
             ViewBag.DisplayAABLink = environmentInfo.EnableAabNavigation;
             ViewBag.DisplayIsciMappingLink = environmentInfo.DisplayIsciMappingLink;

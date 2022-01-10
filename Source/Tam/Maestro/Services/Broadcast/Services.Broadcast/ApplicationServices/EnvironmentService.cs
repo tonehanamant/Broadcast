@@ -79,10 +79,8 @@ namespace Services.Broadcast.ApplicationServices
             var environmentInfo = new EnvironmentDto
             {
                 Environment = new AppSettings().Environment.ToString(),
-                HostName = Environment.MachineName,
-                AllowMultipleCreativeLengths = true,
-                // Keep These : these are referenced by the NavBar.cshtml
-                DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_CAMPAIGN_LINK),
+                HostName = Environment.MachineName,               
+                // Keep These : these are referenced by the NavBar.cshtml           
                 DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
                 DisplayIsciMappingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ISCI_MAPPING),
                 DisplaySpotExceptionsLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS)

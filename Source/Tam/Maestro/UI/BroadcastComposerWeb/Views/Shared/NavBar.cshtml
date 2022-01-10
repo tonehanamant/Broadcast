@@ -16,11 +16,8 @@
             <ul class="nav navbar-nav">
                 @* We don't need to track active class for React links, as they have their own tracking for the active tab. *@
                 <li><a href="/broadcastreact/inventory">Inventory</a></li>
-                @* Campaigns link is displayed according to system parameter. *@
-                @if (ViewBag.DisplayCampaignLink != null && ViewBag.DisplayCampaignLink)
-                {
-                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>
-                }
+                @* Campaigns link is displayed according to system parameter. *@              
+                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>               
                 @if (ViewBag.DisplayIsciMappingLink != null && ViewBag.DisplayIsciMappingLink)
                 {
                     <li><a href="/broadcastreact/isci-mapping">Isci Mapping</a></li>
