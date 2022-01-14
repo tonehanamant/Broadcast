@@ -3001,6 +3001,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Task.FromResult(
                     new PlanPricingApiSpotsResponseDto_v3
                     {
+                        RequestId = "AAAA",
                         Error = new PlanPricingApiSpotsErrorDto_v3
                         {
                             Messages = new List<string>
@@ -3041,7 +3042,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(2, jobUpdates.Count);
             Assert.IsNull(jobUpdates[0].ErrorMessage);
-            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Pricing Model returned the following error:"));
+            Assert.IsTrue(jobUpdates[1].ErrorMessage.StartsWith("Pricing Model Mode ('Quality') Request Id 'AAAA' returned the following error:"));
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(PlanPricingJob), "ErrorMessage");

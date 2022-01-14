@@ -20,6 +20,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -1079,20 +1080,31 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (!goalsFulfilledByProprietaryInventory)
             {
-
                 foreach (var allocationResult in results)
                 {
-                    await _SendPricingRequestAsync(
-                        allocationResult,
-                        plan,
-                        jobId,
-                        inventory,
-                        token,
-                        diagnostic,
-                        planPricingParametersDto,
-                        proprietaryInventoryData);
-                }
+                    _LogInfo($"Preparing call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
+                    var pricingModelCallTimer = new Stopwatch();
+                    pricingModelCallTimer.Start();
+                    try
+                    {
+                        await _SendPricingRequest_v3Async(
+                           allocationResult,
+                           plan,
+                           jobId,
+                           inventory,
+                           token,
+                           diagnostic,
+                           planPricingParametersDto,
+                           proprietaryInventoryData);
+                    }
+                    finally
+                    {
+                        pricingModelCallTimer.Stop();
+                        var duration = pricingModelCallTimer.ElapsedMilliseconds;
 
+                        _LogInfo($"Completed call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
+                    }
+                }
             }
 
             return results;
@@ -1516,28 +1528,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         x.ProprietarySummaryByAudiences.ForEach(y => y.ImpressionsPerWeek /= 2);
                     });
             }
-        }
-
-        private async Task _SendPricingRequestAsync(
-            PlanPricingAllocationResult allocationResult,
-            PlanDto plan,
-            int jobId,
-            List<PlanPricingInventoryProgram> inventory,
-            CancellationToken token,
-            PlanPricingJobDiagnostic diagnostic,
-            PlanPricingParametersDto parameters,
-            ProprietaryInventoryData proprietaryInventoryData)
-        {
-            await _SendPricingRequest_v3Async(
-                allocationResult,
-                plan,
-                jobId,
-                inventory,
-                token,
-                diagnostic,
-                parameters,
-                proprietaryInventoryData);
-        }
+        }        
 
         internal void _HandleMissingSpotCosts(List<int> planSpotLengthIds, PlanPricingApiRequestDto_v3 request)
         {
@@ -1625,6 +1616,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();
             _HandleMissingSpotCosts(planSpotLengthIds, pricingApiRequest);
 
+            _LogInfo($"Sending pricing model input to the S3 log bucket for model '{allocationResult.SpotAllocationModelMode}'.");
             _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, jobId, pricingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
@@ -1635,7 +1627,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (apiAllocationResult.Error != null)
             {
-                var errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
+                var errorMessage = $@"Pricing Model Mode ('{allocationResult.SpotAllocationModelMode}') Request Id '{apiAllocationResult.RequestId}' returned the following error: {apiAllocationResult.Error.Name} 
                                 -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
                 throw new PricingModelException(errorMessage);
             }

@@ -21,6 +21,7 @@ using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -969,15 +970,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 foreach (var allocationResult in results)
                 {
-                    await _SendBuyingRequestAsync(
-                        allocationResult,
-                        plan,
-                        jobId,
-                        inventory,
-                        token,
-                        diagnostic,
-                        planBuyingParametersDto,
-                        proprietaryInventoryData);
+                    _LogInfo($"Preparing call to Buying Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
+                    var pricingModelCallTimer = new Stopwatch();
+                    pricingModelCallTimer.Start();
+
+                    try
+                    {
+                        await _SendBuyingRequest_v3Async(
+                            allocationResult,
+                            plan,
+                            jobId,
+                            inventory,
+                            token,
+                            diagnostic,
+                            planBuyingParametersDto,
+                            proprietaryInventoryData);
+                    }
+                    finally
+                    {
+                        pricingModelCallTimer.Stop();
+                        var duration = pricingModelCallTimer.ElapsedMilliseconds;
+
+                        _LogInfo($"Completed call to Buying Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
+                    }
                 }
             }
 
@@ -1519,27 +1534,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private async Task _SendBuyingRequestAsync(
-            PlanBuyingAllocationResult allocationResult,
-            PlanDto plan,
-            int jobId,
-            List<PlanBuyingInventoryProgram> inventory,
-            CancellationToken token,
-            PlanBuyingJobDiagnostic diagnostic,
-            PlanBuyingParametersDto parameters,
-            ProprietaryInventoryData proprietaryInventoryData)
-        {
-            await _SendBuyingRequest_v3Async(
-                allocationResult,
-                plan,
-                jobId,
-                inventory,
-                token,
-                diagnostic,
-                parameters,
-                proprietaryInventoryData);
-        }
-
         private PlanBuyingBudgetCpmLeverEnum _GetPlanBuyingBudgetCpmLeverEnum(BudgetCpmLeverEnum budgetCpmLever)
         {
             switch (budgetCpmLever)
@@ -1588,6 +1582,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planSpotLengthIds = plan.CreativeLengths.Select(s => s.SpotLengthId).ToList();
             _HandleMissingSpotCosts(planSpotLengthIds, buyingApiRequest);
 
+            _LogInfo($"Sending buying model input to the S3 log bucket for model '{allocationResult.SpotAllocationModelMode}'.");
             _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, jobId, buyingApiRequest, apiVersion, allocationResult.SpotAllocationModelMode));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
@@ -1598,8 +1593,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (apiAllocationResult.Error != null)
             {
-                var errorMessage = $@"Buying Model returned the following error: {apiAllocationResult.Error.Name} 
+                var errorMessage = $@"Buying Model Mode ('{allocationResult.SpotAllocationModelMode}') Request Id '{apiAllocationResult.RequestId}' returned the following error: {apiAllocationResult.Error.Name} 
                                 -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
+                
                 throw new BuyingModelException(errorMessage);
             }
 
