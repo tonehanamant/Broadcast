@@ -1004,19 +1004,6 @@ namespace Services.Broadcast.Repositories
                 Name = programRestriction.program_name
             };
         }
-        private static ProgramDto _MapToCustomDaypartProgramDto(plan_version_custom_daypart_program_restrictions programRestriction)
-        {
-            return new ProgramDto
-            {
-                Genre = new LookupDto
-                {
-                    Id = programRestriction.genre.id,
-                    Display = programRestriction.genre.name
-                },
-                ContentRating = programRestriction.content_rating,
-                Name = programRestriction.program_name
-            };
-        }
 
         private static LookupDto _MapToLookupDto(genre genre)
         {

@@ -24,7 +24,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.show_type_mappings = new HashSet<show_type_mappings>();
             this.show_type_mappings1 = new HashSet<show_type_mappings>();
             this.inventory_proprietary_daypart_programs = new HashSet<inventory_proprietary_daypart_programs>();
-            this.plan_version_custom_daypart_show_type_restrictions = new HashSet<plan_version_custom_daypart_show_type_restrictions>();
         }
     
         public int id { get; set; }
@@ -43,6 +42,5 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<show_type_mappings> show_type_mappings { get; set; }
         public virtual ICollection<show_type_mappings> show_type_mappings1 { get; set; }
         public virtual ICollection<inventory_proprietary_daypart_programs> inventory_proprietary_daypart_programs { get; set; }
-        public virtual ICollection<plan_version_custom_daypart_show_type_restrictions> plan_version_custom_daypart_show_type_restrictions { get; set; }
     }
 }

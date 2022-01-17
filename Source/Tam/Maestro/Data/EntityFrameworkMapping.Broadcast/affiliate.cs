@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public affiliate()
         {
             this.plan_version_daypart_affiliate_restrictions = new HashSet<plan_version_daypart_affiliate_restrictions>();
-            this.plan_version_custom_daypart_affiliate_restrictions = new HashSet<plan_version_custom_daypart_affiliate_restrictions>();
         }
     
         public int id { get; set; }
@@ -28,6 +27,5 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime modified_date { get; set; }
     
         public virtual ICollection<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
-        public virtual ICollection<plan_version_custom_daypart_affiliate_restrictions> plan_version_custom_daypart_affiliate_restrictions { get; set; }
     }
 }

@@ -1832,7 +1832,38 @@ ELSE
 	  END
 Go
 
-/*************************************** Start BP-3716 *****************************************************/
+/*************************************** END BP-3716 *****************************************************/
+
+/*************************************** Start BP-3658 *****************************************************/
+
+IF OBJECT_ID('plan_version_custom_daypart_affiliate_restrictions') IS NOT NULL
+BEGIN
+    DROP TABLE [dbo].[plan_version_custom_daypart_affiliate_restrictions]
+END
+
+IF OBJECT_ID('plan_version_custom_daypart_genre_restrictions') IS NOT NULL
+BEGIN
+    DROP TABLE [dbo].[plan_version_custom_daypart_genre_restrictions]
+END
+
+IF OBJECT_ID('plan_version_custom_daypart_program_restrictions') IS NOT NULL
+BEGIN
+    DROP TABLE [dbo].[plan_version_custom_daypart_program_restrictions]
+END
+
+IF OBJECT_ID('plan_version_custom_daypart_show_type_restrictions') IS NOT NULL
+BEGIN
+    DROP TABLE [dbo].[plan_version_custom_daypart_show_type_restrictions]
+END
+
+IF OBJECT_ID('plan_version_custom_dayparts') IS NOT NULL
+BEGIN
+    DROP TABLE [dbo].[plan_version_custom_dayparts]
+END
+
+
+/*************************************** END BP-3658 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

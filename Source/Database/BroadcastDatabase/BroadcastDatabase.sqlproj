@@ -287,11 +287,6 @@
     <Build Include="dbo\Tables\spot_exceptions_out_of_spec_decisions.sql" />
     <Build Include="dbo\Tables\spot_exceptions_out_of_spec_reason_codes.sql" />
     <Build Include="dbo\Tables\custom_daypart_organizations.sql" />
-    <Build Include="dbo\Tables\plan_version_custom_dayparts.sql" />
-    <Build Include="dbo\Tables\plan_version_custom_daypart_affiliate_restrictions.sql" />
-    <Build Include="dbo\Tables\plan_version_custom_daypart_genre_restrictions.sql" />
-    <Build Include="dbo\Tables\plan_version_custom_daypart_program_restrictions.sql" />
-    <Build Include="dbo\Tables\plan_version_custom_daypart_show_type_restrictions.sql" />
     <Build Include="dbo\Tables\plan_version_daypart_customizations.sql" />
   </ItemGroup>
   <ItemGroup>
