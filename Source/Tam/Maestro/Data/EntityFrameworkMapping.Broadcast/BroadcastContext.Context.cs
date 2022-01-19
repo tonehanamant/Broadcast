@@ -238,5 +238,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<custom_daypart_organizations> custom_daypart_organizations { get; set; }
         public virtual DbSet<plan_iscis> plan_iscis { get; set; }
         public virtual DbSet<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
+        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
+        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
+        public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
+        public virtual DbSet<staged_unposted_no_plan> staged_unposted_no_plan { get; set; }
+        public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
     }
 }

@@ -42,6 +42,8 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime ingested_at { get; set; }
         public string advertiser_name { get; set; }
         public int reason_code_id { get; set; }
+        public long unique_id_external { get; set; }
+        public string execution_id_external { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual audience audience1 { get; set; }

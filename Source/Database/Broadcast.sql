@@ -1861,9 +1861,199 @@ BEGIN
     DROP TABLE [dbo].[plan_version_custom_dayparts]
 END
 
-
+GO
 /*************************************** END BP-3658 *****************************************************/
 
+/*************************************** Start BP-3848 *****************************************************/
+/*** Out of Spec - Staging Tables ***/
+IF OBJECT_ID('staged_out_of_specs') IS NULL
+BEGIN
+	CREATE TABLE staged_out_of_specs
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		unique_id_external BIGINT NOT NULL,
+		execution_id_external VARCHAR(100) NOT NULL,
+		estimate_id INT NOT NULL,
+		inventory_source VARCHAR(100) NOT NULL,
+		house_isci VARCHAR(100) NOT NULL,
+		client_isci VARCHAR(100) NOT NULL,
+		client_spot_length INT NOT NULL,
+		broadcast_aired_date DATETIME2 NOT NULL,
+		aired_time INT NOT NULL,
+		station_legacy_call_letters VARCHAR(30) NULL,
+		affiliate VARCHAR(30) NULL,
+		market_code INT NULL,
+		market_rank INT NULL,
+		rate MONEY NOT NULL,
+		audience_name VARCHAR(127) NOT NULL,
+		impressions FLOAT NOT NULL,
+		[program_name] VARCHAR(500) NOT NULL,
+		program_genre VARCHAR(127) NOT NULL,
+		reason_code INT NOT NULL,
+		reason_code_message VARCHAR(500) NULL,
+		lead_in_program_name VARCHAR(500) NULL,
+		lead_out_program_name VARCHAR(500) NULL,
+		plan_id INT NOT NULL,
+		daypart_code VARCHAR(10) NULL,
+		start_time INT NULL,
+		end_time INT NULL,
+		monday INT NULL,
+		tuesday INT NULL,
+		wednesday INT NULL,
+		thursday INT NULL,
+		friday INT NULL,
+		saturday INT NULL,
+		sunday INT NULL,
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+END
+
+/*** Out of Spec - Target Tables ***/
+IF NOT EXISTS (SELECT 1 FROM sys.columns 
+          WHERE [Name] = N'unique_id_external'
+          AND OBJECT_ID = OBJECT_ID(N'spot_exceptions_out_of_specs'))
+BEGIN	
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD unique_id_external BIGINT NULL
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD execution_id_external VARCHAR(100) NULL
+END
+
+DECLARE @oos_populationSql VARCHAR(MAX) = '
+UPDATE spot_exceptions_out_of_specs SET
+	 unique_id_external = 1,
+	 execution_id_external = ''1''
+WHERE unique_id_external IS NULL
+'
+
+DECLARE @oos_alterSql VARCHAR(MAX) = '
+ALTER TABLE spot_exceptions_out_of_specs 
+	ALTER COLUMN unique_id_external BIGINT NOT NULL
+
+ALTER TABLE spot_exceptions_out_of_specs 
+	ALTER COLUMN execution_id_external VARCHAR(100) NOT NULL
+'
+EXEC (@oos_populationSql)
+EXEC (@oos_alterSql)
+
+
+/*** Recommended Plans - Staging Tables ***/
+IF OBJECT_ID('staged_recommended_plans') IS NULL
+BEGIN
+	CREATE TABLE staged_recommended_plans
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		unique_id_external BIGINT NOT NULL,
+		execution_id_external VARCHAR(100) NOT NULL,
+		ambiguity_cod INT NOT NULL,
+		estimate_id INT NOT NULL,
+		inventory_source VARCHAR(100) NOT NULL,
+		house_isci VARCHAR(100) NOT NULL,
+		client_isci VARCHAR(100) NOT NULL,
+		client_spot_length INT NOT NULL,
+		broadcast_aired_date DATETIME2 NOT NULL,
+		aired_time INT NOT NULL,
+		station_legacy_call_letters VARCHAR(30) NULL,
+		affiliate VARCHAR(30) NULL,
+		market_code INT NULL,
+		market_rank INT NULL,
+		rate MONEY NOT NULL,
+		audience_name VARCHAR(127) NOT NULL,
+		impressions FLOAT NOT NULL,
+		[program_name] VARCHAR(500) NOT NULL,
+		program_genre VARCHAR(127) NOT NULL,
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+
+	CREATE TABLE staged_recommended_plan_details
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		staged_recommended_plan_id INT NOT NULL, -- FK
+		recommended_plan_id INT NOT NULL,
+		is_recommended_plan BIT NOT NULL,
+		plan_clearance_percentage FLOAT NULL,	
+		daypart_code VARCHAR(10) NULL,
+		start_time INT NULL,
+		end_time INT NULL,
+		monday INT NULL,
+		tuesday INT NULL,
+		wednesday INT NULL,
+		thursday INT NULL,
+		friday INT NULL,
+		saturday INT NULL,
+		sunday INT NULL,
+	)
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD CONSTRAINT FK_staged_recommended_plan_details_staged_recommended_plans
+		FOREIGN KEY (staged_recommended_plan_id) REFERENCES staged_recommended_plans(id)
+END
+
+/*** Recommended Plans - Target Tables ***/
+IF NOT EXISTS (SELECT 1 FROM sys.columns 
+          WHERE [Name] = N'unique_id_external'
+          AND OBJECT_ID = OBJECT_ID(N'spot_exceptions_recommended_plans'))
+BEGIN	
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD unique_id_external BIGINT NULL
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD execution_id_external VARCHAR(100) NULL
+END
+
+DECLARE @rp_populationSql VARCHAR(MAX) = '
+UPDATE spot_exceptions_recommended_plans SET
+	 unique_id_external = 1,
+	 execution_id_external = ''1''
+WHERE unique_id_external IS NULL
+'
+
+DECLARE @rp_alterSql VARCHAR(MAX) = '
+ALTER TABLE spot_exceptions_recommended_plans 
+	ALTER COLUMN unique_id_external BIGINT NOT NULL
+
+ALTER TABLE spot_exceptions_recommended_plans 
+	ALTER COLUMN execution_id_external VARCHAR(100) NOT NULL
+'
+EXEC (@rp_populationSql)
+EXEC (@rp_alterSql)
+
+/*** Aggregate Tables ***/
+IF OBJECT_ID('staged_unposted_no_plan') IS NULL
+BEGIN
+	CREATE TABLE staged_unposted_no_plan
+	(
+		id INT IDENTITY(1,1) PRIMARY KEY,
+		house_isci VARCHAR(50) NOT NULL,
+		client_isci VARCHAR(50) NOT NULL,
+		spot_count INT NOT NULL,	
+		program_air_time DATETIME2 NOT NULL,	
+		estimate_id BIGINT NOT NULL,	
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+END
+
+IF OBJECT_ID('staged_unposted_no_reel_roster') IS NULL
+BEGIN
+	CREATE TABLE staged_unposted_no_reel_roster
+	(
+		id INT IDENTITY(1,1) PRIMARY KEY,
+		house_isci VARCHAR(50) NOT NULL,
+		spot_count INT NOT NULL,	
+		program_air_time DATETIME2 NOT NULL,
+		estimate_id BIGINT NOT NULL,
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+END
+
+GO
+
+/*************************************** END BP-3848 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

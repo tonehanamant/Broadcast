@@ -1,0 +1,20 @@
+﻿CREATE TABLE [dbo].[staged_recommended_plan_details]
+(
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[staged_recommended_plan_id] [int] NOT NULL,
+	[recommended_plan_id] [int] NOT NULL,
+	[is_recommended_plan] [bit] NOT NULL,
+	[plan_clearance_percentage] [float] NULL,
+	[daypart_code] [varchar](10) NULL,
+	[start_time] [int] NULL,
+	[end_time] [int] NULL,
+	[monday] [int] NULL,
+	[tuesday] [int] NULL,
+	[wednesday] [int] NULL,
+	[thursday] [int] NULL,
+	[friday] [int] NULL,
+	[saturday] [int] NULL,
+	[sunday] [int] NULL,
+	CONSTRAINT [PK_staged_recommended_plan_details] PRIMARY KEY CLUSTERED ([id] ASC),
+	CONSTRAINT [FK_staged_recommended_plan_details_staged_recommended_plans] FOREIGN KEY ([staged_recommended_plan_id]) REFERENCES [dbo].[staged_recommended_plans] ([id]) ON DELETE CASCADE,
+);
