@@ -537,6 +537,7 @@
     <Compile Include="Clients\PricingJobQueueApiClient.cs" />
     <Compile Include="Entities\LogoResultDto.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
+    <Compile Include="Entities\Plan\Buying\ProprietaryInventoryData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramInventoryDaypart.cs" />
     <Compile Include="Entities\Plan\CustomDaypartOrganizationDto.cs" />

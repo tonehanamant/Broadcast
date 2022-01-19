@@ -1730,7 +1730,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             await _RunBuyingJobAsync(planBuyingParametersDto, plan, jobId, token);
         }
 
-        private List<PlanBuyingApiRequestWeekDto_v3> _GetBuyingModelWeeks_v3(
+        internal List<PlanBuyingApiRequestWeekDto_v3> _GetBuyingModelWeeks_v3(
             PlanDto plan,
             PlanBuyingParametersDto parameters,
             ProprietaryInventoryData proprietaryInventoryData,
@@ -1778,13 +1778,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     weeklyBudget *= (decimal)(1.0 - (parameters.Margin / 100.0));
                 }
 
+                // call the plancalculatebudgetbymode to adjust impressions when goal is floor and efficiency
+                var budgetResponseByModes = PlanGoalHelper.PlanCalculateBudgetByMode(weeklyBudget, impressionGoal, spotAllocationModelMode);
+
                 var buyingWeek = new PlanBuyingApiRequestWeekDto_v3
                 {
                     MediaWeekId = mediaWeekId,
-                    ImpressionGoal = impressionGoal,
-
-                    CpmGoal = spotAllocationModelMode == SpotAllocationModelMode.Quality ?
-                        ProposalMath.CalculateCpm(weeklyBudget, impressionGoal) : 1,
+                    ImpressionGoal = budgetResponseByModes.ImpressionGoal,
+                    CpmGoal = budgetResponseByModes.CpmGoal,
                     MarketCoverageGoal = marketCoverageGoal,
                     FrequencyCap = FrequencyCapHelper.GetFrequencyCap(planBuyingParameters.UnitCapsType, planBuyingParameters.UnitCaps),
                     ShareOfVoice = shareOfVoice,
@@ -2709,17 +2710,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             public PlanBuyingInventoryProgram Program { get; set; }
 
             public BasePlanInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
-        }
-
-        internal class ProprietaryInventoryData
-        {
-            public double TotalImpressions { get; set; }
-
-            public decimal TotalCost { get; set; }
-
-            public decimal TotalCostWithMargin { get; set; }
-
-            public Dictionary<short, double> ImpressionsPerMarket { get; set; } = new Dictionary<short, double>();
         }
 
         internal class InventorySpotMapping

@@ -1796,12 +1796,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     weeklyBudget *= (decimal)(1.0 - (parameters.Margin / 100.0));
                 }
 
+                // call the plancalculatebudgetbymode to adjust impressions when goal is floor and efficiency
+                var budgetResponseByModes = PlanGoalHelper.PlanCalculateBudgetByMode(weeklyBudget, impressionGoal, spotAllocationModelMode);
+
                 var pricingWeek = new PlanPricingApiRequestWeekDto_v3
                 {
                     MediaWeekId = mediaWeekId,
-                    ImpressionGoal = impressionGoal,
-                    CpmGoal = spotAllocationModelMode == SpotAllocationModelMode.Quality ?
-                        ProposalMath.CalculateCpm(weeklyBudget, impressionGoal) : 1,
+                    ImpressionGoal = budgetResponseByModes.ImpressionGoal,
+                    CpmGoal = budgetResponseByModes.CpmGoal,
                     MarketCoverageGoal = marketCoverageGoal,
                     FrequencyCap = FrequencyCapHelper.GetFrequencyCap(planPricingParameters.UnitCapsType, planPricingParameters.UnitCaps),
                     ShareOfVoice = shareOfVoice,

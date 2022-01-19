@@ -581,6 +581,7 @@
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\KeyHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\PlanComparisonHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\PlanGoalHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\PlanPostingTypeHelperTests.cs" />
     <Compile Include="UnitTests\Helpers\PlanPricingBuyingFileHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\ProgramRestrictionsHelperUnitTests.cs" />

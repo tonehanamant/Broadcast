@@ -1,6 +1,8 @@
 ﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ namespace Services.Broadcast.Helpers
     /// </summary>
     public static class PlanGoalHelper
     {
+        private const int nonQualityCpmGoal = 1;
+
         /// <summary>
         /// Takes a list of dayparts and calculates weights for those dayparts that does not have weight set
         /// Remaining weight is distributed evenly
@@ -68,6 +72,35 @@ namespace Services.Broadcast.Helpers
                     Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) * GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
                 }).ToList();
             return allSpotLengthIdAndStandardDaypartIdCombinations;
+        }
+
+
+        /// <summary>Plans the calculate budget by mode to adjust impressions for floor and efficiency mode.</summary>
+        /// <param name="weeklyBudget">The weekly budget.</param>
+        /// <param name="impressionGoal">The impression goal.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        public static PlanBudgetResponseByMode PlanCalculateBudgetByMode(decimal weeklyBudget, double impressionGoal, SpotAllocationModelMode spotAllocationModelMode)
+        {
+            var result = new PlanBudgetResponseByMode();
+            var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
+
+            if(spotAllocationModelMode == SpotAllocationModelMode.Quality)
+            {
+                result.CpmGoal = cpmGoal;
+                result.ImpressionGoal = impressionGoal;
+            }
+            else
+            {
+                result.CpmGoal = nonQualityCpmGoal;
+                result.ImpressionGoal = (double)cpmGoal * impressionGoal;
+            }
+            return result;
+        }
+
+        public class PlanBudgetResponseByMode
+        {
+            public double ImpressionGoal { get; set; }
+            public decimal CpmGoal { get; set; }
         }
     }
 }
