@@ -51,6 +51,8 @@ namespace BroadcastJobScheduler.Service
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            // if we get here the service comes down.
+            // at least we log.
             var message = $"Unhandled exception caught.";
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, sender.GetType(), "unknown", "Program.Main");
             _Log.Error(logMessage.ToJson(), (Exception)e.ExceptionObject);

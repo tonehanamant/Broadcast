@@ -51,7 +51,14 @@ namespace Services.Broadcast.Clients
 
                         var transferUtility = new TransferUtility(client);
 
-                        await transferUtility.UploadAsync(fileMemoryStream, bucketName, keyName);
+                        try
+                        {
+                            await transferUtility.UploadAsync(fileMemoryStream, bucketName, keyName);
+                        }
+                        catch (Exception ex)
+                        {
+                            _LogError("Exception caught attempting UploadAsync", ex);
+                        }
                     }
                 }
             }
