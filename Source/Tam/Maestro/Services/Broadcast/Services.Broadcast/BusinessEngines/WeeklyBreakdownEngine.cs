@@ -1235,6 +1235,11 @@ namespace Services.Broadcast.BusinessEngines
            double totalImpressions)
         {
             var unlockedWeeks = weeks.Where(w => w.IsLocked == false).ToList();
+            if (!unlockedWeeks.Any())
+            {
+                return;
+            }
+
             var firstWeek = unlockedWeeks.First();
             var totalImpressionsRounded = unlockedWeeks.Sum(w => w.WeeklyImpressions);
             var roundedImpressionsDifference = totalImpressions - totalImpressionsRounded;
