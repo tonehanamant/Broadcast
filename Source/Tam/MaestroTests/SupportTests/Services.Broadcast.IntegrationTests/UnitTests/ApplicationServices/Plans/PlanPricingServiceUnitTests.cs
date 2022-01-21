@@ -9851,6 +9851,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             parameters.MarketGroup = MarketGroupEnum.None;
             parameters.Margin = 20;
             parameters.JobId = jobId;
+            parameters.BudgetCpmLever = BudgetCpmLeverEnum.Budget;
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))

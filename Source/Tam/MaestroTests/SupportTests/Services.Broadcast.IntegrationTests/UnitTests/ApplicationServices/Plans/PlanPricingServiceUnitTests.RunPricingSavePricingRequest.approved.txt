@@ -579,7 +579,7 @@
     },
     "pricingApiRequest": {
       "configuration": {
-        "requirement": "impressions"
+        "requirement": "budget"
       },
       "contract": [
         {

@@ -74,12 +74,13 @@ namespace Services.Broadcast.Helpers
             return allSpotLengthIdAndStandardDaypartIdCombinations;
         }
 
-
         /// <summary>Plans the calculate budget by mode to adjust impressions for floor and efficiency mode.</summary>
         /// <param name="weeklyBudget">The weekly budget.</param>
         /// <param name="impressionGoal">The impression goal.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
-        public static PlanBudgetResponseByMode PlanCalculateBudgetByMode(decimal weeklyBudget, double impressionGoal, SpotAllocationModelMode spotAllocationModelMode)
+        /// <param name="budgetCpmLever">The budget CPM lever.</param>
+        public static PlanBudgetResponseByMode PlanCalculateBudgetByMode(decimal weeklyBudget, double impressionGoal, SpotAllocationModelMode spotAllocationModelMode,
+            BudgetCpmLeverEnum budgetCpmLever)
         {
             var result = new PlanBudgetResponseByMode();
             var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
@@ -92,7 +93,7 @@ namespace Services.Broadcast.Helpers
             else
             {
                 result.CpmGoal = nonQualityCpmGoal;
-                result.ImpressionGoal = (double)cpmGoal * impressionGoal;
+                result.ImpressionGoal = budgetCpmLever == BudgetCpmLeverEnum.Budget ? (double)cpmGoal * impressionGoal : impressionGoal;
             }
             return result;
         }

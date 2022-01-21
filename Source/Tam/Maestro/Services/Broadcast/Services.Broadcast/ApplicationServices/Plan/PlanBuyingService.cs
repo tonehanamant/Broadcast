@@ -1779,7 +1779,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 // call the plancalculatebudgetbymode to adjust impressions when goal is floor and efficiency
-                var budgetResponseByModes = PlanGoalHelper.PlanCalculateBudgetByMode(weeklyBudget, impressionGoal, spotAllocationModelMode);
+                var budgetResponseByModes = PlanGoalHelper.PlanCalculateBudgetByMode(weeklyBudget, impressionGoal, spotAllocationModelMode, parameters.BudgetCpmLever);
 
                 var buyingWeek = new PlanBuyingApiRequestWeekDto_v3
                 {
