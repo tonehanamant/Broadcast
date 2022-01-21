@@ -655,7 +655,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 plan.TargetImpressions = Math.Truncate(Convert.ToDouble(plan.TargetImpressions / 1000));
             }
+
             plan.HHImpressions /= 1000;
+
             foreach (var audience in plan.SecondaryAudiences)
             {
                 if (audience.Impressions.HasValue)
@@ -663,7 +665,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     audience.Impressions /= 1000;
                 }
             }
+
             foreach (var week in plan.WeeklyBreakdownWeeks)
+            {
+                week.WeeklyImpressions /= 1000;
+            }
+
+            foreach (var week in plan.RawWeeklyBreakdownWeeks)
             {
                 week.WeeklyImpressions /= 1000;
             }
