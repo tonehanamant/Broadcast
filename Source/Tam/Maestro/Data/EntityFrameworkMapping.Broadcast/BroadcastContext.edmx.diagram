@@ -562,6 +562,8 @@
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_plan" Width="1.5" PointX="40.375" PointY="0.75" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="37.75" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" Width="1.5" PointX="20.375" PointY="41.75" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="41.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -243,5 +243,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
         public virtual DbSet<staged_unposted_no_plan> staged_unposted_no_plan { get; set; }
         public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
+        public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
+        public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
     }
 }

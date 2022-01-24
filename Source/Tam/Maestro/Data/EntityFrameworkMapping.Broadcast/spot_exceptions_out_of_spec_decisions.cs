@@ -20,6 +20,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string decision_notes { get; set; }
         public string username { get; set; }
         public System.DateTime created_at { get; set; }
+        public string synced_by { get; set; }
+        public Nullable<System.DateTime> synced_at { get; set; }
     
         public virtual spot_exceptions_out_of_specs spot_exceptions_out_of_specs { get; set; }
     }

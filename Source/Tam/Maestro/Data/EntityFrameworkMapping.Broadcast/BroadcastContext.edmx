@@ -2297,6 +2297,8 @@
           <Property Name="decision_notes" Type="nvarchar" MaxLength="1024" />
           <Property Name="username" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="synced_by" Type="varchar" MaxLength="100" />
+          <Property Name="synced_at" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="spot_exceptions_out_of_spec_reason_codes">
           <Key>
@@ -2345,6 +2347,8 @@
           <Property Name="spot_exceptions_recommended_plan_detail_id" Type="int" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="synced_by" Type="varchar" MaxLength="100" />
+          <Property Name="synced_at" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_details">
           <Key>
@@ -2380,6 +2384,31 @@
           <Property Name="advertiser_name" Type="nvarchar" MaxLength="100" />
           <Property Name="unique_id_external" Type="bigint" Nullable="false" />
           <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_unposted_no_plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="house_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="client_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="program_air_time" Type="datetime" Nullable="false" />
+          <Property Name="estimate_id" Type="bigint" Nullable="false" />
+          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_unposted_no_reel_roster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="house_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="program_air_time" Type="datetime" Nullable="false" />
+          <Property Name="estimate_id" Type="bigint" Nullable="false" />
+          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_length_cost_multipliers">
           <Key>
@@ -2735,7 +2764,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2904,7 +2933,7 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2932,7 +2961,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__062DE679">
+        <Association Name="FK__genre_map__maest__27114E05">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2944,7 +2973,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__07220AB2">
+        <Association Name="FK__genre_map__mappe__2805723E">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2956,7 +2985,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__62AFA012">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -7366,6 +7395,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="spot_exceptions_recommended_plan_decision" EntityType="Self.spot_exceptions_recommended_plan_decision" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_exceptions_recommended_plan_details" EntityType="Self.spot_exceptions_recommended_plan_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_exceptions_recommended_plans" EntityType="Self.spot_exceptions_recommended_plans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="Self.spot_exceptions_unposted_no_plan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="Self.spot_exceptions_unposted_no_reel_roster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_length_cost_multipliers" EntityType="Self.spot_length_cost_multipliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_lengths" EntityType="Self.spot_lengths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_tracker_file_details" EntityType="Self.spot_tracker_file_details" Schema="dbo" store:Type="Tables" />
@@ -7432,15 +7463,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__062DE679" Association="Self.FK__genre_map__maest__062DE679">
+          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__07220AB2" Association="Self.FK__genre_map__mappe__07220AB2">
+          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__62AFA012" Association="Self.FK__plan_vers__genre__62AFA012">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -10316,6 +10347,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
             <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
           </AssociationSet>
+          <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" />
+          <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -17469,6 +17502,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="username" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
+          <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="synced_at" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -17479,6 +17514,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="username" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" FromRole="spot_exceptions_recommended_plan_decision" ToRole="spot_exceptions_recommended_plan_details" />
+          <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="synced_at" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_details">
           <Key>
@@ -18072,6 +18109,31 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="spot_exceptions_unposted_no_plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estimate_id" Type="Int64" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_unposted_no_reel_roster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estimate_id" Type="Int64" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -20919,6 +20981,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySetMapping Name="spot_exceptions_out_of_spec_decisions">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_spec_decisions">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_spec_decisions">
+                <ScalarProperty Name="synced_at" ColumnName="synced_at" />
+                <ScalarProperty Name="synced_by" ColumnName="synced_by" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="decision_notes" ColumnName="decision_notes" />
@@ -20931,6 +20995,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySetMapping Name="spot_exceptions_recommended_plan_decision">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_decision">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_decision">
+                <ScalarProperty Name="synced_at" ColumnName="synced_at" />
+                <ScalarProperty Name="synced_by" ColumnName="synced_by" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="spot_exceptions_recommended_plan_detail_id" ColumnName="spot_exceptions_recommended_plan_detail_id" />
@@ -21183,6 +21249,33 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
                 <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
                 <ScalarProperty Name="spot_count" ColumnName="spot_count" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_unposted_no_plan">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_plan">
+              <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_plan">
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="client_isci" ColumnName="client_isci" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_unposted_no_reel_roster">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_reel_roster">
+              <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_reel_roster">
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="count" ColumnName="count" />
                 <ScalarProperty Name="house_isci" ColumnName="house_isci" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

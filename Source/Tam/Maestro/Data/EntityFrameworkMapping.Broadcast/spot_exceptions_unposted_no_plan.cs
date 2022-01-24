@@ -12,15 +12,15 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class spot_exceptions_recommended_plan_decision
+    public partial class spot_exceptions_unposted_no_plan
     {
         public int id { get; set; }
-        public int spot_exceptions_recommended_plan_detail_id { get; set; }
-        public string username { get; set; }
-        public System.DateTime created_at { get; set; }
-        public string synced_by { get; set; }
-        public Nullable<System.DateTime> synced_at { get; set; }
-    
-        public virtual spot_exceptions_recommended_plan_details spot_exceptions_recommended_plan_details { get; set; }
+        public string house_isci { get; set; }
+        public string client_isci { get; set; }
+        public int count { get; set; }
+        public System.DateTime program_air_time { get; set; }
+        public long estimate_id { get; set; }
+        public string ingested_by { get; set; }
+        public System.DateTime ingested_at { get; set; }
     }
 }

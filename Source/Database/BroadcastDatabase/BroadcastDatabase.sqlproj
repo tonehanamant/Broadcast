@@ -293,6 +293,8 @@
     <Build Include="dbo\Tables\staged_recommended_plan_details.sql" />
     <Build Include="dbo\Tables\staged_unposted_no_plan.sql" />
     <Build Include="dbo\Tables\staged_unposted_no_reel_roster.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_unposted_no_plan.sql" />
+    <Build Include="dbo\Tables\spot_exceptions_unposted_no_reel_roster.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

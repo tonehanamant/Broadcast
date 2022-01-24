@@ -14,4 +14,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="spot_length_id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="8eb345e9-01c6-49c1-9237-b05ea0ebcef4" ChangeDateTime="01/21/2022 10:20:07">
+    <Property Name="ElementName" Value="[dbo].[spot_exceptions_unposted_no_plan].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[spot_exceptions_unposted_no_plan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7651c99c-ea2a-44e3-a6c4-fe14906eb5f9" ChangeDateTime="01/21/2022 10:23:26">
+    <Property Name="ElementName" Value="[dbo].[spot_exceptions_unposted_no_reel_roster].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[spot_exceptions_unposted_no_reel_roster]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
 </Operations>
