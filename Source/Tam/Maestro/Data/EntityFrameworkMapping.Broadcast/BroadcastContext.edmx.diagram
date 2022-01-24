@@ -564,6 +564,21 @@
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" Width="1.5" PointX="20.375" PointY="41.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="41.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_goals" Width="1.5" PointX="20.5" PointY="103.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_available_markets" Width="1.5" PointX="22.75" PointY="68.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_flight_days" Width="1.5" PointX="28.75" PointY="59.125" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_flight_hiatus_days" Width="1.5" PointX="22.75" PointY="117.25" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_weekly_breakdown" Width="1.5" PointX="25.75" PointY="57.25" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_flight_days_days" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_available_markets_market_coverage_file" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_available_markets_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_available_markets_plan_version_daypart_goals" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_flight_days_plan_version_daypart_goals" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

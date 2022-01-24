@@ -295,6 +295,11 @@
     <Build Include="dbo\Tables\staged_unposted_no_reel_roster.sql" />
     <Build Include="dbo\Tables\spot_exceptions_unposted_no_plan.sql" />
     <Build Include="dbo\Tables\spot_exceptions_unposted_no_reel_roster.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_weekly_breakdown.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_goals.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_flight_hiatus_days.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_flight_days.sql" />
+    <Build Include="dbo\Tables\plan_version_daypart_available_markets.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

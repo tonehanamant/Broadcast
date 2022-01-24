@@ -30,6 +30,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int latest_version_id { get; set; }
         public Nullable<System.Guid> product_master_id { get; set; }
         public Nullable<int> spot_allocation_model_mode { get; set; }
+        public int plan_mode { get; set; }
     
         public virtual campaign campaign { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }

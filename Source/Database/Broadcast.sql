@@ -2106,6 +2106,136 @@ END
 
 /*************************************** END BP3770 *****************************************************/
 
+/*************************************** END BP-3825 *****************************************************/
+
+GO
+
+DECLARE @AddColumnSql VARCHAR(MAX) = 
+	'ALTER TABLE plans
+			ADD plan_mode INT NULL'
+
+DECLARE @PopulateSql VARCHAR(MAX) =
+	'UPDATE plans 
+			SET plan_mode = 1 
+		WHERE plan_mode IS NULL'
+
+DECLARE @AlterSql VARCHAR(MAX) = 
+	'ALTER TABLE plans
+			ALTER COLUMN plan_mode INT NOT NULL'
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plans' AND COLUMN_NAME= 'plan_mode')
+BEGIN
+	EXEC (@AddColumnSql)
+	EXEC (@PopulateSql)
+	EXEC (@AlterSql)
+END
+
+GO
+
+IF OBJECT_ID('[dbo].[plan_version_daypart_goals]') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_daypart_goals]
+	(
+		id INT NOT NULL PRIMARY KEY IDENTITY, 
+		plan_version_daypart_id INT NOT NULL,
+		flight_start_Date DATETIME NOT NULL,
+		flight_end_Date DATETIME NOT NULL,
+		budget money NOT NULL,
+		target_impression float NOT NULL,
+		target_cpm money NOT NULL,
+		target_rating_points float NOT NULL,
+		target_cpp money NOT NULL,
+		target_universe float NOT NULL,
+		hh_impressions float NOT NULL,
+		hh_cpm money NOT NULL,
+		hh_rating_points float NOT NULL,
+		hh_cpp money NOT NULL,
+		hh_universe float NOT NULL,
+		currency int NOT NULL,  
+		coverage_goal_percent float NOT NULL,
+		goal_breakdown_type int NOT NULL,
+		is_adu_enabled bit NOT NULL,
+		impressions_per_unit float NULL,
+		CONSTRAINT [FK_plan_version_daypart_goals_plan_version_dayparts] FOREIGN KEY ([plan_version_daypart_id]) REFERENCES [dbo].[plan_version_dayparts](id) ON DELETE CASCADE
+	)
+END
+
+GO
+
+IF OBJECT_ID('[dbo].[plan_version_daypart_weekly_breakdown]') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_daypart_weekly_breakdown]
+	(
+		id int IDENTITY(1,1) NOT NULL,
+		plan_version_daypart_goal_id INT NOT NULL,
+		media_week_id int NOT NULL,
+		number_active_days int NOT NULL,
+		active_days_label varchar(20) NULL,
+		impressions float NOT NULL,
+		impressions_percentage float NOT NULL,
+		plan_version_id int NOT NULL,
+		rating_points float NOT NULL,
+		budget money NOT NULL,
+		spot_length_id int NULL,
+		percentage_of_week float NULL,
+		adu_impressions float NOT NULL,
+		unit_impressions float NULL,
+		is_locked bit NULL,
+		CONSTRAINT [FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals](id) ON DELETE CASCADE,
+		CONSTRAINT [FK_plan_version_daypart_weekly_breakdown_media_weeks] FOREIGN KEY ([media_week_id]) REFERENCES [dbo].[media_weeks] (id),
+		CONSTRAINT [FK_plan_version_daypart_weekly_breakdown_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths] (id)
+	)	
+END
+
+GO
+
+IF OBJECT_ID('[dbo].[plan_version_daypart_available_markets]') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_daypart_available_markets]
+	(
+		id int IDENTITY(1,1) NOT NULL,
+		plan_version_daypart_goal_id INT NOT NULL,
+		market_code smallint NOT NULL,
+		market_coverage_file_id int NOT NULL,
+		share_of_voice_percent float NULL,	
+		is_user_share_of_voice_percent bit NOT NULL,
+		CONSTRAINT [FK_plan_version_daypart_available_markets_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals](id) ON DELETE CASCADE,
+		CONSTRAINT [FK_plan_version_daypart_available_markets_markets] FOREIGN KEY ([market_code]) REFERENCES [dbo].[markets] (market_code),
+		CONSTRAINT [FK_plan_version_daypart_available_markets_market_coverage_file] FOREIGN KEY ([market_coverage_file_id]) REFERENCES [dbo].[market_coverage_files] (id)
+	)		
+END
+
+GO
+
+IF OBJECT_ID('[dbo].[plan_version_daypart_flight_days]') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_daypart_flight_days]
+	(
+		id int IDENTITY(1,1) NOT NULL,
+		plan_version_daypart_goal_id INT NOT NULL,
+		day_id INT NOT NULL,
+		CONSTRAINT [FK_plan_version_daypart_flight_days_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals](id) ON DELETE CASCADE,
+		CONSTRAINT [FK_plan_version_daypart_flight_days_days] FOREIGN KEY ([day_id]) REFERENCES [dbo].[days] (id)
+	)	
+END
+
+GO
+
+IF OBJECT_ID('[dbo].[plan_version_daypart_flight_hiatus_days]') IS NULL
+BEGIN
+	CREATE TABLE [dbo].[plan_version_daypart_flight_hiatus_days]
+	(
+		id int IDENTITY(1,1) NOT NULL,
+		plan_version_daypart_goal_id INT NOT NULL,
+		hiatus_day DATETIME NOT NULL,
+		CONSTRAINT [FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals](id) ON DELETE CASCADE
+	)
+END
+
+GO
+
+/*************************************** END BP-3825 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

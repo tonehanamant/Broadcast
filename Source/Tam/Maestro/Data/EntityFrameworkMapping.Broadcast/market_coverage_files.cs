@@ -20,6 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.pricing_guide_distributions = new HashSet<pricing_guide_distributions>();
             this.plan_version_available_markets = new HashSet<plan_version_available_markets>();
             this.plan_version_blackout_markets = new HashSet<plan_version_blackout_markets>();
+            this.plan_version_daypart_available_markets = new HashSet<plan_version_daypart_available_markets>();
         }
     
         public int id { get; set; }
@@ -32,5 +33,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<pricing_guide_distributions> pricing_guide_distributions { get; set; }
         public virtual ICollection<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual ICollection<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
+        public virtual ICollection<plan_version_daypart_available_markets> plan_version_daypart_available_markets { get; set; }
     }
 }

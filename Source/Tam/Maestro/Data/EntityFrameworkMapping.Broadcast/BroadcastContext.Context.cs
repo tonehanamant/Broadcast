@@ -245,5 +245,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
         public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
         public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
+        public virtual DbSet<plan_version_daypart_goals> plan_version_daypart_goals { get; set; }
+        public virtual DbSet<plan_version_daypart_available_markets> plan_version_daypart_available_markets { get; set; }
+        public virtual DbSet<plan_version_daypart_flight_days> plan_version_daypart_flight_days { get; set; }
+        public virtual DbSet<plan_version_daypart_flight_hiatus_days> plan_version_daypart_flight_hiatus_days { get; set; }
+        public virtual DbSet<plan_version_daypart_weekly_breakdown> plan_version_daypart_weekly_breakdown { get; set; }
     }
 }

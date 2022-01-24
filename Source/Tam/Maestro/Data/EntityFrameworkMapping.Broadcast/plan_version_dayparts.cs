@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
             this.plan_version_daypart_show_type_restrictions = new HashSet<plan_version_daypart_show_type_restrictions>();
             this.plan_version_daypart_customizations = new HashSet<plan_version_daypart_customizations>();
+            this.plan_version_daypart_goals = new HashSet<plan_version_daypart_goals>();
         }
     
         public int id { get; set; }
@@ -46,5 +47,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual plan_versions plan_versions { get; set; }
         public virtual standard_dayparts standard_dayparts { get; set; }
         public virtual ICollection<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
+        public virtual ICollection<plan_version_daypart_goals> plan_version_daypart_goals { get; set; }
     }
 }
