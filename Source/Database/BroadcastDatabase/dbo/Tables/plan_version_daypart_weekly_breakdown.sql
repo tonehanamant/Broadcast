@@ -14,8 +14,11 @@
     [adu_impressions]              FLOAT (53)   NOT NULL,
     [unit_impressions]             FLOAT (53)   NULL,
     [is_locked]                    BIT          NULL,
+    PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_version_daypart_weekly_breakdown_media_weeks] FOREIGN KEY ([media_week_id]) REFERENCES [dbo].[media_weeks] ([id]),
     CONSTRAINT [FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals] ([id]) ON DELETE CASCADE,
     CONSTRAINT [FK_plan_version_daypart_weekly_breakdown_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths] ([id])
 );
+
+
 

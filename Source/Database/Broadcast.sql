@@ -2057,7 +2057,7 @@ GO
 
 /*************************************** Start BP-3770 *****************************************************/
 
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_decision' AND COLUMN_NAME= 'synced_by' AND COLUMN_NAME='synced_at')
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_decision' AND (COLUMN_NAME= 'synced_by' OR COLUMN_NAME='synced_at'))
 BEGIN
 	ALTER TABLE spot_exceptions_recommended_plan_decision
 	ADD synced_by VARCHAR(100) NULL,
@@ -2065,7 +2065,7 @@ BEGIN
 END
 
 
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions' AND COLUMN_NAME= 'synced_by' AND COLUMN_NAME='synced_at')
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions' AND (COLUMN_NAME= 'synced_by' OR COLUMN_NAME='synced_at'))
 BEGIN
 	ALTER TABLE spot_exceptions_out_of_spec_decisions
 	ADD synced_by VARCHAR(100) NULL,
@@ -2136,7 +2136,7 @@ IF OBJECT_ID('[dbo].[plan_version_daypart_goals]') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[plan_version_daypart_goals]
 	(
-		id INT NOT NULL PRIMARY KEY IDENTITY, 
+		id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 		plan_version_daypart_id INT NOT NULL,
 		flight_start_Date DATETIME NOT NULL,
 		flight_end_Date DATETIME NOT NULL,
@@ -2166,7 +2166,7 @@ IF OBJECT_ID('[dbo].[plan_version_daypart_weekly_breakdown]') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[plan_version_daypart_weekly_breakdown]
 	(
-		id int IDENTITY(1,1) NOT NULL,
+		id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 		plan_version_daypart_goal_id INT NOT NULL,
 		media_week_id int NOT NULL,
 		number_active_days int NOT NULL,
@@ -2193,7 +2193,7 @@ IF OBJECT_ID('[dbo].[plan_version_daypart_available_markets]') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[plan_version_daypart_available_markets]
 	(
-		id int IDENTITY(1,1) NOT NULL,
+		id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 		plan_version_daypart_goal_id INT NOT NULL,
 		market_code smallint NOT NULL,
 		market_coverage_file_id int NOT NULL,
@@ -2211,7 +2211,7 @@ IF OBJECT_ID('[dbo].[plan_version_daypart_flight_days]') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[plan_version_daypart_flight_days]
 	(
-		id int IDENTITY(1,1) NOT NULL,
+		id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 		plan_version_daypart_goal_id INT NOT NULL,
 		day_id INT NOT NULL,
 		CONSTRAINT [FK_plan_version_daypart_flight_days_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals](id) ON DELETE CASCADE,
@@ -2225,7 +2225,7 @@ IF OBJECT_ID('[dbo].[plan_version_daypart_flight_hiatus_days]') IS NULL
 BEGIN
 	CREATE TABLE [dbo].[plan_version_daypart_flight_hiatus_days]
 	(
-		id int IDENTITY(1,1) NOT NULL,
+		id int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 		plan_version_daypart_goal_id INT NOT NULL,
 		hiatus_day DATETIME NOT NULL,
 		CONSTRAINT [FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals] FOREIGN KEY ([plan_version_daypart_goal_id]) REFERENCES [dbo].[plan_version_daypart_goals](id) ON DELETE CASCADE
