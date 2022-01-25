@@ -563,6 +563,8 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansStationRequestDto.cs" />
     <Compile Include="Entities\SpotLengthDto.cs" />
+    <Compile Include="Exceptions\PlanValidationException.cs" />
+    <Compile Include="Exceptions\PlanSaveException.cs" />
     <Compile Include="FeatureToggles.cs" />
     <Compile Include="BusinessEngines\AabEngine.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />

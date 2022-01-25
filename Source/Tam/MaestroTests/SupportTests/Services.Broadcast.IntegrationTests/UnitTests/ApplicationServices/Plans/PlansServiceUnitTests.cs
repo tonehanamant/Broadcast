@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Castle.Components.DictionaryAdapter;
+using Services.Broadcast.Exceptions;
 using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -1137,7 +1138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
                 .Returns(standardResult);
 
-            var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true));
+            var exception = Assert.Throws<PlanSaveException>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true));
 
             Assert.AreEqual(expectedMessage, exception.Message);
         }
@@ -1195,7 +1196,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             plan.Id = 1;
             plan.VersionId = 1;
 
-            var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23)));
+            var exception = Assert.Throws<PlanSaveException>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23)));
 
             Assert.AreEqual(expectedMessage, exception.Message);
         }

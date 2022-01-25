@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Services.Broadcast.Exceptions;
+using Services.Broadcast.Helpers.Json;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
 using static Services.Broadcast.Entities.Plan.PlanCustomDaypartDto;
@@ -337,6 +339,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private int _DoSavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool shouldPromotePlanPricingResults, bool shouldPromotePlanBuyingResults)
         {
+            var logTxId = Guid.NewGuid();
+
             const string SW_KEY_TOTAL_DURATION = "Total duration";
             const string SW_KEY_PRE_PLAN_VALIDATION = "Pre Plan Validation";
             const string SW_KEY_PLAN_VALIDATION = "Plan Validation";
@@ -344,131 +348,164 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const string SW_KEY_PLAN_SAVE = "Plan Save";
             const string SW_KEY_POST_PLAN_SAVE = "Post Plan Save";
 
-            _LogInfo($"SavePlan starting for planID '{plan.Id}'", createdBy);
+            _LogInfo($"SavePlan starting for planID '{plan.Id}'", logTxId, createdBy);
 
-            var processTimers = new ProcessWorkflowTimers();
-            processTimers.Start(SW_KEY_TOTAL_DURATION);
-            processTimers.Start(SW_KEY_PRE_PLAN_VALIDATION);
-
-            if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
+            try
             {
-                throw new Exception("The pricing model is running for the plan");
-            }
+                var processTimers = new ProcessWorkflowTimers();
+                processTimers.Start(SW_KEY_TOTAL_DURATION);
+                processTimers.Start(SW_KEY_PRE_PLAN_VALIDATION);
 
-            PlanDto beforePlan;
-            var saveState = _DeriveSaveState(plan, out beforePlan);
-
-            if (plan.CreativeLengths.Count == 1)
-            {//if there is only 1 creative length, set the weight to 100%
-                plan.CreativeLengths.Single().Weight = 100;
-            }
-            else
-            {
-                plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
-            }
-            DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
-
-            _CalculateDaypartOverrides(plan.Dayparts);
-            _OnSaveHandlePlanAvailableMarketSovFeature(plan);
-
-            processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
-            processTimers.Start(SW_KEY_PLAN_VALIDATION);
-
-            _PlanValidator.ValidatePlan(plan);
-
-            processTimers.End(SW_KEY_PLAN_VALIDATION);
-            processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
-
-            _ConvertImpressionsToRawFormat(plan);
-            plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-            _CalculateDeliveryDataPerAudience(plan);
-            _SetPlanVersionNumber(plan);
-            _SetPlanFlightDays(plan);
-           
-            if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
-            {
-                plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
-            }
-
-            _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
-
-            processTimers.End(SW_KEY_PRE_PLAN_SAVE);
-            processTimers.Start(SW_KEY_PLAN_SAVE);
-
-            if (saveState == SaveState.CreatingNewPlan)
-            {
-                _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
-            }
-            else
-            {
-                var key = KeyHelper.GetPlanLockingKey(plan.Id);
-                var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
-
-                if (lockingResult.Success)
+                if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
                 {
-                    if (plan.IsDraft)
-                    {
-                        _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
-                    }
-                    else
-                    {
-                        _PlanRepository.SavePlan(plan, createdBy, createdDate);
-                    }
+                    throw new PlanSaveException("The pricing model is running for the plan");
+                }
+
+                PlanDto beforePlan;
+                var saveState = _DeriveSaveState(plan, out beforePlan);
+
+                if (plan.CreativeLengths.Count == 1)
+                {
+                    //if there is only 1 creative length, set the weight to 100%
+                    plan.CreativeLengths.Single().Weight = 100;
                 }
                 else
                 {
-                    throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
+                    plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
                 }
+
+                DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
+
+                _CalculateDaypartOverrides(plan.Dayparts);
+                _OnSaveHandlePlanAvailableMarketSovFeature(plan);
+
+                processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
+                processTimers.Start(SW_KEY_PLAN_VALIDATION);
+
+                _PlanValidator.ValidatePlan(plan);
+
+                processTimers.End(SW_KEY_PLAN_VALIDATION);
+                processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
+
+                _ConvertImpressionsToRawFormat(plan);
+                plan.WeeklyBreakdownWeeks =
+                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                _CalculateDeliveryDataPerAudience(plan);
+                _SetPlanVersionNumber(plan);
+                _SetPlanFlightDays(plan);
+
+                if (plan.Status == PlanStatusEnum.Contracted &&
+                    plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
+                {
+                    plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
+                }
+
+                _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
+
+                processTimers.End(SW_KEY_PRE_PLAN_SAVE);
+                processTimers.Start(SW_KEY_PLAN_SAVE);
+
+                if (saveState == SaveState.CreatingNewPlan)
+                {
+                    _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
+                }
+                else
+                {
+                    var key = KeyHelper.GetPlanLockingKey(plan.Id);
+                    var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
+
+                    if (lockingResult.Success)
+                    {
+                        if (plan.IsDraft)
+                        {
+                            _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
+                        }
+                        else
+                        {
+                            _PlanRepository.SavePlan(plan, createdBy, createdDate);
+                        }
+                    }
+                    else
+                    {
+                        throw new PlanSaveException(
+                            $"The chosen plan has been locked by {lockingResult.LockedUserName}");
+                    }
+                }
+
+                processTimers.End(SW_KEY_PLAN_SAVE);
+                processTimers.Start(SW_KEY_POST_PLAN_SAVE);
+
+                _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
+
+                // We only aggregate data for versions, not drafts.
+                if (!plan.IsDraft)
+                {
+                    _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                    _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+                }
+
+                /*** Handle Pricing and Buying ***/
+                // This plan.id and plan.versionId were updated in their respective saves.
+                // if a new version was published then the VersionId is the latest published version.
+                // if a draft was saved then the VersionId is the draft version instead. 
+                var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
+                if (!plan.IsDraft)
+                {
+                    if (beforePlan?.Dayparts.Any() ?? false)
+                    {
+                        beforePlan.Dayparts = beforePlan.Dayparts.Where(daypart =>
+                            !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+                    }
+
+                    if (afterPlan?.Dayparts.Any() ?? false)
+                    {
+                        afterPlan.Dayparts = afterPlan.Dayparts.Where(daypart =>
+                            !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+                    }
+
+                    if (!shouldPromotePlanPricingResults && !shouldPromotePlanBuyingResults)
+                    {
+                        shouldPromotePlanPricingResults = shouldPromotePlanBuyingResults =
+                            _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
+                    }
+
+                    if (!shouldPromotePlanPricingResults && !shouldPromotePlanBuyingResults)
+                    {
+                        plan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
+                        _PlanRepository.UpdateSpotAllocationModelMode(plan.Id, SpotAllocationModelMode.Quality);
+                    }
+
+                    _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy,
+                        shouldPromotePlanPricingResults);
+                    _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePlanBuyingResults);
+                }
+
+                processTimers.End(SW_KEY_POST_PLAN_SAVE);
+                processTimers.End(SW_KEY_TOTAL_DURATION);
+                var timersReport = processTimers.ToString();
+                _LogInfo($"Plan Save Process Timers Report : '{timersReport}'", logTxId, createdBy);
+
+                return plan.Id;
             }
-
-            processTimers.End(SW_KEY_PLAN_SAVE);
-            processTimers.Start(SW_KEY_POST_PLAN_SAVE);
-
-            _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);           
-           
-            // We only aggregate data for versions, not drafts.
-            if (!plan.IsDraft)
+            catch (PlanSaveException)
             {
-                _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
-                _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+                throw;
             }
-
-            /*** Handle Pricing and Buying ***/
-            // This plan.id and plan.versionId were updated in their respective saves.
-            // if a new version was published then the VersionId is the latest published version.
-            // if a draft was saved then the VersionId is the draft version instead. 
-            var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
-            if (!plan.IsDraft)
+            catch (Exception ex)
             {
-                if (beforePlan?.Dayparts.Any() ?? false)
-                {
-                    beforePlan.Dayparts = beforePlan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
-                }
-                if (afterPlan?.Dayparts.Any() ?? false)
-                {
-                    afterPlan.Dayparts = afterPlan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
-                }
-
-                if (!shouldPromotePlanPricingResults && !shouldPromotePlanBuyingResults)
-                {
-                    shouldPromotePlanPricingResults = shouldPromotePlanBuyingResults = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
-                }
-
-                if (!shouldPromotePlanPricingResults && !shouldPromotePlanBuyingResults)
-                {
-                    plan.SpotAllocationModelMode = SpotAllocationModelMode.Quality;
-                    _PlanRepository.UpdateSpotAllocationModelMode(plan.Id, SpotAllocationModelMode.Quality);
-                }
-                _HandlePricingOnPlanSave(saveState, plan, beforePlan, afterPlan, createdDate, createdBy, shouldPromotePlanPricingResults);
-                _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePlanBuyingResults);
+                _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
+                throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
             }
-            processTimers.End(SW_KEY_POST_PLAN_SAVE);
-            processTimers.End(SW_KEY_TOTAL_DURATION);
-            var timersReport = processTimers.ToString();
-            _LogInfo($"Plan Save Process Timers Report : '{timersReport}'");
-
-            return plan.Id;
         }
+
+        private void _HandleUnknownPlanSaveException(PlanDto plan, Exception ex, Guid logTxId, string createdBy)
+        {
+            // have to do it like this to align the log message content.
+            var exceptionToLog = new Exception($"Exception caught saving the plan.  PlanId='{plan.Id}'; Username='{createdBy}';", ex);
+            var serPlan = JsonSerializerHelper.ConvertToJson(plan);
+            _LogError(serPlan, logTxId, exceptionToLog, createdBy);
+        }
+
         internal void _HandleBuyingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, bool shouldPromotePricingResults)
         {
             // the plan passed up by the UI may not relate to the last pricing run, so ignore them.
