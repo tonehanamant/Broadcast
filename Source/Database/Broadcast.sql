@@ -2057,6 +2057,26 @@ GO
 
 /*************************************** Start BP-3770 *****************************************************/
 
+DECLARE @AddColumnSql VARCHAR(MAX) = 
+	'ALTER TABLE spot_exceptions_out_of_specs
+			ADD impressions float NOT NULL'
+
+DECLARE @PopulateSql VARCHAR(MAX) =
+	'UPDATE spot_exceptions_out_of_specs 
+			SET impressions = 50000 
+		WHERE impressions IS NULL'
+
+DECLARE @AlterSql VARCHAR(MAX) = 
+	'ALTER TABLE spot_exceptions_out_of_specs
+			ALTER COLUMN impressions float NOT NULL'
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'impressions')
+BEGIN
+	EXEC (@AddColumnSql)
+	EXEC (@PopulateSql)
+	EXEC (@AlterSql)
+END
+
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_decision' AND (COLUMN_NAME= 'synced_by' OR COLUMN_NAME='synced_at'))
 BEGIN
 	ALTER TABLE spot_exceptions_recommended_plan_decision

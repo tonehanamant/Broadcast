@@ -1121,15 +1121,9 @@
           <Property Name="plan_version_daypart_id" Type="int" Nullable="false" />
           <Property Name="affiliate_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_daypart_available_markets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="plan_version_daypart_available_markets">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="market_code" />
-            <PropertyRef Name="market_coverage_file_id" />
-            <PropertyRef Name="is_user_share_of_voice_percent" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_daypart_goal_id" Type="int" Nullable="false" />
@@ -1147,25 +1141,17 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_day
           <Property Name="custom_daypart_organization_id" Type="int" Nullable="false" />
           <Property Name="custom_daypart_name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_daypart_flight_days' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="plan_version_daypart_flight_days">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="day_id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_daypart_goal_id" Type="int" Nullable="false" />
           <Property Name="day_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_daypart_flight_hiatus_days' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="plan_version_daypart_flight_hiatus_days">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="hiatus_day" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_daypart_goal_id" Type="int" Nullable="false" />
@@ -1222,20 +1208,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_day
           <Property Name="plan_version_daypart_id" Type="int" Nullable="false" />
           <Property Name="show_type_id" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_daypart_weekly_breakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="plan_version_daypart_weekly_breakdown">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="media_week_id" />
-            <PropertyRef Name="number_active_days" />
-            <PropertyRef Name="impressions" />
-            <PropertyRef Name="impressions_percentage" />
-            <PropertyRef Name="plan_version_id" />
-            <PropertyRef Name="rating_points" />
-            <PropertyRef Name="budget" />
-            <PropertyRef Name="adu_impressions" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_daypart_goal_id" Type="int" Nullable="false" />
@@ -2436,6 +2411,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.plan_version_day
           <Property Name="reason_code_id" Type="int" Nullable="false" />
           <Property Name="unique_id_external" Type="bigint" Nullable="false" />
           <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -7529,11 +7505,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_buying_station_details" EntityType="Self.plan_version_buying_station_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_creative_lengths" EntityType="Self.plan_version_creative_lengths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_affiliate_restrictions" EntityType="Self.plan_version_daypart_affiliate_restrictions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_available_markets" EntityType="Self.plan_version_daypart_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_customizations" EntityType="Self.plan_version_daypart_customizations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_flight_days" EntityType="Self.plan_version_daypart_flight_days" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_flight_hiatus_days" EntityType="Self.plan_version_daypart_flight_hiatus_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_genre_restrictions" EntityType="Self.plan_version_daypart_genre_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_goals" EntityType="Self.plan_version_daypart_goals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_program_restrictions" EntityType="Self.plan_version_daypart_program_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_show_type_restrictions" EntityType="Self.plan_version_daypart_show_type_restrictions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_daypart_weekly_breakdown" EntityType="Self.plan_version_daypart_weekly_breakdown" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_dayparts" EntityType="Self.plan_version_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_flight_days" EntityType="Self.plan_version_flight_days" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_flight_hiatus_days" EntityType="Self.plan_version_flight_hiatus_days" Schema="dbo" store:Type="Tables" />
@@ -7661,49 +7641,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="vpvh_files" EntityType="Self.vpvh_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvh_quarters" EntityType="Self.vpvh_quarters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvhs" EntityType="Self.vpvhs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="plan_version_daypart_available_markets" EntityType="Self.plan_version_daypart_available_markets" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [plan_version_daypart_available_markets].[id] AS [id], 
-    [plan_version_daypart_available_markets].[plan_version_daypart_goal_id] AS [plan_version_daypart_goal_id], 
-    [plan_version_daypart_available_markets].[market_code] AS [market_code], 
-    [plan_version_daypart_available_markets].[market_coverage_file_id] AS [market_coverage_file_id], 
-    [plan_version_daypart_available_markets].[share_of_voice_percent] AS [share_of_voice_percent], 
-    [plan_version_daypart_available_markets].[is_user_share_of_voice_percent] AS [is_user_share_of_voice_percent]
-    FROM [dbo].[plan_version_daypart_available_markets] AS [plan_version_daypart_available_markets]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="plan_version_daypart_flight_days" EntityType="Self.plan_version_daypart_flight_days" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [plan_version_daypart_flight_days].[id] AS [id], 
-    [plan_version_daypart_flight_days].[plan_version_daypart_goal_id] AS [plan_version_daypart_goal_id], 
-    [plan_version_daypart_flight_days].[day_id] AS [day_id]
-    FROM [dbo].[plan_version_daypart_flight_days] AS [plan_version_daypart_flight_days]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="plan_version_daypart_flight_hiatus_days" EntityType="Self.plan_version_daypart_flight_hiatus_days" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [plan_version_daypart_flight_hiatus_days].[id] AS [id], 
-    [plan_version_daypart_flight_hiatus_days].[plan_version_daypart_goal_id] AS [plan_version_daypart_goal_id], 
-    [plan_version_daypart_flight_hiatus_days].[hiatus_day] AS [hiatus_day]
-    FROM [dbo].[plan_version_daypart_flight_hiatus_days] AS [plan_version_daypart_flight_hiatus_days]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="plan_version_daypart_weekly_breakdown" EntityType="Self.plan_version_daypart_weekly_breakdown" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [plan_version_daypart_weekly_breakdown].[id] AS [id], 
-    [plan_version_daypart_weekly_breakdown].[plan_version_daypart_goal_id] AS [plan_version_daypart_goal_id], 
-    [plan_version_daypart_weekly_breakdown].[media_week_id] AS [media_week_id], 
-    [plan_version_daypart_weekly_breakdown].[number_active_days] AS [number_active_days], 
-    [plan_version_daypart_weekly_breakdown].[active_days_label] AS [active_days_label], 
-    [plan_version_daypart_weekly_breakdown].[impressions] AS [impressions], 
-    [plan_version_daypart_weekly_breakdown].[impressions_percentage] AS [impressions_percentage], 
-    [plan_version_daypart_weekly_breakdown].[plan_version_id] AS [plan_version_id], 
-    [plan_version_daypart_weekly_breakdown].[rating_points] AS [rating_points], 
-    [plan_version_daypart_weekly_breakdown].[budget] AS [budget], 
-    [plan_version_daypart_weekly_breakdown].[spot_length_id] AS [spot_length_id], 
-    [plan_version_daypart_weekly_breakdown].[percentage_of_week] AS [percentage_of_week], 
-    [plan_version_daypart_weekly_breakdown].[adu_impressions] AS [adu_impressions], 
-    [plan_version_daypart_weekly_breakdown].[unit_impressions] AS [unit_impressions], 
-    [plan_version_daypart_weekly_breakdown].[is_locked] AS [is_locked]
-    FROM [dbo].[plan_version_daypart_weekly_breakdown] AS [plan_version_daypart_weekly_breakdown]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="station_inventory_manifest_weeks_history" EntityType="Self.station_inventory_manifest_weeks_history" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [station_inventory_manifest_weeks_history].[id] AS [id], 
@@ -10602,6 +10539,37 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
           </AssociationSet>
           <EntitySet Name="spot_exceptions_out_of_spec_reason_codes" EntityType="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" />
+          <EntitySet Name="custom_daypart_organizations" EntityType="BroadcastModel.custom_daypart_organizations" />
+          <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
+          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_iscis" EntitySet="plan_iscis" />
+          </AssociationSet>
+          <EntitySet Name="plan_version_daypart_customizations" EntityType="BroadcastModel.plan_version_daypart_customizations" />
+          <AssociationSet Name="FK_plan_version_daypart_customizations_custom_daypart_organizations" Association="BroadcastModel.FK_plan_version_daypart_customizations_custom_daypart_organizations">
+            <End Role="custom_daypart_organizations" EntitySet="custom_daypart_organizations" />
+            <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_daypart_customizations_plan_version_daypart" Association="BroadcastModel.FK_plan_version_daypart_customizations_plan_version_daypart">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
+          </AssociationSet>
+          <EntitySet Name="staged_out_of_specs" EntityType="BroadcastModel.staged_out_of_specs" />
+          <EntitySet Name="staged_recommended_plan_details" EntityType="BroadcastModel.staged_recommended_plan_details" />
+          <EntitySet Name="staged_recommended_plans" EntityType="BroadcastModel.staged_recommended_plans" />
+          <EntitySet Name="staged_unposted_no_plan" EntityType="BroadcastModel.staged_unposted_no_plan" />
+          <EntitySet Name="staged_unposted_no_reel_roster" EntityType="BroadcastModel.staged_unposted_no_reel_roster" />
+          <AssociationSet Name="FK_staged_recommended_plan_details_staged_recommended_plans" Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans">
+            <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
+            <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
+          </AssociationSet>
+          <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" />
+          <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" />
+          <EntitySet Name="plan_version_daypart_goals" EntityType="BroadcastModel.plan_version_daypart_goals" />
+          <AssociationSet Name="FK_plan_version_daypart_goals_plan_version_dayparts" Association="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts">
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+            <End Role="plan_version_daypart_goals" EntitySet="plan_version_daypart_goals" />
+          </AssociationSet>
           <EntitySet Name="spot_exceptions_out_of_specs" EntityType="BroadcastModel.spot_exceptions_out_of_specs" />
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_audiences" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -10635,33 +10603,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
-          <EntitySet Name="custom_daypart_organizations" EntityType="BroadcastModel.custom_daypart_organizations" />
-          <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
-          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_iscis" EntitySet="plan_iscis" />
-          </AssociationSet>
-          <EntitySet Name="plan_version_daypart_customizations" EntityType="BroadcastModel.plan_version_daypart_customizations" />
-          <AssociationSet Name="FK_plan_version_daypart_customizations_custom_daypart_organizations" Association="BroadcastModel.FK_plan_version_daypart_customizations_custom_daypart_organizations">
-            <End Role="custom_daypart_organizations" EntitySet="custom_daypart_organizations" />
-            <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_daypart_customizations_plan_version_daypart" Association="BroadcastModel.FK_plan_version_daypart_customizations_plan_version_daypart">
-            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
-            <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
-          </AssociationSet>
-          <EntitySet Name="staged_out_of_specs" EntityType="BroadcastModel.staged_out_of_specs" />
-          <EntitySet Name="staged_recommended_plan_details" EntityType="BroadcastModel.staged_recommended_plan_details" />
-          <EntitySet Name="staged_recommended_plans" EntityType="BroadcastModel.staged_recommended_plans" />
-          <EntitySet Name="staged_unposted_no_plan" EntityType="BroadcastModel.staged_unposted_no_plan" />
-          <EntitySet Name="staged_unposted_no_reel_roster" EntityType="BroadcastModel.staged_unposted_no_reel_roster" />
-          <AssociationSet Name="FK_staged_recommended_plan_details_staged_recommended_plans" Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans">
-            <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
-            <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
-          </AssociationSet>
-          <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" />
-          <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" />
-          <EntitySet Name="plan_version_daypart_goals" EntityType="BroadcastModel.plan_version_daypart_goals" />
           <EntitySet Name="plan_version_daypart_available_markets" EntityType="BroadcastModel.plan_version_daypart_available_markets" />
           <EntitySet Name="plan_version_daypart_flight_days" EntityType="BroadcastModel.plan_version_daypart_flight_days" />
           <EntitySet Name="plan_version_daypart_flight_hiatus_days" EntityType="BroadcastModel.plan_version_daypart_flight_hiatus_days" />
@@ -10693,10 +10634,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals" Association="BroadcastModel.FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals">
             <End Role="plan_version_daypart_goals" EntitySet="plan_version_daypart_goals" />
             <End Role="plan_version_daypart_flight_hiatus_days" EntitySet="plan_version_daypart_flight_hiatus_days" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_daypart_goals_plan_version_dayparts" Association="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts">
-            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
-            <End Role="plan_version_daypart_goals" EntitySet="plan_version_daypart_goals" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals" Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals">
             <End Role="plan_version_daypart_goals" EntitySet="plan_version_daypart_goals" />
@@ -14279,9 +14216,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spot_allocation_model_mode" Type="Int32" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plans" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
           <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
           <Property Name="plan_mode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -17865,9 +17802,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="decision_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
           <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="synced_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -18140,140 +18077,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="label" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_spec_reason_codes" ToRole="spot_exceptions_out_of_specs" />
         </EntityType>
-        <EntityType Name="spot_exceptions_out_of_specs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="recommended_plan_id" Type="Int32" />
-          <Property Name="program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="spot_length_id" Type="Int32" />
-          <Property Name="audience_id" Type="Int32" />
-          <Property Name="product" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
-          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
-          <Property Name="daypart_id" Type="Int32" />
-          <Property Name="program_daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="program_flight_start_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="program_flight_end_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="program_audience_id" Type="Int32" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="advertiser_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="reason_code_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
-          <NavigationProperty Name="audience1" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" FromRole="spot_exceptions_out_of_specs" ToRole="daypart" />
-          <NavigationProperty Name="daypart1" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" FromRole="spot_exceptions_out_of_specs" ToRole="daypart" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
-          <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
-          <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
-          <Property Name="unique_id_external" Type="Int64" Nullable="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_spot_exceptions_out_of_specs_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_audiences_program">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="program_audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_dayparts_program">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="program_daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs">
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_spec_decisions" Role="spot_exceptions_out_of_spec_decisions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_spec_decisions">
-              <PropertyRef Name="spot_exceptions_out_of_spec_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
-          <End Type="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Role="spot_exceptions_out_of_spec_reason_codes" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_exceptions_out_of_spec_reason_codes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="reason_code_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="custom_daypart_organizations">
           <Key>
             <PropertyRef Name="id" />
@@ -18522,19 +18325,164 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="goal_breakdown_type" Type="Int32" Nullable="false" />
           <Property Name="is_adu_enabled" Type="Boolean" Nullable="false" />
           <Property Name="impressions_per_unit" Type="Double" />
+          <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts" FromRole="plan_version_daypart_goals" ToRole="plan_version_dayparts" />
           <NavigationProperty Name="plan_version_daypart_available_markets" Relationship="BroadcastModel.FK_plan_version_daypart_available_markets_plan_version_daypart_goals" FromRole="plan_version_daypart_goals" ToRole="plan_version_daypart_available_markets" />
           <NavigationProperty Name="plan_version_daypart_flight_days" Relationship="BroadcastModel.FK_plan_version_daypart_flight_days_plan_version_daypart_goals" FromRole="plan_version_daypart_goals" ToRole="plan_version_daypart_flight_days" />
           <NavigationProperty Name="plan_version_daypart_flight_hiatus_days" Relationship="BroadcastModel.FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals" FromRole="plan_version_daypart_goals" ToRole="plan_version_daypart_flight_hiatus_days" />
-          <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts" FromRole="plan_version_daypart_goals" ToRole="plan_version_dayparts" />
           <NavigationProperty Name="plan_version_daypart_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals" FromRole="plan_version_daypart_goals" ToRole="plan_version_daypart_weekly_breakdown" />
         </EntityType>
+        <Association Name="FK_plan_version_daypart_goals_plan_version_dayparts">
+          <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_daypart_goals" Role="plan_version_daypart_goals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_goals">
+              <PropertyRef Name="plan_version_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="spot_exceptions_out_of_specs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="recommended_plan_id" Type="Int32" />
+          <Property Name="program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="spot_length_id" Type="Int32" />
+          <Property Name="audience_id" Type="Int32" />
+          <Property Name="product" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
+          <Property Name="daypart_id" Type="Int32" />
+          <Property Name="program_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="program_flight_start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="program_flight_end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="program_audience_id" Type="Int32" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="advertiser_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="reason_code_id" Type="Int32" Nullable="false" />
+          <Property Name="unique_id_external" Type="Int64" Nullable="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
+          <NavigationProperty Name="audience1" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" FromRole="spot_exceptions_out_of_specs" ToRole="daypart" />
+          <NavigationProperty Name="daypart1" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" FromRole="spot_exceptions_out_of_specs" ToRole="daypart" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
+          <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
+          <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
+        </EntityType>
+        <Association Name="FK_spot_exceptions_out_of_specs_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_audiences_program">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="program_audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_dayparts">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_dayparts_program">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="program_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs">
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_spec_decisions" Role="spot_exceptions_out_of_spec_decisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_spec_decisions">
+              <PropertyRef Name="spot_exceptions_out_of_spec_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
+          <End Type="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Role="spot_exceptions_out_of_spec_reason_codes" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_exceptions_out_of_spec_reason_codes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="reason_code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="plan_version_daypart_available_markets">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="market_code" />
-            <PropertyRef Name="market_coverage_file_id" />
-            <PropertyRef Name="is_user_share_of_voice_percent" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="plan_version_daypart_goal_id" Type="Int32" Nullable="false" />
@@ -18549,8 +18497,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
         <EntityType Name="plan_version_daypart_flight_days">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="day_id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="plan_version_daypart_goal_id" Type="Int32" Nullable="false" />
@@ -18561,8 +18507,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
         <EntityType Name="plan_version_daypart_flight_hiatus_days">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="hiatus_day" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="plan_version_daypart_goal_id" Type="Int32" Nullable="false" />
@@ -18572,15 +18516,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
         <EntityType Name="plan_version_daypart_weekly_breakdown">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="plan_version_daypart_goal_id" />
-            <PropertyRef Name="media_week_id" />
-            <PropertyRef Name="number_active_days" />
-            <PropertyRef Name="impressions" />
-            <PropertyRef Name="impressions_percentage" />
-            <PropertyRef Name="plan_version_id" />
-            <PropertyRef Name="rating_points" />
-            <PropertyRef Name="budget" />
-            <PropertyRef Name="adu_impressions" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="plan_version_daypart_goal_id" Type="Int32" Nullable="false" />
@@ -18688,20 +18623,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_daypart_flight_hiatus_days">
               <PropertyRef Name="plan_version_daypart_goal_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_daypart_goals_plan_version_dayparts">
-          <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_version_daypart_goals" Role="plan_version_daypart_goals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_dayparts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_daypart_goals">
-              <PropertyRef Name="plan_version_daypart_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21670,37 +21591,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_out_of_specs">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
-              <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
-                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
-                <ScalarProperty Name="unique_id_external" ColumnName="unique_id_external" />
-                <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
-                <ScalarProperty Name="advertiser_name" ColumnName="advertiser_name" />
-                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
-                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
-                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
-                <ScalarProperty Name="program_audience_id" ColumnName="program_audience_id" />
-                <ScalarProperty Name="program_network" ColumnName="program_network" />
-                <ScalarProperty Name="program_flight_end_date" ColumnName="program_flight_end_date" />
-                <ScalarProperty Name="program_flight_start_date" ColumnName="program_flight_start_date" />
-                <ScalarProperty Name="program_daypart_id" ColumnName="program_daypart_id" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
-                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
-                <ScalarProperty Name="product" ColumnName="product" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
-                <ScalarProperty Name="isci_name" ColumnName="isci_name" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="reason_code_message" ColumnName="reason_code_message" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="custom_daypart_organizations">
             <EntityTypeMapping TypeName="BroadcastModel.custom_daypart_organizations">
               <MappingFragment StoreEntitySet="custom_daypart_organizations">
@@ -21901,6 +21791,38 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="flight_end_Date" ColumnName="flight_end_Date" />
                 <ScalarProperty Name="flight_start_Date" ColumnName="flight_start_Date" />
                 <ScalarProperty Name="plan_version_daypart_id" ColumnName="plan_version_daypart_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_out_of_specs">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
+              <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
+                <ScalarProperty Name="unique_id_external" ColumnName="unique_id_external" />
+                <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
+                <ScalarProperty Name="advertiser_name" ColumnName="advertiser_name" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="program_audience_id" ColumnName="program_audience_id" />
+                <ScalarProperty Name="program_network" ColumnName="program_network" />
+                <ScalarProperty Name="program_flight_end_date" ColumnName="program_flight_end_date" />
+                <ScalarProperty Name="program_flight_start_date" ColumnName="program_flight_start_date" />
+                <ScalarProperty Name="program_daypart_id" ColumnName="program_daypart_id" />
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
+                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
+                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
+                <ScalarProperty Name="product" ColumnName="product" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
+                <ScalarProperty Name="isci_name" ColumnName="isci_name" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="reason_code_message" ColumnName="reason_code_message" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

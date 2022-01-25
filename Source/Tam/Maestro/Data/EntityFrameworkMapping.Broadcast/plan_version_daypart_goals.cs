@@ -43,10 +43,10 @@ namespace EntityFrameworkMapping.Broadcast
         public bool is_adu_enabled { get; set; }
         public Nullable<double> impressions_per_unit { get; set; }
     
+        public virtual plan_version_dayparts plan_version_dayparts { get; set; }
         public virtual ICollection<plan_version_daypart_available_markets> plan_version_daypart_available_markets { get; set; }
         public virtual ICollection<plan_version_daypart_flight_days> plan_version_daypart_flight_days { get; set; }
         public virtual ICollection<plan_version_daypart_flight_hiatus_days> plan_version_daypart_flight_hiatus_days { get; set; }
-        public virtual plan_version_dayparts plan_version_dayparts { get; set; }
         public virtual ICollection<plan_version_daypart_weekly_breakdown> plan_version_daypart_weekly_breakdown { get; set; }
     }
 }

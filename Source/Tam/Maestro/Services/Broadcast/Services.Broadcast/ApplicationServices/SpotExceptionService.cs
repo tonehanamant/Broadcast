@@ -554,6 +554,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  Impressions=10000,
                   SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
                     {
                       AcceptedAsInSpec=true,
@@ -593,6 +594,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=20000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 3,
@@ -625,6 +627,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=30000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 4,
@@ -657,6 +660,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=40000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 5,
@@ -689,6 +693,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=50000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 3,
@@ -721,6 +726,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=60000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 2,
@@ -753,6 +759,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=70000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 3,
@@ -785,6 +792,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=80000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 4,
@@ -817,6 +825,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=90000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 5,
@@ -849,6 +858,7 @@ namespace Services.Broadcast.ApplicationServices
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
+                  Impressions=100000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
                         Id = 3,

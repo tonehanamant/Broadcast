@@ -191,7 +191,8 @@ namespace Services.Broadcast.Repositories
                         ingested_at = outOfSpecs.IngestedAt,
                         reason_code_id = outOfSpecs.SpotExceptionsOutOfSpecReasonCode.Id,
                         unique_id_external = ++uniqueExternalIdOos,
-                        execution_id_external = executionId.ToString()
+                        execution_id_external = executionId.ToString(),
+                        impressions= outOfSpecs.Impressions
                     };
                     if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
                     {

@@ -44,6 +44,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public DateTime ProgramAirTime { get; set; }
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
+        public float Impressions { get; set; }        
         public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; }
         public SpotExceptionsOutOfSpecReasonCodeDto SpotExceptionsOutOfSpecReasonCode { get; set; }
     }

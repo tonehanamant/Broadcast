@@ -541,15 +541,6 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Width="1.5" PointX="38.375" PointY="0.875" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.625" PointY="17.5" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.custom_daypart_organizations" Width="1.5" PointX="30.375" PointY="4.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="34.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
@@ -565,10 +556,20 @@
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" Width="1.5" PointX="20.375" PointY="41.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="41.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_goals" Width="1.5" PointX="20.5" PointY="103.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_available_markets" Width="1.5" PointX="22.75" PointY="68.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_flight_days" Width="1.5" PointX="28.75" PointY="59.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="42.625" PointY="14.25" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences_program" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts_program" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_available_markets" Width="1.5" PointX="23.75" PointY="58.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_flight_days" Width="1.5" PointX="25.75" PointY="55" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_flight_hiatus_days" Width="1.5" PointX="22.75" PointY="117.25" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_weekly_breakdown" Width="1.5" PointX="25.75" PointY="57.25" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_weekly_breakdown" Width="1.5" PointX="28.75" PointY="67.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_flight_days_days" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_available_markets_market_coverage_file" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_available_markets_markets" />
@@ -576,7 +577,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_available_markets_plan_version_daypart_goals" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_flight_days_plan_version_daypart_goals" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_flight_hiatus_days_plan_version_daypart_goals" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_plan_version_daypart_goals" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_spot_lengths" />
         </Diagram>
