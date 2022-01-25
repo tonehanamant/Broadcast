@@ -502,7 +502,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             // have to do it like this to align the log message content.
             var exceptionToLog = new Exception($"Exception caught saving the plan.  PlanId='{plan.Id}'; Username='{createdBy}';", ex);
-            var serPlan = JsonSerializerHelper.ConvertToJson(plan);
+
+            // HACK : The logs will truncate the full plan json.
+            // we will truncate the large pieces that don't usually have an issue
+            var planToLog = plan.DeepCloneUsingSerialization();
+            planToLog.AvailableMarkets = new List<PlanAvailableMarketDto>();
+            planToLog.BlackoutMarkets = new List<PlanBlackoutMarketDto>();
+
+            var serPlan = JsonSerializerHelper.ConvertToJson(planToLog);
             _LogError(serPlan, logTxId, exceptionToLog, createdBy);
         }
 
