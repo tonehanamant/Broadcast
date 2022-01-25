@@ -166,61 +166,54 @@ namespace Services.Broadcast.BusinessEngines
             var weeks = GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
 
             foreach (var weeklyBreakdown in plan.WeeklyBreakdownWeeks)
-            {
-                if (!weeklyBreakdown.IsLocked)
+            {                
+                var aduImpressionsForBreakdownItem = CalculateWeeklyADUImpressions(
+                    weeklyBreakdown,
+                    plan.Equivalized,
+                    plan.ImpressionsPerUnit,
+                    plan.CreativeLengths);
+
+                var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
+                var week = weeks.Single(w => w.MediaWeekId == weeklyBreakdown.MediaWeekId);
+
+                // In save plan it's distributing goals for spot length, so it's not necessary to call it again
+                foreach (var distributedSpotLength in plan.CreativeLengths)
                 {
-                    var aduImpressionsForBreakdownItem = CalculateWeeklyADUImpressions(
-                        weeklyBreakdown,
-                        plan.Equivalized,
-                        plan.ImpressionsPerUnit,
-                        plan.CreativeLengths);
+                    var weighting = GeneralMath.ConvertPercentageToFraction(distributedSpotLength.Weight.GetValueOrDefault());
 
-                    var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
-                    var week = weeks.Single(w => w.MediaWeekId == weeklyBreakdown.MediaWeekId);
-
-                    // In save plan it's distributing goals for spot length, so it's not necessary to call it again
-                    foreach (var distributedSpotLength in plan.CreativeLengths)
+                    var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                     {
-                        var weighting = GeneralMath.ConvertPercentageToFraction(distributedSpotLength.Weight.GetValueOrDefault());
+                        WeekNumber = weeklyBreakdown.WeekNumber,
+                        MediaWeekId = weeklyBreakdown.MediaWeekId,
+                        StartDate = weeklyBreakdown.StartDate,
+                        EndDate = weeklyBreakdown.EndDate,
+                        NumberOfActiveDays = weeklyBreakdown.NumberOfActiveDays,
+                        ActiveDays = weeklyBreakdown.ActiveDays,
+                        SpotLengthId = distributedSpotLength.SpotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(distributedSpotLength.SpotLengthId),
+                        DaypartCodeId = weeklyBreakdown.DaypartCodeId,
+                        AduImpressions = aduImpressionsForBreakdownItem * weighting,
+                        UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
+                        IsLocked = weeklyBreakdown.IsLocked
+                    };
 
-                        var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                        {
-                            WeekNumber = weeklyBreakdown.WeekNumber,
-                            MediaWeekId = weeklyBreakdown.MediaWeekId,
-                            StartDate = weeklyBreakdown.StartDate,
-                            EndDate = weeklyBreakdown.EndDate,
-                            NumberOfActiveDays = weeklyBreakdown.NumberOfActiveDays,
-                            ActiveDays = weeklyBreakdown.ActiveDays,
-                            SpotLengthId = distributedSpotLength.SpotLengthId,
-                            SpotLengthDuration = _GetWeeklySpotLengthDuration(distributedSpotLength.SpotLengthId),
-                            DaypartCodeId = weeklyBreakdown.DaypartCodeId,
-                            AduImpressions = aduImpressionsForBreakdownItem * weighting,
-                            UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
-                            IsLocked = weeklyBreakdown.IsLocked
-                        };
+                    var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
 
-                        var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
+                    _UpdateGoalsForWeeklyBreakdownItem(
+                        impressionsGoal,
+                        plan.TargetRatingPoints.Value,
+                        budgetGoal,
+                        newWeeklyBreakdownItem,
+                        impressions,
+                        roundRatings: false);
 
-                        _UpdateGoalsForWeeklyBreakdownItem(
-                            impressionsGoal,
-                            plan.TargetRatingPoints.Value,
-                            budgetGoal,
-                            newWeeklyBreakdownItem,
-                            impressions,
-                            roundRatings: false);
+                    newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
 
-                        newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
-
-                        result.Add(newWeeklyBreakdownItem);
-                    }
+                    result.Add(newWeeklyBreakdownItem);
                 }
-                else
-                {
-                    var lockedWeek = plan.WeeklyBreakdownWeeks.Where(x => x.DaypartCodeId == weeklyBreakdown.DaypartCodeId && x.SpotLengthId == weeklyBreakdown.SpotLengthId && x.WeekNumber == weeklyBreakdown.WeekNumber).ToList().SingleOrDefault();
-                    result.Add(lockedWeek);
-                }
+                
             }
-                return result;
+            return result;
         }
 
         /// <summary>
@@ -238,58 +231,50 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var week in weeks)
             {
-                if (!week.IsLocked)
+                foreach (var breakdownItem in plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.MediaWeekId))
                 {
-                    foreach (var breakdownItem in plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.MediaWeekId))
+                    double aduImpressionsForBreakdownItem = CalculateWeeklyADUImpressions(
+                        breakdownItem,
+                        plan.Equivalized,
+                        plan.ImpressionsPerUnit,
+                        plan.CreativeLengths);
+
+                    double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyUnits == 0 ? 0 : breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
+
+                    foreach (var item in standardDaypardWeightingGoals)
                     {
-                        double aduImpressionsForBreakdownItem = CalculateWeeklyADUImpressions(
-                            breakdownItem,
-                            plan.Equivalized,
-                            plan.ImpressionsPerUnit,
-                            plan.CreativeLengths);
+                        var weighting = GeneralMath.ConvertPercentageToFraction(item.WeightingGoalPercent);
 
-                        double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyUnits == 0 ? 0 : breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
-
-                        foreach (var item in standardDaypardWeightingGoals)
+                        var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                         {
-                            var weighting = GeneralMath.ConvertPercentageToFraction(item.WeightingGoalPercent);
+                            WeekNumber = week.WeekNumber,
+                            MediaWeekId = week.MediaWeekId,
+                            StartDate = week.StartDate,
+                            EndDate = week.EndDate,
+                            NumberOfActiveDays = week.NumberOfActiveDays,
+                            ActiveDays = week.ActiveDays,
+                            SpotLengthId = breakdownItem.SpotLengthId,
+                            SpotLengthDuration = _GetWeeklySpotLengthDuration(breakdownItem.SpotLengthId),
+                            DaypartCodeId = item.StandardDaypartId,
+                            AduImpressions = aduImpressionsForBreakdownItem * weighting,
+                            UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
+                            IsLocked = week.IsLocked
+                        };
 
-                            var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                            {
-                                WeekNumber = week.WeekNumber,
-                                MediaWeekId = week.MediaWeekId,
-                                StartDate = week.StartDate,
-                                EndDate = week.EndDate,
-                                NumberOfActiveDays = week.NumberOfActiveDays,
-                                ActiveDays = week.ActiveDays,
-                                SpotLengthId = breakdownItem.SpotLengthId,
-                                SpotLengthDuration = _GetWeeklySpotLengthDuration(breakdownItem.SpotLengthId),
-                                DaypartCodeId = item.StandardDaypartId,
-                                AduImpressions = aduImpressionsForBreakdownItem * weighting,
-                                UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
-                                IsLocked = week.IsLocked
-                            };
+                        var impressions = breakdownItem.WeeklyImpressions * weighting;
 
-                            var impressions = breakdownItem.WeeklyImpressions * weighting;
+                        _UpdateGoalsForWeeklyBreakdownItem(
+                            impressionsGoal,
+                            plan.TargetRatingPoints.Value,
+                            budgetGoal,
+                            newWeeklyBreakdownItem,
+                            impressions,
+                            roundRatings: false);
 
-                            _UpdateGoalsForWeeklyBreakdownItem(
-                                impressionsGoal,
-                                plan.TargetRatingPoints.Value,
-                                budgetGoal,
-                                newWeeklyBreakdownItem,
-                                impressions,
-                                roundRatings: false);
+                        newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
 
-                            newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
-
-                            result.Add(newWeeklyBreakdownItem);
-                        }
+                        result.Add(newWeeklyBreakdownItem);
                     }
-                }
-               else
-                {
-                    var lockedWeek = plan.WeeklyBreakdownWeeks.Where(x => x.DaypartCodeId == week.DaypartCodeId && x.SpotLengthId == week.SpotLengthId && x.WeekNumber == week.WeekNumber).ToList().SingleOrDefault();
-                    result.Add(lockedWeek);
                 }
             }
 
@@ -314,53 +299,45 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                if(!week.IsLocked)
+                var weeklyAduImpressions = CalculateWeeklyADUImpressions(
+                    week,
+                    plan.Equivalized,
+                    plan.ImpressionsPerUnit,
+                    plan.CreativeLengths);
+
+                var unitsImpressions = week.WeeklyUnits == 0 ? 0 : week.WeeklyImpressions / week.WeeklyUnits;
+
+                foreach (var combination in allSpotLengthIdAndStandardDaypartIdCombinations)
                 {
-                    var weeklyAduImpressions = CalculateWeeklyADUImpressions(
-                        week,
-                        plan.Equivalized,
-                        plan.ImpressionsPerUnit,
-                        plan.CreativeLengths);
-
-                    var unitsImpressions = week.WeeklyUnits == 0 ? 0 : week.WeeklyImpressions / week.WeeklyUnits;
-
-                    foreach (var combination in allSpotLengthIdAndStandardDaypartIdCombinations)
+                    var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                     {
-                        var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                        {
-                            WeekNumber = week.WeekNumber,
-                            MediaWeekId = week.MediaWeekId,
-                            StartDate = week.StartDate,
-                            EndDate = week.EndDate,
-                            NumberOfActiveDays = week.NumberOfActiveDays,
-                            ActiveDays = week.ActiveDays,
-                            SpotLengthId = combination.SpotLengthId,
-                            SpotLengthDuration = _GetWeeklySpotLengthDuration(combination.SpotLengthId),
-                            DaypartCodeId = combination.DaypartCodeId,
-                            AduImpressions = weeklyAduImpressions * combination.Weighting,
-                            UnitImpressions = unitsImpressions * combination.Weighting,
-                            IsLocked = week.IsLocked
-                        };
+                        WeekNumber = week.WeekNumber,
+                        MediaWeekId = week.MediaWeekId,
+                        StartDate = week.StartDate,
+                        EndDate = week.EndDate,
+                        NumberOfActiveDays = week.NumberOfActiveDays,
+                        ActiveDays = week.ActiveDays,
+                        SpotLengthId = combination.SpotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(combination.SpotLengthId),
+                        DaypartCodeId = combination.DaypartCodeId,
+                        AduImpressions = weeklyAduImpressions * combination.Weighting,
+                        UnitImpressions = unitsImpressions * combination.Weighting,
+                        IsLocked = week.IsLocked
+                    };
 
-                        var impressions = week.WeeklyImpressions * combination.Weighting;
+                    var impressions = week.WeeklyImpressions * combination.Weighting;
 
-                        _UpdateGoalsForWeeklyBreakdownItem(
-                            impressionsGoal,
-                            plan.TargetRatingPoints.Value,
-                            budgetGoal,
-                            newWeeklyBreakdownItem,
-                            impressions,
-                            roundRatings: false);
+                    _UpdateGoalsForWeeklyBreakdownItem(
+                        impressionsGoal,
+                        plan.TargetRatingPoints.Value,
+                        budgetGoal,
+                        newWeeklyBreakdownItem,
+                        impressions,
+                        roundRatings: false);
 
-                        newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.WeeklyImpressions);
+                    newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.WeeklyImpressions);
 
-                        result.Add(newWeeklyBreakdownItem);
-                    }
-                }
-                else
-                {
-                    var lockedWeek = plan.WeeklyBreakdownWeeks.Where(x => x.DaypartCodeId == week.DaypartCodeId && x.SpotLengthId == week.SpotLengthId && x.WeekNumber == week.WeekNumber).ToList().SingleOrDefault();
-                    result.Add(lockedWeek);
+                    result.Add(newWeeklyBreakdownItem);
                 }
             }
             return result;
@@ -651,7 +628,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var spotCostMultipliers = _SpotLengthCostMultipliers.Value;
             var baseCostDenom = weeks.Sum(w => Convert.ToDecimal(w.WeeklyUnits) * spotCostMultipliers[w.SpotLengthId.Value]);
-            var baseCost = totalBudget / (baseCostDenom);
+            var baseCost = baseCostDenom > 0 ? totalBudget / (baseCostDenom) : 0;
             foreach (var week in weeks)
             {
                 if (!week.IsLocked)
