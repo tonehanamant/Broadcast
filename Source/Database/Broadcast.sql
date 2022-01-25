@@ -2057,9 +2057,10 @@ GO
 
 /*************************************** Start BP-3770 *****************************************************/
 
+
 DECLARE @AddColumnSql VARCHAR(MAX) = 
 	'ALTER TABLE spot_exceptions_out_of_specs
-			ADD impressions float NOT NULL'
+			ADD impressions float NULL'
 
 DECLARE @PopulateSql VARCHAR(MAX) =
 	'UPDATE spot_exceptions_out_of_specs 
