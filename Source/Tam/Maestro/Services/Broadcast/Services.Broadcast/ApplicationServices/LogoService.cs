@@ -6,10 +6,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Web;
-using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -21,7 +17,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>
         /// Image as a byte array
         /// </returns>
-        LogoResultDto GetLogoAsByteArray(string LogoFilePath);
+        byte[] GetLogoAsByteArray(string LogoFilePath);
 
         void SaveInventoryLogo(int inventorySourceId, FileRequest saveRequest, string userName, DateTime now);
 
@@ -30,40 +26,20 @@ namespace Services.Broadcast.ApplicationServices
 
     public class LogoService : BroadcastBaseClass, ILogoService
     {
-        private readonly ISMSClient _SmsClient;
         private readonly IInventoryLogoRepository _InventoryLogoRepository;
-        private readonly Lazy<bool> _IsLocalCadentLogoEnabled;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
-         
+
         public LogoService(
-            ISMSClient smsClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IConfigurationSettingsHelper configurationSettingsHelper,
-            IFeatureToggleHelper featureToggleHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
-            _SmsClient = smsClient;
             _InventoryLogoRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryLogoRepository>();
-            _FeatureToggleHelper = featureToggleHelper;
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
-            _IsLocalCadentLogoEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_LOCAL_CADENT_LOGO));          
         }
 
-        public LogoResultDto GetLogoAsByteArray(string LogoFilePath)
-        {           
-            LogoResultDto logoResult = new LogoResultDto();           
-            if (_IsLocalCadentLogoEnabled.Value)
-            {              
-                string logoUrl = Path.Combine(LogoFilePath, BroadcastConstants.LOGO_FILENAME);
-                logoResult.LogoAsByteArray = _ConvertFileToByteArray(logoUrl);
-                logoResult.logoFlag = true;
-            }
-            else
-            {
-                logoResult.LogoAsByteArray= _SmsClient.GetLogoImage(CMWImageEnums.CMW_CADENT_LOGO).ImageData;
-                logoResult.logoFlag = false;
-            }
-            return logoResult;
+        public byte[] GetLogoAsByteArray(string LogoFilePath)
+        {
+            string logoUrl = Path.Combine(LogoFilePath, BroadcastConstants.LOGO_FILENAME);
+            return _ConvertFileToByteArray(logoUrl);
         }
 
         public void SaveInventoryLogo(int inventorySourceId, FileRequest saveRequest, string userName, DateTime now)
@@ -100,10 +76,10 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private byte[] _ConvertFileToByteArray(string logoUrl)
-        {          
+        {
             byte[] cadentLogo = System.IO.File.ReadAllBytes(logoUrl);
             return cadentLogo;
         }
-       
+
     }
 }

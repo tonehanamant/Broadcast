@@ -32,30 +32,19 @@ namespace BroadcastComposerWeb.Controllers
             var appDataPath = _GetAppDataPath();
             var logo = logoService.GetLogoAsByteArray(appDataPath);
             var response = new HttpResponseMessage(HttpStatusCode.OK)
+
             {
-                Content = new StreamContent(new MemoryStream(logo.LogoAsByteArray))
+                Content = new StreamContent(new MemoryStream(logo))
             };
-            if (logo.logoFlag)
-            {
-                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = BroadcastConstants.LOGO_FILENAME
-                };
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/svg+xml");
 
-                return response;
-            }
-            else
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
-                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = BroadcastConstants.LOGO_PNG_FILENAME
-                };
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                FileName = BroadcastConstants.LOGO_FILENAME
+            };
 
-                return response;
-            }
-            
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/svg+xml");
+
+            return response;
         }
 
         [HttpGet]
@@ -76,10 +65,12 @@ namespace BroadcastComposerWeb.Controllers
             {
                 Content = new StreamContent(new MemoryStream(logo.FileContent))
             };
+
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
                 FileName = logo.FileName
             };
+
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
             return response;

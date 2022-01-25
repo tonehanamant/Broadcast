@@ -535,7 +535,6 @@
     <Compile Include="Entities\Isci\IsciSpotLengthDto.cs" />
     <Compile Include="Entities\Isci\PlanMappedIsciDetailsDto.cs" />
     <Compile Include="Clients\PricingJobQueueApiClient.cs" />
-    <Compile Include="Entities\LogoResultDto.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
     <Compile Include="Entities\Plan\Buying\ProprietaryInventoryData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
