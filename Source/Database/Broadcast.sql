@@ -473,6 +473,20 @@ GO
 
 /*************************************** END BP-3825 *****************************************************/
 
+/*************************************** START BP-3786 ***************************************/
+DECLARE @Sql_AddColumns VARCHAR(MAX) = '
+ALTER TABLE plan_iscis ADD modified_at DATETIME2(7) NULL
+ALTER TABLE plan_iscis ADD modified_by VARCHAR(100) NULL
+'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'modified_at' AND OBJECT_ID = OBJECT_ID(N'plan_iscis'))
+BEGIN
+	EXEC (@Sql_AddColumns)
+END
+
+GO
+/*************************************** END BP-3786 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
