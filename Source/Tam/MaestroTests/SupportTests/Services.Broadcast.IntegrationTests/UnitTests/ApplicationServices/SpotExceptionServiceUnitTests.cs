@@ -872,6 +872,161 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
         }
 
+        private List<SpotExceptionsOutOfSpecsDto> _GetOutOfSpecPlansData()
+        {
+            return new List<SpotExceptionsOutOfSpecsDto>()
+            {
+                new SpotExceptionsOutOfSpecsDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserName="MyBite",
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramFlightStartDate=new DateTime(2019, 12, 1),
+                    ProgramFlightEndDate=new DateTime(2019, 12, 9),
+                    ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsOutOfSpecDecision=null,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    }
+                },
+                new SpotExceptionsOutOfSpecsDto
+                {
+                  Id = 2,
+                  ReasonCodeMessage="",
+                  EstimateId= 191757,
+                  IsciName="AB82VR58",
+                  RecommendedPlanId= 215,
+                  RecommendedPlanName="4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="Reynolds Foil @9",
+                  AdvertiserName=null,
+                  StationLegacyCallLetters="KSTP",
+                  Affiliate = "NBC",
+                  Market = "Phoenix (Prescott)",
+                  PlanId = 215,
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                  AudienceId= 430,
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartId= 70642,
+                  ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
+                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
+                  ProgramNetwork = "",
+                   ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  SpotExceptionsOutOfSpecDecision =null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    }
+                },
+                new SpotExceptionsOutOfSpecsDto
+                {
+                  Id = 3,
+                  ReasonCodeMessage="",
+                  EstimateId= 191758,
+                  IsciName="AB44NR58",
+                  RecommendedPlanId= 218,
+                  RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserName="MyBite",
+                  StationLegacyCallLetters = "KSTP",
+                  Affiliate = "ABC",
+                  Market = "Lincoln & Hastings-Krny",
+                  PlanId = 218,
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                  AudienceId= 430,
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartId= 70643,
+                  ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
+                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
+                  ProgramNetwork = "",
+                   ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  SpotExceptionsOutOfSpecDecision =  null,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    }
+                },
+            };
+        }
+
         [Test]
         public void SaveSpotExceptionsOutOfSpecsDecisions()
         {
@@ -1342,6 +1497,72 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlans_OutOfSpecPlansExist()
+        {
+            // Arrange
+            SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutOfSpecPostsRequest = new SpotExceptionsOutofSpecsPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetOutOfSpecPlansData());
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(result.Active.Count, 2);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlans_OutOfSpecPlans_DoesNotExist()
+        {
+            // Arrange
+            List<SpotExceptionsOutOfSpecsDto> outofSpecData = null;
+            SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutOfSpecPostsRequest = new SpotExceptionsOutofSpecsPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outofSpecData);
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest);
+
+            // Assert            
+            Assert.AreEqual(result.Active.Count, 0);
+        }
+        
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlans_ThrowsException()
+        {
+            // Arrange
+            SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutOfSpecPostsRequest = new SpotExceptionsOutofSpecsPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+            // Act           
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest));
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }

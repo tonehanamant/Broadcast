@@ -327,6 +327,8 @@ namespace Services.Broadcast.Repositories
                 ProgramAirTime = spotExceptionsOutOfSpecEntity.program_air_time,
                 IngestedBy = spotExceptionsOutOfSpecEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecEntity.ingested_at,
+                Impressions = spotExceptionsOutOfSpecEntity.impressions,
+                PlanId = spotExceptionsOutOfSpecEntity.plan.id,
                 SpotExceptionsOutOfSpecDecision = spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_decisions.Select(spotExceptionsOutOfSpecsDecisionDb => new SpotExceptionsOutOfSpecDecisionsDto
                 {
                     Id = spotExceptionsOutOfSpecsDecisionDb.id,

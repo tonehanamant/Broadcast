@@ -97,6 +97,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsOutofSpecsStationRequest">The spot exceptions out of specs station request parameters</param>     
         /// <returns>The spot exceptions out of specs stations</returns>
         List<string> GetSpotExceptionsOutofSpecsStations(SpotExceptionsOutofSpecsStationRequestDto spotExceptionsOutofSpecsStationRequest);
+
+        /// <summary>
+        /// Gets The Spot Exception Out Of specs Plans
+        /// </summary>
+        /// <param name="spotExceptionsOutofSpecsActivePlansRequestDto"></param>
+        /// <returns>Returns Spot Exceptions Active and completed Plans</returns>
+        SpotExceptionsOutOfSpecPlansResultDto GetSpotExceptionsOutofSpecsPlans(SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutofSpecsActivePlansRequestDto);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1135,6 +1142,55 @@ namespace Services.Broadcast.ApplicationServices
 
             var stations = spotExceptionsOutOfSpecPostsResults.Select(spotExceptionsOutOfSpecPostsResult => spotExceptionsOutOfSpecPostsResult.Station ?? "Unknown").Distinct().OrderBy(station => station).ToList();
             return stations;
+        }
+
+        public SpotExceptionsOutOfSpecPlansResultDto GetSpotExceptionsOutofSpecsPlans(SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutofSpecsPlansRequestDto)
+        {
+            var spotExceptionsOutOfSpecPlansResults = new SpotExceptionsOutOfSpecPlansResultDto();
+            const string flightStartDateFormat = "MM/dd";
+            const string flightEndDateFormat = "MM/dd/yyyy";
+
+            var spotExceptionsoutOfSpecsPlans = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutofSpecsPlansRequestDto.WeekStartDate, spotExceptionsOutofSpecsPlansRequestDto.WeekEndDate);
+            if (spotExceptionsoutOfSpecsPlans?.Any() ?? false)
+            {
+                spotExceptionsoutOfSpecsPlans = spotExceptionsoutOfSpecsPlans.Where(x => x.SpotExceptionsOutOfSpecDecision == null).ToList();
+                var AffectedCount = spotExceptionsoutOfSpecsPlans.GroupBy(x => x.RecommendedPlanId).Select(x => new { RecommendedPlanId = x.Key, Count = x.Count() }).ToList();
+                spotExceptionsoutOfSpecsPlans = spotExceptionsoutOfSpecsPlans.GroupBy(e => e.RecommendedPlanId).Select(e => e.FirstOrDefault()).ToList();
+                spotExceptionsOutOfSpecPlansResults.Active = spotExceptionsoutOfSpecsPlans.Select(spotExceptionsOutOfSpec =>
+                {
+                    var spotExceptionsOutOfSpecPlansResult = new SpotExceptionsOutOfSpecToDoPlansDto
+                    {
+                        PlanId = spotExceptionsOutOfSpec.PlanId,
+                        AdvertiserName = spotExceptionsOutOfSpec.AdvertiserName,
+                        PlanName = spotExceptionsOutOfSpec.RecommendedPlanName,
+                        AffectedSportsCount = AffectedCount.Where(x => x.RecommendedPlanId == spotExceptionsOutOfSpec.RecommendedPlanId).Select(e => e.Count).FirstOrDefault(),
+                        Impressions = spotExceptionsOutOfSpec.Impressions / 1000,
+                        SyncedTimestamp = null,
+                        SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
+                        AudienceName = spotExceptionsOutOfSpec.ProgramAudience?.Name,
+                        FlightString = spotExceptionsOutOfSpec.FlightStartDate.HasValue && spotExceptionsOutOfSpec.FlightEndDate.HasValue ? $"{Convert.ToDateTime(spotExceptionsOutOfSpec.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(spotExceptionsOutOfSpec.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(spotExceptionsOutOfSpec.FlightStartDate), Convert.ToDateTime(spotExceptionsOutOfSpec.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+
+                    };
+                    return spotExceptionsOutOfSpecPlansResult;
+                }).ToList();
+            }
+            return spotExceptionsOutOfSpecPlansResults;
+        }
+
+        private int _GetTotalNumberOfWeeks(DateTime startDate, DateTime endDate)
+        {
+            if (endDate < startDate)
+            {
+                throw new Exception("EndDate should be greater than StartDate");
+            }
+            startDate = startDate.Date;
+            endDate = endDate.Date.AddDays(1);
+            var dateDifference = endDate - startDate;
+            var totalDays = dateDifference.TotalDays;
+            int numberOfWeeks = Convert.ToInt32(totalDays / 7);
+            var reminder = totalDays % 7;
+            numberOfWeeks = reminder > 0 ? numberOfWeeks + 1 : numberOfWeeks;
+            return numberOfWeeks;
         }
     }
 }

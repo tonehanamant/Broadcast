@@ -1,0 +1,26 @@
+{
+  "Active": [
+    {
+      "AdvertiserName": "MyBite",
+      "AffectedSportsCount": 2,
+      "AudienceName": "Men 50-64",
+      "FlightString": "12/01 - 12/09/2019 (2 Weeks)",
+      "Impressions": 0.0,
+      "PlanId": 215,
+      "PlanName": "3Q' 21 Reckitt HYHO Early Morning Upfront",
+      "SpotLengthString": ":45",
+      "SyncedTimestamp": null
+    },
+    {
+      "AdvertiserName": "MyBite",
+      "AffectedSportsCount": 1,
+      "AudienceName": "Men 50-64",
+      "FlightString": "07/02 - 08/02/2018 (6 Weeks)",
+      "Impressions": 0.0,
+      "PlanId": 218,
+      "PlanName": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+      "SpotLengthString": ":45",
+      "SyncedTimestamp": null
+    }
+  ]
+}
