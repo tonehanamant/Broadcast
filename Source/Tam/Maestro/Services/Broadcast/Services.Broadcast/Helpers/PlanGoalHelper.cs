@@ -24,7 +24,7 @@ namespace Services.Broadcast.Helpers
         /// </summary>
         public static List<StandardDaypartWeightingGoal> GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts)
         {
-            var weightingGoalPercentByStandardDaypartIdDictionary = new Dictionary<int, double>();
+            var weightingGoalPercentByStandardDaypartIdDictionary = new Dictionary<string, double>();
 
             var daypartsWithWeighting = dayparts.Where(x => x.WeightingGoalPercent.HasValue).ToList();
             var daypartsWithoutWeighting = dayparts.Where(x => !x.WeightingGoalPercent.HasValue).ToList();
@@ -38,18 +38,21 @@ namespace Services.Broadcast.Helpers
                 var firstDaypartWeighing = undistributedWeighingPerDaypart + remainingWeighing;
                 var firstDaypart = daypartsWithoutWeighting.TakeOut(0);
 
-                weightingGoalPercentByStandardDaypartIdDictionary[firstDaypart.DaypartCodeId] = firstDaypartWeighing;
-                daypartsWithoutWeighting.ForEach(x => weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId] = undistributedWeighingPerDaypart);
+                weightingGoalPercentByStandardDaypartIdDictionary[firstDaypart.DaypartUniquekey] = firstDaypartWeighing;
+                daypartsWithoutWeighting.ForEach(x => weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartUniquekey] = undistributedWeighingPerDaypart);
             }
 
-            daypartsWithWeighting.ForEach(x => weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId] = x.WeightingGoalPercent.Value);
+            daypartsWithWeighting.ForEach(x => weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartUniquekey] = x.WeightingGoalPercent.Value);
 
             // to keep the original order
             return dayparts
                 .Select(x => new StandardDaypartWeightingGoal
                 {
                     StandardDaypartId = x.DaypartCodeId,
-                    WeightingGoalPercent = weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]
+                    DaypartOrganizationId = x.DaypartOrganizationId,
+                    CustomName = x.CustomName,
+                    DaypartOrganizationName = x.DaypartOrganizationName,
+                    WeightingGoalPercent = weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartUniquekey]
                 })
                 .ToList();
         }

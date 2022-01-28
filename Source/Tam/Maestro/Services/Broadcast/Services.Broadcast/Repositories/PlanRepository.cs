@@ -764,7 +764,9 @@ namespace Services.Broadcast.Repositories
                 DaypartCodeId = arg.standard_daypart_id,
                 PercentageOfWeek = arg.percentage_of_week,
                 UnitImpressions = arg.unit_impressions ?? 0,
-                IsLocked = arg.is_locked ?? false
+                IsLocked = arg.is_locked ?? false,
+                DaypartOrganizationId = arg.custom_daypart_organization_id,
+                CustomName = arg.custom_daypart_name
             };
         }
 

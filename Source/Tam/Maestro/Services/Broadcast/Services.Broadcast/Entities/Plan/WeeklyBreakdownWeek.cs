@@ -27,6 +27,10 @@ namespace Services.Broadcast.Entities.Plan
         // assumes that the WeeklyImpressions have been formatted for (000)
         public decimal WeeklyCpm => ProposalMath.CalculateCpm(WeeklyBudget, (WeeklyImpressions * 1000));
         public bool IsLocked { get; set; } = false;
+        public int? DaypartOrganizationId { get; set; }
+        public string CustomName { get; set; }
+        public string DaypartOrganizationName { get; set; }
+        public string DaypartUniquekey { get { return $"{DaypartCodeId}|{DaypartOrganizationId}|{CustomName?.ToLower()}"; } }
     }
 
     public class WeeklyBreakdownTotals
@@ -87,6 +91,9 @@ namespace Services.Broadcast.Entities.Plan
         public int Adu { get; set; }
         public double Units { get; set; }
         public bool IsLocked { get; set; }
+        public int? DaypartOrganizationId { get; set; }
+        public string CustomName { get; set; }
+        public string DaypartOrganizationName { get; set; }
     }
 
     public class WeeklyBreakdownByStandardDaypart

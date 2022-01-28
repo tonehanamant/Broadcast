@@ -1544,6 +1544,8 @@
           <Property Name="adu_impressions" Type="float" Nullable="false" />
           <Property Name="unit_impressions" Type="float" />
           <Property Name="is_locked" Type="bit" />
+          <Property Name="custom_daypart_organization_id" Type="int" />
+          <Property Name="custom_daypart_name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="plan_versions">
           <Key>
@@ -17890,6 +17892,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_version_weekly_breakdown" ToRole="plan_versions" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" FromRole="plan_version_weekly_breakdown" ToRole="spot_lengths" />
           <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts" FromRole="plan_version_weekly_breakdown" ToRole="standard_dayparts" />
+          <Property Name="custom_daypart_organization_id" Type="Int32" />
+          <Property Name="custom_daypart_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_plan_version_weekly_breakdown_media_weeks">
           <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
@@ -21537,6 +21541,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_weekly_breakdown">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_weekly_breakdown">
               <MappingFragment StoreEntitySet="plan_version_weekly_breakdown">
+                <ScalarProperty Name="custom_daypart_name" ColumnName="custom_daypart_name" />
+                <ScalarProperty Name="custom_daypart_organization_id" ColumnName="custom_daypart_organization_id" />
                 <ScalarProperty Name="is_locked" ColumnName="is_locked" />
                 <ScalarProperty Name="unit_impressions" ColumnName="unit_impressions" />
                 <ScalarProperty Name="adu_impressions" ColumnName="adu_impressions" />

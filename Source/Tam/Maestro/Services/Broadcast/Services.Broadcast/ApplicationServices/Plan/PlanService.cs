@@ -765,7 +765,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _OnGetHandlePlanAvailableMarketSovFeature(plan);
             _HandleAvailableMarketSovs(plan);
-
+            _AddDaypartToWeeklyBreakdownResult(plan);
+            plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
             return plan;
         }
 
@@ -1751,6 +1752,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return result;
 
+        }
+
+        private void _AddDaypartToWeeklyBreakdownResult(PlanDto plan)
+        {
+            foreach (var week in plan.WeeklyBreakdownWeeks)
+            {
+                foreach (var item in plan.Dayparts)
+                {
+                    if (week.DaypartUniquekey == item.DaypartUniquekey)
+                    {
+                        week.DaypartOrganizationId = item.DaypartOrganizationId;
+                        week.CustomName = item.CustomName;
+                        week.DaypartOrganizationName = item.DaypartOrganizationName;
+                    }
+                }
+            }
         }
     }
 }

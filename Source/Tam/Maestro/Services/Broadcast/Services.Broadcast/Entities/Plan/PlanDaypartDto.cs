@@ -105,6 +105,7 @@ namespace Services.Broadcast.Entities.Plan
         public List<PlanDaypartVpvhForAudienceDto> VpvhForAudiences { get; set; } = new List<PlanDaypartVpvhForAudienceDto>();
 
         public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();
+        public string DaypartUniquekey { get { return $"{DaypartCodeId}|{DaypartOrganizationId}|{CustomName?.ToLower()}"; } }
 
         public bool Equals(PlanDaypartDto other)
         {

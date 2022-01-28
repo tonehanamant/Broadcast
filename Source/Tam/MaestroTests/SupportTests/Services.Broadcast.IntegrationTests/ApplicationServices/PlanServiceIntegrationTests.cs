@@ -1232,7 +1232,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 4600, WeightingGoalPercent = 0.0 });
 
-                Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.Throws<PlanValidationException>(() => _PlanService.SavePlan(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), "Invalid daypart weighting goal.");
             }
         }
@@ -1869,7 +1869,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid request"));
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(null, false), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid request"));
             }
         }
 
@@ -1883,7 +1883,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     FlightEndDate = default,
                     FlightStartDate = default,
-                }, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+                }, false), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
@@ -1897,7 +1897,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     FlightEndDate = default,
                     FlightStartDate = new DateTime(2019, 01, 01),
-                }, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight start/end date."));
+                }, false), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight start/end date."));
             }
         }
 
@@ -1914,7 +1914,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     TotalImpressions = 1000,
                     ImpressionsPerUnit = 1001,
                     FlightDays = new List<int> { 1, 2, 3, 4, 5 },
-                }, false), Throws.TypeOf<Exception>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
+                }, false), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
             }
         }
 
@@ -1969,7 +1969,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ImpressionsPerUnit = 100
                 };
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false));
+                var exception = Assert.Throws<PlanValidationException>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(request, false));
 
                 Assert.That(exception.Message, Is.EqualTo("For the chosen delivery type, dayparts are required"));
             }

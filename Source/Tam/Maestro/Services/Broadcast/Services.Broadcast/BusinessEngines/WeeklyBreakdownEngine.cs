@@ -194,7 +194,10 @@ namespace Services.Broadcast.BusinessEngines
                         DaypartCodeId = weeklyBreakdown.DaypartCodeId,
                         AduImpressions = aduImpressionsForBreakdownItem * weighting,
                         UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
-                        IsLocked = weeklyBreakdown.IsLocked
+                        IsLocked = weeklyBreakdown.IsLocked,
+                        DaypartOrganizationId = weeklyBreakdown.DaypartOrganizationId,
+                        CustomName = weeklyBreakdown.CustomName,
+                        DaypartOrganizationName = weeklyBreakdown.DaypartOrganizationName
                     };
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
@@ -382,7 +385,10 @@ namespace Services.Broadcast.BusinessEngines
                     DaypartCodeId = item.DaypartCodeId,
                     WeeklyAdu = item.Adu,
                     WeeklyUnits = item.Units,
-                    IsLocked = item.IsLocked
+                    IsLocked = item.IsLocked,
+                    DaypartOrganizationId = item.DaypartOrganizationId,
+                    CustomName = item.CustomName,
+                    DaypartOrganizationName = item.DaypartOrganizationName
                 };
 
                 _UpdateGoalsForWeeklyBreakdownItem(
@@ -552,6 +558,7 @@ namespace Services.Broadcast.BusinessEngines
             _CalculateWeeklyGoalBreakdownTotals(response, request);
             _OrderWeeks(request, response);
             SetWeekNumberAndSpotLengthDuration(response.Weeks);
+            _AddDaypartToWeeklyBreakdownResult(request, response);
             PlanDto plan = new PlanDto();
             plan.GoalBreakdownType = request.DeliveryType;
             plan.CreativeLengths = request.CreativeLengths;
@@ -755,10 +762,10 @@ namespace Services.Broadcast.BusinessEngines
             List<StandardDaypartWeightingGoal> standardDayparts)
         {
             // Get the existing daypart ids in the existing weeks
-            var existingWeekDaypartIds = response.Weeks.Select(w => w.DaypartCodeId.Value).Distinct();
+            var existingWeekDaypartIds = response.Weeks.Select(w => w.DaypartUniquekey).Distinct();
 
             // Add new dayparts to existin weeks
-            var daypartsToAdd = standardDayparts.Where(d => !existingWeekDaypartIds.Contains(d.StandardDaypartId)).ToList();
+            var daypartsToAdd = standardDayparts.Where(d => !existingWeekDaypartIds.Contains(d.DaypartUniquekey)).ToList();
             if (daypartsToAdd.Any())
             {
                 _AddNewWeeksByDaypartToWeeklyBreakdownResult(response, existingWeeks, request, daypartsToAdd);
@@ -1098,7 +1105,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 foreach (var item in standardDayparts)
                 {
-                    var planDayparts = request.Dayparts.Where(d => d.DaypartCodeId == item.StandardDaypartId).ToList();
+                    var planDayparts = request.Dayparts.Where(d => d.DaypartUniquekey == item.DaypartUniquekey).ToList();
                     var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, planDayparts, out string activeDaysString);
                     result.Weeks.Add(new WeeklyBreakdownWeek
                     {
@@ -1108,7 +1115,10 @@ namespace Services.Broadcast.BusinessEngines
                         EndDate = week.WeekEndDate,
                         MediaWeekId = week.Id,
                         DaypartCodeId = item.StandardDaypartId,
-                        PercentageOfWeek = item.WeightingGoalPercent
+                        PercentageOfWeek = item.WeightingGoalPercent,
+                        DaypartOrganizationId = planDayparts.Select(x => x.DaypartOrganizationId).FirstOrDefault(),
+                        DaypartOrganizationName = planDayparts.Select(x => x.DaypartOrganizationName).FirstOrDefault(),
+                        CustomName = planDayparts.Select(x => x.CustomName).FirstOrDefault()
                     });
                 }
             }
@@ -1460,7 +1470,7 @@ namespace Services.Broadcast.BusinessEngines
             , double impressionsPerUnit, bool equivalized, List<CreativeLength> creativeLengths)
         {
             return weeklyBreakdown
-                .GroupBy(x => new { x.MediaWeekId, x.DaypartCodeId })
+                .GroupBy(x => new { x.MediaWeekId, x.DaypartUniquekey })
                 .Select(grouping =>
                 {
                     var first = grouping.First();
@@ -1481,7 +1491,10 @@ namespace Services.Broadcast.BusinessEngines
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Adu = _CalculateADU(impressionsPerUnit, allItems.Sum(x => x.AduImpressions), equivalized, null, creativeLengths),
                         Units = unitsImpressions == 0 ? 0 : weekImpressions / unitsImpressions,
-                        IsLocked = first.IsLocked
+                        IsLocked = first.IsLocked,
+                        DaypartOrganizationId = first.DaypartOrganizationId,
+                        CustomName = first.CustomName,
+                        DaypartOrganizationName = first.DaypartOrganizationName
                     };
                 }).ToList();
         }
@@ -1611,6 +1624,22 @@ namespace Services.Broadcast.BusinessEngines
             else
             {
                 return (aduImpressions / impressionsPerUnit);
+            }
+        }
+
+        private void _AddDaypartToWeeklyBreakdownResult(WeeklyBreakdownRequest request, WeeklyBreakdownResponseDto response)
+        {
+            foreach (var week in response.Weeks)
+            {
+                foreach (var item in request.Dayparts)
+                {
+                    if (item.DaypartUniquekey == week.DaypartUniquekey)
+                    {
+                        week.DaypartOrganizationId = item.DaypartOrganizationId;
+                        week.CustomName = item.CustomName;
+                        week.DaypartOrganizationName = item.DaypartOrganizationName;
+                    }
+                }
             }
         }
     }

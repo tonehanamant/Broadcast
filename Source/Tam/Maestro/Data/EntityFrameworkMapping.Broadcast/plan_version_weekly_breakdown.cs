@@ -29,6 +29,8 @@ namespace EntityFrameworkMapping.Broadcast
         public double adu_impressions { get; set; }
         public Nullable<double> unit_impressions { get; set; }
         public Nullable<bool> is_locked { get; set; }
+        public Nullable<int> custom_daypart_organization_id { get; set; }
+        public string custom_daypart_name { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_versions plan_versions { get; set; }
