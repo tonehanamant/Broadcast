@@ -545,7 +545,7 @@ namespace Services.Broadcast.Validators
                    .Select(x => x.Count())
                    .Any(x => x > 1);
 
-                if (weeklyBreakdownHasSeveralRowsWithTheSameWeekAndDaypart)
+                if (weeklyBreakdownHasSeveralRowsWithTheSameWeekAndDaypart && weeklyBreakdown.Any(x => !x.DaypartCodeId.HasValue) && weeklyBreakdown.Any(x => !x.SpotLengthId.HasValue))
                     throw new PlanValidationException("For the chosen delivery type, each week and daypart combination must be unique");
             }
             else if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
