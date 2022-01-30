@@ -5,5 +5,7 @@
 		[queued_at] DATETIME2 NOT NULL,
 		[queued_by] VARCHAR(100) NOT NULL,
 		[completed_at] DATETIME2 NULL,
-		[error_message] NVARCHAR(MAX) NULL
+		[error_message] NVARCHAR(MAX) NULL,
+		[start_date] DATETIME2(7) NOT NULL,
+		[end_date] DATETIME2(7) NOT NULL
 	)

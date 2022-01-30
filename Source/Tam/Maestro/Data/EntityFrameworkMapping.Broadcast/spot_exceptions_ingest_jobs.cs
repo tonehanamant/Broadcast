@@ -20,5 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string queued_by { get; set; }
         public Nullable<System.DateTime> completed_at { get; set; }
         public string error_message { get; set; }
+        public System.DateTime start_date { get; set; }
+        public System.DateTime end_date { get; set; }
     }
 }

@@ -341,11 +341,10 @@ BEGIN
     )
 END
 
+GO
 /*************************************** END BP3770 *****************************************************/
 
-/*************************************** END BP-3825 *****************************************************/
-
-GO
+/*************************************** START BP-3825 *****************************************************/
 
 DECLARE @AddColumnSql VARCHAR(MAX) = 
 	'ALTER TABLE plans
@@ -497,6 +496,33 @@ END
 
 GO
 /*************************************** END BP-3661 ***************************************/
+
+/*************************************** START BP-3284 *****************************************************/
+
+DECLARE @AddColumnSql VARCHAR(MAX) = 
+	'ALTER TABLE spot_exceptions_ingest_jobs ADD start_date DATETIME2(7) NULL;
+	ALTER TABLE spot_exceptions_ingest_jobs ADD end_date DATETIME2(7) NULL;'
+
+DECLARE @PopulateSql VARCHAR(MAX) =
+	'UPDATE spot_exceptions_ingest_jobs  SET
+			start_date = ''2022-01-03'',
+			end_date = ''2022-01-09''
+		WHERE start_date IS NULL'
+
+DECLARE @AlterSql VARCHAR(MAX) = 
+	'ALTER TABLE spot_exceptions_ingest_jobs ALTER COLUMN start_date DATETIME2(7) NOT NULL;
+	ALTER TABLE spot_exceptions_ingest_jobs ALTER COLUMN end_date DATETIME2(7) NOT NULL;'
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_ingest_jobs' AND COLUMN_NAME= 'start_date')
+BEGIN
+	EXEC (@AddColumnSql)
+	EXEC (@PopulateSql)
+	EXEC (@AlterSql)
+END
+
+GO
+
+/***************************************  END BP-3284  *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
