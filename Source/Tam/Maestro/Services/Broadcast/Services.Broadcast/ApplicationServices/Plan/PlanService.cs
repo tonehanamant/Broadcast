@@ -1452,10 +1452,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var targetAudienceImpressions = item.Impressions;
                 var targetAudienceVpvh = plan
-                    .Dayparts.Single(x => x.DaypartCodeId == item.StandardDaypartId)
-                    .VpvhForAudiences.Single(x => x.AudienceId == plan.AudienceId)
-                    .Vpvh;
-
+                   .Dayparts.Where(x => x.DaypartCodeId == item.StandardDaypartId)
+                   .SelectMany(s => s.VpvhForAudiences)
+                   .Where(s => s.AudienceId == plan.AudienceId)
+                   .Average(s => s.Vpvh);
+                  
                 result[item.StandardDaypartId] = ProposalMath.CalculateHhImpressionsUsingVpvh(targetAudienceImpressions, targetAudienceVpvh);
             }
 
