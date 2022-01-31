@@ -119,7 +119,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("out-of-specs-plans")]
+        [Route("out-of-spec-plans")]
         public BaseResponse<SpotExceptionsOutOfSpecPlansResultDto> GetSpotExceptionsOutofSpecsPlans(SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutofSpecsActivePlansRequestDto)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutofSpecsActivePlansRequestDto));
