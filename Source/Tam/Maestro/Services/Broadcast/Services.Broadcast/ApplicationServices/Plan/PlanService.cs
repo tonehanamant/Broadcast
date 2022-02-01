@@ -330,6 +330,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        internal void _OnGetHandlePlanAvailableMarketSovFeature(PlanDaypartGoalDto planDaypartGoal)
+        {
+            if (!_IsMarketSovCalculationEnabled.Value)
+            {
+                planDaypartGoal.AvailableMarkets.ForEach(s =>
+                {
+                    if (!s.IsUserShareOfVoicePercent)
+                    {
+                        s.ShareOfVoicePercent = null;
+                    }
+                });
+            }
+        }
+
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
@@ -400,7 +414,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
                 }
 
-                _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
+                _VerifyWeeklyAdu(plan.IsAduEnabled ?? false, plan.WeeklyBreakdownWeeks);
 
                 processTimers.End(SW_KEY_PRE_PLAN_SAVE);
                 processTimers.Start(SW_KEY_PLAN_SAVE);
@@ -721,6 +735,27 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        private void _ConvertImpressionsToUserFormat(PlanDaypartGoalDto planDaypartGoal)
+        {
+            //the UI is sending the user entered value instead of the raw value. BE needs to adjust
+            if (planDaypartGoal.TargetImpressions.HasValue)
+            {
+                planDaypartGoal.TargetImpressions = Math.Truncate(Convert.ToDouble(planDaypartGoal.TargetImpressions / 1000));
+            }
+
+            planDaypartGoal.HHImpressions /= 1000;
+
+            foreach (var week in planDaypartGoal.WeeklyBreakdownWeeks)
+            {
+                week.WeeklyImpressions /= 1000;
+            }
+
+            foreach (var week in planDaypartGoal.RawWeeklyBreakdownWeeks)
+            {
+                week.WeeklyImpressions /= 1000;
+            }
+        }
+
         private void _CalculateDaypartOverrides(List<PlanDaypartDto> planDayparts)
         {
             var standardDayparts = _StandardDaypartRepository.GetAllStandardDaypartsWithAllData();
@@ -746,26 +781,52 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
             }
-            plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
-            // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
-            // we need to group them back based on the plan delivery type
-            plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
-            _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.WeeklyBreakdownWeeks);
-            _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.RawWeeklyBreakdownWeeks);
-            _SetWeeklyBreakdownTotals(plan);
+            
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
-
             _SetDefaultDaypartRestrictions(plan);
-            _ConvertImpressionsToUserFormat(plan);
-
             _SortPlanDayparts(plan);
-
             _SortProgramRestrictions(plan);
             _SortCreativeLengths(plan);
 
-            _OnGetHandlePlanAvailableMarketSovFeature(plan);
-            _HandleAvailableMarketSovs(plan);
-            _AddDaypartToWeeklyBreakdownResult(plan);
+            if (plan.PlanMode == PlanModeEnum.Daypart)
+            {
+                var daypartGoals = plan.Dayparts.Select(x => x.Goals).ToList();
+                daypartGoals.ForEach(goal =>
+                {
+                    goal.RawWeeklyBreakdownWeeks = goal.WeeklyBreakdownWeeks;
+                    // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
+                    // we need to group them back based on the plan delivery type
+                    goal.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan, goal);
+                    _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(goal.WeeklyBreakdownWeeks);
+                    _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(goal.RawWeeklyBreakdownWeeks);
+                    _SetWeeklyBreakdownTotals(goal);
+
+                    _ConvertImpressionsToUserFormat(goal);
+
+                    _OnGetHandlePlanAvailableMarketSovFeature(goal);
+                    _HandleAvailableMarketSovs(goal);
+                    _AggregateBlackoutMarkets(goal);
+                    plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
+                });
+            }
+            else
+            {
+                plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
+                // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
+                // we need to group them back based on the plan delivery type
+                plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
+                _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.WeeklyBreakdownWeeks);
+                _WeeklyBreakdownEngine.SetWeekNumberAndSpotLengthDuration(plan.RawWeeklyBreakdownWeeks);
+                _SetWeeklyBreakdownTotals(plan);
+
+                _ConvertImpressionsToUserFormat(plan);
+
+                _OnGetHandlePlanAvailableMarketSovFeature(plan);
+                _HandleAvailableMarketSovs(plan);
+                _AddDaypartToWeeklyBreakdownResult(plan);
+                plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
+            }
+
             return plan;
         }
 
@@ -774,6 +835,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var calculationResults = _PlanMarketSovCalculator.CalculateMarketWeights(plan.AvailableMarkets);
             plan.AvailableMarkets = calculationResults.AvailableMarkets;
             plan.AvailableMarketsSovTotal = calculationResults.TotalWeight;
+        }
+
+        private void _HandleAvailableMarketSovs(PlanDaypartGoalDto planDaypartGoal)
+        {
+            var calculationResults = _PlanMarketSovCalculator.CalculateMarketWeights(planDaypartGoal.AvailableMarkets);
+            planDaypartGoal.AvailableMarkets = calculationResults.AvailableMarkets;
+            planDaypartGoal.AvailableMarketsSovTotal = calculationResults.TotalWeight;
+            planDaypartGoal.AvailableMarketsWithSovCount = planDaypartGoal.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue).Count();
+        }
+
+        private void _AggregateBlackoutMarkets(PlanDaypartGoalDto planDaypartGoal)
+        {
+            if (!planDaypartGoal.BlackoutMarkets.Any())
+            {
+                return;
+            }
+
+            var blackoutMarketCount = planDaypartGoal.BlackoutMarkets.Count;
+            var blackoutMarketCoverage = planDaypartGoal.BlackoutMarkets.Sum(s => s.PercentageOfUS);
+
+            planDaypartGoal.BlackoutMarketCount = blackoutMarketCount;
+            planDaypartGoal.BlackoutMarketTotalUsCoveragePercent = blackoutMarketCoverage;
         }
 
         public PlanDto_v2 GetPlan_v2(int planId, int? versionId = null)
@@ -878,22 +961,35 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private void _SetWeeklyBreakdownTotals(PlanDto plan)
-        {
-            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
-
-            plan.WeeklyBreakdownTotals.TotalActiveDays = weeklyBreakdownByWeek.Sum(w => w.NumberOfActiveDays);
-
-            plan.WeeklyBreakdownTotals.TotalImpressions = Math.Floor(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions) / 1000);
-            var impressionsTotalsRatio = plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0
-                ? plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions) / plan.TargetImpressions.Value : 0;
-
-            plan.WeeklyBreakdownTotals.TotalRatingPoints = Math.Round(plan.TargetRatingPoints ?? 0 * impressionsTotalsRatio, 1);
-            plan.WeeklyBreakdownTotals.TotalImpressionsPercentage = Math.Round(GeneralMath.ConvertFractionToPercentage(impressionsTotalsRatio), 0);
-            plan.WeeklyBreakdownTotals.TotalBudget = plan.Budget.Value * (decimal)impressionsTotalsRatio;
-            plan.WeeklyBreakdownTotals.TotalUnits = Math.Round(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyUnits), 2);
+        {            
+            plan.WeeklyBreakdownTotals = _SetWeeklyBreakdownTotals(plan.WeeklyBreakdownWeeks, plan.TargetImpressions, plan.TargetRatingPoints, plan.Budget);
         }
 
-        private void _SortPlanDayparts(PlanDto plan)
+        private void _SetWeeklyBreakdownTotals(PlanDaypartGoalDto planDaypartGoal)
+        {
+            planDaypartGoal.WeeklyBreakdownTotals = _SetWeeklyBreakdownTotals(planDaypartGoal.WeeklyBreakdownWeeks, planDaypartGoal.TargetImpressions, planDaypartGoal.TargetRatingPoints, planDaypartGoal.Budget);
+        }
+
+        private WeeklyBreakdownTotals _SetWeeklyBreakdownTotals(List<WeeklyBreakdownWeek> weeklyBreakdownWeeks, double? targetImpressions, double? targetRatingPoints, decimal? budget)
+        {
+            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(weeklyBreakdownWeeks);
+
+            var impressionsTotalsRatio = targetImpressions.HasValue && targetImpressions.Value > 0
+                ? weeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions) / targetImpressions.Value : 0;
+
+            var weeklyBreakdownTotals = new WeeklyBreakdownTotals
+            {
+                TotalActiveDays = weeklyBreakdownByWeek.Sum(w => w.NumberOfActiveDays),
+                TotalImpressions = Math.Floor(weeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions) / 1000),
+                TotalRatingPoints = Math.Round(targetRatingPoints ?? 0 * impressionsTotalsRatio, 1),
+                TotalImpressionsPercentage = Math.Round(GeneralMath.ConvertFractionToPercentage(impressionsTotalsRatio), 0),
+                TotalBudget = budget.Value * (decimal)impressionsTotalsRatio,
+                TotalUnits = Math.Round(weeklyBreakdownWeeks.Sum(w => w.WeeklyUnits), 2)
+            };
+            return weeklyBreakdownTotals;
+        }
+
+            private void _SortPlanDayparts(PlanDto plan)
         {
             var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
             var planDayparts = plan.Dayparts.Select(x => new PlanDaypart
@@ -908,11 +1004,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 WeightingGoalPercent = x.WeightingGoalPercent,
                 WeekdaysWeighting = x.WeekdaysWeighting,
                 WeekendWeighting = x.WeekendWeighting,
-                FlightDays = plan.FlightDays.ToList(),
+                FlightDays = (plan.PlanMode == PlanModeEnum.Daypart) ? x.Goals.FlightDays.ToList() : plan.FlightDays.ToList(),
                 VpvhForAudiences = x.VpvhForAudiences,
                 DaypartOrganizationId = x.DaypartOrganizationId,
                 CustomName = x.CustomName,
-                DaypartOrganizationName = x.DaypartOrganizationName
+                DaypartOrganizationName = x.DaypartOrganizationName,
+                Goals = x.Goals
             }).ToList();
 
             plan.Dayparts = planDayparts.OrderDayparts(standardDayparts);

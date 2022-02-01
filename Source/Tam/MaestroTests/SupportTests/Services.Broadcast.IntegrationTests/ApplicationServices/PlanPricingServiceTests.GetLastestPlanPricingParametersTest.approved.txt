@@ -2111,6 +2111,7 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "2||",
       "EndTimeSeconds": 46800,
+      "Goals": null,
       "IsEndTimeModified": false,
       "IsStartTimeModified": false,
       "Restrictions": {
@@ -2177,6 +2178,7 @@
   "ModifiedBy": "Sebastian Roibu",
   "ModifiedDate": "2020-06-19T01:02:14.207",
   "Name": "Plan in working",
+  "PlanMode": 1,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

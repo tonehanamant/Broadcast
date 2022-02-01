@@ -357,7 +357,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household CPM.
         /// </value>
-        public decimal HHCPM { get; set; }
+        public decimal? HHCPM { get; set; }
 
         /// <summary>
         /// Gets or sets the household universe.
@@ -365,7 +365,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household universe.
         /// </value>
-        public double HHUniverse { get; set; }
+        public double? HHUniverse { get; set; }
 
         /// <summary>
         /// Gets or sets the household CPP.
@@ -373,7 +373,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household CPP.
         /// </value>
-        public decimal HHCPP { get; set; }
+        public decimal? HHCPP { get; set; }
 
         /// <summary>
         /// Gets or sets the household rating points.
@@ -381,7 +381,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household rating points.
         /// </value>
-        public double HHRatingPoints { get; set; }
+        public double? HHRatingPoints { get; set; }
 
         /// <summary>
         /// Gets or sets the target universe.
@@ -389,7 +389,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The target universe.
         /// </value>
-        public double TargetUniverse { get; set; }
+        public double? TargetUniverse { get; set; }
 
         /// <summary>
         /// Gets or sets the household impressions.
@@ -397,7 +397,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The household impressions.
         /// </value>
-        public double HHImpressions { get; set; }
+        public double? HHImpressions { get; set; }
 
         /// <summary>
         /// Gets or sets the blackout market count.
@@ -473,7 +473,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         ///   <c>true</c> if this instance is enable; otherwise, <c>false</c>.
         /// </value>
-        public bool IsAduEnabled { get; set; }
+        public bool? IsAduEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the impressions per unit.
@@ -534,6 +534,7 @@ namespace Services.Broadcast.Entities.Plan
             var result = BuyingParameters?.BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
             return result;
         }
+        public PlanModeEnum PlanMode { get; set; } = PlanModeEnum.Classic;
     }
 
     public class PlanDto_v2 : PlanDto

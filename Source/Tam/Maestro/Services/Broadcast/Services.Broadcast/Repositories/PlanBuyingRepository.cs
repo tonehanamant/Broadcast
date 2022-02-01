@@ -320,7 +320,7 @@ namespace Services.Broadcast.Repositories
                     PlanId = e.plan_versions.plan_id,
                     BudgetGoal = e.budget_adjusted,
                     CompetitionFactor = e.competition_factor,
-                    CoverageGoalPercent = e.plan_versions.coverage_goal_percent,
+                    CoverageGoalPercent = e.plan_versions.coverage_goal_percent ?? 0,
                     CpmGoal = e.cpm_adjusted,
                     ImpressionsGoal = e.impressions_goal,
                     InflationFactor = e.inflation_factor,

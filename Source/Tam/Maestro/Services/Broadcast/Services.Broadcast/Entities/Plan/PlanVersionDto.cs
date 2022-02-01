@@ -43,7 +43,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The flight start date.
         /// </value>
-        public DateTime FlightStartDate { get; set; }
+        public DateTime? FlightStartDate { get; set; }
 
         /// <summary>
         /// Gets or sets the flight end date.
@@ -51,7 +51,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The flight end date.
         /// </value>
-        public DateTime FlightEndDate { get; set; }
+        public DateTime? FlightEndDate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is flight modified.

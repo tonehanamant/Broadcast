@@ -74,6 +74,7 @@
       "DaypartTypeId": 2,
       "DaypartUniquekey": "2||",
       "EndTimeSeconds": 2000,
+      "Goals": null,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
@@ -139,6 +140,7 @@
       "DaypartTypeId": 3,
       "DaypartUniquekey": "3||",
       "EndTimeSeconds": 68400,
+      "Goals": null,
       "IsEndTimeModified": true,
       "IsStartTimeModified": false,
       "Restrictions": {
@@ -207,6 +209,7 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "11||",
       "EndTimeSeconds": 2788,
+      "Goals": null,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
@@ -294,6 +297,7 @@
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "Renamed Plan",
+  "PlanMode": 1,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

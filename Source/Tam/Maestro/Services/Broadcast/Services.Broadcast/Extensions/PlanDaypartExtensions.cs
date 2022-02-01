@@ -17,7 +17,7 @@ namespace Services.Broadcast.Extensions
             const int WEDNESDAY = 3;
             const int THURSDAY = 4;
             const int FRIDAY = 5;
-            const int SATURDAY = 6;
+            const int SATURDAY = 6;            
 
             // join the plans dayparts with daypart defaults, so that later we can order them
             var mappedPlanDaypartList = planDaypartList.Join(
@@ -42,7 +42,8 @@ namespace Services.Broadcast.Extensions
                     planDaypart.VpvhForAudiences,
                     planDaypart.DaypartOrganizationId,
                     planDaypart.DaypartOrganizationName,
-                    planDaypart.CustomName
+                    planDaypart.CustomName,
+                    planDaypart.Goals
                 }).ToList();
 
             // return the ordered list
@@ -73,7 +74,8 @@ namespace Services.Broadcast.Extensions
                     VpvhForAudiences = item.VpvhForAudiences,
                     DaypartOrganizationId = item.DaypartOrganizationId,
                     DaypartOrganizationName = item.DaypartOrganizationName,
-                    CustomName = item.CustomName
+                    CustomName = item.CustomName,
+                    Goals = item.Goals
                 }).ToList();
         }
 

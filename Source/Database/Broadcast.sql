@@ -524,6 +524,156 @@ GO
 
 /***************************************  END BP-3284  *****************************************************/
 
+/*************************************** START BP-3829 *****************************************************/
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'flight_start_date' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN flight_start_date datetime NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'flight_end_date' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN flight_end_date datetime NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'budget' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN budget money NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_impression' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_impression float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_cpm' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_cpm money NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_rating_points' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_rating_points float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_cpp' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_cpp money NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_universe' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_universe float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'hh_impressions' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN hh_impressions float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'hh_cpm' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN hh_cpm money NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'hh_rating_points' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN hh_rating_points float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'hh_cpp' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN hh_cpp money NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'hh_universe' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN hh_universe float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'currency' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN currency int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'coverage_goal_percent' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN coverage_goal_percent float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'goal_breakdown_type' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN goal_breakdown_type int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'is_adu_enabled' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN is_adu_enabled bit NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'impressions_per_unit' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN impressions_per_unit float NULL
+END
+
+GO
+
+/*************************************** END BP-3829 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -195,8 +195,8 @@ namespace Services.Broadcast.Repositories
                         SpotLengthValues = planVersion.plan_version_creative_lengths.Select(x => x.spot_lengths.length).ToList(),
                         AudienceCode = planVersion.audience.code,
                         Dayparts = planVersion.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
-                        FlightStartDate = planVersion.flight_start_date,
-                        FlightEndDate = planVersion.flight_end_date,
+                        FlightStartDate = planVersion.flight_start_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
+                        FlightEndDate = planVersion.flight_end_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
                         ProductName = planVersionSummary.product_name,
                         Iscis = plan.plan_iscis
                                         .Where(planIsci => planIsci.deleted_at == null 

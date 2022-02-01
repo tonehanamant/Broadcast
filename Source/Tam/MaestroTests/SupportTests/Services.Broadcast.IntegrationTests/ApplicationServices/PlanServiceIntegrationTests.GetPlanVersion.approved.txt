@@ -64,6 +64,7 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "2||",
       "EndTimeSeconds": 2000,
+      "Goals": null,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
@@ -105,6 +106,7 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "11||",
       "EndTimeSeconds": 2788,
+      "Goals": null,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
       "Restrictions": {
@@ -173,6 +175,7 @@
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2019-05-14T00:00:00",
   "Name": "New Plan",
+  "PlanMode": 1,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": null,

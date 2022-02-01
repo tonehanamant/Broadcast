@@ -36,36 +36,36 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_id { get; set; }
         public bool is_draft { get; set; }
         public bool equivalized { get; set; }
-        public System.DateTime flight_start_date { get; set; }
-        public System.DateTime flight_end_date { get; set; }
+        public Nullable<System.DateTime> flight_start_date { get; set; }
+        public Nullable<System.DateTime> flight_end_date { get; set; }
         public string flight_notes { get; set; }
         public int audience_type { get; set; }
         public int posting_type { get; set; }
         public int target_audience_id { get; set; }
         public int share_book_id { get; set; }
         public Nullable<int> hut_book_id { get; set; }
-        public decimal budget { get; set; }
-        public double target_impression { get; set; }
-        public decimal target_cpm { get; set; }
-        public double target_rating_points { get; set; }
-        public decimal target_cpp { get; set; }
-        public double target_universe { get; set; }
-        public double hh_impressions { get; set; }
-        public decimal hh_cpm { get; set; }
-        public double hh_rating_points { get; set; }
-        public decimal hh_cpp { get; set; }
-        public double hh_universe { get; set; }
-        public int currency { get; set; }
+        public Nullable<decimal> budget { get; set; }
+        public Nullable<double> target_impression { get; set; }
+        public Nullable<decimal> target_cpm { get; set; }
+        public Nullable<double> target_rating_points { get; set; }
+        public Nullable<decimal> target_cpp { get; set; }
+        public Nullable<double> target_universe { get; set; }
+        public Nullable<double> hh_impressions { get; set; }
+        public Nullable<decimal> hh_cpm { get; set; }
+        public Nullable<double> hh_rating_points { get; set; }
+        public Nullable<decimal> hh_cpp { get; set; }
+        public Nullable<double> hh_universe { get; set; }
+        public Nullable<int> currency { get; set; }
         public double target_vpvh { get; set; }
-        public double coverage_goal_percent { get; set; }
-        public int goal_breakdown_type { get; set; }
+        public Nullable<double> coverage_goal_percent { get; set; }
+        public Nullable<int> goal_breakdown_type { get; set; }
         public int status { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<int> version_number { get; set; }
-        public bool is_adu_enabled { get; set; }
+        public Nullable<bool> is_adu_enabled { get; set; }
         public Nullable<double> impressions_per_unit { get; set; }
         public string flight_notes_internal { get; set; }
     

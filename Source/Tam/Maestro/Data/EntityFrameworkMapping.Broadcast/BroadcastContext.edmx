@@ -838,7 +838,7 @@
           <Property Name="deleted_at" Type="datetime2" Precision="7" />
           <Property Name="deleted_by" Type="varchar" MaxLength="100" />
           <Property Name="flight_start_date" Type="date" Nullable="false" />
-          <Property Name="flight_end_date" Type="date" Nullable="false" />
+          <Property Name="flight_end_date" Type="date" Nullable="false" />          
         </EntityType>
         <EntityType Name="plan_version_audience_daypart_vpvh">
           <Key>
@@ -1555,36 +1555,36 @@
           <Property Name="plan_id" Type="int" Nullable="false" />
           <Property Name="is_draft" Type="bit" Nullable="false" />
           <Property Name="equivalized" Type="bit" Nullable="false" />
-          <Property Name="flight_start_date" Type="datetime" Nullable="false" />
-          <Property Name="flight_end_date" Type="datetime" Nullable="false" />
+          <Property Name="flight_start_date" Type="datetime" />
+          <Property Name="flight_end_date" Type="datetime" />
           <Property Name="flight_notes" Type="nvarchar" MaxLength="1024" />
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
           <Property Name="target_audience_id" Type="int" Nullable="false" />
           <Property Name="share_book_id" Type="int" Nullable="false" />
           <Property Name="hut_book_id" Type="int" />
-          <Property Name="budget" Type="money" Nullable="false" />
-          <Property Name="target_impression" Type="float" Nullable="false" />
-          <Property Name="target_cpm" Type="money" Nullable="false" />
-          <Property Name="target_rating_points" Type="float" Nullable="false" />
-          <Property Name="target_cpp" Type="money" Nullable="false" />
-          <Property Name="target_universe" Type="float" Nullable="false" />
-          <Property Name="hh_impressions" Type="float" Nullable="false" />
-          <Property Name="hh_cpm" Type="money" Nullable="false" />
-          <Property Name="hh_rating_points" Type="float" Nullable="false" />
-          <Property Name="hh_cpp" Type="money" Nullable="false" />
-          <Property Name="hh_universe" Type="float" Nullable="false" />
-          <Property Name="currency" Type="int" Nullable="false" />
+          <Property Name="budget" Type="money" />
+          <Property Name="target_impression" Type="float" />
+          <Property Name="target_cpm" Type="money" />
+          <Property Name="target_rating_points" Type="float" />
+          <Property Name="target_cpp" Type="money" />
+          <Property Name="target_universe" Type="float" />
+          <Property Name="hh_impressions" Type="float" />
+          <Property Name="hh_cpm" Type="money" />
+          <Property Name="hh_rating_points" Type="float" />
+          <Property Name="hh_cpp" Type="money" />
+          <Property Name="hh_universe" Type="float" />
+          <Property Name="currency" Type="int" />
           <Property Name="target_vpvh" Type="float" Nullable="false" />
-          <Property Name="coverage_goal_percent" Type="float" Nullable="false" />
-          <Property Name="goal_breakdown_type" Type="int" Nullable="false" />
+          <Property Name="coverage_goal_percent" Type="float" />
+          <Property Name="goal_breakdown_type" Type="int" />
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" />
           <Property Name="modified_date" Type="datetime" />
           <Property Name="version_number" Type="int" />
-          <Property Name="is_adu_enabled" Type="bit" Nullable="false" />
+          <Property Name="is_adu_enabled" Type="bit" />
           <Property Name="impressions_per_unit" Type="float" />
           <Property Name="flight_notes_internal" Type="nvarchar" MaxLength="1024" />
         </EntityType>
@@ -15356,36 +15356,36 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="plan_id" Type="Int32" Nullable="false" />
           <Property Name="is_draft" Type="Boolean" Nullable="false" />
           <Property Name="equivalized" Type="Boolean" Nullable="false" />
-          <Property Name="flight_start_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="flight_end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
           <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="audience_type" Type="Int32" Nullable="false" />
           <Property Name="posting_type" Type="Int32" Nullable="false" />
           <Property Name="target_audience_id" Type="Int32" Nullable="false" />
           <Property Name="share_book_id" Type="Int32" Nullable="false" />
           <Property Name="hut_book_id" Type="Int32" />
-          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="target_impression" Type="Double" Nullable="false" />
-          <Property Name="target_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="target_rating_points" Type="Double" Nullable="false" />
-          <Property Name="target_cpp" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="target_universe" Type="Double" Nullable="false" />
-          <Property Name="hh_impressions" Type="Double" Nullable="false" />
-          <Property Name="hh_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="hh_rating_points" Type="Double" Nullable="false" />
-          <Property Name="hh_cpp" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="hh_universe" Type="Double" Nullable="false" />
-          <Property Name="currency" Type="Int32" Nullable="false" />
+          <Property Name="budget" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="target_impression" Type="Double" />
+          <Property Name="target_cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="target_rating_points" Type="Double" />
+          <Property Name="target_cpp" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="target_universe" Type="Double" />
+          <Property Name="hh_impressions" Type="Double" />
+          <Property Name="hh_cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="hh_rating_points" Type="Double" />
+          <Property Name="hh_cpp" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="hh_universe" Type="Double" />
+          <Property Name="currency" Type="Int32" />
           <Property Name="target_vpvh" Type="Double" Nullable="false" />
-          <Property Name="coverage_goal_percent" Type="Double" Nullable="false" />
-          <Property Name="goal_breakdown_type" Type="Int32" Nullable="false" />
+          <Property Name="coverage_goal_percent" Type="Double" />
+          <Property Name="goal_breakdown_type" Type="Int32" />
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Precision="3" />
           <Property Name="version_number" Type="Int32" />
-          <Property Name="is_adu_enabled" Type="Boolean" Nullable="false" />
+          <Property Name="is_adu_enabled" Type="Boolean" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="plan_versions" ToRole="audience" />
           <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_plan_versions_hut_media_months" FromRole="plan_versions" ToRole="media_months" />
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_plan_versions_share_media_months" FromRole="plan_versions" ToRole="media_months" />
@@ -18106,7 +18106,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="flight_start_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="flight_end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />          
         </EntityType>
         <Association Name="FK_plan_iscis_plans">
           <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
@@ -21613,7 +21613,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </EntitySetMapping>
           <EntitySetMapping Name="plan_iscis">
             <EntityTypeMapping TypeName="BroadcastModel.plan_iscis">
-              <MappingFragment StoreEntitySet="plan_iscis">
+              <MappingFragment StoreEntitySet="plan_iscis">                
                 <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
                 <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
                 <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
