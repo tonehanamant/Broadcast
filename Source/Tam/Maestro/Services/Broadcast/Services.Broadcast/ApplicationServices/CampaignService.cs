@@ -136,6 +136,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="campaignId">The Campaign identifier.</param>
         /// <returns></returns>
         BroadcastReleaseLockResponse UnlockCampaigns(int campaignId);
+
+        /// <summary>
+        /// Gets the campaign Copy.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns></returns>
+        CampaignCopyDto GetCampaignCopy(int campaignId);
     }
 
     /// <summary>
@@ -886,6 +893,13 @@ namespace Services.Broadcast.ApplicationServices
             var broadcastReleaseLockResponse = _LockingEngine.UnlockCampaigns(campaignId);
 
             return broadcastReleaseLockResponse;
+        }
+
+        /// <inheritdoc />
+        public CampaignCopyDto GetCampaignCopy(int campaignId)
+        {
+            var campaign = _CampaignRepository.GetCampaignCopy(campaignId);
+            return campaign;
         }
     }
 }

@@ -74,6 +74,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="modifiedDate">The modified date.</param>
         /// <param name="modifiedBy">The modified by.</param>
         void UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy);
+
+        /// <summary>
+        /// Gets the campaign copy.
+        /// </summary>
+        /// <param name="campaignId">The identifier.</param>
+        /// <returns>CampaignCopyDto object</returns>
+        CampaignCopyDto GetCampaignCopy(int campaignId);
     }
 
     /// <summary>
@@ -488,6 +495,49 @@ namespace Services.Broadcast.Repositories
             }
 
             return plansWithStartDate.ToList();
+        }
+
+        public CampaignCopyDto GetCampaignCopy(int campaignId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var campaign = context.campaigns
+                        .Include(x => x.plans)
+                        .Include(z => z.plans.Select(x => x.plan_versions))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
+                        .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
+
+                    return _MapToCampaignCopyDto(campaign);
+                });
+        }
+
+        private CampaignCopyDto _MapToCampaignCopyDto(campaign campaign)
+        {
+            var campaignCopyDto = new CampaignCopyDto
+            {
+                Id = campaign.id,
+                Name = campaign.name,
+                AdvertiserMasterId = Convert.ToString(campaign.advertiser_master_id),
+                AgencyMasterId = Convert.ToString(campaign.agency_master_id),
+                Plans = campaign.plans.SelectMany(x => x.plan_versions
+                            .Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
+                                .Where(x => x.id == x.plan.latest_version_id)
+                    .Select(version =>
+                    {
+                        var plandata = campaign.plans.Where(x => x.latest_version_id == version.id).FirstOrDefault();
+
+                        return new PlansCopyDto
+                        {
+                            ProductMasterId = Convert.ToString(plandata.product_master_id),
+                            Name = version.plan.name,
+                            StartDate = Convert.ToString(version.flight_start_date),
+                            EndDate = Convert.ToString(version.flight_end_date),
+                            SourcePlanId = version.plan.id,
+                        };
+                    }).ToList()
+            };
+            return campaignCopyDto;
         }
 
     }

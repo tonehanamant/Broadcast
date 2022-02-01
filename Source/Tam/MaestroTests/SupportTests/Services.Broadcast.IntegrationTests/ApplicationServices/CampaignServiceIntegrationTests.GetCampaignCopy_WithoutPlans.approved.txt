@@ -1,0 +1,7 @@
+{
+  "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+  "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+  "Id": 5,
+  "Name": "Test Campaign 5",
+  "Plans": []
+}

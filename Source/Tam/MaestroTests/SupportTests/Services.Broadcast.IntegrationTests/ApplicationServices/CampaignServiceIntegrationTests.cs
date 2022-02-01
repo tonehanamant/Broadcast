@@ -1016,6 +1016,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }
             }
         }
+
+        [Test]
+        [Category("short_running")]
+        public void GetCampaignCopy()
+        {
+            var campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                var foundCampaign = _CampaignService.GetCampaignCopy(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [Category("short_running")]
+        public void GetCampaignCopy_WithoutPlans()
+        {
+            var campaignId = 5;
+            using (new TransactionScopeWrapper())
+            {
+                var foundCampaign = _CampaignService.GetCampaignCopy(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
     }
 }
 

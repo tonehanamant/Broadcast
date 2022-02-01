@@ -2858,5 +2858,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual(expectedResult, result.Success);
         }
+
+        [Test]
+        public void GetCampaignCopy()
+        {
+            // Arrange
+            int campaignId = 2;
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignCopy(It.IsAny<int>())).Returns(_GetCampaignCopy(campaignId));
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetCampaignCopy(campaignId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private static CampaignCopyDto _GetCampaignCopy(int campaignId)
+        {
+            return new CampaignCopyDto 
+            {
+                    Id = 2,
+                    Name = "3765 campaign",
+                    AdvertiserMasterId = "d6dbbe81-eeb3-482d-98eb-69b24c2f7020",
+                    AgencyMasterId = "abca9fae-367e-4c11-8bf2-03a92412a5a7",
+                    Plans = new List<PlansCopyDto>
+                    {
+                        new PlansCopyDto
+                        {
+                            SourcePlanId = 341,
+                            Name = "3765 CustomByWeekByDaypart",
+                            ProductMasterId = "049c3450-5824-43c3-b9f6-b7158c330b61",
+                            StartDate = "1/24/2022 12:00:00 AM",
+                            EndDate = "1/30/2022 12:00:00 AM"
+                        },
+                        new PlansCopyDto
+                        {
+                            SourcePlanId = 342,
+                            Name = "8888 CustomByWeek",
+                            ProductMasterId = "049c3450-5824-43c3-b9f6-b7158c330b61",
+                            StartDate = "2/24/2022 12:00:00 AM",
+                            EndDate = "2/30/2022 12:00:00 AM"
+                        }
+                    }
+            };
+        }
     }
 }

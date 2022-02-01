@@ -1,0 +1,15 @@
+{
+  "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+  "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+  "Id": 2,
+  "Name": "Test Campaign 2",
+  "Plans": [
+    {
+      "EndDate": "7/31/2019 12:00:00 AM",
+      "Name": "New Plan",
+      "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
+      "SourcePlanId": 524,
+      "StartDate": "1/1/2019 12:00:00 AM"
+    }
+  ]
+}

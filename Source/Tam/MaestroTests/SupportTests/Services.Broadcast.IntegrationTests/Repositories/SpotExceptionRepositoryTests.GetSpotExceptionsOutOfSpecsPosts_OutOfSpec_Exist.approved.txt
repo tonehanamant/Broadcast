@@ -18,6 +18,7 @@
     "IngestedBy": "Repository Test User",
     "IsciName": "AB82TXT2H",
     "Market": "Albuquerque-Santa Fe",
+    "PlanId": 1196,
     "Product": "Pizza Hut",
     "ProgramAirTime": "2010-01-04T08:07:15",
     "ProgramAudience": {
@@ -73,6 +74,7 @@
     "IngestedBy": "Repository Test User",
     "IsciName": "AB82VR58",
     "Market": "Minneapolis-St. Paul",
+    "PlanId": 1197,
     "Product": "Spotify",
     "ProgramAirTime": "2010-01-04T08:07:15",
     "ProgramAudience": {

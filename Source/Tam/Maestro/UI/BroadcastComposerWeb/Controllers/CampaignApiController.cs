@@ -171,5 +171,19 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
                 .GenerateProgramLineupReport(request, fullName, DateTime.Now, appDataPath));
         }
+
+        /// <summary>
+        /// Gets the campaign Copy.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns>The campaign copy by the given id.</returns>
+        [HttpGet]
+        [Route("{campaignId}/for-copy")]
+        public BaseResponse<CampaignCopyDto> GetCampaignCopy(int campaignId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignCopy(campaignId));
+        }
     }
 }
