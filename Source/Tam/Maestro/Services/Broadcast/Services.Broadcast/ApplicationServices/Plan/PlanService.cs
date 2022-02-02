@@ -805,8 +805,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                     _OnGetHandlePlanAvailableMarketSovFeature(goal);
                     _HandleAvailableMarketSovs(goal);
-                    _AggregateBlackoutMarkets(goal);
-                    plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
+                    _AggregateBlackoutMarkets(goal);                    
                 });
             }
             else
@@ -823,8 +822,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _OnGetHandlePlanAvailableMarketSovFeature(plan);
                 _HandleAvailableMarketSovs(plan);
-                _AddDaypartToWeeklyBreakdownResult(plan);
-                plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
+                _AddDaypartToWeeklyBreakdownResult(plan);               
             }
 
             return plan;
