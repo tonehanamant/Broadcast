@@ -900,7 +900,9 @@ namespace Services.Broadcast.Repositories
                     standard_daypart_id = d.DaypartCodeId,
                     percentage_of_week = d.PercentageOfWeek,
                     unit_impressions = d.UnitImpressions,
-                    is_locked = d.IsLocked
+                    is_locked = d.IsLocked,
+                    custom_daypart_organization_id = d.DaypartOrganizationId,
+                    custom_daypart_name = d.CustomName
                 });
             });
         }
