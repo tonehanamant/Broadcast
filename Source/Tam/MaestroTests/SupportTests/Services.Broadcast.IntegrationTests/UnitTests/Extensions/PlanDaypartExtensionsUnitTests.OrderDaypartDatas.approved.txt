@@ -1,9 +1,11 @@
 [
   {
+    "CustomDayartOrganizationId": null,
     "CustomDayartOrganizationName": null,
     "CustomDaypartName": null,
     "DaypartCode": "AMN",
     "DaypartCodeId": 0,
+    "DaypartUniquekey": "0||",
     "EndTime": "9:00",
     "FlightDays": "M-Su",
     "GenreRestrictions": [],
@@ -11,10 +13,12 @@
     "StartTime": "8:00"
   },
   {
+    "CustomDayartOrganizationId": null,
     "CustomDayartOrganizationName": null,
     "CustomDaypartName": null,
     "DaypartCode": "EMN",
     "DaypartCodeId": 0,
+    "DaypartUniquekey": "0||",
     "EndTime": "12:00",
     "FlightDays": "M-F",
     "GenreRestrictions": [],
@@ -22,10 +26,12 @@
     "StartTime": "11:00"
   },
   {
+    "CustomDayartOrganizationId": null,
     "CustomDayartOrganizationName": null,
     "CustomDaypartName": null,
     "DaypartCode": "EMN",
     "DaypartCodeId": 0,
+    "DaypartUniquekey": "0||",
     "EndTime": "11:30",
     "FlightDays": "M-F",
     "GenreRestrictions": [],
@@ -33,10 +39,12 @@
     "StartTime": "11:00"
   },
   {
+    "CustomDayartOrganizationId": null,
     "CustomDayartOrganizationName": null,
     "CustomDaypartName": null,
     "DaypartCode": "EMN",
     "DaypartCodeId": 0,
+    "DaypartUniquekey": "0||",
     "EndTime": "9:00",
     "FlightDays": "W-F",
     "GenreRestrictions": [],
@@ -44,10 +52,12 @@
     "StartTime": "8:00"
   },
   {
+    "CustomDayartOrganizationId": null,
     "CustomDayartOrganizationName": null,
     "CustomDaypartName": null,
     "DaypartCode": "EMN",
     "DaypartCodeId": 0,
+    "DaypartUniquekey": "0||",
     "EndTime": "9:00",
     "FlightDays": "F",
     "GenreRestrictions": [],

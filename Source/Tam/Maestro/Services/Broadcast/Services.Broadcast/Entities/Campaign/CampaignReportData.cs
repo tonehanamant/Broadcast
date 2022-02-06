@@ -174,7 +174,8 @@ namespace Services.Broadcast.Entities.Campaign
                 EndTime = x.DaypartEndTime,
                 StartTime = x.DaypartStartTime,
                 CustomDayartOrganizationName = x.CustomDayartOrganizationName,
-                CustomDaypartName = x.CustomDaypartName,
+                CustomDaypartName = x.CustomDaypartName,  
+                CustomDayartOrganizationId=x.CustomOrganizationId,
                 FlightDays = GroupHelper.GroupWeekDays(x.FlightDays)
             }).Distinct(new DaypartDataEqualityComparer()).ToList().OrderDayparts();
         }
@@ -187,11 +188,11 @@ namespace Services.Broadcast.Entities.Campaign
                 foreach (var daypart in plan.Dayparts
                     .Where(x => x.Restrictions.GenreRestrictions != null && x.Restrictions.GenreRestrictions.Genres.Any()).ToList())
                 {
-                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartUniquekey == daypart.DaypartUniquekey
                                             && x.FlightDays.Equals(flightDaysString)
                                             && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.StartTime) == daypart.StartTimeSeconds
                                             && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.EndTime) == daypart.EndTimeSeconds);
-                    var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    var planDaypart = plan.Dayparts.Single(x => x.DaypartUniquekey == daypart.DaypartUniquekey);
                     mappedDaypart.GenreRestrictions.Add(new DaypartRestrictionsData
                     {
                         PlanId = plan.Id,
@@ -202,11 +203,11 @@ namespace Services.Broadcast.Entities.Campaign
                 foreach (var daypart in plan.Dayparts
                     .Where(x => x.Restrictions.ProgramRestrictions != null && x.Restrictions.ProgramRestrictions.Programs.Any()).ToList())
                 {
-                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartUniquekey == daypart.DaypartUniquekey
                                 && x.FlightDays.Equals(flightDaysString)
                                 && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.StartTime) == daypart.StartTimeSeconds
                                 && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.EndTime) == daypart.EndTimeSeconds);
-                    var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
+                    var planDaypart = plan.Dayparts.Single(x => x.DaypartUniquekey == daypart.DaypartUniquekey);
                     mappedDaypart.ProgramRestrictions.Add(new DaypartRestrictionsData
                     {
                         PlanId = plan.Id,
@@ -265,8 +266,8 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null,
                             _AllSpotLengths.Single(x => x.Id == weekComponent.SpotLengthId),
-                            plan.Dayparts.Single(x => x.DaypartCodeId == weekComponent.DaypartCodeId));
-
+                            plan.Dayparts.Single(x => x.DaypartUniquekey == weekComponent.DaypartUniquekey));
+                        
                         newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
                         newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, plan.Equivalized, _SpotLengthDeliveryMultipliers);
 
@@ -287,29 +288,31 @@ namespace Services.Broadcast.Entities.Campaign
         {
             var audienceImpressions = planWeek.WeeklyImpressions;
             double? audienceVpvh = null;
-
-            if (isVpvhDemoEnabled)
+            if (!planWeek.DaypartOrganizationId.HasValue)
             {
-                audienceVpvh = _GetCalculatedVpvh(planWeek.DaypartCodeId.Value, plan.Id, planPricingResultsDayparts);
-            }
+                if (isVpvhDemoEnabled )
+                {
+                    audienceVpvh = _GetCalculatedVpvh(planWeek.DaypartCodeId.Value, plan.Id, planPricingResultsDayparts);
+                }
 
-            if (!audienceVpvh.HasValue)
-            {
-                audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartCodeId.Value, plan.AudienceId);
-            }
+                if (!audienceVpvh.HasValue && !planWeek.DaypartOrganizationId.HasValue)
+                {
+                    audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartUniquekey, plan.AudienceId);
+                }
 
-            planProjection.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh.Value);
+                planProjection.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh.Value);
 
-            if (plan.HHImpressions.HasValue && plan.HHRatingPoints.HasValue)
-            {
-                var factor = planProjection.TotalHHImpressions / plan.HHImpressions.Value;
-                planProjection.TotalHHRatingPoints = plan.HHRatingPoints.Value * factor;
+                if (plan.HHImpressions.HasValue )
+                {
+                    var factor = planProjection.TotalHHImpressions / plan.HHImpressions.Value;
+                    planProjection.TotalHHRatingPoints = plan.HHRatingPoints.Value * factor;
+                }
             }
         }
 
-        private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, int standardDaypartId, int audienceId)
+        private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, string standardDaypartId, int audienceId)
         {
-            return plan.Dayparts.Single(x => x.DaypartCodeId == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
+            return plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
         }
 
         private double? _GetCalculatedVpvh(int daypartCodeId,  int planId, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
@@ -368,7 +371,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             foreach (var audience in plan.SecondaryAudiences)
             {
-                var audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartCodeId.Value, audience.AudienceId);
+                var audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartUniquekey, audience.AudienceId);
                 var audienceImpressions = ProposalMath.CalculateAudienceImpressionsUsingVpvh(hhImpressions, audienceVpvh);
                 var factor = audienceImpressions / audience.Impressions.Value;
 
@@ -414,7 +417,7 @@ namespace Services.Broadcast.Entities.Campaign
                         {
                             var newProjectedPlan = _GetEmptyWeek(week, plan, quarter, quarterMediaMonth
                                 , _AllSpotLengths.Single(x => x.Id == weekComponent.SpotLengthId)
-                                , plan.Dayparts.Single(x => x.DaypartCodeId == weekComponent.DaypartCodeId));
+                                , plan.Dayparts.Single(x => x.DaypartUniquekey == weekComponent.DaypartUniquekey));
 
                             newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
                             newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, plan.Equivalized, _SpotLengthDeliveryMultipliers);
@@ -488,6 +491,7 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds, "hh:mmtt"),
                 CustomDayartOrganizationName = daypart.DaypartOrganizationName,
                 CustomDaypartName = daypart.CustomName,
+                CustomOrganizationId=daypart.DaypartOrganizationId,
                 SpotLengthId = spotLength.Id,
                 SpotLength = spotLength.Display,
                 //we set false for 30s on plans equivalized to group all the data together
@@ -1483,6 +1487,7 @@ namespace Services.Broadcast.Entities.Campaign
             public List<int> FlightDays { get; set; }
             public string CustomDayartOrganizationName { get; set; }
             public string CustomDaypartName { get; set; }
+            public int? CustomOrganizationId { get; set; }
             public List<string> GuaranteedDemo { get; set; }
             public string SpotLength { get; set; }
             public int SpotLengthId { get; set; }
@@ -1591,7 +1596,9 @@ namespace Services.Broadcast.Entities.Campaign
         public string EndTime { get; set; }
         public string FlightDays { get; set; }
         public string CustomDayartOrganizationName { get; set; }
+        public int? CustomDayartOrganizationId { get; set; }
         public string CustomDaypartName { get; set; }
+        public string DaypartUniquekey { get { return $"{DaypartCodeId}|{CustomDayartOrganizationId}|{CustomDaypartName?.ToLower()}"; } }
         public List<DaypartRestrictionsData> GenreRestrictions { get; set; } = new List<DaypartRestrictionsData>();
         public List<DaypartRestrictionsData> ProgramRestrictions { get; set; } = new List<DaypartRestrictionsData>();
     }
@@ -1603,7 +1610,10 @@ namespace Services.Broadcast.Entities.Campaign
             return x.DaypartCode.Equals(y.DaypartCode)
                 && x.StartTime.Equals(y.StartTime)
                 && x.EndTime.Equals(y.EndTime)
-                && x.FlightDays.Equals(y.FlightDays);
+                && x.FlightDays.Equals(y.FlightDays)
+                && x.DaypartUniquekey.Equals(y.DaypartUniquekey);
+              
+            
         }
 
         public int GetHashCode(DaypartData obj)

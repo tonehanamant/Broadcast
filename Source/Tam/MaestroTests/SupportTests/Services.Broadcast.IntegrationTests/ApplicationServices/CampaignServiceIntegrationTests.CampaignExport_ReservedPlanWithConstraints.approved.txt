@@ -10,10 +10,12 @@
   "ContractTotals": [],
   "DaypartsData": [
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
+      "DaypartUniquekey": "6||",
       "EndTime": "06:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -21,10 +23,12 @@
       "StartTime": "03:00pm"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
+      "DaypartUniquekey": "14||",
       "EndTime": "09:00am",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -32,10 +36,12 @@
       "StartTime": "06:00am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
+      "DaypartUniquekey": "2||",
       "EndTime": "01:00pm",
       "FlightDays": "M-F,SU",
       "GenreRestrictions": [
@@ -62,10 +68,12 @@
       "StartTime": "11:00am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
+      "DaypartUniquekey": "2||",
       "EndTime": "01:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [
@@ -89,10 +97,12 @@
       "StartTime": "11:00am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "PA",
       "DaypartCodeId": 7,
+      "DaypartUniquekey": "7||",
       "EndTime": "08:00pm",
       "FlightDays": "M-F,SU",
       "GenreRestrictions": [

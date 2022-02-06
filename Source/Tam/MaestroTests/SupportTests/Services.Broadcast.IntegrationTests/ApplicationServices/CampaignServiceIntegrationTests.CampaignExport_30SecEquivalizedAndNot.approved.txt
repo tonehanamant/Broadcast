@@ -10,10 +10,12 @@
   "ContractTotals": [],
   "DaypartsData": [
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "ENLN",
       "DaypartCodeId": 5,
+      "DaypartUniquekey": "5||",
       "EndTime": "12:05am",
       "FlightDays": "M-F",
       "GenreRestrictions": [],

@@ -550,7 +550,7 @@ namespace Services.Broadcast.Validators
             }
             else if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
             {
-                if (weeklyBreakdown.Any(x => !x.SpotLengthId.HasValue))
+                if (weeklyBreakdown.Any(x => !x.SpotLengthId.HasValue) && weeklyBreakdown.Any(x => !x.SpotLengthDuration.HasValue))
                     throw new PlanValidationException("For the chosen delivery type, each weekly breakdown row must have spot length associated with it");
 
                 if (weeklyBreakdown.Any(x => !x.PercentageOfWeek.HasValue))
@@ -561,7 +561,7 @@ namespace Services.Broadcast.Validators
                     .Select(x => x.Count())
                     .Any(x => x > 1);
 
-                if (weeklyBreakdownHasSeveralRowsWithTheSameWeekAndSpotLength)
+                if (weeklyBreakdownHasSeveralRowsWithTheSameWeekAndSpotLength && weeklyBreakdown.Any(x => !x.DaypartCodeId.HasValue) && weeklyBreakdown.Any(x => !x.SpotLengthId.HasValue))
                     throw new PlanValidationException("For the chosen delivery type, each week and spot Length combination must be unique");
             }
         }

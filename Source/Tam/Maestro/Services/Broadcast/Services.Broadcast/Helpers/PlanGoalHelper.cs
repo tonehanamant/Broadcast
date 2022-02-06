@@ -72,6 +72,9 @@ namespace Services.Broadcast.Helpers
                 {
                     SpotLengthId = a.SpotLengthId,
                     DaypartCodeId = b.StandardDaypartId,
+                    CustomName=b.CustomName,
+                    DaypartOrganizationName=b.DaypartOrganizationName,
+                    DaypartOrganizationId=b.DaypartOrganizationId,                    
                     Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) * GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
                 }).ToList();
             return allSpotLengthIdAndStandardDaypartIdCombinations;

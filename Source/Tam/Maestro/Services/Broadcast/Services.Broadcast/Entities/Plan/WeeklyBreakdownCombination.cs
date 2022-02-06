@@ -11,5 +11,8 @@ namespace Services.Broadcast.Entities.Plan
         public int SpotLengthId { get; set; }
         public int DaypartCodeId { get; set; }
         public double Weighting { get; set; }
+        public string DaypartOrganizationName { get; set; }
+        public string CustomName { get; set; }
+        public int? DaypartOrganizationId { get; set; }
     }
 }

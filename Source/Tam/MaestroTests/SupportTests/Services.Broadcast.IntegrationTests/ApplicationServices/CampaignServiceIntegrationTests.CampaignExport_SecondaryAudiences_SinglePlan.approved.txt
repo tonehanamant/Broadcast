@@ -10,10 +10,12 @@
   "ContractTotals": [],
   "DaypartsData": [
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "DAY",
       "DaypartCodeId": 12,
+      "DaypartUniquekey": "12||",
       "EndTime": "04:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -21,10 +23,12 @@
       "StartTime": "09:00am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "EMN",
       "DaypartCodeId": 1,
+      "DaypartUniquekey": "1||",
       "EndTime": "10:00am",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -32,10 +36,12 @@
       "StartTime": "04:00am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "PT",
       "DaypartCodeId": 8,
+      "DaypartUniquekey": "8||",
       "EndTime": "11:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],

@@ -1351,9 +1351,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                       WeeklyRatings = 1,
                       StartDate= new DateTime(2019,09,30),
                       WeekNumber= 1,
-                      IsUpdated = true,
-                      SpotLengthId = 1,
+                      IsUpdated = true,                      
                       PercentageOfWeek = 50,
+                      SpotLengthDuration=15                    
+
                     },
                     new WeeklyBreakdownWeek {
                       ActiveDays= "",
@@ -1366,8 +1367,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                       StartDate= new DateTime(2019,10,7),
                       WeekNumber= 2,
                       IsUpdated = false,
-                      SpotLengthId = 1,
                       PercentageOfWeek = 50,
+                      SpotLengthDuration=15,
+                     
                     },
                 }
             };
@@ -1628,16 +1630,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     new WeeklyBreakdownWeek
                     {
                         WeeklyImpressions = 6.060606060606061,
-                        WeeklyImpressionsPercentage = 50,
-                        SpotLengthId = 1,
-                        PercentageOfWeek = 50
+                        WeeklyImpressionsPercentage = 50,                       
+                        PercentageOfWeek = 50,                        
+                        SpotLengthDuration=15
                     },
                     new WeeklyBreakdownWeek
                     {
                         WeeklyImpressions = 6.060606060606061,
                         WeeklyImpressionsPercentage = 50,
-                        SpotLengthId = 1,
-                        PercentageOfWeek = 50
+                        PercentageOfWeek = 50,                       
+                        SpotLengthDuration=30
                     }
                 }
             };

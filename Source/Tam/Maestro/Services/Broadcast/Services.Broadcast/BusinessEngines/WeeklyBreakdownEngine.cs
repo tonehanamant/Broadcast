@@ -263,7 +263,10 @@ namespace Services.Broadcast.BusinessEngines
                             DaypartCodeId = item.StandardDaypartId,
                             AduImpressions = aduImpressionsForBreakdownItem * weighting,
                             UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
-                            IsLocked = week.IsLocked
+                            IsLocked = week.IsLocked,
+                            CustomName = item.CustomName,
+                            DaypartOrganizationName = item.DaypartOrganizationName,
+                            DaypartOrganizationId=item.DaypartOrganizationId
                         };
 
                         var impressions = breakdownItem.WeeklyImpressions * weighting;
@@ -327,7 +330,11 @@ namespace Services.Broadcast.BusinessEngines
                         DaypartCodeId = combination.DaypartCodeId,
                         AduImpressions = weeklyAduImpressions * combination.Weighting,
                         UnitImpressions = unitsImpressions * combination.Weighting,
-                        IsLocked = week.IsLocked
+                        IsLocked = week.IsLocked,
+                        CustomName = combination.CustomName,
+                        DaypartOrganizationName = combination.DaypartOrganizationName,
+                        DaypartOrganizationId= combination.DaypartOrganizationId
+
                     };
 
                     var impressions = week.WeeklyImpressions * combination.Weighting;
@@ -840,10 +847,13 @@ namespace Services.Broadcast.BusinessEngines
 
             //remove deleted weeks
             _RemoveOutOfFlightWeeks(request.Weeks, weeks);
-
+            if (request.Weeks.Any(x => x.DaypartCodeId.HasValue) && request.Weeks.Any(x => x.SpotLengthId.HasValue))
+            {
+                request.Weeks = request.Weeks.GroupBy(x => new { x.DaypartUniquekey, x.MediaWeekId }).Select(grouping => grouping.First()).ToList();
+            }
             //add the remain weeks
             result.Weeks.AddRange(request.Weeks);
-
+                       
             // Remove dayparts not in use from the remain weeks
             _RemoveDaypartsInTheExistingWeeks(request, result);
 
@@ -925,7 +935,10 @@ namespace Services.Broadcast.BusinessEngines
 
             //add the remain weeks
             result.Weeks.AddRange(request.Weeks);
-
+            if (request.Weeks.Any(x => x.DaypartCodeId.HasValue) && request.Weeks.Any(x => x.SpotLengthId.HasValue))
+            {
+                result.Weeks = result.Weeks.GroupBy(x => x.MediaWeekId).Select(grouping => grouping.First()).ToList();
+            }           
             _RecalculateExistingWeeks(request, out bool redistributeCustom);
 
             //add the new weeks
@@ -1016,10 +1029,13 @@ namespace Services.Broadcast.BusinessEngines
 
             _RemoveOutOfFlightWeeks(request.Weeks, weeks);
             _RemoveWeeksWithCreativeLengthNotPresentingInCurrentCreativeLengthsList(request.Weeks, creativeLengths);
-
+            if (request.Weeks.Any(x => x.DaypartCodeId.HasValue) && request.Weeks.Any(x => x.SpotLengthId.HasValue))
+            {
+                request.Weeks = request.Weeks.GroupBy(x => new { x.SpotLengthId, x.MediaWeekId }).Select(grouping => grouping.First()).ToList();
+            }
             // add the remain weeks
             result.Weeks.AddRange(request.Weeks);
-
+                  
             _RecalculateExistingWeeks(request, out var redistributeCustom);
 
             var oldMediaWeekIds = request.Weeks.Select(y => y.MediaWeekId).Distinct().ToList();
@@ -1562,7 +1578,9 @@ namespace Services.Broadcast.BusinessEngines
                             : weeklyImpressions / unitsImpressions,
                         IsLocked = first.IsLocked,
                         SpotLengthId=first.SpotLengthId,
-                        DaypartCodeId=first.DaypartCodeId
+                        DaypartCodeId=first.DaypartCodeId,
+                        CustomName = first.CustomName,
+                        DaypartOrganizationName = first.DaypartOrganizationName
                     };
                     if (!creativeLengths.IsNullOrEmpty())
                     {

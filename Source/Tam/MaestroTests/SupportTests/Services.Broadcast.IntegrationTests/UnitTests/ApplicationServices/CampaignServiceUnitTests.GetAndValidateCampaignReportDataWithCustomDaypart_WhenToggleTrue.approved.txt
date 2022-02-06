@@ -12,10 +12,12 @@
   "CreatedDate": "01/01/20",
   "DaypartsData": [
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "DAY",
       "DaypartCodeId": 12,
+      "DaypartUniquekey": "12||",
       "EndTime": "11:00am",
       "FlightDays": "M-SU",
       "GenreRestrictions": [
@@ -33,10 +35,12 @@
       "StartTime": "09:00am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "DAY",
       "DaypartCodeId": 12,
+      "DaypartUniquekey": "12||",
       "EndTime": "12:30pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [
@@ -54,10 +58,12 @@
       "StartTime": "11:40am"
     },
     {
+      "CustomDayartOrganizationId": null,
       "CustomDayartOrganizationName": null,
       "CustomDaypartName": null,
       "DaypartCode": "PA",
       "DaypartCodeId": 7,
+      "DaypartUniquekey": "7||",
       "EndTime": "08:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [

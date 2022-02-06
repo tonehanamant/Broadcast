@@ -57,7 +57,9 @@ namespace Services.Broadcast.Entities.Plan
         public double Units { get; set; }
         public bool IsLocked { get; set; }
         public int? SpotLengthId { get; set; }
-       public int? DaypartCodeId { get; set; }
+        public int? DaypartCodeId { get; set; }
+        public string CustomName { get; set; }
+        public string DaypartOrganizationName { get; set; }
     }
 
     public class WeeklyBreakdownByWeekBySpotLength
