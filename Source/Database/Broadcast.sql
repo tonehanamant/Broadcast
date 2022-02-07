@@ -674,6 +674,28 @@ GO
 
 /*************************************** END BP-3829 *****************************************************/
 
+/*************************************** START BP-3816 ***************************************************/
+
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plans' AND COLUMN_NAME= 'deleted_by')
+BEGIN
+	ALTER TABLE plans
+			ADD deleted_by VARCHAR(100) NULL
+END
+
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plans' AND COLUMN_NAME= 'deleted_at')
+BEGIN
+	ALTER TABLE plans
+			ADD deleted_at DATETIME2 NULL
+END
+
+GO
+
+/*************************************** END BP-3816 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
