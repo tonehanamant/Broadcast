@@ -1024,6 +1024,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Affiliate"
                     }
                 },
+                new SpotExceptionsOutOfSpecsDto
+                {
+                  Id = 4,
+                  ReasonCodeMessage="",
+                  EstimateId= 191759,
+                  IsciName="AB44NR59",
+                  RecommendedPlanId= 11726,
+                  RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserName="MyBite",
+                  StationLegacyCallLetters = "KSTP",
+                  Affiliate = "ABC",
+                  Market = "Lincoln & Hastings-Krny",
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                  AudienceId= 430,
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartId= 70643,
+                  ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
+                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
+                  ProgramNetwork = "",
+                   ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  SpotExceptionsOutOfSpecDecision =  new SpotExceptionsOutOfSpecDecisionsDto
+                   {
+                       SpotExceptionsOutOfSpecId=4,
+                       AcceptedAsInSpec=true,
+                       DecisionNotes="",
+                       UserName = "MockData",
+                       CreatedAt = new DateTime(2020, 2, 1)
+                   },
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    }
+                },
             };
         }
 
@@ -1507,7 +1563,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
-
             };
             _SpotExceptionRepositoryMock
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -1530,7 +1585,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
-
             };
             _SpotExceptionRepositoryMock
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -1551,7 +1605,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
-
             };
             _SpotExceptionRepositoryMock
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -1559,10 +1612,33 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     throw new Exception("Throwing a test exception.");
                 });
+
             // Act           
             var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest));
+
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlans_OutOfSpecCompletedPlansExist()
+        {
+            // Arrange
+            SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutOfSpecPostsRequest = new SpotExceptionsOutofSpecsPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetOutOfSpecPlansData());
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(result.Completed.Count, 1);
         }
     }
 }

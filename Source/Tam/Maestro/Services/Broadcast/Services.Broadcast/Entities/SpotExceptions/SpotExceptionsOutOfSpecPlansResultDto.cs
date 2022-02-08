@@ -7,8 +7,10 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public SpotExceptionsOutOfSpecPlansResultDto()
         {
             Active = new List<SpotExceptionsOutOfSpecToDoPlansDto>();
+            Completed = new List<SpotExceptionsOutOfSpecCompletedPlansDto>();
         }
         public List<SpotExceptionsOutOfSpecToDoPlansDto> Active { get; set; }
+        public List<SpotExceptionsOutOfSpecCompletedPlansDto> Completed { get; set; }
     }
 
     public class SpotExceptionsOutOfSpecToDoPlansDto
@@ -16,7 +18,20 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int PlanId { get; set; }
         public string AdvertiserName { get; set; }
         public string PlanName { get; set; }
-        public int AffectedSportsCount { get; set; }
+        public int AffectedSpotsCount { get; set; }
+        public double Impressions { get; set; }
+        public string SyncedTimestamp { get; set; }
+        public string SpotLengthString { get; set; }
+        public string AudienceName { get; set; }
+        public string FlightString { get; set; }
+    }
+
+    public class SpotExceptionsOutOfSpecCompletedPlansDto
+    {
+        public int PlanId { get; set; }
+        public string AdvertiserName { get; set; }
+        public string PlanName { get; set; }
+        public int AffectedSpotsCount { get; set; }
         public double Impressions { get; set; }
         public string SyncedTimestamp { get; set; }
         public string SpotLengthString { get; set; }
