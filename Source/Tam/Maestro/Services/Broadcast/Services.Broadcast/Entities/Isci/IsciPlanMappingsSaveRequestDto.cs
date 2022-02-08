@@ -9,4 +9,11 @@ namespace Services.Broadcast.Entities.Isci
         public List<IsciPlanModifiedMappingDto> IsciPlanMappingsModified { get; set; } = new List<IsciPlanModifiedMappingDto>();
         public List<IsciProductMappingDto> IsciProductMappings { get; set; } = new List<IsciProductMappingDto>();
     }
+
+    public class IsciPlanMappingModifiedCountsDto
+    {
+        public int TotalChangedCount { get; set; }
+        public int NoDuplicateCount { get; set; }
+        public int DuplicateCount { get; set; }
+    }
 }

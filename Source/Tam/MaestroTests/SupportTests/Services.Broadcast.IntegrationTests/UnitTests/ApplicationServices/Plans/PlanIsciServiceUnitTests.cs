@@ -941,28 +941,125 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void SaveIsciMappings_ModifyFlight()
         {
-            var createdBy = "Test User";
+            var modifiedAt = DateTime.Now;
+            var modifiedBy = "Test User";
+
             var modified = new List<IsciPlanModifiedMappingDto>
             {
-                new IsciPlanModifiedMappingDto{ PlanIsciMappingId = 1, FlightStartDate = new DateTime(2021,11,24), FlightEndDate = new DateTime(2021,12,15)},
-                new IsciPlanModifiedMappingDto{ PlanIsciMappingId = 2, FlightStartDate = new DateTime(2021,11,26), FlightEndDate = new DateTime(2021,12,12)}
+                new IsciPlanModifiedMappingDto
+                {
+                    PlanIsciMappingId = 1,
+                    FlightStartDate = new DateTime(2022,01,03),
+                    FlightEndDate = new DateTime(2022,01,10)
+                },
+                new IsciPlanModifiedMappingDto
+                {
+                    PlanIsciMappingId = 1,
+                    FlightStartDate = new DateTime(2022,01,03),
+                    FlightEndDate = new DateTime(2022,01,16)
+                },
+                new IsciPlanModifiedMappingDto
+                {
+                    PlanIsciMappingId = 3,
+                    FlightStartDate = new DateTime(2022,01,3),
+                    FlightEndDate = new DateTime(2022,01,12)
+                },
+                new IsciPlanModifiedMappingDto
+                {
+                    PlanIsciMappingId = 3,
+                    FlightStartDate = new DateTime(2022,01,03),
+                    FlightEndDate = new DateTime(2022,01,09)
+                }
             };
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis())
+                .Returns(new List<PlanIsciDto>
+                {
+                    new PlanIsciDto
+                    {
+                        Id = 1,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16)
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 2,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16),
+                        DeletedAt = new DateTime(2022,01,16),
+                        DeletedBy = "Test User"
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 3,
+                        PlanId = 2,
+                        Isci = "myIsci2",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,13)
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 4,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,09)
+                    }
+                });
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIsciDuplicates(It.IsAny<List<IsciPlanModifiedMappingDto>>()))
+                .Returns(new List<PlanIsciDto>
+                {
+                    new PlanIsciDto
+                    {
+                        Id = 1,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16)
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 2,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16),
+                        DeletedAt = new DateTime(2022,01,16),
+                        DeletedBy = "Test User"
+                    },
+                     new PlanIsciDto
+                    {
+                        Id = 4,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,09)
+                    }
+                });
+            
             var saveRequest = new IsciPlanMappingsSaveRequestDto()
             {
                 IsciPlanMappingsModified = modified
             };
-            var saved = new List<IsciPlanModifiedMappingDto>();
-            _PlanIsciRepositoryMock.Setup(s => s.UpdateIsciPlanMappings(It.IsAny<List<IsciPlanModifiedMappingDto>>()))
-                .Callback<List<IsciPlanModifiedMappingDto>>((a) => saved = a)
+
+            var isciPlanMappingsToUpdate = new List<PlanIsciDto>();
+            _PlanIsciRepositoryMock.Setup(s => s.UpdateIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback<List<PlanIsciDto>, DateTime, string>((a, b, c) => isciPlanMappingsToUpdate = a)
                 .Returns(2);
 
             //Act
-            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, modifiedBy);
 
             //Assert
             Assert.IsTrue(result);
-            _PlanIsciRepositoryMock.Verify(s => s.UpdateIsciPlanMappings(It.IsAny<List<IsciPlanModifiedMappingDto>>()), Times.Once);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saved));
+            _PlanIsciRepositoryMock.Verify(s => s.UpdateIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Exactly(2));
+            Assert.AreEqual(2, isciPlanMappingsToUpdate.Count);
         }
 
         [Test]

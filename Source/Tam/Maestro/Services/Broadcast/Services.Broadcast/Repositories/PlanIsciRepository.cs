@@ -70,10 +70,19 @@ namespace Services.Broadcast.Repositories
         /// Delete Plan Isci mappings
         /// </summary>
         /// <param name="isciPlanMappingsIdsToDelete">The List of ids to delete.</param>
-        /// /// <param name="deletedBy">Deleted By</param>
-        /// /// <param name="deletedAt">Deleted At</param>
+        /// <param name="deletedBy">Deleted By</param>
+        /// <param name="deletedAt">Deleted At</param>
         /// <returns>Total Number Of Deleted Plan ISCI Mappings</returns>
         int DeleteIsciPlanMappings(List<int> isciPlanMappingsIdsToDelete, string deletedBy, DateTime deletedAt);
+
+        /// <summary>
+        /// Updates the isci plan mappings.
+        /// </summary>
+        /// <param name="isciPlanMappingsToUpdate">The isci plan mappings ids to update.</param>
+        /// <param name="modifiedAt">The modified at.</param>
+        /// <param name="modifiedBy">The modified by.</param>
+        /// <returns><br /></returns>
+        int UpdateIsciPlanMappings(List<PlanIsciDto> isciPlanMappingsToUpdate, DateTime modifiedAt, string modifiedBy);
 
         /// <summary>
         /// Deletes plan isci that do not exist in reel isci
@@ -90,6 +99,20 @@ namespace Services.Broadcast.Repositories
         List<IsciMappedPlanCountDto> GetIsciPlanMappingCounts(List<int> isciPlanMappingIds);
 
         /// <summary>
+        /// Gets the plan iscis by mapping identifier.
+        /// </summary>
+        /// <param name="isciPlanMappingId">The isci plan mapping identifier.</param>
+        /// <returns><br /></returns>
+        List<PlanIsciDto> GetPlanIscisByMappingId(int isciPlanMappingId);
+
+        /// <summary>
+        /// Gets the plan isci duplicates.
+        /// </summary>
+        /// <param name="modified">The modified.</param>
+        /// <returns><br /></returns>
+        List<PlanIsciDto> GetPlanIsciDuplicates(List<IsciPlanModifiedMappingDto> modified);
+
+        /// <summary>
         /// Gets the isci spot lengths.
         /// </summary>
         /// <param name="iscis">The iscis.</param>
@@ -97,18 +120,11 @@ namespace Services.Broadcast.Repositories
         List<IsciSpotLengthDto> GetIsciSpotLengths(List<string> iscis);
 
         /// <summary>
-        /// Updates the isci plan mappings.
-        /// </summary>
-        /// <param name="isciPlanMappings">The isci plan mappings.</param>
-        /// <returns></returns>
-        int UpdateIsciPlanMappings(List<IsciPlanModifiedMappingDto> isciPlanMappings);
-
-        /// <summary>
         /// Uns the delete isci plan mappings.
         /// </summary>
         /// <param name="idsToUnDelete">The ids to un delete.</param>
         /// <returns></returns>
-        int UnDeleteIsciPlanMappings(List<int> idsToUnDelete);
+        int UnDeleteIsciPlanMappings(List<int> idsToUnDelete);       
     }
 
     /// <summary>
@@ -225,27 +241,12 @@ namespace Services.Broadcast.Repositories
                         created_at = createdAt,
                         created_by = createdBy,
                         flight_start_date = isciPlanMapping.FlightStartDate,
-                        flight_end_date = isciPlanMapping.FlightEndDate
+                        flight_end_date = isciPlanMapping.FlightEndDate,
+                        modified_at = createdAt,
+                        modified_by = createdBy
                     });
                 });
                 
-                var savedCount = context.SaveChanges();
-                return savedCount;
-            });
-        }
-
-        /// <inheritdoc />
-        public int UpdateIsciPlanMappings(List<IsciPlanModifiedMappingDto> isciPlanMappings)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                isciPlanMappings.ForEach(item =>
-                {
-                    var found = context.plan_iscis.Single(m => m.id == item.PlanIsciMappingId);
-                    found.flight_start_date = item.FlightStartDate;
-                    found.flight_end_date = item.FlightEndDate;
-                });
-
                 var savedCount = context.SaveChanges();
                 return savedCount;
             });
@@ -265,6 +266,64 @@ namespace Services.Broadcast.Repositories
 
                 var savedCount = context.SaveChanges();
                 return savedCount;
+            });
+        }
+
+        public int DeleteIsciPlanMappings(List<int> isciPlanMappingsIdsToDelete, string deletedBy, DateTime deletedAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var deletedCount = 0;
+                if (!(isciPlanMappingsIdsToDelete?.Any() ?? false))
+                {
+                    return deletedCount;
+                }
+
+                var isciPlanMappingDeletedList = context.plan_iscis
+                    .Where(x => isciPlanMappingsIdsToDelete.Contains(x.id) && x.deleted_at == null)
+                    .ToList();
+
+                if (!isciPlanMappingDeletedList.Any())
+                {
+                    return deletedCount;
+                }
+
+                foreach (var isciPlanMappingDeletedObj in isciPlanMappingDeletedList)
+                {
+                    isciPlanMappingDeletedObj.deleted_at = deletedAt;
+                    isciPlanMappingDeletedObj.deleted_by = deletedBy;
+                    deletedCount++;
+                }
+
+                context.SaveChanges();
+                return deletedCount;
+            });
+        }
+
+        /// <inheritdoc />
+        public int UpdateIsciPlanMappings(List<PlanIsciDto> isciPlanMappingsToUpdate, DateTime modifiedAt, string modifiedBy)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var updatedCount = 0;
+                if (!isciPlanMappingsToUpdate.Any())
+                {
+                    return updatedCount;
+                }
+
+                isciPlanMappingsToUpdate.ForEach(plan =>
+                {
+                    var foundPlan = context.plan_iscis.Single(x => x.id == plan.Id);
+
+                    foundPlan.flight_start_date = plan.FlightStartDate;
+                    foundPlan.flight_end_date = plan.FlightEndDate;
+                    foundPlan.modified_at = modifiedAt;
+                    foundPlan.modified_by = modifiedBy;
+                    updatedCount++;
+                });
+
+                context.SaveChanges();
+                return updatedCount;
             });
         }
 
@@ -349,38 +408,6 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public int DeleteIsciPlanMappings(List<int> isciPlanMappingsIdsToDelete, string deletedBy, DateTime deletedAt)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var deletedCount = 0;
-                if (!(isciPlanMappingsIdsToDelete?.Any() ?? false))
-                {
-                    return deletedCount;
-                }
-
-                var isciPlanMappingDeletedList = context.plan_iscis
-                    .Where(x => isciPlanMappingsIdsToDelete.Contains(x.id) && x.deleted_at == null)
-                    .ToList();
-
-                if (!isciPlanMappingDeletedList.Any())
-                {
-                    return deletedCount;
-                }
-
-                foreach (var isciPlanMappingDeletedObj in isciPlanMappingDeletedList)
-                {
-                    isciPlanMappingDeletedObj.deleted_at = deletedAt;
-                    isciPlanMappingDeletedObj.deleted_by = deletedBy;
-                    deletedCount++;
-                }
-
-                context.SaveChanges();
-                return deletedCount;
-            });
-        }
-
-        /// <inheritdoc />
         public int DeletePlanIscisNotExistInReelIsci(DateTime deletedAt, string deletedBy)
         {
             return _InReadUncommitedTransaction(context =>
@@ -436,6 +463,62 @@ namespace Services.Broadcast.Repositories
                     .ToList();
 
                 return isciPlanCounts;
+            });
+        }
+
+        public List<PlanIsciDto> GetPlanIscisByMappingId(int isciPlanMappingId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_iscis
+                    .Where(m => m.id == isciPlanMappingId)
+                    .Select(x => new PlanIsciDto
+                    {
+                        Id = x.id,
+                        PlanId = x.plan_id,
+                        Isci = x.isci,
+                        FlightStartDate = x.flight_start_date,
+                        FlightEndDate = x.flight_end_date
+                    })
+                    .ToList();
+                return result;
+            });
+        }
+
+        public List<PlanIsciDto> GetPlanIsciDuplicates(List<IsciPlanModifiedMappingDto> modified)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var duplicateMappings = new List<PlanIsciDto>();
+                modified.ForEach(item =>
+                {
+                    var found = context.plan_iscis.Single(m => m.id == item.PlanIsciMappingId);
+
+                    var result = (from isciMappings in context.plan_iscis
+                                  join modifyingMappings in context.plan_iscis
+                                  on new { isciMappings.isci, isciMappings.id } equals
+                                  new { modifyingMappings.isci, modifyingMappings.id } into dups
+                                  from duplicates in dups.DefaultIfEmpty()
+                                  where duplicates.plan_id == found.plan_id
+                                  && duplicates.isci == found.isci
+                                  && duplicates.flight_start_date == item.FlightStartDate
+                                  && duplicates.flight_end_date == item.FlightEndDate
+                                  select new PlanIsciDto
+                                  {
+                                      Id = duplicates.id,
+                                      PlanId = duplicates.plan_id,
+                                      Isci = duplicates.isci,
+                                      FlightStartDate = duplicates.flight_start_date,
+                                      FlightEndDate = duplicates.flight_end_date,
+                                      DeletedAt = duplicates.deleted_at
+
+                                  });
+                    if(result != null)
+                    {
+                        duplicateMappings.AddRange(result);
+                    }
+                });
+                return duplicateMappings;
             });
         }
     }

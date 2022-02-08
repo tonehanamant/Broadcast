@@ -336,20 +336,87 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return totalChangedCount;
         }
 
-        private int _HandleModifiedIsciPlanMappings(List<IsciPlanModifiedMappingDto> modified)
+        internal IsciPlanMappingModifiedCountsDto _HandleModifiedIsciPlanMappings(List<IsciPlanModifiedMappingDto> modified, DateTime modifiedAt, string modifiedBy)
         {
+            var duplicateCount = 0;
+            var noDuplicateCount = 0;
+            var noDuplicateList = new List<PlanIsciDto>();
+            var duplicateList = new List<PlanIsciDto>();
+            var result = new IsciPlanMappingModifiedCountsDto();
+
             if (!modified.Any())
             {
-                return 0;
+                return result;
             }
-            var savedCount = _PlanIsciRepository.UpdateIsciPlanMappings(modified);
-            return savedCount;
+
+            var potentialDuplicates = _PlanIsciRepository.GetPlanIsciDuplicates(modified);
+
+
+            modified.ForEach(m =>
+            {
+                if (!potentialDuplicates.Any())
+                {
+                    var isci = _PlanIsciRepository.GetPlanIscisByMappingId(m.PlanIsciMappingId);
+                    noDuplicateList = isci.Select(p => new PlanIsciDto
+                    {
+                        Id = m.PlanIsciMappingId,
+                        PlanId = p.PlanId,
+                        Isci = p.Isci,
+                        FlightStartDate = m.FlightStartDate,
+                        FlightEndDate = m.FlightEndDate
+                    }).ToList();
+                }
+                else
+                {
+                    noDuplicateList = potentialDuplicates
+                        .Where(p => p.DeletedAt != null)
+                        .Select(p => new PlanIsciDto
+                        {
+                            Id = m.PlanIsciMappingId,
+                            PlanId = p.PlanId,
+                            Isci = p.Isci,
+                            FlightStartDate = m.FlightStartDate,
+                            FlightEndDate = m.FlightEndDate
+                        }).ToList();
+
+                    duplicateList = potentialDuplicates
+                        .Where(p => p.DeletedAt == null)
+                        .Select(p => new PlanIsciDto
+                        {
+                            Id = p.Id,
+                            PlanId = p.PlanId,
+                            Isci = p.Isci,
+                            FlightStartDate = m.FlightStartDate,
+                            FlightEndDate = m.FlightEndDate
+                        }).ToList();
+                }
+            });
+
+            if (noDuplicateList.Any())
+            {
+                noDuplicateCount = _PlanIsciRepository.UpdateIsciPlanMappings(noDuplicateList, modifiedAt, modifiedBy);
+            }
+
+            if (duplicateList.Any())
+            {
+                duplicateCount = _PlanIsciRepository.UpdateIsciPlanMappings(duplicateList, modifiedAt, modifiedBy);
+            }
+
+            result = new IsciPlanMappingModifiedCountsDto
+            {
+                TotalChangedCount = noDuplicateCount + duplicateCount,
+                NoDuplicateCount = noDuplicateCount,
+                DuplicateCount = duplicateCount
+            };
+
+            return result;
         }
 
         public bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy)
         {
             var createdAt = _DateTimeEngine.GetCurrentMoment();
             var deletedAt = _DateTimeEngine.GetCurrentMoment();
+            var modifiedAt = _DateTimeEngine.GetCurrentMoment();
 
             var isciPlanMappingsDeletedCount = _HandleDeleteIsciPlanMapping(saveRequest.IsciPlanMappingsDeleted, createdBy, deletedAt);
             _LogInfo($"{isciPlanMappingsDeletedCount } IsciPlanMappings are deleted.");
@@ -357,7 +424,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var addedCount = _HandleNewIsciPlanMapping(saveRequest.IsciPlanMappings, createdBy, createdAt);
             _LogInfo($"{addedCount} IsciPlanMappings were added.");
 
-            var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified);
+            var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
 
             var isciProductMappingCount = _HandleSaveIsciProduct(saveRequest.IsciProductMappings, createdBy, createdAt);

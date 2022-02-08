@@ -838,7 +838,9 @@
           <Property Name="deleted_at" Type="datetime2" Precision="7" />
           <Property Name="deleted_by" Type="varchar" MaxLength="100" />
           <Property Name="flight_start_date" Type="date" Nullable="false" />
-          <Property Name="flight_end_date" Type="date" Nullable="false" />          
+          <Property Name="flight_end_date" Type="date" Nullable="false" />
+          <Property Name="modified_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_audience_daypart_vpvh">
           <Key>
@@ -10546,11 +10548,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="spot_exceptions_out_of_spec_reason_codes" EntityType="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" />
           <EntitySet Name="custom_daypart_organizations" EntityType="BroadcastModel.custom_daypart_organizations" />
-          <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
-          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_iscis" EntitySet="plan_iscis" />
-          </AssociationSet>
           <EntitySet Name="plan_version_daypart_customizations" EntityType="BroadcastModel.plan_version_daypart_customizations" />
           <AssociationSet Name="FK_plan_version_daypart_customizations_custom_daypart_organizations" Association="BroadcastModel.FK_plan_version_daypart_customizations_custom_daypart_organizations">
             <End Role="custom_daypart_organizations" EntitySet="custom_daypart_organizations" />
@@ -10648,6 +10645,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_daypart_weekly_breakdown_spot_lengths" Association="BroadcastModel.FK_plan_version_daypart_weekly_breakdown_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan_version_daypart_weekly_breakdown" EntitySet="plan_version_daypart_weekly_breakdown" />
+          </AssociationSet>
+          <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
+          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_iscis" EntitySet="plan_iscis" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -14222,11 +14224,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spot_allocation_model_mode" Type="Int32" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plans" />
-          <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
           <Property Name="plan_mode" Type="Int32" Nullable="false" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
           <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="deleted_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -18097,33 +18099,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="organization_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="plan_version_daypart_customizations" Relationship="BroadcastModel.FK_plan_version_daypart_customizations_custom_daypart_organizations" FromRole="custom_daypart_organizations" ToRole="plan_version_daypart_customizations" />
         </EntityType>
-        <EntityType Name="plan_iscis">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="plan_id" Type="Int32" Nullable="false" />
-          <Property Name="isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="deleted_at" Type="DateTime" Precision="7" />
-          <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="flight_start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="flight_end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />          
-        </EntityType>
-        <Association Name="FK_plan_iscis_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_iscis" Role="plan_iscis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_iscis">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_version_daypart_customizations">
           <Key>
             <PropertyRef Name="id" />
@@ -18661,6 +18636,35 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_daypart_weekly_breakdown">
               <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_iscis">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <Property Name="isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="deleted_at" Type="DateTime" Precision="7" />
+          <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="flight_start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="flight_end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
+        </EntityType>
+        <Association Name="FK_plan_iscis_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_iscis" Role="plan_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_iscis">
+              <PropertyRef Name="plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21617,21 +21621,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_iscis">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_iscis">
-              <MappingFragment StoreEntitySet="plan_iscis">                                
-                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
-                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
-                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
-                <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="isci" ColumnName="isci" />
-                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_daypart_customizations">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_daypart_customizations">
               <MappingFragment StoreEntitySet="plan_version_daypart_customizations">
@@ -21892,6 +21881,23 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="number_active_days" ColumnName="number_active_days" />
                 <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
                 <ScalarProperty Name="plan_version_daypart_goal_id" ColumnName="plan_version_daypart_goal_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_iscis">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_iscis">
+              <MappingFragment StoreEntitySet="plan_iscis">
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
+                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="isci" ColumnName="isci" />
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

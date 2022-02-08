@@ -497,6 +497,25 @@ END
 GO
 /*************************************** END BP-3661 ***************************************/
 
+/*************************************** START BP-3786 ***************************************/
+DECLARE @Sql_PopulateColumns VARCHAR(MAX) = '
+UPDATE plan_iscis SET modified_at = created_at, modified_by = created_by
+'
+
+DECLARE @Sql_FinalizeColumns VARCHAR(MAX) = '
+ALTER TABLE plan_iscis ALTER COLUMN modified_at DATETIME2(7) NOT NULL
+ALTER TABLE plan_iscis ALTER COLUMN modified_by VARCHAR(100) NOT NULL
+'
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'modified_at' AND OBJECT_ID = OBJECT_ID(N'plan_iscis') and is_nullable = 1)
+BEGIN
+	EXEC (@Sql_PopulateColumns)
+	EXEC (@Sql_FinalizeColumns)
+END
+
+GO
+/*************************************** END BP-3786 ***************************************/
+
 /*************************************** START BP-3284 *****************************************************/
 
 DECLARE @AddColumnSql VARCHAR(MAX) = 
@@ -695,6 +714,40 @@ END
 GO
 
 /*************************************** END BP-3816 *****************************************************/
+
+/*************************************** START BP-3786 ***************************************/
+
+DECLARE @Sql_RemoveUniqueConstraint VARCHAR(MAX) = '
+DROP INDEX [UX_plan_iscis_plan_id_isci] ON [dbo].[plan_iscis]
+'
+
+DECLARE @Sql_ReplaceUniqueConstraint VARCHAR(MAX) = '
+CREATE UNIQUE NONCLUSTERED INDEX [UX_plan_iscis_plan_id_isci] ON [dbo].[plan_iscis]
+(
+	[plan_id] ASC,
+	[isci] ASC,
+	[deleted_at] ASC,
+	[flight_start_date] ASC,
+	[flight_end_date] ASC
+)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+'
+
+IF NOT EXISTS(select 1 from sys.tables as t
+				inner join sys.columns as c
+					on  t.object_id = c.object_id
+				inner join sys.index_columns as ic 
+					on c.column_id = ic.column_id and c.object_id = ic.object_id
+				inner join sys.indexes as i
+					on ic.index_id = i.index_id and ic.object_id = i.object_id
+				where t.name = N'plan_iscis' and c.name = N'deleted_at')
+BEGIN
+	EXEC (@Sql_RemoveUniqueConstraint)
+	EXEC (@Sql_ReplaceUniqueConstraint)
+END
+
+GO
+/*************************************** END BP-3786 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

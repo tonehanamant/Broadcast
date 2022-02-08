@@ -12,6 +12,8 @@ namespace Services.Broadcast.Entities.Isci
         public string Isci { get; set; }
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
 
         public override bool Equals(object obj)
         {

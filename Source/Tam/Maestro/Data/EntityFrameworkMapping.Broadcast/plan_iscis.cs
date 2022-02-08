@@ -23,6 +23,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string deleted_by { get; set; }
         public System.DateTime flight_start_date { get; set; }
         public System.DateTime flight_end_date { get; set; }
+        public System.DateTime modified_at { get; set; }
+        public string modified_by { get; set; }
     
         public virtual plan plan { get; set; }
     }
