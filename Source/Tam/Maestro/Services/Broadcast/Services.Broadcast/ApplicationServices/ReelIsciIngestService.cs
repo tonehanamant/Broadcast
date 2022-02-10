@@ -144,6 +144,8 @@ namespace Services.Broadcast.ApplicationServices
             // a pseudo-setting for controlling the call strategy per upstream performance
             const bool ingestOverManyCalls = false;
 
+            var isKeepOrphanedIsciMappingEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_KEEP_ORPHANED_ISCI_MAPPING);
+
             try
             {
                 _LogInfo($"reel-isci-ingest : Calling RealIsciClient. startDate='{startDate.ToString(ReelIsciApiClient.ReelIsciApiDateFormat)}';numberOfDays='{numberOfDays}'");
@@ -161,12 +163,19 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 _LogInfo($"reel-isci-ingest : Added {addedCount} reel iscis");
 
-                var deletedReelIsciProductsCount = _DeleteReelIsciProductsNotExistInReelIsci();
-                _LogInfo($"reel-isci-ingest : Deleted {deletedReelIsciProductsCount} reel iscis products.");
+                if (!isKeepOrphanedIsciMappingEnabled)
+                {
+                    var deletedReelIsciProductsCount = _DeleteReelIsciProductsNotExistInReelIsci();
+                    _LogInfo($"reel-isci-ingest : Deleted {deletedReelIsciProductsCount} reel iscis products.");
 
-                DateTime deletedAt = _DateTimeEngine.GetCurrentMoment();
-                var deletedplanIscisCount = _DeletePlanIscisNotExistInReelIsci(deletedAt, userName);
-                _LogInfo($"reel-isci-ingest : Deleted {deletedplanIscisCount} plan iscis.");
+                    DateTime deletedAt = _DateTimeEngine.GetCurrentMoment();
+                    var deletedplanIscisCount = _DeletePlanIscisNotExistInReelIsci(deletedAt, userName);
+                    _LogInfo($"reel-isci-ingest : Deleted {deletedplanIscisCount} plan iscis.");
+                }
+                else
+                {
+                    _LogInfo($"reel_isci_ingest: isKeepOrphanedIscimappingEnable Flag is {isKeepOrphanedIsciMappingEnabled}. No isci products or plan iscis deleted.");
+                }
 
                 var reelIsciIngestJobCompleted = new ReelIsciIngestJobDto
                 {

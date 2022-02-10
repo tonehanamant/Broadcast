@@ -259,62 +259,60 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void PerformReelIsciIngestBetweenRange_DeleteReelIsciProducts_NotExistInReelIsci()
+        [TestCase(true, 0, 0, 0)]
+        [TestCase(false, 2, 2, 1)]
+        public void PerformReelIsciIngestBetweenRange_DeleteReelIsciProducts_NotExistInReelIsci(bool toggleEnabled, int expectedDeleteCount, int deletedCount, int runCount)
         {
             //Arrange
             var startDate = new DateTime(2021, 01, 01);
             const int numberOfDays = 6;
-            var expectedDeleteCount = 2;
-            var deletedCount = 0;
             const int jobId = 12;
 
             _ReelIsciApiClientMock
                 .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
                 .Returns(new List<ReelRosterIsciDto>());
 
+            _featureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_KEEP_ORPHANED_ISCI_MAPPING))
+                .Returns(toggleEnabled);
+
             _ReelIsciProductRepositoryMock
                 .Setup(x => x.DeleteReelIsciProductsNotExistInReelIsci())
-                .Callback(() =>
-                {
-                    deletedCount = 2;
-                })
                 .Returns(deletedCount);
 
             //Act
             _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
 
             //Assert
-            _ReelIsciProductRepositoryMock.Verify(x => x.DeleteReelIsciProductsNotExistInReelIsci(), Times.Once);
+            _ReelIsciProductRepositoryMock.Verify(x => x.DeleteReelIsciProductsNotExistInReelIsci(), Times.Exactly(runCount));
             Assert.AreEqual(expectedDeleteCount, deletedCount);
         }
 
         [Test]
-        public void PerformReelIsciIngestBetweenRange_DeletePlanIscis_NotExistInReelIsci()
+        [TestCase(true, 0, 0, 0)]
+        [TestCase(false, 2, 2, 1)]
+        public void PerformReelIsciIngestBetweenRange_DeletePlanIscis_NotExistInReelIsci(bool toggleEnabled, int expectedDeleteCount, int deletedCount, int runCount)
         {
             //Arrange
             var startDate = new DateTime(2021, 01, 01);
             const int numberOfDays = 6;
-            var expectedDeleteCount = 2;
-            var deletedCount = 0;
             const int jobId = 12;
 
             _ReelIsciApiClientMock
                 .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
                 .Returns(new List<ReelRosterIsciDto>());
 
+            _featureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_KEEP_ORPHANED_ISCI_MAPPING))
+                .Returns(toggleEnabled);
+
             _PlanIsciRepositoryMock
                 .Setup(x => x.DeletePlanIscisNotExistInReelIsci(It.IsAny<DateTime>(), It.IsAny<string>()))
-                .Callback(() =>
-                {
-                    deletedCount = 2;
-                })
                 .Returns(deletedCount);
 
             //Act
             _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
 
             //Assert
-            _PlanIsciRepositoryMock.Verify(x => x.DeletePlanIscisNotExistInReelIsci(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+            _PlanIsciRepositoryMock.Verify(x => x.DeletePlanIscisNotExistInReelIsci(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Exactly(runCount));
             Assert.AreEqual(expectedDeleteCount, deletedCount);
         }
 

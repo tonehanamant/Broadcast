@@ -28,5 +28,6 @@
         public static string ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-queued-pricing-requests";
         public static string ENABLE_PLAN_ISCI_BY_WEEK = "broadcast-enable-plan-isci-by-week";
         public static string ENABLE_CUSTOM_DAYPART = "broadcast-enable-custom-daypart";
+        public static string ENABLE_KEEP_ORPHANED_ISCI_MAPPING = "broad-enable-keep-orphaned-isci-mapping";
     }
 }

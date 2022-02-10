@@ -290,7 +290,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             {
                 var addedCount = planIsciRepository.SaveIsciPlanMappings(isciMappings, deletedBy, deletedAt);
                 before = planIsciRepository.GetPlanIscis(7009);
-                var idToDelete = new List<int>{ before.First().Id };
+                var idToDelete = new List<int> { before.First().Id };
                 deletedCount = planIsciRepository.DeleteIsciPlanMappings(idToDelete, deletedBy, deletedAt);
                 after = planIsciRepository.GetPlanIscis(7009);
             }
