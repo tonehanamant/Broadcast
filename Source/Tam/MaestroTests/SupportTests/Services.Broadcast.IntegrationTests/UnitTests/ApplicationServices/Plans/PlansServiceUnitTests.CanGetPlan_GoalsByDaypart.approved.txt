@@ -442,6 +442,7 @@
       "VpvhForAudiences": [
         {
           "AudienceId": 31,
+          "DaypartCustomizationId": null,
           "StartingPoint": "2019-01-12T12:30:29",
           "Vpvh": 0.5,
           "VpvhType": 2
@@ -871,6 +872,7 @@
       "VpvhForAudiences": [
         {
           "AudienceId": 31,
+          "DaypartCustomizationId": null,
           "StartingPoint": "2019-01-12T12:30:29",
           "Vpvh": 0.5,
           "VpvhType": 2

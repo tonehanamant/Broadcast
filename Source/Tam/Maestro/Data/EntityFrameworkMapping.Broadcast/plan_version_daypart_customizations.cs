@@ -14,6 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class plan_version_daypart_customizations
     {
+        public plan_version_daypart_customizations()
+        {
+            this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
+        }
+    
         public int id { get; set; }
         public int plan_version_daypart_id { get; set; }
         public int custom_daypart_organization_id { get; set; }
@@ -21,5 +26,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual custom_daypart_organizations custom_daypart_organizations { get; set; }
         public virtual plan_version_dayparts plan_version_dayparts { get; set; }
+        public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
     }
 }

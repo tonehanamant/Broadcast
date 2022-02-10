@@ -184,7 +184,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<vpvh_quarters> vpvh_quarters { get; set; }
         public virtual DbSet<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
         public virtual DbSet<program_name_exceptions> program_name_exceptions { get; set; }
-        public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual DbSet<plan_version_pricing_market_details> plan_version_pricing_market_details { get; set; }
         public virtual DbSet<plan_version_pricing_station_details> plan_version_pricing_station_details { get; set; }
         public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
@@ -235,7 +234,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_reason_codes> spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual DbSet<custom_daypart_organizations> custom_daypart_organizations { get; set; }
-        public virtual DbSet<plan_iscis> plan_iscis { get; set; }
         public virtual DbSet<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
         public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
         public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
@@ -250,5 +248,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_daypart_flight_days> plan_version_daypart_flight_days { get; set; }
         public virtual DbSet<plan_version_daypart_flight_hiatus_days> plan_version_daypart_flight_hiatus_days { get; set; }
         public virtual DbSet<plan_version_daypart_weekly_breakdown> plan_version_daypart_weekly_breakdown { get; set; }
+        public virtual DbSet<plan_iscis> plan_iscis { get; set; }
+        public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
     }
 }

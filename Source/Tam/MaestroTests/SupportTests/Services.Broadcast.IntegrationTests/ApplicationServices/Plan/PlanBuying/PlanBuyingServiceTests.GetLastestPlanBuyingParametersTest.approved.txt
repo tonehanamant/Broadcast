@@ -2124,7 +2124,41 @@
     }
   ],
   "Currency": 1,
-  "CustomDayparts": [],
+  "CustomDayparts": [
+    {
+      "CustomDaypartName": null,
+      "CustomDaypartOrganizationId": 0,
+      "CustomDaypartOrganizationName": null,
+      "DaypartTypeId": 0,
+      "EndTimeSeconds": 0,
+      "Id": 0,
+      "IsEndTimeModified": false,
+      "IsStartTimeModified": false,
+      "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [],
+          "ContainType": 2
+        },
+        "GenreRestrictions": {
+          "ContainType": 2,
+          "Genres": []
+        },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": []
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": []
+        }
+      },
+      "StartTimeSeconds": 0,
+      "VpvhForAudiences": [],
+      "WeekdaysWeighting": null,
+      "WeekendWeighting": null,
+      "WeightingGoalPercent": null
+    }
+  ],
   "Dayparts": [
     {
       "CustomName": null,
@@ -2159,6 +2193,7 @@
       "VpvhForAudiences": [
         {
           "AudienceId": 34,
+          "DaypartCustomizationId": null,
           "StartingPoint": "2020-06-19T01:01:50.0241026",
           "Vpvh": 1.138,
           "VpvhType": 2

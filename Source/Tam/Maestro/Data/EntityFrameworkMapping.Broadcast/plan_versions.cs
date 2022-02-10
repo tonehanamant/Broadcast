@@ -24,12 +24,12 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_version_summaries = new HashSet<plan_version_summaries>();
             this.plan_version_creative_lengths = new HashSet<plan_version_creative_lengths>();
-            this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
             this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
             this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
             this.plan_version_buying_job = new HashSet<plan_version_buying_job>();
             this.plan_version_buying_parameters = new HashSet<plan_version_buying_parameters>();
             this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
+            this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
         }
     
         public int id { get; set; }
@@ -81,11 +81,11 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
-        public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual ICollection<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual ICollection<plan_version_buying_job> plan_version_buying_job { get; set; }
         public virtual ICollection<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
+        public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
     }
 }

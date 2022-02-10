@@ -650,9 +650,10 @@ namespace Services.Broadcast.Repositories
                 TargetImpressions = planVersion.target_impression,
                 TargetCPM = planVersion.target_cpm,
                 TargetRatingPoints = planVersion.target_rating_points,
-                TargetCPP = planVersion.target_cpp,                
+                TargetCPP = planVersion.target_cpp,
                 SecondaryAudiences = planVersion.plan_version_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
                 Dayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanDaypartDto(d, planVersion, marketCoverages)).ToList(),
+                CustomDayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanCustomDaypartDto(d)).ToList(),
                 CoverageGoalPercent = planVersion.coverage_goal_percent,
                 AvailableMarkets = planVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
                 BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
@@ -957,7 +958,7 @@ namespace Services.Broadcast.Repositories
         {
             var planVersionDaypartCustomization = entity.plan_version_daypart_customizations.SingleOrDefault();
             var dto = new PlanDaypartDto
-            {
+            {                
                 DaypartCodeId = entity.standard_daypart_id,
                 DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
                 StartTimeSeconds = entity.start_time_seconds,
@@ -967,6 +968,7 @@ namespace Services.Broadcast.Repositories
                 WeightingGoalPercent = entity.weighting_goal_percent,
                 WeekdaysWeighting = entity.weekdays_weighting,
                 WeekendWeighting = entity.weekend_weighting,
+               
                 DaypartOrganizationId = planVersionDaypartCustomization?.custom_daypart_organization_id,
                 CustomName = planVersionDaypartCustomization?.custom_daypart_name,
                 DaypartOrganizationName = planVersionDaypartCustomization?.custom_daypart_organizations.organization_name,
@@ -977,10 +979,13 @@ namespace Services.Broadcast.Repositories
                         AudienceId = x.audience_id,
                         Vpvh = x.vpvh_value,
                         VpvhType = (VpvhTypeEnum)x.vpvh_type,
-                        StartingPoint = x.starting_point
+                        StartingPoint = x.starting_point,
+                        DaypartCustomizationId=x.daypart_customization_id
                     })
                     .ToList(),
-                Goals = _MapPlanDaypartGoalDto(entity.plan_version_daypart_goals.SingleOrDefault(), marketCoverages)
+                Goals = _MapPlanDaypartGoalDto(entity.plan_version_daypart_goals.SingleOrDefault(), marketCoverages),
+               
+             
             };
 
             // if the contain type has ever been set
@@ -1023,7 +1028,19 @@ namespace Services.Broadcast.Repositories
 
             return dto;
         }
-
+        private PlanCustomDaypartDto _MapPlanCustomDaypartDto(plan_version_dayparts entity)
+        {
+            var planVersionDaypartCustomization = entity.plan_version_daypart_customizations.SingleOrDefault();
+            PlanCustomDaypartDto dto =new PlanCustomDaypartDto();
+            if (planVersionDaypartCustomization != null)
+            {
+                dto.Id = planVersionDaypartCustomization.id;
+                dto.CustomDaypartOrganizationId = planVersionDaypartCustomization.custom_daypart_organization_id;
+                dto.CustomDaypartName = planVersionDaypartCustomization.custom_daypart_name;
+               
+            }
+            return dto;
+        }
         private PlanDaypartGoalDto _MapPlanDaypartGoalDto(plan_version_daypart_goals planVersionDaypartGoalEntity, List<market_coverages> marketCoverages)
         {
             if (planVersionDaypartGoalEntity == null)
@@ -1193,7 +1210,7 @@ namespace Services.Broadcast.Repositories
             var planVersionDaypartCustomization = new plan_version_daypart_customizations
             {
                 custom_daypart_organization_id = Convert.ToInt32(planDaypart.DaypartOrganizationId),
-                custom_daypart_name = planDaypart.CustomName
+                custom_daypart_name = planDaypart.CustomName                
             };
             planVersionDaypart.plan_version_daypart_customizations.Add(planVersionDaypartCustomization);
         }
@@ -1203,17 +1220,41 @@ namespace Services.Broadcast.Repositories
             context.plan_version_audience_daypart_vpvh.RemoveRange(entity.plan_version_audience_daypart_vpvh);
 
             foreach (var daypart in planDto.Dayparts)
-            {
-                foreach (var vpvhForAudience in daypart.VpvhForAudiences)
+            {               
+                if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()))
                 {
-                    entity.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
+                    var planVersionDaypartCustomizations = entity.plan_version_dayparts.SelectMany(customDayparts => customDayparts.plan_version_daypart_customizations);
+                    
+                    var planVersionDaypartCustomization = planVersionDaypartCustomizations.Single(customDaypart => customDaypart.custom_daypart_name== daypart.CustomName 
+                    && customDaypart.custom_daypart_organization_id == daypart.DaypartOrganizationId
+                    );                   
+                        foreach (var vpvhForAudience in daypart.VpvhForAudiences)
+                        {
+                            planVersionDaypartCustomization.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
+                            {
+                                audience_id = vpvhForAudience.AudienceId,
+                                standard_daypart_id = daypart.DaypartCodeId,
+                                vpvh_type = (int)vpvhForAudience.VpvhType,
+                                vpvh_value = vpvhForAudience.Vpvh,
+                                starting_point = vpvhForAudience.StartingPoint,
+
+                            });
+                        }                   
+                }
+                else
+                {
+                    foreach (var vpvhForAudience in daypart.VpvhForAudiences)
                     {
-                        audience_id = vpvhForAudience.AudienceId,
-                        standard_daypart_id = daypart.DaypartCodeId,
-                        vpvh_type = (int)vpvhForAudience.VpvhType,
-                        vpvh_value = vpvhForAudience.Vpvh,
-                        starting_point = vpvhForAudience.StartingPoint
-                    });
+                        entity.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
+                        {
+                            audience_id = vpvhForAudience.AudienceId,
+                            standard_daypart_id = daypart.DaypartCodeId,
+                            vpvh_type = (int)vpvhForAudience.VpvhType,
+                            vpvh_value = vpvhForAudience.Vpvh,
+                            starting_point = vpvhForAudience.StartingPoint,
+
+                        });
+                    }
                 }
             }
         }

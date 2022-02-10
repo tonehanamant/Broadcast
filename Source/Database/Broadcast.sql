@@ -749,6 +749,17 @@ END
 GO
 /*************************************** END BP-3786 ***************************************/
 
+/*************************************** START BP-4060 ***************************************/
+IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_audience_daypart_vpvh' AND COLUMN_NAME= 'daypart_customization_id')
+BEGIN
+    ALTER TABLE plan_version_audience_daypart_vpvh
+    ADD daypart_customization_id INT NULL,
+    CONSTRAINT [FK_ plan_version_audience_daypart_vpvh_plan_version_daypart_customizations]
+    FOREIGN KEY([daypart_customization_id])REFERENCES [dbo].[plan_version_daypart_customizations] ([id])
+END
+GO
+/*************************************** END BP-4060 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

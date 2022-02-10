@@ -288,14 +288,13 @@ namespace Services.Broadcast.Entities.Campaign
         {
             var audienceImpressions = planWeek.WeeklyImpressions;
             double? audienceVpvh = null;
-            if (!planWeek.DaypartOrganizationId.HasValue)
-            {
-                if (isVpvhDemoEnabled )
+           
+                if (isVpvhDemoEnabled && !planWeek.DaypartOrganizationId.HasValue)
                 {
                     audienceVpvh = _GetCalculatedVpvh(planWeek.DaypartCodeId.Value, plan.Id, planPricingResultsDayparts);
                 }
 
-                if (!audienceVpvh.HasValue && !planWeek.DaypartOrganizationId.HasValue)
+                if (!audienceVpvh.HasValue )
                 {
                     audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartUniquekey, plan.AudienceId);
                 }
@@ -307,13 +306,26 @@ namespace Services.Broadcast.Entities.Campaign
                     var factor = planProjection.TotalHHImpressions / plan.HHImpressions.Value;
                     planProjection.TotalHHRatingPoints = plan.HHRatingPoints.Value * factor;
                 }
-            }
+            
         }
 
         private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, string standardDaypartId, int audienceId)
         {
-            return plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
+            double vpvhByStandardDaypartAndAudience = 0.0;
+            var daypart = plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId);
+            if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()))
+            {
+                var daypartCustomizations = plan.CustomDayparts.Single(x => x.CustomDaypartOrganizationId == daypart.DaypartOrganizationId && x.CustomDaypartName == daypart.CustomName);
+                vpvhByStandardDaypartAndAudience= plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId && x.DaypartCustomizationId== daypartCustomizations.Id).Vpvh;
+            }
+            else
+            {
+                vpvhByStandardDaypartAndAudience= plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
+            }
+            return vpvhByStandardDaypartAndAudience;
         }
+               
+            
 
         private double? _GetCalculatedVpvh(int daypartCodeId,  int planId, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
         {

@@ -816,6 +816,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                     new PlanDaypartDto
                     {
                         DaypartCodeId = 2,
+                        DaypartTypeId=DaypartTypeEnum.EntertainmentNonNews,
                         StartTimeSeconds = 0,
                         EndTimeSeconds = 2000,
                         WeightingGoalPercent = 28.0,
@@ -834,6 +835,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                     {
                         DaypartCodeId = 11,
                         StartTimeSeconds = 1500,
+                        DaypartTypeId=DaypartTypeEnum.EntertainmentNonNews,
                         EndTimeSeconds = 2788,
                         WeightingGoalPercent = 33.2,
                         VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
