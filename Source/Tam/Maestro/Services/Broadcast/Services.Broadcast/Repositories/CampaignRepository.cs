@@ -302,7 +302,7 @@ namespace Services.Broadcast.Repositories
                 AdvertiserMasterId = campaign.advertiser_master_id,
                 AgencyId = campaign.agency_id,
                 AgencyMasterId = campaign.agency_master_id,
-                Plans = campaign.plans.SelectMany(x => x.plan_versions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
+                Plans = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
                                     .Where(x => x.id == x.plan.latest_version_id)
                     .Select(version =>
                     {
