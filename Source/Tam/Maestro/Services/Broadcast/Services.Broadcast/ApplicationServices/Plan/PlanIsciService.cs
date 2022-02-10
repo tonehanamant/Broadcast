@@ -62,8 +62,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IReelIsciRepository _ReelIsciRepository;
         private readonly IReelIsciProductRepository _ReelIsciProductRepository;
 
-        private Lazy<bool> _EnablePlanIsciByWeek;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
         /// </summary>
@@ -84,8 +82,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             IStandardDaypartService standardDaypartService,
             ISpotLengthEngine spotLengthEngine,
             IDateTimeEngine dateTimeEngine,
-            IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper, 
-            IConfigurationSettingsHelper configurationSettingsHelper) 
+            IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper)
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
@@ -100,41 +98,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
-
-            _EnablePlanIsciByWeek = new Lazy<bool>(_GetEnablePlanIsciByWeek);
-        }
-
-        private bool _GetEnablePlanIsciByWeek()
-        {
-            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK);
-            return result;
         }
 
         /// <inheritdoc />
-        public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch) {
+        public List<IsciListItemDto> GetAvailableIscis(IsciSearchDto isciSearch)
+        {
             var isciListDto = new List<IsciListItemDto>();
             var isciAdvertiserListDto = new List<IsciAdvertiserDto>();
 
             DateTime queryStartDate;
             DateTime queryEndDate;
 
-            if (_EnablePlanIsciByWeek.Value)
+            if (!isciSearch.WeekStartDate.HasValue || !isciSearch.WeekEndDate.HasValue)
             {
-                if (!isciSearch.WeekStartDate.HasValue || !isciSearch.WeekEndDate.HasValue)
-                {
-                    throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
-                }
+                throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
+            }
 
-                queryStartDate = isciSearch.WeekStartDate.Value;
-                queryEndDate = isciSearch.WeekEndDate.Value;
-            }
-            else
-            {
-                var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
-                queryStartDate = mediaMonthsDates.StartDate;
-                queryEndDate = mediaMonthsDates.EndDate;
-            }
-                
+            queryStartDate = isciSearch.WeekStartDate.Value;
+            queryEndDate = isciSearch.WeekEndDate.Value;
+
             isciAdvertiserListDto = _PlanIsciRepository.GetAvailableIscis(queryStartDate, queryEndDate);
             if (isciAdvertiserListDto?.Any() ?? false)
             {
@@ -197,23 +179,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             DateTime queryStartDate;
             DateTime queryEndDate;
 
-            if (_EnablePlanIsciByWeek.Value)
+            if (!isciPlanSearch.WeekStartDate.HasValue || !isciPlanSearch.WeekEndDate.HasValue)
             {
-                if (!isciPlanSearch.WeekStartDate.HasValue || !isciPlanSearch.WeekEndDate.HasValue)
-                {
-                    throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
-                }
+                throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
+            }
 
-                queryStartDate = isciPlanSearch.WeekStartDate.Value;
-                queryEndDate = isciPlanSearch.WeekEndDate.Value;
-            }
-            else
-            {
-                var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciPlanSearch.MediaMonth.Id);
-                queryStartDate = mediaMonthsDates.StartDate;
-                queryEndDate = mediaMonthsDates.EndDate;
-            }
-            
+            queryStartDate = isciPlanSearch.WeekStartDate.Value;
+            queryEndDate = isciPlanSearch.WeekEndDate.Value;
+
             var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(queryStartDate, queryEndDate);
             if (isciPlans?.Any() ?? false)
             {
@@ -526,8 +499,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             mappings.ForEach(m =>
             {
-                if (!planIscis.Any(s => 
-                    s.PlanId.Equals(m.PlanId) && 
+                if (!planIscis.Any(s =>
+                    s.PlanId.Equals(m.PlanId) &&
                     s.Isci.Equals(m.Isci) &&
                     _GetOverlappingDateRange(new DateRange(m.FlightStartDate, m.FlightEndDate)
                         ,new DateRange(s.FlightStartDate, s.FlightEndDate)) != null
@@ -562,7 +535,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        internal List<PlanIsciDto> _PopulateIsciPlanMappingFlightsForMapping(int planId, DateTime planFlightStartDate, DateTime planFlightEndDate, 
+        internal List<PlanIsciDto> _PopulateIsciPlanMappingFlightsForMapping(int planId, DateTime planFlightStartDate, DateTime planFlightEndDate,
             List<ReelIsciDto> reelIsciDetails)
         {
             var result = new List<PlanIsciDto>();
@@ -599,7 +572,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var spotLengthsString = _GetSpotLengthsString(plan.CreativeLengths);
             var demoString = _GetAudienceString(plan.AudienceId);
             var flightString = _GetFlightString(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
-            
+
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
             var mappingsDetails = new PlanIsciMappingsDetailsDto
@@ -684,7 +657,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             const string fullFormat = "MM/dd/yyyy";
             const string shortFormat = "MM/dd";
-            var startDateString = startDate.Year == endDate.Year 
+            var startDateString = startDate.Year == endDate.Year
                 ? startDate.ToString(shortFormat)
                 : startDate.ToString(fullFormat);
             var endDateString = endDate.ToString(fullFormat);

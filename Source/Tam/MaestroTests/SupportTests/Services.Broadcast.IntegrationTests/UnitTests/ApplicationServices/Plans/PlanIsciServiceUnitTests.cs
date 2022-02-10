@@ -91,9 +91,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
 
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
-                .Returns(true);
-
             _PlanIsciService = new PlanIsciService(
                 _DataRepositoryFactoryMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
@@ -101,9 +98,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _CampaignService.Object,
                 _StandardDaypartService.Object,
                 _SpotLengthEngine.Object,
-                _DateTimeEngineMock.Object, 
+                _DateTimeEngineMock.Object,
                 _AabEngineMock.Object,
-                _FeatureToggleMock.Object, 
+                _FeatureToggleMock.Object,
                 _ConfigurationSettingsHelperMock.Object);
         }
 
@@ -126,18 +123,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void GetAvailableIscis_DatesPerToggle(bool toggleEnabled)
+        public void GetAvailableIscis_DatesPerToggle()
         {
             // Arrange
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
-                .Returns(toggleEnabled);
-
             IsciSearchDto isciSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
-                WeekStartDate = new DateTime(2021,11,01),
+                WeekStartDate = new DateTime(2021, 11, 01),
                 WeekEndDate = new DateTime(2021, 11, 7),
                 UnmappedOnly = false
             };
@@ -145,7 +137,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var passedDateRange = new DateRange();
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Callback<DateTime,DateTime>((start,end) => passedDateRange = new DateRange(start, end))
+                .Callback<DateTime, DateTime>((start, end) => passedDateRange = new DateRange(start, end))
                 .Returns(_GetAvailableIscis());
 
             // Act
@@ -156,24 +148,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var expectedStartDateTime = "2021-11-01";
             var expectedendDateTime = "2021-11-07";
 
-            if (!toggleEnabled)
-            {
-                expectedStartDateTime = "2021-07-26";
-                expectedendDateTime = "2021-08-29";
-            }
             Assert.AreEqual(expectedStartDateTime, passedDateRange.Start.Value.ToString(DateFormat));
             Assert.AreEqual(expectedendDateTime, passedDateRange.End.Value.ToString(DateFormat));
             _PlanIsciRepositoryMock.Verify(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void GetAvailableIsciPlans_DatesPerToggle(bool toggleEnabled)
+        public void GetAvailableIsciPlans_DatesPerToggle()
         {
             // Arrange
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
-                .Returns(toggleEnabled);
             var isciPlanSearch = new IsciSearchDto
             {
                 MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
@@ -192,16 +175,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
 
             // Assert
-
             const string DateFormat = "yyyy-MM-dd";
             var expectedStartDateTime = "2021-11-01";
             var expectedendDateTime = "2021-11-07";
 
-            if (!toggleEnabled)
-            {
-                expectedStartDateTime = "2021-07-26";
-                expectedendDateTime = "2021-08-29";
-            }
             Assert.AreEqual(expectedStartDateTime, passedDateRange.Start.Value.ToString(DateFormat));
             Assert.AreEqual(expectedendDateTime, passedDateRange.End.Value.ToString(DateFormat));
             _PlanIsciRepositoryMock.Verify(x => x.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Once);
@@ -323,7 +300,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 UnmappedOnly = true,
 
             };
-            
+
             _PlanIsciRepositoryMock
                 .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(
@@ -366,7 +343,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 UnmappedOnly = false,
 
             };
-            
+
             _PlanIsciRepositoryMock
                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
@@ -739,7 +716,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
-        
+
         [Test]
         public void SaveIsciMappings_IsciProductMappings()
         {
@@ -854,7 +831,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<List<int>, string, DateTime>((a, b, c) => deletedPlanIsciIds = a)
                 .Returns(2);
 
-            
+
             _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
                 .Returns(new List<IsciMappedPlanCountDto>
                 {
@@ -1042,7 +1019,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightEndDate = new DateTime(2022,01,09)
                     }
                 });
-            
+
             var saveRequest = new IsciPlanMappingsSaveRequestDto()
             {
                 IsciPlanMappingsModified = modified
