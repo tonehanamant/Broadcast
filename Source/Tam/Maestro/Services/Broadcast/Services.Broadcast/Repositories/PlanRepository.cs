@@ -226,6 +226,15 @@ namespace Services.Broadcast.Repositories
         double GetNsiToNtiConversionRate(List<PlanDaypartDto> planDayparts);
         List<PlanPricingResultsDaypartDto> GetPlanPricingResultsDaypartsByPlanPricingResultId(int planPricingResultId);
         List<CustomDaypartOrganizationDto> GetAllCustomDaypartOrganizations();
+
+        /// <summary>
+        /// Deletes the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier</param>
+        /// <param name="deletedBy">The username who is deleting plan</param>
+        /// <param name="deletedAt">The datetime when user is deleting plan</param>
+        /// <returns>True if plan has been deleted sucessfully, otherwise false.</returns>
+        bool DeletePlan(int planId, string deletedBy, DateTime deletedAt);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -389,7 +398,7 @@ namespace Services.Broadcast.Repositories
                                                 .ToList();
 
                     var entity = (from plan in context.plans
-                                  where plan.id == planId
+                                  where plan.id == planId                                        
                                   select plan)
                         .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
@@ -667,7 +676,7 @@ namespace Services.Broadcast.Repositories
                 IsAduEnabled = planVersion.is_adu_enabled,
                 ImpressionsPerUnit = planVersion.impressions_per_unit ?? 0,
                 BuyingParameters = _MapBuyingParameters(planVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
-                PlanMode = EnumHelper.GetEnum<PlanModeEnum>(entity.plan_mode)
+                PlanMode = EnumHelper.GetEnum<PlanModeEnum>(entity.plan_mode)                
             };
 
             if (dto.PlanMode == PlanModeEnum.Classic)
@@ -2879,6 +2888,22 @@ namespace Services.Broadcast.Repositories
                 }).ToList();
 
                 return customDaypartorganizations;
+            });
+        }
+
+        /// <inheritdoc/>        
+        public bool DeletePlan(int planId, string deletedBy, DateTime deletedAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planToDelete = context.plans.Single(plan => plan.id == planId && !(plan.deleted_at.HasValue), $"Invalid plan id {planId}.");
+                planToDelete.deleted_by = deletedBy;
+                planToDelete.deleted_at = deletedAt;
+
+                var deletedCount = context.SaveChanges();
+                
+                var result = deletedCount > 0;
+                return result;
             });
         }
     }

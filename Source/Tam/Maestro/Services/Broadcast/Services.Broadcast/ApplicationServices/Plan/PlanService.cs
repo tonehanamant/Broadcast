@@ -224,6 +224,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         BroadcastReleaseLockResponse UnlockPlan(int planId);
 
         List<CustomDaypartOrganizationDto> GetCustomDaypartOrganizations();
+
+        /// <summary>
+        /// Deletes the plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier</param>
+        /// <param name="deletedBy">The username who is deleting plan</param>
+        /// <returns>True if plan has been deleted sucessfully, otherwise false.</returns>
+        bool DeletePlan(int planId, string deletedBy);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -254,6 +262,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
         private readonly ILockingEngine _LockingEngine;
         private Lazy<bool> _IsMarketSovCalculationEnabled;
+        private readonly IDateTimeEngine _DateTimeEngine;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -270,7 +279,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
             , ICreativeLengthEngine creativeLengthEngine
             , IFeatureToggleHelper featureToggleHelper
-            , IPlanMarketSovCalculator planMarketSovCalculator, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine) : base(featureToggleHelper, configurationSettingsHelper)
+            , IPlanMarketSovCalculator planMarketSovCalculator
+            , IConfigurationSettingsHelper configurationSettingsHelper
+            , ILockingEngine lockingEngine
+            , IDateTimeEngine dateTimeEngine) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -299,6 +311,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsMarketSovCalculationEnabled = new Lazy<bool>(() =>
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
             _LockingEngine = lockingEngine;
+            _DateTimeEngine = dateTimeEngine;
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -1875,6 +1888,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public bool DeletePlan(int planId, string deletedBy)
+        {
+            var plan = _PlanRepository.GetPlan(planId);
+            if (plan.Status != PlanStatusEnum.Canceled)
+            {
+                throw new ApplicationException("Plan cannot be deleted. To delete plan, plan status must be canceled.");
+            }
+
+            var deletedAt = _DateTimeEngine.GetCurrentMoment();
+            var result = _PlanRepository.DeletePlan(planId, deletedBy, deletedAt);
+            return result;
         }
     }
 }

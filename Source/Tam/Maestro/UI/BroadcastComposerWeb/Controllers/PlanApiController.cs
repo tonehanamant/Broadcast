@@ -345,5 +345,14 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetCustomDaypartOrganizations());
         }
+
+        [Authorize]
+        [HttpPost]        
+        [Route("{planId}/delete")]
+        public BaseResponse<bool> DeletePlan(int planId)
+        {
+            var deletedBy = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().DeletePlan(planId, deletedBy));
+        }
     }
 }

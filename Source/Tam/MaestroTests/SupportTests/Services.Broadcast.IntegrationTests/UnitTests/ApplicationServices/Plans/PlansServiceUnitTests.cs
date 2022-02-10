@@ -57,6 +57,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepository;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private Mock<ILockingEngine> _LockingEngineMock;
+        private Mock<IDateTimeEngine> _DateTimeEngineMock;
 
         [SetUp]
         public void CreatePlanService()
@@ -85,6 +86,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _NtiToNsiConversionRepository = new Mock<INtiToNsiConversionRepository>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _LockingEngineMock = new Mock<ILockingEngine>();
+            _DateTimeEngineMock = new Mock<IDateTimeEngine>();
+
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -208,7 +211,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     featureToggleHelper,
                     _PlanMarketSovCalculator.Object,
                     _ConfigurationSettingsHelperMock.Object,
-                    _LockingEngineMock.Object
+                    _LockingEngineMock.Object,
+                    _DateTimeEngineMock.Object
                 );
 
             _SpotLengthEngineMock
@@ -222,6 +226,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SpotLengthEngineMock.Setup(a => a.GetSpotLengthIdByValue(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthIdByDuration);
             //.Returns(1);
+
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2022, 01, 01));
         }
 
         [Test]
@@ -4156,6 +4164,85 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(expectedBeforePlanDaypartCount, beforePlan.Dayparts.Count);
             Assert.AreEqual(expectedAfterPlanDaypartCount, afterPlan.Dayparts.Count);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DeletePlan(bool expectedResult)
+        {
+            // Arrange
+            var planId = 1;
+            var deletedBy = "Test User";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    Status = PlanStatusEnum.Canceled
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.DeletePlan(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result = _PlanService.DeletePlan(planId, deletedBy);
+
+            // Assert
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [Test]
+        public void DeletePlan_NonCanceledPlan_ThrowsException()
+        {
+            // Arrange
+            var planId = 1;
+            var deletedBy = "Test User";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    Status = PlanStatusEnum.Working
+                });
+
+            // Act
+            var result = Assert.Throws<ApplicationException>(() => _PlanService.DeletePlan(planId, deletedBy));
+
+            // Assert
+            Assert.AreEqual("Plan cannot be deleted. To delete plan, plan status must be canceled.", result.Message);
+        }
+
+        [Test]
+        public void DeletePlan_ThrowsException()
+        {
+            // Arrange
+            var planId = 1;
+            var deletedBy = "Test User";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    Status = PlanStatusEnum.Canceled
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.DeletePlan(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _PlanService.DeletePlan(planId, deletedBy));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }
