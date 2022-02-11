@@ -760,6 +760,15 @@ END
 GO
 /*************************************** END BP-4060 ***************************************/
 
+/*************************************** START BP-4119 ***************************************/
+IF EXISTS(SELECT 1 FROM system_settings.INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME='system_component_parameters')
+BEGIN
+	DELETE FROM system_settings.dbo.system_component_parameters where component_id in ('BroadcastComposerWeb','BroadcastService');
+END
+GO
+
+/*************************************** END BP-4119 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
