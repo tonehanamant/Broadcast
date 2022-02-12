@@ -973,7 +973,7 @@ namespace Services.Broadcast.Repositories
                 CustomName = planVersionDaypartCustomization?.custom_daypart_name,
                 DaypartOrganizationName = planVersionDaypartCustomization?.custom_daypart_organizations.organization_name,
                 VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
-                    .Where(x => x.standard_daypart_id == entity.standard_daypart_id)
+                     .Where(x => x.standard_daypart_id == entity.standard_daypart_id && x.daypart_customization_id == planVersionDaypartCustomization.id)
                     .Select(x => new PlanDaypartVpvhForAudienceDto
                     {
                         AudienceId = x.audience_id,
