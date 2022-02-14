@@ -967,12 +967,28 @@ namespace Services.Broadcast.Repositories
                 IsEndTimeModified = entity.is_end_time_modified,
                 WeightingGoalPercent = entity.weighting_goal_percent,
                 WeekdaysWeighting = entity.weekdays_weighting,
-                WeekendWeighting = entity.weekend_weighting,
-               
+                WeekendWeighting = entity.weekend_weighting,               
                 DaypartOrganizationId = planVersionDaypartCustomization?.custom_daypart_organization_id,
                 CustomName = planVersionDaypartCustomization?.custom_daypart_name,
                 DaypartOrganizationName = planVersionDaypartCustomization?.custom_daypart_organizations.organization_name,
                 VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
+                     .Where(x => x.standard_daypart_id == entity.standard_daypart_id)
+                    .Select(x => new PlanDaypartVpvhForAudienceDto
+                    {
+                        AudienceId = x.audience_id,
+                        Vpvh = x.vpvh_value,
+                        VpvhType = (VpvhTypeEnum)x.vpvh_type,
+                        StartingPoint = x.starting_point,
+                        DaypartCustomizationId = x.daypart_customization_id
+                    })
+                    .ToList(),
+                Goals = _MapPlanDaypartGoalDto(entity.plan_version_daypart_goals.SingleOrDefault(), marketCoverages),              
+             
+            };
+           
+            if ((int)DaypartTypeEnum.Sports==entity.daypart_type)
+            {
+                dto.VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
                      .Where(x => x.standard_daypart_id == entity.standard_daypart_id && x.daypart_customization_id == planVersionDaypartCustomization.id)
                     .Select(x => new PlanDaypartVpvhForAudienceDto
                     {
@@ -980,16 +996,13 @@ namespace Services.Broadcast.Repositories
                         Vpvh = x.vpvh_value,
                         VpvhType = (VpvhTypeEnum)x.vpvh_type,
                         StartingPoint = x.starting_point,
-                        DaypartCustomizationId=x.daypart_customization_id
+                        DaypartCustomizationId = x.daypart_customization_id
                     })
-                    .ToList(),
-                Goals = _MapPlanDaypartGoalDto(entity.plan_version_daypart_goals.SingleOrDefault(), marketCoverages),
-               
-             
-            };
+                    .ToList();
+            }
 
-            // if the contain type has ever been set
-            if (entity.show_type_restrictions_contain_type.HasValue)
+                // if the contain type has ever been set
+                if (entity.show_type_restrictions_contain_type.HasValue)
             {
                 dto.Restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
                 {
