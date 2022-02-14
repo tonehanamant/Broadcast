@@ -1226,23 +1226,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     var allAggregationTasks = Task.WhenAll(aggregationTasks.Select(x => x.Task).ToArray());
                     allAggregationTasks.Wait();
                     /*** Persist the results ***/
-                    using (var transaction = new TransactionScopeWrapper())
-                    {
-                        _SaveBuyingArtifacts(allocationResults, aggregationTasks, diagnostic);
+                    _SaveBuyingArtifacts(allocationResults, aggregationTasks, diagnostic);
 
-                        diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-                        var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-                        buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
-                        buyingJob.Completed = _DateTimeEngine.GetCurrentMoment();
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+                    var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
+                    buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
+                    buyingJob.Completed = _DateTimeEngine.GetCurrentMoment();
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
 
-                        diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
-                        buyingJob.DiagnosticResult = diagnostic.ToString();
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
+                    buyingJob.DiagnosticResult = diagnostic.ToString();
 
-                        _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
-
-                        transaction.Complete();
-                    }
+                    _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
                 }
             }
             catch (BuyingModelException exception)

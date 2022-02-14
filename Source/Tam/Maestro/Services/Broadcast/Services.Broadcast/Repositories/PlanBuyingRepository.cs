@@ -7,6 +7,7 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -620,7 +621,6 @@ namespace Services.Broadcast.Repositories
                 buying_version = result.BuyingVersion,
                 spot_allocation_model_mode = (int)result.SpotAllocationModelMode,
                 posting_type = (int)result.PostingType,
-                plan_version_buying_api_result_spots = planBuyingApiResultSpots
             };
 
             _InReadUncommitedTransaction(context =>
@@ -628,6 +628,19 @@ namespace Services.Broadcast.Repositories
                 context.plan_version_buying_api_results.Add(planBuyingApiResult);
                 context.SaveChanges();
             });
+            var newId = planBuyingApiResult.id;
+
+            var chunksToSave = planBuyingApiResultSpots.GetChunks<plan_version_buying_api_result_spots>(10000);
+            foreach (var chunk in chunksToSave)
+            {
+                chunk.ForEach(s => s.plan_version_buying_api_results_id = newId);
+
+                _InReadUncommitedTransaction(context =>
+                {
+                    context.plan_version_buying_api_result_spots.AddRange(chunk);
+                    context.SaveChanges();
+                });
+            }
         }
 
         /// <inheritdoc/>
