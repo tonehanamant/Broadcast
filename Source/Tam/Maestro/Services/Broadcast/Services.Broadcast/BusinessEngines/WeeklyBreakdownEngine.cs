@@ -1383,7 +1383,7 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             var firstWeek = unlockedWeeks.First();
-            var totalImpressionsRounded = unlockedWeeks.Sum(w => w.WeeklyImpressions);
+            var totalImpressionsRounded = weeks.Sum(w => w.WeeklyImpressions);
             var roundedImpressionsDifference = totalImpressions - totalImpressionsRounded;
             var impressions = Math.Floor(firstWeek.WeeklyImpressions + roundedImpressionsDifference);
 
