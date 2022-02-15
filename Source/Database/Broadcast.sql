@@ -769,6 +769,70 @@ GO
 
 /*************************************** END BP-4119 ***************************************/
 
+/*************************************** START BP-3285 ***************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'spot_unique_hash'
+        AND OBJECT_ID = OBJECT_ID('staged_recommended_plans'))
+BEGIN
+	DROP TABLE staged_recommended_plan_details
+	DROP TABLE staged_recommended_plans
+END
+
+IF OBJECT_ID('staged_recommended_plans') IS NULL
+BEGIN
+	CREATE TABLE staged_recommended_plans
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external VARCHAR(255) NOT NULL,
+		ambiguity_code INT NOT NULL,
+		estimate_id INT NOT NULL,
+		inventory_source VARCHAR(100) NOT NULL,
+		house_isci VARCHAR(100) NOT NULL,
+		client_isci VARCHAR(100) NOT NULL,
+		client_spot_length INT NOT NULL,
+		broadcast_aired_date DATETIME2 NOT NULL,
+		aired_time INT NOT NULL,
+		station_legacy_call_letters VARCHAR(30) NULL,
+		affiliate VARCHAR(30) NULL,
+		market_code INT NULL,
+		market_rank INT NULL,		
+		[program_name] VARCHAR(500) NOT NULL,
+		program_genre VARCHAR(127) NOT NULL,
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+
+	CREATE TABLE staged_recommended_plan_details
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		staged_recommended_plan_id INT NOT NULL, -- FK
+		recommended_plan_id INT NOT NULL,
+		execution_trace_id BIGINT NOT NULL,
+		rate MONEY NULL,
+		audience_name VARCHAR(127) NULL,
+		impressions FLOAT NULL,
+		is_recommended_plan BIT NOT NULL,
+		plan_clearance_percentage FLOAT NULL,	
+		daypart_code VARCHAR(10) NULL,
+		start_time INT NULL,
+		end_time INT NULL,
+		monday INT NULL,
+		tuesday INT NULL,
+		wednesday INT NULL,
+		thursday INT NULL,
+		friday INT NULL,
+		saturday INT NULL,
+		sunday INT NULL,
+	)
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD CONSTRAINT FK_staged_recommended_plan_details_staged_recommended_plans
+		FOREIGN KEY (staged_recommended_plan_id) REFERENCES staged_recommended_plans(id)
+END
+
+GO
+/*************************************** END BP-3285 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -17,6 +17,10 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int staged_recommended_plan_id { get; set; }
         public int recommended_plan_id { get; set; }
+        public long execution_trace_id { get; set; }
+        public Nullable<decimal> rate { get; set; }
+        public string audience_name { get; set; }
+        public Nullable<double> impressions { get; set; }
         public bool is_recommended_plan { get; set; }
         public Nullable<double> plan_clearance_percentage { get; set; }
         public string daypart_code { get; set; }
