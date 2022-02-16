@@ -185,5 +185,19 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignCopy(campaignId));
         }
+        /// <summary>
+        /// Endpoint for creating copy campaign
+        /// </summary>
+        /// <param name="campaignCopy">The object with the data for the copy campaign</param>
+        [HttpPost]
+        [Route("copy")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<int> CreateCampaignCopy(SaveCampaignCopyDto campaignCopy)
+        {
+            var createdBy = _GetCurrentUserFullName();
+            return
+                _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
+                .SaveCampaignCopy(campaignCopy, createdBy, DateTime.Now));
+        }
     }
 }

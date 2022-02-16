@@ -197,7 +197,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAabEngine>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
                 );
 
                 var campaign = _GetValidCampaignForSave();
@@ -620,8 +622,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DaypartCache.Instance,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IAabEngine>(),
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>()
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),                IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
                 );
 
             return campaignService;

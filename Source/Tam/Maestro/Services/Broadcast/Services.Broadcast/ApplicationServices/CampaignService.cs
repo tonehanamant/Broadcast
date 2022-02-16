@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Hangfire;
+using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
@@ -143,6 +144,15 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="campaignId">The campaign identifier.</param>
         /// <returns></returns>
         CampaignCopyDto GetCampaignCopy(int campaignId);
+
+        /// <summary>
+        /// Copy the campaign along with plans.
+        /// </summary>
+        /// <param name="campaignCopy">The campaign object.</param>
+        /// <param name="createdBy">Name of the user.</param>
+        /// <param name="createdDate">The created date.</param>
+        /// <returns>Id of the new campaign</returns>
+        int SaveCampaignCopy(SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate);
     }
 
     /// <summary>
@@ -172,6 +182,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDaypartCache _DaypartCache;
         private readonly IAabEngine _AabEngine;
         private readonly ILockingEngine _LockingEngine;
+        private readonly IPlanService _PlanService;
+        private readonly IPlanValidator _PlanValidator;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -188,7 +200,7 @@ namespace Services.Broadcast.ApplicationServices
             IWeeklyBreakdownEngine weeklyBreakdownEngine,
             IDaypartCache daypartCache,
             IFeatureToggleHelper featureToggleHelper,
-            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine) : base(featureToggleHelper, configurationSettingsHelper)
+            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine, IPlanService PlanService, IPlanValidator PlanValidator) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -211,7 +223,10 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCache = daypartCache;
             _AabEngine = aabEngine;
             _LockingEngine = lockingEngine;
+            _PlanService = PlanService;
+            _PlanValidator = PlanValidator;
         }
+
 
         /// <inheritdoc />
         public List<CampaignListItemDto> GetCampaigns(CampaignFilterDto filter, DateTime currentDate)
@@ -543,11 +558,11 @@ namespace Services.Broadcast.ApplicationServices
             var plans = campaign.Plans
                 .Select(x =>
                 {
-                    var plan = _PlanRepository.GetPlan(x.PlanId);                   
+                    var plan = _PlanRepository.GetPlan(x.PlanId);
                     DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
                     return plan;
                 }).ToList();
-           foreach( var plan in plans)
+            foreach(var plan in plans)
             {
                 var dayparts = _GetPlanPricingResultsDayparts(plan);
                 if (dayparts != null)
@@ -563,7 +578,7 @@ namespace Services.Broadcast.ApplicationServices
             var spotLengths = _SpotLengthRepository.GetSpotLengths();
             var spotLengthDeliveryMultipliers = _SpotLengthRepository.GetDeliveryMultipliersBySpotLengthId();
             var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
-            var audiences = _AudienceService.GetAudiences();          
+            var audiences = _AudienceService.GetAudiences();
 
             var campaignReportData = new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
                 spotLengths,
@@ -573,7 +588,7 @@ namespace Services.Broadcast.ApplicationServices
                  _MediaMonthAndWeekAggregateCache,
                 _QuarterCalculationEngine,
                 _DateTimeEngine,
-                _WeeklyBreakdownEngine, planPricingResultsDayparts,_FeatureToggleHelper);
+                _WeeklyBreakdownEngine, planPricingResultsDayparts, _FeatureToggleHelper);
 
             return campaignReportData;
         }
@@ -757,8 +772,8 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
             var manifestDaypartIds = manifestsOpenMarket.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
-            
-            var result= new ProgramLineupReportData(
+
+            var result = new ProgramLineupReportData(
                 plan,
                 pricingJob,
                 agency,
@@ -900,6 +915,63 @@ namespace Services.Broadcast.ApplicationServices
         {
             var campaign = _CampaignRepository.GetCampaignCopy(campaignId);
             return campaign;
+        }
+
+        /// <inheritdoc />
+        public int SaveCampaignCopy(SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate)
+        {
+            int campaignId = 0;
+            var campaignDto = new SaveCampaignDto
+            {
+                Name = campaignCopy.Name,
+                AdvertiserMasterId = campaignCopy.AdvertiserMasterId,
+                AgencyMasterId = campaignCopy.AgencyMasterId,
+                ModifiedBy = createdBy,
+                ModifiedDate = createdDate
+            };
+            _CampaignValidator.Validate(campaignDto);
+            var campaign = _CampaignRepository.CheckCampaignExist(campaignDto);
+            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+            {
+                if (campaign.Id == 0)
+                {
+                    campaignId = _CampaignRepository.CreateCampaign(campaignDto, createdBy, createdDate);
+                }
+                else
+                {
+                    throw new InvalidOperationException($"The Campaign {campaignDto.Name} already exists.");
+                }
+                if (campaignId > 0)
+                {
+                    var plans = _MapCampaignToPlans(campaignId, campaignCopy);
+                    _PlanRepository.CopyPlans(plans, createdBy, createdDate);
+                    foreach (var plan in plans)
+                    {
+                        _PlanService.DispatchPlanAggregation(plan, true);
+
+                    }
+                }
+                transaction.Complete();
+            }
+            return campaignId;
+        }
+
+        private List<PlanDto> _MapCampaignToPlans(int campaignId, SaveCampaignCopyDto campaignCopy)
+        {
+            var plans = new List<PlanDto>();
+            foreach (var plan in campaignCopy.Plans)
+            {
+                var planToCopy = _PlanService.GetPlan(plan.SourcePlanId);
+                var campaignPlan = campaignCopy.Plans.Where(x => x.SourcePlanId == plan.SourcePlanId).FirstOrDefault();
+                planToCopy.CampaignId = campaignId;
+                planToCopy.CampaignName = campaignCopy.Name;
+                planToCopy.Name = campaignPlan.Name;
+                planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
+                planToCopy.Id = 0;
+                _PlanValidator.ValidatePlan(planToCopy);
+                plans.Add(planToCopy);
+            }
+            return plans;
         }
     }
 }

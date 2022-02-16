@@ -81,6 +81,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="campaignId">The identifier.</param>
         /// <returns>CampaignCopyDto object</returns>
         CampaignCopyDto GetCampaignCopy(int campaignId);
+
+        /// <summary>
+        /// Check if the campaign already exist in DB
+        /// </summary>
+        /// <param name="saveCampaignDto">The campaign dto.</param>
+        /// <returns>CampaignDto object</returns>
+        CampaignDto CheckCampaignExist(SaveCampaignDto saveCampaignDto);
     }
 
     /// <summary>
@@ -96,8 +103,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="pBroadcastContextFactory">The p broadcast context factory.</param>
         /// <param name="pTransactionHelper">The p transaction helper.</param>
         /// <param name="pConfigurationWebApiClient">The p configuration web API client.</param>
-         /// <param name="featureToggleHelper">The p configuration web API client.</param>
-         /// <param name="configurationSettingsHelper">The p configuration web API client.</param>
+        /// <param name="featureToggleHelper">The p configuration web API client.</param>
+        /// <param name="configurationSettingsHelper">The p configuration web API client.</param>
         public CampaignRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)
@@ -363,7 +370,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var campaigns = _GetFilteredCampaignsWithoutValidPlans(null, null, planStatus, context);
                     var plans = _GetFilteredPlansWithDates(null, null, planStatus, context);
-                    
+
                     var plansDateRanges = plans.SelectMany(x => x.plan_versions).Where(y => y.id == y.plan.latest_version_id).Select(version => new
                     {
                         version.flight_start_date,
@@ -540,5 +547,29 @@ namespace Services.Broadcast.Repositories
             return campaignCopyDto;
         }
 
+        /// <inheritdoc />
+        public CampaignDto CheckCampaignExist(SaveCampaignDto saveCampaignDto)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var campaign = context.campaigns.Where(x => x.name == saveCampaignDto.Name &&
+                     x.agency_master_id == saveCampaignDto.AgencyMasterId && x.advertiser_master_id == saveCampaignDto.AdvertiserMasterId).FirstOrDefault();
+                    return _MapExistingCampaignToDto(campaign);
+                });
+
+        }
+        private CampaignDto _MapExistingCampaignToDto(campaign campaign)
+        {
+            CampaignDto campaignDto = new CampaignDto();
+            if (campaign != null)
+            {
+                campaignDto.Id = campaign.id;
+                campaignDto.Name = campaign.name;
+                campaignDto.AdvertiserMasterId = campaign.advertiser_master_id;
+                campaignDto.AgencyMasterId = campaign.agency_master_id;
+            }
+            return campaignDto;
+        }
     }
 }

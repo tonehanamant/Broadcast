@@ -232,6 +232,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="deletedBy">The username who is deleting plan</param>
         /// <returns>True if plan has been deleted sucessfully, otherwise false.</returns>
         bool DeletePlan(int planId, string deletedBy);
+
+        /// <summary>
+        /// Aggregate the plan result
+        /// </summary>
+        /// <param name="plan">The plan object</param>
+        /// <param name="aggregatePlanSynchronously">Method execution flag</param>
+        void DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -467,7 +474,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 // We only aggregate data for versions, not drafts.
                 if (!plan.IsDraft)
                 {
-                    _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                    DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
                 }
 
@@ -1449,7 +1456,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _SetPlanVersionNumber(plan);
                     _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
                     _PlanRepository.UpdatePlanPricingVersionId(plan.VersionId, oldPlanVersionId);
-                    _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                    DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
                 }
                 else
@@ -1480,7 +1487,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
+        public void DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
         {
             _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.VersionId, PlanAggregationProcessingStatusEnum.InProgress);
 

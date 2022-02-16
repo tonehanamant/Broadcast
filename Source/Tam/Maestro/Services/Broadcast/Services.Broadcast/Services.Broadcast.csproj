@@ -528,6 +528,7 @@
     <Compile Include="Clients\PlanBuyingJobQueueApiClient.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
     <Compile Include="Entities\CampaignCopyDto.cs" />
+    <Compile Include="Entities\Campaign\SaveCampaignCopyDto.cs" />
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\Enums\PlanModeEnum.cs" />
     <Compile Include="Entities\Isci\IsciMappedPlanCountDto.cs" />
@@ -545,6 +546,7 @@
     <Compile Include="Entities\Plan\PlanCustomDaypartDto.cs" />
     <Compile Include="Entities\Plan\PlansCopyDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartGoalDto.cs" />
+    <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecAdvertisersRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsDto.cs" />

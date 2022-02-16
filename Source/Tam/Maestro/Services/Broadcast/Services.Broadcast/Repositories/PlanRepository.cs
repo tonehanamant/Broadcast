@@ -34,6 +34,14 @@ namespace Services.Broadcast.Repositories
         void SaveNewPlan(PlanDto planDto, string createdBy, DateTime createdDate);
 
         /// <summary>
+        /// copy list of plans.
+        /// </summary>
+        /// <param name="plans">The list of plans.</param>
+        /// <param name="createdBy">The created by.</param>
+        /// <param name="createdDate">The created date.</param>
+        void CopyPlans(List<PlanDto> plans, string createdBy, DateTime createdDate);
+
+        /// <summary>
         /// Saves the plan.
         /// </summary>
         /// <param name="planDto">The plan dto.</param>
@@ -281,6 +289,30 @@ namespace Services.Broadcast.Repositories
 
                     planDto.Id = newPlan.id;
                     planDto.VersionId = newPlan.latest_version_id;
+                });
+        }
+
+        /// <inheritdoc/>
+        public void CopyPlans(List<PlanDto> plans, string createdBy, DateTime createdDate)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    foreach (var plan in plans)
+                    {
+                        var newPlan = new plan();
+                        var version = new plan_versions();
+                        newPlan.plan_versions.Add(version);
+
+                        _MapFromDto(plan, context, newPlan, version);
+                        _SetCreatedDate(version, createdBy, createdDate);
+                        context.plans.Add(newPlan);
+                        context.SaveChanges();
+
+                        _UpdateLatestVersionId(newPlan, context);
+                        plan.Id = newPlan.id;
+                        plan.VersionId = newPlan.latest_version_id;
+                    }
                 });
         }
 

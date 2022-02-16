@@ -5,6 +5,7 @@ using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
@@ -64,6 +65,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<ILockingEngine> _LockingEngineMock;
+        private Mock<IPlanService> _PlanServiceMock;
+        private Mock<IPlanValidator> _PlanValidatorMock;
 
         [SetUp]
         public void SetUp()
@@ -91,6 +94,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _LockingEngineMock = new Mock<ILockingEngine>();
+            _PlanServiceMock = new Mock<IPlanService>();
+            _PlanValidatorMock = new Mock<IPlanValidator>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
                 .Returns(_StationProgramRepositoryMock.Object);
@@ -117,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
-                .Returns(_SpotLengthRepositoryMock.Object);
+                .Returns(_SpotLengthRepositoryMock.Object); 
         }
 
         [Test]
@@ -2564,8 +2569,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();            
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION, false);
-            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
-
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub); 
             return new CampaignService(
                 _DataRepositoryFactoryMock.Object,
                 _CampaignValidatorMock.Object,
@@ -2583,7 +2587,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 featureToggleHelper,
                 _AabEngine.Object,
                 _ConfigurationSettingsHelperMock.Object,
-                _LockingEngineMock.Object
+                _LockingEngineMock.Object,
+                _PlanServiceMock.Object,
+                _PlanValidatorMock.Object
                 );
         }
 
@@ -2904,5 +2910,165 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     }
             };
         }
+
+        [Test]
+        public void SaveCampaignCopy()
+        {
+            // Arrange
+            const int campaignId = 0;
+            const string campaignName = "CampaignOne";
+            Guid? advertiserMasterId = Guid.NewGuid(); 
+            Guid? agencyMasterId = Guid.NewGuid(); 
+            var campaign = new SaveCampaignCopyDto
+            {
+                Name = campaignName,
+                AgencyMasterId = agencyMasterId,
+                AdvertiserMasterId = advertiserMasterId
+            };
+            _CampaignRepositoryMock
+                .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
+                .Returns(new CampaignDto { Id= campaignId });
+            var tc = _BuildCampaignService();
+
+            // Act
+            tc.SaveCampaignCopy(campaign, _User, _CurrentDate);
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.CreateCampaign(
+                It.Is<SaveCampaignDto>(c => c.Name == campaignName &&                                       
+                                        c.AdvertiserMasterId == advertiserMasterId &&
+                                        campaign.AgencyMasterId == agencyMasterId),
+                _User,
+                _CurrentDate), Times.Once);
+        }
+        [Test]
+        public void SaveCampaignCopy_InvalidCampaign_ThrowsException()
+        {
+            // Arrange
+            const int campaignId = 0;
+            const string expectedMessage = "This is a test exception thrown from Validate.";           
+            const string campaignName = "CampaignOne";
+            Guid? advertiserMasterId = Guid.NewGuid();
+            Guid? agencyMasterId = Guid.NewGuid();
+            var campaign = new SaveCampaignCopyDto
+            {
+                Name = campaignName,
+                AgencyMasterId = agencyMasterId,
+                AdvertiserMasterId = advertiserMasterId
+            };
+            _CampaignRepositoryMock
+                .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
+                .Returns(new CampaignDto { Id = campaignId });
+            _CampaignValidatorMock
+                .Setup(s => s.Validate(It.IsAny<SaveCampaignDto>()))
+                .Callback<SaveCampaignDto>(x => throw new Exception(expectedMessage));
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.SaveCampaignCopy(campaign, _User, _CurrentDate));
+
+            // Assert
+            _CampaignValidatorMock.Verify(x => x.Validate(
+                It.Is<SaveCampaignDto>(c => c.Name == campaignName &&
+                                        c.AdvertiserMasterId == advertiserMasterId &&
+                                        campaign.AgencyMasterId == agencyMasterId)));
+            _CampaignRepositoryMock.Verify(x => x.CreateCampaign(It.IsAny<SaveCampaignDto>(), _User, _CurrentDate), Times.Never);
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+        [Test]
+        public void SaveCampaignCopy_ThrowsException()
+        {
+            // Arrange
+            const int campaignId = 0;
+            const string expectedMessage = "This is a test exception thrown from CreateCampaign.";
+            const string campaignName = "CampaignOne";
+            Guid? advertiserMasterId = Guid.NewGuid();
+            Guid? agencyMasterId = Guid.NewGuid();
+            var campaign = new SaveCampaignCopyDto
+            {
+                Name = campaignName,
+                AgencyMasterId = agencyMasterId,
+                AdvertiserMasterId = advertiserMasterId
+            };
+            _CampaignRepositoryMock
+               .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
+               .Returns(new CampaignDto { Id = campaignId });
+
+            _CampaignRepositoryMock
+                .Setup(s => s.CreateCampaign(It.IsAny<SaveCampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() => throw new Exception(expectedMessage));
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.SaveCampaignCopy(campaign, _User, _CurrentDate));
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.CreateCampaign(
+                It.Is<SaveCampaignDto>(c => c.Name == campaignName &&
+                                        c.AdvertiserMasterId == advertiserMasterId &&
+                                        campaign.AgencyMasterId == agencyMasterId),
+                _User,
+                _CurrentDate));
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void SaveCampaignCopy_ValidatesCampaign()
+        {
+            // Arrange
+            const string campaignName = "CampaignOne";
+            Guid? advertiserMasterId = Guid.NewGuid();
+            Guid? agencyMasterId = Guid.NewGuid();
+            var campaign = new SaveCampaignCopyDto
+            {
+                Name = campaignName,
+                AgencyMasterId = agencyMasterId,
+                AdvertiserMasterId = advertiserMasterId
+            };
+            _CampaignRepositoryMock
+                .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
+                .Returns(new CampaignDto { Id = 0 });
+            
+            var tc = _BuildCampaignService();
+
+            // Act
+            tc.SaveCampaignCopy(campaign, _User, _CurrentDate);
+
+            // Assert
+            _CampaignValidatorMock.Verify(x => x.Validate(
+                It.Is<SaveCampaignDto>(c => c.Name == campaignName &&
+                                        c.AdvertiserMasterId == advertiserMasterId &&
+                                        campaign.AgencyMasterId == agencyMasterId)));
+        }
+
+        [Test]
+        public void SaveCampaignCopy_CampaignExist()
+        {
+            // Arrange
+            const int campaignId = 1;
+            const string expectedMessage = "The Campaign CampaignOne already exists.";
+            const string campaignName = "CampaignOne";
+            Guid? advertiserMasterId = Guid.NewGuid();
+            Guid? agencyMasterId = Guid.NewGuid();
+            var campaign = new SaveCampaignCopyDto
+            {
+                Name = campaignName,
+                AgencyMasterId = agencyMasterId,
+                AdvertiserMasterId = advertiserMasterId
+            };
+            _CampaignRepositoryMock
+                .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
+                .Returns(new CampaignDto { Id = campaignId });
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<InvalidOperationException>(() => tc.SaveCampaignCopy(campaign, _User, _CurrentDate));
+            
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }       
     }
 }
