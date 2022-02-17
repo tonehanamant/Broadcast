@@ -948,6 +948,7 @@ namespace Services.Broadcast.ApplicationServices
                     foreach (var plan in plans)
                     {
                         _PlanService.DispatchPlanAggregation(plan, true);
+                        _CampaignAggregationJobTrigger.TriggerJob(campaignId, createdBy);
 
                     }
                 }
@@ -964,6 +965,7 @@ namespace Services.Broadcast.ApplicationServices
                 var planToCopy = _PlanService.GetPlan(plan.SourcePlanId);
                 var campaignPlan = campaignCopy.Plans.Where(x => x.SourcePlanId == plan.SourcePlanId).FirstOrDefault();
                 planToCopy.CampaignId = campaignId;
+                planToCopy.Status = PlanStatusEnum.Working;
                 planToCopy.CampaignName = campaignCopy.Name;
                 planToCopy.Name = campaignPlan.Name;
                 planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
