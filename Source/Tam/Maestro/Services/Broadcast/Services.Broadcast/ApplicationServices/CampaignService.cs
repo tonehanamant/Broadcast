@@ -971,6 +971,8 @@ namespace Services.Broadcast.ApplicationServices
                 planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
                 planToCopy.Id = 0;
                 _PlanValidator.ValidatePlan(planToCopy);
+                planToCopy.WeeklyBreakdownWeeks =
+                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
                 plans.Add(planToCopy);
             }
             return plans;
