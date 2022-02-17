@@ -947,13 +947,13 @@ namespace Services.Broadcast.ApplicationServices
                     _PlanRepository.CopyPlans(plans, createdBy, createdDate);
                     foreach (var plan in plans)
                     {
-                        _PlanService.DispatchPlanAggregation(plan, true);                       
+                        _PlanService.DispatchPlanAggregation(plan, true);                      
 
-                    }
-                    _CampaignAggregationJobTrigger.TriggerJob(campaignId, createdBy);
+                    }                   
                 }
-                transaction.Complete();
+                transaction.Complete();                
             }
+            _CampaignAggregationJobTrigger.TriggerJob(campaignId, createdBy);
             return campaignId;
         }
 
