@@ -2421,6 +2421,8 @@
           <Property Name="unique_id_external" Type="bigint" Nullable="false" />
           <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="market_code" Type="int" />
+          <Property Name="market_rank" Type="int" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -18280,6 +18282,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
+          <Property Name="market_code" Type="Int32" />
+          <Property Name="market_rank" Type="Int32" />
         </EntityType>
         <Association Name="FK_spot_exceptions_out_of_specs_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -21781,6 +21785,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_out_of_specs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
+                <ScalarProperty Name="market_rank" ColumnName="market_rank" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
                 <ScalarProperty Name="unique_id_external" ColumnName="unique_id_external" />

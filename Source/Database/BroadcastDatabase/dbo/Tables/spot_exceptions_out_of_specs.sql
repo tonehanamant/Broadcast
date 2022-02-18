@@ -26,6 +26,8 @@
 	[unique_id_external] BIGINT NOT NULL,
 	[execution_id_external] VARCHAR(100) NOT NULL,
     [impressions] FLOAT NULL, 
+    [market_code] INT NULL, 
+    [market_rank] INT NULL, 
     CONSTRAINT [FK_spot_exceptions_out_of_specs_plans] FOREIGN KEY ([recommended_plan_id]) REFERENCES [dbo].[plans]([ID]),
 	CONSTRAINT [FK_spot_exceptions_out_of_specs_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths]([ID]),
 	CONSTRAINT [FK_spot_exceptions_out_of_specs_audiences] FOREIGN KEY ([audience_id]) REFERENCES [dbo].[audiences]([ID]),

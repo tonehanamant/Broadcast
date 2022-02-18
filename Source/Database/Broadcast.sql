@@ -833,6 +833,17 @@ END
 GO
 /*************************************** END BP-3285 ***************************************/
 
+/*************************************** START BP-3774 ***************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND (COLUMN_NAME= 'market_code' OR COLUMN_NAME='market_rank'))
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+	ADD market_code int NULL,
+	market_rank int NULL
+END
+
+/*************************************** END BP-3774 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

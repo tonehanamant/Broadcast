@@ -45,6 +45,8 @@ namespace EntityFrameworkMapping.Broadcast
         public long unique_id_external { get; set; }
         public string execution_id_external { get; set; }
         public double impressions { get; set; }
+        public Nullable<int> market_code { get; set; }
+        public Nullable<int> market_rank { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual audience audience1 { get; set; }
