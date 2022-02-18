@@ -1930,7 +1930,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanValidator.ValidatePlan(planToCopy);
                 _ConvertImpressionsToRawFormat(planToCopy);
                 planToCopy.WeeklyBreakdownWeeks =
-                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);               
+                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
+                _CalculateDeliveryDataPerAudience(planToCopy);
                 plans.Add(planToCopy);
             }
             _PlanRepository.CopyPlans(plans, createdBy, createdDate);
