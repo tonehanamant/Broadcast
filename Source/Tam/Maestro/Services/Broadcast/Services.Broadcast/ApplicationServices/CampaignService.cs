@@ -562,7 +562,7 @@ namespace Services.Broadcast.ApplicationServices
                     DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
                     return plan;
                 }).ToList();
-            foreach(var plan in plans)
+            foreach (var plan in plans)
             {
                 var dayparts = _GetPlanPricingResultsDayparts(plan);
                 if (dayparts != null)
@@ -943,39 +943,13 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 if (campaignId > 0)
                 {
-                    var plans = _MapCampaignToPlans(campaignId, campaignCopy);
-                    _PlanRepository.CopyPlans(plans, createdBy, createdDate);
-                    foreach (var plan in plans)
-                    {
-                        _PlanService.DispatchPlanAggregation(plan, true);                      
+                    _PlanService.CopyPlans(campaignId, campaignCopy, createdBy, createdDate);
 
-                    }                   
                 }
-                transaction.Complete();                
+                transaction.Complete();
             }
             _CampaignAggregationJobTrigger.TriggerJob(campaignId, createdBy);
             return campaignId;
-        }
-
-        private List<PlanDto> _MapCampaignToPlans(int campaignId, SaveCampaignCopyDto campaignCopy)
-        {
-            var plans = new List<PlanDto>();
-            foreach (var plan in campaignCopy.Plans)
-            {
-                var planToCopy = _PlanService.GetPlan(plan.SourcePlanId);
-                var campaignPlan = campaignCopy.Plans.Where(x => x.SourcePlanId == plan.SourcePlanId).FirstOrDefault();
-                planToCopy.CampaignId = campaignId;
-                planToCopy.Status = PlanStatusEnum.Working;
-                planToCopy.CampaignName = campaignCopy.Name;
-                planToCopy.Name = campaignPlan.Name;
-                planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
-                planToCopy.Id = 0;
-                _PlanValidator.ValidatePlan(planToCopy);
-                planToCopy.WeeklyBreakdownWeeks =
-                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
-                plans.Add(planToCopy);
-            }
-            return plans;
         }
     }
 }

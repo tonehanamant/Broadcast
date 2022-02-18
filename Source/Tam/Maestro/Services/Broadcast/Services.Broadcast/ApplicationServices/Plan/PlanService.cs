@@ -24,6 +24,7 @@ using Services.Broadcast.Helpers.Json;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
 using static Services.Broadcast.Entities.Plan.PlanCustomDaypartDto;
+using Services.Broadcast.Entities.Campaign;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -234,11 +235,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         bool DeletePlan(int planId, string deletedBy);
 
         /// <summary>
-        /// Aggregate the plan result
+        /// copy plans
         /// </summary>
-        /// <param name="plan">The plan object</param>
-        /// <param name="aggregatePlanSynchronously">Method execution flag</param>
-        void DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously);
+        /// <param name="campaignId">campaignId is id of campaign in which plans are going to be copied</param>
+        /// <param name="campaignCopy">Campaign objects containing campaign and plans</param>
+        /// <param name="createdBy">The username who is copying plans</param>
+        /// <param name="createdDate">Timestamp when plans are copying</param>
+       void CopyPlans(int campaignId, SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -474,7 +477,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 // We only aggregate data for versions, not drafts.
                 if (!plan.IsDraft)
                 {
-                    DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                    _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
                 }
 
@@ -1456,7 +1459,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _SetPlanVersionNumber(plan);
                     _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
                     _PlanRepository.UpdatePlanPricingVersionId(plan.VersionId, oldPlanVersionId);
-                    DispatchPlanAggregation(plan, aggregatePlanSynchronously);
+                    _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
                 }
                 else
@@ -1487,7 +1490,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public void DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
+        private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)
         {
             _PlanSummaryRepository.SetProcessingStatusForPlanSummary(plan.VersionId, PlanAggregationProcessingStatusEnum.InProgress);
 
@@ -1909,6 +1912,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var deletedAt = _DateTimeEngine.GetCurrentMoment();
             var result = _PlanRepository.DeletePlan(planId, deletedBy, deletedAt);
             return result;
+        }
+
+        public void CopyPlans(int campaignId, SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate)
+        {
+            var plans = new List<PlanDto>();
+            foreach (var plan in campaignCopy.Plans)
+            {
+                var planToCopy = GetPlan(plan.SourcePlanId);
+                var campaignPlan = campaignCopy.Plans.Where(x => x.SourcePlanId == plan.SourcePlanId).FirstOrDefault();
+                planToCopy.CampaignId = campaignId;
+                planToCopy.Status = PlanStatusEnum.Working;
+                planToCopy.CampaignName = campaignCopy.Name;
+                planToCopy.Name = campaignPlan.Name;
+                planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
+                planToCopy.Id = 0;
+                _PlanValidator.ValidatePlan(planToCopy);
+                _ConvertImpressionsToRawFormat(planToCopy);
+                planToCopy.WeeklyBreakdownWeeks =
+                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);               
+                plans.Add(planToCopy);
+            }
+            _PlanRepository.CopyPlans(plans, createdBy, createdDate);
+            foreach (var plan in plans)
+            {   
+                _DispatchPlanAggregation(plan, true);
+                _SetPlanPricingParameters(plan);
+                _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+                _SetPlanBuyingParameters(plan);
+                _PlanBuyingRepository.SavePlanBuyingParameters(plan.BuyingParameters);
+            }
         }
     }
 }
