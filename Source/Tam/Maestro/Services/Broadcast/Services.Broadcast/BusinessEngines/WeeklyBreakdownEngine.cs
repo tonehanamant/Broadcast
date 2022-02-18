@@ -849,7 +849,41 @@ namespace Services.Broadcast.BusinessEngines
             _RemoveOutOfFlightWeeks(request.Weeks, weeks);
             if (request.Weeks.Any(x => x.DaypartCodeId.HasValue) && request.Weeks.Any(x => x.SpotLengthId.HasValue))
             {
-                request.Weeks = request.Weeks.GroupBy(x => new { x.DaypartUniquekey, x.MediaWeekId }).Select(grouping => grouping.First()).ToList();
+                request.Weeks = request.Weeks.GroupBy(x => new { x.DaypartUniquekey, x.MediaWeekId }).Select(grouping =>
+                {
+                    var first = grouping.First();
+                    var allItems = grouping.ToList();
+                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
+                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
+                    decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
+                    var week = new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = first.WeekNumber,
+                        MediaWeekId = first.MediaWeekId,
+                        StartDate = first.StartDate,
+                        EndDate = first.EndDate,
+                        NumberOfActiveDays = first.NumberOfActiveDays,
+                        ActiveDays = first.ActiveDays,
+                        WeeklyImpressions = weeklyImpressions,
+                        WeeklyImpressionsPercentage = first.WeeklyImpressionsPercentage,
+                        WeeklyRatings = first.WeeklyRatings,
+                        WeeklyBudget = weeklyBudget,
+                        WeeklyAdu = first.WeeklyAdu,
+                        AduImpressions = first.AduImpressions,
+                        SpotLengthId = first.SpotLengthId,
+                        SpotLengthDuration = first.SpotLengthDuration,
+                        DaypartCodeId = first.DaypartCodeId,
+                        PercentageOfWeek = first.PercentageOfWeek,
+                        IsUpdated = first.IsUpdated,
+                        UnitImpressions = first.UnitImpressions,
+                        IsLocked = first.IsLocked,
+                        DaypartOrganizationId = first.DaypartOrganizationId,
+                        CustomName = first.CustomName,
+                        DaypartOrganizationName = first.DaypartOrganizationName,
+                        WeeklyUnits = unitsImpressions == 0 ? 0 : weeklyImpressions / unitsImpressions
+                    };
+                    return week;
+                }).ToList();
             }
             //add the remain weeks
             result.Weeks.AddRange(request.Weeks);
@@ -933,12 +967,46 @@ namespace Services.Broadcast.BusinessEngines
             //remove deleted weeks
             _RemoveOutOfFlightWeeks(request.Weeks, weeks);
 
-            //add the remain weeks
-            result.Weeks.AddRange(request.Weeks);
+            //add the remain weeks           
             if (request.Weeks.Any(x => x.DaypartCodeId.HasValue) && request.Weeks.Any(x => x.SpotLengthId.HasValue))
             {
-                result.Weeks = result.Weeks.GroupBy(x => x.MediaWeekId).Select(grouping => grouping.First()).ToList();
-            }           
+                request.Weeks = request.Weeks.GroupBy(x => x.MediaWeekId).Select(grouping =>
+                {
+                    var first = grouping.First();
+                    var allItems = grouping.ToList();
+                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
+                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
+                    decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
+                    var week = new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = first.WeekNumber,
+                        MediaWeekId = first.MediaWeekId,
+                        StartDate = first.StartDate,
+                        EndDate = first.EndDate,
+                        NumberOfActiveDays = first.NumberOfActiveDays,
+                        ActiveDays = first.ActiveDays,
+                        WeeklyImpressions = weeklyImpressions,
+                        WeeklyImpressionsPercentage = first.WeeklyImpressionsPercentage,
+                        WeeklyRatings = first.WeeklyRatings,
+                        WeeklyBudget = weeklyBudget,
+                        WeeklyAdu = first.WeeklyAdu,
+                        AduImpressions = first.AduImpressions,
+                        SpotLengthId = first.SpotLengthId,
+                        SpotLengthDuration = first.SpotLengthDuration,
+                        DaypartCodeId = first.DaypartCodeId,
+                        PercentageOfWeek = first.PercentageOfWeek,
+                        IsUpdated = first.IsUpdated,
+                        UnitImpressions = first.UnitImpressions,
+                        IsLocked = first.IsLocked,
+                        DaypartOrganizationId = first.DaypartOrganizationId,
+                        CustomName = first.CustomName,
+                        DaypartOrganizationName = first.DaypartOrganizationName ,
+                        WeeklyUnits =unitsImpressions == 0? 0: weeklyImpressions / unitsImpressions
+                    };                   
+                    return week;
+                }).ToList();
+            }
+            result.Weeks.AddRange(request.Weeks);
             _RecalculateExistingWeeks(request, out bool redistributeCustom);
 
             //add the new weeks
@@ -1031,7 +1099,41 @@ namespace Services.Broadcast.BusinessEngines
             _RemoveWeeksWithCreativeLengthNotPresentingInCurrentCreativeLengthsList(request.Weeks, creativeLengths);
             if (request.Weeks.Any(x => x.DaypartCodeId.HasValue) && request.Weeks.Any(x => x.SpotLengthId.HasValue))
             {
-                request.Weeks = request.Weeks.GroupBy(x => new { x.SpotLengthId, x.MediaWeekId }).Select(grouping => grouping.First()).ToList();
+                request.Weeks = request.Weeks.GroupBy(x => new { x.SpotLengthId, x.MediaWeekId }).Select(grouping =>
+                {
+                    var first = grouping.First();
+                    var allItems = grouping.ToList();
+                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
+                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
+                    decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
+                    var week = new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = first.WeekNumber,
+                        MediaWeekId = first.MediaWeekId,
+                        StartDate = first.StartDate,
+                        EndDate = first.EndDate,
+                        NumberOfActiveDays = first.NumberOfActiveDays,
+                        ActiveDays = first.ActiveDays,
+                        WeeklyImpressions = weeklyImpressions,
+                        WeeklyImpressionsPercentage = first.WeeklyImpressionsPercentage,
+                        WeeklyRatings = first.WeeklyRatings,
+                        WeeklyBudget = weeklyBudget,
+                        WeeklyAdu = first.WeeklyAdu,
+                        AduImpressions = first.AduImpressions,
+                        SpotLengthId = first.SpotLengthId,
+                        SpotLengthDuration = first.SpotLengthDuration,
+                        DaypartCodeId = first.DaypartCodeId,
+                        PercentageOfWeek = first.PercentageOfWeek,
+                        IsUpdated = first.IsUpdated,
+                        UnitImpressions = first.UnitImpressions,
+                        IsLocked = first.IsLocked,
+                        DaypartOrganizationId = first.DaypartOrganizationId,
+                        CustomName = first.CustomName,
+                        DaypartOrganizationName = first.DaypartOrganizationName,
+                        WeeklyUnits = unitsImpressions == 0 ? 0 : weeklyImpressions / unitsImpressions
+                    };
+                    return week;
+                }).ToList();
             }
             // add the remain weeks
             result.Weeks.AddRange(request.Weeks);
