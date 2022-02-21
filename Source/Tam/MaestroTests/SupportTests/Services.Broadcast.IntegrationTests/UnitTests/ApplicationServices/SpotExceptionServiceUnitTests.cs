@@ -327,7 +327,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Id = 102,
                             SpotExceptionsRecommendedPlanId = 1,
                             RecommendedPlanDetail = new RecommendedPlanDetailDto
-                            { 
+                            {
                                 Id = 301,
                                 Name = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
                                 FlightStartDate = new DateTime(2019, 12, 1),
@@ -720,7 +720,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 16,
                         Length = 45
-                    },                   
+                    },
                     AudienceId = 426,
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
@@ -729,7 +729,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 71646,
                         Code = "CUS"
-                    },                   
+                    },
                     ProgramFlightStartDate=new DateTime(2019, 12, 1),
                     ProgramFlightEndDate=new DateTime(2020, 2, 1),
                     ProgramAudience = new AudienceDto
@@ -1083,6 +1083,175 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
         }
 
+        private List<SpotExceptionsOutOfSpecsDto> _GetOutOfSpecPlanSpotsData()
+        {
+            return new List<SpotExceptionsOutOfSpecsDto>()
+            {
+                new SpotExceptionsOutOfSpecsDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserName = "MyBite",
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
+                    ProgramFlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
+                    {
+                       SpotExceptionsOutOfSpecId = 1,
+                       AcceptedAsInSpec = true,
+                       DecisionNotes = "",
+                       UserName = "MockData",
+                       CreatedAt = new DateTime(2020, 2, 1),
+                       SyncedBy = null,
+                       SyncedAt = new DateTime(2020,1,10,23,45,00)
+                    },
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    }
+                },
+                new SpotExceptionsOutOfSpecsDto
+                {
+                    Id = 2,
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserName = "MyBite",
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
+                    ProgramFlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
+                    {
+                       SpotExceptionsOutOfSpecId = 2,
+                       AcceptedAsInSpec = true,
+                       DecisionNotes = "",
+                       UserName = "MockData",
+                       CreatedAt = new DateTime(2020, 2, 1),
+                       SyncedBy = null,
+                       SyncedAt = null
+                    },
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    }
+                },
+                new SpotExceptionsOutOfSpecsDto
+                {
+                    Id = 3,
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserName = "MyBite",
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramDaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
+                    ProgramFlightEndDate = new DateTime(2019, 12, 9),
+                    ProgramAudience = new AudienceDto
+                    {
+                        Id = 427,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsOutOfSpecDecision = null,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    }
+                },
+            };
+        }
+
         [Test]
         public void SaveSpotExceptionsOutOfSpecsDecisions()
         {
@@ -1132,9 +1301,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
 
-        [Test]       
+        [Test]
         public void GetSpotExceptionsRecommendedPlansAdvertisers_Advertisers_Exist()
-        { 
+        {
             // Arrange
             var spotExceptionsRecommendedPlansAdvertisersRequest = new SpotExceptionsRecommendedPlansAdvertisersRequestDto
             {
@@ -1302,9 +1471,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlansAdvertisers(spotExceptionsRecommendedPlansAdvertisersRequest);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));            
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
+
         [Test]
         public void GetSpotExceptionsRecommendedPlansAdvertisers_Advertisers_DoesNotExist()
         {
@@ -1343,7 +1512,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = _SpotExceptionService.GetSpotExceptionsOutofSpecAdvertisers(spotExceptionsOutofSpecAdvertisersRequest);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));            
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -1475,7 +1644,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new SpotExceptionsRecommendedPlansDto
                     {
                         Id = 2,
-                        StationLegacyCallLetters = "WDAY"                        
+                        StationLegacyCallLetters = "WDAY"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -1596,7 +1765,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert            
             Assert.AreEqual(result.Active.Count, 0);
         }
-        
+
         [Test]
         public void GetSpotExceptionsOutOfSpecsPlans_ThrowsException()
         {
@@ -1639,6 +1808,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             Assert.AreEqual(result.Completed.Count, 1);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlanSpots_OutOfSpecPlanSpots_Exist()
+        {
+            // Arrange
+            SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest = new SpotExceptionsOutofSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetOutOfSpecPlanSpotsData());
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecSpots(spotExceptionsOutofSpecSpotsRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(result.Active.Count, 1);
+            Assert.AreEqual(result.Queued.Count, 1);
+            Assert.AreEqual(result.Synced.Count, 1);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlanSpots_OutOfSpecPlanSpots_DoesNotExist()
+        {
+            // Arrange
+            List<SpotExceptionsOutOfSpecsDto> outofSpecData = null;
+            SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest = new SpotExceptionsOutofSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outofSpecData);
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsOutofSpecSpots(spotExceptionsOutofSpecSpotsRequest);
+
+            // Assert            
+            Assert.AreEqual(result.Active.Count, 0);
+            Assert.AreEqual(result.Queued.Count, 0);
+            Assert.AreEqual(result.Synced.Count, 0);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlanSpots_ThrowsException()
+        {
+            // Arrange
+            SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest = new SpotExceptionsOutofSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act           
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsOutofSpecSpots(spotExceptionsOutofSpecSpotsRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }

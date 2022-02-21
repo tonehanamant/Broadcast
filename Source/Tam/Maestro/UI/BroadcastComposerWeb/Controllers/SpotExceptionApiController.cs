@@ -124,5 +124,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutofSpecsActivePlansRequestDto));
         }
+
+        [HttpPost]
+        [Route("out-of-spec-plan-spots")]
+        public BaseResponse<SpotExceptionsOutOfSpecPlanSpotsResultDto> GetSpotExceptionsOutofSpecSpots(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutofSpecSpots(spotExceptionsOutofSpecSpotsRequest));
+        }
     }
 }

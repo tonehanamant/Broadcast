@@ -104,6 +104,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsOutofSpecsActivePlansRequestDto"></param>
         /// <returns>Returns Spot Exceptions Active and completed Plans</returns>
         SpotExceptionsOutOfSpecPlansResultDto GetSpotExceptionsOutofSpecsPlans(SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutofSpecsActivePlansRequestDto);
+
+        /// <summary>
+        /// Gets the spot exception out of spec spots
+        /// </summary>
+        /// <param name="spotExceptionsOutofSpecSpotsRequest">Spot Exception out of spec spots</param>
+        /// <returns>it gave the response for active, queued and synced plans</returns>
+        SpotExceptionsOutOfSpecPlanSpotsResultDto GetSpotExceptionsOutofSpecSpots(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1211,6 +1218,106 @@ namespace Services.Broadcast.ApplicationServices
             var reminder = totalDays % 7;
             numberOfWeeks = reminder > 0 ? numberOfWeeks + 1 : numberOfWeeks;
             return numberOfWeeks;
+        }
+
+        /// <inheritdoc />
+        public SpotExceptionsOutOfSpecPlanSpotsResultDto GetSpotExceptionsOutofSpecSpots(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecsPlanSpotsRequest)
+        {
+            var spotExceptionsOutOfSpecPlanSpotsResult = new SpotExceptionsOutOfSpecPlanSpotsResultDto();
+            List<SpotExceptionsOutOfSpecsDto> activePlans = null;
+            List<SpotExceptionsOutOfSpecsDto> queuedPlans = null;
+
+            var spotExceptionsOutOfSpecsPlanSpots = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutofSpecsPlanSpotsRequest.WeekStartDate, spotExceptionsOutofSpecsPlanSpotsRequest.WeekEndDate);
+            if (spotExceptionsOutOfSpecsPlanSpots?.Any() ?? false)
+            {
+                spotExceptionsOutOfSpecsPlanSpots = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionsoutOfSpecsPlan => spotExceptionsoutOfSpecsPlan.PlanId == spotExceptionsOutofSpecsPlanSpotsRequest.PlanId).ToList();
+                activePlans = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision == null).ToList();
+                queuedPlans = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision != null).ToList();
+
+                spotExceptionsOutOfSpecPlanSpotsResult.Active = activePlans
+                .Select(activePlan =>
+                {
+                    return new SpotExceptionsOutOfSpecActivePlanSpotsDto
+                    {
+                        Id = activePlan.PlanId,
+                        EstimateId = activePlan.EstimateId,
+                        Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
+                        MarketRank = activePlan.MarketRank,
+                        DMA = 58, //**** TODO - UnHardcode This
+                        Market = activePlan.Market,
+                        Station = activePlan.StationLegacyCallLetters,
+                        TimeZone = "EST", //**** TODO - UnHardcode This
+                        Affiliate = activePlan.Affiliate,
+                        Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
+                        GenreName = "News", //**** TODO - UnHardcode This
+                        HouseIsci = "655MEP1010H", //**** TODO - UnHardcode This
+                        ClientIsci = activePlan.IsciName,
+                        ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
+                        ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
+                        ProgramName = activePlan.ProgramName,
+                        SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
+                        DaypartCode = "MDN", //**** TODO - UnHardcode This
+                    };
+                }).ToList();
+
+                spotExceptionsOutOfSpecPlanSpotsResult.Queued = queuedPlans.Where(syncedSpot => syncedSpot.SpotExceptionsOutOfSpecDecision.SyncedAt == null)
+                .Select(queuedPlan =>
+                {
+                    return new SpotExceptionsOutOfSpecQueuedPlanSpotsDto
+                    {
+                        Id = queuedPlan.PlanId,
+                        EstimateId = queuedPlan.EstimateId,
+                        Reason = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
+                        MarketRank = queuedPlan.MarketRank,
+                        DMA = 58, //**** TODO - UnHardcode This
+                        Market = queuedPlan.Market,
+                        Station = queuedPlan.StationLegacyCallLetters,
+                        TimeZone = "EST", //**** TODO - UnHardcode This
+                        Affiliate = queuedPlan.Affiliate,
+                        Day = queuedPlan.ProgramAirTime.DayOfWeek.ToString(),
+                        GenreName = "News", //**** TODO - UnHardcode This
+                        HouseIsci = "655MEP1010H", //**** TODO - UnHardcode This
+                        ClientIsci = queuedPlan.IsciName,
+                        ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
+                        ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
+                        FlightEndDate = queuedPlan.FlightEndDate.ToString(),
+                        ProgramName = queuedPlan.ProgramName,
+                        SpotLengthString = queuedPlan.SpotLength != null ? $":{queuedPlan.SpotLength.Length}" : null,
+                        DaypartCode = "MDN", //**** TODO - UnHardcode This
+                        DecisionString = queuedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes
+                    };
+                }).ToList();
+
+                spotExceptionsOutOfSpecPlanSpotsResult.Synced = queuedPlans.Where(syncedSpot => syncedSpot.SpotExceptionsOutOfSpecDecision.SyncedAt != null)
+                .Select(syncedPlan =>
+                {
+                    return new SpotExceptionsOutOfSpecSyncedPlanSpotsDto
+                    {
+                        Id = syncedPlan.PlanId,
+                        EstimateId = syncedPlan.EstimateId,
+                        Reason = syncedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
+                        MarketRank = syncedPlan.MarketRank,
+                        DMA = 58, //**** TODO - UnHardcode This
+                        Market = syncedPlan.Market,
+                        Station = syncedPlan.StationLegacyCallLetters,
+                        TimeZone = "EST", //**** TODO - UnHardcode This
+                        Affiliate = syncedPlan.Affiliate,
+                        Day = syncedPlan.ProgramAirTime.DayOfWeek.ToString(),
+                        GenreName = "News", //**** TODO - UnHardcode This
+                        HouseIsci = "655MEP1010H", //**** TODO - UnHardcode This
+                        ClientIsci = syncedPlan.IsciName,
+                        ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
+                        ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
+                        FlightEndDate = syncedPlan.FlightEndDate.ToString(),
+                        ProgramName = syncedPlan.ProgramName,
+                        SpotLengthString = syncedPlan.SpotLength != null ? $":{syncedPlan.SpotLength.Length}" : null,
+                        DaypartCode = "MDN", //**** TODO - UnHardcode This
+                        DecisionString = syncedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
+                        SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDecision.SyncedAt.ToString()
+                    };
+                }).ToList();
+            }
+            return spotExceptionsOutOfSpecPlanSpotsResult;
         }
     }
 }

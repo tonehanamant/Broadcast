@@ -552,11 +552,13 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDetailsResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlanSpotsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecReasonCodeDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecReasonCodeResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecsDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsPlanSpotsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsStationRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlansResultDto.cs" />

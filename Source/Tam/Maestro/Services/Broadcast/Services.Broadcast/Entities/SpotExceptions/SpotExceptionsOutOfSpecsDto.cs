@@ -48,6 +48,8 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int PlanId { get; set; }
         public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; }
         public SpotExceptionsOutOfSpecReasonCodeDto SpotExceptionsOutOfSpecReasonCode { get; set; }
+        public int? MarketCode { get; set; }
+        public int? MarketRank { get; set; }
     }
 }
 

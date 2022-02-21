@@ -336,9 +336,13 @@ namespace Services.Broadcast.Repositories
                     AcceptedAsInSpec = spotExceptionsOutOfSpecsDecisionDb.accepted_as_in_spec,
                     DecisionNotes = spotExceptionsOutOfSpecsDecisionDb.decision_notes,
                     UserName = spotExceptionsOutOfSpecsDecisionDb.username,
-                    CreatedAt = spotExceptionsOutOfSpecsDecisionDb.created_at
+                    CreatedAt = spotExceptionsOutOfSpecsDecisionDb.created_at,
+                    SyncedBy = spotExceptionsOutOfSpecsDecisionDb.synced_by,
+                    SyncedAt = spotExceptionsOutOfSpecsDecisionDb.synced_at
                 }).SingleOrDefault(),
-                SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_reason_codes)
+                SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_reason_codes),
+                MarketCode = spotExceptionsOutOfSpecEntity.market_code,
+                MarketRank = spotExceptionsOutOfSpecEntity.market_rank
             };
             return spotExceptionsOutOfSpec;
         }

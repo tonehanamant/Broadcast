@@ -9,6 +9,8 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string DecisionNotes { get; set; }
         public string UserName { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string SyncedBy { get; set; }
+        public DateTime? SyncedAt { get; set; }
     }
 }
 		
