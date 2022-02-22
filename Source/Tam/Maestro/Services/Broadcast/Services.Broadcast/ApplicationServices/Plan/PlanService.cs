@@ -1927,7 +1927,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planToCopy.Name = campaignPlan.Name;
                 planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
                 planToCopy.Id = 0;
-                _PlanValidator.ValidatePlan(planToCopy);
+                DaypartTimeHelper.SubtractOneSecondToEndTime(planToCopy.Dayparts);
+                _PlanValidator.ValidatePlan(planToCopy);               
                 _ConvertImpressionsToRawFormat(planToCopy);
                 planToCopy.WeeklyBreakdownWeeks =
                     _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
