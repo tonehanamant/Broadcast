@@ -47,7 +47,7 @@ namespace Services.Broadcast.Clients
         /// </summary>
         public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
                 : base(featureToggleHelper, configurationSettingsHelper)
-        {              
+        {
             _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
              _HttpClient = httpClient;
         }
@@ -122,7 +122,9 @@ namespace Services.Broadcast.Clients
         }
         private string _GetAgencyAdvertiserBrandApiUrl()
         {
-            var result = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl);
+            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_CORE_API) ?
+                _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandCoreApiUrl) :
+                _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl);
             return result;
         }
     }

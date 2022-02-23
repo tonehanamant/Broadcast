@@ -36,7 +36,8 @@
 		public static readonly string UseMaestroDayPartRepo = "UseMaestroDayPartRepo";
 		
 		public static readonly string AgencyAdvertiserBrandApiUrl = "AgencyAdvertiserBrandApiUrl";
-		
+		public static readonly string AgencyAdvertiserBrandCoreApiUrl = "AgencyAdvertiserBrandCoreApiUrl";
+
 		public static readonly string BroadcastAppFolder = "BroadcastAppFolder";
 		public static readonly string BroadcastNTIUploadApiUrl= "BroadcastNTIUploadApiUrl";
 		public static readonly string BroadcastSharedFolder = "BroadcastSharedFolder";
