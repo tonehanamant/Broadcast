@@ -539,6 +539,11 @@ namespace Services.Broadcast.Repositories
                             StartDate = Convert.ToString(version.flight_start_date),
                             EndDate = Convert.ToString(version.flight_end_date),
                             SourcePlanId = version.plan.id,
+                            Impressions = version.target_impression,
+                            CPM = version.target_cpm,
+                            Budget = version.budget,
+                            SpotLengths = version.plan_version_creative_lengths.Select(x => x.spot_lengths.length).ToList(),
+                            Status = (PlanStatusEnum)version.status,
                         };
                     }).ToList()
             };

@@ -14,6 +14,11 @@ namespace Services.Broadcast.Entities.Plan
         public string ProductMasterId { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public double? Impressions { get; set; }
+        public decimal? CPM { get; set; }
+        public decimal? Budget { get; set; }
+        public List<int> SpotLengths { get; set; }
+        public PlanStatusEnum Status { get; set; }
 
     }
 }

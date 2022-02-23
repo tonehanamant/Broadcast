@@ -5,11 +5,18 @@
   "Name": "Test Campaign 2",
   "Plans": [
     {
+      "Budget": 100.0000,
+      "CPM": 12.0000,
       "EndDate": "7/31/2019 12:00:00 AM",
+      "Impressions": 100.0,
       "Name": "New Plan",
       "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
       "SourcePlanId": 524,
-      "StartDate": "1/1/2019 12:00:00 AM"
+      "SpotLengths": [
+        30
+      ],
+      "StartDate": "1/1/2019 12:00:00 AM",
+      "Status": 1
     }
   ]
 }

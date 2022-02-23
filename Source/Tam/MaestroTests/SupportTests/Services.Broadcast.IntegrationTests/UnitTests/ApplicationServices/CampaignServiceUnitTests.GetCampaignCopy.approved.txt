@@ -5,18 +5,28 @@
   "Name": "3765 campaign",
   "Plans": [
     {
+      "Budget": null,
+      "CPM": null,
       "EndDate": "1/30/2022 12:00:00 AM",
+      "Impressions": null,
       "Name": "3765 CustomByWeekByDaypart",
       "ProductMasterId": "049c3450-5824-43c3-b9f6-b7158c330b61",
       "SourcePlanId": 341,
-      "StartDate": "1/24/2022 12:00:00 AM"
+      "SpotLengths": null,
+      "StartDate": "1/24/2022 12:00:00 AM",
+      "Status": 0
     },
     {
+      "Budget": null,
+      "CPM": null,
       "EndDate": "2/30/2022 12:00:00 AM",
+      "Impressions": null,
       "Name": "8888 CustomByWeek",
       "ProductMasterId": "049c3450-5824-43c3-b9f6-b7158c330b61",
       "SourcePlanId": 342,
-      "StartDate": "2/24/2022 12:00:00 AM"
+      "SpotLengths": null,
+      "StartDate": "2/24/2022 12:00:00 AM",
+      "Status": 0
     }
   ]
 }
