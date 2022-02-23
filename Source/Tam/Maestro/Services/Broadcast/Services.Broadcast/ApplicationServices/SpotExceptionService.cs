@@ -1239,7 +1239,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     return new SpotExceptionsOutOfSpecActivePlanSpotsDto
                     {
-                        Id = activePlan.PlanId,
+                        Id = activePlan.Id,
                         EstimateId = activePlan.EstimateId,
                         Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = activePlan.MarketRank,
@@ -1265,7 +1265,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     return new SpotExceptionsOutOfSpecQueuedPlanSpotsDto
                     {
-                        Id = queuedPlan.PlanId,
+                        Id = queuedPlan.Id,
                         EstimateId = queuedPlan.EstimateId,
                         Reason = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = queuedPlan.MarketRank,
@@ -1293,7 +1293,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     return new SpotExceptionsOutOfSpecSyncedPlanSpotsDto
                     {
-                        Id = syncedPlan.PlanId,
+                        Id = syncedPlan.Id,
                         EstimateId = syncedPlan.EstimateId,
                         Reason = syncedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = syncedPlan.MarketRank,
