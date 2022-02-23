@@ -50,6 +50,9 @@ namespace Services.Broadcast.ApplicationServices
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
             if (plans.Count < 1)
             {
+                // When campaign does not contain any plan, campaign will have working status and PlanStatusCountCanceled will reset.
+                summary.CampaignStatus = PlanStatusEnum.Working;
+                summary.PlanStatusCountCanceled = null;
                 return summary;
             }
 

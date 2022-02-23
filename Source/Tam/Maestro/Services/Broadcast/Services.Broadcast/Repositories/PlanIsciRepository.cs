@@ -76,6 +76,15 @@ namespace Services.Broadcast.Repositories
         int DeleteIsciPlanMappings(List<int> isciPlanMappingsIdsToDelete, string deletedBy, DateTime deletedAt);
 
         /// <summary>
+        /// Delete Plan Isci mappings
+        /// </summary>
+        /// <param name="planId">The plan id to delete.</param>
+        /// <param name="deletedBy">Deleted By</param>
+        /// <param name="deletedAt">Deleted At</param>
+        /// <returns>Total Number Of Deleted Plan ISCI Mappings</returns>
+        int DeleteIsciPlanMappings(int planId, string deletedBy, DateTime deletedAt);
+
+        /// <summary>
         /// Updates the isci plan mappings.
         /// </summary>
         /// <param name="isciPlanMappingsToUpdate">The isci plan mappings ids to update.</param>
@@ -187,6 +196,7 @@ namespace Services.Broadcast.Repositories
                                           && (plan_versions.status == (int)PlanStatusEnum.Contracted
                                               || plan_versions.status == (int)PlanStatusEnum.Live
                                               || plan_versions.status == (int)PlanStatusEnum.Complete)
+                                          && !(plans.deleted_at.HasValue)
                                     select plans)
                                     .Include(x => x.campaign)
                                     .Include(x => x.plan_versions)
@@ -269,6 +279,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc />
         public int DeleteIsciPlanMappings(List<int> isciPlanMappingsIdsToDelete, string deletedBy, DateTime deletedAt)
         {
             return _InReadUncommitedTransaction(context =>
@@ -296,6 +307,33 @@ namespace Services.Broadcast.Repositories
                 }
 
                 context.SaveChanges();
+                return deletedCount;
+            });
+        }
+
+        /// <inheritdoc />
+        public int DeleteIsciPlanMappings(int planId, string deletedBy, DateTime deletedAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var deletedCount = 0;
+                
+                var isciPlanMappingsToDelete = context.plan_iscis
+                    .Where(planIsci => planIsci.plan_id == planId  && !(planIsci.deleted_at.HasValue))
+                    .ToList();
+
+                if (!isciPlanMappingsToDelete.Any())
+                {
+                    return deletedCount;
+                }
+
+                isciPlanMappingsToDelete.ForEach(planIsci =>
+                {
+                    planIsci.deleted_by = deletedBy;
+                    planIsci.deleted_at = deletedAt;
+                });
+
+                deletedCount = context.SaveChanges();
                 return deletedCount;
             });
         }

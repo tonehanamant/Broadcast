@@ -314,7 +314,7 @@ namespace Services.Broadcast.Repositories
                     .Select(version =>
                     {
                         var summary = version.plan_version_summaries.Single();
-                        var draft = campaign.plans.SelectMany(x => x.plan_versions)
+                        var draft = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions)
                             .Where(x => x.plan_id == version.plan_id && x.is_draft == true).SingleOrDefault();
 
                         return new PlanSummaryDto
@@ -463,7 +463,7 @@ namespace Services.Broadcast.Repositories
         {
             var plansWithoutStartDate = (from plan in context.plans
                                          join version in context.plan_versions on plan.id equals version.plan_id
-                                         where version.flight_start_date == null && version.id == plan.latest_version_id
+                                         where !(plan.deleted_at.HasValue) && version.flight_start_date == null && version.id == plan.latest_version_id
                                          select plan);
             if (planStatus.HasValue)
             {
@@ -477,7 +477,7 @@ namespace Services.Broadcast.Repositories
         {
             var plansWithStartDate = (from p in context.plans
                                       join v in context.plan_versions on p.id equals v.plan_id
-                                      where v.id == p.latest_version_id && v.flight_start_date != null
+                                      where !(p.deleted_at.HasValue) && v.id == p.latest_version_id && v.flight_start_date != null
                                       select p);
 
             if (startDate.HasValue && endDate.HasValue)
@@ -527,16 +527,14 @@ namespace Services.Broadcast.Repositories
                 Name = campaign.name,
                 AdvertiserMasterId = Convert.ToString(campaign.advertiser_master_id),
                 AgencyMasterId = Convert.ToString(campaign.agency_master_id),
-                Plans = campaign.plans.SelectMany(x => x.plan_versions
+                Plans = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions
                             .Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
                                 .Where(x => x.id == x.plan.latest_version_id)
                     .Select(version =>
                     {
-                        var plandata = campaign.plans.Where(x => x.latest_version_id == version.id).FirstOrDefault();
-
                         return new PlansCopyDto
                         {
-                            ProductMasterId = Convert.ToString(plandata.product_master_id),
+                            ProductMasterId = Convert.ToString(version.plan.product_master_id),
                             Name = version.plan.name,
                             StartDate = Convert.ToString(version.flight_start_date),
                             EndDate = Convert.ToString(version.flight_end_date),

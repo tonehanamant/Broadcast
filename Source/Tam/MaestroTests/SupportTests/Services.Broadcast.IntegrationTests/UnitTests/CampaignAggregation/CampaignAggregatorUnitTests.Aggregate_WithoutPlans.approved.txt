@@ -1,7 +1,7 @@
 ﻿{
   "Budget": null,
   "CampaignId": 666,
-  "CampaignStatus": null,
+  "CampaignStatus": 1,
   "ComponentsModified": null,
   "FlightActiveDays": null,
   "FlightEndDate": null,

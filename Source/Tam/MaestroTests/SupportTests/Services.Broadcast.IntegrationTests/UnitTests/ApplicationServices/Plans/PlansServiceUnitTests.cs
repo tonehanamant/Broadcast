@@ -58,6 +58,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private Mock<ILockingEngine> _LockingEngineMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
+        private Mock<ICampaignRepository> _CampaignRepositoryMock;
+        private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
 
         [SetUp]
         public void CreatePlanService()
@@ -87,6 +89,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _LockingEngineMock = new Mock<ILockingEngine>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
+            _CampaignRepositoryMock = new Mock<ICampaignRepository>();
+            _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
 
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
@@ -103,9 +107,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     LockedUserName = "IntegrationUser"
                 });
 
-            var campaignRepositoryMock = new Mock<ICampaignRepository>();
-            _DataRepositoryFactoryMock.Setup(x => x.GetDataRepository<ICampaignRepository>())
-                .Returns(campaignRepositoryMock.Object);
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<ICampaignRepository>())
+                .Returns(_CampaignRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
+                .Returns(_PlanIsciRepositoryMock.Object);
 
             _DayRepositoryMock = new Mock<IDayRepository>();
             _DayRepositoryMock.Setup(s => s.GetDays()).Returns(new List<Day>());
@@ -4187,10 +4195,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.DeletePlan(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Returns(expectedResult);
 
+            _PlanIsciRepositoryMock
+                .Setup(x => x.DeleteIsciPlanMappings(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(1);
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                { 
+                    HasPlans = true
+                });
+
             // Act
             var result = _PlanService.DeletePlan(planId, deletedBy);
 
             // Assert
+            if (!result)
+            {
+                _PlanIsciRepositoryMock.Verify(s => s.DeleteIsciPlanMappings(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Never);
+            }
             Assert.AreEqual(result, expectedResult);
         }
 

@@ -273,6 +273,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ILockingEngine _LockingEngine;
         private Lazy<bool> _IsMarketSovCalculationEnabled;
         private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IPlanIsciRepository _PlanIsciRepository;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -322,6 +323,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
             _LockingEngine = lockingEngine;
             _DateTimeEngine = dateTimeEngine;
+            _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>(); 
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -1909,8 +1911,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new ApplicationException("Plan cannot be deleted. To delete plan, plan status must be canceled.");
             }
 
-            var deletedAt = _DateTimeEngine.GetCurrentMoment();
-            var result = _PlanRepository.DeletePlan(planId, deletedBy, deletedAt);
+            var result = false;
+            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+            {
+                var deletedAt = _DateTimeEngine.GetCurrentMoment();
+
+                result = _PlanRepository.DeletePlan(planId, deletedBy, deletedAt);
+
+                if (result)
+                {
+                    _PlanIsciRepository.DeleteIsciPlanMappings(planId, deletedBy, deletedAt);
+                }
+
+                transaction.Complete();
+            }
+
+            if (result)
+            {
+                var campaignId = plan.CampaignId;
+                var campaign = _CampaignRepository.GetCampaign(campaignId);
+                if (!campaign.HasPlans)
+                {
+                    var createdBy = deletedBy;
+                    _CampaignAggregationJobTrigger.TriggerJob(campaignId, createdBy);
+                }
+            }
+
             return result;
         }
 

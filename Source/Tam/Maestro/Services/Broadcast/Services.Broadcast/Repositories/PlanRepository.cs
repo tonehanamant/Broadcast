@@ -423,12 +423,6 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
                 {
-                    var markets = context.markets.ToList();
-
-                    var marketCoverage = context.market_coverages
-                                                .Include(m => m.market)
-                                                .ToList();
-
                     var entity = (from plan in context.plans
                                   where plan.id == planId                                        
                                   select plan)
@@ -466,6 +460,18 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_goals.Select(g => g.plan_version_daypart_flight_days.Select(f => f.day)))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_goals.Select(g => g.plan_version_daypart_flight_hiatus_days))))
                         .Single(s => s.id == planId, "Invalid plan id.");
+
+                    if (entity.deleted_at.HasValue)
+                    {
+                        throw new ApplicationException("The plan is deleted.");
+                    }
+
+                    var markets = context.markets.ToList();
+
+                    var marketCoverage = context.market_coverages
+                                                .Include(m => m.market)
+                                                .ToList();
+
                     return _MapToDto(entity, markets, versionId, marketCoverage);
                 });
         }
@@ -542,7 +548,7 @@ namespace Services.Broadcast.Repositories
                 var markets = context.markets.ToList();
                 var entitiesRaw = (from plan in context.plans
                                    join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
-                                   where plan.campaign_id == campaignId && plan.latest_version_id == planVersion.id
+                                   where !(plan.deleted_at.HasValue) && plan.campaign_id == campaignId && plan.latest_version_id == planVersion.id
                                    select plan)
                         .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
