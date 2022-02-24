@@ -10,8 +10,7 @@ namespace PricingModelEndpointTester
         {
             var tests = new List<ITest>
             {
-                new PricingApiClientTest()
-                , new PricingJobQueueApiClientTest()
+                new PricingJobQueueApiClientTest()
             };
 
             try

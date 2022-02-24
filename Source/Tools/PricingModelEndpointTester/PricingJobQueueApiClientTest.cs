@@ -14,6 +14,11 @@ namespace PricingModelEndpointTester
     {
         public async Task<bool> Run()
         {
+            var settings = new Dictionary<string, object>();
+
+            settings[ConfigKeys.PlanPricingAllocationsEfficiencyModelSubmitUrl] = @"https://datascience-uat.cadent.tv/broadcast-openmarket-allocations/v4/submit";
+            settings[ConfigKeys.PlanPricingAllocationsEfficiencyModelFetchUrl] = @"https://datascience-uat.cadent.tv/broadcast-openmarket-allocations/v4/fetch";
+
             const string basePath = @"C:\git\Broadcast\Source\Tools\PricingModelEndpointTester\DataFiles";
             const string requestFileName = "qa_v4-request-639_670_F-20210901_151828.log";
 
@@ -30,7 +35,7 @@ namespace PricingModelEndpointTester
             var request = Utilities.GetFromFile<PlanPricingApiRequestDto_v3>(requestFilePath);
             Console.WriteLine("Request loaded.");
 
-            var client = _GetClient();
+            var client = _GetClient(settings);
             Console.WriteLine("Client loaded.");
 
             Console.WriteLine("Making the request...");
@@ -60,11 +65,12 @@ namespace PricingModelEndpointTester
             return true;
         }
 
-        private PricingJobQueueApiClient _GetClient()
+        private PricingJobQueueApiClient _GetClient(Dictionary<string, object> settingsDict)
         {
+            var csHelper = new TestConfigurationSettingsHelper(settingsDict);
             var httpClient = new HttpClient();
 
-            var client = new PricingJobQueueApiClient(httpClient);
+            var client = new PricingJobQueueApiClient(csHelper, httpClient);
 
             return client;
         }

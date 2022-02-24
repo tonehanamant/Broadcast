@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan.Buying;
 using System;
 using System.Collections.Generic;
@@ -9,31 +10,9 @@ using System.Threading.Tasks;
 
 namespace Services.Broadcast.Clients
 {
-    public class BuyingJobSubmitResponse
+    public interface IPlanBuyingApiClient
     {
-        public string request_id { get; set; }
-        public string task_id { get; set; }
-        public BuyingApiErrorDto error { get; set; }
-    }
-
-    public class BuyingApiErrorDto
-    {
-        public List<string> Messages { get; set; } = new List<string>();
-        public string Name { get; set; }
-    }
-
-    public class BuyingJobFetchRequest
-    {
-        public string task_id { get; set; }
-    }
-
-    public class BuyingJobFetchResponse<T>
-    {
-        public string request_id { get; set; }
-        public string task_id { get; set; }
-        public string task_status { get; set; }
-        public List<T> results { get; set; }
-        public BuyingApiErrorDto error { get; set; }
+        Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request);
     }
 
     public class PlanBuyingJobQueueApiClient : IPlanBuyingApiClient

@@ -243,8 +243,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IPlanPricingService, PlanPricingService>();
 
-            //unityContainer.RegisterType<IPricingApiClient, PricingJobQueueApiClient>();
-            unityContainer.RegisterType<IPricingApiClient, PricingApiClient>();
+            unityContainer.RegisterType<IPricingApiClient, PricingJobQueueApiClient>();
 
             unityContainer.RegisterType<IPricingRequestLogClient, PricingRequestLogClientAmazonS3>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
@@ -260,7 +259,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IHealthService, HealthService>();
 
             //plan buying tab
-            unityContainer.RegisterType<IPlanBuyingApiClient, PlanBuyingApiClient>();
+            unityContainer.RegisterType<IPlanBuyingApiClient, PlanBuyingJobQueueApiClient>();
             unityContainer.RegisterType<IPlanBuyingRequestLogClient, PlanBuyingRequestLogClientAmazonS3>();
             unityContainer.RegisterType<IPlanBuyingService, PlanBuyingService>();
             unityContainer.RegisterType<IPlanBuyingInventoryEngine, PlanBuyingInventoryEngine>();

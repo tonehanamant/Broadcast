@@ -121,8 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITest.cs" />
-    <Compile Include="PricingApiClientTest.cs" />
-    <Compile Include="PricingJobQueueApiClient.cs" />
     <Compile Include="PricingJobQueueApiClientTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

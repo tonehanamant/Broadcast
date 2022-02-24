@@ -186,6 +186,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
+        private readonly Lazy<bool> _IsParallelPricingEnabled;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -238,6 +239,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
+            _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
         }
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
@@ -1080,33 +1082,65 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (!goalsFulfilledByProprietaryInventory)
             {
-                foreach (var allocationResult in results)
+                if (!_IsParallelPricingEnabled.Value)
                 {
-                    _LogInfo($"Preparing call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
-                    var pricingModelCallTimer = new Stopwatch();
-                    pricingModelCallTimer.Start();
-                    try
+                    foreach (var allocationResult in results)
                     {
-                        await _SendPricingRequest_v3Async(
-                           allocationResult,
-                           plan,
-                           jobId,
-                           inventory,
-                           token,
-                           diagnostic,
-                           planPricingParametersDto,
-                           proprietaryInventoryData);
-                    }
-                    finally
-                    {
-                        pricingModelCallTimer.Stop();
-                        var duration = pricingModelCallTimer.ElapsedMilliseconds;
+                        _LogInfo($"Preparing call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
+                        var pricingModelCallTimer = new Stopwatch();
+                        pricingModelCallTimer.Start();
+                        try
+                        {
+                            await _SendPricingRequest_v3Async(
+                               allocationResult,
+                               plan,
+                               jobId,
+                               inventory,
+                               token,
+                               diagnostic,
+                               planPricingParametersDto,
+                               proprietaryInventoryData);
+                        }
+                        finally
+                        {
+                            pricingModelCallTimer.Stop();
+                            var duration = pricingModelCallTimer.ElapsedMilliseconds;
 
-                        _LogInfo($"Completed call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
+                            _LogInfo($"Completed call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
+                        }
                     }
                 }
-            }
+                else
+                {
+                    var tasks = results.Select(async allocationResult =>
+                    {
+                        _LogInfo($"Preparing call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
+                        var pricingModelCallTimer = new Stopwatch();
+                        pricingModelCallTimer.Start();
 
+                        try
+                        {
+                            await _SendPricingRequest_v3Async(
+                               allocationResult,
+                               plan,
+                               jobId,
+                               inventory,
+                               token,
+                               diagnostic,
+                               planPricingParametersDto,
+                               proprietaryInventoryData);
+                        }
+                        finally
+                        {
+                            pricingModelCallTimer.Stop();
+                            var duration = pricingModelCallTimer.ElapsedMilliseconds;
+
+                            _LogInfo($"Completed call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
+                        }
+                    });
+                    await Task.WhenAll(tasks);
+                }
+            }
             return results;
         }
 

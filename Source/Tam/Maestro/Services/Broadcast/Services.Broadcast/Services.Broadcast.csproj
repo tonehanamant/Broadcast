@@ -530,6 +530,8 @@
     <Compile Include="Entities\CampaignCopyDto.cs" />
     <Compile Include="Entities\Campaign\SaveCampaignCopyDto.cs" />
     <Compile Include="Entities\DaypartDetailDto.cs" />
+    <Compile Include="Entities\DTO\PlanBuyingDto.cs" />
+    <Compile Include="Entities\DTO\PlanPricingDto.cs" />
     <Compile Include="Entities\Enums\PlanModeEnum.cs" />
     <Compile Include="Entities\Isci\IsciMappedPlanCountDto.cs" />
     <Compile Include="Entities\Isci\PlanIsciMappingsDetailsDto.cs" />
@@ -636,7 +638,6 @@
     <Compile Include="ApplicationServices\Inventory\ProgramMapping\ProgramMappingService.cs" />
     <Compile Include="Cache\ShowTypeCache.cs" />
     <Compile Include="Clients\LaunchDarklyClient.cs" />
-    <Compile Include="Clients\PlanBuyingApiClient.cs" />
     <Compile Include="Clients\PlanBuyingRequestLogClient.cs" />
     <Compile Include="Clients\PricingRequestLogClient.cs" />
     <Compile Include="Clients\LogToAmazonS3.cs" />
@@ -672,7 +673,6 @@
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessorFactory.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRequestPackage.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
-    <Compile Include="Clients\PricingApiClient.cs" />
     <Compile Include="Cache\GenreCache.cs" />
     <Compile Include="Converters\DetectionConverter.cs" />
     <Compile Include="Clients\TokenizedClientBase.cs" />

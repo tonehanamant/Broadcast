@@ -25,7 +25,7 @@
         public static string ENABLE_RESTRICTIONS_PROGRAM_OR = "broadcast-restrictions-enable-program-or";
         public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
         public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
-        public static string ENABLE_QUEUED_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-queued-pricing-requests";
+        public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";
         public static string ENABLE_CUSTOM_DAYPART = "broadcast-enable-custom-daypart";
         public static string ENABLE_KEEP_ORPHANED_ISCI_MAPPING = "broad-enable-keep-orphaned-isci-mapping";
         public static string ENABLE_AAB_CORE_API = "broadcast-enable-aab-core-api";
