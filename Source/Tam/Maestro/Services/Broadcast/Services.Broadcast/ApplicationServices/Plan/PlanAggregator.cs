@@ -1,15 +1,14 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -106,12 +105,40 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return;
             }
 
-            var totalHiatusDays = plan.FlightHiatusDays.Count;
-            var totalFlightDays = Convert.ToInt32(plan.FlightEndDate.Value.Subtract(plan.FlightStartDate.Value).TotalDays) + 1;
-            var totalActiveDays = totalFlightDays - totalHiatusDays;
+            var totalHiatusDays = plan.FlightHiatusDays.Count(h => _IsFlightDay(h, plan.FlightDays));
+
+            var totalActiveDays = _GetActiveFlightDays(plan.FlightStartDate.Value, plan.FlightEndDate.Value, 
+                plan.FlightHiatusDays, plan.FlightDays);
 
             summary.TotalActiveDays = totalActiveDays;
             summary.TotalHiatusDays = totalHiatusDays;
+        }
+
+        private static int _GetActiveFlightDays(DateTime start, DateTime end, List<DateTime> hiatusDays, List<int> flightDays)
+        {
+            var dateIndex = start.AddDays(-1);
+            var activeDayCount = 0;
+
+            do
+            {
+                dateIndex = dateIndex.AddDays(1);
+                var isAFlightDay = _IsFlightDay(dateIndex, flightDays);
+                if (isAFlightDay)
+                {
+                    var isAHiatusDay = hiatusDays.Any(h => h.Date == dateIndex.Date);
+                    if (!isAHiatusDay)
+                    {
+                        activeDayCount++;
+                    }
+                }
+            } while (dateIndex.Date < end.Date);
+            return activeDayCount;
+        }
+
+        private static bool _IsFlightDay(DateTime dt, List<int> flightDays)
+        {
+            var result = flightDays.Contains((int)dt.GetBroadcastDayOfWeek());
+            return result;
         }
 
         internal void AggregateAvailableMarkets(PlanDto plan, PlanSummaryDto summary)

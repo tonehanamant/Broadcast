@@ -79,12 +79,48 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 10));
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 11));
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 13));
+            plan.FlightDays = new List<int> {1,2,3,4,5,6,7 };
             var summary = new PlanSummaryDto();
 
             tc.AggregateFlightDays(plan, summary);
 
             Assert.AreEqual(3, summary.TotalHiatusDays, "Invalid summary.TotalHiatusDays");
             Assert.AreEqual(17, summary.TotalActiveDays, "Invalid summary.TotalActiveDays");
+        }
+
+        [Test]
+        [TestCase(false, 1, 14)]
+        [TestCase(true, 2, 16)]
+        public void AggregateFlightDays_ActiveDays(bool thursdayIsActive, int expectedHiatusCount, int expectedTotalDaysCount)
+        {
+            var tc = GetEmptyTestClass();
+            var plan = new PlanDto
+            {
+                // 3 weeks
+                FlightStartDate = new DateTime(2022, 02, 7), // Monday
+                FlightEndDate = new DateTime(2022, 02 ,27) // Sunday
+            };
+            plan.FlightHiatusDays.Add(new DateTime(2022, 02, 09)); // first wed
+            plan.FlightHiatusDays.Add(new DateTime(2022, 02, 17)); // second Thursday
+
+            plan.FlightDays = new List<int>
+            {
+                (int)BroadcastDayOfWeek.Monday,
+                (int)BroadcastDayOfWeek.Wednesday,
+                (int)BroadcastDayOfWeek.Friday,
+                (int)BroadcastDayOfWeek.Saturday,
+                (int)BroadcastDayOfWeek.Sunday
+            };
+            if (thursdayIsActive)
+            {
+                plan.FlightDays.Add((int)DayOfWeek.Thursday);
+            }
+            var summary = new PlanSummaryDto();
+
+            tc.AggregateFlightDays(plan, summary);
+
+            Assert.AreEqual(expectedHiatusCount, summary.TotalHiatusDays, "Invalid summary.TotalHiatusDays");
+            Assert.AreEqual(expectedTotalDaysCount, summary.TotalActiveDays, "Invalid summary.TotalActiveDays");
         }
 
         [Test]
@@ -419,6 +455,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 10));
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 11));
             plan.FlightHiatusDays.Add(new DateTime(2019, 01, 13));
+            plan.FlightDays = new List<int> {1,2,3,4,5,6,7 };
             var selectedAvailableMarkets = GetTestSelectedAvailablePlanMarkets();
             plan.AvailableMarkets.AddRange(selectedAvailableMarkets);
             var selectedBlackoutMarkets = GetTestSelectedBlackoutPlanMarkets();
