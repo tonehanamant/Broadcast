@@ -27,7 +27,7 @@
         public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
         public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";
         public static string ENABLE_CUSTOM_DAYPART = "broadcast-enable-custom-daypart";
-        public static string ENABLE_KEEP_ORPHANED_ISCI_MAPPING = "broad-enable-keep-orphaned-isci-mapping";
+        public static string ENABLE_KEEP_ORPHANED_ISCI_MAPPING = "broadcast-keep-orphaned-isci-mappings";
         public static string ENABLE_AAB_CORE_API = "broadcast-enable-aab-core-api";
     }
 }
