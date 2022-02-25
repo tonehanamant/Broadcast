@@ -1396,7 +1396,8 @@ namespace Services.Broadcast.BusinessEngines
                     NumberOfActiveDays = activeDays,
                     StartDate = week.WeekStartDate,
                     EndDate = week.WeekEndDate,
-                    MediaWeekId = week.Id
+                    MediaWeekId = week.Id,
+                    IsLocked = request.Weeks.Where(x => x.MediaWeekId == week.Id).Select(x => x.IsLocked).FirstOrDefault()
                 });
             }
         }
