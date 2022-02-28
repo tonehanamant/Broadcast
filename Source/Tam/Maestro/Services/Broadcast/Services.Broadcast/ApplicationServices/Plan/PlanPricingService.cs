@@ -283,6 +283,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request, processingId);
             _LogInfo($"Finished gather inventory.  Gathered {programs.Count} programs.", processingId);
 
+            if (programs.Count == 0)
+            {
+                const string no_inventory_message = 
+                    "There is no inventory available for the selected program restrictions in the requested quarter. " +
+                    "Previous quarters might have available inventory that will be utilized when pricing is executed.";
+                throw new InvalidOperationException(no_inventory_message);
+            }
+
             var reportData = new QuoteReportData(request, generatedTimeStamp, allAudiences, allMarkets, programs);
             return reportData;
         }

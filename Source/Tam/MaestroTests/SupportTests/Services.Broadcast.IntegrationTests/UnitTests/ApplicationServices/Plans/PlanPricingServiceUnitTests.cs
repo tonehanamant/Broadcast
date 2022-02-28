@@ -13,11 +13,13 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -12508,6 +12510,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual(expectedResult, plan.Dayparts.Count);
+        }
+
+        [Test]
+        public void GetQuoteReportData_WithoutInventory()
+        {
+            // Arrange
+            var request = _GetQuoteRequest();
+            var currentDateTime = new DateTime(2022,02,25,15,20,12);
+            var programs = new List<QuoteProgram>();
+            
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+            _AudienceServiceMock.Setup(s => s.GetAudiences())
+                .Returns(AudienceTestData.GetAudiences());
+            _MarketCoverageRepositoryMock.Setup(s => s.GetMarketsWithLatestCoverage())
+                .Returns(MarketsTestData.GetMarketsWithLatestCoverage());
+
+            _PlanPricingInventoryEngineMock.Setup(s => s.GetInventoryForQuote(It.IsAny<QuoteRequestDto>(), It.IsAny<Guid>()))
+                .Returns(programs);
+
+            var service = _GetService(true, true);
+
+            // Act
+            var caught = Assert.Throws<InvalidOperationException>(() => service.GetQuoteReportData(request));
+
+            // Assert
+            const string expected_message = "There is no inventory available for the selected program restrictions in the requested quarter. " +
+                "Previous quarters might have available inventory that will be utilized when pricing is executed.";
+            Assert.AreEqual(expected_message, caught.Message);
+        }
+
+        private static QuoteRequestDto _GetQuoteRequest()
+        {
+            var request = new QuoteRequestDto
+            {
+                FlightStartDate = new DateTime(2018, 12, 17),
+                FlightEndDate = new DateTime(2018, 12, 23),
+                FlightHiatusDays = new List<DateTime>(),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 100 } },
+                Equivalized = true,
+                AudienceId = 31,
+                SecondaryAudiences = new List<PlanAudienceDto>
+                {
+                    new PlanAudienceDto { Type = AudienceTypeEnum.Nielsen, AudienceId = 287 },
+                    new PlanAudienceDto { Type = AudienceTypeEnum.Nielsen, AudienceId = 420 }
+                },
+                PostingType = PostingTypeEnum.NTI,
+                ShareBookId = 437,
+                HUTBookId = 434,
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 8,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 14400,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto(),
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto(),
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto(),
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto> {new ProgramDto {Name = "Early news"}}
+                            }
+                        }
+                    }
+                }
+            };
+            return request;
         }
     }
 }

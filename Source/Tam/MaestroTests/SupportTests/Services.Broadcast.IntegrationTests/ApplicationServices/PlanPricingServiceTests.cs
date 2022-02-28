@@ -1099,13 +1099,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             dateTimeEngine.UT_CurrentMoment = new DateTime(2020, 8, 10, 14, 8, 45);
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDateTimeEngine>(dateTimeEngine);
 
-            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+            var planPricingService = (PlanPricingService) IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
 
             // Act
-            var result = ((PlanPricingService)planPricingService).GetQuoteReportData(request);
+            var caught = Assert.Throws<InvalidOperationException>(() => planPricingService.GetQuoteReportData(request));
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            const string expected_message = "There is no inventory available for the selected program restrictions in the requested quarter. " +
+                "Previous quarters might have available inventory that will be utilized when pricing is executed.";
+            Assert.AreEqual(expected_message, caught.Message);
         }
 
         private static QuoteRequestDto _GetQuoteRequest()
