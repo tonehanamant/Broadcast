@@ -19,6 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_buying_api_results = new HashSet<plan_version_buying_api_results>();
             this.plan_version_buying_parameters = new HashSet<plan_version_buying_parameters>();
             this.plan_version_buying_results = new HashSet<plan_version_buying_results>();
+            this.plan_version_buying_band_inventory_stations = new HashSet<plan_version_buying_band_inventory_stations>();
         }
     
         public int id { get; set; }
@@ -34,5 +35,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual ICollection<plan_version_buying_results> plan_version_buying_results { get; set; }
+        public virtual ICollection<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
     }
 }

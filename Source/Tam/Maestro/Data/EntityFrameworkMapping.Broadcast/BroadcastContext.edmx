@@ -928,6 +928,27 @@
           <Property Name="available_inventory_percentage" Type="float" Nullable="false" />
           <Property Name="plan_version_buying_result_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_version_buying_band_inventory_station_dayparts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_band_inventory_station_id" Type="int" Nullable="false" />
+          <Property Name="active_days" Type="int" Nullable="false" />
+          <Property Name="hours" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_band_inventory_stations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_job_id" Type="int" Nullable="false" />
+          <Property Name="posting_type_id" Type="int" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="cost" Type="money" Nullable="false" />
+          <Property Name="manifest_weeks_count" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_buying_band_station_dayparts">
           <Key>
             <PropertyRef Name="id" />
@@ -4338,6 +4359,48 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id">
+          <End Role="plan_version_buying_band_inventory_stations" Type="Self.plan_version_buying_band_inventory_stations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_band_inventory_station_dayparts" Type="Self.plan_version_buying_band_inventory_station_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_band_inventory_stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_inventory_station_dayparts">
+              <PropertyRef Name="plan_version_buying_band_inventory_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_band_inventory_stations" Type="Self.plan_version_buying_band_inventory_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_inventory_stations">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_band_inventory_stations_stations_id">
+          <End Role="stations" Type="Self.stations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_band_inventory_stations" Type="Self.plan_version_buying_band_inventory_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_inventory_stations">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_buying_band_station_dayparts_plan_version_buying_band_stations">
           <End Role="plan_version_buying_band_stations" Type="Self.plan_version_buying_band_stations" Multiplicity="1" />
           <End Role="plan_version_buying_band_station_dayparts" Type="Self.plan_version_buying_band_station_dayparts" Multiplicity="*" />
@@ -7514,6 +7577,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_buying_api_result_spots" EntityType="Self.plan_version_buying_api_result_spots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_api_results" EntityType="Self.plan_version_buying_api_results" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_band_details" EntityType="Self.plan_version_buying_band_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_band_inventory_station_dayparts" EntityType="Self.plan_version_buying_band_inventory_station_dayparts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_band_inventory_stations" EntityType="Self.plan_version_buying_band_inventory_stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_band_station_dayparts" EntityType="Self.plan_version_buying_band_station_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_band_stations" EntityType="Self.plan_version_buying_band_stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_buying_job" EntityType="Self.plan_version_buying_job" Schema="dbo" store:Type="Tables" />
@@ -8102,6 +8167,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_buying_band_details_plan_version_buying_results" Association="Self.FK_plan_version_buying_band_details_plan_version_buying_results">
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
             <End Role="plan_version_buying_band_details" EntitySet="plan_version_buying_band_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" Association="Self.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id">
+            <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
+            <End Role="plan_version_buying_band_inventory_station_dayparts" EntitySet="plan_version_buying_band_inventory_station_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" Association="Self.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_inventory_stations_stations_id" Association="Self.FK_plan_version_buying_band_inventory_stations_stations_id">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_buying_band_station_dayparts_plan_version_buying_band_stations" Association="Self.FK_plan_version_buying_band_station_dayparts_plan_version_buying_band_stations">
             <End Role="plan_version_buying_band_stations" EntitySet="plan_version_buying_band_stations" />
@@ -10673,6 +10750,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_staged_recommended_plan_details_staged_recommended_plans" Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans">
             <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
             <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
+          </AssociationSet>
+          <EntitySet Name="plan_version_buying_band_inventory_station_dayparts" EntityType="BroadcastModel.plan_version_buying_band_inventory_station_dayparts" />
+          <EntitySet Name="plan_version_buying_band_inventory_stations" EntityType="BroadcastModel.plan_version_buying_band_inventory_stations" />
+          <AssociationSet Name="FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" Association="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id">
+            <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
+            <End Role="plan_version_buying_band_inventory_station_dayparts" EntitySet="plan_version_buying_band_inventory_station_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_inventory_stations_stations_id" Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id">
+            <End Role="station" EntitySet="stations" />
+            <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -16513,6 +16604,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_versions" FromRole="plan_version_buying_job" ToRole="plan_versions" />
           <NavigationProperty Name="plan_version_buying_parameters" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_parameters" />
           <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_results" />
+          <NavigationProperty Name="plan_version_buying_band_inventory_stations" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" FromRole="plan_version_buying_job" ToRole="plan_version_buying_band_inventory_stations" />
         </EntityType>
         <EntityType Name="plan_version_buying_parameters">
           <Key>
@@ -16997,6 +17089,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
           <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" FromRole="station" ToRole="inventory_proprietary_summary_station_audiences" />
           <NavigationProperty Name="plan_version_buying_band_stations" Relationship="BroadcastModel.FK_plan_version_buying_band_stations_stations" FromRole="station" ToRole="plan_version_buying_band_stations" />
+          <NavigationProperty Name="plan_version_buying_band_inventory_stations" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" FromRole="station" ToRole="plan_version_buying_band_inventory_stations" />
         </EntityType>
         <Association Name="FK_stations_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
@@ -18707,6 +18800,73 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="staged_recommended_plan_details">
               <PropertyRef Name="staged_recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_buying_band_inventory_station_dayparts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_band_inventory_station_id" Type="Int32" Nullable="false" />
+          <Property Name="active_days" Type="Int32" Nullable="false" />
+          <Property Name="hours" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_band_inventory_stations" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" FromRole="plan_version_buying_band_inventory_station_dayparts" ToRole="plan_version_buying_band_inventory_stations" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_band_inventory_stations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" Nullable="false" />
+          <Property Name="posting_type_id" Type="Int32" Nullable="false" />
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="manifest_weeks_count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_band_inventory_station_dayparts" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" FromRole="plan_version_buying_band_inventory_stations" ToRole="plan_version_buying_band_inventory_station_dayparts" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" FromRole="plan_version_buying_band_inventory_stations" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" FromRole="plan_version_buying_band_inventory_stations" ToRole="station" />
+        </EntityType>
+        <Association Name="FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id">
+          <End Type="BroadcastModel.plan_version_buying_band_inventory_stations" Role="plan_version_buying_band_inventory_stations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_band_inventory_station_dayparts" Role="plan_version_buying_band_inventory_station_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_band_inventory_stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_inventory_station_dayparts">
+              <PropertyRef Name="plan_version_buying_band_inventory_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_band_inventory_stations" Role="plan_version_buying_band_inventory_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_inventory_stations">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_band_inventory_stations_stations_id">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_band_inventory_stations" Role="plan_version_buying_band_inventory_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_inventory_stations">
+              <PropertyRef Name="station_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21943,6 +22103,29 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
                 <ScalarProperty Name="ambiguity_code" ColumnName="ambiguity_code" />
                 <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_band_inventory_station_dayparts">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_band_inventory_station_dayparts">
+              <MappingFragment StoreEntitySet="plan_version_buying_band_inventory_station_dayparts">
+                <ScalarProperty Name="hours" ColumnName="hours" />
+                <ScalarProperty Name="active_days" ColumnName="active_days" />
+                <ScalarProperty Name="plan_version_buying_band_inventory_station_id" ColumnName="plan_version_buying_band_inventory_station_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_band_inventory_stations">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_band_inventory_stations">
+              <MappingFragment StoreEntitySet="plan_version_buying_band_inventory_stations">
+                <ScalarProperty Name="manifest_weeks_count" ColumnName="manifest_weeks_count" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+                <ScalarProperty Name="posting_type_id" ColumnName="posting_type_id" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

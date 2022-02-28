@@ -580,6 +580,11 @@
         <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plan_details" Width="1.5" PointX="41.625" PointY="5.125" />
         <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plans" Width="1.5" PointX="39.375" PointY="5.125" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_station_dayparts" Width="1.5" PointX="19.25" PointY="81.125" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_stations" Width="1.5" PointX="17" PointY="84.625" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -146,19 +146,18 @@ namespace AttachmentMicroServiceApiTester
         protected const int ASYNC_API_TIMEOUT_MILLISECONDS = 900000;
         private readonly HttpClient _HttpClient;
 
-        private string _ApplicationId = "BD9C9B56-1F78-4C47-B99D-67E0340C7232";
-        private string _UrlBase = "http://cpa-dev-cd1.dev.cadent.tv/attachmentmicroservice/api/v1/attachment";
-        
+        private readonly string _ApplicationId = "BD9C9B56-1F78-4C47-B99D-67E0340C7232";
+        private readonly string _UrlBase = "http://cpa-dev-cd1.dev.cadent.tv/attachmentmicroservice/api/v1/attachment";        
 
         public AttachmentServiceApiClient(HttpClient httpClient)
         {
             _HttpClient = httpClient;
         }
 
-        private T _SendData<T>(HttpRequestMessage httpRequestMessage)
+        private async Task<T> _SendDataAsync<T>(HttpRequestMessage httpRequestMessage)
         {
-            var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).Result;
-            var result = serviceResponse.Content.ReadAsAsync<T>().Result;
+            var serviceResponse = await _HttpClient.SendAsync(httpRequestMessage);            
+            var result = await serviceResponse.Content.ReadAsAsync<T>();
             return result;
         }
 
@@ -215,7 +214,7 @@ namespace AttachmentMicroServiceApiTester
 
             var httpRequestMessage = _GetRequestMessage(url, request);
 
-            var result = _SendData<ListResponse>(httpRequestMessage);
+            var result = await _SendDataAsync<ListResponse>(httpRequestMessage);
 
             return result;
         }
@@ -234,7 +233,7 @@ namespace AttachmentMicroServiceApiTester
             };
 
             var httpRequestMessage = _GetRequestMessage(url, request);
-            var result = _SendData<RegisterResponse>(httpRequestMessage);
+            var result = await _SendDataAsync<RegisterResponse>(httpRequestMessage);
 
             return result;
         }
@@ -246,7 +245,7 @@ namespace AttachmentMicroServiceApiTester
 
             var httpRequestMessage = _GetRequestMessage(url, attachmentId);
 
-            var result = _SendData<BaseResponse>(httpRequestMessage);
+            var result = await _SendDataAsync<BaseResponse>(httpRequestMessage);
 
             return result;
         }
@@ -263,7 +262,7 @@ namespace AttachmentMicroServiceApiTester
             multipartContent.Add(byteArrayContent, "attachment", fileName);
             httpRequestMessage.Content = multipartContent;
 
-            var result = _SendData<BaseResponse>(httpRequestMessage);
+            var result = await _SendDataAsync<BaseResponse>(httpRequestMessage);
 
             return result;
         }
@@ -275,7 +274,7 @@ namespace AttachmentMicroServiceApiTester
 
             var httpRequestMessage = _GetRequestMessage(url, attachmentId);
 
-            var result = _SendData<RetrieveResponse>(httpRequestMessage);
+            var result = await _SendDataAsync<RetrieveResponse>(httpRequestMessage);
 
             return result;
         }

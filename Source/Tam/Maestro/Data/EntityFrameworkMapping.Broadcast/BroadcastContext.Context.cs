@@ -250,5 +250,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
         public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
+        public virtual DbSet<plan_version_buying_band_inventory_station_dayparts> plan_version_buying_band_inventory_station_dayparts { get; set; }
+        public virtual DbSet<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
     }
 }
