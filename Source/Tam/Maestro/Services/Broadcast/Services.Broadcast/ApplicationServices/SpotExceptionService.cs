@@ -111,6 +111,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsOutofSpecSpotsRequest">Spot Exception out of spec spots</param>
         /// <returns>it gave the response for active, queued and synced plans</returns>
         SpotExceptionsOutOfSpecPlanSpotsResultDto GetSpotExceptionsOutofSpecSpots(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest);
+
+        /// <summary>
+        /// Gets the markets of active spot exception out of spec spots
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request parameters</param>
+        /// <returns>The markets of active spot exception out of spec spots</returns>
+        List<string> GetSpotExceptionsOutOfSpecMarkets(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1318,6 +1325,20 @@ namespace Services.Broadcast.ApplicationServices
                 }).ToList();
             }
             return spotExceptionsOutOfSpecPlanSpotsResult;
+        }
+
+        /// <inheritdoc />
+        public List<string> GetSpotExceptionsOutOfSpecMarkets(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        {
+            var spotExceptionsOutOfSpecSpotsResult = GetSpotExceptionsOutofSpecSpots(spotExceptionsOutOfSpecSpotsRequest);
+            
+            if (spotExceptionsOutOfSpecSpotsResult?.Active == null)
+            {
+                return null;
+            }
+
+            var markets = spotExceptionsOutOfSpecSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
+            return markets;
         }
     }
 }
