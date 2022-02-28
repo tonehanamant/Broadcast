@@ -500,7 +500,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
-                        ProductName = "Sample - 2Q09",
+                        ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
                         Iscis = new List<string>()
                         {
                             "OKWF1701H",
@@ -517,7 +517,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
-                        ProductName = "1-800-Contacts",
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                         {
                             "OKWF1703H",
@@ -534,7 +534,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
-                        ProductName = "1-800-Contacts",
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                         {
                             "CLDC6513000H",
@@ -546,6 +546,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()));
 
             // Act
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
@@ -579,7 +583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
-                        ProductName = "Sample - 2Q09",
+                        ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
                         Iscis = new List<string>()
                     },
                     new IsciPlanDetailDto()
@@ -592,7 +596,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
-                        ProductName = "1-800-Contacts",
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                     },
                     new IsciPlanDetailDto()
@@ -605,7 +609,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
-                        ProductName = "1-800-Contacts",
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                     }
                 });
@@ -613,6 +617,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock
+    .Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+    .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()));
 
             // Act
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
@@ -646,7 +654,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
-                        ProductName = "Sample - 2Q09",
+                        ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
                         Iscis = new List<string>()
                     },
                     new IsciPlanDetailDto()
@@ -659,7 +667,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
-                        ProductName = "1-800-Contacts",
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                     },
                     new IsciPlanDetailDto()
@@ -672,7 +680,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
-                        ProductName = "1-800-Contacts",
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                         {
                             "CLDC6513000H",
@@ -684,6 +692,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock
+    .Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+    .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()));
 
             // Act
             var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);

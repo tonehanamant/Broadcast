@@ -212,7 +212,6 @@ namespace Services.Broadcast.Repositories
                 var result = planEntities.Select(plan =>
                 {
                     var planVersion = plan.plan_versions.Where(x => x.id == plan.latest_version_id).Single();
-                    var planVersionSummary = planVersion.plan_version_summaries.Single();
                     var isciPlanDetail = new IsciPlanDetailDto()
                     {
                         Id = plan.id,
@@ -223,7 +222,7 @@ namespace Services.Broadcast.Repositories
                         Dayparts = planVersion.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
                         FlightStartDate = planVersion.flight_start_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
                         FlightEndDate = planVersion.flight_end_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
-                        ProductName = planVersionSummary.product_name,
+                        ProductMasterId = plan.product_master_id,
                         Iscis = plan.plan_iscis
                                         .Where(planIsci => planIsci.deleted_at == null 
                                                 && (planIsci.flight_start_date <= mediaMonthStartDate && planIsci.flight_end_date >= mediaMonthEndDate

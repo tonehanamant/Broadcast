@@ -12,7 +12,8 @@
     "FlightStartDate": "2019-07-31T00:00:00",
     "Id": 1540,
     "Iscis": [],
-    "ProductName": "PetMed Express",
+    "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
+    "ProductName": null,
     "SpotLengthValues": [
       45
     ],

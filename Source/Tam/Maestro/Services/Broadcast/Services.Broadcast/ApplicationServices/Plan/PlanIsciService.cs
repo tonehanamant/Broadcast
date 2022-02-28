@@ -198,6 +198,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (isciPlans?.Any() ?? false)
                 {
                     _SetIsciPlanAdvertiser(isciPlans);
+                    _SetIsciPlanAdvertiserProduct(isciPlans);
 
                     var isciPlansGroupedByAdvertiser = isciPlans.GroupBy(x => x.AdvertiserName).OrderBy(x => x.Key);
                     foreach (var isciPlanItem in isciPlansGroupedByAdvertiser)
@@ -233,6 +234,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var advertisers = _AabEngine.GetAdvertisers();
             isciPlanSummaries.ForEach(x =>
                 x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
+        }
+
+        private void _SetIsciPlanAdvertiserProduct(List<IsciPlanDetailDto> isciPlanSummaries)
+        {
+            isciPlanSummaries.ForEach(item =>
+            {
+                var product = _AabEngine.GetAdvertiserProduct(item.AdvertiserMasterId.Value, item.ProductMasterId.Value);
+
+                item.ProductName = product.Name;
+            });
         }
 
         private int _HandleSaveIsciProduct(List<IsciProductMappingDto> mappings, string createdBy, DateTime createdAt)

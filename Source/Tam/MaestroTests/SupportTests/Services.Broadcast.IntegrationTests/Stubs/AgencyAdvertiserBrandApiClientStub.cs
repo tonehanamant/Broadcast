@@ -46,5 +46,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             };
             return products;
         }
+
+        public ProductDto GetAdvertiserProduct(Guid advertiserMasterId, Guid productMasterId)
+        {
+            var product = new ProductDto { Id = 1, MasterId = productMasterId, Name = "Product1", AdvertiserId = 2, AdvertiserMasterId = advertiserMasterId };
+            
+            return product;
+        }
     }
 }
