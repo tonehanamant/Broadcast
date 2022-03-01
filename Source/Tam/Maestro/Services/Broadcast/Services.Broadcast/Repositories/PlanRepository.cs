@@ -996,7 +996,7 @@ namespace Services.Broadcast.Repositories
         {
             var planVersionDaypartCustomization = entity.plan_version_daypart_customizations.SingleOrDefault();
             var dto = new PlanDaypartDto
-            {                
+            {
                 DaypartCodeId = entity.standard_daypart_id,
                 DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
                 StartTimeSeconds = entity.start_time_seconds,
@@ -1005,8 +1005,9 @@ namespace Services.Broadcast.Repositories
                 IsEndTimeModified = entity.is_end_time_modified,
                 WeightingGoalPercent = entity.weighting_goal_percent,
                 WeekdaysWeighting = entity.weekdays_weighting,
-                WeekendWeighting = entity.weekend_weighting,               
+                WeekendWeighting = entity.weekend_weighting,
                 DaypartOrganizationId = planVersionDaypartCustomization?.custom_daypart_organization_id,
+                PlanDaypartId = entity.id,
                 CustomName = planVersionDaypartCustomization?.custom_daypart_name,
                 DaypartOrganizationName = planVersionDaypartCustomization?.custom_daypart_organizations.organization_name,
                 VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh

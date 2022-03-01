@@ -49,6 +49,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],
@@ -123,6 +124,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],
@@ -197,6 +199,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],
@@ -271,6 +274,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],
@@ -345,6 +349,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],
@@ -419,6 +424,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],
@@ -493,6 +499,7 @@
     },
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
+    "PlanDaypartId": 0,
     "Restrictions": {
       "AffiliateRestrictions": {
         "Affiliates": [],

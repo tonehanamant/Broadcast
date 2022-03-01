@@ -3307,7 +3307,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "JobId");
             jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "PlanVersionId");
-
+            jsonResolver.Ignore(typeof(PlanDaypartDto), "PlanDaypartId");
+            jsonResolver.Ignore(typeof(WeeklyBreakdownWeek), "PlanDaypartId");
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

@@ -8,5 +8,6 @@
         public string CustomName { get; set; }
         public string DaypartOrganizationName { get; set; }
         public string DaypartUniquekey { get { return $"{StandardDaypartId}|{DaypartOrganizationId}|{CustomName?.ToLower()}"; } }
+        public int PlanDaypartId { get; set; }
     }
 }

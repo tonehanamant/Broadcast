@@ -12,6 +12,7 @@
     "IsLocked": false,
     "MediaWeekId": 502,
     "NumberOfActiveDays": 5,
+    "PlanDaypartId": 0,
     "StartDate": "2020-05-04T00:00:00",
     "Units": 0.0,
     "WeekNumber": 3
@@ -29,6 +30,7 @@
     "IsLocked": false,
     "MediaWeekId": 501,
     "NumberOfActiveDays": 4,
+    "PlanDaypartId": 0,
     "StartDate": "2020-04-27T00:00:00",
     "Units": 0.0,
     "WeekNumber": 2
@@ -46,6 +48,7 @@
     "IsLocked": false,
     "MediaWeekId": 500,
     "NumberOfActiveDays": 3,
+    "PlanDaypartId": 0,
     "StartDate": "2020-04-20T00:00:00",
     "Units": 0.0,
     "WeekNumber": 1
@@ -63,6 +66,7 @@
     "IsLocked": false,
     "MediaWeekId": 500,
     "NumberOfActiveDays": 3,
+    "PlanDaypartId": 0,
     "StartDate": "2020-04-20T00:00:00",
     "Units": 0.0,
     "WeekNumber": 1

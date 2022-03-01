@@ -52,7 +52,8 @@ namespace Services.Broadcast.Helpers
                     DaypartOrganizationId = x.DaypartOrganizationId,
                     CustomName = x.CustomName,
                     DaypartOrganizationName = x.DaypartOrganizationName,
-                    WeightingGoalPercent = weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartUniquekey]
+                    WeightingGoalPercent = weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartUniquekey],
+                    PlanDaypartId=x.PlanDaypartId
                 })
                 .ToList();
         }
@@ -74,7 +75,8 @@ namespace Services.Broadcast.Helpers
                     DaypartCodeId = b.StandardDaypartId,
                     CustomName=b.CustomName,
                     DaypartOrganizationName=b.DaypartOrganizationName,
-                    DaypartOrganizationId=b.DaypartOrganizationId,                    
+                    DaypartOrganizationId=b.DaypartOrganizationId, 
+                    PlanDaypartId=b.PlanDaypartId,
                     Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) * GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
                 }).ToList();
             return allSpotLengthIdAndStandardDaypartIdCombinations;

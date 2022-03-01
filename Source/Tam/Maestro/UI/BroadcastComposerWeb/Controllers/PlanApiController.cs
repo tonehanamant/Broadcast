@@ -354,5 +354,12 @@ namespace BroadcastComposerWeb.Controllers
             var deletedBy = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().DeletePlan(planId, deletedBy));
         }
+
+        [HttpPost]
+        [Route("plan-daypart-update")]
+        public BaseResponse<PlanDaypartUpdateResponseDto> UpdatePlanDaypart(PlanDaypartUpdateRequestDto planDaypartUpdateRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().UpdatePlanDaypart(planDaypartUpdateRequest));
+        }
     }
 }

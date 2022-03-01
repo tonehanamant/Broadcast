@@ -14,5 +14,6 @@ namespace Services.Broadcast.Entities.Plan
         public string DaypartOrganizationName { get; set; }
         public string CustomName { get; set; }
         public int? DaypartOrganizationId { get; set; }
+        public int PlanDaypartId { get; set; }
     }
 }

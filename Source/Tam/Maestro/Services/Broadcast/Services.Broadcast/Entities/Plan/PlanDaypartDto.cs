@@ -102,6 +102,14 @@ namespace Services.Broadcast.Entities.Plan
         /// </summary>
         public double? WeekendWeighting { get; set; }
 
+        /// <summary>
+        /// Gets and set the PlanDaypartId.
+        /// </summary>
+        /// <value>
+        /// The PlanDaypartId.
+        /// </value>
+        public int PlanDaypartId { get; set; }       
+
         public List<PlanDaypartVpvhForAudienceDto> VpvhForAudiences { get; set; } = new List<PlanDaypartVpvhForAudienceDto>();
 
         public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();

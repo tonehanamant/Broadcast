@@ -199,7 +199,8 @@ namespace Services.Broadcast.BusinessEngines
                         IsLocked = weeklyBreakdown.IsLocked,
                         DaypartOrganizationId = weeklyBreakdown.DaypartOrganizationId,
                         CustomName = weeklyBreakdown.CustomName,
-                        DaypartOrganizationName = weeklyBreakdown.DaypartOrganizationName
+                        DaypartOrganizationName = weeklyBreakdown.DaypartOrganizationName,
+                        PlanDaypartId=weeklyBreakdown.PlanDaypartId
                     };
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
@@ -266,7 +267,8 @@ namespace Services.Broadcast.BusinessEngines
                             IsLocked = week.IsLocked,
                             CustomName = item.CustomName,
                             DaypartOrganizationName = item.DaypartOrganizationName,
-                            DaypartOrganizationId=item.DaypartOrganizationId
+                            DaypartOrganizationId=item.DaypartOrganizationId,
+                            PlanDaypartId=item.PlanDaypartId
                         };
 
                         var impressions = breakdownItem.WeeklyImpressions * weighting;
@@ -333,7 +335,8 @@ namespace Services.Broadcast.BusinessEngines
                         IsLocked = week.IsLocked,
                         CustomName = combination.CustomName,
                         DaypartOrganizationName = combination.DaypartOrganizationName,
-                        DaypartOrganizationId= combination.DaypartOrganizationId
+                        DaypartOrganizationId= combination.DaypartOrganizationId,
+                        PlanDaypartId=combination.PlanDaypartId
 
                     };
 
@@ -404,6 +407,7 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var item in weeklyBreakdownByWeekByDaypart)
             {
+                var planDaypartId = plan.Dayparts.Single(x => x.DaypartCodeId == item.DaypartCodeId).PlanDaypartId;
                 var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                 {
                     WeekNumber = item.WeekNumber,
@@ -418,7 +422,8 @@ namespace Services.Broadcast.BusinessEngines
                     IsLocked = item.IsLocked,
                     DaypartOrganizationId = item.DaypartOrganizationId,
                     CustomName = item.CustomName,
-                    DaypartOrganizationName = item.DaypartOrganizationName
+                    DaypartOrganizationName = item.DaypartOrganizationName,
+                    PlanDaypartId=planDaypartId
                 };
 
                 _UpdateGoalsForWeeklyBreakdownItem(
@@ -929,10 +934,13 @@ namespace Services.Broadcast.BusinessEngines
             var requestDaypartIds = request.Dayparts.Select(w => w.DaypartCodeId).Distinct();
 
             // Remove dayparts that doesnt exist in the request
-            var daypartsToRemove = existingWeekDaypartIds.Where(d => !requestDaypartIds.Contains(d)).ToList();
-            if (daypartsToRemove.Any())
+            if (!existingWeekDaypartIds.Contains(0))
             {
-                response.Weeks.RemoveAll(w => daypartsToRemove.Contains(w.DaypartCodeId.Value));
+                var daypartsToRemove = existingWeekDaypartIds.Where(d => !requestDaypartIds.Contains(d)).ToList();
+                if (daypartsToRemove.Any())
+                {
+                    response.Weeks.RemoveAll(w => daypartsToRemove.Contains(w.DaypartCodeId.Value));
+                }
             }
         }
 
@@ -944,14 +952,25 @@ namespace Services.Broadcast.BusinessEngines
             List<DisplayMediaWeek> existingWeeks,
             List<StandardDaypartWeightingGoal> standardDayparts)
         {
+            foreach (var week in response.Weeks)
+            {
+                var itemRefCode = standardDayparts.FirstOrDefault(d => d.PlanDaypartId == week.PlanDaypartId);
+                if (itemRefCode != null)
+                {
+                    week.DaypartCodeId = itemRefCode.StandardDaypartId;                   
+                }
+            }
             // Get the existing daypart ids in the existing weeks
             var existingWeekDaypartIds = response.Weeks.Select(w => w.DaypartUniquekey).Distinct();
 
-            // Add new dayparts to existin weeks
-            var daypartsToAdd = standardDayparts.Where(d => !existingWeekDaypartIds.Contains(d.DaypartUniquekey)).ToList();
-            if (daypartsToAdd.Any())
+            // Add new dayparts to existin week
+            if (!existingWeekDaypartIds.Contains("0||"))
             {
-                _AddNewWeeksByDaypartToWeeklyBreakdownResult(response, existingWeeks, request, daypartsToAdd);
+                var daypartsToAdd = standardDayparts.Where(d => !existingWeekDaypartIds.Contains(d.DaypartUniquekey)).ToList();
+                if (daypartsToAdd.Any())
+                {
+                    _AddNewWeeksByDaypartToWeeklyBreakdownResult(response, existingWeeks, request, daypartsToAdd);
+                }
             }
         }
 
@@ -1378,7 +1397,8 @@ namespace Services.Broadcast.BusinessEngines
                         PercentageOfWeek = item.WeightingGoalPercent,
                         DaypartOrganizationId = planDayparts.Select(x => x.DaypartOrganizationId).FirstOrDefault(),
                         DaypartOrganizationName = planDayparts.Select(x => x.DaypartOrganizationName).FirstOrDefault(),
-                        CustomName = planDayparts.Select(x => x.CustomName).FirstOrDefault()
+                        CustomName = planDayparts.Select(x => x.CustomName).FirstOrDefault(),
+                        PlanDaypartId=item.PlanDaypartId
                     });
                 }
             }
@@ -1901,6 +1921,7 @@ namespace Services.Broadcast.BusinessEngines
                         week.DaypartOrganizationId = item.DaypartOrganizationId;
                         week.CustomName = item.CustomName;
                         week.DaypartOrganizationName = item.DaypartOrganizationName;
+                        week.PlanDaypartId = item.PlanDaypartId;
                     }
                 }
             }

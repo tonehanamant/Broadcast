@@ -26,7 +26,7 @@ namespace Services.Broadcast.Extensions
                 standardDaypart => standardDaypart.Id,
                 (planDaypart, standardDaypart) => new
                 {
-                    planDaypart.DaypartCodeId,
+                    planDaypart.DaypartCodeId,                    
                     standardDaypart.Code,
                     standardDaypart.FullName,
                     planDaypart.DaypartTypeId,
@@ -43,7 +43,8 @@ namespace Services.Broadcast.Extensions
                     planDaypart.DaypartOrganizationId,
                     planDaypart.DaypartOrganizationName,
                     planDaypart.CustomName,
-                    planDaypart.Goals
+                    planDaypart.Goals,
+                    planDaypart.PlanDaypartId
                 }).ToList();
 
             // return the ordered list
@@ -63,6 +64,7 @@ namespace Services.Broadcast.Extensions
                 {
                     DaypartCodeId = item.DaypartCodeId,
                     DaypartTypeId = item.DaypartTypeId,
+                    PlanDaypartId=item.PlanDaypartId,
                     StartTimeSeconds = item.StartTimeSeconds,
                     EndTimeSeconds = item.EndTimeSeconds,
                     IsEndTimeModified = item.IsEndTimeModified,

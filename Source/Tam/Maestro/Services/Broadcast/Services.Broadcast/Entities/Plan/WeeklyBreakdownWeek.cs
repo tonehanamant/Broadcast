@@ -20,6 +20,7 @@ namespace Services.Broadcast.Entities.Plan
         public int? SpotLengthId { get; set; }
         public int? SpotLengthDuration { get; set; }
         public int? DaypartCodeId { get; set; }
+        public int PlanDaypartId { get; set; }
         public double? PercentageOfWeek { get; set; }
         public bool IsUpdated { get; set; }
         public double UnitImpressions { get; set; }
@@ -96,6 +97,7 @@ namespace Services.Broadcast.Entities.Plan
         public int? DaypartOrganizationId { get; set; }
         public string CustomName { get; set; }
         public string DaypartOrganizationName { get; set; }
+        public int PlanDaypartId { get; set; }
     }
 
     public class WeeklyBreakdownByStandardDaypart

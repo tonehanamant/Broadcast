@@ -242,6 +242,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="createdBy">The username who is copying plans</param>
         /// <param name="createdDate">Timestamp when plans are copying</param>
        void CopyPlans(int campaignId, SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate);
+
+        /// <summary>
+        /// Update plan daypart with unique id
+        /// </summary>
+        /// <param name="planDaypartUpdateRequestDto">planDaypartUpdateRequestDto</param>
+        /// <returns>Returns Weeklybreakdown and Rawweeklybreakdown array</returns>
+        PlanDaypartUpdateResponseDto UpdatePlanDaypart(PlanDaypartUpdateRequestDto planDaypartUpdateRequestDto);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -1019,6 +1026,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 DaypartCodeId = x.DaypartCodeId,
                 DaypartTypeId = x.DaypartTypeId,
+                PlanDaypartId=x.PlanDaypartId,
                 StartTimeSeconds = x.StartTimeSeconds,
                 EndTimeSeconds = x.EndTimeSeconds,
                 IsEndTimeModified = x.IsEndTimeModified,
@@ -1970,6 +1978,34 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _SetPlanBuyingParameters(plan);
                 _PlanBuyingRepository.SavePlanBuyingParameters(plan.BuyingParameters);
             }
+        }
+
+        /// <inheritdoc />
+        public PlanDaypartUpdateResponseDto UpdatePlanDaypart(PlanDaypartUpdateRequestDto planDaypartUpdateRequest)
+        {
+            PlanDaypartUpdateResponseDto planDaypartUpdateResponseDto = new PlanDaypartUpdateResponseDto();          
+            foreach (var item in planDaypartUpdateRequest.RawWeeklyBreakdownWeeks)
+            {
+                if (item.PlanDaypartId == planDaypartUpdateRequest.PlanDaypartId)
+                {
+                    item.DaypartCodeId = planDaypartUpdateRequest.DaypartCodeId;
+                    item.DaypartOrganizationId = planDaypartUpdateRequest.DaypartOrganizationId;
+                    item.CustomName = planDaypartUpdateRequest.CustomName;
+
+                }
+                planDaypartUpdateResponseDto.RawWeeklyBreakdownWeeks.Add(item);
+            }
+            foreach (var item in planDaypartUpdateRequest.Weeks)
+            {
+                if (item.PlanDaypartId == planDaypartUpdateRequest.PlanDaypartId)
+                {
+                    item.DaypartCodeId = planDaypartUpdateRequest.DaypartCodeId;
+                    item.DaypartOrganizationId = planDaypartUpdateRequest.DaypartOrganizationId;
+                    item.CustomName = planDaypartUpdateRequest.CustomName;
+                }
+                planDaypartUpdateResponseDto.Weeks.Add(item);
+            }
+            return planDaypartUpdateResponseDto;
         }
     }
 }
