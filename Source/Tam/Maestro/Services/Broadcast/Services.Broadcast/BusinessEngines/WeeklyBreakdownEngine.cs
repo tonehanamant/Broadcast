@@ -407,7 +407,7 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var item in weeklyBreakdownByWeekByDaypart)
             {
-                var planDaypartId = plan.Dayparts.Single(x => x.DaypartCodeId == item.DaypartCodeId).PlanDaypartId;
+                var planDaypartId = plan.Dayparts.Single(x => x.DaypartUniquekey == item.DaypartUniquekey).PlanDaypartId;
                 var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                 {
                     WeekNumber = item.WeekNumber,

@@ -98,6 +98,7 @@ namespace Services.Broadcast.Entities.Plan
         public string CustomName { get; set; }
         public string DaypartOrganizationName { get; set; }
         public int PlanDaypartId { get; set; }
+        public string DaypartUniquekey { get { return $"{DaypartCodeId}|{DaypartOrganizationId}|{CustomName?.ToLower()}"; } }
     }
 
     public class WeeklyBreakdownByStandardDaypart
