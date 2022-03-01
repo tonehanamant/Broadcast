@@ -543,7 +543,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_customizations" Width="1.5" PointX="38.625" PointY="25.375" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_customizations_custom_daypart_organizations" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_customizations_plan_version_daypart" />
-        <EntityTypeShape EntityType="BroadcastModel.staged_out_of_specs" Width="1.5" PointX="40.375" PointY="28.75" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_plan" Width="1.5" PointX="40.375" PointY="0.75" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="37.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" Width="1.5" PointX="20.375" PointY="41.75" />
@@ -585,6 +584,7 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" />
+        <EntityTypeShape EntityType="BroadcastModel.staged_out_of_specs" Width="1.5" PointX="40.375" PointY="28.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

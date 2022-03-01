@@ -15,7 +15,7 @@ namespace EntityFrameworkMapping.Broadcast
     public partial class staged_out_of_specs
     {
         public int id { get; set; }
-        public long unique_id_external { get; set; }
+        public string spot_unique_hash_external { get; set; }
         public string execution_id_external { get; set; }
         public int estimate_id { get; set; }
         public string inventory_source { get; set; }

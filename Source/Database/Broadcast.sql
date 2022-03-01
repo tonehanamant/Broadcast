@@ -830,6 +830,56 @@ BEGIN
 		FOREIGN KEY (staged_recommended_plan_id) REFERENCES staged_recommended_plans(id)
 END
 
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'spot_unique_hash'
+        AND OBJECT_ID = OBJECT_ID('staged_out_of_specs'))
+BEGIN
+	DROP TABLE staged_out_of_specs	
+END
+
+IF OBJECT_ID('staged_out_of_specs') IS NULL
+BEGIN
+	CREATE TABLE staged_out_of_specs
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external VARCHAR(255) NOT NULL,
+		execution_id_external VARCHAR(100) NOT NULL,
+		estimate_id INT NOT NULL,
+		inventory_source VARCHAR(100) NOT NULL,
+		house_isci VARCHAR(100) NOT NULL,
+		client_isci VARCHAR(100) NOT NULL,
+		client_spot_length INT NOT NULL,
+		broadcast_aired_date DATETIME2 NOT NULL,
+		aired_time INT NOT NULL,
+		station_legacy_call_letters VARCHAR(30) NULL,
+		affiliate VARCHAR(30) NULL,
+		market_code INT NULL,
+		market_rank INT NULL,
+		rate MONEY NOT NULL,
+		audience_name VARCHAR(127) NOT NULL,
+		impressions FLOAT NOT NULL,
+		[program_name] VARCHAR(500) NOT NULL,
+		program_genre VARCHAR(127) NOT NULL,
+		reason_code INT NOT NULL,
+		reason_code_message VARCHAR(500) NULL,
+		lead_in_program_name VARCHAR(500) NULL,
+		lead_out_program_name VARCHAR(500) NULL,
+		plan_id INT NOT NULL,
+		daypart_code VARCHAR(10) NULL,
+		start_time INT NULL,
+		end_time INT NULL,
+		monday INT NULL,
+		tuesday INT NULL,
+		wednesday INT NULL,
+		thursday INT NULL,
+		friday INT NULL,
+		saturday INT NULL,
+		sunday INT NULL,
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+END
+
 GO
 /*************************************** END BP-3285 ***************************************/
 

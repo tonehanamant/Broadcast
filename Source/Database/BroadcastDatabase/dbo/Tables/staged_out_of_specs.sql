@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[staged_out_of_specs]
 (
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[unique_id_external] [bigint] NOT NULL,
+	[spot_unique_hash_external] VARCHAR(255) NOT NULL,
 	[execution_id_external] [varchar](100) NOT NULL,
 	[estimate_id] [int] NOT NULL,
 	[inventory_source] [varchar](100) NOT NULL,
