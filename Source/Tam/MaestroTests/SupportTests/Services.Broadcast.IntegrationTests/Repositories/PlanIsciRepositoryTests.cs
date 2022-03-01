@@ -129,6 +129,78 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
+        public void GetPlanIscis_IsciDeleted()
+        {
+            // Arrange
+            var createdBy = "Test User";
+            var createdAt = DateTime.Now;
+            var reelIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var planId = 7009;
+
+            var Iscis = new List<ReelIsciDto>
+            {
+                new ReelIsciDto()
+                {
+                    Isci = "UniqueIsci1",
+                    SpotLengthId = 1,
+                    ActiveStartDate = new DateTime(2019,01,01),
+                    ActiveEndDate = new DateTime(2019,01,17),
+                    IngestedAt = new DateTime(2010,10,12),
+                    ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
+                    {
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Colgate EM"
+                        },
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Nature's Bounty"
+                        }
+                    }
+                }
+            };
+
+            var isciMappings = new List<PlanIsciDto>
+            {
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci1",
+                    FlightStartDate = new DateTime(2020, 2, 17),
+                    FlightEndDate = new DateTime(2020, 3, 2),
+                },
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci2",
+                    FlightStartDate = new DateTime(2020, 2, 17),
+                    FlightEndDate = new DateTime(2020, 3, 2),
+                }
+            };
+
+            // Act
+            List<PlanIsciDto> results;
+            using (new TransactionScopeWrapper())
+            {
+                reelIsciRepository.AddReelIscis(Iscis);
+                planIsciRepository.SaveIsciPlanMappings(isciMappings, createdBy, createdAt);
+                results = planIsciRepository.GetPlanIscis(planId);
+            }
+
+            // Assert
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanIsciDto), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+        }
+
+        [Test]
         public void SaveIsciPlanMappings()
         {
             // Arrange
@@ -264,6 +336,49 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Arrange
             string deletedBy = "Test User";
             DateTime deletedAt = DateTime.Now;
+
+            var Iscis = new List<ReelIsciDto>
+            {
+                new ReelIsciDto()
+                {
+                    Isci = "UniqueIsci1",
+                    SpotLengthId = 1,
+                    ActiveStartDate = new DateTime(2019,01,01),
+                    ActiveEndDate = new DateTime(2019,01,17),
+                    IngestedAt = new DateTime(2010,10,12),
+                    ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
+                    {
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Colgate EM"
+                        },
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Nature's Bounty"
+                        }
+                    }
+                },
+                new ReelIsciDto()
+                {
+                    Isci = "UniqueIsci2",
+                    SpotLengthId = 1,
+                    ActiveStartDate = new DateTime(2019,01,01),
+                    ActiveEndDate = new DateTime(2019,01,17),
+                    IngestedAt = new DateTime(2010,10,12),
+                    ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
+                    {
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Colgate EM"
+                        },
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Nature's Bounty"
+                        }
+                    }
+                }
+            };
+
             var isciMappings = new List<PlanIsciDto>
             {
                 new PlanIsciDto()
@@ -282,12 +397,15 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 }
             };
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var reelIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var before = new List<PlanIsciDto>();
             var after = new List<PlanIsciDto>();
             var deletedCount = 0;
+
             // Act
             using (new TransactionScopeWrapper())
             {
+                reelIsciRepository.AddReelIscis(Iscis);
                 var addedCount = planIsciRepository.SaveIsciPlanMappings(isciMappings, deletedBy, deletedAt);
                 before = planIsciRepository.GetPlanIscis(7009);
                 var idToDelete = new List<int> { before.First().Id };
@@ -315,10 +433,35 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         public void DeletePlanIscisNotExistInReelIsci()
         {
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var reelIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var createdBy = "Test User";
             var createdAt = DateTime.Now;
             var deletedAt = DateTime.Now;
             var deletedBy = "TestUser";
+
+            var Iscis = new List<ReelIsciDto>
+            {
+                new ReelIsciDto()
+                {
+                    Isci = "UniqueIsci1",
+                    SpotLengthId = 1,
+                    ActiveStartDate = new DateTime(2019,01,01),
+                    ActiveEndDate = new DateTime(2019,01,17),
+                    IngestedAt = new DateTime(2010,10,12),
+                    ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
+                    {
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Colgate EM"
+                        },
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Nature's Bounty"
+                        }
+                    }
+                }
+            };
+
             var isciMappings = new List<PlanIsciDto>
             {
                 new PlanIsciDto()
@@ -343,6 +486,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Act
             using (new TransactionScopeWrapper())
             {
+                reelIsciRepository.AddReelIscis(Iscis);
                 planIsciRepository.SaveIsciPlanMappings(isciMappings, createdBy, createdAt);
                 before = planIsciRepository.GetPlanIscis(7009);
                 deletedCount = planIsciRepository.DeletePlanIscisNotExistInReelIsci(deletedAt, deletedBy);

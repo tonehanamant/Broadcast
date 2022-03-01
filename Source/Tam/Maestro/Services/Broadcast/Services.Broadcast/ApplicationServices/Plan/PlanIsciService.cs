@@ -622,23 +622,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var isciSpotLengths = _PlanIsciRepository.GetIsciSpotLengths(iscis);
 
             var result = planIscis.Select(i =>
+            {
+                // we are using .First() here as a reel isci should never have same isci with different spot id.
+                var spotLengthId = isciSpotLengths.Where(s => s.Isci.Equals(i.Isci)).Select(s => s.SpotLengthId).First();
+                var spotLengthString = _GetSpotLengthsString(spotLengthId);
+                var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
+                var item = new PlanMappedIsciDetailsDto
                 {
-                    var spotLengthId = isciSpotLengths.Where(s => s.Isci.Equals(i.Isci)).Select(s => s.SpotLengthId)
-                        .First();
-                    var spotLengthString = _GetSpotLengthsString(spotLengthId);
-                    var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
-                    var item = new PlanMappedIsciDetailsDto
-                    {
-                        PlanIsciMappingId = i.Id,
-                        Isci = i.Isci,
-                        SpotLengthId = spotLengthId,
-                        SpotLengthString = spotLengthString,
-                        FlightStartDate = i.FlightStartDate,
-                        FlightEndDate = i.FlightEndDate,
-                        FlightString = flightString
-                    };
-                    return item;
-                })
+                    PlanIsciMappingId = i.Id,
+                    Isci = i.Isci,
+                    SpotLengthId = spotLengthId,
+                    SpotLengthString = spotLengthString,
+                    FlightStartDate = i.FlightStartDate,
+                    FlightEndDate = i.FlightEndDate,
+                    FlightString = flightString
+                };
+                return item;
+            })
             .ToList();
             return result;
         }

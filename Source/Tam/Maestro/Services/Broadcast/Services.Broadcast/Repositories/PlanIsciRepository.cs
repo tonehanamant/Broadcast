@@ -429,17 +429,19 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_iscis
-                    .Where(x => x.plan_id == planId && x.deleted_at == null)
-                    .Select(x => new PlanIsciDto
-                    {
-                        Id = x.id,
-                        PlanId = x.plan_id,
-                        Isci = x.isci,
-                        FlightStartDate = x.flight_start_date,
-                        FlightEndDate = x.flight_end_date
-                    })
-                    .ToList();
+                var result = (from isciMappings in context.plan_iscis
+                              join iscis in context.reel_iscis
+                              on  isciMappings.isci  equals iscis.isci
+                              where isciMappings.plan_id == planId
+                              && isciMappings.deleted_at == null
+                              select new PlanIsciDto
+                              {
+                                  Id = isciMappings.id,
+                                  PlanId = isciMappings.plan_id,
+                                  Isci = isciMappings.isci,
+                                  FlightStartDate = isciMappings.flight_start_date,
+                                  FlightEndDate = isciMappings.flight_end_date
+                              }).Distinct().ToList();
                 return result;
             });
         }
