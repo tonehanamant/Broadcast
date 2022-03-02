@@ -1052,16 +1052,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
 
             // Act
+            InvalidOperationException caught = null;
             using (new TransactionScopeWrapper())
             {
-                planPricingService.RunQuote(request, username, templatePath);
+                caught = Assert.Throws<InvalidOperationException>(() => planPricingService.RunQuote(request, username, templatePath));
             }
 
             // Assert
-            var savedFile = fileService.CreatedFileStreams;
-            Assert.AreEqual(1, fileService.CreatedFileStreams.Count);
-            var savedContentLength = savedFile.First().Item3.Length;
-            Assert.IsTrue(savedContentLength > 6000);
+            const string expected_message =
+                    "There is no inventory available for the selected program restrictions in the requested quarter. " +
+                    "Previous quarters might have available inventory that will be utilized when pricing is executed.";
+            Assert.AreEqual(expected_message, caught.Message);
         }
 
         [Test]
