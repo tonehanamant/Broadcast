@@ -3,7 +3,9 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -129,6 +131,109 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
+        public void GetAvailableIsciPlans_IsciDeleted()
+        {
+            // Arrange
+            var createdBy = "Test User";
+            var createdAt = DateTime.Now;
+            DateTime mediaMonthStartDate = new DateTime(2020, 02, 17);
+            DateTime mediaMonthEndDate = new DateTime(2020, 03, 02);
+            var reelIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var planRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+
+
+            var Iscis = new List<ReelIsciDto>
+            {
+                new ReelIsciDto()
+                {
+                    Isci = "UniqueIsci1",
+                    SpotLengthId = 1,
+                    ActiveStartDate = new DateTime(2019, 02, 17),
+                    ActiveEndDate = new DateTime(2019, 03, 02),
+                    IngestedAt = new DateTime(2010, 10, 12),
+                    ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
+                    {
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Colgate EM"
+                        },
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Nature's Bounty"
+                        }
+                    }
+                }
+            };
+
+            var planDto = new PlanDto
+            {
+                CampaignId = 1,
+                Id = 7009,
+                Equivalized = true,
+                Name = "New Plan",
+                ProductId = 1,
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
+                AudienceType = AudienceTypeEnum.Nielsen,
+                AudienceId = 31,
+                ShareBookId = 437,
+                HUTBookId = 437,
+                PostingType = PostingTypeEnum.NSI,
+                Status = PlanStatusEnum.Contracted,
+                ModifiedBy = createdBy,
+                ModifiedDate = createdAt,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                FlightStartDate = new DateTime(2020, 02, 17),
+                FlightEndDate = new DateTime(2019, 03, 02),
+                Budget = 500000m,
+                TargetImpressions = 50000000,
+                TargetCPM = 10m,
+                CoverageGoalPercent = 60,
+                TargetRatingPoints = 0.00248816152650979,
+                TargetCPP = 200951583.9999m,
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+            };
+
+            var isciMappings = new List<PlanIsciDto>
+            {
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci1",
+                    FlightStartDate = new DateTime(2020, 02, 17),
+                    FlightEndDate = new DateTime(2020, 03, 02),
+                },
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci2",
+                    FlightStartDate = new DateTime(2020, 02, 17),
+                    FlightEndDate = new DateTime(2020, 03, 02),
+                }
+            };
+
+            // Act
+            List<IsciPlanDetailDto> results;
+            using (new TransactionScopeWrapper())
+            {
+                reelIsciRepository.AddReelIscis(Iscis);
+                planRepository.SavePlan(planDto, createdBy, createdAt);
+                planIsciRepository.SaveIsciPlanMappings(isciMappings, createdBy, createdAt);
+                results = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+            }
+
+            // Assert
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+        }
+
+        [Test]
         public void GetPlanIscis_IsciDeleted()
         {
             // Arrange
@@ -144,9 +249,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 {
                     Isci = "UniqueIsci1",
                     SpotLengthId = 1,
-                    ActiveStartDate = new DateTime(2019,01,01),
-                    ActiveEndDate = new DateTime(2019,01,17),
-                    IngestedAt = new DateTime(2010,10,12),
+                    ActiveStartDate = new DateTime(2020, 02, 17),
+                    ActiveEndDate = new DateTime(2019, 03, 02),
+                    IngestedAt = new DateTime(2010, 10, 12),
                     ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
                     {
                         new ReelIsciAdvertiserNameReferenceDto()
@@ -167,15 +272,15 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 {
                     PlanId = 7009,
                     Isci = "UniqueIsci1",
-                    FlightStartDate = new DateTime(2020, 2, 17),
-                    FlightEndDate = new DateTime(2020, 3, 2),
+                    FlightStartDate = new DateTime(2020, 02, 17),
+                    FlightEndDate = new DateTime(2020, 03, 02),
                 },
                 new PlanIsciDto()
                 {
                     PlanId = 7009,
                     Isci = "UniqueIsci2",
-                    FlightStartDate = new DateTime(2020, 2, 17),
-                    FlightEndDate = new DateTime(2020, 3, 2),
+                    FlightStartDate = new DateTime(2020, 02, 17),
+                    FlightEndDate = new DateTime(2020, 03, 02),
                 }
             };
 

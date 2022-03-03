@@ -223,7 +223,10 @@ namespace Services.Broadcast.Repositories
                         FlightStartDate = planVersion.flight_start_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
                         FlightEndDate = planVersion.flight_end_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
                         ProductMasterId = plan.product_master_id,
-                        Iscis = plan.plan_iscis
+                        Iscis = plan.plan_iscis.Join(context.reel_iscis,
+                                                    plan_iscis => plan_iscis.isci,
+                                                    reel_iscis => reel_iscis.isci,
+                                                    (plan_iscis, reel_iscis) => plan_iscis)
                                         .Where(planIsci => planIsci.deleted_at == null 
                                                 && (planIsci.flight_start_date <= mediaMonthStartDate && planIsci.flight_end_date >= mediaMonthEndDate
                                                     || planIsci.flight_start_date >= mediaMonthStartDate && planIsci.flight_start_date <= mediaMonthEndDate

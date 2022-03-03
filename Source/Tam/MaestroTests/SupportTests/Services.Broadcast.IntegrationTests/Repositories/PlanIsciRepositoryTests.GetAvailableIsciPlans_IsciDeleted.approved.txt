@@ -1,0 +1,20 @@
+[
+  {
+    "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+    "AdvertiserName": null,
+    "AudienceCode": "HH",
+    "Dayparts": [],
+    "FlightEndDate": "2019-03-02T00:00:00",
+    "FlightStartDate": "2020-02-17T00:00:00",
+    "Id": 7009,
+    "Iscis": [
+      "UniqueIsci1"
+    ],
+    "ProductMasterId": null,
+    "ProductName": null,
+    "SpotLengthValues": [
+      30
+    ],
+    "Title": "New Plan"
+  }
+]
