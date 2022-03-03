@@ -858,8 +858,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     var first = grouping.First();
                     var allItems = grouping.ToList();
-                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
-                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
+                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);                  
                     decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
                     var week = new WeeklyBreakdownWeek
                     {
@@ -875,8 +874,6 @@ namespace Services.Broadcast.BusinessEngines
                         WeeklyBudget = weeklyBudget,
                         WeeklyAdu = first.WeeklyAdu,
                         AduImpressions = first.AduImpressions,
-                        SpotLengthId = first.SpotLengthId,
-                        SpotLengthDuration = first.SpotLengthDuration,
                         DaypartCodeId = first.DaypartCodeId,
                         PercentageOfWeek = first.PercentageOfWeek,
                         IsUpdated = first.IsUpdated,
@@ -885,7 +882,7 @@ namespace Services.Broadcast.BusinessEngines
                         DaypartOrganizationId = first.DaypartOrganizationId,
                         CustomName = first.CustomName,
                         DaypartOrganizationName = first.DaypartOrganizationName,
-                        WeeklyUnits = unitsImpressions == 0 ? 0 : weeklyImpressions / unitsImpressions
+                        WeeklyUnits=first.WeeklyUnits
                     };
                     return week;
                 }).ToList();
@@ -994,7 +991,6 @@ namespace Services.Broadcast.BusinessEngines
                     var first = grouping.First();
                     var allItems = grouping.ToList();
                     double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
-                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
                     decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
                     var week = new WeeklyBreakdownWeek
                     {
@@ -1010,17 +1006,14 @@ namespace Services.Broadcast.BusinessEngines
                         WeeklyBudget = weeklyBudget,
                         WeeklyAdu = first.WeeklyAdu,
                         AduImpressions = first.AduImpressions,
-                        SpotLengthId = first.SpotLengthId,
-                        SpotLengthDuration = first.SpotLengthDuration,
-                        DaypartCodeId = first.DaypartCodeId,
                         PercentageOfWeek = first.PercentageOfWeek,
                         IsUpdated = first.IsUpdated,
                         UnitImpressions = first.UnitImpressions,
                         IsLocked = first.IsLocked,
                         DaypartOrganizationId = first.DaypartOrganizationId,
                         CustomName = first.CustomName,
-                        DaypartOrganizationName = first.DaypartOrganizationName ,
-                        WeeklyUnits =unitsImpressions == 0? 0: weeklyImpressions / unitsImpressions
+                        DaypartOrganizationName = first.DaypartOrganizationName,
+                        WeeklyUnits=first.WeeklyUnits
                     };                   
                     return week;
                 }).ToList();
@@ -1122,8 +1115,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     var first = grouping.First();
                     var allItems = grouping.ToList();
-                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
-                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
+                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);                   
                     decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
                     var week = new WeeklyBreakdownWeek
                     {
@@ -1141,15 +1133,14 @@ namespace Services.Broadcast.BusinessEngines
                         AduImpressions = first.AduImpressions,
                         SpotLengthId = first.SpotLengthId,
                         SpotLengthDuration = first.SpotLengthDuration,
-                        DaypartCodeId = first.DaypartCodeId,
                         PercentageOfWeek = first.PercentageOfWeek,
                         IsUpdated = first.IsUpdated,
                         UnitImpressions = first.UnitImpressions,
                         IsLocked = first.IsLocked,
                         DaypartOrganizationId = first.DaypartOrganizationId,
                         CustomName = first.CustomName,
-                        DaypartOrganizationName = first.DaypartOrganizationName,
-                        WeeklyUnits = unitsImpressions == 0 ? 0 : weeklyImpressions / unitsImpressions
+                        DaypartOrganizationName = first.DaypartOrganizationName ,
+                        WeeklyUnits=first.WeeklyUnits
                     };
                     return week;
                 }).ToList();
