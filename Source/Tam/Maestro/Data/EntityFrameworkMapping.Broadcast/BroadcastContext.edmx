@@ -2498,11 +2498,16 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="house_isci" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="client_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="client_spot_length_id" Type="int" Nullable="false" />
           <Property Name="count" Type="int" Nullable="false" />
           <Property Name="program_air_time" Type="datetime" Nullable="false" />
           <Property Name="estimate_id" Type="bigint" Nullable="false" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="modified_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_reel_roster">
           <Key>
@@ -2515,6 +2520,10 @@
           <Property Name="estimate_id" Type="bigint" Nullable="false" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="modified_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_length_cost_multipliers">
           <Key>
@@ -2603,7 +2612,7 @@
           <Property Name="audience_name" Type="varchar" MaxLength="127" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="program_name" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="program_genre" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="program_genre" Type="varchar" MaxLength="127" />
           <Property Name="reason_code" Type="int" Nullable="false" />
           <Property Name="reason_code_message" Type="varchar" MaxLength="500" />
           <Property Name="lead_in_program_name" Type="varchar" MaxLength="500" />
@@ -2665,7 +2674,7 @@
           <Property Name="market_code" Type="int" />
           <Property Name="market_rank" Type="int" />
           <Property Name="program_name" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="program_genre" Type="varchar" MaxLength="127" Nullable="false" />
+          <Property Name="program_genre" Type="varchar" MaxLength="127" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
         </EntityType>
@@ -2676,6 +2685,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="house_isci" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="client_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="client_spot_length" Type="int" Nullable="false" />
           <Property Name="spot_count" Type="int" Nullable="false" />
           <Property Name="program_air_time" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="estimate_id" Type="bigint" Nullable="false" />
@@ -18214,6 +18224,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="estimate_id" Type="Int64" Nullable="false" />
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="client_spot_length" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="staged_unposted_no_reel_roster">
           <Key>
@@ -18239,6 +18250,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="estimate_id" Type="Int64" Nullable="false" />
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="client_spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_reel_roster">
           <Key>
@@ -18251,6 +18267,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="estimate_id" Type="Int64" Nullable="false" />
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="plan_version_daypart_goals">
           <Key>
@@ -18745,7 +18765,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="market_code" Type="Int32" />
           <Property Name="market_rank" Type="Int32" />
           <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="program_genre" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="staged_recommended_plan_details" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plans" ToRole="staged_recommended_plan_details" />
@@ -18851,7 +18871,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="audience_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="program_genre" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
           <Property Name="reason_code" Type="Int32" Nullable="false" />
           <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="lead_in_program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -21823,6 +21843,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="staged_unposted_no_plan">
             <EntityTypeMapping TypeName="BroadcastModel.staged_unposted_no_plan">
               <MappingFragment StoreEntitySet="staged_unposted_no_plan">
+                <ScalarProperty Name="client_spot_length" ColumnName="client_spot_length" />
                 <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
                 <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
@@ -21850,6 +21871,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_unposted_no_plan">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_plan">
               <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_plan">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="client_spot_length_id" ColumnName="client_spot_length_id" />
                 <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
                 <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
@@ -21864,6 +21890,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_unposted_no_reel_roster">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_reel_roster">
               <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_reel_roster">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
                 <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />

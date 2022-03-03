@@ -880,6 +880,87 @@ BEGIN
 	)
 END
 
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'client_spot_length_id'
+        AND OBJECT_ID = OBJECT_ID('staged_unposted_no_plan'))
+BEGIN
+	DROP TABLE staged_unposted_no_plan	
+	DROP TABLE spot_exceptions_unposted_no_plan	
+	DROP TABLE spot_exceptions_unposted_no_reel_roster	
+END
+
+IF OBJECT_ID('staged_unposted_no_plan') IS NULL
+BEGIN
+	CREATE TABLE staged_unposted_no_plan
+	(
+		id INT IDENTITY(1,1) PRIMARY KEY,
+		house_isci VARCHAR(50) NOT NULL,
+		client_isci VARCHAR(50) NOT NULL,
+		client_spot_length INT NOT NULL,
+		spot_count INT NOT NULL,	
+		program_air_time DATETIME2 NOT NULL,	
+		estimate_id BIGINT NOT NULL,	
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL
+	)
+END
+
+IF OBJECT_ID('spot_exceptions_unposted_no_plan') IS NULL
+BEGIN
+	CREATE TABLE [dbo].spot_exceptions_unposted_no_plan
+    (
+		id INT IDENTITY(1,1) PRIMARY KEY,
+		house_isci VARCHAR(50) NOT NULL,
+		client_isci VARCHAR(50) NOT NULL,
+		client_spot_length_id INT NOT NULL,
+		[count] INT NOT NULL,	
+		program_air_time DATETIME NOT NULL,	
+		estimate_id BIGINT NOT NULL,	
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL,
+		created_by VARCHAR(100) NOT NULL,
+		created_at DATETIME NOT NULL,
+		modified_by VARCHAR(100) NOT NULL,
+		modified_at DATETIME NOT NULL
+    )
+END
+
+IF OBJECT_ID('spot_exceptions_unposted_no_reel_roster') IS NULL
+BEGIN
+    CREATE TABLE [dbo].spot_exceptions_unposted_no_reel_roster
+     (
+		id INT IDENTITY(1,1) PRIMARY KEY,
+		house_isci VARCHAR(50) NOT NULL,
+		[count] INT NOT NULL,	
+		program_air_time DATETIME NOT NULL,	
+		estimate_id BIGINT NOT NULL,
+		ingested_by VARCHAR(100) NOT NULL,
+		ingested_at DATETIME NOT NULL,
+		created_by VARCHAR(100) NOT NULL,
+		created_at DATETIME NOT NULL,
+		modified_by VARCHAR(100) NOT NULL,
+		modified_at DATETIME NOT NULL
+    )
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'staged_recommended_plans' 
+	AND COLUMN_NAME= 'program_genre' 
+	AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE staged_recommended_plans
+		ALTER COLUMN program_genre VARCHAR(127) NULL
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'staged_out_of_specs' 
+	AND COLUMN_NAME= 'program_genre' 
+	AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE staged_out_of_specs
+		ALTER COLUMN program_genre VARCHAR(127) NULL
+END
+
 GO
 /*************************************** END BP-3285 ***************************************/
 

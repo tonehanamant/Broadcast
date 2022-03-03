@@ -22,5 +22,6 @@ namespace EntityFrameworkMapping.Broadcast
         public long estimate_id { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
+        public int client_spot_length { get; set; }
     }
 }

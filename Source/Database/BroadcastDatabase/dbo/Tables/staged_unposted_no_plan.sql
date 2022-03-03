@@ -3,6 +3,7 @@
 	id INT IDENTITY(1,1),
 	house_isci VARCHAR(50) NOT NULL,
 	client_isci VARCHAR(50) NOT NULL,
+	client_spot_length INT NOT NULL,
 	spot_count INT NOT NULL,	
 	program_air_time DATETIME2 NOT NULL,	
 	estimate_id BIGINT NOT NULL,	
