@@ -2,6 +2,7 @@
 using Hangfire;
 using Services.Broadcast.Repositories;
 using System;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -42,8 +43,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public string TriggerJob(int campaignId, string queuedBy)
         {
+            var result = TriggerJobAsync(campaignId, queuedBy).Result;
+            return result;
+        }
+
+        private async Task<string> TriggerJobAsync(int campaignId, string queuedBy)
+        {
             _CampaignSummaryRepository.SetSummaryProcessingStatusToInProgress(campaignId, queuedBy, DateTime.Now);
-            return _BackgroundJobClient.Enqueue<ICampaignService>(x => x.ProcessCampaignAggregation(campaignId));
+            return await Task.Run(() => _BackgroundJobClient.Enqueue<ICampaignService>(x => x.ProcessCampaignAggregation(campaignId)));
         }
     }
 }
