@@ -1026,6 +1026,9 @@ IF NOT EXISTS(SELECT 1 FROM sys.columns
         WHERE Name = 'spot_unique_hash_external'
         AND OBJECT_ID = OBJECT_ID('spot_exceptions_out_of_specs'))
 BEGIN
+	DELETE FROM spot_exceptions_out_of_spec_decisions
+	DELETE FROM spot_exceptions_out_of_specs
+
 	ALTER TABLE spot_exceptions_out_of_specs
 		DROP FK_spot_exceptions_out_of_specs_dayparts_program
 
