@@ -136,6 +136,14 @@ namespace Services.Broadcast.ApplicationServices
             List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans = _GetSpotExceptionsRecommendedPlansMock();
             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs = _GetSpotExceptionsOutOfSpecsMock();
 
+            spotExceptionsOutOfSpecs.ForEach(s =>
+            {
+                s.CreatedAt = DateTime.Now;
+                s.CreatedBy = "Mock Data";
+                s.ModifiedAt = DateTime.Now;
+                s.ModifiedBy = "Mock Date";
+            });
+
             // uncomment this to align with the integration test database
             //spotExceptionsRecommendedPlans.ForEach(s => s.RecommendedPlanId = 524);
             //spotExceptionsRecommendedPlans.SelectMany(s => s.SpotExceptionsRecommendedPlanDetails).ToList().ForEach(s => s.RecommendedPlanId = 524);
@@ -562,7 +570,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzNzk3Nw==",
                   HouseIsci = "612NM15082H",
-                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 8, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191756,
                   IsciName="AB82TXT2H",
@@ -601,13 +609,13 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzODk5MA==",
                   HouseIsci = "613NM15082H",
-                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191757,
                   IsciName="AB82VR58",
@@ -646,7 +654,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 13, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191758,
                   IsciName="AB44NR58",
@@ -685,7 +693,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191759,
                   IsciName="AB21QR58",
@@ -724,7 +732,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191760,
                   IsciName="AB44NR58",
@@ -763,7 +771,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA5ODgwOQ==",
                   HouseIsci = "613NM13290H",
-                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 8, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191761,
                   IsciName="AB33PR58",
@@ -802,7 +810,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 13, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191762,
                   IsciName="AB79PR58",
@@ -841,7 +849,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 8, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191763,
                   IsciName="AB81GR58",
@@ -880,7 +888,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
                   HouseIsci = "OMGN1016000H",
-                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191764,
                   IsciName="AB87GR58",
@@ -919,7 +927,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
+                  ProgramGenre = new Entities.Genre { Id = 13, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191765,
                   IsciName="AB83PR58",
@@ -1342,21 +1350,21 @@ namespace Services.Broadcast.ApplicationServices
                         EstimateId = queuedPlan.EstimateId,
                         Reason = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = queuedPlan.MarketRank,
-                        DMA = 58, //**** TODO - UnHardcode This
+                        DMA = queuedPlan.DMA,
                         Market = queuedPlan.Market,
                         Station = queuedPlan.StationLegacyCallLetters,
-                        TimeZone = "EST", //**** TODO - UnHardcode This
+                        TimeZone = queuedPlan.TimeZone,
                         Affiliate = queuedPlan.Affiliate,
                         Day = queuedPlan.ProgramAirTime.DayOfWeek.ToString(),
-                        GenreName = "News", //**** TODO - UnHardcode This
-                        HouseIsci = "655MEP1010H", //**** TODO - UnHardcode This
+                        GenreName = queuedPlan.ProgramGenre.Name,
+                        HouseIsci = queuedPlan.HouseIsci,
                         ClientIsci = queuedPlan.IsciName,
                         ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
                         FlightEndDate = queuedPlan.FlightEndDate.ToString(),
                         ProgramName = queuedPlan.ProgramName,
                         SpotLengthString = queuedPlan.SpotLength != null ? $":{queuedPlan.SpotLength.Length}" : null,
-                        DaypartCode = "MDN", //**** TODO - UnHardcode This
+                        DaypartCode = queuedPlan.DaypartDetail.Code,
                         DecisionString = queuedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes
                     };
                 }).ToList();
@@ -1370,21 +1378,21 @@ namespace Services.Broadcast.ApplicationServices
                         EstimateId = syncedPlan.EstimateId,
                         Reason = syncedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = syncedPlan.MarketRank,
-                        DMA = 58, //**** TODO - UnHardcode This
+                        DMA = syncedPlan.DMA,
                         Market = syncedPlan.Market,
                         Station = syncedPlan.StationLegacyCallLetters,
-                        TimeZone = "EST", //**** TODO - UnHardcode This
+                        TimeZone = syncedPlan.TimeZone,
                         Affiliate = syncedPlan.Affiliate,
                         Day = syncedPlan.ProgramAirTime.DayOfWeek.ToString(),
-                        GenreName = "News", //**** TODO - UnHardcode This
-                        HouseIsci = "655MEP1010H", //**** TODO - UnHardcode This
+                        GenreName = syncedPlan.ProgramGenre.Name,
+                        HouseIsci = syncedPlan.HouseIsci,
                         ClientIsci = syncedPlan.IsciName,
                         ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
                         FlightEndDate = syncedPlan.FlightEndDate.ToString(),
                         ProgramName = syncedPlan.ProgramName,
                         SpotLengthString = syncedPlan.SpotLength != null ? $":{syncedPlan.SpotLength.Length}" : null,
-                        DaypartCode = "MDN", //**** TODO - UnHardcode This
+                        DaypartCode = syncedPlan.DaypartDetail.Code,
                         DecisionString = syncedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
                         SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDecision.SyncedAt.ToString()
                     };

@@ -2417,6 +2417,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="reason_code_message" Type="nvarchar" MaxLength="500" />
           <Property Name="estimate_id" Type="int" Nullable="false" />
           <Property Name="isci_name" Type="varchar" MaxLength="100" Nullable="false" />
@@ -2431,17 +2433,19 @@
           <Property Name="daypart_id" Type="int" />
           <Property Name="program_network" Type="varchar" MaxLength="10" />
           <Property Name="program_air_time" Type="datetime" Nullable="false" />
-          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ingested_at" Type="datetime" Nullable="false" />
           <Property Name="advertiser_name" Type="nvarchar" MaxLength="100" />
           <Property Name="reason_code_id" Type="int" Nullable="false" />
-          <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="market_code" Type="int" />
           <Property Name="market_rank" Type="int" />
           <Property Name="program_genre_id" Type="int" />
           <Property Name="house_isci" Type="varchar" MaxLength="100" />
-          <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="modified_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -6629,6 +6633,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_program_genre">
+          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
+          <End Role="spot_exceptions_out_of_specs" Type="Self.spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="program_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
           <End Role="spot_exceptions_out_of_spec_reason_codes" Type="Self.spot_exceptions_out_of_spec_reason_codes" Multiplicity="1" />
           <End Role="spot_exceptions_out_of_specs" Type="Self.spot_exceptions_out_of_specs" Multiplicity="*" />
@@ -6650,18 +6666,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="spot_exceptions_out_of_specs">
               <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specsprogram_genre">
-          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
-          <End Role="spot_exceptions_out_of_specs" Type="Self.spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="program_genre_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8860,16 +8864,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plans" EntitySet="plans" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_program_genre" Association="Self.FK_spot_exceptions_out_of_specs_program_genre">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" Association="Self.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
             <End Role="spot_exceptions_out_of_spec_reason_codes" EntitySet="spot_exceptions_out_of_spec_reason_codes" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_lengths" Association="Self.FK_spot_exceptions_out_of_specs_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specsprogram_genre" Association="Self.FK_spot_exceptions_out_of_specsprogram_genre">
-            <End Role="genres" EntitySet="genres" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" Association="Self.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details">
@@ -10556,7 +10560,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_buying_band_stations" EntitySet="plan_version_buying_band_stations" />
           </AssociationSet>
           <EntitySet Name="spot_exceptions_ingest_jobs" EntityType="BroadcastModel.spot_exceptions_ingest_jobs" />
-          <EntitySet Name="spot_exceptions_out_of_spec_decisions" EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" />
           <EntitySet Name="spot_exceptions_recommended_plan_decision" EntityType="BroadcastModel.spot_exceptions_recommended_plan_decision" />
           <EntitySet Name="spot_exceptions_recommended_plan_details" EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" />
           <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans">
@@ -10724,6 +10727,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_buying_band_inventory_stations" EntitySet="plan_version_buying_band_inventory_stations" />
           </AssociationSet>
           <EntitySet Name="staged_out_of_specs" EntityType="BroadcastModel.staged_out_of_specs" />
+          <EntitySet Name="spot_exceptions_out_of_spec_decisions" EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" />
           <EntitySet Name="spot_exceptions_out_of_specs" EntityType="BroadcastModel.spot_exceptions_out_of_specs" />
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_audiences" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -10733,7 +10737,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="daypart" EntitySet="dayparts" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specsprogram_genre" Association="BroadcastModel.FK_spot_exceptions_out_of_specsprogram_genre">
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_program_genre" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre">
             <End Role="genre" EntitySet="genres" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
@@ -15856,7 +15860,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="program_name_exceptions" Relationship="BroadcastModel.FK_program_name_exceptions_genres" FromRole="genre" ToRole="program_name_exceptions" />
           <NavigationProperty Name="program_name_mapping_keywords" Relationship="BroadcastModel.FK_program_name_mapping_keywords_genres" FromRole="genre" ToRole="program_name_mapping_keywords" />
           <NavigationProperty Name="inventory_proprietary_daypart_programs" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_programs_genres" FromRole="genre" ToRole="inventory_proprietary_daypart_programs" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specsprogram_genre" FromRole="genre" ToRole="spot_exceptions_out_of_specs" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre" FromRole="genre" ToRole="spot_exceptions_out_of_specs" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_daypart_programs">
           <Key>
@@ -17856,20 +17860,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="start_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
-        <EntityType Name="spot_exceptions_out_of_spec_decisions">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_exceptions_out_of_spec_id" Type="Int32" Nullable="false" />
-          <Property Name="accepted_as_in_spec" Type="Boolean" Nullable="false" />
-          <Property Name="decision_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="synced_at" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
-        </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
             <PropertyRef Name="id" />
@@ -18730,11 +18720,27 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="spot_exceptions_out_of_spec_decisions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_exceptions_out_of_spec_id" Type="Int32" Nullable="false" />
+          <Property Name="accepted_as_in_spec" Type="Boolean" Nullable="false" />
+          <Property Name="decision_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="synced_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
+        </EntityType>
         <EntityType Name="spot_exceptions_out_of_specs">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="estimate_id" Type="Int32" Nullable="false" />
           <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -18749,20 +18755,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_id" Type="Int32" />
           <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="advertiser_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="reason_code_id" Type="Int32" Nullable="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <Property Name="market_code" Type="Int32" />
           <Property Name="market_rank" Type="Int32" />
           <Property Name="program_genre_id" Type="Int32" />
           <Property Name="house_isci" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" FromRole="spot_exceptions_out_of_specs" ToRole="daypart" />
-          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specsprogram_genre" FromRole="spot_exceptions_out_of_specs" ToRole="genre" />
+          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre" FromRole="spot_exceptions_out_of_specs" ToRole="genre" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
@@ -18792,7 +18800,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_spot_exceptions_out_of_specsprogram_genre">
+        <Association Name="FK_spot_exceptions_out_of_specs_program_genre">
           <End Type="BroadcastModel.genre" Role="genre" Multiplicity="0..1" />
           <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
           <ReferentialConstraint>
@@ -21688,20 +21696,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_out_of_spec_decisions">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_spec_decisions">
-              <MappingFragment StoreEntitySet="spot_exceptions_out_of_spec_decisions">
-                <ScalarProperty Name="synced_at" ColumnName="synced_at" />
-                <ScalarProperty Name="synced_by" ColumnName="synced_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="decision_notes" ColumnName="decision_notes" />
-                <ScalarProperty Name="accepted_as_in_spec" ColumnName="accepted_as_in_spec" />
-                <ScalarProperty Name="spot_exceptions_out_of_spec_id" ColumnName="spot_exceptions_out_of_spec_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="spot_exceptions_recommended_plan_decision">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_decision">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_decision">
@@ -22088,20 +22082,36 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_out_of_spec_decisions">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_spec_decisions">
+              <MappingFragment StoreEntitySet="spot_exceptions_out_of_spec_decisions">
+                <ScalarProperty Name="synced_at" ColumnName="synced_at" />
+                <ScalarProperty Name="synced_by" ColumnName="synced_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="decision_notes" ColumnName="decision_notes" />
+                <ScalarProperty Name="accepted_as_in_spec" ColumnName="accepted_as_in_spec" />
+                <ScalarProperty Name="spot_exceptions_out_of_spec_id" ColumnName="spot_exceptions_out_of_spec_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="spot_exceptions_out_of_specs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
-                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="house_isci" ColumnName="house_isci" />
                 <ScalarProperty Name="program_genre_id" ColumnName="program_genre_id" />
                 <ScalarProperty Name="market_rank" ColumnName="market_rank" />
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
                 <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
                 <ScalarProperty Name="advertiser_name" ColumnName="advertiser_name" />
-                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
-                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
                 <ScalarProperty Name="program_network" ColumnName="program_network" />
                 <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
@@ -22116,6 +22126,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="isci_name" ColumnName="isci_name" />
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
                 <ScalarProperty Name="reason_code_message" ColumnName="reason_code_message" />
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
+                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

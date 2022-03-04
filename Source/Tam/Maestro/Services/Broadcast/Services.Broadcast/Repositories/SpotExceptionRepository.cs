@@ -182,9 +182,7 @@ namespace Services.Broadcast.Repositories
                         flight_start_date = outOfSpecs.FlightStartDate,
                         flight_end_date = outOfSpecs.FlightEndDate,
                         program_network = outOfSpecs.ProgramNetwork,
-                        program_air_time = outOfSpecs.ProgramAirTime,
-                        ingested_by = outOfSpecs.IngestedBy,
-                        ingested_at = outOfSpecs.IngestedAt,
+                        program_air_time = outOfSpecs.ProgramAirTime,                        
                         reason_code_id = outOfSpecs.SpotExceptionsOutOfSpecReasonCode.Id,
                         execution_id_external = executionId.ToString(),
                         impressions= outOfSpecs.Impressions,
@@ -194,6 +192,12 @@ namespace Services.Broadcast.Repositories
                         daypart_id = outOfSpecs.DaypartId,
                         market_code = outOfSpecs.MarketCode,
                         market_rank = outOfSpecs.MarketRank,
+                        ingested_by = outOfSpecs.IngestedBy,
+                        ingested_at = outOfSpecs.IngestedAt,
+                        created_by = outOfSpecs.CreatedBy,
+                        created_at = outOfSpecs.CreatedAt,
+                        modified_by = outOfSpecs.ModifiedBy,
+                        modified_at = outOfSpecs.ModifiedAt
                     };
                     if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
                     {
@@ -320,6 +324,10 @@ namespace Services.Broadcast.Repositories
                 ProgramAirTime = spotExceptionsOutOfSpecEntity.program_air_time,
                 IngestedBy = spotExceptionsOutOfSpecEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecEntity.ingested_at,
+                CreatedBy = spotExceptionsOutOfSpecEntity.created_by,
+                CreatedAt = spotExceptionsOutOfSpecEntity.created_at,
+                ModifiedBy = spotExceptionsOutOfSpecEntity.modified_by,
+                ModifiedAt = spotExceptionsOutOfSpecEntity.modified_at,
                 Impressions = spotExceptionsOutOfSpecEntity.impressions,
                 PlanId = spotExceptionsOutOfSpecEntity.plan.id,
                 SpotExceptionsOutOfSpecDecision = spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_decisions.Select(spotExceptionsOutOfSpecsDecisionDb => new SpotExceptionsOutOfSpecDecisionsDto
@@ -665,6 +673,10 @@ namespace Services.Broadcast.Repositories
                     program_air_time = outOfSpecs.ProgramAirTime,
                     ingested_by = outOfSpecs.IngestedBy,
                     ingested_at = outOfSpecs.IngestedAt,
+                    created_by = outOfSpecs.CreatedBy,
+                    created_at = outOfSpecs.CreatedAt,
+                    modified_by = outOfSpecs.ModifiedBy,
+                    modified_at = outOfSpecs.ModifiedAt,
                     execution_id_external = executionId.ToString(),
                     spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
                     house_isci = outOfSpecs.HouseIsci,

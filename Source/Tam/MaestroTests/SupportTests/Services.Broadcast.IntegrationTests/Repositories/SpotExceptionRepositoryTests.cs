@@ -267,6 +267,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       ProgramAirTime = new DateTime(2010,1,4,8,7,15),
                       IngestedBy=ingestedBy,
                       IngestedAt=ingestedDateTime,
+                      CreatedBy=ingestedBy,
+                      CreatedAt=ingestedDateTime,
+                      ModifiedBy=ingestedBy,
+                      ModifiedAt=ingestedDateTime,
                       SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                       {
                           Id = 2,
@@ -297,6 +301,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       ProgramAirTime = new DateTime(2010,1,4,8,7,15),
                       IngestedBy=ingestedBy,
                       IngestedAt=ingestedDateTime,
+                      CreatedBy=ingestedBy,
+                      CreatedAt=ingestedDateTime,
+                      ModifiedBy=ingestedBy,
+                      ModifiedAt=ingestedDateTime,
                       SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                       {
                           Id = 3,
@@ -327,6 +335,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       ProgramAirTime = new DateTime(2010,1,11,8,7,15),
                       IngestedBy=ingestedBy,
                       IngestedAt=ingestedDateTime,
+                      CreatedBy=ingestedBy,
+                      CreatedAt=ingestedDateTime,
+                      ModifiedBy=ingestedBy,
+                      ModifiedAt=ingestedDateTime,
                       SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                       {
                           Id = 4,

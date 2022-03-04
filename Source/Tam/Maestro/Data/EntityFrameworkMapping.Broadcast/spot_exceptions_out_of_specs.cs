@@ -20,6 +20,8 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
+        public string spot_unique_hash_external { get; set; }
+        public string execution_id_external { get; set; }
         public string reason_code_message { get; set; }
         public int estimate_id { get; set; }
         public string isci_name { get; set; }
@@ -34,17 +36,19 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> daypart_id { get; set; }
         public string program_network { get; set; }
         public System.DateTime program_air_time { get; set; }
-        public string ingested_by { get; set; }
-        public System.DateTime ingested_at { get; set; }
         public string advertiser_name { get; set; }
         public int reason_code_id { get; set; }
-        public string execution_id_external { get; set; }
         public double impressions { get; set; }
         public Nullable<int> market_code { get; set; }
         public Nullable<int> market_rank { get; set; }
         public Nullable<int> program_genre_id { get; set; }
         public string house_isci { get; set; }
-        public string spot_unique_hash_external { get; set; }
+        public string ingested_by { get; set; }
+        public System.DateTime ingested_at { get; set; }
+        public string created_by { get; set; }
+        public System.DateTime created_at { get; set; }
+        public string modified_by { get; set; }
+        public System.DateTime modified_at { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
