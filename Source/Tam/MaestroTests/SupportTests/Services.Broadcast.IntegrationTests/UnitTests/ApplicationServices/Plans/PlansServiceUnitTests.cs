@@ -571,6 +571,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);
         }
+
         [Test]
         [TestCase(0, 1, false, false, PlanService.SaveState.CreatingNewPlan)]
         [TestCase(1, 0, false, false, PlanService.SaveState.CreatingNewPlan)]

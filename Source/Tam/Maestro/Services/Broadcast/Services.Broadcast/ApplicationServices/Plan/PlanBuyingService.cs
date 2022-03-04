@@ -78,7 +78,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planBuyingFilter">The plan Buying Filter.</param>
         /// <returns></returns>
         PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// Gets the buying rep firms.
@@ -89,7 +89,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planBuyingFilter">The plan Buying Filter.</param>
         /// <returns></returns>
         PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// For troubleshooting
@@ -149,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planBuyingFilter">The filter parameter to filter the result.</param>
         /// <returns></returns>
         PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null);
 
         /// <summary>
         /// Gets the stations.
@@ -161,16 +161,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="isConversionRequired">User Format Conversion Flag</param>
         /// <returns></returns>
         PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null,bool isConversionRequired = true);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null,bool isConversionRequired = true);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
         /// </summary>
         PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null);
 
         PlanBuyingBandsDto GetBuyingBands(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null);
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -181,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         void SaveBuyingRequest(int planId, int jobId, PlanBuyingApiRequestDto_v3 buyingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
 
         Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
             PostingTypeEnum postingType = PostingTypeEnum.NSI);
         /// <summary>
         /// Generates the program lineup report.
@@ -208,7 +208,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>      
         /// <returns>The list of Rep firms</returns>
         List<string> GetResultRepFirms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency);
 
         /// <summary>
         /// Retrieves list of result Ownership Groups  
@@ -218,7 +218,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>      
         /// <returns>The list of Ownership Groups</returns>
         List<string> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency);
     }
 
     /// <summary>
@@ -532,7 +532,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private CurrentBuyingExecution _GetCurrentBuyingExecution(PlanBuyingJob job, int? planId, PostingTypeEnum postingType = PostingTypeEnum.NSI,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
         {
             CurrentBuyingExecutionResultDto buyingExecutionResult = null;
 
@@ -645,7 +645,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var emptyList = new List<CurrentBuyingExecutionResultDto>
             {
-                new CurrentBuyingExecutionResultDto() {SpotAllocationModelMode = SpotAllocationModelMode.Quality}
+                new CurrentBuyingExecutionResultDto() {SpotAllocationModelMode = SpotAllocationModelMode.Efficiency}
             };
             return emptyList;
         }
@@ -945,15 +945,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 JobId = jobId,
                 PlanVersionId = plan.VersionId,
                 BuyingVersion = _GetPricingModelVersion().ToString(),
-                SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-                PostingType = plan.PostingType
-            });
-
-            results.Add(new PlanBuyingAllocationResult
-            {
-                JobId = jobId,
-                PlanVersionId = plan.VersionId,
-                BuyingVersion = _GetPricingModelVersion().ToString(),
                 SpotAllocationModelMode = SpotAllocationModelMode.Floor,
                 PostingType = plan.PostingType
             });
@@ -963,10 +954,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 JobId = jobId,
                 PlanVersionId = plan.VersionId,
                 BuyingVersion = _GetPricingModelVersion().ToString(),
-                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
-                PostingType = plan.PostingType,
+                SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                PostingType = plan.PostingType
             });
-
 
             if (!goalsFulfilledByProprietaryInventory)
             {
@@ -2221,7 +2211,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var buyingApiRequest = new PlanBuyingApiRequestDto_v3
             {
-                Weeks = _GetBuyingModelWeeks_v3(plan, parameters, new ProprietaryInventoryData(), out List<int> skippedWeeksIds, SpotAllocationModelMode.Quality),
+                Weeks = _GetBuyingModelWeeks_v3(plan, parameters, new ProprietaryInventoryData(), out List<int> skippedWeeksIds, SpotAllocationModelMode.Efficiency),
                 Spots = _GetBuyingModelSpots_v3(groupedInventory, skippedWeeksIds).Spots
             };
 
@@ -2262,7 +2252,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         public PlanBuyingResultProgramsDto GetPrograms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
             PlanBuyingResultProgramsDto results = new PlanBuyingResultProgramsDto();
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
@@ -2311,7 +2301,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingBandsDto GetBuyingBands(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
             PlanBuyingBandsDto planBuyingBands = null;
 
@@ -2386,7 +2376,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
             if (_IsBuyExpRepOrgEnabled.Value)
             {
@@ -2425,7 +2415,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null, bool isConversionRequired = true)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null, bool isConversionRequired = true)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
@@ -2472,7 +2462,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
 
             if (_IsBuyExpRepOrgEnabled.Value)
@@ -2516,7 +2506,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <inheritdoc />
         public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality, PlanBuyingFilterDto planBuyingFilter = null)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
             if (_IsBuyExpRepOrgEnabled.Value)
             {
@@ -2608,7 +2598,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
 
             var postingType = request.PostingType ?? plan.PostingType;
-            var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Quality;
+            var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Efficiency;
             var result = new ProgramLineupReportData(
                 plan,
                 buyingJob,
@@ -2882,7 +2872,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
         public List<string> GetResultRepFirms(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
         {
             postingType = _ResolvePostingType(planId, postingType);
 
@@ -2899,7 +2889,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         public List<string> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
         {
             postingType = _ResolvePostingType(planId, postingType);
 

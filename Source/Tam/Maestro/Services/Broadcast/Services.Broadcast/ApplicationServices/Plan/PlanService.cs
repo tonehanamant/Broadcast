@@ -241,7 +241,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="campaignCopy">Campaign objects containing campaign and plans</param>
         /// <param name="createdBy">The username who is copying plans</param>
         /// <param name="createdDate">Timestamp when plans are copying</param>
-       void CopyPlans(int campaignId, SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate);
+        void CopyPlans(int campaignId, SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate);
 
         /// <summary>
         /// Update plan daypart with unique id
@@ -330,7 +330,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
             _LockingEngine = lockingEngine;
             _DateTimeEngine = dateTimeEngine;
-            _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>(); 
+            _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -566,7 +566,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SetPlanBuyingParameters(plan);
 
             _FinalizeBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePricingResults);
-        }      
+        }
 
         internal void _HandlePricingOnPlanSave(SaveState saveState, PlanDto plan, PlanDto beforePlan, PlanDto afterPlan, DateTime createdDate, string createdBy, bool shouldPromotePricingResults)
         {
@@ -586,7 +586,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
             }
             else
-            {               
+            {
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
             }
         }
@@ -600,7 +600,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-               _PlanBuyingRepository.SavePlanBuyingParameters(plan.BuyingParameters);
+                _PlanBuyingRepository.SavePlanBuyingParameters(plan.BuyingParameters);
             }
         }
         internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan)
@@ -702,7 +702,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MarketGroup = pricingDefaults.MarketGroup,
                 PostingType = plan.PostingType
             };
-            
+
             _PlanBuyingService.ValidateAndApplyMargin(plan.BuyingParameters);
         }
 
@@ -813,7 +813,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
             }
-            
+
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
             _SetDefaultDaypartRestrictions(plan);
             _SortPlanDayparts(plan);
@@ -837,7 +837,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                     _OnGetHandlePlanAvailableMarketSovFeature(goal);
                     _HandleAvailableMarketSovs(goal);
-                    _AggregateBlackoutMarkets(goal);                    
+                    _AggregateBlackoutMarkets(goal);
                 });
             }
             else
@@ -854,7 +854,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _OnGetHandlePlanAvailableMarketSovFeature(plan);
                 _HandleAvailableMarketSovs(plan);
-                _AddDaypartToWeeklyBreakdownResult(plan);               
+                _AddDaypartToWeeklyBreakdownResult(plan);
             }
 
             return plan;
@@ -991,7 +991,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private void _SetWeeklyBreakdownTotals(PlanDto plan)
-        {            
+        {
             plan.WeeklyBreakdownTotals = _SetWeeklyBreakdownTotals(plan.WeeklyBreakdownWeeks, plan.TargetImpressions, plan.TargetRatingPoints, plan.Budget);
         }
 
@@ -1019,7 +1019,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return weeklyBreakdownTotals;
         }
 
-            private void _SortPlanDayparts(PlanDto plan)
+        private void _SortPlanDayparts(PlanDto plan)
         {
             var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
             var planDayparts = plan.Dayparts.Select(x => new PlanDaypart
@@ -1430,7 +1430,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
             }
 
-            var result = clearAll ? _WeeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request) 
+            var result = clearAll ? _WeeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request)
                 : _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
             return result;
         }
@@ -1583,7 +1583,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                    .SelectMany(s => s.VpvhForAudiences)
                    .Where(s => s.AudienceId == plan.AudienceId)
                    .Average(s => s.Vpvh);
-                  
+
                 result[item.StandardDaypartId] = ProposalMath.CalculateHhImpressionsUsingVpvh(targetAudienceImpressions, targetAudienceVpvh);
             }
 
@@ -1962,7 +1962,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
                 planToCopy.Id = 0;
                 DaypartTimeHelper.SubtractOneSecondToEndTime(planToCopy.Dayparts);
-                _PlanValidator.ValidatePlan(planToCopy);               
+                _PlanValidator.ValidatePlan(planToCopy);
                 _ConvertImpressionsToRawFormat(planToCopy);
                 planToCopy.WeeklyBreakdownWeeks =
                     _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
@@ -1971,7 +1971,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             _PlanRepository.CopyPlans(plans, createdBy, createdDate);
             foreach (var plan in plans)
-            {   
+            {
                 _DispatchPlanAggregation(plan, true);
                 _SetPlanPricingParameters(plan);
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
@@ -1983,7 +1983,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <inheritdoc />
         public PlanDaypartUpdateResponseDto UpdatePlanDaypart(PlanDaypartUpdateRequestDto planDaypartUpdateRequest)
         {
-            PlanDaypartUpdateResponseDto planDaypartUpdateResponseDto = new PlanDaypartUpdateResponseDto();          
+            PlanDaypartUpdateResponseDto planDaypartUpdateResponseDto = new PlanDaypartUpdateResponseDto();
             foreach (var item in planDaypartUpdateRequest.RawWeeklyBreakdownWeeks)
             {
                 if (item.PlanDaypartId == planDaypartUpdateRequest.PlanDaypartId)

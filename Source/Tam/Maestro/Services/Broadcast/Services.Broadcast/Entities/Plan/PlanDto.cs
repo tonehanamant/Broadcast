@@ -148,7 +148,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The total number of Active days in the flight.
         /// </value>
-        public int? TotalActiveDays { get { return WeeklyBreakdownTotals.TotalActiveDays;  } }
+        public int? TotalActiveDays { get { return WeeklyBreakdownTotals.TotalActiveDays; } }
 
         /// <summary>
         /// Gets or sets the audience identifier.
@@ -549,12 +549,12 @@ namespace Services.Broadcast.Entities.Plan
             BudgetCpmLeverEnum result;
             if (PricingParameters?.Any() ?? false)
             {
-                 result = PricingParameters?[0].BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
+                result = PricingParameters?[0].BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
             }
             else
             {
-                result= BudgetCpmLeverEnum.Cpm; 
-            }           
+                result = BudgetCpmLeverEnum.Cpm;
+            }
             return result;
         }
     }

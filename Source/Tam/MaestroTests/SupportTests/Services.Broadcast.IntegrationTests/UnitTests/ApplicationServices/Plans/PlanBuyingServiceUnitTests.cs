@@ -2764,7 +2764,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(SpotAllocationModelMode.Quality, "PlanBuying_Test Plan Name_20201030_121523_Q")]
         [TestCase(SpotAllocationModelMode.Efficiency, "PlanBuying_Test Plan Name_20201030_121523_E")]
         [TestCase(SpotAllocationModelMode.Floor, "PlanBuying_Test Plan Name_20201030_121523_F")]
         public void ExportPlanBuyingScx(SpotAllocationModelMode spotAllocationModelMode, string expectedFileName)
@@ -4776,7 +4775,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                         HasResults=true,
                                         CpmPercentage=4,
                                         PostingType=PostingTypeEnum.NTI,
-                                        SpotAllocationModelMode=SpotAllocationModelMode.Quality
+                                        SpotAllocationModelMode=SpotAllocationModelMode.Efficiency
                                     },
                                     new CurrentBuyingExecutionResultDto
                                     {
@@ -4788,7 +4787,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                         HasResults=true,
                                         CpmPercentage=4,
                                         PostingType=PostingTypeEnum.NTI,
-                                        SpotAllocationModelMode=SpotAllocationModelMode.Quality
+                                        SpotAllocationModelMode=SpotAllocationModelMode.Efficiency
                                     }
                 }
             };
@@ -4872,7 +4871,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             candidateResults.Add(new CurrentBuyingExecutionResultDto
             {
                 PostingType = postingType,
-                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
                 OptimalCpm = 23
             });
 
@@ -4904,8 +4903,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Assert.AreEqual(1, results.Count());
                 return;
             }
-
-            Assert.IsTrue(results.Any(a => a.PostingType == postingType && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
 
             if (!isPricingEfficiencyModelEnabled)
             {
@@ -4941,7 +4938,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                        BuyingJobId = 4,
                        PlanVersionId = 879,
                        PostingType = PostingTypeEnum.NSI,
-                       SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                       SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
                        Details = new List<PlanBuyingStationDto>
                        {
                             new PlanBuyingStationDto
@@ -5049,7 +5046,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             HasResults = true,
                             CpmPercentage = 112,
                             PostingType = PostingTypeEnum.NSI,
-                            SpotAllocationModelMode = SpotAllocationModelMode.Quality
+                            SpotAllocationModelMode = SpotAllocationModelMode.Efficiency
                         }
                 };
         }
@@ -5108,7 +5105,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var plan = _GetPlan();
 
             // Act
-            var result = service.GetResultRepFirms(plan.Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
+            var result = service.GetResultRepFirms(plan.Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -5151,7 +5148,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var Id = 1197;
 
             // Act
-            var result = service.GetResultOwnershipGroups(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
+            var result = service.GetResultOwnershipGroups(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -5926,7 +5923,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -6109,7 +6106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = service.GetBuyingOwnershipGroups(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetBuyingOwnershipGroups(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -6292,7 +6289,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = service.GetBuyingRepFirms(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetBuyingRepFirms(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -6456,7 +6453,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             { };
 
             // Act
-            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -6608,7 +6605,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -6760,7 +6757,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetStations(Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -6952,7 +6949,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = service.GetMarkets(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetMarkets(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
 
             // Assert
             Assert.AreEqual(expectedCount, stationResultCount);
@@ -7677,7 +7674,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act           
-            var result = service.GetPrograms(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality, planBuyingFilter);
+            var result = service.GetPrograms(planId, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency, planBuyingFilter);
             // Assert
             Assert.AreEqual(expectedCount, count);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

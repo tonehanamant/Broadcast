@@ -36,7 +36,7 @@
     }
   ],
   "PostingType": 2,
-  "SpotAllocationModelMode": 1,
+  "SpotAllocationModelMode": 2,
   "Totals": {
     "AvgCpm": 22.0177,
     "AvgImpressions": 24.808,

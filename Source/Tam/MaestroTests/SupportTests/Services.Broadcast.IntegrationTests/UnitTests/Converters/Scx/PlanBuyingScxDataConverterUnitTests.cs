@@ -57,7 +57,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
         /// It creates a simple data package limited to the needs of this unit.
         /// </summary>
         [Test]
-        [TestCase(SpotAllocationModelMode.Quality)]
         [TestCase(SpotAllocationModelMode.Efficiency)]
         [TestCase(SpotAllocationModelMode.Floor)]
         public void ConvertData(SpotAllocationModelMode spotAllocationModelMode)

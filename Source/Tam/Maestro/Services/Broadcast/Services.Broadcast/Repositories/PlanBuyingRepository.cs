@@ -98,7 +98,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="postingType"></param>
         /// <returns></returns>
         PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, 
             PostingTypeEnum postingType = PostingTypeEnum.NSI);
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns></returns>
         List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null,
-            SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality);
+            SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Efficiency);
 
         /// <summary>
         /// Gets the proprietary inventory for program lineup.
@@ -645,7 +645,7 @@ namespace Services.Broadcast.Repositories
 
         /// <inheritdoc/>
         public PlanBuyingAllocationResult GetBuyingApiResultsByJobId(int jobId,
-        SpotAllocationModelMode spotAllocationModelMode,
+        SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
         PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             return _InReadUncommitedTransaction(context =>
@@ -1518,7 +1518,7 @@ namespace Services.Broadcast.Repositories
             public List<PlanBuyingAllocatedSpot> Unallocated = new List<PlanBuyingAllocatedSpot>();
         }
 
-        public List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public List<PlanBuyingAllocatedSpot> GetPlanBuyingAllocatedSpotsByPlanId(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode? spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
         {
             return _InReadUncommitedTransaction(context =>
             {

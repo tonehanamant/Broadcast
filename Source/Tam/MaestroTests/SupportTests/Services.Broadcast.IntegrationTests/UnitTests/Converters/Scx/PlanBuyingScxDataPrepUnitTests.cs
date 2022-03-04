@@ -289,7 +289,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             var jobParams = new PlanBuyingParametersDto { Margin = 20 };
             var jobResult = new PlanBuyingAllocationResult
             {
-                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                SpotAllocationModelMode = SpotAllocationModelMode.Floor,
                 AllocatedSpots = new List<PlanBuyingAllocatedSpot>
                 {
                     new PlanBuyingAllocatedSpot
@@ -380,14 +380,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             var testClass = _GetTestClass();
 
             // Act
-            var resultQ = testClass.GetScxData(request, generated, SpotAllocationModelMode.Quality);
             var resultE = testClass.GetScxData(request, generated, SpotAllocationModelMode.Efficiency);
             var resultF = testClass.GetScxData(request, generated, SpotAllocationModelMode.Floor);
 
             var result = new
-            {
-
-                Quality = resultQ,
+           {
                 Efficiency = resultE,
                 Floor = resultF,
             };

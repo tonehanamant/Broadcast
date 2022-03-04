@@ -42,7 +42,7 @@
       "OptimalCpm": 20.0,
       "PlanVersionId": 659,
       "PostingType": 1,
-      "SpotAllocationModelMode": 1
+      "SpotAllocationModelMode": 2
     }
   ]
 }

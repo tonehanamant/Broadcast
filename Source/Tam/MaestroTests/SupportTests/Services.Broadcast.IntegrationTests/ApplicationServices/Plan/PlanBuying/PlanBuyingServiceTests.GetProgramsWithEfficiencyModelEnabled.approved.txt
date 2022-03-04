@@ -37,7 +37,7 @@
       }
     ],
     "PostingType": 2,
-    "SpotAllocationModelMode": 1,
+    "SpotAllocationModelMode": 2,
     "Totals": {
       "AvgCpm": 17.6142,
       "AvgImpressions": 18.606,
@@ -140,57 +140,6 @@
     ],
     "PostingType": 2,
     "SpotAllocationModelMode": 3,
-    "Totals": {
-      "AvgCpm": 17.6142,
-      "AvgImpressions": 18.606,
-      "Budget": 16386.5250,
-      "Impressions": 930.3,
-      "ImpressionsPercentage": 100.0,
-      "MarketCount": 2,
-      "MarketCoveragePercent": 0.0,
-      "SpotCount": 50,
-      "StationCount": 2
-    }
-  },
-  "Quality": {
-    "Details": [
-      {
-        "AvgCpm": 17.5186,
-        "AvgImpressions": 30.835,
-        "Budget": 16205.6250,
-        "Genre": "Children",
-        "Impressions": 925.05,
-        "ImpressionsPercentage": 99.43566591,
-        "LegacyCallLetters": null,
-        "MarketCode": null,
-        "MarketCount": 1,
-        "OwnerName": null,
-        "ProgramName": "Early news",
-        "RepFirm": null,
-        "Spots": 30,
-        "Station": null,
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 34.4571,
-        "AvgImpressions": 0.2625,
-        "Budget": 180.9000,
-        "Genre": "Comedy",
-        "Impressions": 5.25,
-        "ImpressionsPercentage": 0.56433409,
-        "LegacyCallLetters": null,
-        "MarketCode": null,
-        "MarketCount": 1,
-        "OwnerName": null,
-        "ProgramName": "Late news",
-        "RepFirm": null,
-        "Spots": 20,
-        "Station": null,
-        "StationCount": 1
-      }
-    ],
-    "PostingType": 2,
-    "SpotAllocationModelMode": 1,
     "Totals": {
       "AvgCpm": 17.6142,
       "AvgImpressions": 18.606,

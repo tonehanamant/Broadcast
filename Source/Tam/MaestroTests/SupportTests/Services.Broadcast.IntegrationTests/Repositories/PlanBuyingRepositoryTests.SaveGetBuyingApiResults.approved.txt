@@ -97,7 +97,7 @@
   "PlanVersionId": 9166,
   "PostingType": 1,
   "RequestId": null,
-  "SpotAllocationModelMode": 1,
+  "SpotAllocationModelMode": 2,
   "UnallocatedSpots": [
     {
       "ContractMediaWeek": {

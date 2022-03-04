@@ -29,7 +29,7 @@
       }
     ],
     "PostingType": 2,
-    "SpotAllocationModelMode": 1,
+    "SpotAllocationModelMode": 2,
     "Totals": {
       "AvgCpm": 17.6142,
       "AvgImpressions": 0.0,
@@ -116,49 +116,6 @@
     ],
     "PostingType": 2,
     "SpotAllocationModelMode": 3,
-    "Totals": {
-      "AvgCpm": 17.6142,
-      "AvgImpressions": 0.0,
-      "Budget": 16386.5250,
-      "Impressions": 930.3,
-      "ImpressionsPercentage": 100.0,
-      "MarketCount": 0,
-      "MarketCoveragePercent": 0.0,
-      "SpotCount": 50,
-      "StationCount": 2
-    }
-  },
-  "Quality": {
-    "Details": [
-      {
-        "Affiliate": "CW",
-        "Budget": 16205.6250,
-        "Cpm": 17.5186,
-        "Impressions": 925.05,
-        "ImpressionsPercentage": 99.43566591,
-        "LegacyCallLetters": "WPIX",
-        "Market": "New York",
-        "OwnerName": "Ownership group 3",
-        "RepFirm": "Sales group 4",
-        "Spots": 30,
-        "Station": "WPIX"
-      },
-      {
-        "Affiliate": "FOX",
-        "Budget": 180.9000,
-        "Cpm": 34.4571,
-        "Impressions": 5.25,
-        "ImpressionsPercentage": 0.56433409,
-        "LegacyCallLetters": "WPFO",
-        "Market": "Portland-Auburn",
-        "OwnerName": "Ownership group 3",
-        "RepFirm": "Sales group 4",
-        "Spots": 20,
-        "Station": "WPFO"
-      }
-    ],
-    "PostingType": 2,
-    "SpotAllocationModelMode": 1,
     "Totals": {
       "AvgCpm": 17.6142,
       "AvgImpressions": 0.0,

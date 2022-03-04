@@ -86,7 +86,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 PlanVersionId = planVersionId,
                 AllocatedSpots = allocated,
                 UnallocatedSpots = unallocated,
-                SpotAllocationModelMode = SpotAllocationModelMode.Quality,
+                SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
                 PostingType = PostingTypeEnum.NSI
             };
             PlanBuyingAllocationResult savedResults;
@@ -101,7 +101,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
                 // Act
                 planBuyingRepo.SaveBuyingApiResults(planBuyingAllocationResult);
-                savedResults = planBuyingRepo.GetBuyingApiResultsByJobId(jobId);
+                savedResults = planBuyingRepo.GetBuyingApiResultsByJobId(jobId, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
             }
 
             // Assert

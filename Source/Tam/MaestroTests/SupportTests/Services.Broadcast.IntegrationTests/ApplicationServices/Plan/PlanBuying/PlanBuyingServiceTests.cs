@@ -804,9 +804,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = await _SavePlanAndRunBuyingJobAsync(plan);
 
-                var apiResult = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
+                var apiResult = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
                 var executionResult = _PlanBuyingService.GetCurrentBuyingExecutionByJobId(job.Id);
-                Assert.AreEqual(SpotAllocationModelMode.Quality, executionResult.Result.SpotAllocationModelMode);
+                Assert.AreEqual(SpotAllocationModelMode.Efficiency, executionResult.Result.SpotAllocationModelMode);
 
                 resultsToVerify = IntegrationTestHelper.ConvertToJson(apiResult, jsonSettings);
             }
@@ -829,15 +829,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             {
                 var job = await _SavePlanAndRunBuyingJobAsync(plan);
 
-                var resultDefault = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id);
-                var resultQ = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality);
-                var resultE = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency);
-                var resultF = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Floor);
+                var resultDefault = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+                var resultE = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+                var resultF = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, SpotAllocationModelMode.Floor, PostingTypeEnum.NSI);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };
@@ -864,14 +862,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetBuyingBands(plan.Id, null);
-                var resultQ = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetBuyingBands(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };
@@ -898,14 +894,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetStations(plan.Id, null);
-                var resultQ = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetStations(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };
@@ -932,14 +926,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetMarkets(plan.Id, null);
-                var resultQ = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetMarkets(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };
@@ -966,14 +958,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetPrograms(plan.Id, null);
-                var resultQ = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetPrograms(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };
@@ -1000,14 +990,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null);
-                var resultQ = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetBuyingOwnershipGroups(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };
@@ -1034,14 +1022,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var job = _SavePlanAndRunBuyingJobAsync(plan);
 
                 var resultDefault = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null);
-                var resultQ = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Quality);
                 var resultE = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Efficiency);
                 var resultF = _PlanBuyingService.GetBuyingRepFirms(plan.Id, null, SpotAllocationModelMode.Floor);
 
                 var result = new
                 {
                     Default = resultDefault,
-                    Quality = resultQ,
                     Efficiency = resultE,
                     Floor = resultF
                 };

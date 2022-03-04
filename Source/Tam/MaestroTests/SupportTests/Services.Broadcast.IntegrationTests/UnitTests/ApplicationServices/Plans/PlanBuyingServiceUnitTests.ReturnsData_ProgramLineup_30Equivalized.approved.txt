@@ -162,13 +162,13 @@
       "TimePeriods": "12:05AM-12:06AM"
     }
   ],
-  "ExportFileName": "Program_Lineup_Report_B_Brave Plan_NTI_Q_10172017.xlsx",
+  "ExportFileName": "Program_Lineup_Report_B_Brave Plan_NTI_E_10172017.xlsx",
   "FlightEndDate": "03/14/20",
   "FlightStartDate": "03/01/20",
   "GuaranteedDemo": "A18-20",
   "PlanHeaderName": "Brave Plan | Program Lineup*",
   "PostingType": "NTI",
   "ReportGeneratedDate": "10/17/17",
-  "SpotAllocationModelMode": "Quality",
+  "SpotAllocationModelMode": "Efficiency",
   "SpotLengths": ":30"
 }
