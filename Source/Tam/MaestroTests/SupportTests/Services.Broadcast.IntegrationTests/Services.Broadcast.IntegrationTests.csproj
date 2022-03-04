@@ -418,6 +418,7 @@
     <Compile Include="ApplicationServices\StationMappingsIntegationTests.cs" />
     <Compile Include="ApplicationServices\StationServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\TrafficServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\SpotExceptionsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\VpvhServiceIntegrationTests.cs" />
     <Compile Include="AttributeIgnorer.cs" />
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />

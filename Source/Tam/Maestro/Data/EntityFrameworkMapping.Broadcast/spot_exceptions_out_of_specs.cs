@@ -32,26 +32,23 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> flight_start_date { get; set; }
         public Nullable<System.DateTime> flight_end_date { get; set; }
         public Nullable<int> daypart_id { get; set; }
-        public int program_daypart_id { get; set; }
-        public System.DateTime program_flight_start_date { get; set; }
-        public System.DateTime program_flight_end_date { get; set; }
         public string program_network { get; set; }
-        public Nullable<int> program_audience_id { get; set; }
         public System.DateTime program_air_time { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
         public string advertiser_name { get; set; }
         public int reason_code_id { get; set; }
-        public long unique_id_external { get; set; }
         public string execution_id_external { get; set; }
         public double impressions { get; set; }
         public Nullable<int> market_code { get; set; }
         public Nullable<int> market_rank { get; set; }
+        public Nullable<int> program_genre_id { get; set; }
+        public string house_isci { get; set; }
+        public string spot_unique_hash_external { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual audience audience1 { get; set; }
         public virtual daypart daypart { get; set; }
-        public virtual daypart daypart1 { get; set; }
+        public virtual genre genre { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }

@@ -639,22 +639,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Length = 45
                     },
                     AudienceId = 426,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2019, 12, 1),
-                    FlightEndDate = new DateTime(2020, 2, 1),
-                    ProgramDaypartDetail = new DaypartDetailDto
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
-                    ProgramFlightEndDate = new DateTime(2020, 2, 1),
-                    ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2020, 2, 1),
+                    ProgramNetwork = "ABC",
                     ProgramAirTime = new DateTime(2020, 1, 10, 23, 45, 00),
                     IngestedAt = new DateTime(2019, 1, 1),
                     IngestedBy = "Repository Test User",
@@ -671,7 +670,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1 }
                 });
             // Act
             var result = _SpotExceptionService.GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecId);
@@ -725,19 +727,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2020, 2, 1),
-                    ProgramDaypartDetail = new DaypartDetailDto
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                    ProgramFlightStartDate=new DateTime(2019, 12, 1),
-                    ProgramFlightEndDate=new DateTime(2020, 2, 1),
-                    ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    ProgramNetwork = "ABC",
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
@@ -755,7 +756,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -780,20 +784,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70642,
-                  ProgramDaypartDetail = new DaypartDetailDto
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
-                  ProgramNetwork = "",
-                   ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
@@ -811,7 +813,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 2,
                         Reason = "genre content restriction",
                         Label = "Genre"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1}
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -836,20 +841,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70643,
-                  ProgramDaypartDetail = new DaypartDetailDto
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
-                  ProgramNetwork = "",
-                   ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
@@ -867,7 +870,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 3,
                         Reason = "affiliate content restriction",
                         Label = "Affiliate"
-                    }
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
                 },
             };
         }
@@ -890,7 +896,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                     PlanId = 215,
-                     SpotLength = new SpotLengthDto
+                    SpotLength = new SpotLengthDto
                     {
                         Id = 16,
                         Length = 45
@@ -899,19 +905,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramDaypartDetail = new DaypartDetailDto
+                    DaypartId= 70642,
+                    Audience = new AudienceDto
                     {
-                        Id = 71646,
-                        Code = "CUS"
-                    },
-                    ProgramFlightStartDate=new DateTime(2019, 12, 1),
-                    ProgramFlightEndDate=new DateTime(2019, 12, 9),
-                    ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
+                        Id = 426,
                         Code = "M50-64",
                         Name = "Men 50-64"
                     },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
@@ -922,7 +928,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -943,25 +952,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 16,
                         Length = 45
                     },
-                  AudienceId= 430,
+                  AudienceId= 426,
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70642,
-                  ProgramDaypartDetail = new DaypartDetailDto
-                    {
-                        Id = 71646,
-                        Code = "CUS"
-                    },
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
                   ProgramNetwork = "",
-                   ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
@@ -972,7 +979,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 2,
                         Reason = "genre content restriction",
                         Label = "Genre"
-                    }
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -993,25 +1003,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 16,
                         Length = 45
                     },
-                  AudienceId= 430,
+                  AudienceId= 426,
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70643,
-                  ProgramDaypartDetail = new DaypartDetailDto
-                    {
-                        Id = 71646,
-                        Code = "CUS"
-                    },
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
                   ProgramNetwork = "",
-                   ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
@@ -1022,7 +1030,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 3,
                         Reason = "affiliate content restriction",
                         Label = "Affiliate"
-                    }
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1}
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1046,21 +1057,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70643,
-                  ProgramDaypartDetail = new DaypartDetailDto
+                  DaypartId= 70642,
+                  Audience = new AudienceDto
                     {
-                        Id = 71646,
-                        Code = "CUS"
-                    },
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
-                  ProgramNetwork = "",
-                   ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
+                        Id = 426,
                         Code = "M50-64",
                         Name = "Men 50-64"
                     },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
                   IngestedBy = "Repository Test User",
@@ -1078,7 +1087,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 3,
                         Reason = "affiliate content restriction",
                         Label = "Affiliate"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
                 },
             };
         }
@@ -1107,22 +1119,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Length = 45
                     },
                     AudienceId = 426,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2019, 12, 1),
-                    FlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramDaypartDetail = new DaypartDetailDto
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
-                    ProgramFlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    ProgramNetwork = "ABC",
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),                    
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
@@ -1142,7 +1153,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1167,19 +1181,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramDaypartDetail = new DaypartDetailDto
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
-                    ProgramFlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    ProgramNetwork = "ABC",
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
@@ -1199,7 +1212,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1}
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1224,19 +1240,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramDaypartDetail = new DaypartDetailDto
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
                     {
                         Id = 71646,
                         Code = "CUS"
                     },
-                    ProgramFlightStartDate = new DateTime(2019, 12, 1),
-                    ProgramFlightEndDate = new DateTime(2019, 12, 9),
-                    ProgramAudience = new AudienceDto
-                    {
-                        Id = 427,
-                        Code = "M50-64",
-                        Name = "Men 50-64"
-                    },
+                    ProgramNetwork = "ABC",
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
@@ -1247,7 +1262,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ReasonCode = 1,
                         Reason = "spot aired outside daypart",
                         Label = "Daypart"
-                    }
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
+                    HouseIsci = "289J76GN16H",
+                    ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1}
                 },
             };
         }

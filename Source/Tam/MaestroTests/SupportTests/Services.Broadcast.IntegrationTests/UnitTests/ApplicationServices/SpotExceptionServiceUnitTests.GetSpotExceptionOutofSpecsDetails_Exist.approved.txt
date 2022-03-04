@@ -7,7 +7,7 @@
   "FlightEndDate": "2/1/2020 12:00:00 AM",
   "FlightStartDate": "12/1/2019 12:00:00 AM",
   "Id": 1,
-  "Network": null,
+  "Network": "ABC",
   "ProgramAirDate": "01/10/2020",
   "ProgramAirTime": "11:45:00 PM",
   "ProgramName": "Reckitt HYHO",

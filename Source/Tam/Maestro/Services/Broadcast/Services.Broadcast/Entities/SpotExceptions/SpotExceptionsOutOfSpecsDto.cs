@@ -4,20 +4,11 @@ namespace Services.Broadcast.Entities.SpotExceptions
 {
     public class SpotExceptionsOutOfSpecsDto
     {
-        public SpotExceptionsOutOfSpecsDto()
-        {
-            SpotLength = new SpotLengthDto();
-            ProgramAudience = new AudienceDto();
-            Audience = new AudienceDto();
-            DaypartDetail = new DaypartDetailDto();
-            ProgramDaypartDetail = new DaypartDetailDto();
-            SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto();
-            SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto();
-        }
         public int Id { get; set; }
+        public string SpotUniqueHashExternal { get; set; }
         public string ReasonCodeMessage { get; set; }
         public int EstimateId { get; set; }
-        public string IsciName { get; set; }
+        public string IsciName { get; set; }        
         public int? RecommendedPlanId { get; set; }
         public string RecommendedPlanName { get; set; }
         public string ProgramName { get; set; }
@@ -26,30 +17,29 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Market { get; set; }
         public string AdvertiserName { get; set; }        
         public int? SpotLengthId { get; set; }
-        public SpotLengthDto SpotLength { get; set; }
+        public SpotLengthDto SpotLength { get; set; } = new SpotLengthDto();
         public int? AudienceId { get; set; }
-        public AudienceDto Audience { get; set; }
+        public AudienceDto Audience { get; set; } = new AudienceDto();
         public string Product { get; set; }
         public DateTime? FlightStartDate { get; set; }
         public DateTime? FlightEndDate { get; set; }
         public int? DaypartId { get; set; }
-        public DaypartDetailDto DaypartDetail { get; set; }
-        public int ProgramDaypartId { get; set; }
-        public DaypartDetailDto ProgramDaypartDetail { get; set; }
-        public DateTime ProgramFlightStartDate { get; set; }
-        public DateTime ProgramFlightEndDate { get; set; }
+        public DaypartDetailDto DaypartDetail { get; set; } = new DaypartDetailDto();
         public string ProgramNetwork { get; set; }
-        public int? ProgramAudienceId { get; set; }
-        public AudienceDto ProgramAudience { get; set; }
         public DateTime ProgramAirTime { get; set; }
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
         public double Impressions { get; set; }
         public int PlanId { get; set; }
-        public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; }
-        public SpotExceptionsOutOfSpecReasonCodeDto SpotExceptionsOutOfSpecReasonCode { get; set; }
+        public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; } = new SpotExceptionsOutOfSpecDecisionsDto();
+        public SpotExceptionsOutOfSpecReasonCodeDto SpotExceptionsOutOfSpecReasonCode { get; set; } = new SpotExceptionsOutOfSpecReasonCodeDto();
         public int? MarketCode { get; set; }
         public int? MarketRank { get; set; }
+
+        public string HouseIsci { get; set; }
+        public Genre ProgramGenre { get; set; } = new Genre();
+        public string TimeZone { get; set; } = "EST"; // TODO: Populate this for real
+        public int DMA { get; set; } = 58; // TODO: Populate this for real
     }
 }
 

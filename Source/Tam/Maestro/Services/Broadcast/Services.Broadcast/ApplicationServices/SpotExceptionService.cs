@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -134,6 +135,11 @@ namespace Services.Broadcast.ApplicationServices
         {
             List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans = _GetSpotExceptionsRecommendedPlansMock();
             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs = _GetSpotExceptionsOutOfSpecsMock();
+
+            // uncomment this to align with the integration test database
+            //spotExceptionsRecommendedPlans.ForEach(s => s.RecommendedPlanId = 524);
+            //spotExceptionsRecommendedPlans.SelectMany(s => s.SpotExceptionsRecommendedPlanDetails).ToList().ForEach(s => s.RecommendedPlanId = 524);
+            //spotExceptionsOutOfSpecs.ForEach(s => s.RecommendedPlanId = 524);
 
             var result = _SpotExceptionRepository.AddSpotExceptionData(spotExceptionsRecommendedPlans, spotExceptionsOutOfSpecs);
             return result;
@@ -554,6 +560,9 @@ namespace Services.Broadcast.ApplicationServices
             {
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzNzk3Nw==",
+                  HouseIsci = "612NM15082H",
+                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191756,
                   IsciName="AB82TXT2H",
@@ -567,11 +576,14 @@ namespace Services.Broadcast.ApplicationServices
                   FlightStartDate =  new DateTime(2020, 6, 2),
                   FlightEndDate = new DateTime(2020, 7, 2),
                   DaypartId= 70612,
-                  ProgramDaypartId= 70641,
-                  ProgramFlightStartDate= new DateTime(2020, 6, 2),
-                  ProgramFlightEndDate = new DateTime(2020, 7, 2),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 431,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -593,6 +605,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzODk5MA==",
+                  HouseIsci = "613NM15082H",
+                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191757,
                   IsciName="AB82VR58",
@@ -605,12 +620,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70642,
-                  ProgramDaypartId= 70613,
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 430,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -626,6 +644,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191758,
                   IsciName="AB44NR58",
@@ -638,12 +659,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70643,
-                  ProgramDaypartId= 70614,
-                  ProgramFlightStartDate= new DateTime(2018, 7, 2),
-                  ProgramFlightEndDate = new DateTime(2018, 8, 2),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 431,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -659,6 +683,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191759,
                   IsciName="AB21QR58",
@@ -671,12 +698,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 3, 6),
                   FlightEndDate = new DateTime(2018, 4, 6),
-                  DaypartId= 70644,
-                  ProgramDaypartId= 70615,
-                  ProgramFlightStartDate= new DateTime(2018, 3, 6),
-                  ProgramFlightEndDate = new DateTime(2018, 4, 6),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 430,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -692,6 +722,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191760,
                   IsciName="AB44NR58",
@@ -704,12 +737,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 3, 6),
                   FlightEndDate = new DateTime(2018, 4, 6),
-                  DaypartId= 70616,
-                  ProgramDaypartId= 70645,
-                  ProgramFlightStartDate= new DateTime(2019, 7, 3),
-                  ProgramFlightEndDate = new DateTime(2019, 8, 3),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 429,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2020, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -725,6 +761,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTA5ODgwOQ==",
+                  HouseIsci = "613NM13290H",
+                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191761,
                   IsciName="AB33PR58",
@@ -737,12 +776,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Nike",
                   FlightStartDate =  new DateTime(2019, 7, 1),
                   FlightEndDate = new DateTime(2019, 8, 1),
-                  DaypartId= 70617,
-                  ProgramDaypartId= 70646,
-                  ProgramFlightStartDate= new DateTime(2019, 7, 1),
-                  ProgramFlightEndDate = new DateTime(2019, 8, 1),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 428,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -758,6 +800,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191762,
                   IsciName="AB79PR58",
@@ -770,12 +815,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Nike",
                   FlightStartDate =  new DateTime(2021, 8, 6),
                   FlightEndDate = new DateTime(2021, 9, 6),
-                  DaypartId= 70618,
-                  ProgramDaypartId= 70647,
-                  ProgramFlightStartDate= new DateTime(2021, 8, 6),
-                  ProgramFlightEndDate = new DateTime(2021, 9, 6),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 427,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -791,6 +839,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191763,
                   IsciName="AB81GR58",
@@ -803,12 +854,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Nike",
                   FlightStartDate =  new DateTime(2020, 8, 2),
                   FlightEndDate = new DateTime(2021, 9, 6),
-                  DaypartId= 70619,
-                  ProgramDaypartId= 70648,
-                  ProgramFlightStartDate= new DateTime(2020, 8, 2),
-                  ProgramFlightEndDate = new DateTime(2020, 9, 2),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 426,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -824,6 +878,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
+                  HouseIsci = "OMGN1016000H",
+                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191764,
                   IsciName="AB87GR58",
@@ -836,12 +893,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Nike",
                   FlightStartDate =  new DateTime(2020, 6, 6),
                   FlightEndDate = new DateTime(2020, 7, 6),
-                  DaypartId= 70620,
-                  ProgramDaypartId= 70649,
-                  ProgramFlightStartDate= new DateTime(2020, 6, 6),
-                  ProgramFlightEndDate = new DateTime(2020, 7, 6),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 425,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -857,6 +917,9 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
+                  HouseIsci = "289J76GN16H",
+                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191765,
                   IsciName="AB83PR58",
@@ -869,12 +932,15 @@ namespace Services.Broadcast.ApplicationServices
                   Product="Nike",
                   FlightStartDate =  new DateTime(2020, 5, 6),
                   FlightEndDate = new DateTime(2020, 7, 6),
-                  DaypartId= 70621,
-                  ProgramDaypartId= 70650,
-                  ProgramFlightStartDate= new DateTime(2020, 5, 6),
-                  ProgramFlightEndDate = new DateTime(2020, 6, 6),
-                  ProgramNetwork = "",
-                  ProgramAudienceId = 424,
+                  DaypartId= 70612,
+                  DaypartDetail = new DaypartDetailDto
+                  {
+                      Id = 70612,
+                      Code = "MDN"
+                  },
+                  MarketCode = 120,
+                  MarketRank = 50,
+                  ProgramNetwork = "ABC",
                   ProgramAirTime = new DateTime(2021, 10, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
@@ -918,10 +984,10 @@ namespace Services.Broadcast.ApplicationServices
                         Station = spotExceptionsOutOfSpec.StationLegacyCallLetters,
                         Market = spotExceptionsOutOfSpec.Market,
                         SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
-                        AudienceName = spotExceptionsOutOfSpec.ProgramAudience?.Name,
+                        AudienceName = spotExceptionsOutOfSpec.Audience?.Name,
                         ProductName = spotExceptionsOutOfSpec.Product,
                         AdvertiserName = spotExceptionsOutOfSpec.AdvertiserName,
-                        DaypartCode = spotExceptionsOutOfSpec.ProgramDaypartDetail?.Code,
+                        DaypartCode = spotExceptionsOutOfSpec.DaypartDetail?.Code,
                         FlightStartDate = spotExceptionsOutOfSpec.FlightStartDate?.ToString(),
                         FlightEndDate = spotExceptionsOutOfSpec.FlightEndDate?.ToString(),
                         FlightDateString = spotExceptionsOutOfSpec.FlightStartDate.HasValue && spotExceptionsOutOfSpec.FlightEndDate.HasValue ? $"{Convert.ToDateTime(spotExceptionsOutOfSpec.FlightStartDate).ToString(flightStartDateFormat)}-{Convert.ToDateTime(spotExceptionsOutOfSpec.FlightEndDate).ToString(flightEndDateFormat)}" : null,
@@ -953,9 +1019,9 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Id = spotExceptionsOutOfSpecDetail.Id,
                 Reason = spotExceptionsOutOfSpecDetail.SpotExceptionsOutOfSpecReasonCode.Label,
-                DaypartCode = spotExceptionsOutOfSpecDetail.ProgramDaypartDetail?.Code,
+                DaypartCode = spotExceptionsOutOfSpecDetail.DaypartDetail?.Code,
                 Network = spotExceptionsOutOfSpecDetail.ProgramNetwork,
-                AudienceName = spotExceptionsOutOfSpecDetail.ProgramAudience?.Name,
+                AudienceName = spotExceptionsOutOfSpecDetail.Audience?.Name,
                 FlightStartDate = spotExceptionsOutOfSpecDetail.FlightStartDate?.ToString(),
                 FlightEndDate = spotExceptionsOutOfSpecDetail.FlightEndDate?.ToString(),
                 FlightDateString = spotExceptionsOutOfSpecDetail.FlightStartDate.HasValue && spotExceptionsOutOfSpecDetail.FlightEndDate.HasValue ? $"{Convert.ToDateTime(spotExceptionsOutOfSpecDetail.FlightStartDate).ToString(flightStartDateFormat)}-{Convert.ToDateTime(spotExceptionsOutOfSpecDetail.FlightEndDate).ToString(flightEndDateFormat)}" : null,
@@ -1185,7 +1251,7 @@ namespace Services.Broadcast.ApplicationServices
                         Impressions = planDetails.Impressions / 1000,
                         SyncedTimestamp = null,
                         SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        AudienceName = planDetails.ProgramAudience?.Name,
+                        AudienceName = planDetails.Audience?.Name,
                         FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
                     };
                 }).ToList();
@@ -1203,7 +1269,7 @@ namespace Services.Broadcast.ApplicationServices
                         Impressions = planDetails.Impressions / 1000,
                         SyncedTimestamp = null,
                         SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        AudienceName = planDetails.ProgramAudience?.Name,
+                        AudienceName = planDetails.Audience?.Name,
                         FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
                     };
                 }).ToList();
@@ -1250,20 +1316,20 @@ namespace Services.Broadcast.ApplicationServices
                         EstimateId = activePlan.EstimateId,
                         Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = activePlan.MarketRank,
-                        DMA = 58, //**** TODO - UnHardcode This
+                        DMA = activePlan.DMA, 
                         Market = activePlan.Market,
                         Station = activePlan.StationLegacyCallLetters,
-                        TimeZone = "EST", //**** TODO - UnHardcode This
+                        TimeZone = activePlan.TimeZone, 
                         Affiliate = activePlan.Affiliate,
                         Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
-                        GenreName = "News", //**** TODO - UnHardcode This
-                        HouseIsci = "655MEP1010H", //**** TODO - UnHardcode This
+                        GenreName = activePlan.ProgramGenre.Name,
+                        HouseIsci = activePlan.HouseIsci,
                         ClientIsci = activePlan.IsciName,
                         ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
                         ProgramName = activePlan.ProgramName,
                         SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
-                        DaypartCode = "MDN", //**** TODO - UnHardcode This
+                        DaypartCode = activePlan.DaypartDetail.Code
                     };
                 }).ToList();
 

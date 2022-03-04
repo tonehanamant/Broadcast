@@ -240,7 +240,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
         public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
         public virtual DbSet<plan_version_daypart_goals> plan_version_daypart_goals { get; set; }
-        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<plan_version_daypart_available_markets> plan_version_daypart_available_markets { get; set; }
         public virtual DbSet<plan_version_daypart_flight_days> plan_version_daypart_flight_days { get; set; }
         public virtual DbSet<plan_version_daypart_flight_hiatus_days> plan_version_daypart_flight_hiatus_days { get; set; }
@@ -252,5 +251,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_band_inventory_station_dayparts> plan_version_buying_band_inventory_station_dayparts { get; set; }
         public virtual DbSet<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
         public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
     }
 }

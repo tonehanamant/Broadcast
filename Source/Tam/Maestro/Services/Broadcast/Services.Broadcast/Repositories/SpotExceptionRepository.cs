@@ -167,7 +167,7 @@ namespace Services.Broadcast.Repositories
                 var uniqueExternalIdOos = 1;
                 var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs =>
                 {
-                    var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs()
+                    var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs
                     {
                         reason_code_message = outOfSpecs.ReasonCodeMessage,
                         estimate_id = outOfSpecs.EstimateId,
@@ -181,18 +181,19 @@ namespace Services.Broadcast.Repositories
                         product = outOfSpecs.Product,
                         flight_start_date = outOfSpecs.FlightStartDate,
                         flight_end_date = outOfSpecs.FlightEndDate,
-                        program_flight_start_date = outOfSpecs.ProgramFlightStartDate,
-                        program_flight_end_date = outOfSpecs.ProgramFlightEndDate,
                         program_network = outOfSpecs.ProgramNetwork,
-                        program_audience_id = outOfSpecs.ProgramAudienceId,
                         program_air_time = outOfSpecs.ProgramAirTime,
-                        program_daypart_id = outOfSpecs.ProgramDaypartId,
                         ingested_by = outOfSpecs.IngestedBy,
                         ingested_at = outOfSpecs.IngestedAt,
                         reason_code_id = outOfSpecs.SpotExceptionsOutOfSpecReasonCode.Id,
-                        unique_id_external = ++uniqueExternalIdOos,
                         execution_id_external = executionId.ToString(),
-                        impressions= outOfSpecs.Impressions
+                        impressions= outOfSpecs.Impressions,
+                        house_isci = outOfSpecs.HouseIsci,
+                        program_genre_id = outOfSpecs.ProgramGenre?.Id,
+                        spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
+                        daypart_id = outOfSpecs.DaypartId,
+                        market_code = outOfSpecs.MarketCode,
+                        market_rank = outOfSpecs.MarketRank,
                     };
                     if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
                     {
@@ -245,11 +246,8 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart)
-                    //the reason daypart1 is two foreign key referring to same daypart table
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart1)
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
-                    //the reason audience1 is two foreign key referring to same audience table
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience1)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
                         context.stations
@@ -275,11 +273,8 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart)
-                    //the reason daypart1 is two foreign key referring to same daypart table
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart1)
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
-                    //the reason audience1 is two foreign key referring to same audience table
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience1)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
                         context.stations
@@ -304,9 +299,11 @@ namespace Services.Broadcast.Repositories
             var spotExceptionsOutOfSpec = new SpotExceptionsOutOfSpecsDto
             {
                 Id = spotExceptionsOutOfSpecEntity.id,
+                SpotUniqueHashExternal = spotExceptionsOutOfSpecEntity.spot_unique_hash_external,
                 ReasonCodeMessage = spotExceptionsOutOfSpecEntity.reason_code_message,
                 EstimateId = spotExceptionsOutOfSpecEntity.estimate_id,
                 IsciName = spotExceptionsOutOfSpecEntity.isci_name,
+                HouseIsci = spotExceptionsOutOfSpecEntity.house_isci,
                 RecommendedPlanId = spotExceptionsOutOfSpecEntity.recommended_plan_id,
                 RecommendedPlanName = spotExceptionsOutOfSpecEntity.plan?.name,
                 ProgramName = spotExceptionsOutOfSpecEntity.program_name,
@@ -320,10 +317,6 @@ namespace Services.Broadcast.Repositories
                 FlightStartDate = spotExceptionsOutOfSpecEntity.flight_start_date,
                 FlightEndDate = spotExceptionsOutOfSpecEntity.flight_end_date,
                 DaypartDetail = _MapDaypartToDto(spotExceptionsOutOfSpecEntity.daypart),
-                ProgramDaypartDetail = _MapDaypartToDto(spotExceptionsOutOfSpecEntity.daypart1),
-                ProgramFlightStartDate = spotExceptionsOutOfSpecEntity.program_flight_start_date,
-                ProgramFlightEndDate = spotExceptionsOutOfSpecEntity.program_flight_end_date,
-                ProgramAudience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience1),
                 ProgramAirTime = spotExceptionsOutOfSpecEntity.program_air_time,
                 IngestedBy = spotExceptionsOutOfSpecEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecEntity.ingested_at,
@@ -342,8 +335,14 @@ namespace Services.Broadcast.Repositories
                 }).SingleOrDefault(),
                 SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_reason_codes),
                 MarketCode = spotExceptionsOutOfSpecEntity.market_code,
-                MarketRank = spotExceptionsOutOfSpecEntity.market_rank
-            };
+                MarketRank = spotExceptionsOutOfSpecEntity.market_rank,
+                ProgramGenre = new Genre
+                { 
+                    Id = spotExceptionsOutOfSpecEntity.genre.id,
+                    Name = spotExceptionsOutOfSpecEntity.genre.name,
+                    ProgramSourceId = spotExceptionsOutOfSpecEntity.genre.program_source_id
+                }
+             };
             return spotExceptionsOutOfSpec;
         }
 
@@ -662,16 +661,14 @@ namespace Services.Broadcast.Repositories
                     product = outOfSpecs.Product,
                     flight_start_date = outOfSpecs.FlightStartDate,
                     flight_end_date = outOfSpecs.FlightEndDate,
-                    program_flight_start_date = outOfSpecs.ProgramFlightStartDate,
-                    program_flight_end_date = outOfSpecs.ProgramFlightEndDate,
                     program_network = outOfSpecs.ProgramNetwork,
-                    program_audience_id = outOfSpecs.ProgramAudienceId,
                     program_air_time = outOfSpecs.ProgramAirTime,
-                    program_daypart_id = outOfSpecs.ProgramDaypartId,
                     ingested_by = outOfSpecs.IngestedBy,
                     ingested_at = outOfSpecs.IngestedAt,
-                    unique_id_external = ++uniqueExternalId,
-                    execution_id_external = executionId.ToString()
+                    execution_id_external = executionId.ToString(),
+                    spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
+                    house_isci = outOfSpecs.HouseIsci,
+                    program_genre_id = outOfSpecs.ProgramGenre.Id
                 }).ToList();
                 context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
                 context.SaveChanges();

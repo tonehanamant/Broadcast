@@ -1021,6 +1021,50 @@ GO
 
 /*************************************** END BP-4084 ***************************************/
 
+/*************************************** START BP-3285 - Part 2 ***************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'spot_unique_hash_external'
+        AND OBJECT_ID = OBJECT_ID('spot_exceptions_out_of_specs'))
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP FK_spot_exceptions_out_of_specs_dayparts_program
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP FK_spot_exceptions_out_of_specs_audiences_program
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN unique_id_external
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP cOLUMN program_daypart_id
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN program_flight_Start_Date
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN program_flight_end_date
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN program_audience_id
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD program_genre_id INT NULL
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD house_isci VARCHAR(100) NULL
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD spot_unique_hash_external VARCHAR(255) NOT NULL
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_spot_exceptions_out_of_specsprogram_genre
+		FOREIGN KEY (program_genre_id) REFERENCES genres(id)
+END
+
+GO
+/*************************************** END BP-3285 - Part 2 ***************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -10,9 +10,11 @@
     "AudienceId": null,
     "DaypartDetail": null,
     "DaypartId": null,
+    "DMA": 58,
     "EstimateId": 191756,
     "FlightEndDate": "2020-07-02T00:00:00",
     "FlightStartDate": "2020-06-02T00:00:00",
+    "HouseIsci": "OMGN1016000H",
     "Impressions": 0.0,
     "IngestedAt": "2010-10-12T00:00:00",
     "IngestedBy": "Repository Test User",
@@ -23,21 +25,11 @@
     "PlanId": 1196,
     "Product": "Pizza Hut",
     "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramAudience": {
-      "Code": "W12-14",
-      "Id": 4,
-      "Name": "Women 12-14"
+    "ProgramGenre": {
+      "Id": 14,
+      "Name": "Drama",
+      "ProgramSourceId": 1
     },
-    "ProgramAudienceId": null,
-    "ProgramDaypartDetail": {
-      "Code": "WEA",
-      "DaypartText": "SA-SU 6AM-9AM",
-      "Id": 28,
-      "Name": "Weekend AM"
-    },
-    "ProgramDaypartId": 0,
-    "ProgramFlightEndDate": "2020-07-02T00:00:00",
-    "ProgramFlightStartDate": "2020-06-02T00:00:00",
     "ProgramName": "Q13 news at 10",
     "ProgramNetwork": null,
     "ReasonCodeMessage": "",
@@ -55,7 +47,9 @@
       "Length": 30
     },
     "SpotLengthId": null,
-    "StationLegacyCallLetters": "KOB"
+    "SpotUniqueHashExternal": "TE9DQUwtMTA1OTAxOTY3MA==",
+    "StationLegacyCallLetters": "KOB",
+    "TimeZone": "EST"
   },
   {
     "AdvertiserName": null,
@@ -68,9 +62,11 @@
     "AudienceId": null,
     "DaypartDetail": null,
     "DaypartId": null,
+    "DMA": 58,
     "EstimateId": 191757,
     "FlightEndDate": "2018-08-02T00:00:00",
     "FlightStartDate": "2018-07-02T00:00:00",
+    "HouseIsci": "289J76GN16H",
     "Impressions": 0.0,
     "IngestedAt": "2010-10-12T00:00:00",
     "IngestedBy": "Repository Test User",
@@ -81,21 +77,11 @@
     "PlanId": 1197,
     "Product": "Spotify",
     "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramAudience": {
-      "Code": "W15-17",
-      "Id": 5,
-      "Name": "Women 15-17"
+    "ProgramGenre": {
+      "Id": 34,
+      "Name": "News",
+      "ProgramSourceId": 1
     },
-    "ProgramAudienceId": null,
-    "ProgramDaypartDetail": {
-      "Code": "CUS",
-      "DaypartText": "W-F 6AM-9AM",
-      "Id": 56,
-      "Name": "Custom"
-    },
-    "ProgramDaypartId": 0,
-    "ProgramFlightEndDate": "2018-08-02T00:00:00",
-    "ProgramFlightStartDate": "2018-07-02T00:00:00",
     "ProgramName": "FOX 13 10:00 News",
     "ProgramNetwork": null,
     "ReasonCodeMessage": "",
@@ -113,6 +99,8 @@
       "Length": 60
     },
     "SpotLengthId": null,
-    "StationLegacyCallLetters": "KSTP"
+    "SpotUniqueHashExternal": "TE9DQUwtMTA1OTAyMDk1OQ==",
+    "StationLegacyCallLetters": "KSTP",
+    "TimeZone": "EST"
   }
 ]
