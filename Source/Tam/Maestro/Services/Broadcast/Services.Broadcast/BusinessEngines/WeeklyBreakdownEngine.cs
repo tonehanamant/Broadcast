@@ -402,12 +402,17 @@ namespace Services.Broadcast.BusinessEngines
 
         private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekByDaypartDeliveryType(PlanDto plan)
         {
+            int planDaypartId = 0;
             var result = new List<WeeklyBreakdownWeek>();
             var weeklyBreakdownByWeekByDaypart = GroupWeeklyBreakdownByWeekByDaypart(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit, plan.Equivalized, plan.CreativeLengths);
 
             foreach (var item in weeklyBreakdownByWeekByDaypart)
             {
-                var planDaypartId = plan.Dayparts.Single(x => x.DaypartUniquekey == item.DaypartUniquekey).PlanDaypartId;
+                var planDaypart = plan.Dayparts.Where(x => x.DaypartUniquekey == item.DaypartUniquekey).FirstOrDefault();
+                if(planDaypart!=null)
+                {
+                    planDaypartId= planDaypart.PlanDaypartId;
+                }
                 var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                 {
                     WeekNumber = item.WeekNumber,
