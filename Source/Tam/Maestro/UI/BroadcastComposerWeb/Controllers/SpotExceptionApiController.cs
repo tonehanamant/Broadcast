@@ -138,5 +138,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecMarkets(spotExceptionsOutOfSpecSpotsRequest));
         }
+
+        [HttpPost]
+        [Route("out-of-spec-unposted")]
+        public BaseResponse<SpotExceptionOutOfSpecUnpostedResultDto> GetUnpostedSpotExceptions(SpotExceptionOutOfSpecUnpostedRequestDto spotExceptionOutOfSpecUnpostedRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsUnposted(spotExceptionOutOfSpecUnpostedRequest));
+        }
     }
 }

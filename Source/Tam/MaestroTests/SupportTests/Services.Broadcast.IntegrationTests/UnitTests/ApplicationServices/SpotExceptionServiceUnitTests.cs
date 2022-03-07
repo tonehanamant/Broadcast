@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -1270,6 +1271,76 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
         }
 
+        private List<SpotExceptionUnpostedNoPlanDto> _GetSpotExceptionsUnpostedNoPlanData()
+        {
+            return new List<SpotExceptionUnpostedNoPlanDto>()
+            {
+                new SpotExceptionUnpostedNoPlanDto
+                {
+                    HouseIsci = "YB82TXT2H",
+                    ClientIsci = "AB82VR589",
+                    ClientSpotLengthId = 12,
+                    Count = 1,
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    EstimateID = 191757,
+                    IngestedBy = "Mock Data",
+                    IngestedAt = new DateTime(2020,1,10,23,45,00),
+                    CreatedBy = "Mock Data",
+                    CreatedAt = new DateTime(2020,1,10,23,45,00),
+                    ModifiedBy = "Mock Data",
+                    ModifiedAt = new DateTime(2020,1,10,23,45,00)
+                },
+                new SpotExceptionUnpostedNoPlanDto
+                {
+                    HouseIsci = "YB82TXT2H",
+                    ClientIsci = "AB82VR590",
+                    ClientSpotLengthId = 13,
+                    Count = 2,
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    EstimateID = 191758,
+                    IngestedBy = "Mock Data",
+                    IngestedAt = new DateTime(2020,1,10,23,45,00),
+                    CreatedBy = "Mock Data",
+                    CreatedAt = new DateTime(2020,1,10,23,45,00),
+                    ModifiedBy = "Mock Data",
+                    ModifiedAt = new DateTime(2020,1,10,23,45,00)
+                }
+            };
+        }
+
+        private List<SpotExceptionUnpostedNoReelRosterDto> _GetSpotExceptionsUnpostedNoReelRosterData()
+        {
+            return new List<SpotExceptionUnpostedNoReelRosterDto>()
+            {
+                new SpotExceptionUnpostedNoReelRosterDto
+                {
+                    HouseIsci = "YB82TXT2M",
+                    Count = 2,
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    EstimateId = 191759,
+                    IngestedBy = "Mock Data",
+                    IngestedAt = new DateTime(2020,1,10,23,45,00),
+                    CreatedBy = "Mock Data",
+                    CreatedAt = new DateTime(2020,1,10,23,45,00),
+                    ModifiedBy = "Mock Data",
+                    ModifiedAt = new DateTime(2020,1,10,23,45,00)
+                },
+                new SpotExceptionUnpostedNoReelRosterDto
+                {
+                    HouseIsci = "YB82TXT2M",
+                    Count = 2,
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    EstimateId = 191760,
+                    IngestedBy = "Mock Data",
+                    IngestedAt = new DateTime(2020,1,10,23,45,00),
+                    CreatedBy = "Mock Data",
+                    CreatedAt = new DateTime(2020,1,10,23,45,00),
+                    ModifiedBy = "Mock Data",
+                    ModifiedAt = new DateTime(2020,1,10,23,45,00)
+                }
+            };
+        }
+
         [Test]
         public void SaveSpotExceptionsOutOfSpecsDecisions()
         {
@@ -1942,6 +2013,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsUnposted_Unposted_Exist()
+        {
+            // Arrange
+            SpotExceptionOutOfSpecUnpostedRequestDto spotExceptionOutOfSpecUnpostedRequest = new SpotExceptionOutOfSpecUnpostedRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionUnpostedNoPlan(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetSpotExceptionsUnpostedNoPlanData());
+
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionUnpostedNoReelRoster(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetSpotExceptionsUnpostedNoReelRosterData());
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsUnposted(spotExceptionOutOfSpecUnpostedRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(result.NoPlan.Count, 2);
+            Assert.AreEqual(result.NoReelRoster.Count, 2);
+        }
+        
+        [Test]
+        public void GetSpotExceptionsUnposted_Unposted_ThrowException()
+        {
+            // Arrange
+            SpotExceptionOutOfSpecUnpostedRequestDto spotExceptionOutOfSpecUnpostedRequest = new SpotExceptionOutOfSpecUnpostedRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionUnpostedNoPlan(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionUnpostedNoReelRoster(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act           
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsUnposted(spotExceptionOutOfSpecUnpostedRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
     }
 }

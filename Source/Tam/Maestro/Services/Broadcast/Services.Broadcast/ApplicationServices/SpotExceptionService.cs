@@ -119,6 +119,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request parameters</param>
         /// <returns>The markets of active spot exception out of spec spots</returns>
         List<string> GetSpotExceptionsOutOfSpecMarkets(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
+
+        /// <summary>
+        /// Gets the NoPlan And NoReelRoster spot exceptions
+        /// </summary>
+        /// <param name="spotExceptionOutOfSpecUnpostedRequest">The spot exceptions out of spec Unposted plans</param>
+        /// <returns>The NoPlan And NoReelRoster spot exceptions</returns>
+        SpotExceptionOutOfSpecUnpostedResultDto GetSpotExceptionsUnposted(SpotExceptionOutOfSpecUnpostedRequestDto spotExceptionOutOfSpecUnpostedRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1405,7 +1412,7 @@ namespace Services.Broadcast.ApplicationServices
         public List<string> GetSpotExceptionsOutOfSpecMarkets(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
         {
             var spotExceptionsOutOfSpecSpotsResult = GetSpotExceptionsOutofSpecSpots(spotExceptionsOutOfSpecSpotsRequest);
-            
+
             if (spotExceptionsOutOfSpecSpotsResult?.Active == null)
             {
                 return null;
@@ -1413,6 +1420,35 @@ namespace Services.Broadcast.ApplicationServices
 
             var markets = spotExceptionsOutOfSpecSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
             return markets;
+        }
+
+        /// <inheritdoc />
+        public SpotExceptionOutOfSpecUnpostedResultDto GetSpotExceptionsUnposted(SpotExceptionOutOfSpecUnpostedRequestDto spotExceptionOutOfSpecUnpostedRequest)
+        {
+            var spotExceptionOutOfSpecUnpostedResult = new SpotExceptionOutOfSpecUnpostedResultDto();
+
+            var spotExceptionUnpostedNoPlanResult = _SpotExceptionRepository.GetSpotExceptionUnpostedNoPlan(spotExceptionOutOfSpecUnpostedRequest.WeekStartDate, spotExceptionOutOfSpecUnpostedRequest.WeekEndDate);
+            var spotExceptionUnpostedNoReelRosterResult = _SpotExceptionRepository.GetSpotExceptionUnpostedNoReelRoster(spotExceptionOutOfSpecUnpostedRequest.WeekStartDate, spotExceptionOutOfSpecUnpostedRequest.WeekEndDate);
+
+            spotExceptionOutOfSpecUnpostedResult.NoPlan = spotExceptionUnpostedNoPlanResult.Select(x => new SpotExceptionOutOfSpecNoPlanDto
+            {
+                HouseIsci = x.HouseIsci,
+                ClientIsci = x.ClientIsci,
+                ClientSpotLength = ":" + x.ClientSpotLengthId.ToString(),
+                AffectedSpotsCount = x.Count,
+                ProgramAirDate = x.ProgramAirTime.ToShortDateString(),
+                EstimateId = x.EstimateID
+            }).ToList();
+
+            spotExceptionOutOfSpecUnpostedResult.NoReelRoster = spotExceptionUnpostedNoReelRosterResult.Select(x => new SpotExceptionOutOfSpecNoReelRosterDto
+            {
+                HouseIsci = x.HouseIsci,
+                AffectedSpotsCount = x.Count,
+                ProgramAirDate = x.ProgramAirTime.ToShortDateString(),
+                EstimateId = x.EstimateId
+            }).ToList();
+
+            return spotExceptionOutOfSpecUnpostedResult;
         }
     }
 }

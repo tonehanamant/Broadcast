@@ -1,5 +1,6 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Microsoft.EntityFrameworkCore.Internal;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.SpotExceptions;
 using System;
@@ -92,6 +93,22 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>The spot exceptions out of spec reason codes</returns>
         List<SpotExceptionsOutOfSpecReasonCodeDto> GetSpotExceptionsOutOfSpecReasonCodes();
+        
+        /// <summary>
+        /// Gets Spot Exceptions No plan Unposted Plans
+        /// </summary>
+        /// <param name="weekStartDate">Start Date </param>
+        /// <param name="weekEndDate">End Date </param>
+        /// <returns>Unposted No plan Spot Exceptions</returns>
+        List<SpotExceptionUnpostedNoPlanDto> GetSpotExceptionUnpostedNoPlan(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets Spot Exceptions Unposted No Reels Roster Plans
+        /// </summary>
+        /// <param name="weekStartDate">Start week</param>
+        /// <param name="weekEndDate">End Week </param>
+        /// <returns>Unposted No Reel Roster Spot Exceptions</returns>
+        List<SpotExceptionUnpostedNoReelRosterDto> GetSpotExceptionUnpostedNoReelRoster(DateTime weekStartDate, DateTime weekEndDate);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -746,6 +763,47 @@ namespace Services.Broadcast.Repositories
                     Label = spotExceptionsOutOfSpecReasonCodesEntity.label
                 }).ToList();
                 return spotExceptionsOutOfSpecReasonCodes;
+            });
+        }
+
+        public List<SpotExceptionUnpostedNoPlanDto> GetSpotExceptionUnpostedNoPlan(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsUnpostedNoPlanEntities = context.spot_exceptions_unposted_no_plan
+                    .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
+                    .Select(x => new SpotExceptionUnpostedNoPlanDto
+                    {
+                        HouseIsci = x.house_isci,
+                        ClientIsci = x.client_isci,
+                        ClientSpotLengthId = x.client_spot_length_id,
+                        Count = x.count,
+                        ProgramAirTime = x.program_air_time,
+                        EstimateID = x.estimate_id
+                    }).ToList();
+                return spotExceptionsUnpostedNoPlanEntities;
+            });
+        }
+
+        public List<SpotExceptionUnpostedNoReelRosterDto> GetSpotExceptionUnpostedNoReelRoster(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsUnpostedNoReelRosterEntities = context.spot_exceptions_unposted_no_reel_roster
+                    .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
+                    .Select(x => new SpotExceptionUnpostedNoReelRosterDto {
+                        HouseIsci = x.house_isci,
+                        Count = x.count,
+                        ProgramAirTime = x.program_air_time,
+                        EstimateId = x.estimate_id
+                    }).ToList();
+                return spotExceptionsUnpostedNoReelRosterEntities;
             });
         }
     }
