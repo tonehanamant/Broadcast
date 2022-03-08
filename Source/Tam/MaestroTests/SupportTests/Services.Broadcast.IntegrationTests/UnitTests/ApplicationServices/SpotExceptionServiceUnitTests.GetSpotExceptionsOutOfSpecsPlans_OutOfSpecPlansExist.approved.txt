@@ -1,7 +1,7 @@
 {
   "Active": [
     {
-      "AdvertiserName": "MyBite",
+      "AdvertiserName": "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'",
       "AffectedSpotsCount": 2,
       "AudienceName": "Men 50-64",
       "FlightString": "12/01 - 12/09/2019 (2 Weeks)",
@@ -12,7 +12,7 @@
       "SyncedTimestamp": null
     },
     {
-      "AdvertiserName": "MyBite",
+      "AdvertiserName": "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'",
       "AffectedSpotsCount": 1,
       "AudienceName": "Men 50-64",
       "FlightString": "07/02 - 08/02/2018 (6 Weeks)",
@@ -25,7 +25,7 @@
   ],
   "Completed": [
     {
-      "AdvertiserName": "MyBite",
+      "AdvertiserName": "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'",
       "AffectedSpotsCount": 1,
       "AudienceName": "Men 50-64",
       "FlightString": "07/02 - 08/02/2018 (6 Weeks)",

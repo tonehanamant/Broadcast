@@ -2427,13 +2427,9 @@
           <Property Name="station_legacy_call_letters" Type="varchar" MaxLength="15" />
           <Property Name="spot_length_id" Type="int" />
           <Property Name="audience_id" Type="int" />
-          <Property Name="product" Type="nvarchar" MaxLength="100" />
-          <Property Name="flight_start_date" Type="datetime" />
-          <Property Name="flight_end_date" Type="datetime" />
           <Property Name="daypart_id" Type="int" />
           <Property Name="program_network" Type="varchar" MaxLength="10" />
           <Property Name="program_air_time" Type="datetime" Nullable="false" />
-          <Property Name="advertiser_name" Type="nvarchar" MaxLength="100" />
           <Property Name="reason_code_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="market_code" Type="int" />
@@ -2500,7 +2496,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="house_isci" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="client_isci" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="client_spot_length_id" Type="int" Nullable="false" />
+          <Property Name="client_spot_length_id" Type="int" />
           <Property Name="count" Type="int" Nullable="false" />
           <Property Name="program_air_time" Type="datetime" Nullable="false" />
           <Property Name="estimate_id" Type="bigint" Nullable="false" />
@@ -18217,7 +18213,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="estimate_id" Type="Int64" Nullable="false" />
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="client_spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="client_spot_length_id" Type="Int32" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -18749,13 +18745,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="spot_length_id" Type="Int32" />
           <Property Name="audience_id" Type="Int32" />
-          <Property Name="product" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
-          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
           <Property Name="daypart_id" Type="Int32" />
           <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="advertiser_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="reason_code_id" Type="Int32" Nullable="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <Property Name="market_code" Type="Int32" />
@@ -22111,13 +22103,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
-                <ScalarProperty Name="advertiser_name" ColumnName="advertiser_name" />
                 <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
                 <ScalarProperty Name="program_network" ColumnName="program_network" />
                 <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="flight_end_date" ColumnName="flight_end_date" />
-                <ScalarProperty Name="flight_start_date" ColumnName="flight_start_date" />
-                <ScalarProperty Name="product" ColumnName="product" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />

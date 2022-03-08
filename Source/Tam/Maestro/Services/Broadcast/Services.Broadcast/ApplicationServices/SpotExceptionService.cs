@@ -132,10 +132,18 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly ISpotExceptionRepository _SpotExceptionRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
-        public SpotExceptionService(IDataRepositoryFactory dataRepositoryFactory, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, IDateTimeEngine dateTimeEngine) : base(featureToggleHelper, configurationSettingsHelper)
+        private readonly IAabEngine _AabEngine;
+        public SpotExceptionService(
+            IDataRepositoryFactory dataRepositoryFactory, 
+            IAabEngine aabEngine,
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper, 
+            IDateTimeEngine dateTimeEngine) 
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
             _DateTimeEngine = dateTimeEngine;
+            _AabEngine = aabEngine;
         }
 
         public bool AddSpotExceptionData()
@@ -583,13 +591,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB82TXT2H",
                   RecommendedPlanId= 215,
                   ProgramName="Q13 news at 10",
-                  AdvertiserName="Chattem",
                   StationLegacyCallLetters="KOB",
                   SpotLengthId= 12,
                   AudienceId= 431,
-                  Product="Pizza Hut",
-                  FlightStartDate =  new DateTime(2020, 6, 2),
-                  FlightEndDate = new DateTime(2020, 7, 2),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -628,13 +632,10 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB82VR58",
                   RecommendedPlanId= 216,
                   ProgramName="FOX 13 10:00 News",
-                  AdvertiserName="Chattem",
                   StationLegacyCallLetters="KSTP",
                   SpotLengthId= 11,
                   AudienceId= 430,
                   Product="Spotify",
-                  FlightStartDate =  new DateTime(2018, 7, 2),
-                  FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -667,13 +668,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB44NR58",
                   RecommendedPlanId= 217,
                   ProgramName="TEN O'CLOCK NEWS",
-                  AdvertiserName="Costant Contact",
                   StationLegacyCallLetters="KHGI",
                   SpotLengthId= 12,
                   AudienceId= 430,
-                  Product="Spotify",
-                  FlightStartDate =  new DateTime(2018, 7, 2),
-                  FlightEndDate = new DateTime(2018, 8, 2),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -706,13 +703,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB21QR58",
                   RecommendedPlanId= 218,
                   ProgramName="Product1",
-                  AdvertiserName="Curiosity Stream",
                   StationLegacyCallLetters="KWCH",
                   SpotLengthId= 11,
                   AudienceId= 430,
-                  Product="Spotify",
-                  FlightStartDate =  new DateTime(2018, 3, 6),
-                  FlightEndDate = new DateTime(2018, 4, 6),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -745,13 +738,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB44NR58",
                   RecommendedPlanId= 219,
                   ProgramName="TProduct2",
-                  AdvertiserName="Dupixent",
                   StationLegacyCallLetters="WDAY",
                   SpotLengthId= 10,
                   AudienceId= 429,
-                  Product="Spotify",
-                  FlightStartDate =  new DateTime(2018, 3, 6),
-                  FlightEndDate = new DateTime(2018, 4, 6),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -784,13 +773,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB33PR58",
                   RecommendedPlanId= 220,
                   ProgramName="TEN O'CLOCK NEWS",
-                  AdvertiserName="Eli Lilly - Trulicity (EN)",
                   StationLegacyCallLetters="KPNX",
                   SpotLengthId= 10,
                   AudienceId= 428,
-                  Product="Nike",
-                  FlightStartDate =  new DateTime(2019, 7, 1),
-                  FlightEndDate = new DateTime(2019, 8, 1),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -823,13 +808,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB79PR58",
                   RecommendedPlanId= 221,
                   ProgramName="Product4",
-                  AdvertiserName="Eli Lilly - Trulicity (EN)",
                   StationLegacyCallLetters="KELO",
                   SpotLengthId= 09,
                   AudienceId= 427,
-                  Product="Nike",
-                  FlightStartDate =  new DateTime(2021, 8, 6),
-                  FlightEndDate = new DateTime(2021, 9, 6),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -862,13 +843,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB81GR58",
                   RecommendedPlanId= 222,
                   ProgramName="Product3",
-                  AdvertiserName="GAP (EM)",
                   StationLegacyCallLetters="KXMC",
                   SpotLengthId= 08,
                   AudienceId= 426,
-                  Product="Nike",
-                  FlightStartDate =  new DateTime(2020, 8, 2),
-                  FlightEndDate = new DateTime(2021, 9, 6),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -901,13 +878,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB87GR58",
                   RecommendedPlanId= 223,
                   ProgramName="Product6",
-                  AdvertiserName="Hershey - DA",
                   StationLegacyCallLetters="WTTV",
                   SpotLengthId= 07,
                   AudienceId= 425,
-                  Product="Nike",
-                  FlightStartDate =  new DateTime(2020, 6, 6),
-                  FlightEndDate = new DateTime(2020, 7, 6),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -940,13 +913,9 @@ namespace Services.Broadcast.ApplicationServices
                   IsciName="AB83PR58",
                   RecommendedPlanId= 224,
                   ProgramName="Product8",
-                  AdvertiserName=null,
                   StationLegacyCallLetters="WCCO",
                   SpotLengthId= 06,
                   AudienceId= 424,
-                  Product="Nike",
-                  FlightStartDate =  new DateTime(2020, 5, 6),
-                  FlightEndDate = new DateTime(2020, 7, 6),
                   DaypartId= 70612,
                   DaypartDetail = new DaypartDetailDto
                   {
@@ -974,6 +943,16 @@ namespace Services.Broadcast.ApplicationServices
             return spotExceptionsOutOfSpecs;
         }
 
+        private string _GetAdvertiserName(Guid? masterId)
+        {
+            string advertiserName = null;
+            if (masterId.HasValue)
+            {
+                advertiserName = _AabEngine.GetAdvertiser(masterId.Value)?.Name;
+            }
+            return advertiserName;
+        }
+
         /// <inheritdoc />
         public List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest)
         {
@@ -988,6 +967,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 spotExceptionsOutOfSpecPostsResults = spotExceptionsoutOfSpecsPosts.Select(spotExceptionsOutOfSpec =>
                 {
+                    var advertiserName = _GetAdvertiserName(spotExceptionsOutOfSpec.AdvertiserMasterId);
                     var spotExceptionsOutOfSpecPostsResult = new SpotExceptionsOutOfSpecPostsResultDto
                     {
                         Id = spotExceptionsOutOfSpec.Id,
@@ -1001,7 +981,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
                         AudienceName = spotExceptionsOutOfSpec.Audience?.Name,
                         ProductName = spotExceptionsOutOfSpec.Product,
-                        AdvertiserName = spotExceptionsOutOfSpec.AdvertiserName,
+                        AdvertiserName = advertiserName,
                         DaypartCode = spotExceptionsOutOfSpec.DaypartDetail?.Code,
                         FlightStartDate = spotExceptionsOutOfSpec.FlightStartDate?.ToString(),
                         FlightEndDate = spotExceptionsOutOfSpec.FlightEndDate?.ToString(),
@@ -1249,7 +1229,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var spotExceptionsoutOfSpecsPlans = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutofSpecsPlansRequestDto.WeekStartDate, spotExceptionsOutofSpecsPlansRequestDto.WeekEndDate);
             if (spotExceptionsoutOfSpecsPlans?.Any() ?? false)
-            {
+            {                
                 activePlans = spotExceptionsoutOfSpecsPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision == null).ToList();
                 completedPlans = spotExceptionsoutOfSpecsPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision != null).ToList();
 
@@ -1257,10 +1237,11 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(activePlan =>
                 {
                     var planDetails = activePlan.First();
+                    var advertiserName = _GetAdvertiserName(planDetails.AdvertiserMasterId);
                     return new SpotExceptionsOutOfSpecToDoPlansDto
                     {
                         PlanId = planDetails.PlanId,
-                        AdvertiserName = planDetails.AdvertiserName,
+                        AdvertiserName = advertiserName,
                         PlanName = planDetails.RecommendedPlanName,
                         AffectedSpotsCount = activePlan.Count(),
                         Impressions = planDetails.Impressions / 1000,
@@ -1275,10 +1256,11 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(completedPlan =>
                 {
                     var planDetails = completedPlan.First();
+                    var advertiserName = _GetAdvertiserName(planDetails.AdvertiserMasterId);
                     return new SpotExceptionsOutOfSpecCompletedPlansDto
                     {
                         PlanId = planDetails.PlanId,
-                        AdvertiserName = planDetails.AdvertiserName,
+                        AdvertiserName = advertiserName,
                         PlanName = planDetails.RecommendedPlanName,
                         AffectedSpotsCount = completedPlan.Count(),
                         Impressions = planDetails.Impressions / 1000,
@@ -1309,16 +1291,17 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public SpotExceptionsOutOfSpecPlanSpotsResultDto GetSpotExceptionsOutofSpecSpots(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecsPlanSpotsRequest)
+        public SpotExceptionsOutOfSpecPlanSpotsResultDto GetSpotExceptionsOutofSpecSpots(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest)
         {
             var spotExceptionsOutOfSpecPlanSpotsResult = new SpotExceptionsOutOfSpecPlanSpotsResultDto();
             List<SpotExceptionsOutOfSpecsDto> activePlans = null;
             List<SpotExceptionsOutOfSpecsDto> queuedPlans = null;
 
-            var spotExceptionsOutOfSpecsPlanSpots = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutofSpecsPlanSpotsRequest.WeekStartDate, spotExceptionsOutofSpecsPlanSpotsRequest.WeekEndDate);
+            var spotExceptionsOutOfSpecsPlanSpots = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPlanSpots(spotExceptionsOutofSpecSpotsRequest.PlanId, 
+                spotExceptionsOutofSpecSpotsRequest.WeekStartDate, spotExceptionsOutofSpecSpotsRequest.WeekEndDate);
+
             if (spotExceptionsOutOfSpecsPlanSpots?.Any() ?? false)
             {
-                spotExceptionsOutOfSpecsPlanSpots = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionsoutOfSpecsPlan => spotExceptionsoutOfSpecsPlan.PlanId == spotExceptionsOutofSpecsPlanSpotsRequest.PlanId).ToList();
                 activePlans = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision == null).ToList();
                 queuedPlans = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision != null).ToList();
 

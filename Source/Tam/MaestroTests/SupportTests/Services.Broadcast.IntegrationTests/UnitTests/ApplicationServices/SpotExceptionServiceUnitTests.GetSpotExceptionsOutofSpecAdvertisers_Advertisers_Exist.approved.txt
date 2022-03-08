@@ -1,4 +1,4 @@
 [
-  "MyBite",
-  "Unknown"
+  "Advertiser With Id ='d04797db-870c-42d1-bc6c-caf823d7a4d9'",
+  "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'"
 ]

@@ -22,7 +22,7 @@ namespace EntityFrameworkMapping.Broadcast
         public long estimate_id { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public int client_spot_length_id { get; set; }
+        public Nullable<int> client_spot_length_id { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_at { get; set; }
         public string modified_by { get; set; }

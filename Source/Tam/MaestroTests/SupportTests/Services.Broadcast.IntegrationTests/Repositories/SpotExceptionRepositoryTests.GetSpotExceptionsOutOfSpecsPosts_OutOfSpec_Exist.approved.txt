@@ -1,5 +1,6 @@
 [
   {
+    "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
     "AdvertiserName": null,
     "Affiliate": "NBC",
     "Audience": {
@@ -14,8 +15,8 @@
     "DaypartId": null,
     "DMA": 58,
     "EstimateId": 191756,
-    "FlightEndDate": "2020-07-02T00:00:00",
-    "FlightStartDate": "2020-06-02T00:00:00",
+    "FlightEndDate": "2020-01-30T00:00:00",
+    "FlightStartDate": "2020-01-01T00:00:00",
     "HouseIsci": "OMGN1016000H",
     "Impressions": 0.0,
     "IngestedAt": "2010-10-12T00:00:00",
@@ -27,7 +28,7 @@
     "ModifiedAt": "2010-10-12T00:00:00",
     "ModifiedBy": "Repository Test User",
     "PlanId": 1196,
-    "Product": "Pizza Hut",
+    "Product": null,
     "ProgramAirTime": "2010-01-04T08:07:15",
     "ProgramGenre": {
       "Id": 14,
@@ -56,6 +57,7 @@
     "TimeZone": "EST"
   },
   {
+    "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
     "AdvertiserName": null,
     "Affiliate": "ABC",
     "Audience": {
@@ -70,8 +72,8 @@
     "DaypartId": null,
     "DMA": 58,
     "EstimateId": 191757,
-    "FlightEndDate": "2018-08-02T00:00:00",
-    "FlightStartDate": "2018-07-02T00:00:00",
+    "FlightEndDate": "2018-10-31T00:00:00",
+    "FlightStartDate": "2018-10-01T00:00:00",
     "HouseIsci": "289J76GN16H",
     "Impressions": 0.0,
     "IngestedAt": "2010-10-12T00:00:00",
@@ -83,7 +85,7 @@
     "ModifiedAt": "2010-10-12T00:00:00",
     "ModifiedBy": "Repository Test User",
     "PlanId": 1197,
-    "Product": "Spotify",
+    "Product": null,
     "ProgramAirTime": "2010-01-04T08:07:15",
     "ProgramGenre": {
       "Id": 34,

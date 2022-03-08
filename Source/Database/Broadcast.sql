@@ -379,6 +379,37 @@ END
 GO
 /*************************************** END BP-3285 - Part 2 ***************************************/
 
+/*************************************** START BP-3285 - Part 3 *************************************/
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'flight_start_date'
+        AND OBJECT_ID = OBJECT_ID('spot_exceptions_out_of_specs'))
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN flight_start_date
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN flight_end_date
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN advertiser_name
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN product
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'spot_exceptions_unposted_no_plan' 
+	AND COLUMN_NAME= 'client_spot_length_id' 
+	AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE spot_exceptions_unposted_no_plan
+		ALTER COLUMN client_spot_length_id INT NULL
+END
+
+GO
+
+/*************************************** END BP-3285 - Part 3 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

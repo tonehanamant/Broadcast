@@ -1,6 +1,6 @@
 [
   {
-    "AdvertiserName": "MyBite",
+    "AdvertiserName": "Advertiser With Id ='d04797db-870c-42d1-bc6c-caf823d7a4d9'",
     "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191760,
@@ -21,7 +21,7 @@
     "Status": true
   },
   {
-    "AdvertiserName": null,
+    "AdvertiserName": "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'",
     "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191757,
@@ -42,7 +42,7 @@
     "Status": true
   },
   {
-    "AdvertiserName": "MyBite",
+    "AdvertiserName": "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'",
     "AudienceName": "Men 50-64",
     "DaypartCode": "CUS",
     "EstimateId": 191758,

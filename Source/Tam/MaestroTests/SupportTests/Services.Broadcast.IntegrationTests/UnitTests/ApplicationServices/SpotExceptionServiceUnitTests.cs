@@ -25,11 +25,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
+        private Mock<IAabEngine> _AabEngine;
 
         [SetUp]
         public void SetUp()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+            _AabEngine = new Mock<IAabEngine>();
             _SpotExceptionRepositoryMock = new Mock<ISpotExceptionRepository>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
@@ -38,7 +40,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetDataRepository<ISpotExceptionRepository>())
                 .Returns(_SpotExceptionRepositoryMock.Object);
 
-            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, _FeatureToggleMock.Object, _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
+            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object,
+                _AabEngine.Object,
+                _FeatureToggleMock.Object, 
+                _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
         }
 
         [Test]
@@ -549,6 +554,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecData());
 
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'"});
+
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecsPosts(spotExceptionsOutOfSpecPostsRequest);
 
@@ -716,7 +724,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
                     ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
-                    AdvertiserName="MyBite",
+                    AdvertiserMasterId = new Guid("D04797DB-870C-42D1-BC6C-CAF823D7A4D9"),
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                      SpotLength = new SpotLengthDto
@@ -771,7 +779,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 11726,
                   RecommendedPlanName="4Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="Reynolds Foil @9",
-                  AdvertiserName=null,
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                   StationLegacyCallLetters="KSTP",
                   Affiliate = "NBC",
                   Market = "Phoenix (Prescott)",
@@ -828,7 +836,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 11725,
                   RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="TEN O'CLOCK NEWS",
-                  AdvertiserName="MyBite",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                   StationLegacyCallLetters = "KSTP",
                   Affiliate = "ABC",
                   Market = "Lincoln & Hastings-Krny",
@@ -893,7 +901,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
                     ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
-                    AdvertiserName="MyBite",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                     PlanId = 215,
@@ -943,7 +951,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 215,
                   RecommendedPlanName="4Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="Reynolds Foil @9",
-                  AdvertiserName=null,
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                   StationLegacyCallLetters="KSTP",
                   Affiliate = "NBC",
                   Market = "Phoenix (Prescott)",
@@ -994,7 +1002,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 218,
                   RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="TEN O'CLOCK NEWS",
-                  AdvertiserName="MyBite",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                   StationLegacyCallLetters = "KSTP",
                   Affiliate = "ABC",
                   Market = "Lincoln & Hastings-Krny",
@@ -1045,7 +1053,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   RecommendedPlanId= 11726,
                   RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
                   ProgramName="TEN O'CLOCK NEWS",
-                  AdvertiserName="MyBite",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                   StationLegacyCallLetters = "KSTP",
                   Affiliate = "ABC",
                   Market = "Lincoln & Hastings-Krny",
@@ -1110,7 +1118,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
                     ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
-                    AdvertiserName = "MyBite",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                     PlanId = 215,
@@ -1169,7 +1177,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
                     ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
-                    AdvertiserName = "MyBite",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                     PlanId = 215,
@@ -1228,7 +1236,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
                     ProgramName = "Reckitt HYHO",
                     StationLegacyCallLetters = "KXMC",
-                    AdvertiserName = "MyBite",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
                     Affiliate = "CBS",
                     Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
                     PlanId = 215,
@@ -1597,6 +1605,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecData());
 
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsOutofSpecAdvertisers(spotExceptionsOutofSpecAdvertisersRequest);
 
@@ -1826,6 +1837,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecPlansData());
 
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest);
 
@@ -1891,6 +1905,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecPlansData());
 
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsOutofSpecsPlans(spotExceptionsOutOfSpecPostsRequest);
 
@@ -1910,7 +1927,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
             _SpotExceptionRepositoryMock
-                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecPlanSpotsData());
 
             // Act
@@ -1958,7 +1975,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
             _SpotExceptionRepositoryMock
-                .Setup(x => x.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new Exception("Throwing a test exception.");
@@ -2005,7 +2022,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             _SpotExceptionRepositoryMock
-                .Setup(s => s.GetSpotExceptionsOutOfSpecPosts(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecPlanSpotsData());
 
             // Act           

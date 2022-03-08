@@ -15,6 +15,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string StationLegacyCallLetters { get; set; }
         public string Affiliate { get; set; }
         public string Market { get; set; }
+        public Guid? AdvertiserMasterId { get; set; }
         public string AdvertiserName { get; set; }        
         public int? SpotLengthId { get; set; }
         public SpotLengthDto SpotLength { get; set; } = new SpotLengthDto();

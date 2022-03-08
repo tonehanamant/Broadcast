@@ -30,13 +30,9 @@ namespace EntityFrameworkMapping.Broadcast
         public string station_legacy_call_letters { get; set; }
         public Nullable<int> spot_length_id { get; set; }
         public Nullable<int> audience_id { get; set; }
-        public string product { get; set; }
-        public Nullable<System.DateTime> flight_start_date { get; set; }
-        public Nullable<System.DateTime> flight_end_date { get; set; }
         public Nullable<int> daypart_id { get; set; }
         public string program_network { get; set; }
         public System.DateTime program_air_time { get; set; }
-        public string advertiser_name { get; set; }
         public int reason_code_id { get; set; }
         public double impressions { get; set; }
         public Nullable<int> market_code { get; set; }
