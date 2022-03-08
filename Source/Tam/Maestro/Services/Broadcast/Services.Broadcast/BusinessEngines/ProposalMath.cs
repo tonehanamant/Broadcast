@@ -66,7 +66,11 @@ namespace Services.Broadcast.BusinessEngines
             var power = Math.Pow(10, decimalPlaces);
             return Math.Floor(i * power) / power;
         }
-
+        public static double RoundUpWithDecimals(double i, double decimalPlaces)
+        {
+            var power = Math.Pow(10, decimalPlaces);
+            return Math.Round(i * power) / power;
+        }
         public static double CalculateHhImpressionsUsingVpvh(double audienceImpressions, double audienceVpvh)
         {
             return audienceVpvh == 0 ? 0 : audienceImpressions / audienceVpvh;

@@ -11,5 +11,6 @@ namespace Services.Broadcast.Entities.Plan
         public string CustomName { get; set; }
         public List<WeeklyBreakdownWeek> Weeks { get; set; } = new List<WeeklyBreakdownWeek>();
         public List<WeeklyBreakdownWeek> RawWeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
+        public string DaypartUniquekey { get { return $"{DaypartCodeId}|{DaypartOrganizationId}|{CustomName?.ToLower()}"; } }
     }
 }

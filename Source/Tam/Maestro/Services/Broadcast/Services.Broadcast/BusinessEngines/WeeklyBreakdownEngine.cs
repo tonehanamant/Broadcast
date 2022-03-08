@@ -931,17 +931,17 @@ namespace Services.Broadcast.BusinessEngines
         private void _RemoveDaypartsInTheExistingWeeks(WeeklyBreakdownRequest request, WeeklyBreakdownResponseDto response)
         {
             // Get the existing daypart ids in the existing weeks
-            var existingWeekDaypartIds = response.Weeks.Select(w => w.DaypartCodeId.Value).Distinct();
+            var existingWeekDaypartIds = response.Weeks.Select(w => w.DaypartUniquekey).Distinct();
             // Get the daypart ids in the request
-            var requestDaypartIds = request.Dayparts.Select(w => w.DaypartCodeId).Distinct();
+            var requestDaypartIds = request.Dayparts.Select(w => w.DaypartUniquekey).Distinct();
 
             // Remove dayparts that doesnt exist in the request
-            if (!existingWeekDaypartIds.Contains(0))
+            if (!existingWeekDaypartIds.Contains("0||"))
             {
                 var daypartsToRemove = existingWeekDaypartIds.Where(d => !requestDaypartIds.Contains(d)).ToList();
                 if (daypartsToRemove.Any())
                 {
-                    response.Weeks.RemoveAll(w => daypartsToRemove.Contains(w.DaypartCodeId.Value));
+                    response.Weeks.RemoveAll(w => daypartsToRemove.Contains(w.DaypartUniquekey));
                 }
             }
         }
@@ -1627,7 +1627,7 @@ namespace Services.Broadcast.BusinessEngines
                 breakdownItem.WeeklyBudget = (decimal)impressions * budgetPerOneImpression;
 
                 var ratings = totalRatings * weeklyRatio;
-                breakdownItem.WeeklyRatings = roundRatings ? ProposalMath.RoundDownWithDecimals(ratings, 1) : ratings;
+                breakdownItem.WeeklyRatings = roundRatings ? ProposalMath.RoundUpWithDecimals(ratings, 1) : ratings;
         }
 
         private double _CalculatePercentageOfWeek(double breakdownItemImpressions, double weeklyImpressions)

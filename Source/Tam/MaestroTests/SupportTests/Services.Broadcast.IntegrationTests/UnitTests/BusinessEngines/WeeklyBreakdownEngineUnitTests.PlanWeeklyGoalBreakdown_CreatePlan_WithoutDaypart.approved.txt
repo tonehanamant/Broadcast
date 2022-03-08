@@ -397,7 +397,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5392.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 1
     },
@@ -425,7 +425,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 2
     },
@@ -453,7 +453,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 3
     },
@@ -481,7 +481,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 4
     },
@@ -509,7 +509,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 5
     },
@@ -537,7 +537,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 6
     },
@@ -565,7 +565,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 7
     },
@@ -593,7 +593,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 8
     },
@@ -621,7 +621,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 9
     },
@@ -649,7 +649,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 10
     },
@@ -677,7 +677,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 11
     },
@@ -705,7 +705,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 12
     },
@@ -733,7 +733,7 @@
       "WeeklyCpm": 15.285714285714285714285714300,
       "WeeklyImpressions": 5384.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 4.4,
+      "WeeklyRatings": 4.5,
       "WeeklyUnits": 0.0,
       "WeekNumber": 13
     }

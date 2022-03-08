@@ -1986,7 +1986,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDaypartUpdateResponseDto planDaypartUpdateResponseDto = new PlanDaypartUpdateResponseDto();
             foreach (var item in planDaypartUpdateRequest.RawWeeklyBreakdownWeeks)
             {
-                if (item.PlanDaypartId == planDaypartUpdateRequest.PlanDaypartId)
+                if (item.DaypartUniquekey == planDaypartUpdateRequest.DaypartUniquekey)
                 {
                     item.DaypartCodeId = planDaypartUpdateRequest.DaypartCodeId;
                     item.DaypartOrganizationId = planDaypartUpdateRequest.DaypartOrganizationId;
@@ -1997,7 +1997,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             foreach (var item in planDaypartUpdateRequest.Weeks)
             {
-                if (item.PlanDaypartId == planDaypartUpdateRequest.PlanDaypartId)
+                if (item.DaypartUniquekey == planDaypartUpdateRequest.DaypartUniquekey)
                 {
                     item.DaypartCodeId = planDaypartUpdateRequest.DaypartCodeId;
                     item.DaypartOrganizationId = planDaypartUpdateRequest.DaypartOrganizationId;
