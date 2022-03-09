@@ -115,8 +115,6 @@ namespace Services.Broadcast.Entities.Plan
         public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();
         public string DaypartUniquekey { get { return $"{DaypartCodeId}|{DaypartOrganizationId}|{CustomName?.ToLower()}"; } }
 
-        public PlanDaypartGoalDto Goals { get; set; } = new PlanDaypartGoalDto();
-
         public bool Equals(PlanDaypartDto other)
         {
             return DaypartCodeId == other.DaypartCodeId

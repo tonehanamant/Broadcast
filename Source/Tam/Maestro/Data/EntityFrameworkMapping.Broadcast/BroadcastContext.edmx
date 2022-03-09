@@ -1579,8 +1579,8 @@
           <Property Name="plan_id" Type="int" Nullable="false" />
           <Property Name="is_draft" Type="bit" Nullable="false" />
           <Property Name="equivalized" Type="bit" Nullable="false" />
-          <Property Name="flight_start_date" Type="datetime" />
-          <Property Name="flight_end_date" Type="datetime" />
+          <Property Name="flight_start_date" Type="datetime" Nullable="false" />
+          <Property Name="flight_end_date" Type="datetime" Nullable="false" />
           <Property Name="flight_notes" Type="nvarchar" MaxLength="1024" />
           <Property Name="audience_type" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
@@ -15462,8 +15462,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="plan_id" Type="Int32" Nullable="false" />
           <Property Name="is_draft" Type="Boolean" Nullable="false" />
           <Property Name="equivalized" Type="Boolean" Nullable="false" />
-          <Property Name="flight_start_date" Type="DateTime" Precision="3" />
-          <Property Name="flight_end_date" Type="DateTime" Precision="3" />
+          <Property Name="flight_start_date" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="flight_end_date" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="audience_type" Type="Int32" Nullable="false" />
           <Property Name="posting_type" Type="Int32" Nullable="false" />

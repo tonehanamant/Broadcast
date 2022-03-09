@@ -36,8 +36,8 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_id { get; set; }
         public bool is_draft { get; set; }
         public bool equivalized { get; set; }
-        public Nullable<System.DateTime> flight_start_date { get; set; }
-        public Nullable<System.DateTime> flight_end_date { get; set; }
+        public System.DateTime flight_start_date { get; set; }
+        public System.DateTime flight_end_date { get; set; }
         public string flight_notes { get; set; }
         public int audience_type { get; set; }
         public int posting_type { get; set; }

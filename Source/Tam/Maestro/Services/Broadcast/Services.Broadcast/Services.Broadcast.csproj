@@ -532,7 +532,6 @@
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\DTO\PlanBuyingDto.cs" />
     <Compile Include="Entities\DTO\PlanPricingDto.cs" />
-    <Compile Include="Entities\Enums\PlanModeEnum.cs" />
     <Compile Include="Entities\Isci\IsciMappedPlanCountDto.cs" />
     <Compile Include="Entities\Isci\PlanIsciMappingsDetailsDto.cs" />
     <Compile Include="Entities\Isci\PlanIsciDto.cs" />
@@ -549,7 +548,6 @@
     <Compile Include="Entities\Plan\PlanDaypartUpdateRequestDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateResultDto.cs" />
     <Compile Include="Entities\Plan\PlansCopyDto.cs" />
-    <Compile Include="Entities\Plan\PlanDaypartGoalDto.cs" />
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionOutOfSpecUnpostedRequestDto.cs" />

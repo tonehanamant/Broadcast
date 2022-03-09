@@ -521,8 +521,8 @@ namespace Services.Broadcast.Repositories
                         {
                             Id = spotExceptionsRecommendedPlanDetailDb.recommended_plan_id,
                             Name = recommendedPlan.name,
-                            FlightStartDate = recommendedPlanVersion.flight_start_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
-                            FlightEndDate = recommendedPlanVersion.flight_end_date ?? DateTime.MinValue, // Once requirement is clear about plan's flight_start_date and flight_end_date in case of goals by daypart feature we need to change this DateTime.MinValue value
+                            FlightStartDate = recommendedPlanVersion.flight_start_date,
+                            FlightEndDate = recommendedPlanVersion.flight_end_date,
                             SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList()
                         },
                         MetricPercent = spotExceptionsRecommendedPlanDetailDb.metric_percent,

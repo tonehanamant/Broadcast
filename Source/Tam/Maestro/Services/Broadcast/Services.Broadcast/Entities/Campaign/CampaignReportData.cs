@@ -301,7 +301,7 @@ namespace Services.Broadcast.Entities.Campaign
 
                 planProjection.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh.Value);
 
-                if (plan.HHImpressions.HasValue )
+                if (plan.HHImpressions.HasValue && plan.HHRatingPoints.HasValue)
                 {
                     var factor = planProjection.TotalHHImpressions / plan.HHImpressions.Value;
                     planProjection.TotalHHRatingPoints = plan.HHRatingPoints.Value * factor;

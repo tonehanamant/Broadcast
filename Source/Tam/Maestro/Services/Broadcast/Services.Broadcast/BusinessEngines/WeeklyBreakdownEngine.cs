@@ -60,8 +60,6 @@ namespace Services.Broadcast.BusinessEngines
 
         List<WeeklyBreakdownWeek> GroupWeeklyBreakdownWeeksBasedOnDeliveryType(PlanDto plan);
 
-        List<WeeklyBreakdownWeek> GroupWeeklyBreakdownWeeksBasedOnDeliveryType(PlanDto plan, PlanDaypartGoalDto planDaypartGoal);
-
         /// <summary>
         /// Based on the plan delivery type, splits weekly breakdown into all combinations of plan ad lengths and dayparts
         /// And distributes goals based on ad length and daypart weights
@@ -379,27 +377,6 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public List<WeeklyBreakdownWeek> GroupWeeklyBreakdownWeeksBasedOnDeliveryType(PlanDto plan, PlanDaypartGoalDto planDaypartGoal)
-        {
-            if (planDaypartGoal.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery ||
-                planDaypartGoal.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeek)
-            {
-                return _GroupWeeklyBreakdownWeeks_ByWeekDeliveryType(plan, planDaypartGoal);
-            }
-            else if (planDaypartGoal.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
-            {
-                return _GroupWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType(plan, planDaypartGoal);
-            }
-            else if (planDaypartGoal.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
-            {
-                return _GroupWeeklyBreakdownWeeks_ByWeekByDaypartDeliveryType(plan, planDaypartGoal);
-            }
-            else
-            {
-                throw new ApplicationException(_UnsupportedDeliveryTypeMessage);
-            }
-        }
-
         private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekByDaypartDeliveryType(PlanDto plan)
         {
             int planDaypartId = 0;
@@ -437,46 +414,6 @@ namespace Services.Broadcast.BusinessEngines
                        plan.Budget.Value,
                        newWeeklyBreakdownItem,
                        item.Impressions, 
-                       roundRatings: true);
-
-                result.Add(newWeeklyBreakdownItem);
-            }
-
-            RecalculatePercentageOfWeekBasedOnImpressions(result);
-
-            return result;
-        }
-
-        private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekByDaypartDeliveryType(PlanDto plan, PlanDaypartGoalDto planDaypartGoal)
-        {
-            var result = new List<WeeklyBreakdownWeek>();
-            var weeklyBreakdownByWeekByDaypart = GroupWeeklyBreakdownByWeekByDaypart(planDaypartGoal.WeeklyBreakdownWeeks, planDaypartGoal.ImpressionsPerUnit, plan.Equivalized, plan.CreativeLengths);
-
-            foreach (var item in weeklyBreakdownByWeekByDaypart)
-            {
-                var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                {
-                    WeekNumber = item.WeekNumber,
-                    MediaWeekId = item.MediaWeekId,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    NumberOfActiveDays = item.NumberOfActiveDays,
-                    ActiveDays = item.ActiveDays,
-                    DaypartCodeId = item.DaypartCodeId,
-                    WeeklyAdu = item.Adu,
-                    WeeklyUnits = item.Units,
-                    IsLocked = item.IsLocked,
-                    DaypartOrganizationId = item.DaypartOrganizationId,
-                    CustomName = item.CustomName,
-                    DaypartOrganizationName = item.DaypartOrganizationName
-                };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
-                       planDaypartGoal.TargetImpressions.Value,
-                       planDaypartGoal.TargetRatingPoints.Value,
-                       planDaypartGoal.Budget.Value,
-                       newWeeklyBreakdownItem,
-                       item.Impressions,
                        roundRatings: true);
 
                 result.Add(newWeeklyBreakdownItem);
@@ -529,45 +466,6 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType(PlanDto plan, PlanDaypartGoalDto planDaypartGoal)
-        {
-            var result = new List<WeeklyBreakdownWeek>();
-            var weeklyBreakdownByWeekBySpotLength = GroupWeeklyBreakdownByWeekBySpotLength(planDaypartGoal.WeeklyBreakdownWeeks, planDaypartGoal.ImpressionsPerUnit, plan.Equivalized);
-
-            foreach (var item in weeklyBreakdownByWeekBySpotLength)
-            {
-                var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                {
-                    WeekNumber = item.WeekNumber,
-                    MediaWeekId = item.MediaWeekId,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    NumberOfActiveDays = item.NumberOfActiveDays,
-                    ActiveDays = item.ActiveDays,
-                    SpotLengthId = item.SpotLengthId,
-                    SpotLengthDuration = _GetWeeklySpotLengthDuration(item.SpotLengthId),
-                    WeeklyAdu = item.Adu,
-                    WeeklyUnits = item.Units,
-                    IsLocked = item.IsLocked
-                };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
-                    planDaypartGoal.TargetImpressions.Value,
-                    planDaypartGoal.TargetRatingPoints.Value,
-                    planDaypartGoal.Budget.Value,
-                    newWeeklyBreakdownItem,
-                    item.Impressions,
-                    roundRatings: true);
-
-                result.Add(newWeeklyBreakdownItem);
-            }
-
-            RecalculatePercentageOfWeekBasedOnImpressions(result);
-            _AdjustSpotLengthBudget(result, planDaypartGoal.GoalBreakdownType, plan.Equivalized, planDaypartGoal.Budget.Value);
-
-            return result;
-        }
-
         /// <summary>
         /// Groups weekly breakdown by week
         /// </summary>
@@ -599,43 +497,6 @@ namespace Services.Broadcast.BusinessEngines
                        plan.TargetImpressions.Value,
                        plan.TargetRatingPoints.Value,
                        plan.Budget.Value,
-                       newWeeklyBreakdownItem,
-                       week.Impressions, roundRatings: true);
-
-                result.Add(newWeeklyBreakdownItem);
-            }
-
-            return result;
-        }
-
-        private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekDeliveryType(PlanDto plan, PlanDaypartGoalDto planDaypartGoal)
-        {
-            var result = new List<WeeklyBreakdownWeek>();
-            var weeks = GroupWeeklyBreakdownByWeek(
-                planDaypartGoal.WeeklyBreakdownWeeks,
-                planDaypartGoal.ImpressionsPerUnit,
-                plan.CreativeLengths,
-                plan.Equivalized);
-
-            foreach (var week in weeks)
-            {
-                var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                {
-                    WeekNumber = week.WeekNumber,
-                    MediaWeekId = week.MediaWeekId,
-                    StartDate = week.StartDate,
-                    EndDate = week.EndDate,
-                    NumberOfActiveDays = week.NumberOfActiveDays,
-                    ActiveDays = week.ActiveDays,
-                    WeeklyAdu = week.Adu,
-                    WeeklyUnits = week.Units,
-                    IsLocked = week.IsLocked
-                };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
-                       planDaypartGoal.TargetImpressions.Value,
-                       planDaypartGoal.TargetRatingPoints.Value,
-                       planDaypartGoal.Budget.Value,
                        newWeeklyBreakdownItem,
                        week.Impressions, roundRatings: true);
 

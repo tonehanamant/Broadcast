@@ -43,7 +43,6 @@ namespace Services.Broadcast.Extensions
                     planDaypart.DaypartOrganizationId,
                     planDaypart.DaypartOrganizationName,
                     planDaypart.CustomName,
-                    planDaypart.Goals,
                     planDaypart.PlanDaypartId
                 }).ToList();
 
@@ -76,8 +75,7 @@ namespace Services.Broadcast.Extensions
                     VpvhForAudiences = item.VpvhForAudiences,
                     DaypartOrganizationId = item.DaypartOrganizationId,
                     DaypartOrganizationName = item.DaypartOrganizationName,
-                    CustomName = item.CustomName,
-                    Goals = item.Goals
+                    CustomName = item.CustomName
                 }).ToList();
         }
 

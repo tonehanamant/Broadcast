@@ -411,6 +411,26 @@ GO
 
 /*************************************** END BP-3285 - Part 3 ***************************************/
 
+/*************************************** START BP-4221 ***************************************/
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'flight_start_date' AND UPPER(IS_NULLABLE) = UPPER('YES'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN flight_start_date datetime NOT NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'flight_end_date' AND UPPER(IS_NULLABLE) = UPPER('YES'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN flight_end_date datetime NOT NULL
+END
+
+GO
+
+/*************************************** END BP-4221 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

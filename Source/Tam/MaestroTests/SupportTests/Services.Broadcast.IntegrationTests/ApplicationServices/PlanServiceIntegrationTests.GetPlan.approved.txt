@@ -2003,7 +2003,6 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "1||",
       "EndTimeSeconds": 36000,
-      "Goals": null,
       "IsEndTimeModified": false,
       "IsStartTimeModified": false,
       "Restrictions": {
@@ -2051,7 +2050,6 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "5||",
       "EndTimeSeconds": 300,
-      "Goals": null,
       "IsEndTimeModified": false,
       "IsStartTimeModified": false,
       "Restrictions": {
@@ -2094,7 +2092,6 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "16||",
       "EndTimeSeconds": 300,
-      "Goals": null,
       "IsEndTimeModified": false,
       "IsStartTimeModified": true,
       "Restrictions": {
@@ -2164,7 +2161,6 @@
   "ModifiedBy": "Sebastian Roibu",
   "ModifiedDate": "2020-06-19T02:21:37.64",
   "Name": "Plan Q1 2021 13 weeks 544",
-  "PlanMode": 1,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

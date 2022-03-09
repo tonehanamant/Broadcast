@@ -1,10 +1,10 @@
-CREATE TABLE [dbo].[plan_versions] (
+﻿CREATE TABLE [dbo].[plan_versions] (
     [id]                    INT             IDENTITY (1, 1) NOT NULL,
     [plan_id]               INT             NOT NULL,
     [is_draft]              BIT             NOT NULL,
     [equivalized]           BIT             NOT NULL,
-    [flight_start_date]     DATETIME        NULL,
-    [flight_end_date]       DATETIME        NULL,
+    [flight_start_date]     DATETIME        NOT NULL,
+    [flight_end_date]       DATETIME        NOT NULL,
     [flight_notes]          NVARCHAR (1024) NULL,
     [audience_type]         INT             NOT NULL,
     [posting_type]          INT             NOT NULL,
@@ -41,6 +41,8 @@ CREATE TABLE [dbo].[plan_versions] (
     CONSTRAINT [FK_plan_versions_plans] FOREIGN KEY ([plan_id]) REFERENCES [dbo].[plans] ([id]),
     CONSTRAINT [FK_plan_versions_share_media_months] FOREIGN KEY ([share_book_id]) REFERENCES [dbo].[media_months] ([id])
 );
+
+
 
 
 

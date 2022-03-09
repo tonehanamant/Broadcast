@@ -534,7 +534,6 @@ namespace Services.Broadcast.Entities.Plan
             var result = BuyingParameters?.BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
             return result;
         }
-        public PlanModeEnum PlanMode { get; set; } = PlanModeEnum.Classic;
     }
 
     public class PlanDto_v2 : PlanDto
