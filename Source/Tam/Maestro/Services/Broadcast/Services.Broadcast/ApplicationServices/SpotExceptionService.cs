@@ -16,7 +16,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Add mock data to spot exceptions tables.
         /// </summary>   
-        bool AddSpotExceptionData();
+        /// <param name="isIntegrationTestDatabase">True when we are running integration tests against an integration tests database.</param>
+        bool AddSpotExceptionData(bool isIntegrationTestDatabase = false);
         /// <summary>
         /// Clear data from spot exceptions tables.
         /// </summary>   
@@ -146,7 +147,7 @@ namespace Services.Broadcast.ApplicationServices
             _AabEngine = aabEngine;
         }
 
-        public bool AddSpotExceptionData()
+        public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
         {
             List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans = _GetSpotExceptionsRecommendedPlansMock();
             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs = _GetSpotExceptionsOutOfSpecsMock();
@@ -159,10 +160,17 @@ namespace Services.Broadcast.ApplicationServices
                 s.ModifiedBy = "Mock Date";
             });
 
-            // uncomment this to align with the integration test database
-            //spotExceptionsRecommendedPlans.ForEach(s => s.RecommendedPlanId = 524);
-            //spotExceptionsRecommendedPlans.SelectMany(s => s.SpotExceptionsRecommendedPlanDetails).ToList().ForEach(s => s.RecommendedPlanId = 524);
-            //spotExceptionsOutOfSpecs.ForEach(s => s.RecommendedPlanId = 524);
+            if (isIntegrationTestDatabase)
+            {
+                // align this mock data with existing plan data within the integration tests databases                
+                spotExceptionsRecommendedPlans.ForEach(s => s.RecommendedPlanId = 524);
+                spotExceptionsRecommendedPlans.SelectMany(s => s.SpotExceptionsRecommendedPlanDetails).ToList().ForEach(s => s.RecommendedPlanId = 524);
+                spotExceptionsOutOfSpecs.ForEach(s =>
+                {
+                    s.RecommendedPlanId = 524;
+                    s.ProgramGenre.Id++; // these are 1 off 
+                 });
+            }
 
             var result = _SpotExceptionRepository.AddSpotExceptionData(spotExceptionsRecommendedPlans, spotExceptionsOutOfSpecs);
             return result;
@@ -616,9 +624,9 @@ namespace Services.Broadcast.ApplicationServices
                     },
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 2,
-                        ReasonCode = 1,
-                        Reason = "spot aired outside daypart",
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "sIncorrect Time",
                         Label = "Daypart"
                     },
                 },
@@ -652,9 +660,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=20000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 3,
-                        ReasonCode = 2,
-                        Reason = "genre content restriction",
+                        Id = 8,
+                        ReasonCode = 10,
+                        Reason = "Incorrect Genre",
                         Label = "Genre"
                     }
                 },
@@ -687,9 +695,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=30000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 4,
-                        ReasonCode = 3,
-                        Reason = "affiliate content restriction",
+                        Id = 9,
+                        ReasonCode = 11,
+                        Reason = "Incorrect Affiliate",
                         Label = "Affiliate"
                     }
                 },
@@ -722,9 +730,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=40000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 5,
-                        ReasonCode = 4,
-                        Reason = "program content restriction",
+                        Id = 10,
+                        ReasonCode = 12,
+                        Reason = "Incorrect Program",
                         Label = "Program"
                     }
                 },
@@ -757,9 +765,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=50000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 3,
-                        ReasonCode = 2,
-                        Reason = "genre content restriction",
+                        Id = 8,
+                        ReasonCode = 10,
+                        Reason = "Incorrect Genre",
                         Label = "Genre"
                     }
                 },
@@ -792,9 +800,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=60000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 2,
-                        ReasonCode = 1,
-                        Reason = "spot aired outside daypart",
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
                         Label = "Daypart"
                     }
                 },
@@ -827,9 +835,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=70000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 3,
-                        ReasonCode = 2,
-                        Reason = "genre content restriction",
+                        Id = 8,
+                        ReasonCode = 10,
+                        Reason = "Incorrect Genre",
                         Label = "Genre"
                     }
                 },
@@ -862,9 +870,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=80000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 4,
-                        ReasonCode = 3,
-                        Reason = "affiliate content restriction",
+                        Id = 9,
+                        ReasonCode = 11,
+                        Reason = "Incorrect Affiliate",
                         Label = "Affiliate"
                     }
                 },
@@ -897,9 +905,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=90000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 5,
-                        ReasonCode = 4,
-                        Reason = "program content restriction",
+                        Id = 10,
+                        ReasonCode = 12,
+                        Reason = "Incorrect Program",
                         Label = "Program"
                     }
                 },
@@ -932,9 +940,9 @@ namespace Services.Broadcast.ApplicationServices
                   Impressions=100000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 3,
-                        ReasonCode = 2,
-                        Reason = "genre content restriction",
+                        Id = 8,
+                        ReasonCode = 10,
+                        Reason = "Incorrect Genre",
                         Label = "Genre"
                     }
                 }

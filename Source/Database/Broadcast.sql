@@ -431,6 +431,35 @@ GO
 
 /*************************************** END BP-4221 ***************************************/
 
+/*************************************** Start BP-4264 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 12)
+BEGIN 
+	-- no need to retain the data
+	-- the feature is not released yet.
+	DELETE FROM spot_exceptions_out_of_spec_decisions
+	DELETE FROM spot_exceptions_out_of_specs
+
+	DELETE FROM spot_exceptions_out_of_spec_reason_codes
+	DBCC CHECKIDENT ('spot_exceptions_out_of_spec_reason_codes', RESEED, 0);
+
+	INSERT INTO spot_exceptions_out_of_spec_reason_codes (reason_code, reason, [label]) VALUES
+		(3,'Hiatus Day','Hiatus')
+		,(4,'Incorrect Flight Week','Flight')
+		,(5,'Incorrect ISCI','ISCI')
+		,(6,'Incorrect ISCI (Day)','Day')
+		,(7,'Incorrect Length','Length')
+		,(8,'Incorrect Market','Market')
+		,(9,'Incorrect Time','Daypart')
+		,(10,'Incorrect Genre','Genre')
+		,(11,'Incorrect Affiliate','Affiliate')
+		,(12,'Incorrect Program','Program')
+
+END
+
+GO
+/*************************************** END BP-4264 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

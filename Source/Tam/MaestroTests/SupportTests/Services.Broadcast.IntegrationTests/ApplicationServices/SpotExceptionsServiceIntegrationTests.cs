@@ -26,8 +26,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         //[Test]
         public void AddSpotExceptionData()
         {
+            var minPlanId = 215;
+            var maxPlanId = 233;
+
             _SpotExceptionService.ClearSpotExceptionData();
-            _SpotExceptionService.AddSpotExceptionData();
+            _SpotExceptionService.AddSpotExceptionData(isIntegrationTestDatabase: true);
 
             var weekStartDate = new DateTime(2021, 10, 10);
             var weekEndDate = new DateTime(2021, 10, 17);

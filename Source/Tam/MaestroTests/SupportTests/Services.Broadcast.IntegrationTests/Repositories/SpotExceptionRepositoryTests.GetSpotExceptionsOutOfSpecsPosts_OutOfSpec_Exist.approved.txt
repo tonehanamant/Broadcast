@@ -43,9 +43,9 @@
     "SpotExceptionsOutOfSpecDecision": null,
     "SpotExceptionsOutOfSpecReasonCode": {
       "Id": 2,
-      "Label": "Daypart",
-      "Reason": "spot aired outside daypart",
-      "ReasonCode": 1
+      "Label": "Flight",
+      "Reason": "Incorrect Flight Week",
+      "ReasonCode": 4
     },
     "SpotLength": {
       "Id": 1,
@@ -100,9 +100,9 @@
     "SpotExceptionsOutOfSpecDecision": null,
     "SpotExceptionsOutOfSpecReasonCode": {
       "Id": 3,
-      "Label": "Genre",
-      "Reason": "genre content restriction",
-      "ReasonCode": 2
+      "Label": "ISCI",
+      "Reason": "Incorrect ISCI",
+      "ReasonCode": 5
     },
     "SpotLength": {
       "Id": 2,
