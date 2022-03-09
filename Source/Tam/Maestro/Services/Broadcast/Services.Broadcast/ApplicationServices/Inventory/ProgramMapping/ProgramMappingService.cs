@@ -251,11 +251,12 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var programMapping in uniqueProgramMappings)
             {
-                var masterListProgram = masterListPrograms.FirstOrDefault(p =>
+                var masterListProgram = masterListPrograms.FindAll(p =>
                             p.OfficialProgramName.Equals(programMapping.OfficialProgramName,
                                                          StringComparison.OrdinalIgnoreCase));
+                
 
-                if (masterListProgram == null)
+                if (!(masterListProgram?.Any() ?? false))
                 {
                     var programNameException = programNameExceptions.FirstOrDefault(p =>
                             p.CustomProgramName.Equals(programMapping.OfficialProgramName,
@@ -271,6 +272,7 @@ namespace Services.Broadcast.ApplicationServices
                     }
                     continue;
                 }
+                var masterGenreList = masterListProgram.Select(g => g.OfficialGenre).Select(g => g.Name).Distinct();
                 string foundGenreName = null;
                 try
                 {
@@ -295,12 +297,13 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 if (foundGenreName != null)
                 {
-                    if (masterListProgram.OfficialGenre.Name != foundGenreName)
+                    bool matchedGenre = masterGenreList.Contains(foundGenreName);
+                    if (!matchedGenre)
                     {
                         programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
                         {
                             OfficialProgramName = programMapping.OfficialProgramName,
-                            ErrorMessage = $"Program name '{programMapping.OfficialProgramName}' validated, but not with the Genre '{masterListProgram.OfficialGenre.Name}'."
+                            ErrorMessage = $"Program name '{programMapping.OfficialProgramName}' validated, but not with the Genre '{string.Join(", ",masterGenreList)}'."
                         });
                     }
                 }
