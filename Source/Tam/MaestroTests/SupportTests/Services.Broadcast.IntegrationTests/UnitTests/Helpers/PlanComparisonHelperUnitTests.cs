@@ -48,6 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             // These properties some minor properties
             afterPlan.VersionId++;
             afterPlan.ProductId++;
+            afterPlan.Dayparts.ForEach(d => d.PlanDaypartId++);
             afterPlan.Name = beforePlan.Name + " Edited";
             afterPlan.IsDraft = !afterPlan.IsDraft;
 
@@ -64,6 +65,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             // These properties some major properties
             afterPlan.Budget += 10m;
             afterPlan.CoverageGoalPercent += 10;
+            afterPlan.Dayparts.ForEach(d => d.PlanDaypartId++);
 
             var result = PlanComparisonHelper.DidPlanPricingInputsChange(beforePlan, afterPlan);
 
@@ -75,6 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
         {
             var beforePlan = _GetNewPlan();
             var afterPlan = _GetNewPlan();
+            afterPlan.Dayparts.ForEach(d => d.PlanDaypartId++);
 
             beforePlan.Status = PlanStatusEnum.Working;
             beforePlan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery;
@@ -132,6 +135,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
                 {
                     new PlanDaypartDto
                     {
+                        PlanDaypartId = 536,
                         DaypartCodeId = 2,
                         StartTimeSeconds = 0,
                         EndTimeSeconds = 2000,
@@ -149,6 +153,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
                     },
                     new PlanDaypartDto
                     {
+                        PlanDaypartId = 965,
                         DaypartCodeId = 11,
                         StartTimeSeconds = 1500,
                         EndTimeSeconds = 2788,

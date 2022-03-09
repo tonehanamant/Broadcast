@@ -602,7 +602,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue((resultBeforePlan != null) == expectBeforePlanResult);
         }
 
-
         [Test]
         [TestCase(PlanService.SaveState.CreatingNewPlan, true, false)]
         [TestCase(PlanService.SaveState.CreatingNewPlan, false, false)]
@@ -628,6 +627,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             afterPlan.VersionId = planVersionId + 1;
             afterPlan.IsDraft = saveState == PlanService.SaveState.PromotingDraft;
             afterPlan.ModifiedDate = modifiedDate;
+            afterPlan.Dayparts.ForEach(d => d.PlanDaypartId++);
 
             if (goalsChanged)
             {
@@ -665,7 +665,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var afterPlan = _GetNewPlan();
             afterPlan.Id = planId;
             afterPlan.VersionId = planVersionId + 1;
-
+            afterPlan.Dayparts.ForEach(d => d.PlanDaypartId++);
 
             var expectedUpdatePlanPricingVersionId = 0;
             var expectedSavePlanPricingParametersCalled = 0;
@@ -727,7 +727,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var afterPlan = _GetNewPlan();
             afterPlan.Id = planId;
             afterPlan.VersionId = planVersionId + 1;
-
+            afterPlan.Dayparts.ForEach(d => d.PlanDaypartId++);
 
             var expectedUpdatePlanBuyingVersionId = 0;
             var expectedSavePlanBuyingParametersCalled = 0;
@@ -849,6 +849,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             plansToReturn[0].CampaignId = plansToReturn[1].CampaignId = 1;
             plansToReturn[0].Status = PlanStatusEnum.Contracted;
             plansToReturn[1].Status = PlanStatusEnum.Live;
+            plansToReturn[1].Dayparts.ForEach(d => d.PlanDaypartId++);
             _PlanRepositoryMock
                 .Setup(s => s.GetPlansForAutomaticTransition(It.IsAny<DateTime>()))
                 .Returns(plansToReturn);
@@ -1142,6 +1143,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             PlanDto plan = _GetNewPlan();
             plan.Id = 1;
             plan.VersionId = 2;
+            plan.Dayparts.ForEach(s => s.PlanDaypartId++);
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(beforePlan);
@@ -1570,6 +1572,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     new PlanDaypartDto
                     {
+                        PlanDaypartId = 56,
                         DaypartTypeId = DaypartTypeEnum.News,
                         DaypartCodeId = 2,
                         StartTimeSeconds = 0,
@@ -1588,6 +1591,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     new PlanDaypartDto
                     {
+                        PlanDaypartId = 58,
                         DaypartTypeId = DaypartTypeEnum.News,
                         DaypartCodeId = 11,
                         StartTimeSeconds = 1500,
@@ -3729,6 +3733,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 new PlanDaypartDto
                 {
+                    PlanDaypartId = 668,
                     DaypartTypeId = DaypartTypeEnum.News,
                     DaypartCodeId = 2,
                     StartTimeSeconds = 0,
@@ -3747,6 +3752,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 },
                 new PlanDaypartDto
                 {
+                    PlanDaypartId = 669,
                     DaypartTypeId = DaypartTypeEnum.Sports,
                     DaypartCodeId = 24,
                     StartTimeSeconds = 1500,
@@ -3774,6 +3780,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 new PlanDaypartDto
                 {
+                    PlanDaypartId = 769,
                     DaypartTypeId = DaypartTypeEnum.News,
                     DaypartCodeId = 2,
                     StartTimeSeconds = 0,
@@ -3792,6 +3799,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 },
                 new PlanDaypartDto
                 {
+                    PlanDaypartId = 770,
                     DaypartTypeId = DaypartTypeEnum.Sports,
                     DaypartCodeId = 24,
                     StartTimeSeconds = 1500,

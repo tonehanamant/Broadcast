@@ -48,6 +48,10 @@
     "PropertyName": "Id"
   },
   {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "PlanDaypartId"
+  },
+  {
     "ClassTypeName": "PlanDto",
     "PropertyName": "Name"
   },
