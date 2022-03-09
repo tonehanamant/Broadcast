@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using System;
@@ -17,22 +18,29 @@ namespace Services.Broadcast.Entities.Plan.Buying
 
         public string PlanVersion { get; set; }
 
+        public SpotAllocationModelMode SpotAllocationModelMode { get; set; }
+        public PostingTypeEnum PostingType { get; set; }
+
         public SpotAllocationTotals SpotAllocationTotals { get; set; }
 
         public List<SpotsAllocation> SpotAllocations { get; set; }
 
-        private const string FILENAME_FORMAT = "Pricing_Results_Report_Plan_{0}_Version_{1}.xlsx";
+        private const string FILENAME_FORMAT = "Buying_Results_Report_Plan_{0}_Version_{1}_{2}_{3}.xlsx";
         private const string TIME_FORMAT = "HH:mm:ss";
 
         public BuyingResultsReportData(
             PlanDto plan,
+            SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType,
             List<PlanBuyingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
             List<LookupDto> markets,
             IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
-            ExportFileName = string.Format(FILENAME_FORMAT, plan.Id, plan.VersionNumber.Value);
+            SpotAllocationModelMode = spotAllocationModelMode;
+            PostingType = postingType;
+            ExportFileName = string.Format(FILENAME_FORMAT, plan.Id, plan.VersionNumber.Value, SpotAllocationModelMode, PostingType);
             PlanId = plan.Id.ToString();
             PlanVersion = $"Version {plan.VersionNumber.Value}";
 

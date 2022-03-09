@@ -206,6 +206,7 @@
         <button class="tablinks" id="inventory-tab" onclick="openTab('inventory')">Inventory</button>
         <button class="tablinks" id="program_guide-tab" onclick="openTab('program_guide')">Program Guide</button>
         <button class="tablinks" id="planning-tab" onclick="openTab('planning')">Plannning</button>
+        <button class="tablinks" id="buying-tab" onclick="openTab('buying')">Buying</button>
         <button class="tablinks" id="posting-tab" onclick="openTab('posting')">Posting</button>
         <button class="tablinks" id="reference_data-tab" onclick="openTab('reference_data')">Reference Data</button>
         <button class="tablinks" id="settings-tab" onclick="openTab('settings')">Status & Configuration</button>
@@ -401,29 +402,7 @@
                     </div>
                 </div>
             }
-
-
-            @using (Html.BeginForm("RerunPlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h4 class="heading">Rerun Plan Buying Job</h4>
-                    <div class="input-container-row">
-                        <input class="input" type="text" name="jobId" />
-                        <input class="button" type="submit" value="Rerun Plan Buying Job" id="submit" />
-                    </div>
-                </div>
-            }
-
-            @using (Html.BeginForm("ForceCompletePlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h4 class="heading">Force Complete Plan Buying Job</h4>
-                    <div class="input-container-row">
-                        <input class="input" type="text" name="jobId" />
-                        <input class="button" type="submit" value="Force complete a Plan Buying Job" id="submit" />
-                    </div>
-                </div>
-            }
+            
 
             @using (Html.BeginForm("GeneratePricingResultsReport", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -450,6 +429,57 @@
                     <input class="button" type="submit" value="Trigger Test" id="submit" />
                 </div>
             }
+        </div>
+
+        <div id="buying" class="tabcontent">
+
+            @using (Html.BeginForm("RerunPlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Rerun Plan Buying Job</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Rerun Plan Buying Job" id="submit" />
+                    </div>
+                </div>
+            }
+
+            @using (Html.BeginForm("ForceCompletePlanBuyingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Force Complete Plan Buying Job</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Force complete a Plan Buying Job" id="submit" />
+                    </div>
+                </div>
+            }
+
+            @using (Html.BeginForm("GenerateBuyingResultsReportEfficiency", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Generate Buying Results Report - Efficiency</h4>
+                    <div class="input-container">
+                        <label class="label" for="planId">Plan Id</label>
+                        <input class="input" type="text" name="planId" placeholder="e.g. '17'" />
+                    </div>
+                    <input class="button" type="submit" value="Generate" id="submit" />
+                </div>
+            }
+
+            @using (Html.BeginForm("GenerateBuyingResultsReportFloor", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Generate Buying Results Report - Floor</h4>
+                    <div class="input-container">
+                        <label class="label" for="planId">Plan Id</label>
+                        <input class="input" type="text" name="planId" placeholder="e.g. '17'" />
+                    </div>
+                    <input class="button" type="submit" value="Generate" id="submit" />
+                </div>
+            }
+
+
         </div>
 
         <div id="posting" class="tabcontent">

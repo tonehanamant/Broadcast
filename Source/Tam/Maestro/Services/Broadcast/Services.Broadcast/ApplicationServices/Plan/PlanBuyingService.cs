@@ -135,8 +135,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan id</param>
         /// <param name="planVersionNumber">The plan version number</param>
         /// <param name="templatesFilePath">Base path of the file templates</param>
-        /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
-        ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">Type of the posting.</param>
+        /// <returns>
+        /// ReportOutput which contains filename and MemoryStream which actually contains report data
+        /// </returns>
+        ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+            PostingTypeEnum postingType = PostingTypeEnum.NSI);
 
         void ValidateAndApplyMargin(PlanBuyingParametersDto parameters);
 
@@ -330,16 +336,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
         }
 
-        public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
+        public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
-            var reportData = GetBuyingResultsReportData(planId, planVersionNumber);
+            var reportData = GetBuyingResultsReportData(planId, planVersionNumber, spotAllocationModelMode, postingType);
             var reportGenerator = new BuyingResultsReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(reportData);
 
             return report;
         }
 
-        public BuyingResultsReportData GetBuyingResultsReportData(int planId, int? planVersionNumber)
+        public BuyingResultsReportData GetBuyingResultsReportData(int planId, int? planVersionNumber, 
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, 
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             // use passed version or the current version by default
             var planVersionId = planVersionNumber.HasValue ?
@@ -349,10 +359,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var plan = _PlanRepository.GetPlan(planId, planVersionId);
             if (!plan.JobId.HasValue)
             {
-                throw new ApplicationException("Cannot generate the report.  No related job.");
+                throw new InvalidOperationException("Cannot generate the report.  No related job.");
             }
 
-            var runResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(plan.JobId.Value);
+            var buyingJob = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+            if (buyingJob == null)
+            {
+                throw new InvalidOperationException("Cannot generate the report.  No related job.");
+            }
+
+            var runResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(buyingJob.Id, spotAllocationModelMode, postingType);
             var allocatedSpots = runResults.AllocatedSpots;
             var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
             var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
@@ -362,6 +378,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var data = new BuyingResultsReportData(
                 plan,
+                spotAllocationModelMode, 
+                postingType,
                 allocatedSpots,
                 manifests,
                 primaryProgramsByManifestDaypartIds,

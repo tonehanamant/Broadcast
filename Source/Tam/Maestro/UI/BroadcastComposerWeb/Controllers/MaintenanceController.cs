@@ -711,6 +711,41 @@ namespace BroadcastComposerWeb.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult GenerateBuyingResultsReportEfficiency(int planId)
+        {
+            try
+            {
+                var appDataPath = HttpContext.Server.MapPath("~/App_Data");
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
+                var result = service.GenerateBuyingResultsReport(planId, planVersionNumber: null, appDataPath, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+
+                return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GenerateBuyingResultsReportFloor(int planId)
+        {
+            try
+            {
+                var appDataPath = HttpContext.Server.MapPath("~/App_Data");
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
+                var result = service.GenerateBuyingResultsReport(planId, planVersionNumber: null, appDataPath, SpotAllocationModelMode.Floor, PostingTypeEnum.NSI);
+
+                return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
+        }
 
         [HttpPost]
         public ActionResult UploadVpvhFile(HttpPostedFileBase file)

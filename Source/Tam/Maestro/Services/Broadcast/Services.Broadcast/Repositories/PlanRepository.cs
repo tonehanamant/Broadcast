@@ -2584,6 +2584,7 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.plan_version_pricing_api_result_spot_frequencies))
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.standard_dayparts))
+                    .Where(x => x.spot_allocation_model_mode == 1 && x.posting_type == 1) // quality, NSI
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
