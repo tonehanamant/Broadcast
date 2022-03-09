@@ -820,7 +820,9 @@ namespace Services.Broadcast.BusinessEngines
                 var itemRefCode = standardDayparts.FirstOrDefault(d => d.PlanDaypartId == week.PlanDaypartId);
                 if (itemRefCode != null)
                 {
-                    week.DaypartCodeId = itemRefCode.StandardDaypartId;                   
+                    week.DaypartCodeId = itemRefCode.StandardDaypartId;
+                    week.CustomName = itemRefCode.CustomName;
+                    week.DaypartOrganizationId = itemRefCode.DaypartOrganizationId;
                 }
             }
             // Get the existing daypart ids in the existing weeks
