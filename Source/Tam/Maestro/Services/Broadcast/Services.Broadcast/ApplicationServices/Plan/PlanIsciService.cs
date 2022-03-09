@@ -627,6 +627,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var spotLengthId = isciSpotLengths.Where(s => s.Isci.Equals(i.Isci)).Select(s => s.SpotLengthId).First();
                 var spotLengthString = _GetSpotLengthsString(spotLengthId);
                 var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
+                var availabilityString = _GetFlightString(i.ActiveStartDate, i.ActiveEndDate);
                 var item = new PlanMappedIsciDetailsDto
                 {
                     PlanIsciMappingId = i.Id,
@@ -635,7 +636,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     SpotLengthString = spotLengthString,
                     FlightStartDate = i.FlightStartDate,
                     FlightEndDate = i.FlightEndDate,
-                    FlightString = flightString
+                    FlightString = flightString,
+                    AvailabilityStartDate = i.ActiveStartDate,
+                    AvailabilityEndDate = i.ActiveEndDate,
+                    AvailabilityString = availabilityString
                 };
                 return item;
             })

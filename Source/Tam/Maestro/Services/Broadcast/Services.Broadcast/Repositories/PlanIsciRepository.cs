@@ -434,7 +434,7 @@ namespace Services.Broadcast.Repositories
             {
                 var result = (from isciMappings in context.plan_iscis
                               join iscis in context.reel_iscis
-                              on  isciMappings.isci  equals iscis.isci
+                              on isciMappings.isci equals iscis.isci
                               where isciMappings.plan_id == planId
                               && isciMappings.deleted_at == null
                               select new PlanIsciDto
@@ -443,7 +443,9 @@ namespace Services.Broadcast.Repositories
                                   PlanId = isciMappings.plan_id,
                                   Isci = isciMappings.isci,
                                   FlightStartDate = isciMappings.flight_start_date,
-                                  FlightEndDate = isciMappings.flight_end_date
+                                  FlightEndDate = isciMappings.flight_end_date,
+                                  ActiveStartDate = iscis.active_start_date,
+                                  ActiveEndDate = iscis.active_end_date
                               }).Distinct().ToList();
                 return result;
             });
