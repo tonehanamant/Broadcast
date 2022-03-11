@@ -28,6 +28,13 @@
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 1,
           "Spots": 3
+        },
+        {
+          "Impressions": 659.63,
+          "SpotCost": 65.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
         }
       ],
       "StandardDaypart": {
@@ -36,11 +43,11 @@
         "Id": 12,
         "VpvhCalculationSourceType": 0
       },
-      "StationInventoryManifestId": 4341,
-      "TotalCost": 195.0000,
+      "StationInventoryManifestId": 4340,
+      "TotalCost": 260.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 1978.89,
-      "TotalSpots": 3
+      "TotalImpressions": 2638.52,
+      "TotalSpots": 4
     },
     {
       "ContractMediaWeek": {
@@ -70,63 +77,6 @@
           "SpotCostWithMargin": 0.0,
           "SpotLengthId": 1,
           "Spots": 3
-        },
-        {
-          "Impressions": 659.63,
-          "SpotCost": 65.0000,
-          "SpotCostWithMargin": 0.0,
-          "SpotLengthId": 2,
-          "Spots": 1
-        }
-      ],
-      "StandardDaypart": {
-        "Code": "DAY",
-        "FullName": "Daytime",
-        "Id": 12,
-        "VpvhCalculationSourceType": 0
-      },
-      "StationInventoryManifestId": 4340,
-      "TotalCost": 260.0000,
-      "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 2638.52,
-      "TotalSpots": 4
-    }
-  ],
-  "BuyingCpm": 123.4000,
-  "BuyingVersion": "3",
-  "PlanVersionId": 9166,
-  "PostingType": 1,
-  "RequestId": null,
-  "SpotAllocationModelMode": 2,
-  "UnallocatedSpots": [
-    {
-      "ContractMediaWeek": {
-        "_EndDate": "2017-10-22T00:00:00",
-        "_Id": 721,
-        "_MediaMonthId": 433,
-        "_StartDate": "2017-10-16T00:00:00",
-        "_WeekNumber": 4,
-        "IsDirty": true
-      },
-      "Impressions30sec": 12346.69,
-      "InventoryMediaWeek": {
-        "_EndDate": "2019-09-22T00:00:00",
-        "_Id": 821,
-        "_MediaMonthId": 456,
-        "_StartDate": "2019-09-16T00:00:00",
-        "_WeekNumber": 4,
-        "IsDirty": true
-      },
-      "LegacyCallLetters": null,
-      "OwnerName": null,
-      "RepFirm": null,
-      "SpotFrequencies": [
-        {
-          "Impressions": 659.63,
-          "SpotCost": 65.0000,
-          "SpotCostWithMargin": 0.0,
-          "SpotLengthId": 2,
-          "Spots": 0
         }
       ],
       "StandardDaypart": {
@@ -136,59 +86,17 @@
         "VpvhCalculationSourceType": 0
       },
       "StationInventoryManifestId": 4341,
-      "TotalCost": 0.0000,
+      "TotalCost": 195.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
-    },
-    {
-      "ContractMediaWeek": {
-        "_EndDate": "2017-10-22T00:00:00",
-        "_Id": 721,
-        "_MediaMonthId": 433,
-        "_StartDate": "2017-10-16T00:00:00",
-        "_WeekNumber": 4,
-        "IsDirty": true
-      },
-      "Impressions30sec": 12346.69,
-      "InventoryMediaWeek": {
-        "_EndDate": "2019-09-22T00:00:00",
-        "_Id": 821,
-        "_MediaMonthId": 456,
-        "_StartDate": "2019-09-16T00:00:00",
-        "_WeekNumber": 4,
-        "IsDirty": true
-      },
-      "LegacyCallLetters": null,
-      "OwnerName": null,
-      "RepFirm": null,
-      "SpotFrequencies": [
-        {
-          "Impressions": 659.63,
-          "SpotCost": 65.0000,
-          "SpotCostWithMargin": 0.0,
-          "SpotLengthId": 1,
-          "Spots": 0
-        },
-        {
-          "Impressions": 659.63,
-          "SpotCost": 65.0000,
-          "SpotCostWithMargin": 0.0,
-          "SpotLengthId": 2,
-          "Spots": 0
-        }
-      ],
-      "StandardDaypart": {
-        "Code": "DAY",
-        "FullName": "Daytime",
-        "Id": 12,
-        "VpvhCalculationSourceType": 0
-      },
-      "StationInventoryManifestId": 4342,
-      "TotalCost": 0.0000,
-      "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 0.0,
-      "TotalSpots": 0
+      "TotalImpressions": 1978.89,
+      "TotalSpots": 3
     }
-  ]
+  ],
+  "BuyingCpm": 123.4000,
+  "BuyingVersion": "3",
+  "PlanVersionId": 9166,
+  "PostingType": 1,
+  "RequestId": null,
+  "SpotAllocationModelMode": 2,
+  "UnallocatedSpots": []
 }

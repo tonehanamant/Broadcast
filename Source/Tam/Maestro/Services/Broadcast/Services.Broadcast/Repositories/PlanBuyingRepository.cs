@@ -294,6 +294,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="jobId">The job identifier.</param>
         /// <returns>List of ProgramLineupProprietaryInventory objects</returns>
         List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForBuyingProgramLineup(int jobId);
+
+
+        /// <summary>
+        /// Deletes the saved buying data.
+        /// </summary>
+        /// <returns></returns>
+        bool DeleteSavedBuyingData();
     }
 
     public class PlanBuyingRepository : BroadcastRepositoryBase, IPlanBuyingRepository
@@ -537,7 +544,7 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc/>
         public void SavePlanBuyingParameters(PlanBuyingParametersDto planBuyingParametersDto)
         {
-            _InReadUncommitedTransaction(context =>
+           _InReadUncommitedTransaction(context =>
             {
                 var planBuyingParameters = new plan_version_buying_parameters
                 {
@@ -579,24 +586,7 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc/>
         public void SaveBuyingApiResults(PlanBuyingAllocationResult result)
         {
-            // merge allocated and unallocated into one list
-            // figure we'll have less allocated than unallocated.
-            var spots = result.UnallocatedSpots;
-            foreach (var allocated in result.AllocatedSpots)
-            {
-                var existingSpot = spots.SingleOrDefault(s =>
-                    s.Id == allocated.Id &&
-                    s.ContractMediaWeek == allocated.ContractMediaWeek);
-
-                if (existingSpot == null)
-                {
-                    spots.Add(allocated);
-                }
-                else
-                {
-                    existingSpot.SpotFrequencies.AddRange(allocated.SpotFrequencies);
-                }
-            }
+            var spots = result.AllocatedSpots;
 
             var planBuyingApiResultSpots = spots.Select(spot => new plan_version_buying_api_result_spots
             {
@@ -653,7 +643,7 @@ namespace Services.Broadcast.Repositories
                 var apiResult = context.plan_version_buying_api_results
                     .Include(x => x.plan_version_buying_api_result_spots)
                     .Include(x => x.plan_version_buying_api_result_spots.Select(y => y.plan_version_buying_api_result_spot_frequencies))
-                    .Include(x => x.plan_version_buying_api_result_spots.Select(y => y.station_inventory_manifest))                    
+                    .Include(x => x.plan_version_buying_api_result_spots.Select(y => y.station_inventory_manifest))
                     .Where(x => x.plan_version_buying_job_id == jobId && x.spot_allocation_model_mode == (int)spotAllocationModelMode
                         && x.posting_type == (int)postingType)
                     .OrderByDescending(p => p.id)
@@ -1658,6 +1648,69 @@ namespace Services.Broadcast.Repositories
                 })
                 .ToList();
             });
+        }
+
+        public bool DeleteSavedBuyingData()
+        {
+            using (var context = CreateDBContext(false))
+            {
+                context.Database.ExecuteSqlCommand(
+                "DELETE FROM plan_version_buying_api_result_spot_frequencies; "
+                + "DBCC CHECKIDENT('plan_version_buying_api_result_spot_frequencies', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_api_result_spots; "
+                + "DBCC CHECKIDENT('plan_version_buying_api_result_spots', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_api_results; "
+                + "DBCC CHECKIDENT('plan_version_buying_api_results', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_result_spots; "
+                + "DBCC CHECKIDENT('plan_version_buying_result_spots', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_result_spot_stations; "
+                + "DBCC CHECKIDENT('plan_version_buying_result_spot_stations', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_band_station_dayparts; "
+                + "DBCC CHECKIDENT('plan_version_buying_band_station_dayparts', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_band_stations; "
+                + "DBCC CHECKIDENT('plan_version_buying_band_stations', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_results; "
+                + "DBCC CHECKIDENT('plan_version_buying_results', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_job; "
+                + "DBCC CHECKIDENT('plan_version_buying_job', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_band_details; "
+                + "DBCC CHECKIDENT('plan_version_buying_band_details', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_band_inventory_station_dayparts; "
+                + "DBCC CHECKIDENT('plan_version_buying_band_inventory_station_dayparts', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_band_inventory_stations; "
+                + "DBCC CHECKIDENT('plan_version_buying_band_inventory_stations', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_market_details; "
+                + "DBCC CHECKIDENT('plan_version_buying_market_details', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_ownership_group_details; "
+                + "DBCC CHECKIDENT('plan_version_buying_ownership_group_details', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_parameter_inventory_proprietary_summaries; "
+                + "DBCC CHECKIDENT('plan_version_buying_parameter_inventory_proprietary_summaries', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_parameters; "
+                + "DBCC CHECKIDENT('plan_version_buying_parameters', RESEED, 0); "
+
+                + "DELETE FROM plan_version_buying_rep_firm_details; "
+                + "DBCC CHECKIDENT('plan_version_buying_rep_firm_details', RESEED, 0);"
+
+                + "DELETE FROM plan_version_buying_station_details; "
+                + "DBCC CHECKIDENT('plan_version_buying_station_details', RESEED, 0); ");
+            }
+
+            return true;
         }
     }
 }

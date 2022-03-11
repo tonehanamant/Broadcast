@@ -225,6 +225,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <returns>The list of Ownership Groups</returns>
         List<string> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency);
+
+
+        /// <summary>
+        /// Deletes the saved buying data.
+        /// </summary>
+        /// <returns></returns>
+        bool DeleteSavedBuyingData();
     }
 
     /// <summary>
@@ -2930,6 +2937,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             planBuyingParametersDto.DeliveryImpressions = plan.TargetImpressions.Value / 1000;
             planBuyingParametersDto.DeliveryRatingPoints = plan.TargetRatingPoints.Value;
             planBuyingParametersDto.PostingType = plan.PostingType;
+        }
+
+        public bool DeleteSavedBuyingData()
+        {
+            var result = _PlanBuyingRepository.DeleteSavedBuyingData();
+            return result;
         }
     }
 }

@@ -11,6 +11,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -29,7 +30,7 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
-
+        
         public MaintenanceController(
             BroadcastApplicationServiceFactory applicationServiceFactory)
         {
@@ -781,6 +782,7 @@ namespace BroadcastComposerWeb.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public ActionResult RunIsciIngestJob()
         {
@@ -789,6 +791,7 @@ namespace BroadcastComposerWeb.Controllers
             service.Queue(username);
             return RedirectToAction("Index");
         }
+
         [HttpPost] 
         public ActionResult AddOrClearSpotExceptionsData(string Add, string Clear)
         {
@@ -803,6 +806,7 @@ namespace BroadcastComposerWeb.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public ActionResult ExportVpvh()
         {
@@ -839,6 +843,31 @@ namespace BroadcastComposerWeb.Controllers
                         .HtmlDecodeProgramNames();
 
                     ViewBag.Message = "Program names were successfully decoded";
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid protection key";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSavedBuyingData(string protectionKey)
+        {            
+            try
+            {
+                if (protectionKey == "r1f2m3p4")
+                {
+                    var service = _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
+                    service.DeleteSavedBuyingData();
+
+                    ViewBag.Message = "Buying Data was successfully deleted.";
                 }
                 else
                 {
