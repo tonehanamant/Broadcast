@@ -42,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object,
                 _AabEngine.Object,
-                _FeatureToggleMock.Object, 
+                _FeatureToggleMock.Object,
                 _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
         }
 
@@ -555,7 +555,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(_GetOutOfSpecData());
 
             _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'"});
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
 
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecsPosts(spotExceptionsOutOfSpecPostsRequest);
@@ -1142,7 +1142,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     ProgramNetwork = "ABC",
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
-                    FlightEndDate = new DateTime(2019, 12, 9),                    
+                    FlightEndDate = new DateTime(2019, 12, 9),
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     IngestedAt = new DateTime(2019,1,1),
                     IngestedBy = "Repository Test User",
@@ -2057,7 +2057,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(result.NoPlan.Count, 2);
             Assert.AreEqual(result.NoReelRoster.Count, 2);
         }
-        
+
         [Test]
         public void GetSpotExceptionsUnposted_Unposted_ThrowException()
         {
@@ -2083,6 +2083,76 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Act           
             var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetSpotExceptionsUnposted(spotExceptionOutOfSpecUnpostedRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisionsPlans()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDecisionsPlansDto>
+            {
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 21,
+                    AcceptAsInSpec = true
+                },
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 22,
+                    AcceptAsInSpec = true
+                }
+            };
+
+            var spotExceptionSaveDecisionsPlansRequest = new SpotExceptionSaveDecisionsPlansRequestDto();
+            spotExceptionSaveDecisionsPlansRequest.Decisions.AddRange(spotExceptionsOutOfSpecDecisionsPlansResult);
+
+            string userName = "Test User";
+            bool result = false;
+            bool expectedResult = true;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecsDecisionsPlans(It.IsAny<SpotExceptionSaveDecisionsPlansRequestDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            result = _SpotExceptionService.SaveOutofSpecDecisionsPlans(spotExceptionSaveDecisionsPlansRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisionsPlans_ThrowsException()
+        {
+            // Arrange
+            var spotExceptionsDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDecisionsPlansDto>
+            {
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 21,
+                    AcceptAsInSpec = true
+                },
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 22,
+                    AcceptAsInSpec = true
+                }
+            };
+
+            var spotExceptionOutOfSpecSaveDecisionsPlansRequest = new SpotExceptionSaveDecisionsPlansRequestDto();
+            spotExceptionOutOfSpecSaveDecisionsPlansRequest.Decisions.AddRange(spotExceptionsDecisionsPlansResult);
+            string userName = "Test User";
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecsDecisionsPlans(It.IsAny<SpotExceptionSaveDecisionsPlansRequestDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.SaveOutofSpecDecisionsPlans(spotExceptionOutOfSpecSaveDecisionsPlansRequest, userName));
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);

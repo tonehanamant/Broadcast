@@ -127,6 +127,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionOutOfSpecUnpostedRequest">The spot exceptions out of spec Unposted plans</param>
         /// <returns>The NoPlan And NoReelRoster spot exceptions</returns>
         SpotExceptionOutOfSpecUnpostedResultDto GetSpotExceptionsUnposted(SpotExceptionOutOfSpecUnpostedRequestDto spotExceptionOutOfSpecUnpostedRequest);
+
+        /// <summary>
+        /// Save SpotExceptionsOutOfSpecs Decisions data 
+        /// </summary>
+        /// <param name="spotExceptionOutOfSpecSaveDecisionsPlansRequest">The SpotExceptionsOutOfSpecDecisions Request </param>
+        /// <param name="userName">user name</param>
+        /// <returns>true or false</returns>
+        bool SaveOutofSpecDecisionsPlans(SpotExceptionSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest, string userName);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1440,6 +1448,16 @@ namespace Services.Broadcast.ApplicationServices
             }).ToList();
 
             return spotExceptionOutOfSpecUnpostedResult;
+        }
+
+        /// <inheritdoc />
+        public bool SaveOutofSpecDecisionsPlans(SpotExceptionSaveDecisionsPlansRequestDto spotExceptionSaveDecisionsPlansRequest, string userName)
+        {
+            var createdAt = _DateTimeEngine.GetCurrentMoment();
+
+            var isSpotExceptionsOutOfSpecDecisionSaved = _SpotExceptionRepository.SaveSpotExceptionsOutOfSpecsDecisionsPlans(spotExceptionSaveDecisionsPlansRequest, userName, createdAt);
+
+            return isSpotExceptionsOutOfSpecDecisionSaved;
         }
     }
 }

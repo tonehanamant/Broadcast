@@ -145,5 +145,13 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsUnposted(spotExceptionOutOfSpecUnpostedRequest));
         }
+
+        [HttpPost]
+        [Route("out-of-spec-saves")]
+        public BaseResponse<bool> SaveOutofSpecDecisionsPlans(SpotExceptionSaveDecisionsPlansRequestDto spotExceptionSaveDecisionsPlansRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().SaveOutofSpecDecisionsPlans(spotExceptionSaveDecisionsPlansRequest, userName));
+        }
     }
 }
