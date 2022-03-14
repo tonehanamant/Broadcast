@@ -39,27 +39,44 @@ namespace Services.Broadcast.Clients
     /// </summary>
     public class AgencyAdvertiserBrandApiClient : BroadcastBaseClass, IAgencyAdvertiserBrandApiClient
     {
+        private const string _CoreApiVersion = "api/v2";
         private readonly Lazy<string> _AABApiUrl;
         private readonly HttpClient _HttpClient;
+        private readonly bool _IsAABCoreAPIEnabled;
+        private readonly IApiTokenManager _ApiTokenManager;
+        private readonly IServiceClientBase _ServiceClientBase;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgencyAdvertiserBrandApiClient"/> class.
         /// </summary>
-        public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+        public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient,
+            IApiTokenManager apiTokenManager, IServiceClientBase serviceClientBase)
                 : base(featureToggleHelper, configurationSettingsHelper)
         {
             _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
              _HttpClient = httpClient;
+            _IsAABCoreAPIEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_CORE_API);
+            _ApiTokenManager = apiTokenManager;
+            _ServiceClientBase = serviceClientBase;
         }
 
         /// <inheritdoc/>
         public List<AgencyDto> GetAgencies()
         {
-            var url = $"{_AABApiUrl.Value}/agencies";
-
             try
             {
-                var apiResult = _HttpClient.Get<List<aab_agency>>(url);
+                List<aab_agency> apiResult = new List<aab_agency>();
+                if (_IsAABCoreAPIEnabled)
+                {
+                    var httpClient = _GetSecureHttpClient();
+                    apiResult = httpClient.Get<ApiListResponseTyped<aab_agency>>($"{_CoreApiVersion}/agencies").ResultList;
+                }
+                else
+                {
+                    var url = $"{_AABApiUrl.Value}/agencies";
+                    apiResult = _HttpClient.Get<List<aab_agency>>(url);
+                }
+
                 var result = apiResult.Select(i => new AgencyDto
                 {
                     Id = i.id,
@@ -77,11 +94,20 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc/>
         public List<AdvertiserDto> GetAdvertisers()
         {
-            var url = $"{_AABApiUrl.Value}/advertisers";
-
             try
             {
-                var apiResult = _HttpClient.Get<List<aab_advertiser>>(url);
+                List<aab_advertiser> apiResult = new List<aab_advertiser>();
+                if (_IsAABCoreAPIEnabled)
+                {
+                    var httpClient = _GetSecureHttpClient();
+                    apiResult = httpClient.Get<ApiListResponseTyped<aab_advertiser>>($"{_CoreApiVersion}/advertisers").ResultList;
+                }
+                else
+                {
+                    var url = $"{_AABApiUrl.Value}/advertisers";
+                    apiResult = _HttpClient.Get<List<aab_advertiser>>(url);
+                }
+
                 var result = apiResult.Select(i => new AdvertiserDto()
                 {
                     Id = i.id,
@@ -99,11 +125,22 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc />
         public List<ProductDto> GetAdvertiserProducts(Guid advertiserMasterId)
         {
-            var url = $"{_AABApiUrl.Value}/advertisers/getadvertiserbyid/{advertiserMasterId}";
-
             try
             {
-                var advertiserFullInfo = _HttpClient.Get<aab_advertiser>(url);
+                aab_advertiser advertiserFullInfo = new aab_advertiser();
+                if (_IsAABCoreAPIEnabled)
+                {
+                    var httpClient = _GetSecureHttpClient();
+                    advertiserFullInfo = httpClient.Get<ApiItemResponseTyped<aab_advertiser>>
+                        ($"{_CoreApiVersion}/advertisers/company/{advertiserMasterId}")
+                        .Result;
+                }
+                else
+                {
+                    var url = $"{_AABApiUrl.Value}/advertisers/getadvertiserbyid/{advertiserMasterId}";
+                    advertiserFullInfo = _HttpClient.Get<aab_advertiser>(url);
+                }
+
                 var products = advertiserFullInfo.products.Select(i => new ProductDto
                 {
                     Id = i.id,
@@ -120,12 +157,46 @@ namespace Services.Broadcast.Clients
                 throw new Exception($"Cannot fetch products data for advertiser {advertiserMasterId}.", ex);
             }
         }
+
+        private HttpClient _GetSecureHttpClient()
+        {
+            var apiBaseUrl = _GetAgencyAdvertiserBrandCoreApiBaseUrl();
+            var applicationId = _GetAgencyAdvertiserBrandCoreApiApplicationId();
+            var appName = _GetAgencyAdvertiserBrandCoreApiAppName();
+
+            var umUrl = _GetUmUrl();
+            var accessToken = _ApiTokenManager.GetOrRefreshTokenAsync(umUrl, appName, applicationId)
+                .GetAwaiter().GetResult();
+
+            return _ServiceClientBase.GetServiceHttpClient(apiBaseUrl, applicationId, accessToken);
+        }
+
         private string _GetAgencyAdvertiserBrandApiUrl()
         {
-            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_CORE_API) ?
-                _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandCoreApiUrl) :
-                _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl);
+            var result = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.AgencyAdvertiserBrandApiUrl);
             return result;
+        }
+
+        private string _GetAgencyAdvertiserBrandCoreApiBaseUrl()
+        {
+            var apiBaseUrl = _ConfigurationSettingsHelper.GetConfigValue<string>(AgencyAdvertiserBrandCoreApiConfigKeys.ApiBaseUrl);
+            return apiBaseUrl;
+        }
+
+        private string _GetAgencyAdvertiserBrandCoreApiAppName()
+        {
+            var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(AgencyAdvertiserBrandCoreApiConfigKeys.AppName);
+            return appName;
+        }
+        private string _GetAgencyAdvertiserBrandCoreApiApplicationId()
+        {
+            var applicationId = _ConfigurationSettingsHelper.GetConfigValue<string>(AgencyAdvertiserBrandCoreApiConfigKeys.ApplicationId);
+            return applicationId;
+        }
+
+        private string _GetUmUrl()
+        {
+            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.UmUrl);
         }
     }
 }

@@ -279,6 +279,10 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IReelIsciIngestService, ReelIsciIngestService>();
             unityContainer.RegisterType<IReelIsciApiClient, ReelIsciApiClient>();
+
+            unityContainer.RegisterType<IServiceClientBase, ServiceClientBase>();
+            unityContainer.RegisterType<IApiTokenManager, ApiTokenManager>(TypeLifetime.Singleton);
+            
             // Aab Related
             unityContainer.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClient>();
             unityContainer.RegisterType<IAabEngine, AabEngine>();

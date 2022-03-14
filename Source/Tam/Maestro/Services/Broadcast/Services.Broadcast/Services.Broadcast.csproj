@@ -525,6 +525,13 @@
     <Compile Include="ApplicationServices\Plan\PlanIsciService.cs" />
     <Compile Include="ApplicationServices\SpotExceptionService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
+    <Compile Include="Clients\ApiTokenManager.cs" />
+    <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
+    <Compile Include="Entities\ApiResponse\ApiItemResponseTyped.cs" />
+    <Compile Include="Entities\ApiResponse\ApiListResponseTyped.cs" />
+    <Compile Include="Entities\ApiResponse\TokenResponse.cs" />
+    <Compile Include="Clients\AgencyAdvertiserBrandCoreApiConfigKeys.cs" />
+    <Compile Include="Clients\ServiceClientBase.cs" />
     <Compile Include="Clients\PlanBuyingJobQueueApiClient.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
     <Compile Include="Entities\CampaignCopyDto.cs" />

@@ -61,6 +61,8 @@
 
 		public static readonly string PlanPricingAllocationsEfficiencyModelSubmitUrl = "PlanPricingAllocationsEfficiencyModelSubmitUrl";
 		public static readonly string PlanPricingAllocationsEfficiencyModelFetchUrl = "PlanPricingAllocationsEfficiencyModelFetchUrl";
+
+		public static readonly string UmUrl = "UmUrl";
 	}
 }
 
