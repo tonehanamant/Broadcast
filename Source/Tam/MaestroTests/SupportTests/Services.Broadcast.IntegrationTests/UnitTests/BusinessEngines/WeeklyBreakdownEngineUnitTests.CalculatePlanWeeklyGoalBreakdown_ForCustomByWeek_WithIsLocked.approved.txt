@@ -74,7 +74,7 @@
       "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2020-03-09T00:00:00",
-      "UnitImpressions": 1800.0,
+      "UnitImpressions": 3000.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 18000.0,
       "WeeklyCpm": 10.00,
@@ -147,7 +147,7 @@
   "TotalImpressionsPercentage": 90.0,
   "TotalRatingPoints": 25.2,
   "TotalShareOfVoice": 90.0,
-  "TotalUnits": 5.8,
+  "TotalUnits": 5.4,
   "Weeks": [
     {
       "ActiveDays": "M-Su",
@@ -230,7 +230,7 @@
       "WeeklyImpressions": 3000.0,
       "WeeklyImpressionsPercentage": 10.0,
       "WeeklyRatings": 2.8,
-      "WeeklyUnits": 1.0,
+      "WeeklyUnits": 0.6,
       "WeekNumber": 3
     },
     {
