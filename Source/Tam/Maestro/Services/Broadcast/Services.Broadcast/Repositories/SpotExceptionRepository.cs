@@ -874,6 +874,7 @@ namespace Services.Broadcast.Repositories
                         {
                             spot_exceptions_out_of_spec_id = spotExceptionsOutOfSpecId.Id,
                             accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec,
+                            decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out",
                             username = userName,
                             created_at = createdAt
                         });
@@ -883,6 +884,7 @@ namespace Services.Broadcast.Repositories
                         alreadyRecordExists.accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec;
                         alreadyRecordExists.username = userName;
                         alreadyRecordExists.created_at = createdAt;
+                        alreadyRecordExists.decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out";
                         alreadyRecordExists.synced_at = null;
                         alreadyRecordExists.synced_by = null;
                     }
