@@ -5,6 +5,5 @@
         public int Id { get; set; }
         public string Isci { get; set; }
         public string SpotLengthsString { get; set; }
-        public string ProductName { get; set; }
     }
 }

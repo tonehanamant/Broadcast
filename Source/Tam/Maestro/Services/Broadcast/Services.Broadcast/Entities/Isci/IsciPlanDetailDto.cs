@@ -13,7 +13,6 @@ namespace Services.Broadcast.Entities.Isci
         public string Title { get; set; }
         public List<string> Dayparts { get; set; }
         public Guid? ProductMasterId { get; set; }
-        public string ProductName { get; set; }
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
         public List<string> Iscis { get; set; } = new List<string>();

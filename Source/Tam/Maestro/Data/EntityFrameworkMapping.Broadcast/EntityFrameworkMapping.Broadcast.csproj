@@ -813,9 +813,6 @@
     <Compile Include="reel_isci_ingest_jobs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="reel_isci_products.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="rep_firms.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

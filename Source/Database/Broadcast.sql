@@ -460,6 +460,17 @@ END
 GO
 /*************************************** END BP-4264 ***************************************/
 
+/*************************************** START BP-4211 ***************************************/
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'product_name'
+        AND OBJECT_ID = OBJECT_ID('reel_isci_products'))
+BEGIN
+	DROP TABLE reel_isci_products
+END
+
+/*************************************** END BP-4211 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

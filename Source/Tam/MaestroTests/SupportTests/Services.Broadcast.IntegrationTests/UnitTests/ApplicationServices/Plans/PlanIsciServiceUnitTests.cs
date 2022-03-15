@@ -41,7 +41,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<ISpotLengthEngine> _SpotLengthEngine;
         private Mock<IAudienceRepository> _AudienceRepository;
         private Mock<IReelIsciRepository> _ReelIsciRepository;
-        private Mock<IReelIsciProductRepository> _ReelIsciProductRepository;
 
 
         [SetUp]
@@ -61,7 +60,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AudienceRepository = new Mock<IAudienceRepository>();
             _ReelIsciRepository = new Mock<IReelIsciRepository>();
             _CampaignService = new Mock<ICampaignService>();
-            _ReelIsciProductRepository = new Mock<IReelIsciProductRepository>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
@@ -74,10 +72,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IReelIsciRepository>())
                 .Returns(_ReelIsciRepository.Object);
-
-            _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IReelIsciProductRepository>())
-                .Returns(_ReelIsciProductRepository.Object);
 
             _SpotLengthEngine.Setup(s => s.GetSpotLengthValueById(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
@@ -248,47 +242,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Equals(result.Count, 0);
         }
-
-        [Test]
-        public void GetAvailableIscisNullProduct()
-        {
-            // Arrange           
-            IsciSearchDto isciSearch = new IsciSearchDto
-            {
-                WeekStartDate = new DateTime(2021, 11, 01),
-                WeekEndDate = new DateTime(2021, 11, 7),
-                UnmappedOnly = false,
-
-            };
-            _PlanIsciRepositoryMock
-                .Setup(x => x.GetAvailableIscis(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(
-                          new List<IsciAdvertiserDto>()
-                            {
-                                new IsciAdvertiserDto()
-                                {
-                                AdvertiserName = "O'Keeffes",
-                                Id = 1,
-                                SpotLengthDuration = 21,
-                                ProductName = null,
-                                Isci = "OKWF1701H"
-                                },
-                                 new IsciAdvertiserDto()
-                                {
-                                AdvertiserName = "O'Keeffes1",
-                                Id = 2,
-                                SpotLengthDuration = 22,
-                                ProductName = null,
-                                Isci = "OKWL1702H"
-                             }
-                 });
-
-            // Act
-            var result = _PlanIsciService.GetAvailableIscis(isciSearch);
-
-            // Assert
-            Assert.IsNull(result[0].Iscis[0].ProductName);
-        }
+        
         [Test]
         public void GetAvailableIscis_NullPlanIsci()
         {
@@ -311,7 +265,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 AdvertiserName = "O'Keeffes",
                                 Id = 1,
                                 SpotLengthDuration = 21,
-                                ProductName = null,
                                 Isci = "OKWF1701H",
                                 PlanIsci=1
                                 },
@@ -320,7 +273,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 AdvertiserName = "O'Keeffes1",
                                 Id = 2,
                                 SpotLengthDuration = 22,
-                                ProductName = null,
                                 Isci = "OKWL1702H",
                                 PlanIsci=1
                              }
@@ -365,7 +317,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "O'Keeffes",
                 Id = 1,
                 SpotLengthDuration = 21,
-                ProductName = "Product1",
                 Isci = "OKWF1701H",
                 PlanIsci=1
                 },
@@ -374,7 +325,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "O'Keeffes",
                 Id = 2,
                 SpotLengthDuration = 22,
-                ProductName = "Product2",
                 Isci = "OKWL1702H",
                 PlanIsci=1
                 },
@@ -383,7 +333,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "ATLT0063000HU",
                 Id = 3,
                 SpotLengthDuration = 23,
-                ProductName = "Product3",
                 Isci = "OKWF1701H",
                 PlanIsci=1
                 },
@@ -392,7 +341,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "Invisaling (Adult)",
                 Id = 4,
                 SpotLengthDuration = 24,
-                ProductName = "Product4",
                 Isci = "CLDC6513000H",
                 PlanIsci=1
                 },
@@ -401,7 +349,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "Colgate EM",
                 Id = 5,
                 SpotLengthDuration = 25,
-                ProductName = "Product5",
                 Isci = "CUSA1813000H",
                 PlanIsci=1
                 },
@@ -410,7 +357,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "O'Keeffes6",
                 Id = 6,
                 SpotLengthDuration = 26,
-                ProductName = "Product6",
                 Isci = "OKWF1701H",
                 PlanIsci=1
                 },
@@ -419,7 +365,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "USAA",
                 Id = 7,
                 SpotLengthDuration = 27,
-                ProductName = "Product7",
                 Isci = "OKWL1702H",
                 PlanIsci=1
                 },
@@ -428,7 +373,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "Nature's Bounty",
                 Id = 8,
                 SpotLengthDuration = 28,
-                ProductName = null,
                 Isci = "ATLT0063000HU",
                 PlanIsci=1
                 },
@@ -437,7 +381,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "Colgate EM9",
                 Id = 9,
                 SpotLengthDuration = 29,
-                ProductName = null,
                 Isci = "CLDC6513000H",
                 PlanIsci=1
                 },
@@ -446,7 +389,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "Colgate EM10",
                 Id = 10,
                 SpotLengthDuration = 30,
-                ProductName = null,
                 Isci = "CUSA1813000H",
                 PlanIsci=0
                 }
@@ -727,204 +669,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
-        }
-
-        [Test]
-        public void SaveIsciMappings_IsciProductMappings()
-        {
-            //Arrange
-            var createdBy = "Test User";
-
-            var isciProductList = new List<IsciProductMappingDto>
-            {
-                new IsciProductMappingDto()
-                {
-                    ProductName = "NewProduct1",
-                    Isci = "NewIsci"
-                },
-                new IsciProductMappingDto()
-                {
-                    ProductName = "ListDuplicateProduct1",
-                    Isci = "ListDuplicateIsci"
-                },
-                new IsciProductMappingDto()
-                {
-                    ProductName = "ListDuplicateProduct2",
-                    Isci = "ListDuplicateIsci"
-                },
-                new IsciProductMappingDto()
-                {
-                    ProductName = "DbDupProduct1",
-                    Isci = "DbDuplicateIsci"
-                }
-            };
-
-            var getIsciProductMappingsCalls = new List<string>();
-            _ReelIsciProductRepository.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
-                .Callback<List<string>>((a) => getIsciProductMappingsCalls = a)
-                .Returns(new List<IsciProductMappingDto>
-                {
-                    new IsciProductMappingDto()
-                    {
-                        ProductName = "DbDuplicateProduct2",
-                        Isci = "DbDuplicateIsci"
-                    }
-                });
-
-            var savedProductMappings = new List<IsciProductMappingDto>();
-            _ReelIsciProductRepository.Setup(s =>
-                    s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(),
-                        It.IsAny<DateTime>()))
-                .Callback<List<IsciProductMappingDto>, string, DateTime>((a, b, c) => savedProductMappings = a)
-                .Returns(1);
-
-            _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
-                .Returns(new List<IsciMappedPlanCountDto>
-                {
-                    new IsciMappedPlanCountDto
-                    {
-                        Isci = "Isci1",
-                        MappedPlanCount = 1
-                    },
-                    new IsciMappedPlanCountDto
-                    {
-                        Isci = "Isci2",
-                        MappedPlanCount = 1
-                    }
-                });
-
-            _ReelIsciProductRepository.Setup(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()))
-                .Returns<List<string>>((t) => t.Count);
-
-            var saveRequest = new IsciPlanMappingsSaveRequestDto()
-            {
-                IsciProductMappings = isciProductList
-            };
-
-            //Act
-            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
-
-            //Assert
-            Assert.IsTrue(result);
-
-            _ReelIsciProductRepository.Verify(s =>
-                s.GetIsciProductMappings(It.IsAny<List<string>>()), Times.Once);
-
-            _ReelIsciProductRepository.Verify(s =>
-                s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(),
-                    It.IsAny<DateTime>()), Times.Once);
-
-            _PlanIsciRepositoryMock.Verify(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()), Times.Never);
-            _ReelIsciProductRepository.Verify(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()), Times.Never);
-
-            var toVerify = new
-            {
-                getIsciProductMappingsCalls,
-                savedProductMappings
-            };
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
-        }
-
-        [Test]
-        public void SaveIsciMappings_Delete()
-        {
-            //Arrange
-            var createdBy = "Test User";
-            var toDelete = new List<int> {1, 2, 5};
-
-            var saveRequest = new IsciPlanMappingsSaveRequestDto()
-            {
-                IsciPlanMappingsDeleted = toDelete
-            };
-
-            var deletedPlanIsciIds = new List<int>();
-            _PlanIsciRepositoryMock.Setup(s =>
-                    s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback<List<int>, string, DateTime>((a, b, c) => deletedPlanIsciIds = a)
-                .Returns(2);
-
-
-            _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
-                .Returns(new List<IsciMappedPlanCountDto>
-                {
-                    new IsciMappedPlanCountDto
-                    {
-                        Isci = "Isci1",
-                        MappedPlanCount = 1
-                    },
-                    new IsciMappedPlanCountDto
-                    {
-                        Isci = "Isci2",
-                        MappedPlanCount = 1
-                    }
-                });
-
-            _ReelIsciProductRepository.Setup(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()))
-                .Returns<List<string>>((t) => t.Count);
-
-            //Act
-            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
-
-            //Assert
-            Assert.IsTrue(result);
-            _PlanIsciRepositoryMock.Verify(s =>
-                s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
-            Assert.AreEqual(toDelete, deletedPlanIsciIds);
-            _PlanIsciRepositoryMock.Verify(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()), Times.Once);
-            _ReelIsciProductRepository.Verify(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()), Times.Never);
-        }
-
-        [Test]
-        public void SaveIsciMappings_Delete_CleanupIsciProduct()
-        {
-            //Arrange
-            var createdBy = "Test User";
-            var toDelete = new List<int> { 1, 2, 5 };
-
-            var saveRequest = new IsciPlanMappingsSaveRequestDto()
-            {
-                IsciPlanMappingsDeleted = toDelete
-            };
-
-            var deletedPlanIsciIds = new List<int>();
-            _PlanIsciRepositoryMock.Setup(s =>
-                    s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback<List<int>, string, DateTime>((a, b, c) => deletedPlanIsciIds = a)
-                .Returns(2);
-
-
-            _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
-                .Returns(new List<IsciMappedPlanCountDto>
-                {
-                    new IsciMappedPlanCountDto
-                    {
-                        Isci = "Isci1",
-                        MappedPlanCount = 1
-                    },
-                    new IsciMappedPlanCountDto
-                    {
-                        Isci = "Isci2",
-                        MappedPlanCount = 0
-                    }
-                });
-
-            var deletedProductMappingsIscis = new List<string>();
-            _ReelIsciProductRepository.Setup(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()))
-                .Callback<List<string>>(t => deletedProductMappingsIscis = t)
-                .Returns<List<string>>((t) => t.Count);
-
-            //Act
-            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
-
-            //Assert
-            Assert.IsTrue(result);
-            _PlanIsciRepositoryMock.Verify(s =>
-                s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
-            Assert.AreEqual(toDelete, deletedPlanIsciIds);
-            _PlanIsciRepositoryMock.Verify(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()), Times.Once);
-            _ReelIsciProductRepository.Verify(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()), Times.Once);
-            Assert.AreEqual(1, deletedProductMappingsIscis.Count);
-            Assert.AreEqual("Isci2", deletedProductMappingsIscis[0]);
         }
 
         [Test]
@@ -1361,7 +1105,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "O'Keeffes",
                 Id = 1,
                 SpotLengthDuration = 21,
-                ProductName = "Product1",
                 Isci = "OKWF1701H",
                 PlanIsci=1
                 },
@@ -1370,7 +1113,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "O'Keeffes",
                 Id = 2,
                 SpotLengthDuration = 22,
-                ProductName = "Product1",
                 Isci = "OKWF1701H",
                 PlanIsci=1
                 },
@@ -1379,7 +1121,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "Reckitt Benckiser",
                 Id = 3,
                 SpotLengthDuration = 23,
-                ProductName = "Product3",
                 Isci = "OKWF1701H",
                 PlanIsci=1
                 },
@@ -1388,7 +1129,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 AdvertiserName = "O'Keeffes",
                 Id = 4,
                 SpotLengthDuration = 24,
-                ProductName = "Product4",
                 Isci = "CLDC6513000H",
                 PlanIsci=1
                 }

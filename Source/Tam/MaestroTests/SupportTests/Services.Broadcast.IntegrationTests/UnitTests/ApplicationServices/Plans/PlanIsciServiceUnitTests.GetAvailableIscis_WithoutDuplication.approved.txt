@@ -5,13 +5,11 @@
       {
         "Id": 2,
         "Isci": "OKWF1701H",
-        "ProductName": "Product1",
         "SpotLengthsString": ":22"
       },
       {
         "Id": 4,
         "Isci": "CLDC6513000H",
-        "ProductName": "Product4",
         "SpotLengthsString": ":24"
       }
     ]
@@ -22,7 +20,6 @@
       {
         "Id": 3,
         "Isci": "OKWF1701H",
-        "ProductName": "Product3",
         "SpotLengthsString": ":23"
       }
     ]

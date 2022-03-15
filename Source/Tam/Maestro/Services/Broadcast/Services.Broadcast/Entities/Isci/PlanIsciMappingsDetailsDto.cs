@@ -8,7 +8,6 @@ namespace Services.Broadcast.Entities.Isci
         public int PlanId { get; set; }
         public string PlanName { get; set; }
         public string AdvertiserName { get; set; }
-        public string ProductName { get; set; }
         public string SpotLengthString { get; set; }
         public string DaypartCode { get; set; }
         public string DemoString { get; set; }

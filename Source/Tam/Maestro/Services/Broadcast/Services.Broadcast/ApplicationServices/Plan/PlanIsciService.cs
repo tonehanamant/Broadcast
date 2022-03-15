@@ -60,7 +60,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IReelIsciRepository _ReelIsciRepository;
-        private readonly IReelIsciProductRepository _ReelIsciProductRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
@@ -89,7 +88,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();
             _ReelIsciRepository = dataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
-            _ReelIsciProductRepository = dataRepositoryFactory.GetDataRepository<IReelIsciProductRepository>();
 
             _StandardDaypartService = standardDaypartService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -139,7 +137,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             isciItemDto.Id = item.Id;
                             isciItemDto.Isci = item.Isci;
                             isciItemDto.SpotLengthsString = $":{item.SpotLengthDuration}";
-                            isciItemDto.ProductName = item.ProductName;
                             isciListItemDto.Iscis.Add(isciItemDto);
                         }
                         isciListDto.Add(isciListItemDto);
@@ -198,7 +195,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (isciPlans?.Any() ?? false)
                 {
                     _SetIsciPlanAdvertiser(isciPlans);
-                    _SetIsciPlanAdvertiserProduct(isciPlans);
 
                     var isciPlansGroupedByAdvertiser = isciPlans.GroupBy(x => x.AdvertiserName).OrderBy(x => x.Key);
                     foreach (var isciPlanItem in isciPlansGroupedByAdvertiser)
@@ -215,7 +211,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                     DemoString = isciPlanDetail.AudienceCode,
                                     Title = isciPlanDetail.Title,
                                     DaypartsString = string.Join(", ", isciPlanDetail.Dayparts),
-                                    ProductName = isciPlanDetail.ProductName,
                                     FlightString = $"{isciPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{isciPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
                                     Iscis = isciPlanDetail.Iscis
                                 };
@@ -235,33 +230,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             isciPlanSummaries.ForEach(x =>
                 x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
         }
-
-        private void _SetIsciPlanAdvertiserProduct(List<IsciPlanDetailDto> isciPlanSummaries)
-        {
-            isciPlanSummaries.ForEach(item =>
-            {
-                var product = _AabEngine.GetAdvertiserProduct(item.AdvertiserMasterId.Value, item.ProductMasterId.Value);
-
-                item.ProductName = product.Name;
-            });
-        }
-
-        private int _HandleSaveIsciProduct(List<IsciProductMappingDto> mappings, string createdBy, DateTime createdAt)
-        {
-            if (!mappings.Any())
-            {
-                return 0;
-            }
-
-            var dedupedMappings = _RemoveDuplicateIsciProducts(mappings);
-            if (!dedupedMappings.Any())
-            {
-                return 0;
-            }
-
-            var savedCount = _ReelIsciProductRepository.SaveIsciProductMappings(dedupedMappings, createdBy, createdAt);
-            return savedCount;
-        }
+        
 
         private int _HandleDeleteIsciPlanMapping(List<int> toDelete, string deletedBy, DateTime deletedAt)
         {
@@ -272,24 +241,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var deletedCount = _PlanIsciRepository.DeleteIsciPlanMappings(toDelete, deletedBy, deletedAt);
             return deletedCount;
-        }
-
-        private int _CleanupOrphanedIsciProductMappings(List<int> candidateIds)
-        {
-            if (!candidateIds.Any())
-            {
-                return 0;
-            }
-
-            var isciPlanCounts = _PlanIsciRepository.GetIsciPlanMappingCounts(candidateIds);
-            var toCleanup = isciPlanCounts.Where(i => i.MappedPlanCount == 0).Select(s => s.Isci).ToList();
-            if (!toCleanup.Any())
-            {
-                return 0;
-            }
-
-            var cleanedCount = _ReelIsciProductRepository.DeleteIsciProductMapping(toCleanup);
-            return cleanedCount;
         }
 
         private int _HandleNewIsciPlanMapping(List<IsciPlanMappingDto> mappings, string createdBy, DateTime createdAt)
@@ -411,45 +362,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
 
-            var isciProductMappingCount = _HandleSaveIsciProduct(saveRequest.IsciProductMappings, createdBy, createdAt);
-            _LogInfo($"{isciProductMappingCount } IsciProductMappings were saved.");
-
-            var orphanedProductMappingCount = _CleanupOrphanedIsciProductMappings(saveRequest.IsciPlanMappingsDeleted);
-            _LogInfo($"{orphanedProductMappingCount } OrphanedProductMappingCount were cleaned up.");
-
             return true;
-        }
-
-        private List<IsciProductMappingDto> _RemoveDuplicateIsciProducts(List<IsciProductMappingDto> isciProducts)
-        {
-            // remove duplicates within the list, keeping the first one
-            var dedupped = new List<IsciProductMappingDto>();
-            isciProducts.ForEach(p =>
-                {
-                    if (!dedupped.Any(d => d.Isci.Equals(p.Isci)))
-                    {
-                        dedupped.Add(p);
-                    }
-                });
-
-            // if already in the db then ignore
-            var iscis = dedupped.Select(s => s.Isci).ToList();
-            var existing = _ReelIsciProductRepository.GetIsciProductMappings(iscis);
-            if (!existing.Any())
-            {
-                return dedupped;
-            }
-
-            var dbDedupped = new List<IsciProductMappingDto>();
-            var existingIscis = existing.Select(s => s.Isci).ToList();
-            dedupped.ForEach(p =>
-            {
-                if (!existingIscis.Contains(p.Isci))
-                {
-                    dbDedupped.Add(p);
-                }
-            });
-            return dbDedupped;
         }
 
         /// <summary>
@@ -578,7 +491,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var plan = _PlanService.GetPlan(planId);
             var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
             var advertiserName = _GetAdvertiserName(campaign.AdvertiserMasterId.Value);
-            var productName = _GetProductName(campaign.AdvertiserMasterId.Value, plan.ProductMasterId.Value);
             var daypartsString = _GetDaypartCodesString(plan.Dayparts);
             var spotLengthsString = _GetSpotLengthsString(plan.CreativeLengths);
             var demoString = _GetAudienceString(plan.AudienceId);
@@ -591,7 +503,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PlanId = plan.Id,
                 PlanName = plan.Name,
                 AdvertiserName = advertiserName,
-                ProductName = productName,
                 SpotLengthString = spotLengthsString,
                 DaypartCode = daypartsString,
                 DemoString = demoString,
@@ -601,12 +512,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MappedIscis = mappedIscis
             };
             return mappingsDetails;
-        }
-
-        private string _GetProductName(Guid advertiserMasterId, Guid productMasterId)
-        {
-            var product = _AabEngine.GetAdvertiserProduct(advertiserMasterId, productMasterId);
-            return product.Name;
         }
 
         private string _GetAdvertiserName(Guid advertiserMasterId)

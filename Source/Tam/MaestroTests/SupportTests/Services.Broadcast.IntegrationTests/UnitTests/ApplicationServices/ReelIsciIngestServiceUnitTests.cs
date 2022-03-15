@@ -29,7 +29,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
-        private Mock<IReelIsciProductRepository> _ReelIsciProductRepositoryMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
         private Mock<IFeatureToggleHelper> _featureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
@@ -44,7 +43,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
             _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
             _ReelIsciRepository = new Mock<IReelIsciRepository>();
-            _ReelIsciProductRepositoryMock = new Mock<IReelIsciProductRepository>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
             _featureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
@@ -60,10 +58,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
                 .Returns(_SpotLengthRepositoryMock.Object);
-
-            _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IReelIsciProductRepository>())
-                .Returns(_ReelIsciProductRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanIsciRepository>())
@@ -256,35 +250,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             //Assert
             _ReelIsciRepository.Verify(x => x.AddReelIscis(It.IsAny<List<ReelIsciDto>>()), Times.Once);
             Assert.AreEqual(expectedAddCount, addedCount);
-        }
-
-        [Test]
-        [TestCase(true, 0, 0, 0)]
-        [TestCase(false, 2, 2, 1)]
-        public void PerformReelIsciIngestBetweenRange_DeleteReelIsciProducts_NotExistInReelIsci(bool toggleEnabled, int expectedDeleteCount, int deletedCount, int runCount)
-        {
-            //Arrange
-            var startDate = new DateTime(2021, 01, 01);
-            const int numberOfDays = 6;
-            const int jobId = 12;
-
-            _ReelIsciApiClientMock
-                .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
-                .Returns(new List<ReelRosterIsciDto>());
-
-            _featureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_KEEP_ORPHANED_ISCI_MAPPING))
-                .Returns(toggleEnabled);
-
-            _ReelIsciProductRepositoryMock
-                .Setup(x => x.DeleteReelIsciProductsNotExistInReelIsci())
-                .Returns(deletedCount);
-
-            //Act
-            _ReelIsciIngestService.PerformReelIsciIngestBetweenRange(jobId, startDate, numberOfDays, _UserName);
-
-            //Assert
-            _ReelIsciProductRepositoryMock.Verify(x => x.DeleteReelIsciProductsNotExistInReelIsci(), Times.Exactly(runCount));
-            Assert.AreEqual(expectedDeleteCount, deletedCount);
         }
 
         [Test]

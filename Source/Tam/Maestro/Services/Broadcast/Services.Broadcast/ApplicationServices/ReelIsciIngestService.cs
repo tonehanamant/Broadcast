@@ -42,7 +42,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IReelIsciIngestJobsRepository _ReelIsciIngestJobsRepository;
         private readonly IReelIsciRepository _ReelIsciRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
-        private readonly IReelIsciProductRepository _ReelIsciProductRepository;
         private readonly IPlanIsciRepository _PlanIsciRepository;
 
         private readonly IDateTimeEngine _DateTimeEngine;
@@ -56,7 +55,6 @@ namespace Services.Broadcast.ApplicationServices
             _ReelIsciIngestJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciIngestJobsRepository>();
             _ReelIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            _ReelIsciProductRepository = broadcastDataRepositoryFactory.GetDataRepository<IReelIsciProductRepository>();
             _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
 
             _DateTimeEngine = dateTimeEngine;            
@@ -165,9 +163,6 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (!isKeepOrphanedIsciMappingEnabled)
                 {
-                    var deletedReelIsciProductsCount = _DeleteReelIsciProductsNotExistInReelIsci();
-                    _LogInfo($"reel-isci-ingest : Deleted {deletedReelIsciProductsCount} reel iscis products.");
-
                     DateTime deletedAt = _DateTimeEngine.GetCurrentMoment();
                     var deletedplanIscisCount = _DeletePlanIscisNotExistInReelIsci(deletedAt, userName);
                     _LogInfo($"reel-isci-ingest : Deleted {deletedplanIscisCount} plan iscis.");
@@ -260,12 +255,6 @@ namespace Services.Broadcast.ApplicationServices
                 IngestedAt = ingestedAt
             }).ToList();
             var result = _ReelIsciRepository.AddReelIscis(reelIscis);
-            return result;
-        }
-
-        private int _DeleteReelIsciProductsNotExistInReelIsci()
-        {
-            var result = _ReelIsciProductRepository.DeleteReelIsciProductsNotExistInReelIsci();
             return result;
         }
 

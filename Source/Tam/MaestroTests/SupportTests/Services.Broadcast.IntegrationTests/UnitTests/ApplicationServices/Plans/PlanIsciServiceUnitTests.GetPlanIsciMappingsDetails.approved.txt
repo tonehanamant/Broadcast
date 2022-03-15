@@ -45,6 +45,5 @@
   ],
   "PlanId": 23,
   "PlanName": "TestPlanForGetPlanIsciMappingsDetails",
-  "ProductName": "KaBlam!!!",
   "SpotLengthString": ":30,:15"
 }

@@ -159,8 +159,6 @@ namespace Services.Broadcast.Repositories
             {
                 var result = (from isci in context.reel_iscis
                               join isci_adr in context.reel_isci_advertiser_name_references on isci.id equals isci_adr.reel_isci_id
-                              join pro in context.reel_isci_products on isci.isci equals pro.isci into ps
-                              from pro in ps.DefaultIfEmpty()
                               join sl in context.spot_lengths on isci.spot_length_id equals sl.id
                               where (isci.active_start_date <= startDate && isci.active_end_date >= endDate)
                               || (isci.active_start_date >= startDate && isci.active_start_date <= endDate)
@@ -170,7 +168,6 @@ namespace Services.Broadcast.Repositories
                                   AdvertiserName = isci_adr.advertiser_name_reference,
                                   Id = isci.id,
                                   SpotLengthDuration = sl.length,
-                                  ProductName = pro.product_name,
                                   Isci = isci.isci,
                                   PlanIsci = context.plan_iscis
                                                     .Where(planIsci => planIsci.deleted_at == null

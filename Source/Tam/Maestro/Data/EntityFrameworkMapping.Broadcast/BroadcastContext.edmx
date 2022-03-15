@@ -2181,16 +2181,6 @@
           <Property Name="completed_at" Type="datetime2" Precision="7" />
           <Property Name="error_message" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="reel_isci_products">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="isci" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="product_name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="created_at" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
         <EntityType Name="reel_iscis">
           <Key>
             <PropertyRef Name="id" />
@@ -7664,7 +7654,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="rating_adjustments" EntityType="Self.rating_adjustments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reel_isci_advertiser_name_references" EntityType="Self.reel_isci_advertiser_name_references" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reel_isci_ingest_jobs" EntityType="Self.reel_isci_ingest_jobs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="reel_isci_products" EntityType="Self.reel_isci_products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reel_iscis" EntityType="Self.reel_iscis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rep_firms" EntityType="Self.rep_firms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="schedule_audiences" EntityType="Self.schedule_audiences" Schema="dbo" store:Type="Tables" />
@@ -10524,7 +10513,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_pricing_result_spots" EntitySet="plan_version_pricing_result_spots" />
           </AssociationSet>
           <EntitySet Name="reel_isci_advertiser_name_references" EntityType="BroadcastModel.reel_isci_advertiser_name_references" />
-          <EntitySet Name="reel_isci_products" EntityType="BroadcastModel.reel_isci_products" />
           <EntitySet Name="reel_iscis" EntityType="BroadcastModel.reel_iscis" />
           <AssociationSet Name="FK_reel_isci_advertiser_name_references_reel_iscis" Association="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis">
             <End Role="reel_iscis" EntitySet="reel_iscis" />
@@ -17686,16 +17674,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="advertiser_name_reference" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="reel_iscis" Relationship="BroadcastModel.FK_reel_isci_advertiser_name_references_reel_iscis" FromRole="reel_isci_advertiser_name_references" ToRole="reel_iscis" />
         </EntityType>
-        <EntityType Name="reel_isci_products">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="product_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="reel_iscis">
           <Key>
             <PropertyRef Name="id" />
@@ -21587,17 +21565,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="reel_isci_advertiser_name_references">
                 <ScalarProperty Name="advertiser_name_reference" ColumnName="advertiser_name_reference" />
                 <ScalarProperty Name="reel_isci_id" ColumnName="reel_isci_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="reel_isci_products">
-            <EntityTypeMapping TypeName="BroadcastModel.reel_isci_products">
-              <MappingFragment StoreEntitySet="reel_isci_products">
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="product_name" ColumnName="product_name" />
-                <ScalarProperty Name="isci" ColumnName="isci" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

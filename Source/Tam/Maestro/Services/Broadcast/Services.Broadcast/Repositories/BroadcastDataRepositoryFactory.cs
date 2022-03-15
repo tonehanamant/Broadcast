@@ -113,7 +113,6 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IPlanIsciRepository, PlanIsciRepository>();
             instance.RegisterType<IReelIsciIngestJobsRepository, ReelIsciIngestJobsRepository>();
             instance.RegisterType<IReelIsciRepository, ReelIsciRepository>();
-            instance.RegisterType<IReelIsciProductRepository, ReelIsciProductRepository>();
             instance.RegisterType<ISpotExceptionRepository, SpotExceptionRepository>();
             WasRegistered = true;
         }

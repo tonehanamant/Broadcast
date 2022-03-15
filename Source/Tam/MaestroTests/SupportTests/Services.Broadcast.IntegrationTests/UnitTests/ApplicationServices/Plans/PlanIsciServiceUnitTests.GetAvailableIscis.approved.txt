@@ -5,7 +5,6 @@
       {
         "Id": 3,
         "Isci": "OKWF1701H",
-        "ProductName": "Product3",
         "SpotLengthsString": ":23"
       }
     ]
@@ -16,7 +15,6 @@
       {
         "Id": 5,
         "Isci": "CUSA1813000H",
-        "ProductName": "Product5",
         "SpotLengthsString": ":25"
       }
     ]
@@ -27,7 +25,6 @@
       {
         "Id": 10,
         "Isci": "CUSA1813000H",
-        "ProductName": null,
         "SpotLengthsString": ":30"
       }
     ]
@@ -38,7 +35,6 @@
       {
         "Id": 9,
         "Isci": "CLDC6513000H",
-        "ProductName": null,
         "SpotLengthsString": ":29"
       }
     ]
@@ -49,7 +45,6 @@
       {
         "Id": 4,
         "Isci": "CLDC6513000H",
-        "ProductName": "Product4",
         "SpotLengthsString": ":24"
       }
     ]
@@ -60,7 +55,6 @@
       {
         "Id": 8,
         "Isci": "ATLT0063000HU",
-        "ProductName": null,
         "SpotLengthsString": ":28"
       }
     ]
@@ -71,13 +65,11 @@
       {
         "Id": 1,
         "Isci": "OKWF1701H",
-        "ProductName": "Product1",
         "SpotLengthsString": ":21"
       },
       {
         "Id": 2,
         "Isci": "OKWL1702H",
-        "ProductName": "Product2",
         "SpotLengthsString": ":22"
       }
     ]
@@ -88,7 +80,6 @@
       {
         "Id": 6,
         "Isci": "OKWF1701H",
-        "ProductName": "Product6",
         "SpotLengthsString": ":26"
       }
     ]
@@ -99,7 +90,6 @@
       {
         "Id": 7,
         "Isci": "OKWL1702H",
-        "ProductName": "Product7",
         "SpotLengthsString": ":27"
       }
     ]
