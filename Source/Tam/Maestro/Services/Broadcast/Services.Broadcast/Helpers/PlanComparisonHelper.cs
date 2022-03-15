@@ -22,8 +22,26 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketCount"),
             new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketTotalUsCoveragePercent"),
             new ComparisonMinorProperty(typeof(PlanDto), "IsDraft"),
+            
             new ComparisonMinorProperty(typeof(PlanMarketDto), "Id"),
+
             new ComparisonMinorProperty(typeof(PlanDaypartDto), "PlanDaypartId"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "CustomName"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "DaypartOrganizationId"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "DaypartOrganizationName"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "DaypartTypeId"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "DaypartUniquekey"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "IsEndTimeModified"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "IsStartTimeModified"),
+
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "CustomDaypartName"),
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "CustomDaypartOrganizationId"),
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "CustomDaypartOrganizationName"),
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "DaypartTypeId"),
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "Id"),
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "IsEndTimeModified"),
+            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "IsStartTimeModified"),
+
             // ignored - not pricing inputs
             new ComparisonMinorProperty(typeof(PlanDto), "Name"),
             new ComparisonMinorProperty(typeof(PlanDto), "ProductId"),

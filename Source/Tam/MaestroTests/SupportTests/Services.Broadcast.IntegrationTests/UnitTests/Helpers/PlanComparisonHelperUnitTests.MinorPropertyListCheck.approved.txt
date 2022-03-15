@@ -52,6 +52,62 @@
     "PropertyName": "PlanDaypartId"
   },
   {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "CustomName"
+  },
+  {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "DaypartOrganizationId"
+  },
+  {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "DaypartOrganizationName"
+  },
+  {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "DaypartTypeId"
+  },
+  {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "DaypartUniquekey"
+  },
+  {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "IsEndTimeModified"
+  },
+  {
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "IsStartTimeModified"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "CustomDaypartName"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "CustomDaypartOrganizationId"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "CustomDaypartOrganizationName"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "DaypartTypeId"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "Id"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "IsEndTimeModified"
+  },
+  {
+    "ClassTypeName": "PlanCustomDaypartDto",
+    "PropertyName": "IsStartTimeModified"
+  },
+  {
     "ClassTypeName": "PlanDto",
     "PropertyName": "Name"
   },
