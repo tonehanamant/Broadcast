@@ -1,5 +1,5 @@
 ﻿{
-  "AudienceId": 0,
+  "AudienceId": null,
   "AvailableMarketCount": 12,
   "AvailableMarketsWithSovCount": 2,
   "AvailableMarketTotalUsCoveragePercent": 68.7,
@@ -10,7 +10,7 @@
   "DraftId": null,
   "DraftModifiedBy": null,
   "DraftModifiedDate": null,
-  "Equivalized": false,
+  "Equivalized": null,
   "FlightEndDate": null,
   "FlightStartDate": null,
   "HasHiatus": false,

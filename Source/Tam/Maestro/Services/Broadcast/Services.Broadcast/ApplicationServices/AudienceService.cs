@@ -28,7 +28,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="audienceId">The audience identifier.</param>
         /// <returns></returns>
-        PlanAudienceDisplay GetAudienceById(int audienceId);
+        PlanAudienceDisplay GetAudienceById(int? audienceId);
     }
 
     public class AudienceService : IAudienceService
@@ -59,7 +59,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         ///<inheritdoc/>
-        public PlanAudienceDisplay GetAudienceById(int audienceId)
+        public PlanAudienceDisplay GetAudienceById(int? audienceId)
         {
             return _AudiencesCache.GetAllEntities()
                 .Where(x=>x.Id == audienceId)

@@ -136,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices
             proposalAudienceIds.AddRange(proposal.SecondaryDemos);
             var proposalAudiences = _BroadcastAudienceRepository.GetAudienceDtosById(proposalAudienceIds)
                 .OrderBy(a => proposalAudienceIds.IndexOf(a.Id)).ToList(); //This ordering by the original audience id order. Primary audience first.
-            var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a.Id).ToList());
+            var audiencesMappings = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(proposalAudiences.Select(a => a?.Id).ToList());
             var spotLengthMappings = _SpotLengthRepository.GetSpotLengthIdsByDuration();
             var mediaWeeks = _MediaMonthAndWeekCache.GetMediaWeeksByContainingDate(inspecSpots.Select(s => s.AirDate).Distinct().ToList());
             var stationMappings = _BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>()

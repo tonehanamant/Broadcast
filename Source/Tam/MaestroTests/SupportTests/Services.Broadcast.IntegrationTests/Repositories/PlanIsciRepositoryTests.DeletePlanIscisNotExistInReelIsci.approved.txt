@@ -1,6 +1,8 @@
 {
   "after": [
     {
+      "ActiveEndDate": "2019-01-17T00:00:00",
+      "ActiveStartDate": "2019-01-01T00:00:00",
       "DeletedAt": null,
       "DeletedBy": null,
       "FlightEndDate": "2020-03-02T00:00:00",
@@ -11,6 +13,8 @@
   ],
   "before": [
     {
+      "ActiveEndDate": "2019-01-17T00:00:00",
+      "ActiveStartDate": "2019-01-01T00:00:00",
       "DeletedAt": null,
       "DeletedBy": null,
       "FlightEndDate": "2020-03-02T00:00:00",

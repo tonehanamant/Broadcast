@@ -239,7 +239,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _SetIsActiveThisWeekProperty(postedProposals, currentWeekDate);
 
-            var proposalMaestroAudiences = postedProposals.Select(p => p.GuaranteedAudienceId).Distinct().ToList();
+            var proposalMaestroAudiences = postedProposals.Select(p => p?.GuaranteedAudienceId).Distinct().ToList();
             if (!proposalMaestroAudiences.Contains(houseHoldAudienceId))
                 proposalMaestroAudiences.Add(houseHoldAudienceId);
 

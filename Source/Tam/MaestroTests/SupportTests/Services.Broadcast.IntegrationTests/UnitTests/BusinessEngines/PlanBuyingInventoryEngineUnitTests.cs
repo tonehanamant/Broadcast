@@ -1647,7 +1647,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<bool>()))
-                .Callback<List<PlanBuyingInventoryProgram>, int, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
+                .Callback<List<PlanBuyingInventoryProgram>, int?, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
                 {
                     // deep copy
                     passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new

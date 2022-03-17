@@ -4,7 +4,6 @@
     "Id": 1,
     "Isci": "AB82TXT2",
     "PlanIsci": 0,
-    "ProductName": "Product1",
     "SpotLengthDuration": 30
   }
 ]

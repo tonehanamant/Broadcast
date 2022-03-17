@@ -301,9 +301,9 @@ namespace Services.Broadcast.Validators
             }
         }
 
-        private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
+        private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int? primaryAudienceId)
         {
-            var distinctAudiences = new List<int> { primaryAudienceId };
+            var distinctAudiences = new List<int?> { primaryAudienceId };
             foreach (var secondaryAudience in secondaryAudiences)
             {
                 if (!_AudienceCache.IsValidAudience(secondaryAudience.AudienceId))

@@ -177,7 +177,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         private List<AllocationViewRowDisplay> _MapSpotLengthToAllocationViewRows(List<PlanPricingAllocatedSpot> allocatedSpots
             , List<ProgramLineupProprietaryInventory> proprietaryInventory
-            , double totalAllocatedImpressions, List<LookupDto> spotLengths, bool equivalized)
+            , double totalAllocatedImpressions, List<LookupDto> spotLengths, bool? equivalized)
         {
             Dictionary<int, double> data = new Dictionary<int, double>();
             _LoadImpressionsBySpotLengthForOpenMarket(allocatedSpots, data);
@@ -198,7 +198,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         private List<AllocationViewRowDisplay> _MapSpotLengthToBuyingAllocationViewRows(List<PlanBuyingAllocatedSpot> allocatedSpots
             , List<ProgramLineupProprietaryInventory> proprietaryInventory
-            , double totalAllocatedImpressions, List<LookupDto> spotLengths, bool equivalized)
+            , double totalAllocatedImpressions, List<LookupDto> spotLengths, bool? equivalized)
         {
             Dictionary<int, double> data = new Dictionary<int, double>();
             _LoadImpressionsBySpotLengthForBuyingOpenMarket(allocatedSpots, data);
@@ -646,9 +646,9 @@ namespace Services.Broadcast.Entities.Campaign
                 .ToList());
         }
 
-        private string _GetEquivalizedStatus(bool equivalized, string display)
+        private string _GetEquivalizedStatus(bool? equivalized, string display)
         {
-            return equivalized && !display.Equals("30") ? " eq." : string.Empty;
+            return (equivalized ?? false) && !display.Equals("30") ? " eq." : string.Empty;
         }
 
         private double _CalculateWeight(double impressions, double totalAllocatedImpressions)

@@ -20,7 +20,7 @@ namespace Services.Broadcast.Repositories
 
         NtiUniverseHeader GetLatestLoadedNsiUniverses();
 
-        double GetLatestNtiUniverse(int audienceId);
+        double GetLatestNtiUniverse(int? audienceId);
     }
 
     public class NtiUniverseRepository : BroadcastRepositoryBase, INtiUniverseRepository
@@ -81,7 +81,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public double GetLatestNtiUniverse(int audienceId)
+        public double GetLatestNtiUniverse(int? audienceId)
         {
             return _InReadUncommitedTransaction(context =>
             {

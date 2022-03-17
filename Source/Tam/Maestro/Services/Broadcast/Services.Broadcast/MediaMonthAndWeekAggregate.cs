@@ -14,7 +14,7 @@ namespace Services.Broadcast
         List<MediaMonth> GetMediaMonthsByIds(IEnumerable<int> mediaMonthIds);
         MediaMonth GetMediaMonthContainingDate(DateTime date);
         MediaMonth GetMediaMonthByYearAndMonth(int year, int month);
-        MediaMonth GetMediaMonthById(int id);
+        MediaMonth GetMediaMonthById(int? id);
         List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate);
 
         List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime startDate, DateTime endDate,List<MediaWeek> mediaWeeks);
@@ -90,7 +90,7 @@ namespace Services.Broadcast
             return mediaMonth;
         }
 
-        public MediaMonth GetMediaMonthById(int id)
+        public MediaMonth GetMediaMonthById(int? id)
         {
             var mediaMonth = _MediaMonths.SingleOrDefault(x => x.Id == id);
             if (mediaMonth == null)

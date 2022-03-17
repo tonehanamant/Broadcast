@@ -3256,7 +3256,7 @@
   "TotalHiatusDays": 0,
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 7,
-  "Vpvh": 0.65829188,
+  "Vpvh": 0.658291877402354,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 65,
     "TotalBudget": 12000.0000,

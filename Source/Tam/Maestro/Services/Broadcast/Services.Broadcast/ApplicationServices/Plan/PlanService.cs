@@ -448,7 +448,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                     if (lockingResult.Success)
                     {
-                        if (plan.IsDraft)
+                        if (plan.IsDraft ?? false)
                         {
                             _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
                         }
@@ -470,7 +470,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
                 // We only aggregate data for versions, not drafts.
-                if (!plan.IsDraft)
+                if (!(plan.IsDraft ?? false))
                 {
                     _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
@@ -481,7 +481,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 // if a new version was published then the VersionId is the latest published version.
                 // if a draft was saved then the VersionId is the draft version instead. 
                 var afterPlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
-                if (!plan.IsDraft)
+                if (!(plan.IsDraft ?? false))
                 {
                     if (beforePlan?.Dayparts.Any() ?? false)
                     {
@@ -617,12 +617,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             beforePlan = _PlanRepository.GetPlan(plan.Id, plan.VersionId);
 
-            if (!beforePlan.IsDraft && plan.IsDraft)
+            if (!(beforePlan.IsDraft ?? false) && (plan.IsDraft ?? false))
             {
                 return SaveState.CreatingNewDraft;
             }
 
-            if (beforePlan.IsDraft && !plan.IsDraft)
+            if ((beforePlan.IsDraft ?? false) && !(plan.IsDraft ?? false))
             {
                 beforePlan = _PlanRepository.GetPlan(plan.Id);
                 return SaveState.PromotingDraft;
@@ -1049,7 +1049,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 IsDraft = x.IsDraft,
                 ModifiedBy = x.ModifiedBy,
                 ModifiedDate = x.ModifiedDate,
-                Status = EnumHelper.GetEnum<PlanStatusEnum>(x.Status),
+                Status = EnumHelper.GetNullableEnum<PlanStatusEnum>(x.Status),
                 TargetAudienceId = x.TargetAudienceId,
                 VersionId = x.VersionId,
                 TotalDayparts = x.Dayparts.Count(),
@@ -1059,7 +1059,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private string _SetVersionName(PlanVersion planVersion)
         {
-            return planVersion.IsDraft ? "Draft" : $"Version {planVersion.VersionNumber.Value}";
+            return (planVersion.IsDraft ?? false) ? "Draft" : $"Version {planVersion.VersionNumber.Value}";
         }
 
         /// <inheritdoc/>
@@ -1394,7 +1394,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //this is a new plan, so we're saving version 1
                 plan.VersionNumber = 1;
             }
-            else if (plan.IsDraft)
+            else if (plan.IsDraft ?? false)
             {
                 //this is a draft. we create it if none exist or we update it otherwise
                 plan.VersionNumber = null;
@@ -1499,7 +1499,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private Dictionary<int, double> _GetAudienceImpressionsByStandardDaypart(
             PlanDto plan,
             Dictionary<int, double> hhImpressionsByStandardDaypart,
-            int audienceId)
+            int? audienceId)
         {
             var result = new Dictionary<int, double>();
 

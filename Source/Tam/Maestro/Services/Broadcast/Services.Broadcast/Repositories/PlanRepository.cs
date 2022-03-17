@@ -630,7 +630,7 @@ namespace Services.Broadcast.Repositories
             {
                 var latestPlanByVersion =
                     context.plan_versions
-                        .Where(p => p.plan_id == planId && p.is_draft == false)
+                        .Where(p => p.plan_id == planId && (p.is_draft == false || p.is_draft == null))
                         .OrderByDescending(p => p.version_number)
                         .FirstOrDefault();
 
@@ -661,7 +661,7 @@ namespace Services.Broadcast.Repositories
                 SpotAllocationModelMode = EnumHelper.GetEnum<SpotAllocationModelMode>(entity.spot_allocation_model_mode ?? (int)SpotAllocationModelMode.Quality),
                 CreativeLengths = planVersion.plan_version_creative_lengths.Select(_MapCreativeLengthsToDto).ToList(),
                 Equivalized = planVersion.equivalized,
-                Status = EnumHelper.GetEnum<PlanStatusEnum>(planVersion.status),
+                Status = EnumHelper.GetNullableEnum<PlanStatusEnum>(planVersion.status),
                 ProductId = entity.product_id,
                 ProductMasterId = entity.product_master_id,
                 FlightDays = planVersion.plan_version_flight_days.Select(flightDay => flightDay.day.id).ToList(),
@@ -669,11 +669,11 @@ namespace Services.Broadcast.Repositories
                 FlightEndDate = planVersion.flight_end_date,
                 FlightNotes = planVersion.flight_notes,
                 FlightNotesInternal = planVersion.flight_notes_internal,
-                AudienceId = planVersion.target_audience_id,
-                AudienceType = EnumHelper.GetEnum<AudienceTypeEnum>(planVersion.audience_type),
+                AudienceId = planVersion.target_audience_id ?? 0,
+                AudienceType = EnumHelper.GetNullableEnum<AudienceTypeEnum>(planVersion.audience_type),
                 HUTBookId = planVersion.hut_book_id,
                 ShareBookId = planVersion.share_book_id,
-                PostingType = EnumHelper.GetEnum<PostingTypeEnum>(planVersion.posting_type),
+                PostingType = EnumHelper.GetNullableEnum<PostingTypeEnum>(planVersion.posting_type),
                 FlightHiatusDays = planVersion.plan_version_flight_hiatus_days.Select(h => h.hiatus_day).ToList(),
                 Budget = planVersion.budget,
                 TargetImpressions = planVersion.target_impression,

@@ -20,7 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public int processing_status { get; set; }
+        public Nullable<int> processing_status { get; set; }
         public Nullable<int> hiatus_days_count { get; set; }
         public Nullable<int> active_day_count { get; set; }
         public Nullable<int> available_market_count { get; set; }

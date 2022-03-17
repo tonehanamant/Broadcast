@@ -68,7 +68,7 @@ namespace Services.Broadcast.Converters.Scx
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
             var demos = _GetDemos(audienceIds);
-            var demoRanksDictionary = demos.ToDictionary(x => x.Demo.Id, x => x.DemoRank);
+            var demoRanksDictionary = demos.ToDictionary(x => x.Demo?.Id, x => x.DemoRank);
             var dmaMarketNames = GetDmaMarketNames(inventory);
             var standardDaypartDaypartIds = _StandardDaypartRepository.GetStandardDaypartIdDaypartIds();
             var standardDaypartCodes = _StandardDaypartRepository.GetAllStandardDayparts()
@@ -97,7 +97,7 @@ namespace Services.Broadcast.Converters.Scx
         }
 
         internal List<OrderData> _GetOrders(PlanDto plan, List<StationInventoryManifest> inventory, List<PlanBuyingAllocatedSpot> spots, 
-            Dictionary<int,int> demoRanksDictionary, Dictionary<int, string> dmaMarketNames, 
+            Dictionary<int?,int> demoRanksDictionary, Dictionary<int, string> dmaMarketNames, 
             Dictionary<int,int> standardDaypartDaypartIds, Dictionary<int, string> standardDaypartCodes,
             List<DisplayBroadcastStation> stations, IOrderedEnumerable<MediaWeek> sortedMediaWeeks,
             string surveyString)
@@ -228,11 +228,11 @@ namespace Services.Broadcast.Converters.Scx
             return orders;
         }
 
-        internal List<int> _GetAudienceIds(PlanDto plan)
+        internal List<int?> _GetAudienceIds(PlanDto plan)
         {
             // only the primary audience for the plan. 
             // that's what the buying spot impressions are all in terms of.
-            var audienceIds = new List<int> { plan.AudienceId };
+            var audienceIds = new List<int?> { plan.AudienceId };
             return audienceIds;
         }
 
@@ -260,13 +260,13 @@ namespace Services.Broadcast.Converters.Scx
 
         internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, 
             SpotAllocationModelMode spotAllocationModelMode, 
-            bool isEquivalized = false, 
+            bool? isEquivalized = false, 
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode, postingType);            
             var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
 
-            if (isEquivalized)
+            if (isEquivalized ?? false)
             {
                 _UnEquivalizeSpots(jobSpotsResults);
             }

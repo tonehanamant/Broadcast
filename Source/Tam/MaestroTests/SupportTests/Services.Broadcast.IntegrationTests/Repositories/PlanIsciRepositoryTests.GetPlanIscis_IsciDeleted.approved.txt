@@ -1,5 +1,7 @@
 [
   {
+    "ActiveEndDate": "2019-03-02T00:00:00",
+    "ActiveStartDate": "2020-02-17T00:00:00",
     "DeletedAt": null,
     "DeletedBy": null,
     "FlightEndDate": "2020-03-02T00:00:00",

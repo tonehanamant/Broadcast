@@ -406,7 +406,7 @@
   "ImpressionsPerUnit": 5.0,
   "IsAduEnabled": true,
   "IsBuyingModelRunning": false,
-  "IsDraft": false,
+  "IsDraft": null,
   "IsOutOfSync": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
@@ -1264,7 +1264,7 @@
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 2,
-  "Vpvh": 0.7850526,
+  "Vpvh": 0.78505259852410114,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 29,
     "TotalBudget": 222.0000,

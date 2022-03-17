@@ -14,7 +14,7 @@ namespace Services.Broadcast.Repositories
     {
         List<audience_audiences> GetRatingsAudiencesByMaestroAudience(List<int> maestroAudiences);
         Dictionary<int, List<int>> GetMaestroAudiencesGroupedByRatingAudiences(List<int> maestroAudiences);
-        Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int> maestroAudiences);
+        Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int?> maestroAudiences);
         List<LookupDto> GetAudienceDtosById(List<int> proposalAudienceIds);
     }
 
@@ -59,7 +59,7 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int> maestroAudiences)
+        public Dictionary<int, List<int>> GetRatingAudiencesGroupedByMaestroAudience(IEnumerable<int?> maestroAudiences)
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {

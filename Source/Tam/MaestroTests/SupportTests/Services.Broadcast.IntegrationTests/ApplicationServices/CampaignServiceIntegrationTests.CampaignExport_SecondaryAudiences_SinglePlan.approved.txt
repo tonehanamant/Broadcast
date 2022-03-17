@@ -1186,7 +1186,7 @@
     "SecondaryAudiencesTables": [
       {
         "AudienceCode": "A18-54",
-        "AudienceId": 0,
+        "AudienceId": null,
         "Rows": [
           {
             "CPM": 55.603448275861969262782401903,
@@ -1236,7 +1236,7 @@
       },
       {
         "AudienceCode": "A25+",
-        "AudienceId": 0,
+        "AudienceId": null,
         "Rows": [
           {
             "CPM": 25.915178571428586098413584184,
@@ -1286,7 +1286,7 @@
       },
       {
         "AudienceCode": "A35-49",
-        "AudienceId": 0,
+        "AudienceId": null,
         "Rows": [
           {
             "CPM": 118.46938775510256401582673886,

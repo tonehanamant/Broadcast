@@ -1925,7 +1925,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             return plan.CreativeLengths.ToDictionary(
                 x => x.SpotLengthId,
-                x => plan.Equivalized ? _SpotLengthEngine.GetDeliveryMultiplierBySpotLengthId(x.SpotLengthId) : 1);
+                x => (plan.Equivalized ?? false) ? _SpotLengthEngine.GetDeliveryMultiplierBySpotLengthId(x.SpotLengthId) : 1);
         }
 
         internal static List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> _GroupInventory(List<PlanPricingInventoryProgram> inventory)

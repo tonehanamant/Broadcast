@@ -9,7 +9,7 @@ namespace Services.Broadcast.Entities.QuoteReport
 
         public class ImpressionsPerAudience
         {
-            public int AudienceId { get; set; }
+            public int? AudienceId { get; set; }
 
             public double ProjectedImpressions { get; set; }
 

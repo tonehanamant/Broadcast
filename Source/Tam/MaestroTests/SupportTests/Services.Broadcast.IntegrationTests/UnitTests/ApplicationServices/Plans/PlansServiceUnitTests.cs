@@ -3823,7 +3823,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 getPlanReturns.Enqueue(beforePlan);
 
-                if (beforePlan.IsDraft && !plan.IsDraft)
+                if ((beforePlan.IsDraft ?? false) && !(plan.IsDraft ?? false))
                 {
                     getPlanReturns.Enqueue(beforePlan);
                 }

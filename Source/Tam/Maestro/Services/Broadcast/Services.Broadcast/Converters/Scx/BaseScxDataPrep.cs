@@ -55,7 +55,7 @@ namespace Services.Broadcast.Converters.Scx
                                          .ToDictionary(k => (int)k.market_code, v => v.dma_mapped_value);
         }
 
-        protected List<DemoData> _GetDemos(IEnumerable<int> audienceIds)
+        protected List<DemoData> _GetDemos(IEnumerable<int?> audienceIds)
         {
             var audiences = _BroadcastAudiencesCache.GetAllEntities().Where(x => audienceIds.Contains(x.Id));
 
@@ -66,7 +66,7 @@ namespace Services.Broadcast.Converters.Scx
             }).ToList();
         }
 
-        protected string GetSurveyString(int bookingMediaMonthId, ProposalPlaybackType playbackType)
+        protected string GetSurveyString(int? bookingMediaMonthId, ProposalPlaybackType playbackType)
         {
             var bookingMediaMonth = _MediaMonthAndWeekCache.GetMediaMonthById(bookingMediaMonthId);
             var bookingMediaMonthInfo = bookingMediaMonth.Abbreviation + bookingMediaMonth.Year.ToString().Substring(2);

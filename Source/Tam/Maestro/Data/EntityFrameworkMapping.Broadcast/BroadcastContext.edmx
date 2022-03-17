@@ -1278,7 +1278,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
-          <Property Name="day_id" Type="int" Nullable="false" />
+          <Property Name="day_id" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_flight_hiatus_days">
           <Key>
@@ -1529,7 +1529,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="processing_status" Type="int" Nullable="false" />
+          <Property Name="processing_status" Type="int" />
           <Property Name="hiatus_days_count" Type="int" />
           <Property Name="active_day_count" Type="int" />
           <Property Name="available_market_count" Type="int" />
@@ -1577,15 +1577,15 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_id" Type="int" Nullable="false" />
-          <Property Name="is_draft" Type="bit" Nullable="false" />
-          <Property Name="equivalized" Type="bit" Nullable="false" />
+          <Property Name="is_draft" Type="bit" />
+          <Property Name="equivalized" Type="bit" />
           <Property Name="flight_start_date" Type="datetime" Nullable="false" />
           <Property Name="flight_end_date" Type="datetime" Nullable="false" />
           <Property Name="flight_notes" Type="nvarchar" MaxLength="1024" />
-          <Property Name="audience_type" Type="int" Nullable="false" />
-          <Property Name="posting_type" Type="int" Nullable="false" />
-          <Property Name="target_audience_id" Type="int" Nullable="false" />
-          <Property Name="share_book_id" Type="int" Nullable="false" />
+          <Property Name="audience_type" Type="int" />
+          <Property Name="posting_type" Type="int" />
+          <Property Name="target_audience_id" Type="int" />
+          <Property Name="share_book_id" Type="int" />
           <Property Name="hut_book_id" Type="int" />
           <Property Name="budget" Type="money" />
           <Property Name="target_impression" Type="float" />
@@ -1599,10 +1599,10 @@
           <Property Name="hh_cpp" Type="money" />
           <Property Name="hh_universe" Type="float" />
           <Property Name="currency" Type="int" />
-          <Property Name="target_vpvh" Type="float" Nullable="false" />
+          <Property Name="target_vpvh" Type="float" />
           <Property Name="coverage_goal_percent" Type="float" />
           <Property Name="goal_breakdown_type" Type="int" />
-          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" />
@@ -4884,7 +4884,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_flight_days_days">
-          <End Role="days" Type="Self.days" Multiplicity="1" />
+          <End Role="days" Type="Self.days" Multiplicity="0..1" />
           <End Role="plan_version_flight_days" Type="Self.plan_version_flight_days" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="days">
@@ -5308,7 +5308,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_versions_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="audiences" Type="Self.audiences" Multiplicity="0..1" />
           <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="audiences">
@@ -5344,7 +5344,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_versions_share_media_months">
-          <End Role="media_months" Type="Self.media_months" Multiplicity="1" />
+          <End Role="media_months" Type="Self.media_months" Multiplicity="0..1" />
           <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="media_months">
@@ -14284,7 +14284,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="processing_status" Type="Int32" Nullable="false" />
+          <Property Name="processing_status" Type="Int32" />
           <Property Name="hiatus_days_count" Type="Int32" />
           <Property Name="active_day_count" Type="Int32" />
           <Property Name="available_market_count" Type="Int32" />
@@ -15376,12 +15376,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="plan_version_id" Type="Int32" Nullable="false" />
-          <Property Name="day_id" Type="Int32" Nullable="false" />
+          <Property Name="day_id" Type="Int32" />
           <NavigationProperty Name="day" Relationship="BroadcastModel.FK_plan_version_flight_days_days" FromRole="plan_version_flight_days" ToRole="day" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_flight_days_plan_versions" FromRole="plan_version_flight_days" ToRole="plan_versions" />
         </EntityType>
         <Association Name="FK_plan_version_flight_days_days">
-          <End Type="BroadcastModel.day" Role="day" Multiplicity="1" />
+          <End Type="BroadcastModel.day" Role="day" Multiplicity="0..1" />
           <End Type="BroadcastModel.plan_version_flight_days" Role="plan_version_flight_days" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="day">
@@ -15448,15 +15448,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="plan_id" Type="Int32" Nullable="false" />
-          <Property Name="is_draft" Type="Boolean" Nullable="false" />
-          <Property Name="equivalized" Type="Boolean" Nullable="false" />
+          <Property Name="is_draft" Type="Boolean" />
+          <Property Name="equivalized" Type="Boolean" />
           <Property Name="flight_start_date" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="flight_end_date" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="flight_notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="audience_type" Type="Int32" Nullable="false" />
-          <Property Name="posting_type" Type="Int32" Nullable="false" />
-          <Property Name="target_audience_id" Type="Int32" Nullable="false" />
-          <Property Name="share_book_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_type" Type="Int32" />
+          <Property Name="posting_type" Type="Int32" />
+          <Property Name="target_audience_id" Type="Int32" />
+          <Property Name="share_book_id" Type="Int32" />
           <Property Name="hut_book_id" Type="Int32" />
           <Property Name="budget" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="target_impression" Type="Double" />
@@ -15470,10 +15470,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="hh_cpp" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="hh_universe" Type="Double" />
           <Property Name="currency" Type="Int32" />
-          <Property Name="target_vpvh" Type="Double" Nullable="false" />
+          <Property Name="target_vpvh" Type="Double" />
           <Property Name="coverage_goal_percent" Type="Double" />
           <Property Name="goal_breakdown_type" Type="Int32" />
-          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
@@ -15502,7 +15502,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" FromRole="plan_versions" ToRole="plan_version_audience_daypart_vpvh" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
           <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="audience">
@@ -15526,7 +15526,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_versions_share_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="0..1" />
           <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="media_months">

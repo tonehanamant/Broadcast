@@ -25,9 +25,9 @@ namespace Services.Broadcast.BusinessEngines
             ImpressionsRequestDto impressionsRequest,
             int audienceId);
 
-        void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized);
+        void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int? audienceId, int spotLengthId, bool equivalized);
 
-        void ApplyProvidedImpressions(List<PlanBuyingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized);
+        void ApplyProvidedImpressions(List<PlanBuyingInventoryProgram> programs, int? audienceId, int spotLengthId, bool equivalized);
 
         void ApplyProjectedImpressions(
             IEnumerable<QuoteProgram> programs,
@@ -55,7 +55,7 @@ namespace Services.Broadcast.BusinessEngines
             _RatingForecastRepository = broadcastDataRepositoryFactory.GetDataRepository<IRatingForecastRepository>();
         }
 
-        public void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized)
+        public void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int? audienceId, int spotLengthId, bool equivalized)
         {
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
 
@@ -71,7 +71,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        public void ApplyProvidedImpressions(List<PlanBuyingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized)
+        public void ApplyProvidedImpressions(List<PlanBuyingInventoryProgram> programs, int? audienceId, int spotLengthId, bool equivalized)
         {
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
 

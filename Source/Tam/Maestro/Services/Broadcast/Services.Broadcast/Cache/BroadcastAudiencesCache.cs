@@ -33,7 +33,7 @@ namespace Services.Broadcast.Cache
         /// <returns>
         ///   <c>true</c> if the audience id passed is a valid audience id; otherwise, <c>false</c>.
         /// </returns>
-        bool IsValidAudience(int audienceId);
+        bool IsValidAudience(int? audienceId);
     }
 
     public class BroadcastAudiencesCache : IBroadcastAudiencesCache
@@ -125,7 +125,7 @@ namespace Services.Broadcast.Cache
         }
 
         ///<inheritdoc/>
-        public bool IsValidAudience(int audienceId)
+        public bool IsValidAudience(int? audienceId)
         {
             return _Audiences.Any(x => x.Id == audienceId);
         }

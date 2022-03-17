@@ -2622,7 +2622,7 @@
   "TotalShareOfVoice": 100.0,
   "VersionId": 7236,
   "VersionNumber": 3,
-  "Vpvh": 1.13800003,
+  "Vpvh": 1.1380000286776006,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 91,
     "TotalBudget": 500000.0000,

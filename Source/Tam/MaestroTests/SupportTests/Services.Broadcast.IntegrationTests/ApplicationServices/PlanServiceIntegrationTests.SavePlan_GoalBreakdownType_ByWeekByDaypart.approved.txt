@@ -301,7 +301,7 @@
   "ImpressionsPerUnit": 100.0,
   "IsAduEnabled": true,
   "IsBuyingModelRunning": false,
-  "IsDraft": false,
+  "IsDraft": null,
   "IsOutOfSync": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
@@ -889,7 +889,7 @@
   "TotalHiatusDays": 0,
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 1,
-  "Vpvh": 0.83720933,
+  "Vpvh": 0.83720933347755655,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 35,
     "TotalBudget": 500.0000,
@@ -922,7 +922,7 @@
       "WeeklyCpm": 0.1000,
       "WeeklyImpressions": 600.0,
       "WeeklyImpressionsPercentage": 12.0,
-      "WeeklyRatings": 0.4,
+      "WeeklyRatings": 0.5,
       "WeeklyUnits": 6.0,
       "WeekNumber": 1
     },
@@ -976,7 +976,7 @@
       "WeeklyCpm": 0.1000,
       "WeeklyImpressions": 600.0,
       "WeeklyImpressionsPercentage": 12.0,
-      "WeeklyRatings": 0.4,
+      "WeeklyRatings": 0.5,
       "WeeklyUnits": 6.0,
       "WeekNumber": 2
     },
@@ -1030,7 +1030,7 @@
       "WeeklyCpm": 0.1000,
       "WeeklyImpressions": 600.0,
       "WeeklyImpressionsPercentage": 12.0,
-      "WeeklyRatings": 0.4,
+      "WeeklyRatings": 0.5,
       "WeeklyUnits": 6.0,
       "WeekNumber": 3
     },
@@ -1084,7 +1084,7 @@
       "WeeklyCpm": 0.1000,
       "WeeklyImpressions": 600.0,
       "WeeklyImpressionsPercentage": 12.0,
-      "WeeklyRatings": 0.4,
+      "WeeklyRatings": 0.5,
       "WeeklyUnits": 6.0,
       "WeekNumber": 4
     },
@@ -1138,7 +1138,7 @@
       "WeeklyCpm": 0.1000,
       "WeeklyImpressions": 600.0,
       "WeeklyImpressionsPercentage": 12.0,
-      "WeeklyRatings": 0.4,
+      "WeeklyRatings": 0.5,
       "WeeklyUnits": 6.0,
       "WeekNumber": 5
     },

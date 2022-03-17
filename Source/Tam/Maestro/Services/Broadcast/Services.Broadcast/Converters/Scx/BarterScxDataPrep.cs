@@ -42,7 +42,7 @@ namespace Services.Broadcast.Converters.Scx
             var fileHeaders = InventoryRepository.GetInventoryFileHeader(fileIds);
             var allManifests = inventory.SelectMany(x => x.Manifests);
             var dmaMarketNames = GetDmaMarketNames(allManifests);
-            var audienceIds = fileHeaders.Select(x => x.Value.Audience.Id);
+            var audienceIds = fileHeaders.Select(x => x.Value.Audience?.Id);
             var audienceComponents = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(audienceIds);
 
             foreach (var groups in inventory.GroupBy(x => new { GroupName = x.Name, InventorySourceName = x.InventorySource.Name }))

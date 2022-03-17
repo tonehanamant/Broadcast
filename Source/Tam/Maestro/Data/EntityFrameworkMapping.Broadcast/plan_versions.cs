@@ -34,15 +34,15 @@ namespace EntityFrameworkMapping.Broadcast
     
         public int id { get; set; }
         public int plan_id { get; set; }
-        public bool is_draft { get; set; }
-        public bool equivalized { get; set; }
+        public Nullable<bool> is_draft { get; set; }
+        public Nullable<bool> equivalized { get; set; }
         public System.DateTime flight_start_date { get; set; }
         public System.DateTime flight_end_date { get; set; }
         public string flight_notes { get; set; }
-        public int audience_type { get; set; }
-        public int posting_type { get; set; }
-        public int target_audience_id { get; set; }
-        public int share_book_id { get; set; }
+        public Nullable<int> audience_type { get; set; }
+        public Nullable<int> posting_type { get; set; }
+        public Nullable<int> target_audience_id { get; set; }
+        public Nullable<int> share_book_id { get; set; }
         public Nullable<int> hut_book_id { get; set; }
         public Nullable<decimal> budget { get; set; }
         public Nullable<double> target_impression { get; set; }
@@ -56,10 +56,10 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> hh_cpp { get; set; }
         public Nullable<double> hh_universe { get; set; }
         public Nullable<int> currency { get; set; }
-        public double target_vpvh { get; set; }
+        public Nullable<double> target_vpvh { get; set; }
         public Nullable<double> coverage_goal_percent { get; set; }
         public Nullable<int> goal_breakdown_type { get; set; }
-        public int status { get; set; }
+        public Nullable<int> status { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }

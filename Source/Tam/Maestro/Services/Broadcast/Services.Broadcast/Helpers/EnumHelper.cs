@@ -99,5 +99,27 @@ namespace Services.Broadcast.Helpers
         {
             return Enum.GetValues(typeof(T)).Cast<T>();
         }
+
+        /// <summary>
+        /// Gets the Nullable enum.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="candidate">The candidate.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Given status of {candidate} is an invalid {typeof(T).FullName}.</exception>
+        public static T GetNullableEnum<T>(int? candidate)
+        {
+            if (typeof(T).IsEnum == false)
+            {
+                throw new InvalidOperationException("The type must be an Enum.");
+            }
+
+            if (Enum.IsDefined(typeof(T), candidate) == false)
+            {
+                throw new InvalidOperationException($"Given status of {candidate} is an invalid {typeof(T).FullName}.");
+            }
+            var result = (T)Enum.Parse(typeof(T), candidate.ToString());
+            return result;
+        }
     }
 }

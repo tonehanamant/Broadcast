@@ -27,7 +27,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         ///   <c>true</c> if this instance is draft; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDraft { get; set; }
+        public bool? IsDraft { get; set; }
 
         /// <summary>
         /// Gets or sets the status.
@@ -67,7 +67,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The target audience identifier.
         /// </value>
-        public int TargetAudienceId { get; set; }
+        public int? TargetAudienceId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is target audience modified.

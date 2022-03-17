@@ -1,17 +1,17 @@
 {
   "CostValues": [
-    "ADU"
+    null
   ],
   "CPMValues": [
-    "ADU"
+    null
   ],
   "DistributionPercentages": [
     null
   ],
   "ImpressionsValues": [
-    "ADU"
+    null
   ],
   "UnitsValues": [
-    1.21
+    null
   ]
 }

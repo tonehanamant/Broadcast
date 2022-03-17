@@ -92,6 +92,6 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         ///   <c>true</c> if equivalized; otherwise, <c>false</c>.
         /// </value>
-        public bool Equivalized { get; set; }
+        public bool? Equivalized { get; set; }
     }
 }

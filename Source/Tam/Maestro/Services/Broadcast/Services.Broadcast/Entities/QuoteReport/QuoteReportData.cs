@@ -93,7 +93,7 @@ namespace Services.Broadcast.Entities.QuoteReport
             return detailLines;
         }
 
-        private static List<QuoteReportRateDetailLineAudience> _GetQuoteReportRateDetailLineAudience(int primaryAudienceId,
+        private static List<QuoteReportRateDetailLineAudience> _GetQuoteReportRateDetailLineAudience(int? primaryAudienceId,
             List<QuoteProgram.ImpressionsPerAudience> itemAudiences)
         {
             const int householdAudienceId = 31;
@@ -105,7 +105,7 @@ namespace Services.Broadcast.Entities.QuoteReport
                 {
                     IsPrimaryDemo = audience.AudienceId == primaryAudienceId,
                     IsHouseHolds = audience.AudienceId == householdAudienceId,
-                    AudienceId = audience.AudienceId,
+                    AudienceId = audience.AudienceId ?? 0,
                     CPM = audience.CPM,
                     Impressions = audience.Impressions
                 };

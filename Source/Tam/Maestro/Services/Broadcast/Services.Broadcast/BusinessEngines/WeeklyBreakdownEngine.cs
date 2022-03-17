@@ -18,9 +18,9 @@ namespace Services.Broadcast.BusinessEngines
     public interface IWeeklyBreakdownEngine : IApplicationService
     {
         List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
-            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool equivalized = false);
+            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool? equivalized = false);
         List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
-            , double impressionsPerUnit, bool equivalized);
+            , double impressionsPerUnit, bool? equivalized);
         Dictionary<int, int> GetWeekNumberByMediaWeekDictionary(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
 
         WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
@@ -38,14 +38,14 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="impressionsPerUnit">Impressions per unit value</param>
         /// <param name="creativeLengths">List of creative lengths</param>
         /// <returns>Number of adu impressions</returns>
-        double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool equivalized
+        double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool? equivalized
             , double impressionsPerUnit, List<CreativeLength> creativeLengths);
 
         /// <summary>
         /// Groups the weekly breakdown by week by daypart
         /// </summary>
         List<WeeklyBreakdownByWeekByDaypart> GroupWeeklyBreakdownByWeekByDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
-            , double impressionsPerUnit, bool equivalized, List<CreativeLength> creativeLengths);
+            , double impressionsPerUnit, bool? equivalized, List<CreativeLength> creativeLengths);
 
         /// <summary>
         /// Calculates the adu with decimals.
@@ -56,7 +56,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="spotLengthId">Spot length</param>
         /// <returns>Adu number as double</returns>
         double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
-            , bool equivalized, int spotLengthId);
+            , bool? equivalized, int spotLengthId);
 
         List<WeeklyBreakdownWeek> GroupWeeklyBreakdownWeeksBasedOnDeliveryType(PlanDto plan);
 
@@ -638,14 +638,14 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private void _AdjustSpotLengthBudget(List<WeeklyBreakdownWeek> weeks, PlanGoalBreakdownTypeEnum deliveryType,
-            bool equivalized, decimal totalBudget)
+            bool? equivalized, decimal totalBudget)
         {
             if (deliveryType != PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
             {
                 return;
             }
 
-            if (equivalized)
+            if (equivalized ?? false)
             {
                 return;
             }
@@ -1174,7 +1174,7 @@ namespace Services.Broadcast.BusinessEngines
                             week.WeeklyImpressions = ProposalMath.RoundDownWithDecimals((week.WeeklyImpressionsPercentage / 100) * request.TotalImpressions, 0);
                             break;
                         case WeeklyBreakdownCalculationFrom.Units:
-                            if (request.Equivalized)
+                            if (request.Equivalized ?? false)
                             {
                                 if (week.SpotLengthId.HasValue)
                                 {
@@ -1537,7 +1537,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
-            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool equivalized = false)
+            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool? equivalized = false)
         {
             return weeklyBreakdown
                 .GroupBy(x => x.MediaWeekId)
@@ -1577,7 +1577,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
-            , double impressionsPerUnit, bool equivalized)
+            , double impressionsPerUnit, bool? equivalized)
         {
             return weeklyBreakdown
                 .GroupBy(x => new { x.MediaWeekId, x.SpotLengthId })
@@ -1609,7 +1609,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public List<WeeklyBreakdownByWeekByDaypart> GroupWeeklyBreakdownByWeekByDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
-            , double impressionsPerUnit, bool equivalized, List<CreativeLength> creativeLengths)
+            , double impressionsPerUnit, bool? equivalized, List<CreativeLength> creativeLengths)
         {
             return weeklyBreakdown
                 .GroupBy(x => new { x.MediaWeekId, x.DaypartUniquekey })
@@ -1676,11 +1676,11 @@ namespace Services.Broadcast.BusinessEngines
                    .Sum(p => _CalculateUnitsForSingleSpotLength(impressionsPerUnit, impressions, p.SpotLengthId)
                             * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
 
-        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, bool equivalized, double impressionsPerUnit, List<CreativeLength> creativeLengths)
+        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, bool? equivalized, double impressionsPerUnit, List<CreativeLength> creativeLengths)
         {
             foreach (var week in weeks)
             {
-                if (equivalized)
+                if (equivalized ?? false)
                 {
                     if (week.SpotLengthId.HasValue)
                     {
@@ -1704,10 +1704,10 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc/>
-        public double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool equivalized
+        public double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool? equivalized
             , double impressionsPerUnit, List<CreativeLength> creativeLengths)
         {
-            if (equivalized)
+            if (equivalized ?? false)
             {
                 if (week.SpotLengthId.HasValue)
                 {
@@ -1725,13 +1725,13 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private int _CalculateADU(double impressionsPerUnit, double aduImpressions
-            , bool equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)
+            , bool? equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)
         {
             if (impressionsPerUnit == 0)
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
                 return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
             }
-            if (equivalized)
+            if (equivalized ?? false)
             {
                 if (spotLengthId.HasValue)
                 {
@@ -1750,13 +1750,13 @@ namespace Services.Broadcast.BusinessEngines
 
         /// <inheritdoc/>
         public double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
-            , bool equivalized, int spotLengthId)
+            , bool? equivalized, int spotLengthId)
         {
             if (impressionsPerUnit == 0)
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
                 return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
             }
-            if (equivalized)
+            if (equivalized ?? false)
             {
                 return _CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId);
             }

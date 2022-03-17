@@ -58,7 +58,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         ///   <c>true</c> if equivalized; otherwise, <c>false</c>.
         /// </value>
-        public bool Equivalized { get; set; }
+        public bool? Equivalized { get; set; }
 
         /// <summary>
         /// Gets or sets the status.
@@ -180,7 +180,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The share book identifier.
         /// </value>
-        public int ShareBookId { get; set; }
+        public int? ShareBookId { get; set; }
 
         /// <summary>
         /// Gets or sets the hut book identifier.
@@ -349,7 +349,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The VPVH.
         /// </value>
-        public double Vpvh { get; set; }
+        public double? Vpvh { get; set; }
 
         /// <summary>
         /// Gets or sets the household CPM.
@@ -429,7 +429,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         ///   <c>true</c> if this instance is draft; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDraft { get; set; }
+        public bool? IsDraft { get; set; }
 
         /// <summary>
         /// Gets or sets the plans version number.

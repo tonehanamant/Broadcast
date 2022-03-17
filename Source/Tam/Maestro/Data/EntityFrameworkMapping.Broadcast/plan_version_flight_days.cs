@@ -16,7 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public int plan_version_id { get; set; }
-        public int day_id { get; set; }
+        public Nullable<int> day_id { get; set; }
     
         public virtual day day { get; set; }
         public virtual plan_versions plan_versions { get; set; }

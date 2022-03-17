@@ -28,13 +28,13 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public List<CreativeLength> CreativeLengths { get; set; } = new List<CreativeLength>();
         public int SpotLengthId { get; set; }
-        public bool Equivalized { get; set; }
+        public bool? Equivalized { get; set; }
         public List<int> FlightDays { get; set; }
         public DateTime? FlightStartDate { get; set; }
         public DateTime? FlightEndDate { get; set; }
         public List<DateTime> FlightHiatusDays { get; set; } = new List<DateTime>();
         public int AudienceId { get; set; }
-        public int ShareBookId { get; set; }
+        public int? ShareBookId { get; set; }
         public int? HUTBookId { get; set; }
         public List<PlanDaypartDto> Dayparts { get; set; } = new List<PlanDaypartDto>();
         public List<PlanAvailableMarketDto> AvailableMarkets { get; set; } = new List<PlanAvailableMarketDto>();

@@ -471,6 +471,86 @@ END
 
 /*************************************** END BP-4211 ***************************************/
 
+/*************************************** START BP-4245 ***************************************/
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_audience_id' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_audience_id int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'equivalized' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN equivalized bit NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'is_draft' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN is_draft bit NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'audience_type' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN audience_type int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'posting_type' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN posting_type int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'status' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN status int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'target_vpvh' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN target_vpvh float NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND COLUMN_NAME= 'share_book_id' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_versions
+			ALTER COLUMN share_book_id  int NULL
+END
+
+GO
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_flight_days' AND COLUMN_NAME= 'day_id' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_version_flight_days
+			ALTER COLUMN day_id int NULL
+END
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_summaries' AND COLUMN_NAME= 'processing_status' AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE plan_version_summaries
+			ALTER COLUMN processing_status int NULL
+END
+
+/*************************************** END BP-4245 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -29,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="audienceId">Audience id</param>
         /// <returns>Universe</returns>
-        double GetLatestNtiUniverse(int audienceId);
+        double GetLatestNtiUniverse(int? audienceId);
     }
 
     public class NtiUniverseService : INtiUniverseService
@@ -66,7 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc/>
-        public double GetLatestNtiUniverse(int audienceId)
+        public double GetLatestNtiUniverse(int? audienceId)
         {
             var universe = _NtiUniverseRepository.GetLatestNtiUniverse(audienceId);
 

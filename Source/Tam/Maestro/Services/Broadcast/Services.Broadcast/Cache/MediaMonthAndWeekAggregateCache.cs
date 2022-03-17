@@ -46,7 +46,7 @@ namespace Services.Broadcast
             return _MediaMonthAndWeekAggregate.Value.GetMediaMonthByYearAndMonth(year, month);
         }
 
-        public MediaMonth GetMediaMonthById(int id)
+        public MediaMonth GetMediaMonthById(int? id)
         {
             return _MediaMonthAndWeekAggregate.Value.GetMediaMonthById(id);
         }

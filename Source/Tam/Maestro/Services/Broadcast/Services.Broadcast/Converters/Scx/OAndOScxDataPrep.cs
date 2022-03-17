@@ -35,7 +35,7 @@ namespace Services.Broadcast.Converters.Scx
             var inventorySource = InventoryRepository.GetInventorySource(inventorySourceId);
             var fileIds = inventory.Select(x => x.InventoryFileId.Value).Distinct();
             var fileHeaders = InventoryRepository.GetInventoryFileHeader(fileIds);
-            var audienceIds = fileHeaders.Select(x => x.Value.Audience.Id);
+            var audienceIds = fileHeaders.Select(x => x.Value.Audience?.Id);
             var dmaMarketNames = GetDmaMarketNames(inventory);
 
             var manifests = _FilterOutInvalidManifests(inventory);

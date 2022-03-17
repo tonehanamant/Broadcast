@@ -309,7 +309,7 @@ namespace Services.Broadcast.Entities.Campaign
             
         }
 
-        private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, string standardDaypartId, int audienceId)
+        private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, string standardDaypartId, int? audienceId)
         {
             double vpvhByStandardDaypartAndAudience = 0.0;
             var daypart = plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId);
@@ -447,7 +447,7 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        internal static double _CalculateUnitsForWeekComponent(WeeklyBreakdownWeek planWeek, double planImpressionsPerUnit, bool equivalized, Dictionary<int, double> spotLengthDeliveryMultipliers)
+        internal static double _CalculateUnitsForWeekComponent(WeeklyBreakdownWeek planWeek, double planImpressionsPerUnit, bool? equivalized, Dictionary<int, double> spotLengthDeliveryMultipliers)
         {
             if (planWeek.WeeklyImpressions == 0)
             {
@@ -458,7 +458,7 @@ namespace Services.Broadcast.Entities.Campaign
             // WeeklyImpressions is from the weekly breakdown results and already weighted
             var weekImpressions = planWeek.WeeklyImpressions / 1000;
             double deliveryUnitsForThisWeek;
-            if (equivalized)
+            if (equivalized ?? false)
             {
                 var spotLengthId = planWeek.SpotLengthId.Value;
                 var deliveryMultiplier = spotLengthDeliveryMultipliers[spotLengthId];
@@ -886,7 +886,7 @@ namespace Services.Broadcast.Entities.Campaign
                             , plan.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[weekIndex]))
                                                              && w.SpotLengthId == createiveLength.SpotLengthId)
                                                     .Sum(y => y.AduImpressions)
-                            , plan.Equivalized
+                             ,plan.Equivalized
                             , createiveLength.SpotLengthId);
                         });
                         return sum;
@@ -1459,9 +1459,9 @@ namespace Services.Broadcast.Entities.Campaign
                             .ToList();
         }
 
-        private string _GetEquivalizedStatus(bool equivalized, string display)
+        private string _GetEquivalizedStatus(bool? equivalized, string display)
         {
-            return equivalized && !display.Equals("30") ? " eq." : string.Empty;
+            return (equivalized ?? false) && !display.Equals("30") ? " eq." : string.Empty;
         }
 
         private void _SetGuaranteeedDemo(List<PlanAudienceDisplay> guaranteedDemos, List<PlanAudienceDisplay> orderedAudiences)
@@ -1503,7 +1503,7 @@ namespace Services.Broadcast.Entities.Campaign
             public List<string> GuaranteedDemo { get; set; }
             public string SpotLength { get; set; }
             public int SpotLengthId { get; set; }
-            public bool Equivalized { get; set; }
+            public bool? Equivalized { get; set; }
 
             public decimal TotalCost { get; set; }
             public double Units { get; set; }
@@ -1521,7 +1521,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             public class Audience
             {
-                public int AudienceId { get; set; }
+                public int? AudienceId { get; set; }
                 public double VPVH { get; set; }
                 public double TotalRatingPoints { get; set; }
                 public double TotalImpressions { get; set; }
@@ -1573,7 +1573,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         public class SecondayAudienceTable
         {
-            public int AudienceId { get; set; }
+            public int? AudienceId { get; set; }
             public string AudienceCode { get; set; }
             public List<AudienceData> Rows { get; set; } = new List<AudienceData>();
             public AudienceData TotalRow { get; set; }

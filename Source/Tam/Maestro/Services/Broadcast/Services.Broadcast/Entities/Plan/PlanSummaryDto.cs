@@ -103,7 +103,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The audience identifier.
         /// </value>
-        public int AudienceId { get; set; }
+        public int? AudienceId { get; set; }
 
         /// <summary>
         /// The quarters covered by the plan's flight.
@@ -137,7 +137,7 @@ namespace Services.Broadcast.Entities.Plan
 
         public decimal? Budget { get; set; }
 
-        public bool Equivalized { get; set; }
+        public bool? Equivalized { get; set; }
 
         public List<string> Dayparts { get; set; }
 
