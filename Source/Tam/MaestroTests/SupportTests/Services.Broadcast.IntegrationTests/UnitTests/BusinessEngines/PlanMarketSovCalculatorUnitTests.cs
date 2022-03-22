@@ -573,6 +573,54 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(expectedUserEnteredValueCount, result.AvailableMarkets.Count(s => s.IsUserShareOfVoicePercent));
         }
 
+        [Test]
+        [TestCase(100.01, false)]
+        [TestCase(100.00, true)]
+        public void DoesMarketSovTotalExceedThreshold(double threshold, bool expectedOver)
+        {
+            // Arrange
+            var availableMarketes = MarketsTestData.GetPlanAvailableMarkets().Take(10).ToList();
+            availableMarketes.ForEach(m => m.ShareOfVoicePercent = 10);
+            availableMarketes[0].ShareOfVoicePercent = 10.006;
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var exeedsThreshold = testClass.DoesMarketSovTotalExceedThreshold(availableMarketes, threshold);
+
+            // Assert
+            Assert.AreEqual(expectedOver, exeedsThreshold);
+        }
+
+        /// <summary>
+        /// BP-4341 
+        /// When adding the markets we ran into the "margin of error" for rounding.
+        /// This test will exercise that use case and validate we are within the margin of error.
+        /// </summary>
+        [Test]
+        public void DoesMarketSovTotalExceedThreshold_bp4341()
+        {
+            // Arrange
+            var testClass = _GetTestClass();
+            var planAvailableMarkets = new List<PlanAvailableMarketDto>();
+
+            // 100.00 will exceed the threshold
+            const double threshold = 100.01;
+
+            foreach (var market in MarketsTestData.GetPlanAvailableMarkets())
+            {
+                var addedMarket = new List<PlanAvailableMarketDto> { market };
+                var addMarketResult = testClass.CalculateMarketsAdded(planAvailableMarkets, addedMarket);
+                planAvailableMarkets = addMarketResult.AvailableMarkets;
+
+                // Act
+                var exeedsThreshold = testClass.DoesMarketSovTotalExceedThreshold(planAvailableMarkets, threshold);
+
+                // Assert
+                Assert.IsFalse(exeedsThreshold, $"Market {market.MarketCode} caused the list to exceed the threshold");
+            }
+        }
+
         private PlanMarketSovCalculator _GetTestClass()
         {
             var testClass = new PlanMarketSovCalculator();

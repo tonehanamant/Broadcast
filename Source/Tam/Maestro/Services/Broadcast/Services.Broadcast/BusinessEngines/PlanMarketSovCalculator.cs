@@ -52,6 +52,14 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="availableMarkets">The available markets.</param>
         /// <returns></returns>
         PlanAvailableMarketCalculationResult CalculateMarketWeightsClearAll(List<PlanAvailableMarketDto> availableMarkets);
+
+        /// <summary>
+        /// Determines if the sum of the given market sov weights exceeds the given threshold.
+        /// </summary>
+        /// <param name="markets">The markets.</param>
+        /// <param name="threshold">The threshold.</param>
+        /// <returns></returns>
+        bool DoesMarketSovTotalExceedThreshold(List<PlanAvailableMarketDto> markets, double threshold);
     }
 
     /// <summary>
@@ -59,7 +67,7 @@ namespace Services.Broadcast.BusinessEngines
     /// </summary>
     public class PlanMarketSovCalculator : IPlanMarketSovCalculator
     {
-        public const int MarketTotalSovDecimals = 2;
+        private const int MarketTotalSovDecimals = 2;
 
         private const int MarketSovDecimals = 3;
 
@@ -119,6 +127,14 @@ namespace Services.Broadcast.BusinessEngines
             return results;
         }
 
+        /// <inheritdoc />
+        public bool DoesMarketSovTotalExceedThreshold(List<PlanAvailableMarketDto> markets, double threshold)
+        {
+            var totalMarketSov = Math.Round(markets.Sum(m => m.ShareOfVoicePercent ?? 0), MarketTotalSovDecimals);
+            var result = totalMarketSov > threshold;
+            return result;
+        }
+
         private void _BalanceMarketWeights(List<PlanAvailableMarketDto> markets)
         {
             var totalUserEnteredSov = markets.Where(m => m.IsUserShareOfVoicePercent).Sum(m => m.ShareOfVoicePercent ?? 0);
@@ -134,7 +150,7 @@ namespace Services.Broadcast.BusinessEngines
                 markets.Where(m => !m.IsUserShareOfVoicePercent).Sum(m => m.PercentageOfUS);
             
             var remainderToDistribute = 100.0 - totalUserEnteredSov;
-            markets.Where(m => !m.IsUserShareOfVoicePercent).ForEach(m => 
+            markets.Where(m => !m.IsUserShareOfVoicePercent).ForEach(m =>
                 m.ShareOfVoicePercent = remainderToDistribute * (m.PercentageOfUS / totalRepresentedCoverageNonUser));
         }
 
@@ -197,6 +213,6 @@ namespace Services.Broadcast.BusinessEngines
         {
             public PlanAvailableMarketDto Market { get; set; }
             public double? PercentOfRepresentedCoverage { get; set; }
-        }
+        }        
     }
 }

@@ -31,6 +31,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         private Mock<ICreativeLengthEngine> _creativeLengthEngineMock;
 
         private Mock<ICampaignRepository> _CampaignRepository;
+        private Mock<IPlanMarketSovCalculator> _PlanMarketSovCalculator;
 
         private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
         private Mock<IAabEngine> _AabEngine;
@@ -81,6 +82,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _broadcastDataRepositoryFactoryMock.Setup(f => f.GetDataRepository<ICampaignRepository>())
                 .Returns(_CampaignRepository.Object);
 
+            _PlanMarketSovCalculator = new Mock<IPlanMarketSovCalculator>();
+
             _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
 
             _AabEngine = new Mock<IAabEngine>();
@@ -90,7 +93,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 , _broadcastDataRepositoryFactoryMock.Object
                 , _creativeLengthEngineMock.Object
                 , _AabEngine.Object
-                , _FeatureToggleHelper.Object);
+                , _FeatureToggleHelper.Object
+                , _PlanMarketSovCalculator.Object);
         }
 
         [Test]
@@ -983,6 +987,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS))
                 .Returns(isPlanMarketSovCalculationsEnabled);
 
+            _PlanMarketSovCalculator.Setup(s => s.DoesMarketSovTotalExceedThreshold(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<double>()))
+                .Returns(true);
+
             var plan = _GetPlan();
             plan.AvailableMarkets = new List<PlanAvailableMarketDto>
             {
@@ -1002,6 +1009,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS))
                 .Returns(isPlanMarketSovCalculationsEnabled);
+
+            _PlanMarketSovCalculator.Setup(s => s.DoesMarketSovTotalExceedThreshold(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<double>()))
+                .Returns(true);
 
             var plan = _GetPlan();
             plan.AvailableMarkets = new List<PlanAvailableMarketDto>

@@ -59,6 +59,7 @@ namespace Services.Broadcast.Validators
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_PRODUCT = "Invalid product";
@@ -110,6 +111,7 @@ namespace Services.Broadcast.Validators
             , ICreativeLengthEngine creativeLengthEngine
             , IAabEngine aabEngine
             , IFeatureToggleHelper featureToggleHelper
+            , IPlanMarketSovCalculator planMarketSovCalculator
             )
         {
             _AudienceCache = broadcastAudiencesCache;
@@ -123,6 +125,7 @@ namespace Services.Broadcast.Validators
 
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
+            _PlanMarketSovCalculator = planMarketSovCalculator;
         }
 
         /// <inheritdoc/>
@@ -491,12 +494,12 @@ namespace Services.Broadcast.Validators
                 throw new PlanValidationException(INVALID_TOTAL_MARKET_COVERAGE);
             }
 
-            const double maxTotalMarketSov = 100.0;
             var isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
             if (isEnabled)
             {
-                var totalMarketSov = Math.Round(plan.AvailableMarkets.Sum(m => m.ShareOfVoicePercent ?? 0), PlanMarketSovCalculator.MarketTotalSovDecimals);
-                if (totalMarketSov > maxTotalMarketSov)
+                const double maxTotalMarketSov = 100.01;
+                var marketsSovTotalExceedsThreshold = _PlanMarketSovCalculator.DoesMarketSovTotalExceedThreshold(plan.AvailableMarkets, maxTotalMarketSov);
+                if (marketsSovTotalExceedsThreshold)
                 {
                     throw new PlanValidationException(INVALID_TOTAL_MARKET_SHARE_OF_VOICE);
                 }
