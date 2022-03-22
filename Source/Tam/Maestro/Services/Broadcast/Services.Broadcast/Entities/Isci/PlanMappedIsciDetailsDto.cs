@@ -11,8 +11,5 @@ namespace Services.Broadcast.Entities.Isci
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
         public string FlightString { get; set; }
-        public DateTime AvailabilityStartDate { get; set; }
-        public DateTime AvailabilityEndDate { get; set; }
-        public string AvailabilityString { get; set; }
     }
 }

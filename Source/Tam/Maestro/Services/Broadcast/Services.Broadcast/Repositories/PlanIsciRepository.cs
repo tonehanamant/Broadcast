@@ -441,8 +441,6 @@ namespace Services.Broadcast.Repositories
                                   Isci = isciMappings.isci,
                                   FlightStartDate = isciMappings.flight_start_date,
                                   FlightEndDate = isciMappings.flight_end_date,
-                                  ActiveStartDate = iscis.active_start_date,
-                                  ActiveEndDate = iscis.active_end_date
                               }).Distinct().ToList();
                 return result;
             });

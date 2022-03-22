@@ -1153,8 +1153,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Isci = "Isci123",
                         FlightStartDate = DateTime.Parse("11/1/2021"),
                         FlightEndDate = DateTime.Parse("11/10/2021"),
-                        ActiveStartDate = DateTime.Parse("11/10/2021"),
-                        ActiveEndDate = DateTime.Parse("12/10/2021")
                     },
                     new PlanIsciDto
                     {
@@ -1163,8 +1161,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Isci = "Isci456",
                         FlightStartDate = DateTime.Parse("11/1/2021"),
                         FlightEndDate = DateTime.Parse("11/10/2021"),
-                        ActiveStartDate = DateTime.Parse("11/10/2021"),
-                        ActiveEndDate = DateTime.Parse("12/10/2021")
                     },
                     new PlanIsciDto
                     {
@@ -1173,8 +1169,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Isci = "Isci789",
                         FlightStartDate = DateTime.Parse("11/1/2021"),
                         FlightEndDate = DateTime.Parse("11/10/2021"),
-                        ActiveStartDate = DateTime.Parse("11/10/2021"),
-                        ActiveEndDate = DateTime.Parse("12/10/2021")
                     }
                 });
 
