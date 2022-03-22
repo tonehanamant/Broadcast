@@ -2157,5 +2157,77 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+
+        [Test]
+        public void TriggerDecisionSync_Exist()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDecisionsPlansDto>
+            {
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 21,
+                    AcceptAsInSpec = true
+                },
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 22,
+                    AcceptAsInSpec = true
+                }
+            };
+
+            var spotExceptionSaveDecisionsPlansRequest = new SpotExceptionSaveDecisionsPlansRequestDto();
+            spotExceptionSaveDecisionsPlansRequest.Decisions.AddRange(spotExceptionsOutOfSpecDecisionsPlansResult);
+
+
+            string userName = "Test User";
+            bool result = false;
+            bool expectedResult = true;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SyncOutOfSpecDecision(It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            result = _SpotExceptionService.TriggerDecisionSync(userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void TriggerDecisionSync_DoesNotExist()
+        {
+            string userName = "Test User";
+            bool result = false;
+            bool expectedResult = false;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SyncOutOfSpecDecision(It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            result = _SpotExceptionService.TriggerDecisionSync(userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void TriggerDecisionSync_ThrowsException()
+        {
+            // Arrange
+            string userName = "Test User";
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SyncOutOfSpecDecision(It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.TriggerDecisionSync(userName));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
     }
 }

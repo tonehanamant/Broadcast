@@ -127,6 +127,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="createdAt">Created At Time</param>
         /// <returns>true or false</returns>
         bool SaveSpotExceptionsOutOfSpecsDecisionsPlans(SpotExceptionSaveDecisionsPlansRequestDto spotExceptionSaveDecisionsPlansRequest, string userName, DateTime createdAt);
+
+        /// <summary>
+        /// Sync Decision Data Assigning the SyncedAt  and SyncedBy Indicators.
+        /// </summary>
+        /// <param name="userName">User Name </param>
+        /// <param name="dateTime">Current Date time </param>
+        /// <returns>Return true when decision data is synced or else returning false</returns>
+        bool SyncOutOfSpecDecision(string userName, DateTime dateTime);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -899,6 +907,26 @@ namespace Services.Broadcast.Repositories
                 }
 
                 return isSpotExceptionsOutOfSpecDecisionSaved;
+            });
+        }
+
+        /// <inheritdoc />
+        public bool SyncOutOfSpecDecision(string userName, DateTime dateTime)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsDecisionsEntities = context.spot_exceptions_out_of_spec_decisions
+                    .Where(spotExceptionsDecisionDb => spotExceptionsDecisionDb.synced_at == null).ToList();
+
+                if (spotExceptionsDecisionsEntities?.Any() ?? false)
+                {
+                    spotExceptionsDecisionsEntities.ForEach(x => { x.synced_by = userName; x.synced_at = dateTime; });
+                }
+
+                bool isSpotExceptionsOutOfSpecDecisionSynced = false;
+                int recordCount = context.SaveChanges();
+                isSpotExceptionsOutOfSpecDecisionSynced = recordCount > 0;
+                return isSpotExceptionsOutOfSpecDecisionSynced;
             });
         }
     }

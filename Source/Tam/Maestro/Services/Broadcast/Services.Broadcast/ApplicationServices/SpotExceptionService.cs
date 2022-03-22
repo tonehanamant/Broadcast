@@ -135,6 +135,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">user name</param>
         /// <returns>true or false</returns>
         bool SaveOutofSpecDecisionsPlans(SpotExceptionSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest, string userName);
+
+        /// <summary>
+        /// Sync Decision Data Assigning the SyncedAt  and SyncedBy Indicators.
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <returns>Return true when decision data is synced or else returning false</returns>
+        bool TriggerDecisionSync(string userName);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -143,11 +150,11 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
         public SpotExceptionService(
-            IDataRepositoryFactory dataRepositoryFactory, 
+            IDataRepositoryFactory dataRepositoryFactory,
             IAabEngine aabEngine,
             IFeatureToggleHelper featureToggleHelper,
-            IConfigurationSettingsHelper configurationSettingsHelper, 
-            IDateTimeEngine dateTimeEngine) 
+            IConfigurationSettingsHelper configurationSettingsHelper,
+            IDateTimeEngine dateTimeEngine)
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
@@ -177,7 +184,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     s.RecommendedPlanId = 524;
                     s.ProgramGenre.Id++; // these are 1 off 
-                 });
+                });
             }
 
             var result = _SpotExceptionRepository.AddSpotExceptionData(spotExceptionsRecommendedPlans, spotExceptionsOutOfSpecs);
@@ -1245,7 +1252,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var spotExceptionsoutOfSpecsPlans = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutofSpecsPlansRequestDto.WeekStartDate, spotExceptionsOutofSpecsPlansRequestDto.WeekEndDate);
             if (spotExceptionsoutOfSpecsPlans?.Any() ?? false)
-            {                
+            {
                 activePlans = spotExceptionsoutOfSpecsPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision == null).ToList();
                 completedPlans = spotExceptionsoutOfSpecsPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision != null).ToList();
 
@@ -1313,7 +1320,7 @@ namespace Services.Broadcast.ApplicationServices
             List<SpotExceptionsOutOfSpecsDto> activePlans = null;
             List<SpotExceptionsOutOfSpecsDto> queuedPlans = null;
 
-            var spotExceptionsOutOfSpecsPlanSpots = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPlanSpots(spotExceptionsOutofSpecSpotsRequest.PlanId, 
+            var spotExceptionsOutOfSpecsPlanSpots = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPlanSpots(spotExceptionsOutofSpecSpotsRequest.PlanId,
                 spotExceptionsOutofSpecSpotsRequest.WeekStartDate, spotExceptionsOutofSpecSpotsRequest.WeekEndDate);
 
             if (spotExceptionsOutOfSpecsPlanSpots?.Any() ?? false)
@@ -1330,10 +1337,10 @@ namespace Services.Broadcast.ApplicationServices
                         EstimateId = activePlan.EstimateId,
                         Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                         MarketRank = activePlan.MarketRank,
-                        DMA = activePlan.DMA, 
+                        DMA = activePlan.DMA,
                         Market = activePlan.Market,
                         Station = activePlan.StationLegacyCallLetters,
-                        TimeZone = activePlan.TimeZone, 
+                        TimeZone = activePlan.TimeZone,
                         Affiliate = activePlan.Affiliate,
                         Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
                         GenreName = activePlan.ProgramGenre.Name,
@@ -1458,6 +1465,14 @@ namespace Services.Broadcast.ApplicationServices
             var isSpotExceptionsOutOfSpecDecisionSaved = _SpotExceptionRepository.SaveSpotExceptionsOutOfSpecsDecisionsPlans(spotExceptionSaveDecisionsPlansRequest, userName, createdAt);
 
             return isSpotExceptionsOutOfSpecDecisionSaved;
+        }
+
+        /// <inheritdoc />
+        public bool TriggerDecisionSync(string userName)
+        {
+            var dateTime = DateTime.Now;
+            var isSynced = _SpotExceptionRepository.SyncOutOfSpecDecision(userName, dateTime);
+            return isSynced;
         }
     }
 }

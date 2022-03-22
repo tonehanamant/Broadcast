@@ -153,5 +153,12 @@ namespace BroadcastComposerWeb.Controllers
             var userName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().SaveOutofSpecDecisionsPlans(spotExceptionSaveDecisionsPlansRequest, userName));
         }
+
+        [HttpPost]
+        [Route("trigger-decision-sync")]
+        public BaseResponse<bool> TriggerDecisionSync(string userName)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().TriggerDecisionSync(userName));
+        }
     }
 }
