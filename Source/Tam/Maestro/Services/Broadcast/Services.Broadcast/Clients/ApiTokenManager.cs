@@ -44,7 +44,7 @@ namespace Services.Broadcast.Clients
 
             if (_apiTokenMap.TryGetValue(appName, out var apiTokenInfo))
             {
-                if (apiTokenInfo.ExpirationDate <= (DateTime.Now - TimeSpan.FromMinutes(5)))
+                if (apiTokenInfo.ExpirationDate <= (DateTime.UtcNow - TimeSpan.FromMinutes(5)))
                 {
                     apiTokenInfo = await _UpdateApiTokenAsync(umApiBaseUrl, appName, applicationId);
                 }
