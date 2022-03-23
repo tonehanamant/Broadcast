@@ -101,13 +101,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         Task<int> ReRunPricingJobAsync(int jobId);
 
         /// <summary>
-        /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
+        /// For troubleshooting.  Generate a pricing results report for the chosen plan
         /// </summary>
         /// <param name="planId">The plan id</param>
-        /// <param name="planVersionNumber">The plan version number</param>
+        /// <param name="spotAllocationModelMode">The Spot Allocation Model Mode</param>
         /// <param name="templatesFilePath">Base path of the file templates</param>
         /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
-        ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
+        ReportOutput GeneratePricingResultsReport(int planId,SpotAllocationModelMode spotAllocationModelMode, string templatesFilePath);
         void ValidateAndApplyMargin(PlanPricingParametersDto parameters);
         PricingProgramsResultDto GetPrograms(int planId);
         PricingProgramsResultDto GetProgramsByJobId(int jobId);
@@ -295,24 +295,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return reportData;
         }
 
-        public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
+        public ReportOutput GeneratePricingResultsReport(int planId,SpotAllocationModelMode spotAllocationModelMode, string templatesFilePath)
         {
-            var reportData = GetPricingResultsReportData(planId, planVersionNumber);
+            var reportData = GetPricingResultsReportData(planId, spotAllocationModelMode);
             var reportGenerator = new PricingResultsReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(reportData);
 
             return report;
         }
 
-        public PricingResultsReportData GetPricingResultsReportData(int planId, int? planVersionNumber)
+        public PricingResultsReportData GetPricingResultsReportData(int planId,SpotAllocationModelMode spotAllocationModelMode)
         {
-            // use passed version or the current version by default
-            var planVersionId = planVersionNumber.HasValue ?
-                _PlanRepository.GetPlanVersionIdByVersionNumber(planId, planVersionNumber.Value) :
-                (int?)null;
-
-            var plan = _PlanRepository.GetPlan(planId, planVersionId);
-            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanVersionId(plan.VersionId);
+            var plan = _PlanRepository.GetPlan(planId);
+            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanVersionId(planId,plan.VersionId,plan.PostingType,spotAllocationModelMode);
             var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
             var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value);
@@ -325,7 +320,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 manifests,
                 primaryProgramsByManifestDaypartIds,
                 markets,
-                _WeeklyBreakdownEngine);
+                _WeeklyBreakdownEngine,
+                spotAllocationModelMode,
+                plan.PostingType);
         }
 
         public async Task<PlanPricingJob> QueuePricingJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto

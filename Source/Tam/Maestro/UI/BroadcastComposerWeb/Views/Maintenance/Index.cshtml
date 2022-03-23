@@ -230,7 +230,7 @@
                         <input class="button" type="submit" value="Requeue Ratings Job" id="submit" />
                     </div>
                 }
-                
+
                 @using (Html.BeginForm("RequeueInventoryRatingsJobAndWait", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="input-container-row">
@@ -402,9 +402,9 @@
                     </div>
                 </div>
             }
-            
 
-            @using (Html.BeginForm("GeneratePricingResultsReport", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+            @using (Html.BeginForm())
             {
                 <div class="form">
                     <h4 class="heading">Generate Pricing Results Report</h4>
@@ -412,11 +412,11 @@
                         <label class="label" for="planId">Plan Id</label>
                         <input class="input" type="text" name="planId" placeholder="e.g. '17'" />
                     </div>
-                    <div class="input-container">
-                        <label class="label" for="planVersionNumber">Plan Version Number (optional)</label>
-                        <input class="input" type="text" name="planVersionNumber" placeholder="e.g. '3'" />
+                    <div class="btn-group">
+                        <input class="btn button" type="submit" value="Generate Quality" id="btnQuality" formaction="GeneratePricingResultsReportQuality" formmethod="post" />
+                        <input class="btn button" type="submit" value="Generate Efficiency" id="btnEfficiency" formaction="GeneratePricingResultsReportEfficiency" formmethod="post" />
+                        <input class="btn button" type="submit" value="Generate Floor" id="btnFloor" formaction="GeneratePricingResultsReportFloor" formmethod="post" />
                     </div>
-                    <input class="button" type="submit" value="Generate" id="submit" />
                 </div>
             }
 
@@ -538,27 +538,27 @@
 
             }
 
-        @using (Html.BeginForm("ImportStationMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Import station mappings</h1>
-                <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
+            @using (Html.BeginForm("ImportStationMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Import station mappings</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" value="Submit" id="txt Import Station Mappings" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
                 </div>
-                <input class="button" type="submit" value="Submit" id="txt Import Station Mappings" />
-                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-            </div>
-        }
+            }
 
-        @using (Html.BeginForm("PerformImportStationsFromForecastDatabase", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Perform Nightly Stations Update</h1>
-                <input class="button" type="submit" value="Submit" id="txt Perform Nightly Stations Update" />
-            </div>
-        }
-            
+            @using (Html.BeginForm("PerformImportStationsFromForecastDatabase", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Perform Nightly Stations Update</h1>
+                    <input class="button" type="submit" value="Submit" id="txt Perform Nightly Stations Update" />
+                </div>
+            }
+
             @using (Html.BeginForm("ResetLastStationsFromForecastDatabaseJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="form">
@@ -664,7 +664,7 @@
                         </div>
                     </div>
                 }
-                
+
                 @using (Html.BeginForm("ExecuteRepairInventoryPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="form">
@@ -676,127 +676,127 @@
             <div class="form">
                 @using (Html.BeginForm("UploadVpvhFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                <h1 class="heading">Upload VPVH</h1>
-                <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
-                </div>
-                <input class="button" type="submit" text="Upload VPVH" />
-                <div>
-                    <span class="label">Result:</span>
-                    <label class="label" id="result_vpvh">@ViewBag.Message</label>
-                </div>
+                    <h1 class="heading">Upload VPVH</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" text="Upload VPVH" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_vpvh">@ViewBag.Message</label>
+                    </div>
                 }
 
                 @using (Html.BeginForm("ExportVpvh", "Maintenance", FormMethod.Get))
                 {
-                <h1 class="heading">Export VPVH</h1>
-                <input class="button" type="submit" text="Export VPVH" />
-                <div>
-                    <span class="label">Result:</span>
-                    <label class="label" id="result_vpvh">@ViewBag.Message</label>
-                </div>
+                    <h1 class="heading">Export VPVH</h1>
+                    <input class="button" type="submit" text="Export VPVH" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_vpvh">@ViewBag.Message</label>
+                    </div>
                 }
                 @using (Html.BeginForm("RunIsciIngestJob", "Maintenance", FormMethod.Post))
                 {
-                <h1 class="heading">Perform Reel ISCI Ingest</h1>
-                <input class="button" type="submit" text="Perform Reel ISCI Ingest" />
-                <div>
-                    <span class="label">Result:</span>
-                    <label class="label" id="result_IsciIngest">@ViewBag.Message</label>
-                </div>
+                    <h1 class="heading">Perform Reel ISCI Ingest</h1>
+                    <input class="button" type="submit" text="Perform Reel ISCI Ingest" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_IsciIngest">@ViewBag.Message</label>
+                    </div>
                 }
                 @using (Html.BeginForm("AddOrClearSpotExceptionsData", "Maintenance", FormMethod.Post))
                 {
-                <h1 class="heading">Spot Exceptions Mock Data</h1>
-                <input class="button" type="submit" name="Add" value="Add" text="Add Spot Exceptions Data" />
-                <input class="button" type="submit" name="Clear" value="Clear" text="Clear Spot Exceptions Data" />
-                <div>
-                    <span class="label">Result:</span>
-                    <label class="label" id="result_IsciIngest">@ViewBag.Message</label>
-                </div>
-                }
-            </div>
-
-            </div>
-            <div id="settings" class="tabcontent">
-                <div class="form">
-                    <h1 class="heading">Testing Services</h1>
-                    @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
-                    {
-                        <div class="input-container">
-                            <input class="button" type="submit" value="Test Email" id="test_email" />
-                        </div>
-                    }
-                </div>
-                @using (Html.BeginForm("SwitchProcessRatingsAutomatically", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="form">
-                        <h1 class="heading">Temporal Application Settings</h1>
-                        <input class="button" type="submit" value="Switch Process Ratings Automatically flag" id="submit" />
-                    </div>
-                }
-                <div class="form">
-                    <h1 class="heading">Cache Management</h1>
-                    @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
-                    {
-                        <div class="input-container">
-                            <input class="button" type="submit" value="Clear System Param Cache" id="txtClearCache" />
-                        </div>
-                    }
-
-                    @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
-                    {
-                        <div class="input-container">
-                            <input class="button" type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <div id="data_maintenance" class="tabcontent">
-                @using (Html.BeginForm("HTMLDecodeProgramNames", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="form">
-                        <h4 class="heading">Click to decode HTML symbols in program names of all program name mappings and inventory records</h4>
-                        <div class="input-container">
-                            <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'q1w2e3r4')</label>
-                            <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
-                        </div>
-                        <input class="button" type="submit" value="HTML Decode" id="submit" />
-                    </div>
-                }
-
-                @using (Html.BeginForm("DeleteSavedBuyingData", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="form">
-                        <h4 class="heading">Delete Saved Buying Data</h4>
-                        <div class="input-container">
-                            <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'r1f2m3p4')</label>
-                            <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
-                        </div>
-                        <input class="button" type="submit" value="Delete Data" id="submit" />
+                    <h1 class="heading">Spot Exceptions Mock Data</h1>
+                    <input class="button" type="submit" name="Add" value="Add" text="Add Spot Exceptions Data" />
+                    <input class="button" type="submit" name="Clear" value="Clear" text="Clear Spot Exceptions Data" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_IsciIngest">@ViewBag.Message</label>
                     </div>
                 }
             </div>
-    <div id="aab_maintenance" class="tabcontent">
-        <h1 class="heading">Aab Cache Management</h1>
-        <div class="form">
-            <label>Clear the individual caches.</label>
-            @using (Html.BeginForm("ClearAgenciesCache", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        </div>
+        <div id="settings" class="tabcontent">
+            <div class="form">
+                <h1 class="heading">Testing Services</h1>
+                @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Test Email" id="test_email" />
+                    </div>
+                }
+            </div>
+            @using (Html.BeginForm("SwitchProcessRatingsAutomatically", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Clear Agencies Cache" id="txtClearAgenciesCache" />
+                <div class="form">
+                    <h1 class="heading">Temporal Application Settings</h1>
+                    <input class="button" type="submit" value="Switch Process Ratings Automatically flag" id="submit" />
                 </div>
             }
-            @using (Html.BeginForm("ClearAdvertisersCache", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            <div class="form">
+                <h1 class="heading">Cache Management</h1>
+                @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Clear System Param Cache" id="txtClearCache" />
+                    </div>
+                }
+
+                @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div id="data_maintenance" class="tabcontent">
+            @using (Html.BeginForm("HTMLDecodeProgramNames", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Clear Advertisers Cache" id="txtClearAdvertisersCache" />
+                <div class="form">
+                    <h4 class="heading">Click to decode HTML symbols in program names of all program name mappings and inventory records</h4>
+                    <div class="input-container">
+                        <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'q1w2e3r4')</label>
+                        <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
+                    </div>
+                    <input class="button" type="submit" value="HTML Decode" id="submit" />
                 </div>
             }
-        </div>       
-    </div>
+
+            @using (Html.BeginForm("DeleteSavedBuyingData", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Delete Saved Buying Data</h4>
+                    <div class="input-container">
+                        <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'r1f2m3p4')</label>
+                        <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
+                    </div>
+                    <input class="button" type="submit" value="Delete Data" id="submit" />
+                </div>
+            }
+        </div>
+        <div id="aab_maintenance" class="tabcontent">
+            <h1 class="heading">Aab Cache Management</h1>
+            <div class="form">
+                <label>Clear the individual caches.</label>
+                @using (Html.BeginForm("ClearAgenciesCache", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Clear Agencies Cache" id="txtClearAgenciesCache" />
+                    </div>
+                }
+                @using (Html.BeginForm("ClearAdvertisersCache", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Clear Advertisers Cache" id="txtClearAdvertisersCache" />
+                    </div>
+                }
+            </div>
+        </div>
     </content>
     <script>
         function copyToClip() {

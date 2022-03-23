@@ -194,7 +194,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             const int planId = 1;
-            var planVersionNumber = (int?)null;
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
@@ -205,8 +204,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>()))
-                .Returns(new List<PlanPricingAllocatedSpot>());
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new List<PlanPricingAllocatedSpot>()); 
 
             _InventoryRepositoryMock
                 .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
@@ -223,36 +222,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.GetPricingResultsReportData(planId, planVersionNumber);
+            service.GetPricingResultsReportData(planId, SpotAllocationModelMode.Quality);
 
             // Assert
-            _PlanRepositoryMock.Verify(x => x.GetPlanVersionIdByVersionNumber(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
             _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
         }
 
         [Test]
-        public void UsesPassedPlanVersion_WhenVersionIsSpecified_OnPricingResultsReportGeneration()
+        public void UsesSpotAllocationModelModeAsEfficiencyWithPostingTypeAsNTI_OnPricingResultsReportGeneration()
         {
             // Arrange
             const int planId = 1;
             var planVersionNumber = 2;
-            var planVersionId = 5;
-
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlanVersionIdByVersionNumber(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(planVersionId);
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto
                 {
-                    VersionId = planVersionId,
+                    PostingType = PostingTypeEnum.NTI,
                     VersionNumber = planVersionNumber,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>()))
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new List<PlanPricingAllocatedSpot>());
 
             _InventoryRepositoryMock
@@ -270,11 +263,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.GetPricingResultsReportData(planId, planVersionNumber);
+            service.GetPricingResultsReportData(planId, SpotAllocationModelMode.Efficiency);
 
             // Assert
-            _PlanRepositoryMock.Verify(x => x.GetPlanVersionIdByVersionNumber(planId, planVersionNumber), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, planVersionId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
         }
 
         [Test]
@@ -334,7 +326,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>()))
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>(),It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
                 .Returns(new List<PlanPricingAllocatedSpot>
                 {
                     new PlanPricingAllocatedSpot
@@ -573,7 +565,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var result = service.GetPricingResultsReportData(planId, planVersionNumber);
+            var result = service.GetPricingResultsReportData(planId, SpotAllocationModelMode.Quality);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -12582,6 +12574,86 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
             return request;
+        }
+
+        [Test]
+        public void GetPricingResultsReportData_WithEfficiencyAsSpotAllocationModelMode()
+        {
+            // Arrange
+            const int planId = 1;
+            var planVersionNumber = 2;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    VersionNumber = planVersionNumber,
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new List<PlanPricingAllocatedSpot>());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(new List<StationInventoryManifest>());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, Program>());
+
+            _MarketRepositoryMock
+                .Setup(x => x.GetMarketDtos())
+                .Returns(new List<LookupDto>());
+
+            var service = _GetService();
+
+            // Act
+            service.GetPricingResultsReportData(planId, SpotAllocationModelMode.Efficiency);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+        }
+
+        [Test]
+        public void GetPricingResultsReportData_WithFloorAsSpotAllocationModelMode()
+        {
+            // Arrange
+            const int planId = 1;
+            var planVersionNumber = 2;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    VersionNumber = planVersionNumber,
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns(new List<PlanPricingAllocatedSpot>());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(new List<StationInventoryManifest>());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, Program>());
+
+            _MarketRepositoryMock
+                .Setup(x => x.GetMarketDtos())
+                .Returns(new List<LookupDto>());
+
+            var service = _GetService();
+
+            // Act
+            service.GetPricingResultsReportData(planId, SpotAllocationModelMode.Floor);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
         }
     }
 }

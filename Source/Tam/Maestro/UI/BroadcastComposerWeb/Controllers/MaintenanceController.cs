@@ -695,13 +695,49 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult GeneratePricingResultsReport(int planId, int? planVersionNumber = null)
+        public ActionResult GeneratePricingResultsReportQuality(int planId)
         {
             try
             {
                 var appDataPath = HttpContext.Server.MapPath("~/App_Data");
                 var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
-                var result = service.GeneratePricingResultsReport(planId, planVersionNumber, appDataPath);
+                var result = service.GeneratePricingResultsReport(planId, SpotAllocationModelMode.Quality, appDataPath);
+
+                return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GeneratePricingResultsReportEfficiency(int planId)
+        {
+            try
+            {
+                var appDataPath = HttpContext.Server.MapPath("~/App_Data");
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+                var result = service.GeneratePricingResultsReport(planId,SpotAllocationModelMode.Efficiency ,appDataPath);
+
+                return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GeneratePricingResultsReportFloor(int planId)
+        {
+            try
+            {
+                var appDataPath = HttpContext.Server.MapPath("~/App_Data");
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+                var result = service.GeneratePricingResultsReport(planId, SpotAllocationModelMode.Floor, appDataPath);
 
                 return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Filename);
             }

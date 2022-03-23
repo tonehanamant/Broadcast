@@ -157,7 +157,15 @@ namespace Services.Broadcast.Repositories
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId,
             PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
 
-        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
+        /// <summary>
+        /// Get Plan Pricing Allocated Spots.
+        /// </summary>
+        /// <param name="planId">The plan Id</param>
+        /// <param name="planVersionId">The plan Version Id</param>
+        /// <param name="postingType">The postingType of plan</param>
+        /// <param name="spotAllocationModelMode">Spot allocation model mode as per user input</param>
+        /// <returns>List of PlanPricingAllocatedSpot.</returns>
+        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planId,int planVersionId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
 
         int GetPlanVersionIdByVersionNumber(int planId, int versionNumber);
 
@@ -2572,7 +2580,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId)
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planId,int planVersionId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -2584,12 +2592,12 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.plan_version_pricing_api_result_spot_frequencies))
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.standard_dayparts))
-                    .Where(x => x.spot_allocation_model_mode == 1 && x.posting_type == 1) // quality, NSI
+                    .Where(x => x.spot_allocation_model_mode == (int)spotAllocationModelMode && x.posting_type == (int)postingType)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
                 if (apiResult == null)
-                    throw new Exception($"No pricing runs were found for the version {planVersionId}");
+                    throw new Exception($"No pricing runs were found for the plan {planId} latest version {planVersionId} for spot allocation model mode {spotAllocationModelMode} and posting type {postingType}");
 
                 return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
             });
