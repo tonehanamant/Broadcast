@@ -111,13 +111,11 @@ namespace Services.Broadcast.Repositories
         PlanBuyingBandsDto GetPlanBuyingBandByJobId(int jobId, PostingTypeEnum? postingType, SpotAllocationModelMode spotAllocationModelMode);
 
         /// <summary>
-        /// Gets the plan buying band station.
+        /// Gets the plan buying band inventory station.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
-        /// <param name="postingType">The Posting Type.</param>
-        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <returns>The plan buying band station details</returns>
-        PlanBuyingBandStationsDto GetPlanBuyingBandStations(int jobId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
+        PlanBuyingBandInventoryStationsDto GetPlanBuyingBandInventoryStations(int jobId);
 
         /// <summary>
         /// Saves the plan buying bands.
@@ -127,10 +125,10 @@ namespace Services.Broadcast.Repositories
         void SavePlanBuyingBands(PlanBuyingBandsDto planBuyingBandDto, PostingTypeEnum postingType);
 
         /// <summary>
-        /// Saves the plan buying band stations.
+        /// Saves the plan buying band inventory stations.
         /// </summary>
-        /// <param name="planBuyingBandStations">The plan buying band stations dto.</param>
-        void SavePlanBuyingBandStations(PlanBuyingBandStationsDto planBuyingBandStations);
+        /// <param name="planBuyingBandInventoryStations">The plan buying band stations dto.</param>
+        void SavePlanBuyingBandInventoryStations(PlanBuyingBandInventoryStationsDto planBuyingBandInventoryStations);
 
         /// <summary>
         /// Saves the plan buying stations.
@@ -717,17 +715,15 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanBuyingBandStationsDto GetPlanBuyingBandStations(int jobId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
+        public PlanBuyingBandInventoryStationsDto GetPlanBuyingBandInventoryStations(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var planBuyingResult = context.plan_version_buying_results
-                                    .Include(x => x.plan_version_buying_band_stations)
-                                    .Include(x => x.plan_version_buying_band_stations.Select(y => y.station))
-                                    .Include(x => x.plan_version_buying_band_stations.Select(y => y.plan_version_buying_band_station_dayparts))
-                                    .Where(x => x.plan_version_buying_job_id == jobId
-                                                    && x.posting_type == (int)postingType
-                                                    && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
+                var planBuyingResult = context.plan_version_buying_job
+                                    .Include(x => x.plan_version_buying_band_inventory_stations)
+                                    .Include(x => x.plan_version_buying_band_inventory_stations.Select(y => y.station))
+                                    .Include(x => x.plan_version_buying_band_inventory_stations.Select(y => y.plan_version_buying_band_inventory_station_dayparts))
+                                    .Where(x => x.id == jobId)
                                     .OrderByDescending(x => x.id)
                                     .FirstOrDefault();
                 if (planBuyingResult == null)
@@ -735,20 +731,16 @@ namespace Services.Broadcast.Repositories
                     return null;
                 }
 
-                var planBuyingBandStations = new PlanBuyingBandStationsDto
+                var planBuyingBandInventoryStations = new PlanBuyingBandInventoryStationsDto
                 {
-                    BuyingJobId = planBuyingResult.plan_version_buying_job_id,
-                    SpotAllocationModelMode = (SpotAllocationModelMode)planBuyingResult.spot_allocation_model_mode,
-                    PostingType = (PostingTypeEnum)planBuyingResult.posting_type,
-                    Totals = new PlanBuyingProgramTotalsDto
+                    BuyingJobId = planBuyingResult.id,
+                    PostingType = (PostingTypeEnum)planBuyingResult.plan_version_buying_band_inventory_stations.FirstOrDefault(x => x.plan_version_buying_job_id == planBuyingResult.id).posting_type_id,
+                    Totals = planBuyingResult.plan_version_buying_band_inventory_stations.Select(planBuyingBandStationTotals => new PlanBuyingProgramTotalsDto
                     {
-                        AvgCpm = planBuyingResult.total_avg_cpm,
-                        Budget = planBuyingResult.total_budget,
-                        Impressions = planBuyingResult.total_impressions,
-                        SpotCount = planBuyingResult.total_spots
-                    },
-                    Details = planBuyingResult.plan_version_buying_band_stations.Select(planBuyingBandStationDetail => new PlanBuyingBandStationDetailDto
+                    }).FirstOrDefault(),
+                    Details = planBuyingResult.plan_version_buying_band_inventory_stations.Select(planBuyingBandStationDetail => new PlanBuyingBandStationDetailDto
                     {
+
                         StationId = planBuyingBandStationDetail.station_id,
                         Impressions = planBuyingBandStationDetail.impressions,
                         Cost = planBuyingBandStationDetail.cost,
@@ -757,14 +749,14 @@ namespace Services.Broadcast.Repositories
                         OwnerName = planBuyingBandStationDetail.station.owner_name,
                         LegacyCallLetters = planBuyingBandStationDetail.station.legacy_call_letters,
                         MarketCode = planBuyingBandStationDetail.station.market_code,
-                        PlanBuyingBandStationDayparts = planBuyingBandStationDetail.plan_version_buying_band_station_dayparts.Select(planBuyingBandStationDaypart => new PlanBuyingBandStationDaypartDto
+                        PlanBuyingBandInventoryStationDayparts = planBuyingBandStationDetail.plan_version_buying_band_inventory_station_dayparts.Select(planBuyingBandInventoryStationDaypart => new PlanBuyingBandInventoryStationDaypartDto
                         {
-                            ActiveDays = planBuyingBandStationDaypart.active_days,
-                            Hours = planBuyingBandStationDaypart.hours
+                            ActiveDays = planBuyingBandInventoryStationDaypart.active_days,
+                            Hours = planBuyingBandInventoryStationDaypart.hours
                         }).ToList()
                     }).ToList()
                 };
-                return planBuyingBandStations;
+                return planBuyingBandInventoryStations;
             });
         }
 
@@ -796,24 +788,23 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingBandStations(PlanBuyingBandStationsDto planBuyingBandStations)
+        public void SavePlanBuyingBandInventoryStations(PlanBuyingBandInventoryStationsDto planBuyingBandInventoryStations)
         {
             _InReadUncommitedTransaction(context =>
             {
-                var buyingResults = context.plan_version_buying_results
-                    .Single(x => x.plan_version_buying_job_id == planBuyingBandStations.BuyingJobId &&
-                                 x.spot_allocation_model_mode == (int)planBuyingBandStations.SpotAllocationModelMode &&
-                                 x.posting_type == (int)planBuyingBandStations.PostingType,
-                                 $"Unable to find results for given job id {planBuyingBandStations.BuyingJobId}, posting type {planBuyingBandStations.PostingType} and allocation mode {planBuyingBandStations.SpotAllocationModelMode}");
+                var buyingResults = context.plan_version_buying_job
+                    .Single(x => x.id == planBuyingBandInventoryStations.BuyingJobId,
+                                 $"Unable to find results for given job id {planBuyingBandInventoryStations.BuyingJobId}");
 
-                buyingResults.plan_version_buying_band_stations = planBuyingBandStations.Details.Select(x =>
-                        new plan_version_buying_band_stations
+                buyingResults.plan_version_buying_band_inventory_stations = planBuyingBandInventoryStations.Details.Select(x =>
+                        new plan_version_buying_band_inventory_stations
                         {
+                            posting_type_id = (int)planBuyingBandInventoryStations.PostingType,
                             station_id = x.StationId,
                             impressions = x.Impressions,
                             cost = x.Cost,
                             manifest_weeks_count = x.ManifestWeeksCount,
-                            plan_version_buying_band_station_dayparts = x.PlanBuyingBandStationDayparts.Select(y => new plan_version_buying_band_station_dayparts
+                            plan_version_buying_band_inventory_station_dayparts = x.PlanBuyingBandInventoryStationDayparts.Select(y => new plan_version_buying_band_inventory_station_dayparts
                             {
                                 active_days = y.ActiveDays,
                                 hours = y.Hours

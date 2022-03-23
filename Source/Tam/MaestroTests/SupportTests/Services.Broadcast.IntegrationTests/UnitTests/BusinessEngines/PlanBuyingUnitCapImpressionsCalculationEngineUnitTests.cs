@@ -179,9 +179,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     StationId = 1,
                     ManifestWeeksCount = 8,
                     Impressions = 3000,
-                    PlanBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>
+                    PlanBuyingBandInventoryStationDayparts = new List<PlanBuyingBandInventoryStationDaypartDto>
                     { 
-                        new PlanBuyingBandStationDaypartDto()
+                        new PlanBuyingBandInventoryStationDaypartDto()
                         { 
                             ActiveDays = 1,
                             Hours = 1
@@ -193,9 +193,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     StationId = 1,
                     ManifestWeeksCount = 8,
                     Impressions = 5000,
-                    PlanBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>
+                    PlanBuyingBandInventoryStationDayparts = new List<PlanBuyingBandInventoryStationDaypartDto>
                     {
-                        new PlanBuyingBandStationDaypartDto()
+                        new PlanBuyingBandInventoryStationDaypartDto()
                         {
                             ActiveDays = 2,
                             Hours = 2

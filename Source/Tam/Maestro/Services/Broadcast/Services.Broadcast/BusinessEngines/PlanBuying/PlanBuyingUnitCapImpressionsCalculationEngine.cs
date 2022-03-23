@@ -115,37 +115,37 @@ namespace Services.Broadcast.BusinessEngines
                                 programWithHighestImpressions.Impressions;
                         break;
                     case UnitCapEnum.PerDay:
-                        foreach (var planBuyingBandStationDaypart in programWithHighestImpressions.PlanBuyingBandStationDayparts)
+                        foreach (var planBuyingBandInventoryStationDaypart in programWithHighestImpressions.PlanBuyingBandInventoryStationDayparts)
                         {
                             totalInventoryImpressions += numberOfWeeks *
-                                    planBuyingBandStationDaypart.ActiveDays *
+                                    planBuyingBandInventoryStationDaypart.ActiveDays *
                                     parametersDto.UnitCaps *
                                     programWithHighestImpressions.Impressions;
                         }
                         break;
                     case UnitCapEnum.PerHour:
-                        foreach (var planBuyingBandStationDaypart in programWithHighestImpressions.PlanBuyingBandStationDayparts)
+                        foreach (var planBuyingBandInventoryStationDaypart in programWithHighestImpressions.PlanBuyingBandInventoryStationDayparts)
                         {
-                            var hours = planBuyingBandStationDaypart.Hours;
+                            var hours = planBuyingBandInventoryStationDaypart.Hours;
                             hours = hours == 0 ? 1 : hours;
 
                             totalInventoryImpressions += numberOfWeeks *
-                                    planBuyingBandStationDaypart.ActiveDays *
+                                    planBuyingBandInventoryStationDaypart.ActiveDays *
                                     hours *
                                     parametersDto.UnitCaps *
                                     programWithHighestImpressions.Impressions;
                         }
                         break;
                     case UnitCapEnum.Per30Min:
-                        foreach (var planBuyingBandStationDaypart in programWithHighestImpressions.PlanBuyingBandStationDayparts)
+                        foreach (var planBuyingBandInventoryStationDaypart in programWithHighestImpressions.PlanBuyingBandInventoryStationDayparts)
                         {
                             const int per30MinMultiplier = 2;
-                            var hours = planBuyingBandStationDaypart.Hours;
+                            var hours = planBuyingBandInventoryStationDaypart.Hours;
                             hours = hours == 0 ? 1 : hours;
 
                             totalInventoryImpressions += per30MinMultiplier *
                                 numberOfWeeks *
-                                planBuyingBandStationDaypart.ActiveDays *
+                                planBuyingBandInventoryStationDaypart.ActiveDays *
                                 hours *
                                 parametersDto.UnitCaps *
                                 programWithHighestImpressions.Impressions;

@@ -26,7 +26,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="inventories">The inventories.</param>
         /// <param name="planBuyingAllocationResult">The plan buying allocation result.</param>        
         /// <returns>The PlanBuyingBandStationsDto object</returns>
-        PlanBuyingBandStationsDto CalculateBandStation(List<PlanBuyingInventoryProgram> inventories,PlanBuyingAllocationResult planBuyingAllocationResult);
+        PlanBuyingBandInventoryStationsDto CalculateBandInventoryStation(List<PlanBuyingInventoryProgram> inventories,PlanBuyingAllocationResult planBuyingAllocationResult);
 
         /// <summary>
         /// Calculates the specified band stations inventory.
@@ -35,7 +35,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="planBuyingAllocationResult">The allocation result.</param>
         /// <param name="planBuyingParameter">The buying parameters.</param>
         /// <returns>The list of buying bands</returns>
-        PlanBuyingBandsDto Calculate(PlanBuyingBandStationsDto planBuyingBandStationsInventory, PlanBuyingAllocationResult planBuyingAllocationResult, PlanBuyingParametersDto planBuyingParameter);
+        PlanBuyingBandsDto Calculate(PlanBuyingBandInventoryStationsDto planBuyingBandStationsInventory, PlanBuyingAllocationResult planBuyingAllocationResult, PlanBuyingParametersDto planBuyingParameter);
 
         /// <summary>
         /// Converts the impressions to user format.
@@ -103,7 +103,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc/>
-        public PlanBuyingBandsDto Calculate(PlanBuyingBandStationsDto planBuyingBandStationsInventory, PlanBuyingAllocationResult planBuyingAllocationResult, PlanBuyingParametersDto planBuyingParameter)
+        public PlanBuyingBandsDto Calculate(PlanBuyingBandInventoryStationsDto planBuyingBandStationsInventory, PlanBuyingAllocationResult planBuyingAllocationResult, PlanBuyingParametersDto planBuyingParameter)
         {
             planBuyingBandStationsInventory.Details.ForEach(planBuyingBandStation =>
             {
@@ -240,7 +240,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         /// <inheritdoc/>
-        public PlanBuyingBandStationsDto CalculateBandStation(List<PlanBuyingInventoryProgram> inventories, PlanBuyingAllocationResult planBuyingAllocationResult)
+        public PlanBuyingBandInventoryStationsDto CalculateBandInventoryStation(List<PlanBuyingInventoryProgram> inventories, PlanBuyingAllocationResult planBuyingAllocationResult)
         {
             /*
              * As we need each band station inventory details while retrieving buying band details, here we calculate each inventory which we retrieves from data science separately as band station. 
@@ -252,16 +252,16 @@ namespace Services.Broadcast.BusinessEngines
                 Impressions = inventory.Impressions,
                 Cost = _GetInventoryCost(inventory),
                 ManifestWeeksCount = inventory.ManifestWeeks.Count(),
-                PlanBuyingBandStationDayparts = _GetPlanBuyingBandStationDayparts(inventory)
+                PlanBuyingBandInventoryStationDayparts = _GetPlanBuyingBandInventoryStationDayparts(inventory)
             }).ToList();
 
-            var planBuyingBandStations = new PlanBuyingBandStationsDto
+            var planBuyingBandInventoryStations = new PlanBuyingBandInventoryStationsDto
             {
                 PlanVersionId = planBuyingAllocationResult.PlanVersionId,
                 BuyingJobId = planBuyingAllocationResult.JobId,
                 Details = planBuyingBandStationDetails
             };
-            return planBuyingBandStations;
+            return planBuyingBandInventoryStations;
         }
 
         private decimal _GetInventoryCost(PlanBuyingInventoryProgram planBuyingInventory)
@@ -288,23 +288,23 @@ namespace Services.Broadcast.BusinessEngines
             return cost;
         }
 
-        private List<PlanBuyingBandStationDaypartDto> _GetPlanBuyingBandStationDayparts(PlanBuyingInventoryProgram planBuyingBandStationInventory)
+        private List<PlanBuyingBandInventoryStationDaypartDto> _GetPlanBuyingBandInventoryStationDayparts(PlanBuyingInventoryProgram planBuyingBandStationInventory)
         {
             if (planBuyingBandStationInventory == null)
             {
                 return null;
             }
 
-            List<PlanBuyingBandStationDaypartDto> planBuyingBandStationDayparts = null;
+            List<PlanBuyingBandInventoryStationDaypartDto> planBuyingBandInventoryStationDayparts = null;
             if (planBuyingBandStationInventory.ManifestDayparts?.Any() ?? false)
             {
-                planBuyingBandStationDayparts = planBuyingBandStationInventory.ManifestDayparts.Select(manifestDaypart => new PlanBuyingBandStationDaypartDto()
+                planBuyingBandInventoryStationDayparts = planBuyingBandStationInventory.ManifestDayparts.Select(manifestDaypart => new PlanBuyingBandInventoryStationDaypartDto()
                 {
                     ActiveDays = manifestDaypart.Daypart.ActiveDays,
                     Hours = manifestDaypart.Daypart.Hours
                 }).ToList();
             }
-            return planBuyingBandStationDayparts;
+            return planBuyingBandInventoryStationDayparts;
         }        
     }
 }

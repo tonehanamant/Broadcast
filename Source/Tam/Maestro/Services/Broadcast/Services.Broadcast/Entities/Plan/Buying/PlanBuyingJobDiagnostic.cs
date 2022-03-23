@@ -41,6 +41,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public static string SW_KEY_VALIDATING_ALLOCATION_RESULT = "Validating and mapping API response";
         public static string SW_KEY_AGGREGATING_ALLOCATION_RESULTS = "Aggregating allocation results";
         public static string SW_KEY_CALCULATING_BUYING_BANDS = "Calculating buying bands";
+        public static string SW_KEY_CALCULATING_BUYING_BAND_INVENTORY = "Calculating buying band inventory";
         public static string SW_KEY_CALCULATING_BUYING_STATIONS = "Calculating buying stations";
         public static string SW_KEY_AGGREGATING_MARKET_RESULTS = "Aggregating market results";
         public static string SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS = "Aggregating ownership group results";
@@ -49,6 +50,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public static string SW_KEY_SAVING_ALLOCATION_RESULTS = "Saving allocation results";
         public static string SW_KEY_SAVING_AGGREGATION_RESULTS = "Saving aggregation results";
         public static string SW_KEY_SAVING_BUYING_BANDS = "Saving buying bands";
+        public static string SW_KEY_SAVING_BUYING_BAND_INVENTORY = "Saving buying band inventory";
         public static string SW_KEY_SAVING_BUYING_STATIONS = "Saving buying stations";
         public static string SW_KEY_SAVING_MARKET_RESULTS = "Saving market results";
         public static string SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS = "Saving ownership group results";

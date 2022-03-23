@@ -547,6 +547,8 @@
     <Compile Include="Entities\Isci\PlanMappedIsciDetailsDto.cs" />
     <Compile Include="Clients\PricingJobQueueApiClient.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationDaypartDto.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationsDto.cs" />
     <Compile Include="Entities\Plan\Buying\ProprietaryInventoryData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramInventoryDaypart.cs" />
@@ -626,8 +628,6 @@
     <Compile Include="Entities\Isci\ReelIsciAdvertiserNameReferenceDto.cs" />
     <Compile Include="Entities\Isci\ReelIsciDto.cs" />
     <Compile Include="Entities\Isci\ReelIsciIngestJobDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingBandStationDaypartDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingBandStationsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingFilterDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciDto.cs" />
     <Compile Include="Entities\ReelRosterIscis\ReelRosterIsciEntity.cs" />

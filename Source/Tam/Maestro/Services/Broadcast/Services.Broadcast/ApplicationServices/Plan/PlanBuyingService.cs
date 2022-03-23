@@ -1018,7 +1018,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     var tasks = results.Select(async allocationResult =>
                     {
-                        _LogInfo($"Preparing call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
+                        _LogInfo($"Preparing call to Buying Model for Mode '{allocationResult.SpotAllocationModelMode}'.");
                         var pricingModelCallTimer = new Stopwatch();
                         pricingModelCallTimer.Start();
 
@@ -1039,7 +1039,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             pricingModelCallTimer.Stop();
                             var duration = pricingModelCallTimer.ElapsedMilliseconds;
 
-                            _LogInfo($"Completed call to Pricing Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
+                            _LogInfo($"Completed call to Buying Model for Mode '{allocationResult.SpotAllocationModelMode}'.  Duration : {duration}ms");
                         }
                     });
                     await Task.WhenAll(tasks);
@@ -1124,10 +1124,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
 
                 token.ThrowIfCancellationRequested();
+ 
+                _CalculatePlanBuyingBandInventory(modelAllocationResults, planBuyingParametersDto, inventory, token);
 
                 foreach (var allocationResult in modelAllocationResults)
                 {
-                    //
                     var aggregationTasks = new List<AggregationTask>();
 
                     var allocationResults = new Dictionary<PostingTypeEnum, PlanBuyingAllocationResult>();
@@ -1206,17 +1207,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateBands,
                             calculateBuyingBandsTask));
                         calculateBuyingBandsTask.Start();
-
-                        var calculateBuyingBandStationsTask = new Task<PlanBuyingBandStationsDto>(() =>
-                        {
-                            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                            var buyingBandStations = _PlanBuyingBandCalculationEngine.CalculateBandStation(postingTypeInventory, postingAllocationResult);
-                            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                            return buyingBandStations;
-                        });
-                        aggregationTasks.Add(new AggregationTask(targetPostingType, BuyingJobTaskNameEnum.CalculateBandStations,
-                            calculateBuyingBandStationsTask));
-                        calculateBuyingBandStationsTask.Start();
 
                         var calculateBuyingStationsTask = new Task<PlanBuyingStationResultDto>(() =>
                         {
@@ -1303,6 +1293,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        private void _CalculatePlanBuyingBandInventory(List<PlanBuyingAllocationResult> modelAllocationResults, PlanBuyingParametersDto planBuyingParametersDto,
+            List<PlanBuyingInventoryProgram> inventory, CancellationToken token)
+        {
+            var diagnostic = new PlanBuyingJobDiagnostic();
+            var buyingBandResult = modelAllocationResults.FirstOrDefault();
+            if (buyingBandResult == null)
+            {
+                return;
+            }
+
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BAND_INVENTORY);
+            var buyingBandInventoryStations = _PlanBuyingBandCalculationEngine.CalculateBandInventoryStation(inventory, buyingBandResult);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BAND_INVENTORY);
+
+            _SaveBuyingBandInventory(planBuyingParametersDto, buyingBandInventoryStations, diagnostic);
+
+            token.ThrowIfCancellationRequested();
+        }
+
         private void _MapAllocationResultsPostingType(PlanBuyingAllocationResult allocationResult, List<PlanBuyingInventoryProgram> inventory,
             PostingTypeEnum targetPostingType, PostingTypeEnum sourcePostingType, out double nsitoNtiConversionFactor)
         {
@@ -1353,8 +1362,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             CalculateMarkets,
             CalculateOwnershipGroups,
             CalculateRepFirms,
-            CalculateProgramStations,
-            CalculateBandStations
+            CalculateProgramStations
         }
 
         internal class AggregationTask
@@ -1369,6 +1377,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 TaskName = taskName;
                 Task = task;
             }
+        }
+
+        internal void _SaveBuyingBandInventory(PlanBuyingParametersDto planBuyingParametersDto, PlanBuyingBandInventoryStationsDto buyingBandInventoryStations,
+             PlanBuyingJobDiagnostic diagnostic)
+        {
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BAND_INVENTORY);
+            buyingBandInventoryStations.PostingType = planBuyingParametersDto.PostingType;
+            _PlanBuyingRepository.SavePlanBuyingBandInventoryStations(buyingBandInventoryStations);
+            diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BAND_INVENTORY);
         }
 
         internal void _SaveBuyingArtifacts(IDictionary<PostingTypeEnum, PlanBuyingAllocationResult> allocationResults, List<AggregationTask> aggregationTasks,
@@ -1408,15 +1425,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var calculateBuyingBandTaskResult = calculateBuyingBandTask.Result;
                 calculateBuyingBandTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
 
-                var calculateBuyingBandStationsTask = (Task<PlanBuyingBandStationsDto>)aggregationTasks
-                    .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculateBandStations)
-                    .Task;
-                var calculateBuyingBandStationsTaskResult = calculateBuyingBandStationsTask.Result;
-                calculateBuyingBandStationsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
-                calculateBuyingBandStationsTaskResult.PostingType = postingAllocationResult.PostingType;
-
                 _PlanBuyingRepository.SavePlanBuyingBands(calculateBuyingBandTaskResult, postingType);
-                _PlanBuyingRepository.SavePlanBuyingBandStations(calculateBuyingBandStationsTaskResult);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
@@ -2353,15 +2362,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     allocatedSpot.OwnerName = allocatedSpot.OwnerName ?? allocatedSpot.LegacyCallLetters;
                 });
 
-                var planBuyingBandStations = _PlanBuyingRepository.GetPlanBuyingBandStations(job.Id, (PostingTypeEnum)postingType, spotAllocationModelMode);
-                if (planBuyingBandStations == null)
+                var planBuyingBandInventoryStations = _PlanBuyingRepository.GetPlanBuyingBandInventoryStations(job.Id);
+                if (planBuyingBandInventoryStations == null)
                 {
                     return null;
                 }
-                planBuyingBandStations.Details.ForEach(planBuyingBandStation =>
+
+                planBuyingBandInventoryStations.Details.ForEach(planBuyingBandInventoryStation =>
                 {
-                    planBuyingBandStation.RepFirm = planBuyingBandStation.RepFirm ?? planBuyingBandStation.LegacyCallLetters;
-                    planBuyingBandStation.OwnerName = planBuyingBandStation.OwnerName ?? planBuyingBandStation.LegacyCallLetters;
+                    planBuyingBandInventoryStation.RepFirm = planBuyingBandInventoryStation.RepFirm ?? planBuyingBandInventoryStation.LegacyCallLetters;
+                    planBuyingBandInventoryStation.OwnerName = planBuyingBandInventoryStation.OwnerName ?? planBuyingBandInventoryStation.LegacyCallLetters;
                 });
 
                 if (planBuyingFilter != null)
@@ -2369,21 +2379,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
                     {
                         buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                        planBuyingBandStations.Details = planBuyingBandStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                        planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
                     }
                     else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
                     {
                         buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
-                        planBuyingBandStations.Details = planBuyingBandStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
+                        planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
                     }
                     else if (planBuyingFilter.OwnerNames?.Any() ?? false)
                     {
                         buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                        planBuyingBandStations.Details = planBuyingBandStations.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                        planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
                     }
                 }
 
-                planBuyingBands = _PlanBuyingBandCalculationEngine.Calculate(planBuyingBandStations, buyingApiResults, latestParametersForPlanBuyingJob);
+                var plan = _PlanRepository.GetPlan(planId);
+                if (planBuyingBandInventoryStations.PostingType != postingType)
+                {
+                    var ntiToNsiConversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
+                    latestParametersForPlanBuyingJob = _ConvertPlanBuyingParametersToRequestedPostingType(latestParametersForPlanBuyingJob, ntiToNsiConversionRate);
+                }
+
+                planBuyingBands = _PlanBuyingBandCalculationEngine.Calculate(planBuyingBandInventoryStations, buyingApiResults, latestParametersForPlanBuyingJob);
                 planBuyingBands?.Details.OrderBy(p => p.MinBand).ToList();
             }
             else

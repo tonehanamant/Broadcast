@@ -1286,9 +1286,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     It.IsAny<PlanBuyingParametersDto>()))
                 .Returns(new PlanBuyingBandsDto());
 
-            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandStation(
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandInventoryStation(
                     It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>()))
-                .Returns(new PlanBuyingBandStationsDto());
+                .Returns(new PlanBuyingBandInventoryStationsDto());
 
             _PlanBuyingStationEngineMock.Setup(s =>
                     s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
@@ -1939,9 +1939,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     It.IsAny<PlanBuyingParametersDto>()))
                 .Returns(new PlanBuyingBandsDto());
 
-            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandStation(
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandInventoryStation(
                     It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>()))
-                .Returns(new PlanBuyingBandStationsDto());
+                .Returns(new PlanBuyingBandInventoryStationsDto());
 
             _PlanBuyingStationEngineMock.Setup(s =>
                     s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
@@ -5744,9 +5744,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     It.IsAny<PlanBuyingParametersDto>()))
                 .Returns(new PlanBuyingBandsDto());
 
-            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandStation(
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandInventoryStation(
                     It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>()))
-                .Returns(new PlanBuyingBandStationsDto());
+                .Returns(new PlanBuyingBandInventoryStationsDto());
 
             _PlanBuyingStationEngineMock.Setup(s =>
                     s.Calculate(It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>(),
@@ -7455,9 +7455,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     It.IsAny<PlanBuyingParametersDto>()))
                 .Returns(new PlanBuyingBandsDto());
 
-            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandStation(
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.CalculateBandInventoryStation(
                     It.IsAny<List<PlanBuyingInventoryProgram>>(), It.IsAny<PlanBuyingAllocationResult>()))
-                .Returns(new PlanBuyingBandStationsDto
+                .Returns(new PlanBuyingBandInventoryStationsDto
                 {
                     PlanVersionId = 77,
                     BuyingJobId = jobId,
@@ -7469,14 +7469,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Impressions = 1135000,
                             Cost = 6593.75m,
                             ManifestWeeksCount = 2,
-                            PlanBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>()
+                            PlanBuyingBandInventoryStationDayparts = new List<PlanBuyingBandInventoryStationDaypartDto>()
                             { 
-                                new PlanBuyingBandStationDaypartDto()
+                                new PlanBuyingBandInventoryStationDaypartDto()
                                 { 
                                     ActiveDays = 5,
                                     Hours = 1
                                 },
-                                new PlanBuyingBandStationDaypartDto()
+                                new PlanBuyingBandInventoryStationDaypartDto()
                                 {
                                     ActiveDays = 3,
                                     Hours = 2
@@ -7489,9 +7489,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Impressions = 2045420,
                             Cost = 16250.00m,
                             ManifestWeeksCount = 1,
-                            PlanBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>()
+                            PlanBuyingBandInventoryStationDayparts = new List<PlanBuyingBandInventoryStationDaypartDto>()
                             {
-                                new PlanBuyingBandStationDaypartDto()
+                                new PlanBuyingBandInventoryStationDaypartDto()
                                 {
                                     ActiveDays = 1,
                                     Hours = 4
@@ -7521,10 +7521,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                    ))
                 .Returns(new PlanBuyingResultRepFirmDto());
 
-            var passedParameters = new List<PlanBuyingBandStationsDto>();
+            var passedParameters = new List<PlanBuyingBandInventoryStationsDto>();
             _PlanBuyingRepositoryMock
-                .Setup(x => x.SavePlanBuyingBandStations(It.IsAny<PlanBuyingBandStationsDto>()))
-                .Callback<PlanBuyingBandStationsDto>(p => passedParameters.Add(p));
+                .Setup(x => x.SavePlanBuyingBandInventoryStations(It.IsAny<PlanBuyingBandInventoryStationsDto>()))
+                .Callback<PlanBuyingBandInventoryStationsDto>(p => passedParameters.Add(p));
 
             var service = _GetService();
             // Act
@@ -7685,6 +7685,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetBuyingBands_Verify_PlanBuyingFilter()
         {
             int filteredStationCount = 0, filteredAllocatedSpotCount = 0, expectedCount = 3;
+            var plan = _GetPlan();
 
             // Arrange
             _PlanBuyingRepositoryMock
@@ -7695,6 +7696,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Status = BackgroundJobProcessingStatus.Succeeded,
                     Completed = _CurrentDate
                 });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
 
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestParametersForPlanBuyingJob(It.IsAny<int>()))
@@ -7761,8 +7766,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanBuyingRepositoryMock
-                .Setup(x => x.GetPlanBuyingBandStations(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()))
-                .Returns(new PlanBuyingBandStationsDto
+                .Setup(x => x.GetPlanBuyingBandInventoryStations(It.IsAny<int>()))
+                .Returns(new PlanBuyingBandInventoryStationsDto
                 {
                     Details = new List<PlanBuyingBandStationDetailDto>
                     {
@@ -7797,7 +7802,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
-            _PlanBuyingBandCalculationEngineMock.Setup(s => s.Calculate(It.IsAny<PlanBuyingBandStationsDto>(), It.IsAny<PlanBuyingAllocationResult>(), It.IsAny<PlanBuyingParametersDto>()))
+            _PlanBuyingBandCalculationEngineMock.Setup(s => s.Calculate(It.IsAny<PlanBuyingBandInventoryStationsDto>(), It.IsAny<PlanBuyingAllocationResult>(), It.IsAny<PlanBuyingParametersDto>()))
                .Returns(new PlanBuyingBandsDto()
                {
                    PlanVersionId = 1172,
@@ -7913,9 +7918,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                        SpotCount = 604,
                        Impressions = 5121.23
                    }
-               }).Callback<PlanBuyingBandStationsDto, PlanBuyingAllocationResult, PlanBuyingParametersDto>((planBuyingBandStation, planBuyingAllocationResult, planBuyingParameters) =>
+               }).Callback<PlanBuyingBandInventoryStationsDto, PlanBuyingAllocationResult, PlanBuyingParametersDto>((planBuyingBandInventoryStation, planBuyingAllocationResult, planBuyingParameters) =>
                {
-                   filteredStationCount = planBuyingBandStation.Details.Count;
+                   filteredStationCount = planBuyingBandInventoryStation.Details.Count;
                    filteredAllocatedSpotCount = planBuyingAllocationResult.AllocatedSpots.Count;
                });
 

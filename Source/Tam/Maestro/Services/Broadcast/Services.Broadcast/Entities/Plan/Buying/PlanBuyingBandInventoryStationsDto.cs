@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
-    public class PlanBuyingBandStationsDto
+    public class PlanBuyingBandInventoryStationsDto
     {
-        public PlanBuyingBandStationsDto()
+        public PlanBuyingBandInventoryStationsDto()
         {
             Details = new List<PlanBuyingBandStationDetailDto>();
             Totals = new PlanBuyingProgramTotalsDto();
@@ -23,7 +23,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
     {
         public PlanBuyingBandStationDetailDto()
         {
-            PlanBuyingBandStationDayparts = new List<PlanBuyingBandStationDaypartDto>();
+            PlanBuyingBandInventoryStationDayparts = new List<PlanBuyingBandInventoryStationDaypartDto>();
         }
         public int StationId { get; set; }
         public string RepFirm { get; set; }
@@ -34,6 +34,6 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public decimal Cost { get; set; }
         public decimal Cpm { get; set; }
         public int ManifestWeeksCount { get; set; }
-        public List<PlanBuyingBandStationDaypartDto> PlanBuyingBandStationDayparts { get; set; }
+        public List<PlanBuyingBandInventoryStationDaypartDto> PlanBuyingBandInventoryStationDayparts { get; set; }
     }
 }
