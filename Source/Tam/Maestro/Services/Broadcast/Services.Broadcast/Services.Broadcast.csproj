@@ -585,6 +585,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansStationRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionUnpostedNoPlanDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionUnpostedNoReelRosterDto.cs" />
+    <Compile Include="Entities\SpotExceptions\TriggerDecisionSyncRequestDto.cs" />
     <Compile Include="Entities\SpotLengthDto.cs" />
     <Compile Include="Exceptions\PlanValidationException.cs" />
     <Compile Include="Exceptions\PlanSaveException.cs" />

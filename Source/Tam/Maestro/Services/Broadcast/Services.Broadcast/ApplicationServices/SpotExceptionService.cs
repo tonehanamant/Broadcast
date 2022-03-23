@@ -139,9 +139,9 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Sync Decision Data Assigning the SyncedAt  and SyncedBy Indicators.
         /// </summary>
-        /// <param name="userName">User Name</param>
+        /// <param name="triggerDecisionSyncRequest">User Name</param>
         /// <returns>Return true when decision data is synced or else returning false</returns>
-        bool TriggerDecisionSync(string userName);
+        bool TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1468,10 +1468,10 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public bool TriggerDecisionSync(string userName)
+        public bool TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
             var dateTime = DateTime.Now;
-            var isSynced = _SpotExceptionRepository.SyncOutOfSpecDecision(userName, dateTime);
+            var isSynced = _SpotExceptionRepository.SyncOutOfSpecDecision(triggerDecisionSyncRequest, dateTime);
             return isSynced;
         }
     }

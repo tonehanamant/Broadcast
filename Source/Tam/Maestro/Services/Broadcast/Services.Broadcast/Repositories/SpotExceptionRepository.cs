@@ -131,10 +131,10 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Sync Decision Data Assigning the SyncedAt  and SyncedBy Indicators.
         /// </summary>
-        /// <param name="userName">User Name </param>
+        /// <param name="triggerDecisionSyncRequest">User Name </param>
         /// <param name="dateTime">Current Date time </param>
         /// <returns>Return true when decision data is synced or else returning false</returns>
-        bool SyncOutOfSpecDecision(string userName, DateTime dateTime);
+        bool SyncOutOfSpecDecision(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest, DateTime dateTime);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -911,7 +911,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public bool SyncOutOfSpecDecision(string userName, DateTime dateTime)
+        public bool SyncOutOfSpecDecision(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest, DateTime dateTime)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -920,7 +920,7 @@ namespace Services.Broadcast.Repositories
 
                 if (spotExceptionsDecisionsEntities?.Any() ?? false)
                 {
-                    spotExceptionsDecisionsEntities.ForEach(x => { x.synced_by = userName; x.synced_at = dateTime; });
+                    spotExceptionsDecisionsEntities.ForEach(x => { x.synced_by = triggerDecisionSyncRequest.UserName; x.synced_at = dateTime; });
                 }
 
                 bool isSpotExceptionsOutOfSpecDecisionSynced = false;

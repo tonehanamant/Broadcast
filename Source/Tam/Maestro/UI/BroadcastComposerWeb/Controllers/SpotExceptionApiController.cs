@@ -156,9 +156,9 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("trigger-decision-sync")]
-        public BaseResponse<bool> TriggerDecisionSync(string userName)
+        public BaseResponse<bool> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().TriggerDecisionSync(userName));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().TriggerDecisionSync(triggerDecisionSyncRequest));
         }
     }
 }
