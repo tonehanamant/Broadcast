@@ -554,18 +554,18 @@ END
 /*************************************** START BP-4198 *************************************/
 
 IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
-	WHERE TABLE_NAME = 'plan_version_buying_band_stations')
-
-BEGIN
-	DROP TABLE plan_version_buying_band_stations;
-END
-GO
-
-IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
 	WHERE TABLE_NAME = 'plan_version_buying_band_station_dayparts')
 
 BEGIN
 	DROP TABLE plan_version_buying_band_station_dayparts;
+END
+GO
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES 
+	WHERE TABLE_NAME = 'plan_version_buying_band_stations')
+
+BEGIN
+	DROP TABLE plan_version_buying_band_stations;
 END
 GO
 
