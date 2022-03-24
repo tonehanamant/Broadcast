@@ -1677,7 +1677,7 @@ namespace Services.Broadcast.BusinessEngines
                             * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
 
         private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, bool? equivalized, double impressionsPerUnit, List<CreativeLength> creativeLengths)
-        {
+        {           
             foreach (var week in weeks)
             {
                 if (equivalized ?? false)
@@ -1700,6 +1700,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     week.WeeklyUnits = week.WeeklyImpressions / impressionsPerUnit;
                 }
+                week.WeeklyUnits=Math.Round(week.WeeklyUnits,2);
             }
         }
 

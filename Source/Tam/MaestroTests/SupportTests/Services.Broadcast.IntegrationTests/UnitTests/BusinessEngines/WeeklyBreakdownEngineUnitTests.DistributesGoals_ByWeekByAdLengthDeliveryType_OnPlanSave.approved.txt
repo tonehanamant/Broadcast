@@ -80,7 +80,7 @@
     "WeeklyImpressions": 15.0,
     "WeeklyImpressionsPercentage": 14.0,
     "WeeklyRatings": 6.81818182,
-    "WeeklyUnits": 0.375,
+    "WeeklyUnits": 0.38,
     "WeekNumber": 1
   },
   {
