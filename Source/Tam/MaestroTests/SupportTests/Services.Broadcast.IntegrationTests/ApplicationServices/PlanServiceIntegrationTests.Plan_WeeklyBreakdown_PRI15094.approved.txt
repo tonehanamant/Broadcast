@@ -18,7 +18,7 @@
       "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-09-23T00:00:00",
-      "UnitImpressions": 6000000.0,
+      "UnitImpressions": 5999987.57972053,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyCpm": 0.0,
@@ -46,7 +46,7 @@
       "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-09-30T00:00:00",
-      "UnitImpressions": 6000000.0,
+      "UnitImpressions": 5999987.57882479,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyCpm": 0.0,
@@ -74,7 +74,7 @@
       "SpotLengthDuration": 30,
       "SpotLengthId": 1,
       "StartDate": "2019-10-07T00:00:00",
-      "UnitImpressions": 6000000.0,
+      "UnitImpressions": 5999987.57882479,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyCpm": 0.0,
@@ -91,7 +91,7 @@
   "TotalImpressionsPercentage": 100.0,
   "TotalRatingPoints": 896090.7,
   "TotalShareOfVoice": 100.0,
-  "TotalUnits": 2009.51584,
+  "TotalUnits": 2009.52,
   "Weeks": [
     {
       "ActiveDays": "Su",
@@ -118,7 +118,7 @@
       "WeeklyImpressions": 6698386134.0,
       "WeeklyImpressionsPercentage": 33.0,
       "WeeklyRatings": 298696.9,
-      "WeeklyUnits": 669.8386134,
+      "WeeklyUnits": 669.84,
       "WeekNumber": 1
     },
     {
@@ -146,7 +146,7 @@
       "WeeklyImpressions": 6698386133.0,
       "WeeklyImpressionsPercentage": 33.0,
       "WeeklyRatings": 298696.9,
-      "WeeklyUnits": 669.8386133,
+      "WeeklyUnits": 669.84,
       "WeekNumber": 2
     },
     {
@@ -174,7 +174,7 @@
       "WeeklyImpressions": 6698386133.0,
       "WeeklyImpressionsPercentage": 33.0,
       "WeeklyRatings": 298696.9,
-      "WeeklyUnits": 669.8386133,
+      "WeeklyUnits": 669.84,
       "WeekNumber": 3
     }
   ]
