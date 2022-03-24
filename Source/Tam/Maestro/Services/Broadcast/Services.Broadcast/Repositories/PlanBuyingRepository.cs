@@ -477,8 +477,16 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
+                // get the latest succeeded job.
                 var job = context.plan_version_buying_job
-                    .Single(x => x.plan_version_id == planVersionId, $"Job for plan_version_id '{planVersionId}' not found.");
+                .Where(x => x.plan_version_id == planVersionId && x.status == (int)BackgroundJobProcessingStatus.Succeeded)
+                .OrderByDescending(x => x.id)
+                .FirstOrDefault();
+                
+                if (job == null)
+                {
+                    throw new InvalidOperationException($"Job for plan_version_id '{planVersionId}' not found.");
+                }
 
                 return new PlanBuyingJob
                 {
