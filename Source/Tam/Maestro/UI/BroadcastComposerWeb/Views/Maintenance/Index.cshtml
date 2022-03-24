@@ -403,6 +403,31 @@
                 </div>
             }
 
+            @using (Html.BeginForm("ComparePlanVersionForShouldPromotePricing", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Compare Plan Version For "Should Promote Pricing"</h4>
+                    <div class="input-container-row">
+                        <div class="input-container">
+                            <label class="label" for="planId">PlanId:</label>
+                            <input class="input" type="text" name="planId" />
+                        </div>
+                    </div>
+                    <div class="input-container-row">
+                        <div class="input-container">
+                            <label class="label" for="beforeVersionId">Before Plan Version Id:</label>
+                            <input class="input" type="text" name="beforeVersionId" />
+                        </div>
+                    </div>
+                    <div class="input-container-row">
+                        <div class="input-container">
+                            <label class="label" for="afterVersionId">After Plan Version Id:</label>
+                            <input class="input" type="text" name="afterVersionId" />
+                        </div>
+                    </div>
+                    <input class="button" type="submit" value="Compare" id="submit" />
+                </div>
+            }
 
             @using (Html.BeginForm())
             {

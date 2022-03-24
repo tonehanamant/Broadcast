@@ -561,6 +561,25 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult ComparePlanVersionForShouldPromotePricing(int planId, int beforeVersionId, int afterVersionId)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanService>();
+                var result = service.ComparePlanVersionForShouldPromotePricing(planId, beforeVersionId, afterVersionId);
+
+                TempData["Message"] = result;
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "Error Processing Job: " + e.Message;
+            }
+
+            TempData["TabId"] = "planning";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public ActionResult SwitchProcessRatingsAutomatically()
         {
             TemporalApplicationSettings.ProcessRatingsAutomatically = !TemporalApplicationSettings.ProcessRatingsAutomatically;

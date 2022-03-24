@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers.Json;
 using System;
+using System.Linq;
 using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Helpers
@@ -20,9 +22,9 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "IsOutOfSync"),
             new ComparisonMinorProperty(typeof(PlanDto), "AvailableMarketsWithSovCount"),
             new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketCount"),
-            new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketTotalUsCoveragePercent"),
-            new ComparisonMinorProperty(typeof(PlanDto), "IsDraft"),
-            
+            new ComparisonMinorProperty(typeof(PlanDto), "BlackoutMarketTotalUsCoveragePercent"),            
+            new ComparisonMinorProperty(typeof(PlanDto), "IsDraft"),            
+
             new ComparisonMinorProperty(typeof(PlanMarketDto), "Id"),
 
             new ComparisonMinorProperty(typeof(PlanDaypartDto), "PlanDaypartId"),
@@ -33,14 +35,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDaypartDto), "DaypartUniquekey"),
             new ComparisonMinorProperty(typeof(PlanDaypartDto), "IsEndTimeModified"),
             new ComparisonMinorProperty(typeof(PlanDaypartDto), "IsStartTimeModified"),
-
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "CustomDaypartName"),
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "CustomDaypartOrganizationId"),
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "CustomDaypartOrganizationName"),
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "DaypartTypeId"),
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "Id"),
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "IsEndTimeModified"),
-            new ComparisonMinorProperty(typeof(PlanCustomDaypartDto), "IsStartTimeModified"),
+            new ComparisonMinorProperty(typeof(PlanDaypartDto), "VpvhForAudiences"),
 
             // ignored - not pricing inputs
             new ComparisonMinorProperty(typeof(PlanDto), "Name"),
@@ -52,8 +47,29 @@ namespace Services.Broadcast.Helpers
             // ignored - out of scope for this compare
             new ComparisonMinorProperty(typeof(PlanDto), "PricingParameters"),
             new ComparisonMinorProperty(typeof(PlanDto), "BuyingParameters"),
-            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "IsLocked")
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "IsLocked"),
+            new ComparisonMinorProperty(typeof(PlanDto), "RawWeeklyBreakdownWeeks"),
+            new ComparisonMinorProperty(typeof(PlanDto), "CustomDayparts"),
         };
+
+        private static PlanDto _OrderListForCompare(PlanDto toOrder)
+        {
+            var ordered = toOrder.DeepCloneUsingSerialization();
+
+            // for static meta data we can use the id.
+            ordered.FlightDays = ordered.FlightDays.OrderBy(s => s).ToList();
+            ordered.FlightHiatusDays = ordered.FlightHiatusDays.OrderBy(s => s).ToList();
+            ordered.SecondaryAudiences = ordered.SecondaryAudiences.OrderBy(s => s.AudienceId).ToList();
+            ordered.AvailableMarkets = ordered.AvailableMarkets.OrderBy(s => s.Rank).ToList();
+            ordered.BlackoutMarkets = ordered.BlackoutMarkets.OrderBy(s => s.Rank).ToList();
+            ordered.CreativeLengths = ordered.CreativeLengths.OrderBy(s => s.SpotLengthId).ToList();
+
+            // for plan data the id orders can't be trusted, so use a unique key
+            ordered.Dayparts = ordered.Dayparts.OrderBy(s => s.DaypartUniquekey).ToList();
+            ordered.WeeklyBreakdownWeeks = ordered.WeeklyBreakdownWeeks.OrderBy(s => $"{s.MediaWeekId}:{s.SpotLengthId}:{s.DaypartUniquekey}").ToList();
+
+            return ordered;
+        }
 
         public static bool DidPlanPricingInputsChange(PlanDto beforePlan, PlanDto afterPlan)
         {
@@ -68,9 +84,13 @@ namespace Services.Broadcast.Helpers
                 return true;
             }
 
+            // make sure the lists are ordered the same for comparison.
+            var orderedBeforePlan = _OrderListForCompare(beforePlan);
+            var orderedAfterPlan = _OrderListForCompare(afterPlan);
+
             /*** Compare the rest ***/
-            var serializedBefore = _GetSerializedPlanPricingInputs(beforePlan);
-            var serializedAfter = _GetSerializedPlanPricingInputs(afterPlan);
+            var serializedBefore = _GetSerializedPlanPricingInputs(orderedBeforePlan);
+            var serializedAfter = _GetSerializedPlanPricingInputs(orderedAfterPlan);
 
             // this isn't so much needed for runtime
             // but it makes debug a lot easier so it stays

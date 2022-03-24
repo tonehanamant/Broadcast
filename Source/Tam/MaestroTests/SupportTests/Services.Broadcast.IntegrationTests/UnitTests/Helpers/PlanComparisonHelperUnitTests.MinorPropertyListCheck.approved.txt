@@ -80,32 +80,8 @@
     "PropertyName": "IsStartTimeModified"
   },
   {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "CustomDaypartName"
-  },
-  {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "CustomDaypartOrganizationId"
-  },
-  {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "CustomDaypartOrganizationName"
-  },
-  {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "DaypartTypeId"
-  },
-  {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "Id"
-  },
-  {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "IsEndTimeModified"
-  },
-  {
-    "ClassTypeName": "PlanCustomDaypartDto",
-    "PropertyName": "IsStartTimeModified"
+    "ClassTypeName": "PlanDaypartDto",
+    "PropertyName": "VpvhForAudiences"
   },
   {
     "ClassTypeName": "PlanDto",
@@ -142,5 +118,13 @@
   {
     "ClassTypeName": "WeeklyBreakdownWeek",
     "PropertyName": "IsLocked"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "RawWeeklyBreakdownWeeks"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "CustomDayparts"
   }
 ]

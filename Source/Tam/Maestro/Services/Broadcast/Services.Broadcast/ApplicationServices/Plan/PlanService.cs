@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -11,20 +12,17 @@ using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Helpers.Json;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Services.Broadcast.Exceptions;
-using Services.Broadcast.Helpers.Json;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.ContractInterfaces;
-using static Services.Broadcast.Entities.Plan.PlanCustomDaypartDto;
-using Services.Broadcast.Entities.Campaign;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -257,6 +255,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planDaypartUpdateRequestDto">planDaypartUpdateRequestDto</param>
         /// <returns>Returns Weeklybreakdown and Rawweeklybreakdown array</returns>
         PlanDaypartUpdateResponseDto UpdatePlanDaypart(PlanDaypartUpdateRequestDto planDaypartUpdateRequestDto);
+
+        /// <summary>
+        /// Compares the plan version for should promote pricing.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="beforeVersionId">The before version identifier.</param>
+        /// <param name="afterVersionId">The after version identifier.</param>
+        /// <returns></returns>
+        bool ComparePlanVersionForShouldPromotePricing(int planId, int beforeVersionId, int afterVersionId);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -730,6 +737,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _PlanBuyingRepository.SavePlanBuyingParameters(plan.BuyingParameters);
             }
         }
+
+        public bool ComparePlanVersionForShouldPromotePricing(int planId, int beforeVersionId, int afterVersionId)
+        {
+            var saveState = SaveState.UpdatingExisting;
+            var beforePlan = _PlanRepository.GetPlan(planId, beforeVersionId);
+            var afterPlan = _PlanRepository.GetPlan(planId, afterVersionId);
+
+            var result = _ShouldPromotePricingResultsOnPlanSave(saveState, beforePlan, afterPlan);
+
+            return result;
+        }
+
         internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan)
         {
             var shouldPromotePricingResults = false;
