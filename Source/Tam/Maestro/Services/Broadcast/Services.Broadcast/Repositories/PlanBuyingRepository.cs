@@ -72,6 +72,13 @@ namespace Services.Broadcast.Repositories
         PlanBuyingJob GetPlanBuyingJob(int jobId);
 
         /// <summary>
+        /// Gets the plan buying job by plan version identifier.
+        /// </summary>
+        /// <param name="planVersionId">The plan version identifier.</param>
+        /// <returns>PlanBuyingJob object</returns>
+        PlanBuyingJob GetPlanBuyingJobByPlanVersionId(int planVersionId);
+
+        /// <summary>
         /// Gets the latest parameters for plan buying job.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
@@ -450,6 +457,28 @@ namespace Services.Broadcast.Repositories
             {
                 var job = context.plan_version_buying_job
                     .Single(x => x.id == jobId, $"Job id {jobId} not found.");
+
+                return new PlanBuyingJob
+                {
+                    Id = job.id,
+                    HangfireJobId = job.hangfire_job_id,
+                    PlanVersionId = job.plan_version_id,
+                    Status = (BackgroundJobProcessingStatus)job.status,
+                    Queued = job.queued_at,
+                    Completed = job.completed_at,
+                    ErrorMessage = job.error_message,
+                    DiagnosticResult = job.diagnostic_result
+                };
+            });
+        }
+
+        /// <inheritdoc/>
+        public PlanBuyingJob GetPlanBuyingJobByPlanVersionId(int planVersionId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_buying_job
+                    .Single(x => x.plan_version_id == planVersionId, $"Job for plan_version_id '{planVersionId}' not found.");
 
                 return new PlanBuyingJob
                 {

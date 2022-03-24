@@ -364,15 +364,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 (int?)null;
 
             var plan = _PlanRepository.GetPlan(planId, planVersionId);
-            if (!plan.JobId.HasValue)
-            {
-                throw new InvalidOperationException("Cannot generate the report.  No related job.");
-            }
 
-            var buyingJob = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-            if (buyingJob == null)
+            PlanBuyingJob buyingJob;
+            try
             {
-                throw new InvalidOperationException("Cannot generate the report.  No related job.");
+                buyingJob = _PlanBuyingRepository.GetPlanBuyingJobByPlanVersionId(plan.VersionId);
+            }
+            catch (Exception ex)
+            {
+                var planVersionNumberMsg = planVersionNumber.HasValue ? $" Version Number '{planVersionNumber.Value}'" : "";
+                var msg = $"Buying job not found for Plan Id '{planId}'{planVersionNumberMsg}.";
+                throw new InvalidOperationException(msg, ex);
             }
 
             var runResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(buyingJob.Id, spotAllocationModelMode, postingType);
