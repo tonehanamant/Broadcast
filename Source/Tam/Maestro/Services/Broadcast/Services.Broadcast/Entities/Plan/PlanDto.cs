@@ -481,7 +481,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The impressions per unit value.
         /// </value>
-        public double ImpressionsPerUnit { get; set; }
+        public double? ImpressionsPerUnit { get; set; }
 
         /// <summary>
         /// Gets or sets the pricing job id.

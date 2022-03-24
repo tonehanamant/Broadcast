@@ -1,4 +1,5 @@
 ﻿using Common.Services.Repositories;
+using Common.Services.Extensions;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
@@ -23,6 +24,12 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="plan">The plan.</param>
         void ValidatePlan(PlanDto plan);
+
+        /// <summary>
+        /// Validates the plan draft.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void ValidatePlanDraft(PlanDto plan);
 
         /// <summary>
         /// Validates the weekly breakdown.
@@ -151,11 +158,82 @@ namespace Services.Broadcast.Validators
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
             _ValidateBudgetAndDelivery(plan);
-            ValidateImpressionsPerUnit(plan.ImpressionsPerUnit, plan.TargetImpressions.Value);
+            ValidateImpressionsPerUnit(plan.ImpressionsPerUnit.Value, plan.TargetImpressions.Value);
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
-        }        
+        }
+
+        /// <inheritdoc/>
+        public void ValidatePlanDraft(PlanDto plan)
+        {
+            if (string.IsNullOrWhiteSpace(plan.Name) || plan.Name.Length > 255)
+            {
+                throw new PlanValidationException(INVALID_PLAN_NAME);
+            }
+
+            _ValidateCreativeLengths(plan.CreativeLengths);
+
+            if (plan.ProductMasterId.HasValue)
+            {
+                _ValidateProduct(plan);
+            }
+
+            _ValidateFlightAndHiatus(plan);
+
+            if (!plan.Dayparts.IsNullOrEmpty())
+            {
+                _ValidateCustomDayparts(plan);
+                _ValidateDayparts(plan);
+            }
+
+            _ValidatePrimaryAudience(plan);
+            _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
+
+            if (plan.CoverageGoalPercent.HasValue)
+            {
+                _ValidateMarkets(plan);
+            }
+
+            _ValidateWeeklyBreakdownWeeks(plan);
+
+            if (plan.Budget.HasValue)
+            {
+                if (!(plan.Budget.Value > 0m))
+                {
+                    throw new PlanValidationException(INVALID_BUDGET);
+                }
+            }
+            
+            if (plan.TargetCPM.HasValue)
+            {
+                if (!(plan.TargetCPM.Value > 0m))
+                {
+                    throw new PlanValidationException(INVALID_CPM);
+                }
+            }
+
+            if (plan.TargetCPP.HasValue)
+            {
+                if (!(plan.TargetCPP.Value > 0m))
+                {
+                    throw new PlanValidationException(INVALID_CPP);
+                }
+            }
+
+            if (plan.TargetImpressions.HasValue)
+            {
+                if (!(plan.TargetImpressions.Value > 0d))
+                {
+                    throw new PlanValidationException(INVALID_DELIVERY_IMPRESSIONS);
+                }
+
+                if (plan.ImpressionsPerUnit.HasValue)
+                {
+                    ValidateImpressionsPerUnit(plan.ImpressionsPerUnit.Value, plan.TargetImpressions.Value);
+                }
+            }
+        }
 
         /// <inheritdoc/>
         public void ValidatePlanForPricing(PlanDto plan)

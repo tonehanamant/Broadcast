@@ -948,7 +948,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                ImpressionsPerUnit = 1
             };
         }
 
@@ -1470,7 +1471,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                   }
+                   },
+                   ImpressionsPerUnit = 1
                });
 
             _WeeklyBreakdownEngineMock
@@ -5252,7 +5254,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                   }
+                   },
+                   ImpressionsPerUnit = 1
                });
 
             _WeeklyBreakdownEngineMock
@@ -7054,7 +7057,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                   }
+                   },
+                   ImpressionsPerUnit = 1
                });
 
             _WeeklyBreakdownEngineMock

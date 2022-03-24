@@ -170,7 +170,7 @@ namespace Services.Broadcast.BusinessEngines
                 var aduImpressionsForBreakdownItem = CalculateWeeklyADUImpressions(
                     weeklyBreakdown,
                     plan.Equivalized,
-                    plan.ImpressionsPerUnit,
+                    plan.ImpressionsPerUnit.Value,
                     plan.CreativeLengths);
 
                 var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
@@ -240,7 +240,7 @@ namespace Services.Broadcast.BusinessEngines
                     double aduImpressionsForBreakdownItem = CalculateWeeklyADUImpressions(
                         breakdownItem,
                         plan.Equivalized,
-                        plan.ImpressionsPerUnit,
+                        plan.ImpressionsPerUnit.Value,
                         plan.CreativeLengths);
 
                     double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyUnits == 0 ? 0 : breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
@@ -286,7 +286,7 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
 
-            _CalculateUnits(result, plan.Equivalized, plan.ImpressionsPerUnit, plan.CreativeLengths);
+            _CalculateUnits(result, plan.Equivalized, plan.ImpressionsPerUnit.Value, plan.CreativeLengths);
             _AdjustSpotLengthBudget(result, plan.GoalBreakdownType, plan.Equivalized, plan.Budget.Value);
 
             return result;
@@ -310,7 +310,7 @@ namespace Services.Broadcast.BusinessEngines
                 var weeklyAduImpressions = CalculateWeeklyADUImpressions(
                     week,
                     plan.Equivalized,
-                    plan.ImpressionsPerUnit,
+                    plan.ImpressionsPerUnit.Value,
                     plan.CreativeLengths);
 
                 var unitsImpressions = week.WeeklyUnits == 0 ? 0 : week.WeeklyImpressions / week.WeeklyUnits;
@@ -381,7 +381,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             int planDaypartId = 0;
             var result = new List<WeeklyBreakdownWeek>();
-            var weeklyBreakdownByWeekByDaypart = GroupWeeklyBreakdownByWeekByDaypart(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit, plan.Equivalized, plan.CreativeLengths);
+            var weeklyBreakdownByWeekByDaypart = GroupWeeklyBreakdownByWeekByDaypart(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit.Value, plan.Equivalized, plan.CreativeLengths);
 
             foreach (var item in weeklyBreakdownByWeekByDaypart)
             {
@@ -430,7 +430,7 @@ namespace Services.Broadcast.BusinessEngines
         private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType(PlanDto plan)
         {
             var result = new List<WeeklyBreakdownWeek>();
-            var weeklyBreakdownByWeekBySpotLength = GroupWeeklyBreakdownByWeekBySpotLength(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit, plan.Equivalized);
+            var weeklyBreakdownByWeekBySpotLength = GroupWeeklyBreakdownByWeekBySpotLength(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit.Value, plan.Equivalized);
 
             foreach (var item in weeklyBreakdownByWeekBySpotLength)
             {
@@ -474,7 +474,7 @@ namespace Services.Broadcast.BusinessEngines
             var result = new List<WeeklyBreakdownWeek>();
             var weeks = GroupWeeklyBreakdownByWeek(
                 plan.WeeklyBreakdownWeeks,
-                plan.ImpressionsPerUnit,
+                plan.ImpressionsPerUnit.Value,
                 plan.CreativeLengths,
                 plan.Equivalized);
 

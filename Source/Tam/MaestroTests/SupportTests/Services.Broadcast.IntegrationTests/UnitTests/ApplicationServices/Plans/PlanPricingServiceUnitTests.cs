@@ -888,7 +888,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 102
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -2249,7 +2250,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -2667,7 +2669,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -3144,7 +3147,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -3609,7 +3613,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -4067,7 +4072,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -4564,7 +4570,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 });
 
             _WeeklyBreakdownEngineMock
@@ -12342,7 +12349,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     },
                 ProductId = 1,
-                ProductMasterId = new Guid("AD71646F-2736-45DA-BF65-71120DA01221")
+                ProductMasterId = new Guid("AD71646F-2736-45DA-BF65-71120DA01221"),
+                ImpressionsPerUnit = 1
             };
         }
 
@@ -12414,7 +12422,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
-                    }
+                    },
+                ImpressionsPerUnit = 1
             };
         }
 

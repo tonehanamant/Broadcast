@@ -1578,7 +1578,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     FlightHiatusDays = plan.FlightHiatusDays,
                     TotalRatings = plan.TargetRatingPoints.Value,
                     Weeks = weeks,
-                    ImpressionsPerUnit = plan.ImpressionsPerUnit,
+                    ImpressionsPerUnit = plan.ImpressionsPerUnit.Value,
                     WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 };
 

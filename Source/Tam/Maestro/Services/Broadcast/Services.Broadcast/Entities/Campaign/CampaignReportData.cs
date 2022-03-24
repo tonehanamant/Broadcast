@@ -250,7 +250,7 @@ namespace Services.Broadcast.Entities.Campaign
             List<PlanProjectionForCampaignExport> result = new List<PlanProjectionForCampaignExport>();
             plans.ForEach(plan =>
             {
-                var planImpressionsPerUnit = plan.ImpressionsPerUnit;
+                var planImpressionsPerUnit = plan.ImpressionsPerUnit.Value;
                 var planDeliveryImpressions = plan.TargetImpressions.Value;                
 
                 List<QuarterDetailDto> planQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
@@ -404,7 +404,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             foreach (var plan in plans)
             {
-                var planImpressionsPerUnit = plan.ImpressionsPerUnit;
+                var planImpressionsPerUnit = plan.ImpressionsPerUnit.Value;
                 var planDeliveryImpressions = plan.TargetImpressions.Value;
 
                 List<QuarterDetailDto> planQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value
@@ -882,7 +882,7 @@ namespace Services.Broadcast.Entities.Campaign
                         plan.CreativeLengths.ForEach(createiveLength =>
                         {
                             sum += _WeeklyBreakdownEngine.CalculateADUWithDecimals(
-                            plan.ImpressionsPerUnit
+                            plan.ImpressionsPerUnit.Value
                             , plan.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[weekIndex]))
                                                              && w.SpotLengthId == createiveLength.SpotLengthId)
                                                     .Sum(y => y.AduImpressions)
@@ -1103,7 +1103,7 @@ namespace Services.Broadcast.Entities.Campaign
             var plansAndweeklyBreakdowns = plans.Select(x => new
             {
                 Plan = x,
-                WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit, x.CreativeLengths)
+                WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit.Value, x.CreativeLengths)
             }).ToList();
             List<int> distinctSpotLengthIdsList = plans
                 .SelectMany(x => x.CreativeLengths.Select(y => y.SpotLengthId))
@@ -1164,7 +1164,7 @@ namespace Services.Broadcast.Entities.Campaign
             {
                 plans.Select(x => new
                 {
-                    Adu = _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
+                    Adu = _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit.Value
                     , x.WeeklyBreakdownWeeks.Where(y => y.SpotLengthId == spotlengthId && y.StartDate == startDate).Sum(y => y.AduImpressions)
                     , x.Equivalized, spotlengthId),
                     x.Equivalized

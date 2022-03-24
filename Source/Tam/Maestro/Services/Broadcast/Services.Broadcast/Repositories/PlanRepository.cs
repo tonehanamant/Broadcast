@@ -73,6 +73,14 @@ namespace Services.Broadcast.Repositories
         void CreateOrUpdateDraft(PlanDto plan, string createdBy, DateTime createdDate);
 
         /// <summary>
+        /// Saves the plan draft.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        /// <param name="createdBy">The created by.</param>
+        /// <param name="createdDate">The created date.</param>
+        void SaveDraft(PlanDto plan, string createdBy, DateTime createdDate);
+
+        /// <summary>
         /// Gets the plan history.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -392,6 +400,60 @@ namespace Services.Broadcast.Repositories
                        context.SaveChanges();
 
                        planDto.VersionId = draftVersion.id;
+                   });
+        }
+
+        /// <inheritdoc/>
+        public void SaveDraft(PlanDto plan, string createdBy, DateTime createdDate)
+        {
+            _InReadUncommitedTransaction(
+                   context =>
+                   {
+                       var planEntity = new plan();
+                       if (plan.Id > 0)
+                       {
+                           planEntity = (from p in context.plans
+                                   where p.id == plan.Id
+                                   select p)
+                              .Include(p => p.plan_versions)
+                              .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
+                              .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
+                              .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
+                              .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
+                              .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
+                              .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
+                          .Single(x => x.id == plan.Id, "Invalid plan id");
+                       }
+
+                       //there can be only 1 draft on a plan, so we're doing Single here
+                       var draftVersion = planEntity.plan_versions.Where(x => x.is_draft == true).SingleOrDefault();
+                       var isDraftExist = draftVersion != null;
+                       if (!isDraftExist)
+                       {
+                           //there is no draft on the plan, so we create a new version as the draft
+                           draftVersion = new plan_versions();
+                           planEntity.plan_versions.Add(draftVersion);
+                           _SetCreatedDate(draftVersion, createdBy, createdDate);
+                       }
+                       else
+                       {
+                           draftVersion.modified_by = createdBy;
+                           draftVersion.modified_date = createdDate;
+                       }
+
+                       _MapFromDto(plan, context, planEntity, draftVersion);
+
+                       if (!isDraftExist)
+                       {
+                           context.plans.Add(planEntity);
+                       }
+                       context.SaveChanges();
+                       
+                       planEntity.latest_version_id = draftVersion.id;
+                       context.SaveChanges();
+
+                       plan.Id = planEntity.id;
+                       plan.VersionId = planEntity.latest_version_id;
                    });
         }
 
@@ -855,7 +917,7 @@ namespace Services.Broadcast.Repositories
             version.flight_end_date = planDto.FlightEndDate.Value;
             version.flight_notes = planDto.FlightNotes;
             version.flight_notes_internal = planDto.FlightNotesInternal;
-            version.coverage_goal_percent = planDto.CoverageGoalPercent.Value;
+            version.coverage_goal_percent = planDto.CoverageGoalPercent;
             version.goal_breakdown_type = (int)planDto.GoalBreakdownType;
             version.target_vpvh = planDto.Vpvh;
             version.target_universe = planDto.TargetUniverse;
@@ -904,7 +966,7 @@ namespace Services.Broadcast.Repositories
         private static void _MapWeeklyBreakdown(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_weekly_breakdown.RemoveRange(entity.plan_version_weekly_breakdown);
-            planDto.WeeklyBreakdownWeeks.ForEach(d =>
+            planDto.WeeklyBreakdownWeeks?.ForEach(d =>
             {
                 entity.plan_version_weekly_breakdown.Add(new plan_version_weekly_breakdown
                 {
@@ -938,11 +1000,11 @@ namespace Services.Broadcast.Repositories
 
         private static void _MapPlanBudget(plan_versions entity, PlanDto planDto)
         {
-            entity.budget = planDto.Budget.Value;
-            entity.target_impression = planDto.TargetImpressions.Value;
-            entity.target_cpm = planDto.TargetCPM.Value;
-            entity.target_rating_points = planDto.TargetRatingPoints.Value;
-            entity.target_cpp = planDto.TargetCPP.Value;
+            entity.budget = planDto.Budget;
+            entity.target_impression = planDto.TargetImpressions;
+            entity.target_cpm = planDto.TargetCPM;
+            entity.target_rating_points = planDto.TargetRatingPoints;
+            entity.target_cpp = planDto.TargetCPP;
             entity.currency = (int)planDto.Currency;
         }
 
@@ -958,7 +1020,7 @@ namespace Services.Broadcast.Repositories
         private static void _MapPlanFlightHiatus(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_flight_hiatus_days.RemoveRange(entity.plan_version_flight_hiatus_days);
-            planDto.FlightHiatusDays.ForEach(d =>
+            planDto.FlightHiatusDays?.ForEach(d =>
             {
                 entity.plan_version_flight_hiatus_days.Add(new plan_version_flight_hiatus_days { hiatus_day = d });
             });
@@ -1284,7 +1346,7 @@ namespace Services.Broadcast.Repositories
         private static void _MapPlanSecondaryAudiences(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_secondary_audiences.RemoveRange(entity.plan_version_secondary_audiences);
-            planDto.SecondaryAudiences.ForEach(d =>
+            planDto.SecondaryAudiences?.ForEach(d =>
             {
                 entity.plan_version_secondary_audiences.Add(new plan_version_secondary_audiences
                 {
@@ -1305,7 +1367,7 @@ namespace Services.Broadcast.Repositories
             context.plan_version_available_markets.RemoveRange(entity.plan_version_available_markets);
             context.plan_version_blackout_markets.RemoveRange(entity.plan_version_blackout_markets);
 
-            planDto.AvailableMarkets.ForEach(m =>
+            planDto.AvailableMarkets?.ForEach(m =>
             {
                 entity.plan_version_available_markets.Add(new plan_version_available_markets
                 {
@@ -1319,7 +1381,7 @@ namespace Services.Broadcast.Repositories
                 );
             });
 
-            planDto.BlackoutMarkets.ForEach(m =>
+            planDto.BlackoutMarkets?.ForEach(m =>
             {
                 entity.plan_version_blackout_markets.Add(new plan_version_blackout_markets()
                 {

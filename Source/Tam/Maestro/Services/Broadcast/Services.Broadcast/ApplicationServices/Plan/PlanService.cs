@@ -44,6 +44,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false);
 
         /// <summary>
+        /// Saves the plan draft.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        /// <param name="createdBy">The created by.</param>
+        /// <returns>The plan id of saved draft.</returns>
+        int SavePlanDraft(PlanDto plan, string createdBy);
+
+        /// <summary>
         /// Gets the plan.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -530,6 +538,139 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        ///<inheritdoc/>
+        public int SavePlanDraft(PlanDto plan, string createdBy)
+        {
+            plan.IsDraft = true;
+            var createdDate = _DateTimeEngine.GetCurrentMoment();            
+            var result = _DoSavePlanDraft(plan, createdBy, createdDate);
+            return result;
+        }
+
+        private int _DoSavePlanDraft(PlanDto plan, string createdBy, DateTime createdDate)
+        {
+            var logTxId = Guid.NewGuid();
+
+            const string SW_KEY_TOTAL_DURATION = "Total duration";
+            const string SW_KEY_PRE_PLAN_VALIDATION = "Pre Plan Validation";
+            const string SW_KEY_PLAN_VALIDATION = "Plan Validation";
+            const string SW_KEY_PRE_PLAN_SAVE = "Pre Plan Save";
+            const string SW_KEY_PLAN_SAVE = "Plan Save";
+            const string SW_KEY_POST_PLAN_SAVE = "Post Plan Save";
+
+            _LogInfo($"_DoSavePlanDraft starting for planID '{plan.Id}'", logTxId, createdBy);
+
+            try
+            {
+                var processTimers = new ProcessWorkflowTimers();
+                processTimers.Start(SW_KEY_TOTAL_DURATION);
+                processTimers.Start(SW_KEY_PRE_PLAN_VALIDATION);
+
+                if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
+                {
+                    throw new PlanSaveException("The pricing model is running for the plan");
+                }
+
+                if (plan.CreativeLengths.Count == 1)
+                {
+                    //if there is only 1 creative length, set the weight to 100%
+                    plan.CreativeLengths.Single().Weight = 100;
+                }
+                else
+                {
+                    plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
+                }
+
+                if (!plan.Dayparts.IsNullOrEmpty())
+                {
+                    DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
+                    _CalculateDaypartOverrides(plan.Dayparts);
+                }
+
+                _OnSaveHandlePlanAvailableMarketSovFeature(plan);
+
+                processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
+                processTimers.Start(SW_KEY_PLAN_VALIDATION);
+
+                _PlanValidator.ValidatePlanDraft(plan);
+
+                processTimers.End(SW_KEY_PLAN_VALIDATION);
+                processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
+
+                _ConvertImpressionsToRawFormat(plan);
+
+                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
+                {
+                    plan.WeeklyBreakdownWeeks =
+                        _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                }
+
+                if (!plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && !plan.Dayparts.IsNullOrEmpty() && plan.Budget.HasValue && plan.TargetImpressions.HasValue)
+                {
+                    _CalculateDeliveryDataPerAudience(plan);
+                }
+                
+                _SetPlanFlightDays(plan);
+
+                if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
+                {
+                    plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
+                }
+
+                if (plan.IsAduEnabled.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
+                {
+                    _VerifyWeeklyAdu(plan.IsAduEnabled.Value, plan.WeeklyBreakdownWeeks);
+                }
+
+                processTimers.End(SW_KEY_PRE_PLAN_SAVE);
+                processTimers.Start(SW_KEY_PLAN_SAVE);
+
+                if (plan.Id > 0)
+                {
+                    var key = KeyHelper.GetPlanLockingKey(plan.Id);
+                    var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
+
+                    if (lockingResult.Success)
+                    {
+                        _PlanRepository.SaveDraft(plan, createdBy, createdDate);
+                    }
+                    else
+                    {
+                        throw new PlanSaveException(
+                            $"The chosen plan has been locked by {lockingResult.LockedUserName}");
+                    }
+                }
+                else
+                {
+                    _PlanRepository.SaveDraft(plan, createdBy, createdDate);
+                }
+
+                processTimers.End(SW_KEY_PLAN_SAVE);
+                processTimers.Start(SW_KEY_POST_PLAN_SAVE);
+
+                _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
+
+                _DispatchPlanAggregation(plan, aggregatePlanSynchronously:false);
+                _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+
+                processTimers.End(SW_KEY_POST_PLAN_SAVE);
+                processTimers.End(SW_KEY_TOTAL_DURATION);
+                var timersReport = processTimers.ToString();
+                _LogInfo($"Plan Draft Save Process Timers Report : '{timersReport}'", logTxId, createdBy);
+
+                return plan.Id;
+            }
+            catch (PlanSaveException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
+                throw new Exception("Error saving the plan draft.  Please see your administrator to check logs.");
+            }
+        }
+
         private void _HandleUnknownPlanSaveException(PlanDto plan, Exception ex, Guid logTxId, string createdBy)
         {
             // have to do it like this to align the log message content.
@@ -817,7 +958,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _CalculateVPVHForPlan(plan);
             }
-            var conversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
+            var conversionRate = (!plan.Dayparts.IsNullOrEmpty()) ? _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts) : 1;
             var plan_v2 = _MapPlanDtoToPlanDto_v2(plan, conversionRate);
             return plan_v2;
         }
@@ -922,7 +1063,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             plan.WeeklyBreakdownTotals.TotalRatingPoints = Math.Round(plan.TargetRatingPoints ?? 0 * impressionsTotalsRatio, 1);
             plan.WeeklyBreakdownTotals.TotalImpressionsPercentage = Math.Round(GeneralMath.ConvertFractionToPercentage(impressionsTotalsRatio), 0);
-            plan.WeeklyBreakdownTotals.TotalBudget = plan.Budget.Value * (decimal)impressionsTotalsRatio;
+            plan.WeeklyBreakdownTotals.TotalBudget = (plan.Budget ?? 0) * (decimal)impressionsTotalsRatio;
             plan.WeeklyBreakdownTotals.TotalUnits = Math.Round(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyUnits), 2);
         }
 
@@ -1472,7 +1613,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var totalHhImpressions = Math.Floor(hhImpressionsByStandardDaypart.Sum(x => x.Value));
 
             _CalculateHouseholdDeliveryData(plan, totalHhImpressions);
-            _CalculateSecondaryAudiencesDeliveryData(plan, hhImpressionsByStandardDaypart, totalHhImpressions);
+
+            if (!(plan.SecondaryAudiences.IsNullOrEmpty()))
+            {
+                _CalculateSecondaryAudiencesDeliveryData(plan, hhImpressionsByStandardDaypart, totalHhImpressions);
+            }
         }
 
         private Dictionary<int, double> _GetHhImpressionsByStandardDaypart(PlanDto plan)
@@ -1737,7 +1882,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Weeks = beforePlan.WeeklyBreakdownWeeks,
                 CreativeLengths = beforePlan.CreativeLengths,
                 Dayparts = beforePlan.Dayparts,
-                ImpressionsPerUnit = beforePlan.ImpressionsPerUnit,
+                ImpressionsPerUnit = beforePlan.ImpressionsPerUnit.Value,
                 Equivalized = beforePlan.Equivalized
             };
             var calculatedWeeklyBreakdown = CalculatePlanWeeklyGoalBreakdown(weeklyBreakdownRequest);

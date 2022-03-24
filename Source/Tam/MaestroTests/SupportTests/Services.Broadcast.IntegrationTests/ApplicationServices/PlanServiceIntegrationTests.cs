@@ -2922,7 +2922,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightHiatusDays = plan.FlightHiatusDays,
                 GoalBreakdownType = plan.GoalBreakdownType,
                 HUTBookId = plan.HUTBookId,
-                ImpressionsPerUnit = plan.ImpressionsPerUnit,
+                ImpressionsPerUnit = plan.ImpressionsPerUnit.Value,
                 MaxCpm = 20,
                 MinCpm = 5,
                 PostingType = plan.PostingType,

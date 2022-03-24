@@ -323,7 +323,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 5, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 }
             };
             FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
@@ -384,7 +385,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 }
             };
             FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
@@ -516,7 +518,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 2.5, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 }
             };
             var table = new ContractQuarterTableData();
@@ -564,7 +567,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
                         new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    }
+                    },
+                    ImpressionsPerUnit = 1
                 }
             };
             var table = new ContractQuarterTableData();

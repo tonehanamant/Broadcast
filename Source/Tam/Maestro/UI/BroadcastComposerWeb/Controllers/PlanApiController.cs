@@ -7,10 +7,8 @@ using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
-using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -59,6 +57,15 @@ namespace BroadcastComposerWeb.Controllers
             _LogInfo($"SavePlan finished for PlanId '{newPlan.Id}' with result '{result.Data}'. Durations : '{timersReport}'");
 
             return result;
+        }
+
+        [HttpPost]
+        [Route("savedraft")]
+        [Authorize]
+        public BaseResponse<int> SavePlanDraft(PlanDto plan)
+        {
+            var createdBy = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlanDraft(plan, createdBy));
         }
 
         /// <summary>

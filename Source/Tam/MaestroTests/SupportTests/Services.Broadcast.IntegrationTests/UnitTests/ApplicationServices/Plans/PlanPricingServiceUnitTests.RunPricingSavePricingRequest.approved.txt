@@ -146,7 +146,7 @@
       "HHUniverse": null,
       "HUTBookId": null,
       "Id": 1197,
-      "ImpressionsPerUnit": 0.0,
+      "ImpressionsPerUnit": 1.0,
       "IsAduEnabled": null,
       "IsBuyingModelRunning": false,
       "IsDraft": null,
