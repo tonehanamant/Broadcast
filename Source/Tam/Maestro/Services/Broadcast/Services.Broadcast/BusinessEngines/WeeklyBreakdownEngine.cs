@@ -718,6 +718,7 @@ namespace Services.Broadcast.BusinessEngines
                     var allItems = grouping.ToList();
                     double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
                     decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
+                    double weeklyImpressionsPercentage = allItems.Sum(x => x.WeeklyImpressionsPercentage);
                     var week = new WeeklyBreakdownWeek
                     {
                         WeekNumber = first.WeekNumber,
@@ -727,7 +728,7 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
                         WeeklyImpressions = weeklyImpressions,
-                        WeeklyImpressionsPercentage = first.WeeklyImpressionsPercentage,
+                        WeeklyImpressionsPercentage = weeklyImpressionsPercentage,
                         WeeklyRatings = first.WeeklyRatings,
                         WeeklyBudget = weeklyBudget,
                         WeeklyAdu = first.WeeklyAdu,
@@ -978,6 +979,7 @@ namespace Services.Broadcast.BusinessEngines
                     var allItems = grouping.ToList();
                     double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
                     decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
+                    double weeklyImpressionsPercentage = allItems.Sum(x => x.WeeklyImpressionsPercentage);
                     var week = new WeeklyBreakdownWeek
                     {
                         WeekNumber = first.WeekNumber,
@@ -987,7 +989,7 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
                         WeeklyImpressions = weeklyImpressions,
-                        WeeklyImpressionsPercentage = first.WeeklyImpressionsPercentage,
+                        WeeklyImpressionsPercentage = weeklyImpressionsPercentage,
                         WeeklyRatings = first.WeeklyRatings,
                         WeeklyBudget = weeklyBudget,
                         WeeklyAdu = first.WeeklyAdu,
