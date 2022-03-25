@@ -142,6 +142,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="triggerDecisionSyncRequest">User Name</param>
         /// <returns>Return true when decision data is synced or else returning false</returns>
         bool TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest);
+
+        /// <summary>
+        /// Get the Queued Decision Count
+        /// </summary>
+        /// <returns>Count of Decision Data</returns>
+        int GetQueuedDecisionCount();
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1473,6 +1479,13 @@ namespace Services.Broadcast.ApplicationServices
             var dateTime = DateTime.Now;
             var isSynced = _SpotExceptionRepository.SyncOutOfSpecDecision(triggerDecisionSyncRequest, dateTime);
             return isSynced;
+        }
+
+        /// <inheritdoc />
+        public int GetQueuedDecisionCount()
+        {
+            var decisonQueuedCount = _SpotExceptionRepository.GetDecisionQueuedCount();
+            return decisonQueuedCount;
         }
     }
 }

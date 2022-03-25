@@ -135,6 +135,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="dateTime">Current Date time </param>
         /// <returns>Return true when decision data is synced or else returning false</returns>
         bool SyncOutOfSpecDecision(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest, DateTime dateTime);
+
+        /// <summary>
+        /// Get the Queued Decision Count
+        /// </summary>
+        /// <returns>Count of Decision Data</returns>
+        int GetDecisionQueuedCount();
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -927,6 +933,18 @@ namespace Services.Broadcast.Repositories
                 int recordCount = context.SaveChanges();
                 isSpotExceptionsOutOfSpecDecisionSynced = recordCount > 0;
                 return isSpotExceptionsOutOfSpecDecisionSynced;
+            });
+        }
+
+        /// <inheritdoc />
+        public int GetDecisionQueuedCount()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var queuedDecisionCount = context.spot_exceptions_out_of_spec_decisions
+                  .Where(x => x.synced_at == null)
+                  .Count();
+                return queuedDecisionCount;
             });
         }
     }

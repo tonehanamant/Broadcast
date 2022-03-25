@@ -160,5 +160,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().TriggerDecisionSync(triggerDecisionSyncRequest));
         }
+
+        [HttpGet]
+        [Route("queued-decision-count")]
+        public BaseResponse<int> GetQueuedDecisionCount()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetQueuedDecisionCount());
+        }
     }
 }

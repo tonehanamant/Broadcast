@@ -2231,5 +2231,58 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+
+        [Test]
+        public void GetDecisionCount_Exist()
+        {
+            // Arrange
+            int count = 2;
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetDecisionQueuedCount())
+                .Returns(count);
+
+            // Act
+            var result = _SpotExceptionService.GetQueuedDecisionCount();
+
+            // Assert
+            Assert.AreEqual(result, 2);
+        }
+
+        [Test]
+        public void GetDecisionCount_DoesNotExist()
+        {
+            // Arrange
+            int count = 0;
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetDecisionQueuedCount())
+                .Returns(count);
+
+            // Act
+            var result = _SpotExceptionService.GetQueuedDecisionCount();
+
+            // Assert
+            Assert.AreEqual(result, 0);
+        }
+
+        [Test]
+        public void GetDecisionCount_ThrowsException()
+        {
+            // Arrange
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetDecisionQueuedCount())
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetQueuedDecisionCount());
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
     }
 }
