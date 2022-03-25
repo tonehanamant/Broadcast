@@ -313,7 +313,7 @@
       "WeeklyCpm": 10.00,
       "WeeklyImpressions": 6000.0,
       "WeeklyImpressionsPercentage": 20.0,
-      "WeeklyRatings": 5.60823401,
+      "WeeklyRatings": 5.61,
       "WeeklyUnits": 1.2,
       "WeekNumber": 1
     },
@@ -341,7 +341,7 @@
       "WeeklyCpm": 10.00,
       "WeeklyImpressions": 6000.0,
       "WeeklyImpressionsPercentage": 20.0,
-      "WeeklyRatings": 5.60823401,
+      "WeeklyRatings": 5.61,
       "WeeklyUnits": 1.2,
       "WeekNumber": 2
     },
@@ -411,7 +411,7 @@
       "DaypartUniquekey": "||",
       "EndDate": "2020-03-29T00:00:00",
       "IsLocked": false,
-      "IsUpdated": true,
+      "IsUpdated": false,
       "MediaWeekId": 848,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,

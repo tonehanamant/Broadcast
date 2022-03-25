@@ -614,7 +614,7 @@ namespace Services.Broadcast.BusinessEngines
                         week.WeeklyImpressions = 0;
                         week.WeeklyImpressionsPercentage = 0;
                         week.WeeklyAdu = 0;
-                        week.IsUpdated = true;
+                        week.IsUpdated = false;
                     }
                 }
             }
@@ -628,7 +628,7 @@ namespace Services.Broadcast.BusinessEngines
                     week.WeeklyImpressions = 0;
                     week.WeeklyImpressionsPercentage = 0;
                     week.WeeklyAdu = 0;
-                    week.IsUpdated = true;
+                    week.IsUpdated = false;
                 }
             }
 
@@ -860,6 +860,7 @@ namespace Services.Broadcast.BusinessEngines
                     var allItems = grouping.ToList();
                     double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
                     decimal weeklyBudget = allItems.Sum(x => x.WeeklyBudget);
+                    double weeklyImpressionsPercentage = allItems.Sum(x => x.WeeklyImpressionsPercentage);
                     var week = new WeeklyBreakdownWeek
                     {
                         WeekNumber = first.WeekNumber,
@@ -869,7 +870,7 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
                         WeeklyImpressions = weeklyImpressions,
-                        WeeklyImpressionsPercentage = first.WeeklyImpressionsPercentage,
+                        WeeklyImpressionsPercentage = weeklyImpressionsPercentage,
                         WeeklyRatings = first.WeeklyRatings,
                         WeeklyBudget = weeklyBudget,
                         WeeklyAdu = first.WeeklyAdu,
@@ -1490,7 +1491,7 @@ namespace Services.Broadcast.BusinessEngines
             breakdownItem.WeeklyBudget = (decimal)impressions * budgetPerOneImpression;
 
             var ratings = totalRatings * weeklyRatio;
-            breakdownItem.WeeklyRatings = roundRatings ? ProposalMath.RoundUpWithDecimals(ratings, 1) : ratings;
+            breakdownItem.WeeklyRatings = roundRatings ? ProposalMath.RoundUpWithDecimals(ratings, 2) : ratings;
         }
 
         private double _CalculatePercentageOfWeek(double breakdownItemImpressions, double weeklyImpressions)

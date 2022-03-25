@@ -313,7 +313,7 @@
       "WeeklyCpm": 2.3474178403755868544600939000,
       "WeeklyImpressions": 18.0,
       "WeeklyImpressionsPercentage": 8.0,
-      "WeeklyRatings": 0.6,
+      "WeeklyRatings": 0.59,
       "WeeklyUnits": 0.9,
       "WeekNumber": 1
     },
