@@ -42,14 +42,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false);
 
         /// <summary>
-        /// Saves the plan draft.
-        /// </summary>
-        /// <param name="plan">The plan.</param>
-        /// <param name="createdBy">The created by.</param>
-        /// <returns>The plan id of saved draft.</returns>
-        int SavePlanDraft(PlanDto plan, string createdBy);
-
-        /// <summary>
         /// Gets the plan.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -296,6 +288,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private Lazy<bool> _IsMarketSovCalculationEnabled;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IPlanIsciRepository _PlanIsciRepository;
+        private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -346,6 +339,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LockingEngine = lockingEngine;
             _DateTimeEngine = dateTimeEngine;
             _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            _IsPartialPlanSaveEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE));
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -380,7 +374,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
-            var result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults:false);
+            int result;
+            if (_IsPartialPlanSaveEnabled.Value && Convert.ToBoolean(plan.IsDraft))
+            {
+                result = _DoSavePlanDraft(plan, createdBy, createdDate);
+            }
+            else
+            {
+                result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
+            }
             return result;
         }
 
@@ -463,6 +465,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                     if (lockingResult.Success)
                     {
+                        /*
+                            If LD flag: broadcast-enable-partial-plan-save is off then only we will use CreateOrUpdateDraft to save draft.
+                            Once we remove code of LD flag: broadcast-enable-partial-plan-save at that time we need to remove code of CreateOrUpdateDraft to save draft.
+                         */
                         if (plan.IsDraft ?? false)
                         {
                             _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
@@ -545,34 +551,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        ///<inheritdoc/>
-        public int SavePlanDraft(PlanDto plan, string createdBy)
-        {
-            plan.IsDraft = true;
-            var createdDate = _DateTimeEngine.GetCurrentMoment();            
-            var result = _DoSavePlanDraft(plan, createdBy, createdDate);
-            return result;
-        }
-
         private int _DoSavePlanDraft(PlanDto plan, string createdBy, DateTime createdDate)
         {
             var logTxId = Guid.NewGuid();
-
-            const string SW_KEY_TOTAL_DURATION = "Total duration";
-            const string SW_KEY_PRE_PLAN_VALIDATION = "Pre Plan Validation";
-            const string SW_KEY_PLAN_VALIDATION = "Plan Validation";
-            const string SW_KEY_PRE_PLAN_SAVE = "Pre Plan Save";
-            const string SW_KEY_PLAN_SAVE = "Plan Save";
-            const string SW_KEY_POST_PLAN_SAVE = "Post Plan Save";
-
-            _LogInfo($"_DoSavePlanDraft starting for planID '{plan.Id}'", logTxId, createdBy);
-
             try
             {
-                var processTimers = new ProcessWorkflowTimers();
-                processTimers.Start(SW_KEY_TOTAL_DURATION);
-                processTimers.Start(SW_KEY_PRE_PLAN_VALIDATION);
-
                 if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
                 {
                     throw new PlanSaveException("The pricing model is running for the plan");
@@ -590,29 +573,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 if (!plan.Dayparts.IsNullOrEmpty())
                 {
+                    plan.Dayparts = _FilterValidDaypart(plan.Dayparts);
                     DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
                     _CalculateDaypartOverrides(plan.Dayparts);
                 }
 
                 _OnSaveHandlePlanAvailableMarketSovFeature(plan);
 
-                processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
-                processTimers.Start(SW_KEY_PLAN_VALIDATION);
-
                 _PlanValidator.ValidatePlanDraft(plan);
-
-                processTimers.End(SW_KEY_PLAN_VALIDATION);
-                processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
 
                 _ConvertImpressionsToRawFormat(plan);
 
-                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
+                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
                 {
                     plan.WeeklyBreakdownWeeks =
                         _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                 }
 
-                if (!plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && !plan.Dayparts.IsNullOrEmpty() && plan.Budget.HasValue && plan.TargetImpressions.HasValue)
+                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && !plan.Dayparts.IsNullOrEmpty())
                 {
                     _CalculateDeliveryDataPerAudience(plan);
                 }
@@ -628,9 +606,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     _VerifyWeeklyAdu(plan.IsAduEnabled.Value, plan.WeeklyBreakdownWeeks);
                 }
-
-                processTimers.End(SW_KEY_PRE_PLAN_SAVE);
-                processTimers.Start(SW_KEY_PLAN_SAVE);
 
                 if (plan.Id > 0)
                 {
@@ -652,18 +627,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _PlanRepository.SaveDraft(plan, createdBy, createdDate);
                 }
 
-                processTimers.End(SW_KEY_PLAN_SAVE);
-                processTimers.Start(SW_KEY_POST_PLAN_SAVE);
-
                 _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously:false);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
-
-                processTimers.End(SW_KEY_POST_PLAN_SAVE);
-                processTimers.End(SW_KEY_TOTAL_DURATION);
-                var timersReport = processTimers.ToString();
-                _LogInfo($"Plan Draft Save Process Timers Report : '{timersReport}'", logTxId, createdBy);
 
                 return plan.Id;
             }
@@ -676,6 +643,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
                 throw new Exception("Error saving the plan draft.  Please see your administrator to check logs.");
             }
+        }
+
+        private List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
+        {
+            var filteredDayparts = new List<PlanDaypartDto>();
+
+            bool isDaypartMatched;
+            foreach (var daypart in sourceDayparts)
+            {
+                isDaypartMatched = false;
+                if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()) && daypart.DaypartOrganizationId.HasValue && daypart.DaypartOrganizationId.Value > 0 && !string.IsNullOrEmpty(daypart.DaypartOrganizationName))
+                {
+                    isDaypartMatched = true;
+                }
+                else if (!EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()) && daypart.DaypartCodeId > 0)
+                {
+                    isDaypartMatched = true;
+                }
+
+                if (isDaypartMatched)
+                {
+                    filteredDayparts.Add(daypart);
+                }
+            }
+
+            return filteredDayparts;
         }
 
         private void _HandleUnknownPlanSaveException(PlanDto plan, Exception ex, Guid logTxId, string createdBy)

@@ -59,15 +59,6 @@ namespace BroadcastComposerWeb.Controllers
             return result;
         }
 
-        [HttpPost]
-        [Route("savedraft")]
-        [Authorize]
-        public BaseResponse<int> SavePlanDraft(PlanDto plan)
-        {
-            var createdBy = _GetCurrentUserFullName();
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SavePlanDraft(plan, createdBy));
-        }
-
         /// <summary>
         /// Gets the plan statuses.
         /// </summary>

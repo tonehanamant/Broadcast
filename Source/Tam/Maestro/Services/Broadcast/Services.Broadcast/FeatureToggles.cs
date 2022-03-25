@@ -29,5 +29,6 @@
         public static string ENABLE_CUSTOM_DAYPART = "broadcast-enable-custom-daypart";
         public static string ENABLE_KEEP_ORPHANED_ISCI_MAPPING = "broadcast-keep-orphaned-isci-mappings";
         public static string ENABLE_AAB_CORE_API = "broadcast-enable-aab-core-api";
+        public static string ENABLE_PARTIAL_PLAN_SAVE = "broadcast-enable-partial-plan-save";
     }
 }
