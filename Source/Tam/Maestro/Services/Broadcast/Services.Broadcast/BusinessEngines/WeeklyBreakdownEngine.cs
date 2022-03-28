@@ -1190,12 +1190,12 @@ namespace Services.Broadcast.BusinessEngines
                         default:
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
-                                var totalImpressions = request.TotalImpressions;
-                                var totalLockedImpressions = request.Weeks.Where(w => w.IsLocked).Sum(w => w.WeeklyImpressions);
-                                var totalLockedImpressionsCount = request.Weeks.Where(w => w.IsLocked).Count();
-                                if ((totalImpressions - totalLockedImpressions) <= 0)
+                                var totalLockedRowsCount = request.Weeks.Where(w => w.IsLocked).Count();
+                                if (totalLockedRowsCount > 0)
                                 {
-                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalLockedImpressionsCount);
+                                    var totalImpressions = request.TotalImpressions;
+                                    var totalLockedImpressions = request.Weeks.Where(w => w.IsLocked).Sum(w => w.WeeklyImpressions);
+                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalLockedRowsCount);
                                 }
                                 else
                                 {
