@@ -927,7 +927,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var unlockedRow in unlockedRows)
             {
                 var isCleared = unlockedRow.NumberOfActiveDays > 0 &&
-                                unlockedRow.WeeklyImpressions.Equals(0);
+                                unlockedRow.WeeklyImpressions <= 0;
                 if (!isCleared)
                 {
                     return true;
@@ -1190,7 +1190,17 @@ namespace Services.Broadcast.BusinessEngines
                         default:
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
-                                week.WeeklyImpressions = Math.Floor(request.TotalImpressions * week.WeeklyImpressions / oldImpressionTotals);
+                                var totalImpressions = request.TotalImpressions;
+                                var totalLockedImpressions = request.Weeks.Where(w => w.IsLocked).Sum(w => w.WeeklyImpressions);
+                                var totalLockedImpressionsCount = request.Weeks.Where(w => w.IsLocked).Count();
+                                if ((totalImpressions - totalLockedImpressions) <= 0)
+                                {
+                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalLockedImpressionsCount);
+                                }
+                                else
+                                {
+                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions * week.WeeklyImpressions / oldImpressionTotals);
+                                }
                             }
                             else
                             {
