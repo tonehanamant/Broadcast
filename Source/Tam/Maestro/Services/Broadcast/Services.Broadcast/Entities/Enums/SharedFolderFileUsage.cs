@@ -9,6 +9,7 @@
         InventoryScx = 5,
         InventoryExport = 6,
         UploadedInventory = 7,
-        InventoryErrorFile = 8
+        InventoryErrorFile = 8,
+        PricingResultsReport = 9
     }
 }

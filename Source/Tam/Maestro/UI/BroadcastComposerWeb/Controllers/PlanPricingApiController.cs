@@ -252,6 +252,17 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().RunQuote(request, fullName, appDataPath));
         }
 
+        [HttpPost]
+        [Route("ResultsReport")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<Guid> ResultsReport([FromBody]PlanPricingResultsReportRequest request)
+        {
+            var appDataPath = _GetAppDataPath();
+            var fullName = _GetCurrentUserFullName();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GeneratePricingResultsReportAndSave(request, appDataPath, fullName));
+        }
+
         /// <summary>
         /// Lists the Inventory Proprietary Summaries
         /// </summary>

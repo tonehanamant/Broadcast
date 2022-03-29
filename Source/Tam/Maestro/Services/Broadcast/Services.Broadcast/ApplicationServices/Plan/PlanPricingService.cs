@@ -108,6 +108,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="templatesFilePath">Base path of the file templates</param>
         /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
         ReportOutput GeneratePricingResultsReport(int planId,SpotAllocationModelMode spotAllocationModelMode, string templatesFilePath);
+
+        /// <summary>
+        /// Generates the pricing results report, saves it then returns a Guid for retreiving the file.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="templatesFilePath">The templates file path.</param>
+        /// <param name="username">The username.</param>
+        /// <returns></returns>
+        Guid GeneratePricingResultsReportAndSave(PlanPricingResultsReportRequest request,
+            string templatesFilePath, string username);
+
         void ValidateAndApplyMargin(PlanPricingParametersDto parameters);
         PricingProgramsResultDto GetPrograms(int planId);
         PricingProgramsResultDto GetProgramsByJobId(int jobId);
@@ -295,6 +306,33 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return reportData;
         }
 
+        public Guid GeneratePricingResultsReportAndSave(PlanPricingResultsReportRequest request,
+            string templatesFilePath, string username)
+        {
+            var reportData = GetPricingResultsReportData(request.PlanId, request.SpotAllocationModelMode, request.PostingType);
+            var reportGenerator = new PricingResultsReportGenerator(templatesFilePath);
+
+            _LogInfo($"Starting to generate the file '{reportData.ExportFileName}'....");
+
+            var report = reportGenerator.Generate(reportData);
+
+            var savedFileGuid = _SharedFolderService.SaveFile(new SharedFolderFile
+            {
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PRICING_RESULTS_REPORT),
+                FileNameWithExtension = report.Filename,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.PricingResultsReport,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = username,
+                FileContent = report.Stream
+            });
+
+            _LogInfo($"Saved file '{reportData.ExportFileName}' with guid '{savedFileGuid}'");
+
+            return savedFileGuid;
+        }
+
+        /// <inheritdoc/>
         public ReportOutput GeneratePricingResultsReport(int planId,SpotAllocationModelMode spotAllocationModelMode, string templatesFilePath)
         {
             var reportData = GetPricingResultsReportData(planId, spotAllocationModelMode);
@@ -304,10 +342,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return report;
         }
 
-        public PricingResultsReportData GetPricingResultsReportData(int planId,SpotAllocationModelMode spotAllocationModelMode)
+        public PricingResultsReportData GetPricingResultsReportData(int planId,SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum? postingType = null)
         {
             var plan = _PlanRepository.GetPlan(planId);
-            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanVersionId(planId,plan.VersionId,plan.PostingType,spotAllocationModelMode);
+
+            var reportPostingType = postingType ?? plan.PostingType;
+
+            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanVersionId(planId,plan.VersionId, reportPostingType, spotAllocationModelMode);
             var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
             var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value);
