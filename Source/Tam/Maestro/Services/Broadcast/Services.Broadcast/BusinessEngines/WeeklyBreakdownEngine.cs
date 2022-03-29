@@ -1191,11 +1191,12 @@ namespace Services.Broadcast.BusinessEngines
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
                                 var totalLockedRowsCount = request.Weeks.Where(w => w.IsLocked).Count();
+                                var totalUnloockedRowsCount = request.Weeks.Where(w => w.IsLocked.Equals(false)).Count();
                                 if (totalLockedRowsCount > 0)
                                 {
                                     var totalImpressions = request.TotalImpressions;
                                     var totalLockedImpressions = request.Weeks.Where(w => w.IsLocked).Sum(w => w.WeeklyImpressions);
-                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalLockedRowsCount);
+                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalUnloockedRowsCount);
                                 }
                                 else
                                 {
