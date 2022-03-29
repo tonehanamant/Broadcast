@@ -443,7 +443,7 @@ namespace Services.Broadcast.Repositories
 
                        _MapFromDto(plan, context, planEntity, draftVersion);
 
-                       if (!isDraftExist)
+                       if (plan.Id == 0)
                        {
                            context.plans.Add(planEntity);
                        }
@@ -1353,10 +1353,10 @@ namespace Services.Broadcast.Repositories
                     audience_id = d.AudienceId,
                     audience_type = (int)d.Type,
                     vpvh = d.Vpvh,
-                    rating_points = d.RatingPoints.Value,
-                    impressions = d.Impressions.Value,
-                    cpm = d.CPM.Value,
-                    cpp = (double)d.CPP.Value,
+                    rating_points = d.RatingPoints ?? 0,
+                    impressions = d.Impressions ?? 0,
+                    cpm = d.CPM ?? 0,
+                    cpp = d.CPP.HasValue ? (double)d.CPP.Value : 0,
                     universe = d.Universe
                 });
             });

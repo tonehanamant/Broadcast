@@ -190,6 +190,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.VPVH_DEMO, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE, false);
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
@@ -322,6 +323,97 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus);
             _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
             // Pricing Triggering etc is covered by other tests.
+        }
+
+        [Test]
+        public void SavePlanDraft()
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE] = true;
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            var saveNewPlanCalls = new List<DateTime>();
+            _PlanRepositoryMock.Setup(s => s.SaveDraft(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
+
+            var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s =>
+                    s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
+                .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
+
+            var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
+
+            var planAggregator = new Mock<IPlanAggregator>();
+            var aggregateCallCount = 0;
+            var aggregateReturn = new PlanSummaryDto();
+            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Callback(() => aggregateCallCount++)
+                .Returns(aggregateReturn);
+
+            var plan = _GetNewPlan();
+            plan.IsDraft = true;
+            var campaignId = plan.CampaignId;
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
+            // Act
+            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+
+            // Assert
+            Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
+            Assert.AreEqual(1, setStatusCalls.Count, "Invalid call count.");
+            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
+        }
+
+        [Test]
+        public void FilterValidDaypart()
+        {
+            //Arrange
+            var sourceDayparts = new List<PlanDaypartDto>()
+            {
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.News,
+                    DaypartCodeId = 2,
+                    StartTimeSeconds = 0,
+                    EndTimeSeconds = 2000,
+                    WeightingGoalPercent = 28.0
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.Sports,
+                    DaypartOrganizationId = 1,
+                    DaypartOrganizationName = "NBA",
+                    StartTimeSeconds = 0,
+                    EndTimeSeconds = 2000,
+                    WeightingGoalPercent = 28.0
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.News
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = DaypartTypeEnum.Sports,
+                    DaypartOrganizationId = 1
+                },
+            };
+
+            //Act
+            var result = _PlanService._FilterValidDaypart(sourceDayparts);
+
+            //Assert
+            Assert.AreEqual(2, result.Count);
         }
 
         private PlanPricingParametersDto _GetPricingParameters(int planId, int planVersionId)

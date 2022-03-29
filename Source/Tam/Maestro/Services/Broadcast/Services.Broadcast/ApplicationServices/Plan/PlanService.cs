@@ -645,7 +645,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
+        internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
         {
             var filteredDayparts = new List<PlanDaypartDto>();
 
