@@ -568,36 +568,24 @@ namespace Services.Broadcast.BusinessEngines
             _OrderWeeks(request, response);
             SetWeekNumberAndSpotLengthDuration(response.Weeks);
             _AddDaypartToWeeklyBreakdownResult(request, response);
-            PlanDto plan = new PlanDto();
-            plan.GoalBreakdownType = request.DeliveryType;
-            plan.CreativeLengths = request.CreativeLengths;
-            plan.Dayparts = request.Dayparts;
-            plan.WeeklyBreakdownWeeks = response.Weeks;
-            plan.TargetRatingPoints = request.TotalRatings;
-            plan.Budget = request.TotalBudget;
-            plan.Equivalized = request.Equivalized;
-            plan.ImpressionsPerUnit = request.ImpressionsPerUnit;
-            plan.TargetImpressions = request.TotalImpressions;
-            plan.FlightDays = request.FlightDays;
-            plan.FlightEndDate = request.FlightEndDate;
-            plan.FlightHiatusDays = request.FlightHiatusDays;
-            response.RawWeeklyBreakdownWeeks = DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+            response.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, response.Weeks);
             return response;
         }
 
 
         public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
+            var result = new WeeklyBreakdownResponseDto();
+            result.Weeks.AddRange(request.Weeks);
+            result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
 
-            //Switch delivery type if it is even to prevent redestribution          
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
                 request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
 
             if (_IsWeeklyBreakdownLockEnabled.Value)
             {
-                foreach (var week in request.Weeks)
+                foreach (var week in result.Weeks)
                 {
-                    //Checking whether locked is not true then clear the week
                     if (week.IsLocked != true)
                     {
                         week.WeeklyBudget = 0;
@@ -612,7 +600,7 @@ namespace Services.Broadcast.BusinessEngines
             }
             else
             {
-                foreach (var week in request.Weeks)
+                foreach (var week in result.Weeks)
                 {
                     week.WeeklyBudget = 0;
                     week.WeeklyUnits = 0;
@@ -624,9 +612,7 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
 
-            var response = CalculatePlanWeeklyGoalBreakdown(request);
-
-            return response;
+            return result;
         }
 
         private void _AdjustSpotLengthBudget(List<WeeklyBreakdownWeek> weeks, PlanGoalBreakdownTypeEnum deliveryType,
@@ -1788,6 +1774,24 @@ namespace Services.Broadcast.BusinessEngines
                     }
                 }
             }
+        }
+
+        private List<WeeklyBreakdownWeek> _PopulateRawWeeklyBreakdownWeeks(WeeklyBreakdownRequest request, List<WeeklyBreakdownWeek> weeks)
+        {
+            PlanDto plan = new PlanDto();
+            plan.GoalBreakdownType = request.DeliveryType;
+            plan.CreativeLengths = request.CreativeLengths;
+            plan.Dayparts = request.Dayparts;
+            plan.WeeklyBreakdownWeeks = weeks;
+            plan.TargetRatingPoints = request.TotalRatings;
+            plan.Budget = request.TotalBudget;
+            plan.Equivalized = request.Equivalized;
+            plan.ImpressionsPerUnit = request.ImpressionsPerUnit;
+            plan.TargetImpressions = request.TotalImpressions;
+            plan.FlightDays = request.FlightDays;
+            plan.FlightEndDate = request.FlightEndDate;
+            plan.FlightHiatusDays = request.FlightHiatusDays;
+            return DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
         }
     }
 }
