@@ -363,7 +363,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 markets,
                 _WeeklyBreakdownEngine,
                 spotAllocationModelMode,
-                plan.PostingType);
+                reportPostingType);
         }
 
         public async Task<PlanPricingJob> QueuePricingJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto
