@@ -559,6 +559,8 @@
     <Compile Include="Entities\Plan\PlansCopyDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultsReportRequest.cs" />
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
+    <Compile Include="Entities\RatingsForecastResponseDto.cs" />
+    <Compile Include="Entities\RatingsForecastRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionSaveDecisionsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionOutOfSpecUnpostedRequestDto.cs" />

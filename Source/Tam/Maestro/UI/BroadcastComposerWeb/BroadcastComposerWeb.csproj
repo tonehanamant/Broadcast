@@ -359,6 +359,7 @@
     <Compile Include="Controllers\BroadcastControllerBase.cs" />
     <Compile Include="Controllers\CampaignApiController.cs" />
     <Compile Include="Controllers\ContainTypeApiController.cs" />
+    <Compile Include="Controllers\RatingsForecastApiController.cs" />
     <Compile Include="Controllers\LockTestApiController.cs" />
     <Compile Include="Controllers\PlanIsciApiController.cs" />
     <Compile Include="Controllers\SpotExceptionApiController.cs" />
