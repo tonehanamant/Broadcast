@@ -306,7 +306,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 }
             };
             var summary = new CampaignSummaryDto { CampaignId = campaignId };
-            
+
             tc.UT_AggregateFlightInfo(plans, plans.Where(p => p.Status != PlanStatusEnum.Scenario).ToList(), summary);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
@@ -346,6 +346,74 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
 
             tc.UT_AggregateFlightInfo(plans, plans, summary);
 
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Aggregate_ExcludesDrafts()
+        {
+            const int campaignId = 420;
+            var plans = new List<PlanDto>
+            {
+              new PlanDto
+              {
+                Status = PlanStatusEnum.Contracted,
+                Budget = 1000.0m,
+                TargetCPM = 2000.0m,
+                TargetCPP = 3000.0m,
+                TargetRatingPoints = 4000.0,
+                TargetImpressions = 5000.0,
+                FlightStartDate = new DateTime(2019, 08, 01),
+                FlightEndDate = new DateTime(2019, 08, 20),
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 8, 15),
+                    new DateTime(2019, 8, 17)
+                },
+                ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 23),
+                ModifiedBy = "TestUserOne",
+                HHImpressions = 10000,
+                HHUniverse = 1000000,
+                HHCPM = 0.05m,
+                HHRatingPoints = 2,
+                HHCPP = 1,
+                TargetUniverse = 2000000,
+                IsDraft = false
+              },
+              new PlanDto
+              {
+                Status = PlanStatusEnum.Contracted,
+                Budget = 500.0m,
+                TargetCPM = 500.0m,
+                TargetCPP = 500.0m,
+                TargetRatingPoints = 500.0,
+                TargetImpressions = 500.0,
+                FlightStartDate = new DateTime(2019, 09, 21),
+                FlightEndDate = new DateTime(2019, 09, 30),
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 9, 25),
+                    new DateTime(2019, 9, 26)
+                },
+                ModifiedDate = new DateTime(2019, 08, 28, 12, 30, 32),
+                ModifiedBy = "TestUserTwo",
+                HHImpressions = 10000,
+                HHUniverse = 1000000,
+                HHCPM = 0.05m,
+                HHRatingPoints = 50,
+                HHCPP = 1,
+                TargetUniverse = 2000000,
+                IsDraft = true
+              }
+            };
+            var planRepository = new Mock<IPlanRepository>();
+            planRepository.Setup(s => s.GetPlansForCampaign(It.IsAny<int>())).Returns(plans);
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(d => d.GetDataRepository<IPlanRepository>()).Returns(planRepository.Object);
+            var tc = new CampaignAggregatorUnitTestClass(dataRepositoryFactory.Object);
+            var summary = tc.Aggregate(campaignId);
+            planRepository.Verify(c => c.GetPlansForCampaign(campaignId), Times.Once());
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(summary));
         }
     }

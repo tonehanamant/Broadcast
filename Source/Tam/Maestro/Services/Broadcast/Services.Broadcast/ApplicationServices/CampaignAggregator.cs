@@ -62,7 +62,8 @@ namespace Services.Broadcast.ApplicationServices
                 .Where(p => 
                     p.Status != PlanStatusEnum.Scenario && 
                     p.Status != PlanStatusEnum.Canceled &&
-                    p.Status != PlanStatusEnum.Rejected)
+                    p.Status != PlanStatusEnum.Rejected &&
+                    p.IsDraft != true) 
                 .ToList();
 
             var aggFunctions = GetAggregationFunctionList();
