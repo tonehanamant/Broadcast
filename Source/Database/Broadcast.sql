@@ -571,6 +571,18 @@ GO
 
 /*************************************** END BP-4198 ****************************************/
 
+/*************************************** START BP-4199 ***************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_buying_job' AND COLUMN_NAME= 'inventory_raw_file')
+BEGIN
+	ALTER TABLE plan_version_buying_job
+			ADD inventory_raw_file varchar(2048) NULL
+END
+
+GO
+
+/*************************************** END BP-4199 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

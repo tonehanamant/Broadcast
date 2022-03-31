@@ -415,7 +415,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_result_spots" Width="1.5" PointX="24.25" PointY="62.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_results" Width="1.5" PointX="16.75" PointY="95" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_details" Width="1.5" PointX="19.25" PointY="94.875" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_job" Width="1.5" PointX="14.75" PointY="91.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_parameters" Width="1.5" PointX="23" PointY="51.5" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spots" Width="1.5" PointX="7.625" PointY="92.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_station_details" Width="1.5" PointX="21.5" PointY="95" />
@@ -425,9 +424,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spots_station_inventory_manifest" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.program_name_mapping_keywords" Width="1.5" PointX="33.25" PointY="50.875" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_genres" />
@@ -440,7 +436,6 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_sources" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_results" Width="1.5" PointX="17" PointY="89.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_results" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_station_details_plan_version_buying_results" />
@@ -571,7 +566,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_station_dayparts" Width="1.5" PointX="19.25" PointY="81.125" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_stations" Width="1.5" PointX="17" PointY="84.625" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" />
         <EntityTypeShape EntityType="BroadcastModel.staged_out_of_specs" Width="1.5" PointX="40.375" PointY="28.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" Width="1.5" PointX="45.125" PointY="31" />
@@ -583,6 +577,12 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_job" Width="1.5" PointX="14.5" PointY="54.625" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

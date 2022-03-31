@@ -198,7 +198,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
         public virtual DbSet<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
-        public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
         public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual DbSet<plan_version_buying_result_spots> plan_version_buying_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
@@ -251,5 +250,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
     }
 }
