@@ -9,5 +9,7 @@ namespace Services.Broadcast.Entities
     public class RatingsForecastResponseDto
     {
         public double ProjectedImpressions { get; set; }
+
+        public List<StationImpressionsWithAudience> NielsenAudienceImpressions { get; set; }
     }
 }

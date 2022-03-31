@@ -98,7 +98,8 @@ namespace Services.Broadcast.ApplicationServices
 
             var response = new RatingsForecastResponseDto
             {
-                ProjectedImpressions = totalImpressions
+                ProjectedImpressions = totalImpressions,
+                NielsenAudienceImpressions = projectedResult.Impressions
             };
             return response;
         }
