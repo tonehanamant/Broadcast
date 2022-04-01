@@ -334,7 +334,8 @@ namespace Services.Broadcast.BusinessEngines
                         CustomName = combination.CustomName,
                         DaypartOrganizationName = combination.DaypartOrganizationName,
                         DaypartOrganizationId = combination.DaypartOrganizationId,
-                        PlanDaypartId = combination.PlanDaypartId
+                        PlanDaypartId = combination.PlanDaypartId,
+                        WeeklyAdu = week.WeeklyAdu
 
                     };
 
@@ -577,6 +578,12 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = new WeeklyBreakdownResponseDto();
             result.Weeks.AddRange(request.Weeks);
+            result.TotalActiveDays = request.Weeks.Where(x => x.IsLocked).Sum(x => x.NumberOfActiveDays);
+            result.TotalBudget = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyBudget);
+            result.TotalUnits = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyUnits);
+            result.TotalImpressions = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressions);
+            result.TotalRatingPoints = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyRatings);
+            result.TotalImpressionsPercentage = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressionsPercentage);
             result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
 
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)

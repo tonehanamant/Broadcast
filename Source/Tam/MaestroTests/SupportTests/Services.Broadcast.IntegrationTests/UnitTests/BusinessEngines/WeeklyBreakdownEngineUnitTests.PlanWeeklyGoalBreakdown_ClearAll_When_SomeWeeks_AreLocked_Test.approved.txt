@@ -225,13 +225,13 @@
       "WeekNumber": 6
     }
   ],
-  "TotalActiveDays": 0,
-  "TotalBudget": 0.0,
-  "TotalImpressions": 0.0,
-  "TotalImpressionsPercentage": 0.0,
-  "TotalRatingPoints": 0.0,
+  "TotalActiveDays": 14,
+  "TotalBudget": 120000.0,
+  "TotalImpressions": 12000.0,
+  "TotalImpressionsPercentage": 40.0,
+  "TotalRatingPoints": 11.21646802,
   "TotalShareOfVoice": 0.0,
-  "TotalUnits": 0.0,
+  "TotalUnits": 2.0,
   "Weeks": [
     {
       "ActiveDays": "M-Su",
