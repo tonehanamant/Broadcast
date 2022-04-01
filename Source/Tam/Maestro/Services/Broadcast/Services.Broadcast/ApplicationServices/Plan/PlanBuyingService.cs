@@ -2362,8 +2362,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     allocatedSpot.RepFirm = allocatedSpot.RepFirm ?? allocatedSpot.LegacyCallLetters;
                     allocatedSpot.OwnerName = allocatedSpot.OwnerName ?? allocatedSpot.LegacyCallLetters;
                 });
-
-                var planBuyingBandInventoryStations = _PlanBuyingRepository.GetPlanBuyingBandInventoryStations(job.Id);
+                
+                var planBuyingBandInventoryStations = new PlanBuyingBandInventoryStationsDto();
+                try
+                {
+                    planBuyingBandInventoryStations = _PlanBuyingRepository.GetPlanBuyingBandInventoryStations(job.Id);
+                }
+                catch (Exception exception)
+                {
+                    _LogError($"No Bands Inventory data found. If happened before May 2022 then the feature hasn't been released and this can be ignored. If after then look into this", exception);
+                    return null;
+                }
+                
                 if (planBuyingBandInventoryStations == null)
                 {
                     return null;
