@@ -1268,18 +1268,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     allAggregationTasks.Wait();
                     /*** Persist the results ***/
                     _SaveBuyingArtifacts(allocationResults, aggregationTasks, diagnostic);
-
-                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-                    var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-                    buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
-                    buyingJob.Completed = _DateTimeEngine.GetCurrentMoment();
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-
-                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
-                    buyingJob.DiagnosticResult = diagnostic.ToString();
-
-                    _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
                 }
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+                var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
+                buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
+                buyingJob.Completed = _DateTimeEngine.GetCurrentMoment();
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
+                buyingJob.DiagnosticResult = diagnostic.ToString();
+
+                _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
             }
             catch (BuyingModelException exception)
             {
