@@ -584,14 +584,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _ConvertImpressionsToRawFormat(plan);
 
-                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
-                {
-                    plan.WeeklyBreakdownWeeks =
-                        _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-                }
-
                 if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && !plan.Dayparts.IsNullOrEmpty())
                 {
+                    plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                     _CalculateDeliveryDataPerAudience(plan);
                 }
                 

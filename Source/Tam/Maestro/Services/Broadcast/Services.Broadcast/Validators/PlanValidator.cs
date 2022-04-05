@@ -172,67 +172,7 @@ namespace Services.Broadcast.Validators
                 throw new PlanValidationException(INVALID_PLAN_NAME);
             }
 
-            _ValidateCreativeLengths(plan.CreativeLengths);
-
-            if (plan.ProductMasterId.HasValue)
-            {
-                _ValidateProduct(plan);
-            }
-
             _ValidateFlightAndHiatus(plan);
-
-            if (!plan.Dayparts.IsNullOrEmpty())
-            {
-                _ValidateCustomDayparts(plan);
-                _ValidateDayparts(plan);
-            }
-
-            _ValidatePrimaryAudience(plan);
-            _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
-
-            if (plan.CoverageGoalPercent.HasValue)
-            {
-                _ValidateMarkets(plan);
-            }
-
-            _ValidateWeeklyBreakdownWeeks(plan);
-
-            if (plan.Budget.HasValue)
-            {
-                if (!(plan.Budget.Value > 0m))
-                {
-                    throw new PlanValidationException(INVALID_BUDGET);
-                }
-            }
-            
-            if (plan.TargetCPM.HasValue)
-            {
-                if (!(plan.TargetCPM.Value > 0m))
-                {
-                    throw new PlanValidationException(INVALID_CPM);
-                }
-            }
-
-            if (plan.TargetCPP.HasValue)
-            {
-                if (!(plan.TargetCPP.Value > 0m))
-                {
-                    throw new PlanValidationException(INVALID_CPP);
-                }
-            }
-
-            if (plan.TargetImpressions.HasValue)
-            {
-                if (!(plan.TargetImpressions.Value > 0d))
-                {
-                    throw new PlanValidationException(INVALID_DELIVERY_IMPRESSIONS);
-                }
-
-                if (plan.ImpressionsPerUnit.HasValue)
-                {
-                    ValidateImpressionsPerUnit(plan.ImpressionsPerUnit.Value, plan.TargetImpressions.Value);
-                }
-            }
         }
 
         /// <inheritdoc/>
