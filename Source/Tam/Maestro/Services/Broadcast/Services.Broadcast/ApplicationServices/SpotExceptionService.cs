@@ -1477,15 +1477,27 @@ namespace Services.Broadcast.ApplicationServices
         public bool TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
             var dateTime = DateTime.Now;
-            var isSynced = _SpotExceptionRepository.SyncOutOfSpecDecision(triggerDecisionSyncRequest, dateTime);
+            var isSyncedOutOfSpecDecision = _SpotExceptionRepository.SyncOutOfSpecDecision(triggerDecisionSyncRequest, dateTime);
+            var isSyncedRecommandedPlanDecision = _SpotExceptionRepository.SyncRecommandedPlanDecision(triggerDecisionSyncRequest, dateTime);
+            bool isSynced;
+            if (isSyncedOutOfSpecDecision == false && isSyncedRecommandedPlanDecision == false)
+            {
+                isSynced = false;
+            }
+            else
+            {
+                isSynced = true;
+            }
             return isSynced;
         }
 
         /// <inheritdoc />
         public int GetQueuedDecisionCount()
         {
-            var decisonQueuedCount = _SpotExceptionRepository.GetDecisionQueuedCount();
-            return decisonQueuedCount;
+            var outOfSpecDecisonQueuedCount = _SpotExceptionRepository.GetDecisionQueuedCount();
+            var recommandedPlanDecisonQueuedCount = _SpotExceptionRepository.GetRecommandedPlanDecisionQueuedCount();
+            int totalDecisionCount = outOfSpecDecisonQueuedCount + recommandedPlanDecisonQueuedCount;
+            return totalDecisionCount;
         }
     }
 }

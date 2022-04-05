@@ -2236,28 +2236,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void GetDecisionCount_Exist()
         {
             // Arrange
-            int count = 2;
+            int outOfSpecDecisioncount = 2;
+            int recommandedPlanDecisioncount = 3;
 
             _SpotExceptionRepositoryMock
                 .Setup(s => s.GetDecisionQueuedCount())
-                .Returns(count);
+                .Returns(outOfSpecDecisioncount);
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetRecommandedPlanDecisionQueuedCount())
+                .Returns(recommandedPlanDecisioncount);
 
             // Act
             var result = _SpotExceptionService.GetQueuedDecisionCount();
 
             // Assert
-            Assert.AreEqual(result, 2);
+            Assert.AreEqual(result, 5);
         }
 
         [Test]
         public void GetDecisionCount_DoesNotExist()
         {
             // Arrange
-            int count = 0;
+            int outOfSpecDecisioncount = 0;
+            int recommandedPlanDecisioncount = 0;
 
             _SpotExceptionRepositoryMock
                 .Setup(s => s.GetDecisionQueuedCount())
-                .Returns(count);
+                .Returns(outOfSpecDecisioncount);
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetRecommandedPlanDecisionQueuedCount())
+                .Returns(recommandedPlanDecisioncount);
 
             // Act
             var result = _SpotExceptionService.GetQueuedDecisionCount();
@@ -2284,5 +2294,44 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
 
+        [Test]
+        public void TriggerRecommandedPlanDecisionSync_Exist()
+        {
+            // Arrange
+
+            var recommandedPlanDecision = new List<SpotExceptionsRecommendedPlanDecisionDto>()
+            {
+                new SpotExceptionsRecommendedPlanDecisionDto()
+                {
+                    Id = 1,
+                    SpotExceptionsRecommendedPlanDetailId = 1,
+                    UserName = "Test User",
+                    CreatedAt = new DateTime(2020,1,10,23,45,00)
+                },
+                new SpotExceptionsRecommendedPlanDecisionDto()
+                {
+                    Id = 2,
+                    SpotExceptionsRecommendedPlanDetailId = 2,
+                    UserName = "Test User",
+                    CreatedAt = new DateTime(2020,1,10,23,45,00)
+                }
+            };
+
+            var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto
+            {
+                UserName = "Test User"
+            };
+            bool result = false;
+            bool expectedResult = true;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SyncRecommandedPlanDecision(It.IsAny<TriggerDecisionSyncRequestDto>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            result = _SpotExceptionService.TriggerDecisionSync(triggerDecisionSyncRequest);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
     }
 }

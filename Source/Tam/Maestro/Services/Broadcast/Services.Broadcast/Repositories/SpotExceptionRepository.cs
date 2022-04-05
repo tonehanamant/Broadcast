@@ -141,6 +141,20 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>Count of Decision Data</returns>
         int GetDecisionQueuedCount();
+
+        /// <summary>
+        /// Sync Recommande Plan Decision Data Assigning the SyncedAt  and SyncedBy Indicators.
+        /// </summary>
+        /// <param name="triggerDecisionSyncRequest">User Name</param>
+        /// <param name="dateTime">Current Date Time</param>
+        /// <returns>true or false</returns>
+        bool SyncRecommandedPlanDecision(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest, DateTime dateTime);
+
+        /// <summary>
+        /// Get The Recommanded Decision Count
+        /// </summary>
+        /// <returns>Count of Recommanded plan Decision Data</returns>
+        int GetRecommandedPlanDecisionQueuedCount();
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -941,10 +955,43 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var queuedDecisionCount = context.spot_exceptions_out_of_spec_decisions
+                var OutOfSpecDecisionCount = context.spot_exceptions_out_of_spec_decisions
                   .Where(x => x.synced_at == null)
                   .Count();
-                return queuedDecisionCount;
+                return OutOfSpecDecisionCount;
+            });
+        }
+
+        /// <inheritdoc />
+        public bool SyncRecommandedPlanDecision(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest, DateTime dateTime)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                
+                var spotExceptionsRecommandedDecisionsEntities = context.spot_exceptions_recommended_plan_decision
+                    .Where(spotExceptionsDecisionDb => spotExceptionsDecisionDb.synced_at == null).ToList();
+
+                if (spotExceptionsRecommandedDecisionsEntities?.Any() ?? false)
+                {
+                    spotExceptionsRecommandedDecisionsEntities.ForEach(x => { x.synced_by = triggerDecisionSyncRequest.UserName; x.synced_at = dateTime; });
+                }
+
+                bool isSpotExceptionsRecommandedPlanDecisionSynced = false;
+                int recordCount = context.SaveChanges();
+                isSpotExceptionsRecommandedPlanDecisionSynced = recordCount > 0;
+                return isSpotExceptionsRecommandedPlanDecisionSynced;
+            });
+        }
+
+        /// <inheritdoc />
+        public int GetRecommandedPlanDecisionQueuedCount()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var recommandedPlansDecisionCount = context.spot_exceptions_recommended_plan_decision
+                  .Where(x => x.synced_at == null)
+                  .Count();
+                return recommandedPlansDecisionCount;
             });
         }
     }
