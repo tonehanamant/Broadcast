@@ -583,6 +583,18 @@ GO
 
 /*************************************** END BP-4199 ***************************************/
 
+/*************************************** START BP-4198 ***************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_buying_band_inventory_stations' AND COLUMN_NAME= 'posting_type_conversion_rate')
+BEGIN
+	ALTER TABLE plan_version_buying_band_inventory_stations
+			ADD posting_type_conversion_rate float NULL
+END
+
+GO
+
+/*************************************** END BP-4198 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

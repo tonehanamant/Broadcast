@@ -26,9 +26,10 @@ namespace EntityFrameworkMapping.Broadcast
         public double impressions { get; set; }
         public decimal cost { get; set; }
         public int manifest_weeks_count { get; set; }
+        public Nullable<double> posting_type_conversion_rate { get; set; }
     
         public virtual ICollection<plan_version_buying_band_inventory_station_dayparts> plan_version_buying_band_inventory_station_dayparts { get; set; }
-        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
         public virtual station station { get; set; }
+        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
     }
 }
