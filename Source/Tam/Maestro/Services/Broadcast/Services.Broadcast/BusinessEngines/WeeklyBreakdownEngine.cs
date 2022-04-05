@@ -198,7 +198,8 @@ namespace Services.Broadcast.BusinessEngines
                         DaypartOrganizationId = weeklyBreakdown.DaypartOrganizationId,
                         CustomName = weeklyBreakdown.CustomName,
                         DaypartOrganizationName = weeklyBreakdown.DaypartOrganizationName,
-                        PlanDaypartId = weeklyBreakdown.PlanDaypartId
+                        PlanDaypartId = weeklyBreakdown.PlanDaypartId,
+                        WeeklyAdu = weeklyBreakdown.WeeklyAdu
                     };
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
@@ -266,7 +267,8 @@ namespace Services.Broadcast.BusinessEngines
                             CustomName = item.CustomName,
                             DaypartOrganizationName = item.DaypartOrganizationName,
                             DaypartOrganizationId = item.DaypartOrganizationId,
-                            PlanDaypartId = item.PlanDaypartId
+                            PlanDaypartId = item.PlanDaypartId,
+                            WeeklyAdu = week.Adu
                         };
 
                         var impressions = breakdownItem.WeeklyImpressions * weighting;
@@ -1139,9 +1141,9 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var week in weeksToUpdate)
             {
+                week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
                 if (!week.IsLocked)
                 {
-                    week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
                     week.ActiveDays = activeDaysString;
 
                     if (week.NumberOfActiveDays < 1)
@@ -1564,7 +1566,8 @@ namespace Services.Broadcast.BusinessEngines
                         SpotLengthId = first.SpotLengthId,
                         DaypartCodeId = first.DaypartCodeId,
                         CustomName = first.CustomName,
-                        DaypartOrganizationName = first.DaypartOrganizationName
+                        DaypartOrganizationName = first.DaypartOrganizationName,
+                        Adu = first.WeeklyAdu
                     };
                     if (!creativeLengths.IsNullOrEmpty())
                     {
