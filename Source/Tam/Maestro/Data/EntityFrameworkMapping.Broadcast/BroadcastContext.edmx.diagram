@@ -504,11 +504,6 @@
         <EntityTypeShape EntityType="BroadcastModel.reel_isci_ingest_jobs" Width="1.5" PointX="36.375" PointY="3.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spot_stations" Width="1.5" PointX="19.25" PointY="99.375" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_station_dayparts" Width="1.5" PointX="24.5" PointY="87.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_stations" Width="1.5" PointX="22.25" PointY="87.375" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_station_dayparts_plan_version_buying_band_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_stations_plan_version_buying_results" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_stations_stations" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_ingest_jobs" Width="1.5" PointX="36.375" PointY="30.5" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_decision" Width="1.5" PointX="39.5" PointY="12.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" Width="1.5" PointX="37.25" PointY="13.5" />
@@ -536,7 +531,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_daypart_customizations" Width="1.5" PointX="38.625" PointY="25.375" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_customizations_custom_daypart_organizations" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_daypart_customizations_plan_version_daypart" />
-        <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_plan" Width="1.5" PointX="40.375" PointY="0.75" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="37.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" Width="1.5" PointX="20.375" PointY="41.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" Width="1.5" PointX="40.375" PointY="41.75" />
@@ -560,14 +554,10 @@
         <AssociationConnector Association="BroadcastModel.FK__plan_version_audience_daypart_vpvh_plan_version_daypart_customizations" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_standard_dayparts" />
-        <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plan_details" Width="1.5" PointX="41.625" PointY="5.125" />
-        <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plans" Width="1.5" PointX="39.375" PointY="5.125" />
-        <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_station_dayparts" Width="1.5" PointX="19.25" PointY="81.125" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_stations" Width="1.5" PointX="17" PointY="84.625" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" />
-        <EntityTypeShape EntityType="BroadcastModel.staged_out_of_specs" Width="1.5" PointX="40.375" PointY="28.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" Width="1.5" PointX="45.125" PointY="31" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="42.875" PointY="28.625" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />

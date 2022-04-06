@@ -23,7 +23,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_buying_rep_firm_details = new HashSet<plan_version_buying_rep_firm_details>();
             this.plan_version_buying_market_details = new HashSet<plan_version_buying_market_details>();
             this.plan_version_buying_result_spot_stations = new HashSet<plan_version_buying_result_spot_stations>();
-            this.plan_version_buying_band_stations = new HashSet<plan_version_buying_band_stations>();
         }
     
         public int id { get; set; }
@@ -42,13 +41,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int posting_type { get; set; }
     
         public virtual ICollection<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
-        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
         public virtual ICollection<plan_version_buying_ownership_group_details> plan_version_buying_ownership_group_details { get; set; }
         public virtual ICollection<plan_version_buying_result_spots> plan_version_buying_result_spots { get; set; }
         public virtual ICollection<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
         public virtual ICollection<plan_version_buying_rep_firm_details> plan_version_buying_rep_firm_details { get; set; }
         public virtual ICollection<plan_version_buying_market_details> plan_version_buying_market_details { get; set; }
         public virtual ICollection<plan_version_buying_result_spot_stations> plan_version_buying_result_spot_stations { get; set; }
-        public virtual ICollection<plan_version_buying_band_stations> plan_version_buying_band_stations { get; set; }
+        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
     }
 }

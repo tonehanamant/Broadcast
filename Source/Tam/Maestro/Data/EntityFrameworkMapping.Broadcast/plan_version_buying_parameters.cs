@@ -43,8 +43,8 @@ namespace EntityFrameworkMapping.Broadcast
         public int posting_type { get; set; }
         public int budget_cpm_lever { get; set; }
     
-        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
         public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
+        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
     }
 }
