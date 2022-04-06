@@ -1142,7 +1142,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var week in weeksToUpdate)
             {
                 week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
-                if (!week.IsLocked)
+                if (!week.IsLocked && week.NumberOfActiveDays > 0)
                 {
                     week.ActiveDays = activeDaysString;
 
