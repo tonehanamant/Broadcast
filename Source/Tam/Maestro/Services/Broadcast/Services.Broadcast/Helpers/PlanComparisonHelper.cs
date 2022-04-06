@@ -50,6 +50,9 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "IsLocked"),
             new ComparisonMinorProperty(typeof(PlanDto), "RawWeeklyBreakdownWeeks"),
             new ComparisonMinorProperty(typeof(PlanDto), "CustomDayparts"),
+            new ComparisonMinorProperty(typeof(PlanDto), "PricingBudgetCpmLever"),
+            new ComparisonMinorProperty(typeof(PlanDto), "BuyingBudgetCpmLever"),
+
         };
 
         private static PlanDto _OrderListForCompare(PlanDto toOrder)

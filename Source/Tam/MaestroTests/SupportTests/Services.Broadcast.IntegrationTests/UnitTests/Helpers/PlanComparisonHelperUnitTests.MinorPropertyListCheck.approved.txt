@@ -126,5 +126,13 @@
   {
     "ClassTypeName": "PlanDto",
     "PropertyName": "CustomDayparts"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "PricingBudgetCpmLever"
+  },
+  {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "BuyingBudgetCpmLever"
   }
 ]
