@@ -148,13 +148,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         CurrentQuartersDto GetCurrentQuarters(DateTime currentDateTime);
 
-
         /// <summary>
         /// Calculates the creative length weight.
         /// </summary>
         /// <param name="request">Creative lengths set on the plan.</param>
-        /// <returns>List of creative lengths with calculated values</returns>
-        List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request);
+        /// <param name="removeNonCalculatedItems">When true will remove the given items that already had weights so that only those with calcualted values are returned.</param>
+        /// <returns>List of creative lengths with weight values.</returns>
+        List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request, bool removeNonCalculatedItems);
 
         /// <summary>
         /// Calculates the length make up table.
@@ -1477,7 +1477,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // Detect this scenario and do the default balancing.
             if ((request?.CreativeLengths?.Any(s => !s.Weight.HasValue) ?? false))
             {
-                var weightedLengths = CalculateCreativeLengthWeight(request.CreativeLengths);
+                var weightedLengths = CalculateCreativeLengthWeight(request.CreativeLengths, removeNonCalculatedItems:false);
                 if (weightedLengths != null)
                 {
                     request.CreativeLengths = weightedLengths;
@@ -1723,7 +1723,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc/>
-        public List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request)
+        public List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request, bool removeNonCalculatedItems)
         {
             _CreativeLengthEngine.ValidateCreativeLengths(request);
 
@@ -1741,10 +1741,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 request.Single(x => x.Weight == 100).Weight = null;
             }
             var result = _CreativeLengthEngine.DistributeWeight(request);
-            var creativeLengthsWithWeightSet = request.Where(x => x.Weight.HasValue).Select(x => x.SpotLengthId).ToList();
 
-            //we only return the values for placeholders
-            result.RemoveAll(x => creativeLengthsWithWeightSet.Contains(x.SpotLengthId));
+            if (removeNonCalculatedItems)
+            {
+                var creativeLengthsWithWeightSet = request.Where(x => x.Weight.HasValue).Select(x => x.SpotLengthId).ToList();
+
+                //we only return the values for placeholders
+                result.RemoveAll(x => creativeLengthsWithWeightSet.Contains(x.SpotLengthId));
+            }
+            
             return result;
         }
 

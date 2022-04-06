@@ -1568,7 +1568,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 34 } });
 
             // Act
-            var results = _PlanService.CalculateCreativeLengthWeight(request);
+            var results = _PlanService.CalculateCreativeLengthWeight(request, removeNonCalculatedItems:true);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
@@ -1594,7 +1594,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         });
 
             // Act
-            var results = _PlanService.CalculateCreativeLengthWeight(request);
+            var results = _PlanService.CalculateCreativeLengthWeight(request, removeNonCalculatedItems: true);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
@@ -1611,10 +1611,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
 
             // Act
-            var result = _PlanService.CalculateCreativeLengthWeight(request);
+            var result = _PlanService.CalculateCreativeLengthWeight(request, removeNonCalculatedItems: true);
 
             // Assert
             Assert.AreEqual(null, result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateCreativeLengthWeight_DoNotRemoveNonCalculated()
+        {
+            var request = new List<CreativeLength>
+            {
+                new CreativeLength{ SpotLengthId = 1, Weight = 25},
+                new CreativeLength{ SpotLengthId = 2},
+                new CreativeLength{ SpotLengthId = 3}
+            };
+
+            _CreativeLengthEngineMock.Setup(x => x.DistributeWeight(request))
+                .Returns(new List<CreativeLength>
+                        {
+                            new CreativeLength{ SpotLengthId = 1, Weight = 25},
+                            new CreativeLength{ SpotLengthId = 2, Weight = 38},
+                            new CreativeLength{ SpotLengthId = 3, Weight = 37}
+                        });
+
+            // Act
+            var results = _PlanService.CalculateCreativeLengthWeight(request, removeNonCalculatedItems: false);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
         private static PlanDto _GetNewPlan()

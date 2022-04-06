@@ -246,7 +246,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => 
                 _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                    .CalculateCreativeLengthWeight(request));
+                    .CalculateCreativeLengthWeight(request, removeNonCalculatedItems: true));
         }
 
         /// <summary>
