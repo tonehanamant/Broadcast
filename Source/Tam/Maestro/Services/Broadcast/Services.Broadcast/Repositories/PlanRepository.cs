@@ -704,7 +704,7 @@ namespace Services.Broadcast.Repositories
                         .OrderByDescending(p => p.version_number)
                         .FirstOrDefault();
 
-                return latestPlanByVersion.version_number.Value;
+                return latestPlanByVersion?.version_number.Value ?? 0;
             });
         }
 
