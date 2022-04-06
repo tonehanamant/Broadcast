@@ -232,6 +232,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <returns></returns>
         bool DeleteSavedBuyingData();
+
+        /// <summary>
+        /// Generates the buying results report, saves it then returns a Guid for retreiving the file.
+        /// </summary>
+        /// <param name="planBuyingResultsReportRequest">The Plan Buying Results Report Request.</param>
+        /// <param name="templateFilePath">The template file path.</param>
+        /// <param name="createdBy">The createdBy.</param>
+        /// <returns> The Guid</returns>
+        Guid GenerateBuyingResultsReportAndSave(PlanBuyingResultsReportRequest planBuyingResultsReportRequest, string templateFilePath, string createdBy);
     }
 
     /// <summary>
@@ -343,7 +352,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
         }
 
-        public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath, 
+        public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
@@ -354,8 +363,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return report;
         }
 
-        public BuyingResultsReportData GetBuyingResultsReportData(int planId, int? planVersionNumber, 
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, 
+        public BuyingResultsReportData GetBuyingResultsReportData(int planId, int? planVersionNumber,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             // use passed version or the current version by default
@@ -387,7 +396,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var data = new BuyingResultsReportData(
                 plan,
-                spotAllocationModelMode, 
+                spotAllocationModelMode,
                 postingType,
                 allocatedSpots,
                 manifests,
@@ -1126,7 +1135,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
 
                 token.ThrowIfCancellationRequested();
- 
+
                 _CalculatePlanBuyingBandInventory(modelAllocationResults, planBuyingParametersDto, inventory, token);
 
                 foreach (var allocationResult in modelAllocationResults)
@@ -1649,7 +1658,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var errorMessage = $@"Buying Model Mode ('{allocationResult.SpotAllocationModelMode}') Request Id '{apiAllocationResult.RequestId}' returned the following error: {apiAllocationResult.Error.Name} 
                                 -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
-                
+
                 throw new BuyingModelException(errorMessage);
             }
 
@@ -2216,7 +2225,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
                 throw new Exception(msg);
             }
-        }        
+        }
 
         public PlanBuyingApiRequestDto_v3 GetBuyingApiRequestPrograms_v3(int planId, BuyingInventoryGetRequestParametersDto requestParameters)
         {
@@ -2301,7 +2310,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (stationProgramResult == null)
                     return null;
                 stationProgramResult.Details = stationProgramResult.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
-               
+
                 if (planBuyingFilter != null)
                 {
                     if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
@@ -2315,7 +2324,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     else if (planBuyingFilter.OwnerNames?.Any() ?? false)
                     {
                         stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }                    
+                    }
                 }
                 results = _PlanBuyingProgramEngine.GetAggregatedProgramStations(stationProgramResult);
                 results.Details = results.Details.OrderByDescending(p => p.ImpressionsPercentage)
@@ -2362,7 +2371,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     allocatedSpot.RepFirm = allocatedSpot.RepFirm ?? allocatedSpot.LegacyCallLetters;
                     allocatedSpot.OwnerName = allocatedSpot.OwnerName ?? allocatedSpot.LegacyCallLetters;
                 });
-                
+
                 var planBuyingBandInventoryStations = new PlanBuyingBandInventoryStationsDto();
                 try
                 {
@@ -2373,7 +2382,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _LogError($"No Bands Inventory data found. If happened before May 2022 then the feature hasn't been released and this can be ignored. If after then look into this", exception);
                     return null;
                 }
-                
+
                 if (planBuyingBandInventoryStations == null)
                 {
                     return null;
@@ -2971,6 +2980,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = _PlanBuyingRepository.DeleteSavedBuyingData();
             return result;
+        }
+
+        public Guid GenerateBuyingResultsReportAndSave(PlanBuyingResultsReportRequest planBuyingResultsReportRequest, string templateFilePath, string createdBy)
+        {
+            if (planBuyingResultsReportRequest.SpotAllocationModelMode != SpotAllocationModelMode.Efficiency && planBuyingResultsReportRequest.SpotAllocationModelMode != SpotAllocationModelMode.Floor)
+            {
+                throw new Exception($"No results were found for the Spot Allocation Model Mode {planBuyingResultsReportRequest.SpotAllocationModelMode}");
+            }
+            var reportData = GetBuyingResultsReportData(planBuyingResultsReportRequest.PlanId, null, planBuyingResultsReportRequest.SpotAllocationModelMode, PostingTypeEnum.NSI);
+            var reportGenerator = new BuyingResultsReportGenerator(templateFilePath);
+
+            _LogInfo($"Starting to generate the file '{reportData.ExportFileName}'....");
+
+            var report = reportGenerator.Generate(reportData);
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.BUYING_RESULTS_REPORT),
+                FileNameWithExtension = report.Filename,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.PricingResultsReport,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = createdBy,
+                FileContent = report.Stream
+            };
+
+            var savedFileGuid = _SharedFolderService.SaveFile(sharedFolderFile);
+
+            _LogInfo($"Saved file '{reportData.ExportFileName}' with guid '{savedFileGuid}'");
+
+            return savedFileGuid;
         }
     }
 }

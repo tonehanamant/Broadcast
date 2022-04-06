@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Buying;
@@ -276,6 +277,21 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<string>> GetResultOwnershipGroups(int planId, PostingTypeEnum? postingType = null, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetResultOwnershipGroups(planId, postingType, spotAllocationModelMode));
+        }
+
+        /// <summary>
+        /// Gets the Guid For Plan Buying. 
+        /// </summary>
+        /// <param name="planBuyingResultsReportRequest"></param>
+        /// <returns>The Guid</returns>
+        [HttpPost]
+        [Route("ResultsReport")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<Guid> ResultsReport([FromBody] PlanBuyingResultsReportRequest planBuyingResultsReportRequest)
+        {
+            var appDataPath = _GetAppDataPath();
+            var createdBy = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GenerateBuyingResultsReportAndSave(planBuyingResultsReportRequest, appDataPath, createdBy));
         }
     }
 }

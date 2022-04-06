@@ -549,6 +549,7 @@
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationDaypartDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationsDto.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingResultsReportRequest.cs" />
     <Compile Include="Entities\Plan\Buying\ProprietaryInventoryData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramInventoryDaypart.cs" />
