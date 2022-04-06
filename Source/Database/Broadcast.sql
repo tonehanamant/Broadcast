@@ -595,6 +595,17 @@ GO
 
 /*************************************** END BP-4198 ***************************************/
 
+/*************************************** START BP-4198 ***************************************/
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'posting_type_conversion_rate' AND OBJECT_ID = OBJECT_ID(N'plan_version_buying_band_inventory_stations') and is_nullable = 1)
+BEGIN
+	ALTER TABLE plan_version_buying_band_inventory_stations ALTER COLUMN posting_type_conversion_rate float NOT NULL
+END
+
+GO
+
+/*************************************** END BP-4198 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

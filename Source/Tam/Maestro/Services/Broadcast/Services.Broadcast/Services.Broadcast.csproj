@@ -987,6 +987,7 @@
     <Compile Include="Helpers\PlanGoalHelper.cs" />
     <Compile Include="Helpers\PlanPostingTypeHelper.cs" />
     <Compile Include="Helpers\PlanPricingBuyingFileHelper.cs" />
+    <Compile Include="Helpers\PostingTypeConversionHelper.cs" />
     <Compile Include="Helpers\ProgramRestrictionsHelper.cs" />
     <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />

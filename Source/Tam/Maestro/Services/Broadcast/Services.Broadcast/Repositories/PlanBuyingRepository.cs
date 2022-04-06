@@ -786,6 +786,7 @@ namespace Services.Broadcast.Repositories
                         OwnerName = planBuyingBandStationDetail.station.owner_name,
                         LegacyCallLetters = planBuyingBandStationDetail.station.legacy_call_letters,
                         MarketCode = planBuyingBandStationDetail.station.market_code,
+                        PostingTypeConversionRate = planBuyingBandStationDetail.posting_type_conversion_rate,
                         PlanBuyingBandInventoryStationDayparts = planBuyingBandStationDetail.plan_version_buying_band_inventory_station_dayparts.Select(planBuyingBandInventoryStationDaypart => new PlanBuyingBandInventoryStationDaypartDto
                         {
                             ActiveDays = planBuyingBandInventoryStationDaypart.active_days,
@@ -841,6 +842,7 @@ namespace Services.Broadcast.Repositories
                             impressions = x.Impressions,
                             cost = x.Cost,
                             manifest_weeks_count = x.ManifestWeeksCount,
+                            posting_type_conversion_rate = x.PostingTypeConversionRate,
                             plan_version_buying_band_inventory_station_dayparts = x.PlanBuyingBandInventoryStationDayparts.Select(y => new plan_version_buying_band_inventory_station_dayparts
                             {
                                 active_days = y.ActiveDays,

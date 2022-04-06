@@ -948,7 +948,7 @@
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="cost" Type="money" Nullable="false" />
           <Property Name="manifest_weeks_count" Type="int" Nullable="false" />
-          <Property Name="posting_type_conversion_rate" Type="float" />
+          <Property Name="posting_type_conversion_rate" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_job">
           <Key>
@@ -18195,7 +18195,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_buying_band_inventory_station_dayparts" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" FromRole="plan_version_buying_band_inventory_stations" ToRole="plan_version_buying_band_inventory_station_dayparts" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" FromRole="plan_version_buying_band_inventory_stations" ToRole="station" />
           <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" FromRole="plan_version_buying_band_inventory_stations" ToRole="plan_version_buying_job" />
-          <Property Name="posting_type_conversion_rate" Type="Double" />
+          <Property Name="posting_type_conversion_rate" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id">
           <End Type="BroadcastModel.plan_version_buying_band_inventory_stations" Role="plan_version_buying_band_inventory_stations" Multiplicity="1">

@@ -20,6 +20,7 @@
             "Hours": 2
           }
         ],
+        "PostingTypeConversionRate": 0.7,
         "RepFirm": null,
         "StationId": 1376
       },
@@ -37,6 +38,7 @@
             "Hours": 4
           }
         ],
+        "PostingTypeConversionRate": 0.7,
         "RepFirm": null,
         "StationId": 1377
       }

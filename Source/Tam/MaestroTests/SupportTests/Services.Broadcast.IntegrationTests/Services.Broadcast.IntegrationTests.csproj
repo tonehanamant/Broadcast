@@ -441,6 +441,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Helpers\ConfigurationSettingsTestHelper.cs" />
+    <Compile Include="Helpers\PostingTypeConversionHelperTests.cs" />
     <Compile Include="Helpers\ReflectionTestHelper.cs" />
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />

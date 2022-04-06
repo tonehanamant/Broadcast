@@ -249,6 +249,7 @@ namespace Services.Broadcast.BusinessEngines
             var planBuyingBandStationDetails = inventories.Select(inventory => new PlanBuyingBandStationDetailDto()
             {
                 StationId = inventory.Station.Id,
+                PostingTypeConversionRate = inventory.NsiToNtiImpressionConversionRate,
                 Impressions = inventory.Impressions,
                 Cost = _GetInventoryCost(inventory),
                 ManifestWeeksCount = inventory.ManifestWeeks.Count(),

@@ -7470,6 +7470,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanBuyingBandStationDetailDto()
                         {
                             StationId = 1376,
+                            PostingTypeConversionRate = .7,
                             Impressions = 1135000,
                             Cost = 6593.75m,
                             ManifestWeeksCount = 2,
@@ -7490,6 +7491,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanBuyingBandStationDetailDto()
                         {
                             StationId = 1377,
+                            PostingTypeConversionRate = .7,
                             Impressions = 2045420,
                             Cost = 16250.00m,
                             ManifestWeeksCount = 1,

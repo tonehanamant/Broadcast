@@ -2413,11 +2413,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                 }
 
-                var plan = _PlanRepository.GetPlan(planId);
                 if (planBuyingBandInventoryStations.PostingType != postingType)
                 {
-                    var ntiToNsiConversionRate = _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts);
-                    latestParametersForPlanBuyingJob = _ConvertPlanBuyingParametersToRequestedPostingType(latestParametersForPlanBuyingJob, ntiToNsiConversionRate);
+                    foreach (var details in planBuyingBandInventoryStations.Details)
+                    {
+                        var temp = PostingTypeConversionHelper.ConvertImpressions(details.Impressions,
+                            planBuyingBandInventoryStations.PostingType, details.PostingTypeConversionRate);
+                        details.Impressions = temp;
+                    }
                 }
 
                 planBuyingBands = _PlanBuyingBandCalculationEngine.Calculate(planBuyingBandInventoryStations, buyingApiResults, latestParametersForPlanBuyingJob);

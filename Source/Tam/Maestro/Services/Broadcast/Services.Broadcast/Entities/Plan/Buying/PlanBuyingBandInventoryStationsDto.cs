@@ -26,6 +26,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
             PlanBuyingBandInventoryStationDayparts = new List<PlanBuyingBandInventoryStationDaypartDto>();
         }
         public int StationId { get; set; }
+        public double PostingTypeConversionRate { get; set; }
         public string RepFirm { get; set; }
         public string OwnerName { get; set; }
         public string LegacyCallLetters { get; set; }
