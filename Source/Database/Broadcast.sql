@@ -606,6 +606,41 @@ GO
 
 /*************************************** END BP-4198 ***************************************/
 
+/*************************************** START BP-4198 ***************************************/
+
+DECLARE @Sql_SetUpColumns VARCHAR(MAX) = '
+ALTER TABLE plan_version_buying_band_inventory_stations ALTER COLUMN posting_type_conversion_rate float NULL
+'
+
+DECLARE @Sql_PopulateColumns VARCHAR(MAX) = '
+UPDATE plan_version_buying_band_inventory_stations
+SET posting_type_conversion_rate = 
+	(SELECT 
+		MAX(conv.conversion_rate) AS conversion_rate
+		FROM plan_version_buying_band_inventory_stations pvs
+	LEFT JOIN plan_version_buying_job pvbj
+	ON pvs.plan_version_buying_job_id = pvbj.id
+	LEFT JOIN plan_version_dayparts pvd
+	ON pvbj.plan_version_id = pvd.plan_version_id
+	LEFT JOIN nti_to_nsi_conversion_rates conv
+	ON pvd.standard_daypart_id = conv.standard_daypart_id)
+'
+
+DECLARE @Sql_FinalizeColumns VARCHAR(MAX) = '
+ALTER TABLE plan_version_buying_band_inventory_stations ALTER COLUMN posting_type_conversion_rate float NOT NULL
+'
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'posting_type_conversion_rate' AND OBJECT_ID = OBJECT_ID(N'plan_version_buying_band_inventory_stations'))
+BEGIN
+	EXEC (@Sql_SetUpColumns)
+	EXEC (@Sql_PopulateColumns)
+	EXEC (@Sql_FinalizeColumns)
+END
+
+GO
+
+/*************************************** END BP-4198 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
