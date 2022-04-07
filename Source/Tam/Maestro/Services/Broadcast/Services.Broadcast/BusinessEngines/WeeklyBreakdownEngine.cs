@@ -1195,7 +1195,7 @@ namespace Services.Broadcast.BusinessEngines
                                 }
                                 else
                                 {
-                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions * week.WeeklyImpressions / oldImpressionTotals);
+                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnloockedRowsCount);
                                 }
                             }
                             else
