@@ -578,22 +578,14 @@ namespace Services.Broadcast.BusinessEngines
 
         public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
-            var result = new WeeklyBreakdownResponseDto();
-            result.Weeks.AddRange(request.Weeks);
-            result.TotalActiveDays = request.Weeks.Where(x => x.IsLocked).Sum(x => x.NumberOfActiveDays);
-            result.TotalBudget = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyBudget);
-            result.TotalUnits = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyUnits);
-            result.TotalImpressions = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressions);
-            result.TotalRatingPoints = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyRatings);
-            result.TotalImpressionsPercentage = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressionsPercentage);
-            result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
+            var result = new WeeklyBreakdownResponseDto();           
 
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
                 request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
 
             if (_IsWeeklyBreakdownLockEnabled.Value)
             {
-                foreach (var week in result.Weeks)
+                foreach (var week in request.Weeks)
                 {
                     if (week.IsLocked != true)
                     {
@@ -609,7 +601,7 @@ namespace Services.Broadcast.BusinessEngines
             }
             else
             {
-                foreach (var week in result.Weeks)
+                foreach (var week in request.Weeks)
                 {
                     week.WeeklyBudget = 0;
                     week.WeeklyUnits = 0;
@@ -624,6 +616,14 @@ namespace Services.Broadcast.BusinessEngines
             {
                 rawWeek.WeeklyAdu = result.Weeks.Where(x => x.WeekNumber == rawWeek.WeekNumber).Select(x => x.WeeklyAdu).FirstOrDefault();
             }
+            result.Weeks.AddRange(request.Weeks);
+            result.TotalActiveDays = request.Weeks.Where(x => x.IsLocked).Sum(x => x.NumberOfActiveDays);
+            result.TotalBudget = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyBudget);
+            result.TotalUnits = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyUnits);
+            result.TotalImpressions = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressions);
+            result.TotalRatingPoints = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyRatings);
+            result.TotalImpressionsPercentage = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressionsPercentage);
+            result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
             return result;
         }
 
@@ -1354,7 +1354,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var breakdownItem in activeWeeks)
             {
                 var impressions = impressionsByWeeks[breakdownItem.MediaWeekId];
-
+                breakdownItem.IsLocked = false;
                 _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
                     , request.TotalBudget, breakdownItem, impressions, roundRatings: true);
             }
