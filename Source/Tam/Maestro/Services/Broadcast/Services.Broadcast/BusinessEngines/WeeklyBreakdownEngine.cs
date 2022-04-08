@@ -1129,8 +1129,7 @@ namespace Services.Broadcast.BusinessEngines
             // If Updated Week present compute only for the updated week, else do it for all the weeks.
             if (updatedWeek != null)
             {
-                weeksToUpdate = new List<WeeklyBreakdownWeek> { updatedWeek };
-                updatedWeek.IsUpdated = false;
+                weeksToUpdate = new List<WeeklyBreakdownWeek> { updatedWeek };                
             }
             else
             {
@@ -1184,10 +1183,10 @@ namespace Services.Broadcast.BusinessEngines
                             }
                             break;
                         default:
+                            var totalUnloockedRowsCount = request.Weeks.Count(w => w.IsLocked.Equals(false));
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
-                                var totalLockedRowsCount = request.Weeks.Count(w => w.IsLocked);
-                                var totalUnloockedRowsCount = request.Weeks.Count(w => w.IsLocked.Equals(false));
+                                var totalLockedRowsCount = request.Weeks.Count(w => w.IsLocked);                                
                                 if (totalLockedRowsCount > 0)
                                 {
                                     var totalImpressions = request.TotalImpressions;
@@ -1201,11 +1200,19 @@ namespace Services.Broadcast.BusinessEngines
                             }
                             else
                             {
-                                week.WeeklyImpressions = Math.Floor(week.WeeklyImpressions);
+                                if (week.IsUpdated)
+                                {
+                                    week.WeeklyImpressions = Math.Floor(week.WeeklyImpressions);                                    
+                                }
+                                else
+                                {
+                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnloockedRowsCount);
+                                }
                             }
 
                             break;
                     }
+                    week.IsUpdated = false;
                 }
 
                 _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings

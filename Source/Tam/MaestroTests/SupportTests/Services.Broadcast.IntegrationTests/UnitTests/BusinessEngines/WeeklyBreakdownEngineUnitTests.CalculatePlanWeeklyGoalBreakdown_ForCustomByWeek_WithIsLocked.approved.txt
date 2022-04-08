@@ -215,7 +215,7 @@
       "DaypartUniquekey": "||",
       "EndDate": "2020-03-15T00:00:00",
       "IsLocked": true,
-      "IsUpdated": false,
+      "IsUpdated": true,
       "MediaWeekId": 846,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,
