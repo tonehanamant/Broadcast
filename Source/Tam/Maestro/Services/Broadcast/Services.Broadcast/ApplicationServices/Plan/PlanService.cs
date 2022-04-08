@@ -648,6 +648,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var daypart in sourceDayparts)
             {
                 isDaypartMatched = false;
+                if (!EnumHelper.IsDefined(daypart.DaypartTypeId))
+                {
+                    continue;
+                }
                 if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()) && daypart.DaypartOrganizationId.HasValue && daypart.DaypartOrganizationId.Value > 0 && !string.IsNullOrEmpty(daypart.DaypartOrganizationName))
                 {
                     isDaypartMatched = true;

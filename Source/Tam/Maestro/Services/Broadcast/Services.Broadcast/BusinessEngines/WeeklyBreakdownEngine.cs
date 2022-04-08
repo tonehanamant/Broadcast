@@ -620,7 +620,10 @@ namespace Services.Broadcast.BusinessEngines
                     week.IsUpdated = false;
                 }
             }
-
+            foreach (var rawWeek in result.RawWeeklyBreakdownWeeks)
+            {
+                rawWeek.WeeklyAdu = result.Weeks.Where(x => x.WeekNumber == rawWeek.WeekNumber).Select(x => x.WeeklyAdu).FirstOrDefault();
+            }
             return result;
         }
 
@@ -726,7 +729,7 @@ namespace Services.Broadcast.BusinessEngines
                         WeeklyImpressionsPercentage = weeklyImpressionsPercentage,
                         WeeklyRatings = first.WeeklyRatings,
                         WeeklyBudget = weeklyBudget,
-                        WeeklyAdu = first.WeeklyAdu,
+                        WeeklyAdu = first.IsLocked ? first.WeeklyAdu : 0,
                         AduImpressions = first.AduImpressions,
                         DaypartCodeId = first.DaypartCodeId,
                         PercentageOfWeek = first.PercentageOfWeek,
@@ -861,7 +864,7 @@ namespace Services.Broadcast.BusinessEngines
                         WeeklyImpressionsPercentage = weeklyImpressionsPercentage,
                         WeeklyRatings = first.WeeklyRatings,
                         WeeklyBudget = weeklyBudget,
-                        WeeklyAdu = first.WeeklyAdu,
+                        WeeklyAdu = first.IsLocked ? first.WeeklyAdu : 0,
                         AduImpressions = first.AduImpressions,
                         PercentageOfWeek = first.PercentageOfWeek,
                         IsUpdated = first.IsUpdated,
@@ -987,7 +990,7 @@ namespace Services.Broadcast.BusinessEngines
                         WeeklyImpressionsPercentage = weeklyImpressionsPercentage,
                         WeeklyRatings = first.WeeklyRatings,
                         WeeklyBudget = weeklyBudget,
-                        WeeklyAdu = first.WeeklyAdu,
+                        WeeklyAdu = first.IsLocked ? first.WeeklyAdu : 0,
                         AduImpressions = first.AduImpressions,
                         SpotLengthId = first.SpotLengthId,
                         SpotLengthDuration = first.SpotLengthDuration,
@@ -1185,8 +1188,8 @@ namespace Services.Broadcast.BusinessEngines
                         default:
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
-                                var totalLockedRowsCount = request.Weeks.Where(w => w.IsLocked).Count();
-                                var totalUnloockedRowsCount = request.Weeks.Where(w => w.IsLocked.Equals(false)).Count();
+                                var totalLockedRowsCount = request.Weeks.Count(w => w.IsLocked);
+                                var totalUnloockedRowsCount = request.Weeks.Count(w => w.IsLocked.Equals(false));
                                 if (totalLockedRowsCount > 0)
                                 {
                                     var totalImpressions = request.TotalImpressions;
