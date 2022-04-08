@@ -349,7 +349,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         StartDate=new DateTime(2020, 9, 28),
                         EndDate=new DateTime(2020, 10, 4),
                         WeekNumber=1,
-                        MediaWeekId=875
+                        MediaWeekId=875,
+                        NumberOfActiveDays = 7
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -358,7 +359,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         StartDate=new DateTime(2020, 10, 5),
                         EndDate=new DateTime(2020, 10, 11),
                         WeekNumber=2,
-                        MediaWeekId=876
+                        MediaWeekId=876,
+                        NumberOfActiveDays = 7
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -367,7 +369,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         StartDate=new DateTime(2020, 10, 12),
                         EndDate=new DateTime(2020, 10, 18),
                         WeekNumber=3,
-                        MediaWeekId=877
+                        MediaWeekId=877,
+                        NumberOfActiveDays = 7
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -376,7 +379,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         StartDate=new DateTime(2020, 10, 19),
                         EndDate=new DateTime(2020, 10, 25),
                         WeekNumber=4,
-                        MediaWeekId=878
+                        MediaWeekId=878,
+                        NumberOfActiveDays = 7
                     },
                 },
                 CreativeLengths = new List<CreativeLength>

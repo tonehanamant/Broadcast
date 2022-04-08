@@ -1183,7 +1183,7 @@ namespace Services.Broadcast.BusinessEngines
                             }
                             break;
                         default:
-                            var totalUnloockedRowsCount = request.Weeks.Count(w => w.IsLocked.Equals(false));
+                            var totalUnlockedActiveRowsCount = request.Weeks.Count(w => w.IsLocked.Equals(false) && w.NumberOfActiveDays > 0);
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
                                 var totalLockedRowsCount = request.Weeks.Count(w => w.IsLocked);                                
@@ -1191,11 +1191,11 @@ namespace Services.Broadcast.BusinessEngines
                                 {
                                     var totalImpressions = request.TotalImpressions;
                                     var totalLockedImpressions = request.Weeks.Where(w => w.IsLocked).Sum(w => w.WeeklyImpressions);
-                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalUnloockedRowsCount);
+                                    week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalUnlockedActiveRowsCount);
                                 }
                                 else
                                 {
-                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnloockedRowsCount);
+                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnlockedActiveRowsCount);
                                 }
                             }
                             else
@@ -1206,7 +1206,7 @@ namespace Services.Broadcast.BusinessEngines
                                 }
                                 else
                                 {
-                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnloockedRowsCount);
+                                    week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnlockedActiveRowsCount);
                                 }
                             }
 
