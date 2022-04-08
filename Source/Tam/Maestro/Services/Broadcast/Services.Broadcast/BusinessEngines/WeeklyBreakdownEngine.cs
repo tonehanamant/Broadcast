@@ -611,11 +611,7 @@ namespace Services.Broadcast.BusinessEngines
                     week.WeeklyAdu = 0;
                     week.IsUpdated = false;
                 }
-            }
-            foreach (var rawWeek in result.RawWeeklyBreakdownWeeks)
-            {
-                rawWeek.WeeklyAdu = result.Weeks.Where(x => x.WeekNumber == rawWeek.WeekNumber).Select(x => x.WeeklyAdu).FirstOrDefault();
-            }
+            }           
             result.Weeks.AddRange(request.Weeks);
             result.TotalActiveDays = request.Weeks.Where(x => x.IsLocked).Sum(x => x.NumberOfActiveDays);
             result.TotalBudget = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyBudget);
@@ -624,6 +620,10 @@ namespace Services.Broadcast.BusinessEngines
             result.TotalRatingPoints = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyRatings);
             result.TotalImpressionsPercentage = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressionsPercentage);
             result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
+            foreach (var rawWeek in result.RawWeeklyBreakdownWeeks)
+            {
+                rawWeek.WeeklyAdu = result.Weeks.Where(x => x.WeekNumber == rawWeek.WeekNumber).Select(x => x.WeeklyAdu).FirstOrDefault();
+            }
             return result;
         }
 
@@ -1145,18 +1145,16 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var week in weeksToUpdate)
             {
                 week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
+                if (week.NumberOfActiveDays < 1)
+                {
+                    week.WeeklyImpressions = 0;
+                    week.WeeklyRatings = 0;
+                    week.WeeklyImpressionsPercentage = 0;
+                    week.WeeklyBudget = 0;
+                }
                 if (!week.IsLocked && week.NumberOfActiveDays > 0)
                 {
                     week.ActiveDays = activeDaysString;
-
-                    if (week.NumberOfActiveDays < 1)
-                    {
-                        week.WeeklyImpressions = 0;
-                        week.WeeklyRatings = 0;
-                        week.WeeklyImpressionsPercentage = 0;
-                        week.WeeklyBudget = 0;
-                    }
-
                     switch (request.WeeklyBreakdownCalculationFrom)
                     {
                         case WeeklyBreakdownCalculationFrom.Ratings:
