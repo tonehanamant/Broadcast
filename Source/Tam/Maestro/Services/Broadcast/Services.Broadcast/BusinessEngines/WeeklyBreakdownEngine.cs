@@ -1150,6 +1150,7 @@ namespace Services.Broadcast.BusinessEngines
                     week.WeeklyRatings = 0;
                     week.WeeklyImpressionsPercentage = 0;
                     week.WeeklyBudget = 0;
+                    week.WeeklyAdu = 0;
                 }
                 if (!week.IsLocked && week.NumberOfActiveDays > 0)
                 {
