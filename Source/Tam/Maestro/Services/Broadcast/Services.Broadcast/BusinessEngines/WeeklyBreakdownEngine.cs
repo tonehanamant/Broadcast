@@ -578,17 +578,19 @@ namespace Services.Broadcast.BusinessEngines
 
         public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
-            var result = new WeeklyBreakdownResponseDto();           
+            var result = new WeeklyBreakdownResponseDto();
 
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
+            {
                 request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
-
+            }
+            
             if (_IsWeeklyBreakdownLockEnabled.Value)
             {
                 foreach (var week in request.Weeks)
-                {
+                {                   
                     if (week.IsLocked != true)
-                    {
+                    {                        
                         week.WeeklyBudget = 0;
                         week.WeeklyUnits = 0;
                         week.WeeklyRatings = 0;
@@ -602,7 +604,7 @@ namespace Services.Broadcast.BusinessEngines
             else
             {
                 foreach (var week in request.Weeks)
-                {
+                {                  
                     week.WeeklyBudget = 0;
                     week.WeeklyUnits = 0;
                     week.WeeklyRatings = 0;
@@ -611,14 +613,23 @@ namespace Services.Broadcast.BusinessEngines
                     week.WeeklyAdu = 0;
                     week.IsUpdated = false;
                 }
-            }           
-            result.Weeks.AddRange(request.Weeks);
-            result.TotalActiveDays = request.Weeks.Where(x => x.IsLocked).Sum(x => x.NumberOfActiveDays);
-            result.TotalBudget = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyBudget);
-            result.TotalUnits = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyUnits);
-            result.TotalImpressions = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressions);
-            result.TotalRatingPoints = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyRatings);
-            result.TotalImpressionsPercentage = request.Weeks.Where(x => x.IsLocked).Sum(x => x.WeeklyImpressionsPercentage);
+            }
+
+            var totalImpressionsPercentage = 0d;
+            foreach (var week in request.Weeks)
+            {
+                var weeklyRatio = week.WeeklyImpressions / request.TotalImpressions;
+                totalImpressionsPercentage += 100 * weeklyRatio;
+            }
+
+            result.Weeks.AddRange(request.Weeks);           
+            result.TotalActiveDays = request.Weeks.Sum(x => x.NumberOfActiveDays);
+            result.TotalBudget = request.Weeks.Sum(x => x.WeeklyBudget);
+            result.TotalUnits = request.Weeks.Sum(x => x.WeeklyUnits);
+            result.TotalImpressions = request.Weeks.Sum(x => x.WeeklyImpressions); ;
+            result.TotalRatingPoints = request.Weeks.Sum(x => x.WeeklyRatings);
+            result.TotalImpressionsPercentage = totalImpressionsPercentage;
+
             result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
             foreach (var rawWeek in result.RawWeeklyBreakdownWeeks)
             {
@@ -749,7 +760,7 @@ namespace Services.Broadcast.BusinessEngines
 
             // Remove dayparts not in use from the remain weeks
             _RemoveDaypartsInTheExistingWeeks(request, result);
-
+            
             // Recalculate fields in the existing weeks
             _RecalculateExistingWeeks(request, out bool redistributeCustom);
 

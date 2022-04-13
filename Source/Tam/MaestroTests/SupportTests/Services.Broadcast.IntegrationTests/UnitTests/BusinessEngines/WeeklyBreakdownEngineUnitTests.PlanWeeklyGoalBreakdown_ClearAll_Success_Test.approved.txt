@@ -113,7 +113,7 @@
       "WeekNumber": 6
     }
   ],
-  "TotalActiveDays": 0,
+  "TotalActiveDays": 28,
   "TotalBudget": 0.0,
   "TotalImpressions": 0.0,
   "TotalImpressionsPercentage": 0.0,

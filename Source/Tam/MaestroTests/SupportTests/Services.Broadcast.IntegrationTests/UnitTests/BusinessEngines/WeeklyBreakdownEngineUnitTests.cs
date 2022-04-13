@@ -656,6 +656,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void PlanWeeklyGoalBreakdown_ClearAll_When_SomeWeeks_AreLocked_Test()
@@ -784,6 +785,124 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        /// <summary>
+        /// The previous call 
+        /// - resulted in decimal weekly percentages 
+        /// - summed to a total percentage of 100
+        /// - then stripped the decimals by flooring it (8.67 becomes 8) for display
+        /// 
+        /// Then this call was summing to 99 because it's missing those decimals
+        /// from the original total summation.
+        /// 
+        /// This test verifies that during the Clear we can now resolve to an accurate
+        /// total percentage of 100.
+        /// 
+        /// This should not change those locked weekly precentages.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PlanWeeklyGoalBreakdown_ClearAll_WithLocked_DecimalPercentageSumsTo100()
+        {
+            //Arrange
+            var sixtySpotWeight = 40;
+            var fifteenSpotWeight = 60;
+
+            var spotLengthsDict = SpotLengthTestData.GetSpotLengthIdsByDuration();
+            var sixtySpotId = spotLengthsDict[60];
+            var fifteenSpotId = spotLengthsDict[15];
+            var flightStartDate = new DateTime(2021, 08, 02);
+            var flightEndDate = new DateTime(2021, 08, 08);
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength {SpotLengthId = sixtySpotId, Weight = sixtySpotWeight},
+                new CreativeLength {SpotLengthId = fifteenSpotId, Weight = fifteenSpotWeight},
+            };
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
+
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
+                .Returns(_SpotLengthMultiplier);
+            var launchDarklyClientStub = new LaunchDarklyClientStub();
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLED_WEEKLY_BREAKDOWN_LOCK, true);
+            var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
+            var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
+                _PlanValidatorMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _CreativeLengthEngineMock.Object,
+                spotLengthEngine.Object,
+                dataRepositoryFactory.Object, featureToggleHelper);
+            var request = new WeeklyBreakdownRequest
+            {
+                CreativeLengths = creativeLengths,
+                FlightStartDate = new DateTime(2020, 2, 24),
+                FlightEndDate = new DateTime(2020, 3, 8),
+                FlightHiatusDays = new List<DateTime>(),
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { DaypartCodeId = 0}
+                },
+                TotalImpressions = 10000,
+                ImpressionsPerUnit = 5,
+                TotalRatings = 28.041170045861335,
+                TotalBudget = 10000,
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 844,
+                        StartDate = new DateTime(2020, 2, 24),
+                        EndDate = new DateTime(2020, 3, 1),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+
+                        WeeklyImpressions = 866,
+                        WeeklyImpressionsPercentage = 8,
+                        WeeklyRatings = 5.608234009172268,
+                        WeeklyBudget = 60000,
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 1,
+                        IsLocked=true
+
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2,
+                        MediaWeekId = 845,
+                        StartDate = new DateTime(2020, 3, 2),
+                        EndDate = new DateTime(2020, 3, 8),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+
+                        WeeklyImpressions = 9134,
+                        WeeklyImpressionsPercentage = 91,
+                        WeeklyRatings = 5.608234009172268,
+                        WeeklyBudget = 60000,
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 1,
+                        IsLocked=true
+                    }                    
+                },
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+            };
+            request.DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery;
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetDisplayMediaWeeks());
+
+            //Act
+            var result = weeklyBreakdownEngine.ClearPlanWeeklyGoalBreakdown(request);
+
+            //Assert
+            Assert.AreEqual(100, result.TotalImpressionsPercentage);
+            // verify the weekly impressions didn't change.
+            Assert.AreEqual(866, result.Weeks[0].WeeklyImpressions);
+            Assert.AreEqual(9134, result.Weeks[1].WeeklyImpressions);
         }
 
         [Test]
