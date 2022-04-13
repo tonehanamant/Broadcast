@@ -3,9 +3,11 @@ using ApprovalTests.Reporters;
 using Common.Services.Repositories;
 using FizzWare.NBuilder;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -30,6 +32,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
         private Mock<IPlanRepository> _PlanRepository;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactory;
 
+        private Mock<IPlanBuyingRequestLogClient> _PlanBuyingRequestLogClient;
         private Mock<ISpotLengthEngine> _SpotLengthEngine;
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCache;
         private Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCache;
@@ -43,12 +46,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             return new PlanBuyingScxDataPrep(_DataRepositoryFactory.Object,
                     _SpotLengthEngine.Object,
                     _MediaMonthAndWeekAggregateCache.Object,
-                    _BroadcastAudiencesCache.Object);
+                    _BroadcastAudiencesCache.Object,
+                    _PlanBuyingRequestLogClient.Object);
         }
 
         [SetUp]
         public void Setup()
         {
+            _PlanBuyingRequestLogClient = new Mock<IPlanBuyingRequestLogClient>();
+
             _SpotLengthEngine = new Mock<ISpotLengthEngine>();
             _SpotLengthEngine.Setup(s => s.GetDeliveryMultipliers())
                 .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
@@ -195,58 +201,58 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
             // Arrange
             var cpmThresholdPercent = 10;
             var goalCpm = 10;
-            var beforeSpots = new List<PlanBuyingAllocatedSpot>
+            var beforeSpots = new List<PlanBuyingSpotRaw>
             {
-                new PlanBuyingAllocatedSpot
+                new PlanBuyingSpotRaw
                 {
-                    Id = 1, StationInventoryManifestId = 10,
-                    SpotFrequencies = new List<SpotFrequency>
+                    StationInventoryManifestId = 10,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
                     {
-                        new SpotFrequency {SpotLengthId = 1, SpotCost = 22, Impressions = 2400}, // stays
-                        new SpotFrequency {SpotLengthId = 2, SpotCost = 40, Impressions = 3500}, // filtered - too big
+                        new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 22, Impressions = 2400}, // stays
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 40, Impressions = 3500}, // filtered - too big
                     }
                 },
-                new PlanBuyingAllocatedSpot
+                new PlanBuyingSpotRaw
                 {
-                    Id = 2, StationInventoryManifestId = 20,
-                    SpotFrequencies = new List<SpotFrequency>
+                    StationInventoryManifestId = 20,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
                     {
-                        new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000}, // stays
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000}, // stays
                     }
                 },
-                new PlanBuyingAllocatedSpot
+                new PlanBuyingSpotRaw
                 {
-                    Id = 3, StationInventoryManifestId = 30,
-                    SpotFrequencies = new List<SpotFrequency>
+                    StationInventoryManifestId = 30,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
                     {
-                        new SpotFrequency {SpotLengthId = 1, SpotCost = 40, Impressions = 6000}, // filtered - too small
-                        new SpotFrequency {SpotLengthId = 5, SpotCost = 30, Impressions = 3300}, // stays
+                        new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 40, Impressions = 6000}, // filtered - too small
+                        new SpotFrequencyRaw {SpotLengthId = 5, SpotCost = 30, Impressions = 3300}, // stays
                     }
                 },
-                new PlanBuyingAllocatedSpot
+                new PlanBuyingSpotRaw
                 {
-                    Id = 4, StationInventoryManifestId = 40,
-                    SpotFrequencies = new List<SpotFrequency>
+                    StationInventoryManifestId = 40,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
                     {
-                        new SpotFrequency {SpotLengthId = 3, SpotCost = 40, Impressions = 3500}, // filtered -- too big
+                        new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 40, Impressions = 3500}, // filtered -- too big
                     }
                 }
                 ,
-                new PlanBuyingAllocatedSpot
+                new PlanBuyingSpotRaw
                 {
-                    Id = 5, StationInventoryManifestId = 50,
-                    SpotFrequencies = new List<SpotFrequency>
+                    StationInventoryManifestId = 50,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
                     {
-                        new SpotFrequency {SpotLengthId = 6, SpotCost = 60, Impressions = 6600}, // stays
+                        new SpotFrequencyRaw {SpotLengthId = 6, SpotCost = 60, Impressions = 6600}, // stays
                     }
                 }
             };
             var expectedResult = new[]
             {
-                new {Id = 1, SpotLengthId = 1},
-                new {Id = 2, SpotLengthId = 2},
-                new {Id = 3, SpotLengthId = 5},
-                new {Id = 5, SpotLengthId = 6},
+                new {StationInventoryManifestId = 10, SpotLengthId = 1},
+                new {StationInventoryManifestId = 20, SpotLengthId = 2},
+                new {StationInventoryManifestId = 30, SpotLengthId = 5},
+                new {StationInventoryManifestId = 50, SpotLengthId = 6},
             };
 
             var testClass = _GetTestClass();
@@ -256,13 +262,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
 
             // Assert
             var resultIds = afterSpots.SelectMany(s =>
-                    s.SpotFrequencies.Select(f => new { s.Id, f.SpotLengthId }))
+                    s.SpotFrequenciesRaw.Select(f => new { s.StationInventoryManifestId, f.SpotLengthId }))
                 .ToArray();
 
             Assert.AreEqual(expectedResult.Length, resultIds.Length);
             for (var i = 0; i < expectedResult.Length; i++)
             {
-                Assert.AreEqual(expectedResult[i].Id, resultIds[i].Id);
+                Assert.AreEqual(expectedResult[i].StationInventoryManifestId, resultIds[i].StationInventoryManifestId);
                 Assert.AreEqual(expectedResult[i].SpotLengthId, resultIds[i].SpotLengthId);
             }
         }
@@ -287,6 +293,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 ShareBookId = 460
             };
             var jobParams = new PlanBuyingParametersDto { Margin = 20 };
+            var rawResult = new PlanBuyingInventoryRawDto
+            {
+                SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                PostingType = PostingTypeEnum.NSI,
+                AllocatedSpotsRaw = new List<PlanBuyingSpotRaw>
+                {
+                    new PlanBuyingSpotRaw
+                    {
+                        StationInventoryManifestId = 11,
+                        ContractMediaWeekId = 871,
+                        InventoryMediaWeekId = 871,
+                        StandardDaypartId = 1,
+                        SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                            {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                    },
+                    new PlanBuyingSpotRaw
+                    {
+                        StationInventoryManifestId = 11,
+                        ContractMediaWeekId = 872,
+                        InventoryMediaWeekId = 872,
+                        StandardDaypartId = 1,
+                        SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                            {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                    }
+                },
+                UnallocatedSpotsRaw = new List<PlanBuyingSpotRaw>
+                {
+                    new PlanBuyingSpotRaw
+                    {
+                        StationInventoryManifestId = 10,
+                        ContractMediaWeekId = 871,
+                        InventoryMediaWeekId = 871,
+                        StandardDaypartId = 1,
+                        SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                        {
+                            new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
+                            new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
+                        }
+                    },
+                    new PlanBuyingSpotRaw
+                    {
+                        StationInventoryManifestId = 10,
+                        ContractMediaWeekId = 872,
+                        InventoryMediaWeekId = 872,
+                        StandardDaypartId = 1,
+                        SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                        {
+                            new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
+                            new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
+                        }
+                    }
+                }
+            };
+
+            string serilizedResult = JsonConvert.SerializeObject(rawResult);
+
             var jobResult = new PlanBuyingAllocationResult
             {
                 SpotAllocationModelMode = SpotAllocationModelMode.Floor,
@@ -294,44 +356,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 {
                     new PlanBuyingAllocatedSpot
                     {
-                        Id = 1, StationInventoryManifestId = 10,
+                        Id = 1, StationInventoryManifestId = 11,
                         ContractMediaWeek = new MediaWeek { Id = 871 },
+                        InventoryMediaWeek = new MediaWeek { Id = 871 },
                         StandardDaypart = new StandardDaypartDto{ Id = 1},
                         SpotFrequencies = new List<SpotFrequency>
                             {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
                     },
                     new PlanBuyingAllocatedSpot
                     {
-                        Id = 1, StationInventoryManifestId = 10,
+                        Id = 1, StationInventoryManifestId = 11,
                         ContractMediaWeek = new MediaWeek { Id = 872 },
+                        InventoryMediaWeek = new MediaWeek { Id = 872 },
                         StandardDaypart = new StandardDaypartDto{ Id = 1},
                         SpotFrequencies = new List<SpotFrequency>
                             {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
-                    }
-                },
-                UnallocatedSpots = new List<PlanBuyingAllocatedSpot>
-                {
-                    new PlanBuyingAllocatedSpot
-                    {
-                        Id = 1, StationInventoryManifestId = 10,
-                        ContractMediaWeek = new MediaWeek { Id = 871 },
-                        StandardDaypart = new StandardDaypartDto{ Id = 1},
-                        SpotFrequencies = new List<SpotFrequency>
-                        {
-                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
-                            new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
-                        }
-                    },
-                    new PlanBuyingAllocatedSpot
-                    {
-                        Id = 1, StationInventoryManifestId = 10,
-                        ContractMediaWeek = new MediaWeek { Id = 872 },
-                        StandardDaypart = new StandardDaypartDto{ Id = 1},
-                        SpotFrequencies = new List<SpotFrequency>
-                        {
-                            new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}, // stay
-                            new SpotFrequency {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0} // filtered - too big
-                        }
                     }
                 }
             };
@@ -360,6 +399,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                             }
                         }
                     }
+                },
+                new StationInventoryManifest
+                {
+                    Id = 11,
+                    Station = new DisplayBroadcastStation {Id =2, MarketCode = 101},
+                    ManifestRates = new List<StationInventoryManifestRate>
+                    {
+                        new StationInventoryManifestRate {SpotLengthId = 1, SpotCost = 20},
+                        new StationInventoryManifestRate {SpotLengthId = 2, SpotCost = 30},
+                        new StationInventoryManifestRate {SpotLengthId = 3, SpotCost = 30}
+                    },
+                    ManifestDayparts = new List<StationInventoryManifestDaypart>
+                    {
+                        new StationInventoryManifestDaypart
+                        {
+                            PrimaryProgramId = 12,
+                            Programs = new List<StationInventoryManifestDaypartProgram> {new StationInventoryManifestDaypartProgram {Id=12, ProgramName = "MyTestProgram"}},
+                            Daypart = new DisplayDaypart{
+                                Id = 59803,
+                                Code = "CUS"
+                            }
+                        }
+                    }
                 }
             };
 
@@ -369,11 +431,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
                 .Returns(jobParams);
             _PlanBuyingRepository.Setup(s => s.GetBuyingApiResultsByJobId(It.IsAny<int>(), It.IsAny<SpotAllocationModelMode>(), It.IsAny<PostingTypeEnum>()))
                 .Returns(jobResult);
+            _PlanBuyingRequestLogClient.Setup(s => s.GetBuyingRawInventory(It.IsAny<int>()))
+                .Returns(serilizedResult);
+
 
             _PlanRepository.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(plan);
-
-            _InventoryRepository.Setup(s => s.GetPlanBuyingScxInventory(It.IsAny<int>()))
+            _InventoryRepository.Setup(s => s.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
                 .Returns(inventory);
 
             var generated = new DateTime(2020, 10, 17, 12, 34, 56);
@@ -397,37 +461,304 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
         public void UnEquivalize()
         {
             // Arrange          
-            var planBuyingAllocatedSpots = Builder<PlanBuyingAllocationResult>.CreateNew()
-                .With(x => x.AllocatedSpots = Builder<PlanBuyingAllocatedSpot>.CreateListOfSize(2)
+            var planBuyingInventoryRaw = Builder<PlanBuyingInventoryRawDto>.CreateNew()
+                .With(x => x.AllocatedSpotsRaw = Builder<PlanBuyingSpotRaw>.CreateListOfSize(2)
                         .All()
-                        .With(y => y.SpotFrequencies = Builder<SpotFrequency>.CreateListOfSize(2).Build().ToList())
+                        .With(y => y.SpotFrequenciesRaw = Builder<SpotFrequencyRaw>.CreateListOfSize(2).Build().ToList())
                         .Build()
                         .ToList())
-                .With(x => x.UnallocatedSpots = Builder<PlanBuyingAllocatedSpot>.CreateListOfSize(2)
+                .With(x => x.UnallocatedSpotsRaw = Builder<PlanBuyingSpotRaw>.CreateListOfSize(2)
                         .All()
-                        .With(y => y.SpotFrequencies = Builder<SpotFrequency>.CreateListOfSize(2).Build().ToList())
+                        .With(y => y.SpotFrequenciesRaw = Builder<SpotFrequencyRaw>.CreateListOfSize(2).Build().ToList())
                         .Build()
                         .ToList())
                 .Build();
 
-            var controlledAllocatedSpot = planBuyingAllocatedSpots.AllocatedSpots[1].SpotFrequencies[1];
+            var controlledAllocatedSpot = planBuyingInventoryRaw.AllocatedSpotsRaw[1].SpotFrequenciesRaw[1];
             controlledAllocatedSpot.SpotLengthId = 2;
             controlledAllocatedSpot.Impressions = 100;
 
-            var controlledUnAllocatedSpot = planBuyingAllocatedSpots.UnallocatedSpots[1].SpotFrequencies[1];
+            var controlledUnAllocatedSpot = planBuyingInventoryRaw.UnallocatedSpotsRaw[1].SpotFrequenciesRaw[1];
             controlledUnAllocatedSpot.SpotLengthId = 3;
             controlledUnAllocatedSpot.Impressions = 200;
 
             var testClass = _GetTestClass();
 
             // Act
-           testClass._UnEquivalizeSpots(planBuyingAllocatedSpots);
+           testClass._UnEquivalizeSpots(planBuyingInventoryRaw);
 
             // Assert
             Assert.AreEqual(50, controlledAllocatedSpot.Impressions);
             Assert.AreEqual(400, controlledUnAllocatedSpot.Impressions);
+        }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void _UpdateAllocationBuckets_SingleFrequency()
+        {
+            // Arrange
+            var rawResult = new List<PlanBuyingSpotRaw>
+            {
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 11,
+                    ContractMediaWeekId = 871,
+                    InventoryMediaWeekId = 871,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                        {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 0}}
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 11,
+                    ContractMediaWeekId = 872,
+                    InventoryMediaWeekId = 872,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                        {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 0}}
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 10,
+                    ContractMediaWeekId = 871,
+                    InventoryMediaWeekId = 871,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 10,
+                    ContractMediaWeekId = 872,
+                    InventoryMediaWeekId = 872,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0}
+                    }
+                }
+            };
 
+            var jobResult = new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 11,
+                    ContractMediaWeek = new MediaWeek { Id = 871 },
+                    InventoryMediaWeek = new MediaWeek { Id = 871 },
+                    StandardDaypart = new StandardDaypartDto{ Id = 1},
+                    SpotFrequencies = new List<SpotFrequency>
+                        {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 11,
+                    ContractMediaWeek = new MediaWeek { Id = 872 },
+                    InventoryMediaWeek = new MediaWeek { Id = 872 },
+                    StandardDaypart = new StandardDaypartDto{ Id = 1},
+                    SpotFrequencies = new List<SpotFrequency>
+                        {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                }
+            };
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass._UpdateAllocationBuckets(jobResult, rawResult, 
+                    SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void _UpdateAllocationBuckets_MultipleFrequencies()
+        {
+            // Arrange
+            var rawResult = new List<PlanBuyingSpotRaw>
+            {
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 11,
+                    ContractMediaWeekId = 871,
+                    InventoryMediaWeekId = 871,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 0}},
+                        {new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3400, Spots = 0}}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 11,
+                    ContractMediaWeekId = 872,
+                    InventoryMediaWeekId = 872,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 0}},
+                        {new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3400, Spots = 0}}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 10,
+                    ContractMediaWeekId = 871,
+                    InventoryMediaWeekId = 871,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0},
+                        new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 10,
+                    ContractMediaWeekId = 872,
+                    InventoryMediaWeekId = 872,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0},
+                        new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0}
+                    }
+                }
+            };
+
+            var jobResult = new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 11,
+                    ContractMediaWeek = new MediaWeek { Id = 871 },
+                    InventoryMediaWeek = new MediaWeek { Id = 871 },
+                    StandardDaypart = new StandardDaypartDto{ Id = 1},
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}},
+                        {new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3400, Spots = 5}}
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 11,
+                    ContractMediaWeek = new MediaWeek { Id = 872 },
+                    InventoryMediaWeek = new MediaWeek { Id = 872 },
+                    StandardDaypart = new StandardDaypartDto{ Id = 1},
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}},
+                        {new SpotFrequency {SpotLengthId = 2, SpotCost = 30, Impressions = 3400, Spots = 5}}
+                    }
+                }
+            };
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass._UpdateAllocationBuckets(jobResult, rawResult,
+                    SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void _UpdateAllocationBuckets_MultipleMixedFrequencies()
+        {
+            // Arrange
+            var rawResult = new List<PlanBuyingSpotRaw>
+            {
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 11,
+                    ContractMediaWeekId = 871,
+                    InventoryMediaWeekId = 871,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 0}},
+                        {new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3400, Spots = 0}}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 11,
+                    ContractMediaWeekId = 872,
+                    InventoryMediaWeekId = 872,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        {new SpotFrequencyRaw {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 0}},
+                        {new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3400, Spots = 0}}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 10,
+                    ContractMediaWeekId = 871,
+                    InventoryMediaWeekId = 871,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0},
+                        new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0}
+                    }
+                },
+                new PlanBuyingSpotRaw
+                {
+                    StationInventoryManifestId = 10,
+                    ContractMediaWeekId = 872,
+                    InventoryMediaWeekId = 872,
+                    StandardDaypartId = 1,
+                    SpotFrequenciesRaw = new List<SpotFrequencyRaw>
+                    {
+                        new SpotFrequencyRaw {SpotLengthId = 2, SpotCost = 30, Impressions = 3000, Spots = 0},
+                        new SpotFrequencyRaw {SpotLengthId = 3, SpotCost = 15, Impressions = 3500, Spots = 0}
+                    }
+                }
+            };
+
+            var jobResult = new List<PlanBuyingAllocatedSpot>
+            {
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 11,
+                    ContractMediaWeek = new MediaWeek { Id = 871 },
+                    InventoryMediaWeek = new MediaWeek { Id = 871 },
+                    StandardDaypart = new StandardDaypartDto{ Id = 1},
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                    }
+                },
+                new PlanBuyingAllocatedSpot
+                {
+                    Id = 1, StationInventoryManifestId = 11,
+                    ContractMediaWeek = new MediaWeek { Id = 872 },
+                    InventoryMediaWeek = new MediaWeek { Id = 872 },
+                    StandardDaypart = new StandardDaypartDto{ Id = 1},
+                    SpotFrequencies = new List<SpotFrequency>
+                    {
+                        {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                    }
+                }
+            };
+
+            var testClass = _GetTestClass();
+
+            // Act
+            var result = testClass._UpdateAllocationBuckets(jobResult, rawResult,
+                    SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

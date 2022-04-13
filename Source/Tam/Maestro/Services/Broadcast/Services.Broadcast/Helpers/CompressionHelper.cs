@@ -1,25 +1,54 @@
-﻿using System.IO;
+﻿using Amazon.S3.Model;
+using System.IO;
 using System.IO.Compression;
 using System.Text;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.Helpers
 {
     public static class CompressionHelper
     {
-        public static string ToGZipCompressed(this string input)
+
+        /// <summary>Gets the gzip compress.</summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static byte[] GetGzipCompress(string input)
         {
-            var output = string.Empty;
             var inputBytes = Encoding.UTF8.GetBytes(input);
 
-            using (var outputStream = new MemoryStream())
-            using (var gZipStream = new GZipStream(outputStream, CompressionMode.Compress))
-            {
-                gZipStream.Write(inputBytes, 0, inputBytes.Length);
-                var outputBytes = outputStream.ToArray();
-                output = Encoding.UTF8.GetString(outputBytes);
-            }
+            byte[] output;
 
+            using (var originalFileStream = Helpers.BroadcastStreamHelper.CreateStreamFromString(input))
+            {
+                using (var outputStream = new MemoryStream())
+                {
+                    using (var archive = new GZipStream(outputStream, CompressionMode.Compress, true))
+                    {
+                        archive.Write(inputBytes, 0, inputBytes.Length);
+                    }
+                    output = outputStream.ToArray();
+                }
+            }
             return output;
+        }
+
+        /// <summary>Gets the gzip uncompress.</summary>
+        /// <param name="response">The response.</param>
+        /// <returns></returns>
+        public static string GetGzipUncompress(GetObjectResponse response)
+        {
+            var content = string.Empty;
+            using (var archive = new GZipStream(response.ResponseStream, CompressionMode.Decompress))
+            {
+                using( var resultStream = new MemoryStream())
+                {
+                    archive.CopyTo(resultStream);
+                    resultStream.Position = 0;
+                    var reader = new StreamReader(resultStream);
+                    content = reader.ReadToEnd();
+                }
+            }
+            return content;
         }
     }
 }

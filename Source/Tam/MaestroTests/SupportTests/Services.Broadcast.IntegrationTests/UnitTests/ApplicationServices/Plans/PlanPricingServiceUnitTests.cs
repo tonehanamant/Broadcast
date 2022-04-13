@@ -159,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_BroadcastAudienceRepositoryMock.Object);
 
             _PricingRequestLogClient
-                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto_v3>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
+                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
         }
 
         private List<StandardDaypartDto> _GetStandardDayparts()

@@ -8,9 +8,15 @@ namespace Services.Broadcast.Clients
 {
     public interface IPricingRequestLogClient
     {
-        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto planPricingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
-
-        void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
+        /// <summary>
+        /// Saves the pricing request.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="data">The data.</param>
+        /// <param name="apiVersion">The API version.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        void SavePricingRequest(int planId, int jobId, string data, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
     }
 
     public class PricingRequestLogClientAmazonS3 : IPricingRequestLogClient
@@ -27,18 +33,13 @@ namespace Services.Broadcast.Clients
 
         }
 
-        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto planPricingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
+        public void SavePricingRequest(int planId, int jobId, string data, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
         {
             var fileName = _GetFileName(planId, jobId, apiVersion, spotAllocationModelMode);
             var keyName = _GetKeyName(fileName);
-            _LogToAmazonS3.SaveRequest(_BucketName.Value, keyName, fileName, planPricingApiRequestDto);
-        }
 
-        public void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
-        {
-            var fileName = _GetFileName(planId, jobId, apiVersion, spotAllocationModelMode);
-            var keyName = _GetKeyName(fileName);
-            _LogToAmazonS3.SaveRequest(_BucketName.Value, keyName, fileName, planPricingApiRequestDto);
+            var compressedData = CompressionHelper.GetGzipCompress(data);
+            _LogToAmazonS3.UploadFile(_BucketName.Value, keyName, compressedData);
         }
 
         private string _GetFileName(int planId, int jobId, string apiVersion, SpotAllocationModelMode spotAllocationModelMode)
@@ -52,7 +53,7 @@ namespace Services.Broadcast.Clients
         private string _GetKeyName(string fileName)
         {
             const string keyNamePrefix = "broadcast_pricing_allocations";
-            return $"{keyNamePrefix}/{fileName}.zip";
+            return $"{keyNamePrefix}/{fileName}.gz";
         }
         private string _GetBucketName()
         {

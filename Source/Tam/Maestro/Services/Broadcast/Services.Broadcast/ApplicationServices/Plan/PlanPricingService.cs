@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -1991,7 +1992,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion, spotAllocationModelMode);
+                string unZipped = JsonConvert.SerializeObject(pricingApiRequest, Formatting.Indented);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, unZipped, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {
@@ -2004,7 +2006,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId, jobId, pricingApiRequest, apiVersion, spotAllocationModelMode);
+                string unZipped = JsonConvert.SerializeObject(pricingApiRequest, Formatting.Indented);
+                _PricingRequestLogClient.SavePricingRequest(planId, jobId, unZipped, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {

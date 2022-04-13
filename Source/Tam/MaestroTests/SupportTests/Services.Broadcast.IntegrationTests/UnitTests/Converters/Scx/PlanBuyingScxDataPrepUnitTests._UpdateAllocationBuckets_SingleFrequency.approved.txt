@@ -1,0 +1,72 @@
+{
+  "alloc_mode": 2,
+  "allocated_spots": [
+    {
+      "cmweek_id": 871,
+      "conv_rate": 0.0,
+      "daypart_id": 1,
+      "frequencies": [
+        {
+          "cost": 20.0,
+          "impressions": 2400.0,
+          "length": 1,
+          "spots": 3
+        }
+      ],
+      "imps30": 0.0,
+      "imweek_id": 871,
+      "manifest_id": 11
+    },
+    {
+      "cmweek_id": 872,
+      "conv_rate": 0.0,
+      "daypart_id": 1,
+      "frequencies": [
+        {
+          "cost": 20.0,
+          "impressions": 2400.0,
+          "length": 1,
+          "spots": 3
+        }
+      ],
+      "imps30": 0.0,
+      "imweek_id": 872,
+      "manifest_id": 11
+    }
+  ],
+  "posting_type": 1,
+  "unallocated_spots": [
+    {
+      "cmweek_id": 871,
+      "conv_rate": 0.0,
+      "daypart_id": 1,
+      "frequencies": [
+        {
+          "cost": 30.0,
+          "impressions": 3000.0,
+          "length": 2,
+          "spots": 0
+        }
+      ],
+      "imps30": 0.0,
+      "imweek_id": 871,
+      "manifest_id": 10
+    },
+    {
+      "cmweek_id": 872,
+      "conv_rate": 0.0,
+      "daypart_id": 1,
+      "frequencies": [
+        {
+          "cost": 30.0,
+          "impressions": 3000.0,
+          "length": 2,
+          "spots": 0
+        }
+      ],
+      "imps30": 0.0,
+      "imweek_id": 872,
+      "manifest_id": 10
+    }
+  ]
+}

@@ -49,6 +49,13 @@ namespace Services.Broadcast.Repositories
         void UpdateJobHangfireId(int jobId, string hangfireJobId);
 
         /// <summary>
+        /// Updates the plan buying job with the inventory raw file url.
+        /// </summary>
+        /// <param name="jobId">The buying job identifier.</param>
+        /// <param name="fileName">The name of the file.</param>
+        void UpdateFileName(int jobId, string fileName);
+
+        /// <summary>
         /// Gets the latest buying job.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -404,6 +411,19 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
+        public void UpdateFileName(int jobId, string fileName)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_buying_job.Single(x => x.id == jobId);
+
+                job.inventory_raw_file = fileName;
+
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc/>
         public PlanBuyingJob GetLatestBuyingJob(int planId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -467,7 +487,8 @@ namespace Services.Broadcast.Repositories
                     Queued = job.queued_at,
                     Completed = job.completed_at,
                     ErrorMessage = job.error_message,
-                    DiagnosticResult = job.diagnostic_result
+                    DiagnosticResult = job.diagnostic_result,
+                    InventoryRawFile = job.inventory_raw_file
                 };
             });
         }

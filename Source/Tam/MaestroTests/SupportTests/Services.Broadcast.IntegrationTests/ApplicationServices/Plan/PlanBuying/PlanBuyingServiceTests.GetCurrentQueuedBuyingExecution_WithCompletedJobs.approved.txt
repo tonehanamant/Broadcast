@@ -5,6 +5,7 @@
     "DiagnosticResult": null,
     "ErrorMessage": null,
     "HangfireJobId": null,
+    "InventoryRawFile": null,
     "PlanVersionId": 46,
     "Queued": "2019-11-04T00:00:06",
     "Status": 1

@@ -229,7 +229,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_MarketRepositoryMock.Object);
 
             _PlanBuyingRequestLogClient
-                .Setup(x => x.SaveBuyingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PlanBuyingApiRequestDto>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
+                .Setup(x => x.SaveBuyingRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<SpotAllocationModelMode>()));
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeekById(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeek);
@@ -2809,8 +2809,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             Assert.AreEqual(1, savedSharedFiles.Count);
             Assert.AreEqual(expectedFileName, savedSharedFile.FileName);
-
-
         }
 
         private List<InventoryProprietaryQuarterSummaryDto> _GetInventoryProprietaryQuarterSummary(bool highProprietaryNumbers)
@@ -4745,6 +4743,218 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual(true, result.IsBuyingModelRunning);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void _MapBuyingRawInventory_SingleFrequency()
+        {
+            // Arrange
+            var allocationResult = new List<PlanBuyingAllocationResult>
+            {
+                new PlanBuyingAllocationResult
+                {
+                    BuyingCpm = 4.6841m,
+                    JobId = 1,
+                    BuyingVersion = "4",
+                    PlanVersionId = 1172,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    PostingType = PostingTypeEnum.NSI,
+                    AllocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 10},
+                            Impressions30sec = 100,
+                            SpotFrequencies = new List<SpotFrequency>
+                                {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                        }
+                    },
+                    UnallocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 15},
+                            Impressions30sec = 200,
+                            SpotFrequencies = new List<SpotFrequency>
+                                {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                        }
+                    }
+                },
+                new PlanBuyingAllocationResult
+                {
+                    BuyingCpm = 4.6841m,
+                    JobId = 1,
+                    BuyingVersion = "4",
+                    PlanVersionId = 1172,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                    PostingType = PostingTypeEnum.NSI,
+                    AllocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 1},
+                            Impressions30sec = 300,
+                            SpotFrequencies = new List<SpotFrequency>
+                                {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                        }
+                    },
+                    UnallocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 1},
+                            Impressions30sec = 400,
+                            SpotFrequencies = new List<SpotFrequency>
+                                {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                        }
+                    }
+                }
+            };
+
+            var inventory = new List<PlanBuyingInventoryProgram>
+                {
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        NsiToNtiImpressionConversionRate = .8
+                    },
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 10,
+                        NsiToNtiImpressionConversionRate = .75
+                    }
+                };
+
+            // Act
+            var service = _GetService();
+            var result = service._MapBuyingRawInventory(allocationResult, inventory);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void _MapBuyingRawInventory_MultipleFrequencies()
+        {
+            // Arrange
+            var allocationResult = new List<PlanBuyingAllocationResult>
+            {
+                new PlanBuyingAllocationResult
+                {
+                    BuyingCpm = 4.6841m,
+                    JobId = 1,
+                    BuyingVersion = "4",
+                    PlanVersionId = 1172,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                    PostingType = PostingTypeEnum.NSI,
+                    AllocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 10},
+                            Impressions30sec = 100,
+                            SpotFrequencies = new List<SpotFrequency>
+                            {
+                                new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3},
+                                new SpotFrequency {SpotLengthId = 2, SpotCost = 20, Impressions = 2400, Spots = 3}
+                            }
+                        }
+                    },
+                    UnallocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 15},
+                            Impressions30sec = 200,
+                            SpotFrequencies = new List<SpotFrequency>
+                            {
+                                new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3},
+                                new SpotFrequency {SpotLengthId = 2, SpotCost = 20, Impressions = 2400, Spots = 3}
+                            }
+                        }
+                    }
+                },
+                new PlanBuyingAllocationResult
+                {
+                    BuyingCpm = 4.6841m,
+                    JobId = 1,
+                    BuyingVersion = "4",
+                    PlanVersionId = 1172,
+                    SpotAllocationModelMode = SpotAllocationModelMode.Floor,
+                    PostingType = PostingTypeEnum.NSI,
+                    AllocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 1},
+                            Impressions30sec = 300,
+                            SpotFrequencies = new List<SpotFrequency>
+                                {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                        }
+                    },
+                    UnallocatedSpots = new List<PlanBuyingAllocatedSpot>
+                    {
+                        new PlanBuyingAllocatedSpot
+                        {
+                            Id = 1, StationInventoryManifestId = 11,
+                            ContractMediaWeek = new MediaWeek { Id = 871 },
+                            InventoryMediaWeek = new MediaWeek { Id = 871 },
+                            StandardDaypart = new StandardDaypartDto{ Id = 1},
+                            Impressions30sec = 400,
+                            SpotFrequencies = new List<SpotFrequency>
+                                {new SpotFrequency {SpotLengthId = 1, SpotCost = 20, Impressions = 2400, Spots = 3}}
+                        }
+                    }
+                }
+            };
+
+            var inventory = new List<PlanBuyingInventoryProgram>
+                {
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        NsiToNtiImpressionConversionRate = .8
+                    },
+                    new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 10,
+                        NsiToNtiImpressionConversionRate = .75
+                    }
+                };
+
+            // Act
+            var service = _GetService();
+            var result = service._MapBuyingRawInventory(allocationResult, inventory);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]

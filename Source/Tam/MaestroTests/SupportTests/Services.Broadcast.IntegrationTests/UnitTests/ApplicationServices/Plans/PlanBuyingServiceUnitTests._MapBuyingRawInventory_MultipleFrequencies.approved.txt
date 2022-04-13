@@ -1,0 +1,52 @@
+{
+  "alloc_mode": 2,
+  "allocated_spots": [
+    {
+      "cmweek_id": 871,
+      "conv_rate": 0.75,
+      "daypart_id": 10,
+      "frequencies": [
+        {
+          "cost": 20.0,
+          "impressions": 2400.0,
+          "length": 1,
+          "spots": 0
+        },
+        {
+          "cost": 20.0,
+          "impressions": 2400.0,
+          "length": 2,
+          "spots": 0
+        }
+      ],
+      "imps30": 100.0,
+      "imweek_id": 871,
+      "manifest_id": 1
+    }
+  ],
+  "posting_type": 1,
+  "unallocated_spots": [
+    {
+      "cmweek_id": 871,
+      "conv_rate": 0.8,
+      "daypart_id": 15,
+      "frequencies": [
+        {
+          "cost": 20.0,
+          "impressions": 2400.0,
+          "length": 1,
+          "spots": 0
+        },
+        {
+          "cost": 20.0,
+          "impressions": 2400.0,
+          "length": 2,
+          "spots": 0
+        }
+      ],
+      "imps30": 200.0,
+      "imweek_id": 871,
+      "manifest_id": 1
+    }
+  ]
+}

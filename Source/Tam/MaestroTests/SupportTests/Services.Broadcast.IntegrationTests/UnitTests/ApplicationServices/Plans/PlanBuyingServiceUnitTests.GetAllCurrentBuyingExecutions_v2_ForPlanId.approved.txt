@@ -6,6 +6,7 @@
     "ErrorMessage": null,
     "HangfireJobId": "9895",
     "Id": 506,
+    "InventoryRawFile": null,
     "PlanVersionId": 659,
     "Queued": "2021-03-24T11:12:13",
     "Status": 3

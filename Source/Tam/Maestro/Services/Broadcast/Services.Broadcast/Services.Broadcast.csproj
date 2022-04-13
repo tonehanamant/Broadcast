@@ -547,6 +547,7 @@
     <Compile Include="Entities\Isci\PlanMappedIsciDetailsDto.cs" />
     <Compile Include="Clients\PricingJobQueueApiClient.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryRawDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationDaypartDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultsReportRequest.cs" />

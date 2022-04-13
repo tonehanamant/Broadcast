@@ -67,6 +67,7 @@ namespace Services.Broadcast.IntegrationTests
 
                     _instance.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClientStub>();
 
+                    _instance.RegisterType<ILogToAmazonS3, LogToAmazonS3Stub>();
 
                     _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelperStub>();
 

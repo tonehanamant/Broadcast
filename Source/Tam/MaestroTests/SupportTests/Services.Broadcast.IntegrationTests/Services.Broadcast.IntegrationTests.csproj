@@ -112,6 +112,12 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\AWSSDK.Core.3.3.107.24\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\AWSSDK.S3.3.3.111.25\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
     </Reference>
@@ -481,6 +487,7 @@
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="Stubs\EmailerServicedStub.cs" />
     <Compile Include="Stubs\LaunchDarklyClientStub.cs" />
+    <Compile Include="Stubs\LogToAmazonS3Stub.cs.cs" />
     <Compile Include="Stubs\Plan\PlanBuyingApiClientStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
     <Compile Include="Stubs\ShowTypeCacheStub.cs" />

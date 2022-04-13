@@ -35,6 +35,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private LogToAmazonS3Stub LogToAmazonS3Stub;
 
         [SetUp]
         public void SetUp()

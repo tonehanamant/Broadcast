@@ -11,16 +11,28 @@ using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.Clients;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Tam.Maestro.Data.Entities;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.Converters.Scx
 {
     public interface IPlanBuyingScxDataPrep
     {
+
+        /// <summary>
+        /// Gets the SCX data
+        /// .</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="generated">The generated.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">Type of the posting.</param>
+        /// <returns></returns>
         PlanScxData GetScxData(PlanBuyingScxExportRequest request, DateTime generated,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
             PostingTypeEnum postingType = PostingTypeEnum.NSI);
@@ -36,12 +48,14 @@ namespace Services.Broadcast.Converters.Scx
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IStationRepository _StationRepository;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
+        private readonly IPlanBuyingRequestLogClient _BuyingRequestLogClient;
 
         public PlanBuyingScxDataPrep(
             IDataRepositoryFactory broadcastDataDataRepositoryFactory,
             ISpotLengthEngine spotLengthEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IBroadcastAudiencesCache broadcastAudiencesCache) :
+            IBroadcastAudiencesCache broadcastAudiencesCache,
+            IPlanBuyingRequestLogClient planBuyingRequestLogClient) :
 
             base(broadcastDataDataRepositoryFactory,
                 spotLengthEngine,
@@ -49,6 +63,7 @@ namespace Services.Broadcast.Converters.Scx
                 broadcastAudiencesCache)
         {
             _Log = LogManager.GetLogger(GetType());
+            _BuyingRequestLogClient = planBuyingRequestLogClient;
 
             _PlanBuyingRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
             _PlanRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IPlanRepository>();
@@ -64,7 +79,8 @@ namespace Services.Broadcast.Converters.Scx
             _GetValidatedPlanAndJob(request, out var plan, out var job);
             var optimalCPM = _GetOptimalCPM(job.Id, spotAllocationModelMode, postingType);
             var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode, plan.Equivalized, postingType);
-            var inventory = _InventoryRepository.GetPlanBuyingScxInventory(job.Id);            
+            var stationInventoryManifestId = spots.Select(s => s.StationInventoryManifestId).ToList();
+            var inventory = _InventoryRepository.GetStationInventoryManifestsByIds(stationInventoryManifestId);
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
             var demos = _GetDemos(audienceIds);
@@ -96,7 +112,7 @@ namespace Services.Broadcast.Converters.Scx
             return scxData;
         }
 
-        internal List<OrderData> _GetOrders(PlanDto plan, List<StationInventoryManifest> inventory, List<PlanBuyingAllocatedSpot> spots, 
+        internal List<OrderData> _GetOrders(PlanDto plan, List<StationInventoryManifest> inventory, List<PlanBuyingSpotRaw> spots, 
             Dictionary<int?,int> demoRanksDictionary, Dictionary<int, string> dmaMarketNames, 
             Dictionary<int,int> standardDaypartDaypartIds, Dictionary<int, string> standardDaypartCodes,
             List<DisplayBroadcastStation> stations, IOrderedEnumerable<MediaWeek> sortedMediaWeeks,
@@ -140,14 +156,14 @@ namespace Services.Broadcast.Converters.Scx
                             .FirstOrDefault()?.ProgramName;
 
                         var spotLengthsIds = daypartGroup
-                            .SelectMany(g => g.Spot.SpotFrequencies.Select(f => f.SpotLengthId))
+                            .SelectMany(g => g.Spot.SpotFrequenciesRaw.Select(f => f.SpotLengthId))
                             .Distinct()
                             .ToList();
 
                         foreach (var spotLengthId in spotLengthsIds)
                         {
                             var firstFreq = daypartGroup
-                                .SelectMany(g => g.Spot.SpotFrequencies)
+                                .SelectMany(g => g.Spot.SpotFrequenciesRaw)
                                 .FirstOrDefault(f => f.SpotLengthId == spotLengthId);
 
                             if (firstFreq == null)
@@ -162,8 +178,8 @@ namespace Services.Broadcast.Converters.Scx
                             var programWeeks = new List<ScxMarketDto.ScxStation.ScxProgram.ScxWeek>();
                             foreach (var mediaWeek in sortedMediaWeeks)
                             {
-                                var weekFreq = daypartGroup.Where(g => g.Spot.ContractMediaWeek.Id == mediaWeek.Id)
-                                    .SelectMany(g => g.Spot.SpotFrequencies)
+                                var weekFreq = daypartGroup.Where(g => g.Spot.ContractMediaWeekId == mediaWeek.Id)
+                                    .SelectMany(g => g.Spot.SpotFrequenciesRaw)
                                     .SingleOrDefault(f => f.SpotLengthId == spotLengthId);
 
                                 var spotFrequency = weekFreq?.Spots ?? 0;
@@ -258,37 +274,156 @@ namespace Services.Broadcast.Converters.Scx
             }
         }
 
-        internal List<PlanBuyingAllocatedSpot> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, 
+        private List<PlanBuyingSpotRaw> _GetSpots(int? unallocatedCpmThreshold, decimal planTargetCpm, int jobId, 
             SpotAllocationModelMode spotAllocationModelMode, 
             bool? isEquivalized = false, 
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
-            var jobSpotsResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode, postingType);            
-            var unfilteredUnallocatedCount = jobSpotsResults.UnallocatedSpots.Count;
+            var allocatedSpotsByJob = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode, postingType);
+            var jobSpotsResultsRaw = _GetBuyingRawInventory(jobId);
+
+            if (jobSpotsResultsRaw.SpotAllocationModelMode != spotAllocationModelMode)
+            {
+                jobSpotsResultsRaw = _UpdateAllocationBuckets(allocatedSpotsByJob.AllocatedSpots,
+                    jobSpotsResultsRaw.AllocatedSpotsRaw.Concat(jobSpotsResultsRaw.UnallocatedSpotsRaw).ToList(),
+                    jobSpotsResultsRaw.SpotAllocationModelMode, jobSpotsResultsRaw.PostingType);
+            }
+
+            if (jobSpotsResultsRaw.PostingType != postingType)
+            {
+                jobSpotsResultsRaw.AllocatedSpotsRaw = _CovertToNsi(jobSpotsResultsRaw.AllocatedSpotsRaw);
+                jobSpotsResultsRaw.UnallocatedSpotsRaw = _CovertToNsi(jobSpotsResultsRaw.UnallocatedSpotsRaw);
+            }
+
+            var unfilteredUnallocatedCount = jobSpotsResultsRaw.UnallocatedSpotsRaw.Count;
 
             if (isEquivalized ?? false)
             {
-                _UnEquivalizeSpots(jobSpotsResults);
+                _UnEquivalizeSpots(jobSpotsResultsRaw);
             }
 
             var unallocated = unallocatedCpmThreshold.HasValue
-                ? _ApplyCpmThreshold(unallocatedCpmThreshold.Value, planTargetCpm, jobSpotsResults.UnallocatedSpots)
-                : jobSpotsResults.UnallocatedSpots;
+                ? _ApplyCpmThreshold(unallocatedCpmThreshold.Value, planTargetCpm, jobSpotsResultsRaw.UnallocatedSpotsRaw)
+                : jobSpotsResultsRaw.UnallocatedSpotsRaw;
 
             var filteredUnallocatedCount = unallocated.Count;
 
             _LogInfo($"Exporting Buying Scx for job id '{jobId}'. UnallocatedCpmThreshold filtered '{unfilteredUnallocatedCount}' records to '{filteredUnallocatedCount}'.");
 
-            var allSpots = jobSpotsResults.AllocatedSpots.Concat(unallocated).ToList();
+            var allSpots = jobSpotsResultsRaw.AllocatedSpotsRaw.Concat(unallocated).ToList();
             return allSpots;
         }
 
-        internal void _UnEquivalizeSpots(PlanBuyingAllocationResult jobSpotsResults)
+        /// <summary>
+        /// Updates the allocation buckets.
+        /// </summary>
+        /// <param name="allocatedSpotsByJob">The allocated spots by job.</param>
+        /// <param name="jobSpotsResultsRaw">The job spots results raw.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">Type of the posting.</param>
+        /// <returns></returns>
+        internal PlanBuyingInventoryRawDto _UpdateAllocationBuckets(List<PlanBuyingAllocatedSpot> allocatedSpotsByJob, 
+            List<PlanBuyingSpotRaw> jobSpotsResultsRaw, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
         {
-            if (jobSpotsResults == null) return;
+            const int unallocatedSpot = 0;
+            var jobSpotsResultsRawModified = new PlanBuyingInventoryRawDto();
 
-            var jobSpotsFrequencies = jobSpotsResults.AllocatedSpots.Union(jobSpotsResults.UnallocatedSpots)
-                .SelectMany(x => x.SpotFrequencies)
+            foreach (var spot in jobSpotsResultsRaw)
+            {
+                if (allocatedSpotsByJob.Any(s =>
+                    s.StationInventoryManifestId.Equals(spot.StationInventoryManifestId)
+                    && s.InventoryMediaWeek.Id.Equals(spot.InventoryMediaWeekId)
+                    && s.ContractMediaWeek.Id.Equals(spot.ContractMediaWeekId)))
+                {
+                    var allocatedSpot = allocatedSpotsByJob.SingleOrDefault(s => s.StationInventoryManifestId == spot.StationInventoryManifestId
+                        && s.InventoryMediaWeek.Id == spot.InventoryMediaWeekId
+                        && s.ContractMediaWeek.Id == spot.ContractMediaWeekId);
+
+                    jobSpotsResultsRawModified.AllocatedSpotsRaw.Add(new PlanBuyingSpotRaw
+                    {
+                        StationInventoryManifestId = spot.StationInventoryManifestId,
+                        PostingTypeConversationRate = spot.PostingTypeConversationRate,
+                        InventoryMediaWeekId = spot.InventoryMediaWeekId,
+                        Impressions30sec = spot.Impressions30sec,
+                        ContractMediaWeekId = spot.ContractMediaWeekId,
+                        StandardDaypartId = spot.StandardDaypartId,
+                        SpotFrequenciesRaw = spot.SpotFrequenciesRaw.Select(spotFrequencyRaw => new SpotFrequencyRaw()
+                        {
+                            SpotLengthId = spotFrequencyRaw.SpotLengthId,
+                            SpotCost = spotFrequencyRaw.SpotCost,
+                            Spots = allocatedSpot.SpotFrequencies.SingleOrDefault(x => x.SpotLengthId == spotFrequencyRaw.SpotLengthId)?.Spots ?? 0,
+                            Impressions = spotFrequencyRaw.Impressions
+                        }).ToList(),
+                    });
+                }
+                else
+                {
+                    jobSpotsResultsRawModified.UnallocatedSpotsRaw.Add(new PlanBuyingSpotRaw
+                    {
+                        StationInventoryManifestId = spot.StationInventoryManifestId,
+                        PostingTypeConversationRate = spot.PostingTypeConversationRate,
+                        InventoryMediaWeekId = spot.InventoryMediaWeekId,
+                        Impressions30sec = spot.Impressions30sec,
+                        ContractMediaWeekId = spot.ContractMediaWeekId,
+                        StandardDaypartId = spot.StandardDaypartId,
+                        SpotFrequenciesRaw = spot.SpotFrequenciesRaw.Select(spotFrequencyRaw => new SpotFrequencyRaw()
+                        {
+                            SpotLengthId = spotFrequencyRaw.SpotLengthId,
+                            SpotCost = spotFrequencyRaw.SpotCost,
+                            Spots = unallocatedSpot,
+                            Impressions = spotFrequencyRaw.Impressions
+                        }).ToList()
+                    });
+                }
+            };
+            jobSpotsResultsRawModified.SpotAllocationModelMode = spotAllocationModelMode;
+            jobSpotsResultsRawModified.PostingType = postingType;
+            return jobSpotsResultsRawModified;
+        }
+
+        /// <summary>Coverts to nsi.</summary>
+        /// <param name="planBuyingSpotRaw">The plan buying spot raw.</param>
+        /// <returns></returns>
+        public List<PlanBuyingSpotRaw> _CovertToNsi(List<PlanBuyingSpotRaw> planBuyingSpotRaw)
+        {
+            foreach (var spot in planBuyingSpotRaw)
+            {
+                var temp = PostingTypeConversionHelper.ConvertImpressionsFromNtiToNsi(spot.Impressions30sec, spot.PostingTypeConversationRate);
+                spot.Impressions30sec = temp;
+
+                foreach (var spotFrequency in spot.SpotFrequenciesRaw)
+                {
+                    var freqTemp = PostingTypeConversionHelper.ConvertImpressionsFromNtiToNsi(spotFrequency.Impressions, spot.PostingTypeConversationRate);
+                    spotFrequency.Impressions = freqTemp;
+                }
+            }
+            return planBuyingSpotRaw;
+        }
+
+        /// <summary>Gets the buying raw inventory.</summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns></returns>
+        private PlanBuyingInventoryRawDto _GetBuyingRawInventory(int jobId)
+        {
+            var response = new PlanBuyingInventoryRawDto();
+            try
+            {
+                var unZipped = _BuyingRequestLogClient.GetBuyingRawInventory(jobId);
+                response = JsonConvert.DeserializeObject<PlanBuyingInventoryRawDto>(unZipped);
+            }
+            catch (Exception exception)
+            {
+                _LogError("Failed to retrieve buying API raw inventory", exception);
+            }
+            return response;
+        }
+
+        internal void _UnEquivalizeSpots(PlanBuyingInventoryRawDto jobSpotsResultsRaw)
+        {
+            if (jobSpotsResultsRaw == null) return;
+
+            var jobSpotsFrequencies = jobSpotsResultsRaw.AllocatedSpotsRaw.Union(jobSpotsResultsRaw.UnallocatedSpotsRaw)
+                .SelectMany(x => x.SpotFrequenciesRaw)
                 .ToArray();
 
             var deliveryMultipliers = _SpotLengthEngine.GetDeliveryMultipliers();
@@ -301,9 +436,9 @@ namespace Services.Broadcast.Converters.Scx
             }
         }
 
-        internal List<PlanBuyingAllocatedSpot> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm,  List<PlanBuyingAllocatedSpot> spots)
+        internal List<PlanBuyingSpotRaw> _ApplyCpmThreshold(int cpmThresholdPercent, decimal goalCpm,  List<PlanBuyingSpotRaw> spots)
         {
-            var results = new List<PlanBuyingAllocatedSpot>();
+            var results = new List<PlanBuyingSpotRaw>();
             var tolerance = goalCpm * (cpmThresholdPercent / 100.0m);
             var maxCpm = goalCpm + tolerance;
             var minCpm = goalCpm - tolerance;
@@ -312,11 +447,11 @@ namespace Services.Broadcast.Converters.Scx
 
             spots.ForEach(s =>
             {
-                var keptFrequencies = new List<SpotFrequency>();
+                var keptFrequencies = new List<SpotFrequencyRaw>();
                 // PlanBuyingAllocatedSpot.Total* methods are sum([metric] * [frequency]);
                 // When called with unallocated spots the frequency will be 0.
                 // Therefore we cannot use the PlanBuyingAllocatedSpot.Total* methods and must calculate manually.
-                s.SpotFrequencies.ForEach(f =>
+                s.SpotFrequenciesRaw.ForEach(f =>
                 {
                     var totalImpressionsPerSpot30Sec = f.Impressions * deliveryMultipliers[f.SpotLengthId];
                     var totalCost = _CalculateSpotCostPer30s(f.SpotCost, costMultipliers[f.SpotLengthId]);
@@ -329,15 +464,14 @@ namespace Services.Broadcast.Converters.Scx
 
                 if (keptFrequencies.Any())
                 {
-                    var keptSpot = new PlanBuyingAllocatedSpot
+                    var keptSpot = new PlanBuyingSpotRaw
                     {
-                        Id = s.Id,
                         StationInventoryManifestId = s.StationInventoryManifestId,
-                        InventoryMediaWeek = s.InventoryMediaWeek,
-                        ContractMediaWeek = s.ContractMediaWeek,
+                        InventoryMediaWeekId = s.InventoryMediaWeekId,
+                        ContractMediaWeekId = s.ContractMediaWeekId,
                         Impressions30sec = s.Impressions30sec,
-                        StandardDaypart = s.StandardDaypart,
-                        SpotFrequencies = keptFrequencies
+                        StandardDaypartId = s.StandardDaypartId,
+                        SpotFrequenciesRaw = keptFrequencies
                     };
                     results.Add(keptSpot);
                 }
@@ -360,14 +494,14 @@ namespace Services.Broadcast.Converters.Scx
 
         public class ExpandedSpot
         {
-            public PlanBuyingAllocatedSpot Spot { get; }
+            public PlanBuyingSpotRaw Spot { get; }
             public StationInventoryManifest SpotInventory { get; }
             public int InventoryId { get; }
             public int MarketCode { get; }
             public int StationId { get; }
             public int StandardDaypartId { get; }
 
-            public ExpandedSpot(PlanBuyingAllocatedSpot spot, StationInventoryManifest spotInventory)
+            public ExpandedSpot(PlanBuyingSpotRaw spot, StationInventoryManifest spotInventory)
             {
                 Spot = spot;
                 SpotInventory = spotInventory;
@@ -376,7 +510,7 @@ namespace Services.Broadcast.Converters.Scx
                 MarketCode = SpotInventory.Station.MarketCode.Value;
                 StationId = SpotInventory.Station.Id;
 
-                StandardDaypartId = Spot.StandardDaypart.Id;
+                StandardDaypartId = Spot.StandardDaypartId;
             }
         }
 
@@ -386,6 +520,12 @@ namespace Services.Broadcast.Converters.Scx
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName, username);
             _Log.Info(logMessage.ToJson());
+        }
+
+        protected virtual void _LogError(string message, Exception ex = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson(), ex);
         }
 
         #endregion // #region Logging Methods

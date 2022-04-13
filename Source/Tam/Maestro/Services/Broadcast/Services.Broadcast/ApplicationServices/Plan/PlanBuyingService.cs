@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Hangfire;
+using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanBuying;
 using Services.Broadcast.Clients;
@@ -619,7 +620,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
-
         private CurrentBuyingExecutions _GetCurrentBuyingExecution_v2(PlanBuyingJob job, int? planId, PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             List<CurrentBuyingExecutionResultDto> buyingExecutionResults = null;
@@ -1138,6 +1138,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _CalculatePlanBuyingBandInventory(modelAllocationResults, planBuyingParametersDto, inventory, token);
 
+                diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_SPOTS_RAW);
+                var planBuyingRawInventory = _MapBuyingRawInventory(modelAllocationResults, inventory);
+                _SaveBuyingRawInventory(plan.Id, jobId, planBuyingRawInventory);
+                diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_SPOTS_RAW);
+
                 foreach (var allocationResult in modelAllocationResults)
                 {
                     var aggregationTasks = new List<AggregationTask>();
@@ -1303,6 +1308,57 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        /// <summary>
+        /// Maps the buying raw inventory.
+        /// </summary>
+        /// <param name="modelAllocationResults">The model allocation results.</param>
+        /// <param name="inventory">The inventory.</param>
+        /// <returns></returns>
+        internal PlanBuyingInventoryRawDto _MapBuyingRawInventory(List<PlanBuyingAllocationResult> modelAllocationResults, List<PlanBuyingInventoryProgram> inventory)
+        {
+            const int unallocatedSpot = 0;
+
+            var rawSpots = modelAllocationResults.FirstOrDefault();
+            var planBuyingRawInventory = new PlanBuyingInventoryRawDto()
+            {
+                PostingType = rawSpots.PostingType,
+                SpotAllocationModelMode = rawSpots.SpotAllocationModelMode,
+                AllocatedSpotsRaw = rawSpots.AllocatedSpots.Select(rawAllocatedSpots => new PlanBuyingSpotRaw()
+                {
+                    StationInventoryManifestId = rawAllocatedSpots.Id,
+                    PostingTypeConversationRate = inventory.First(y => y.StandardDaypartId == rawAllocatedSpots.StandardDaypart.Id).NsiToNtiImpressionConversionRate,
+                    InventoryMediaWeekId = rawAllocatedSpots.InventoryMediaWeek.Id,
+                    Impressions30sec = rawAllocatedSpots.Impressions30sec,
+                    ContractMediaWeekId = rawAllocatedSpots.ContractMediaWeek.Id,
+                    StandardDaypartId = rawAllocatedSpots.StandardDaypart.Id,
+                    SpotFrequenciesRaw = rawAllocatedSpots.SpotFrequencies.Select(spotFrequencyRaw => new SpotFrequencyRaw()
+                    {
+                        SpotLengthId = spotFrequencyRaw.SpotLengthId,
+                        SpotCost = spotFrequencyRaw.SpotCost,
+                        Spots = unallocatedSpot,
+                        Impressions = spotFrequencyRaw.Impressions
+                    }).ToList()
+                }).ToList(),
+                UnallocatedSpotsRaw = rawSpots.UnallocatedSpots.Select(rawUnallocatedSpots => new PlanBuyingSpotRaw()
+                {
+                    StationInventoryManifestId = rawUnallocatedSpots.Id,
+                    PostingTypeConversationRate = inventory.First(y => y.StandardDaypartId == rawUnallocatedSpots.StandardDaypart.Id).NsiToNtiImpressionConversionRate,
+                    InventoryMediaWeekId = rawUnallocatedSpots.InventoryMediaWeek.Id,
+                    Impressions30sec = rawUnallocatedSpots.Impressions30sec,
+                    ContractMediaWeekId = rawUnallocatedSpots.ContractMediaWeek.Id,
+                    StandardDaypartId = rawUnallocatedSpots.StandardDaypart.Id,
+                    SpotFrequenciesRaw = rawUnallocatedSpots.SpotFrequencies.Select(spotFrequencyRaw => new SpotFrequencyRaw()
+                    {
+                        SpotLengthId = spotFrequencyRaw.SpotLengthId,
+                        SpotCost = spotFrequencyRaw.SpotCost,
+                        Spots = unallocatedSpot,
+                        Impressions = spotFrequencyRaw.Impressions
+                    }).ToList()
+                }).ToList()
+            };
+            return planBuyingRawInventory;
+        }
+
         private void _CalculatePlanBuyingBandInventory(List<PlanBuyingAllocationResult> modelAllocationResults, PlanBuyingParametersDto planBuyingParametersDto,
             List<PlanBuyingInventoryProgram> inventory, CancellationToken token)
         {
@@ -1320,6 +1376,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SaveBuyingBandInventory(planBuyingParametersDto, buyingBandInventoryStations, diagnostic);
 
             token.ThrowIfCancellationRequested();
+        }
+
+        private void _SaveBuyingRawInventory(int planId, int jobId, PlanBuyingInventoryRawDto planBuyingApiScx)
+        {
+            try
+            {
+                string jsonData = JsonConvert.SerializeObject(planBuyingApiScx, Formatting.Indented);
+                var fileName = _BuyingRequestLogClient.SaveBuyingRawInventory(planId, jobId, jsonData);
+                _PlanBuyingRepository.UpdateFileName(jobId, fileName);
+
+            }
+            catch (Exception exception)
+            {
+                _LogError("Failed to save buying API raw inventory", exception);
+            }
         }
 
         private void _MapAllocationResultsPostingType(PlanBuyingAllocationResult allocationResult, List<PlanBuyingInventoryProgram> inventory,
@@ -1952,7 +2023,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion, spotAllocationModelMode);
+                string unZipped = JsonConvert.SerializeObject(buyingApiRequest, Formatting.Indented);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, unZipped, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {
@@ -1964,7 +2036,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             try
             {
-                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, buyingApiRequest, apiVersion, spotAllocationModelMode);
+                string unZipped = JsonConvert.SerializeObject(buyingApiRequest, Formatting.Indented);
+                _BuyingRequestLogClient.SaveBuyingRequest(planId, jobId, unZipped, apiVersion, spotAllocationModelMode);
             }
             catch (Exception exception)
             {

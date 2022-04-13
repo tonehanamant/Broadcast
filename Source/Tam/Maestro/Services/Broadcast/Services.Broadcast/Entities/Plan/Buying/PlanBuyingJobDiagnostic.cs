@@ -42,6 +42,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public static string SW_KEY_AGGREGATING_ALLOCATION_RESULTS = "Aggregating allocation results";
         public static string SW_KEY_CALCULATING_BUYING_BANDS = "Calculating buying bands";
         public static string SW_KEY_CALCULATING_BUYING_BAND_INVENTORY = "Calculating buying band inventory";
+        public static string SW_KEY_SAVING_BUYING_SPOTS_RAW = "Saving buying spots raw";
         public static string SW_KEY_CALCULATING_BUYING_STATIONS = "Calculating buying stations";
         public static string SW_KEY_AGGREGATING_MARKET_RESULTS = "Aggregating market results";
         public static string SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS = "Aggregating ownership group results";
