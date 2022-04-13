@@ -180,18 +180,21 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var campaignsWithSummary = context.campaigns
+                    var campaigns = context.campaigns
                         .Include(campaign => campaign.plans)
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(z => z.plan_version_summary_quarters))))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(z => z.standard_dayparts))))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths)))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths.Select(z => z.spot_lengths))))
-                        .GroupJoin(
-                            context.campaign_summaries,
-                            campaigns => campaigns.id,
-                            campaign_summaries => campaign_summaries.campaign_id,
-                            (campaign, summary) => new { campaign, summaries = summary.DefaultIfEmpty() })
-                         .Select(item => new { item.campaign, summary = item.summaries.FirstOrDefault() });
+                        .Include(campaign => campaign.campaign_summaries)
+                         .ToList();
+
+                    var campaignsWithSummary = campaigns
+                         .Select(item => new { campaign = item, summary = item.campaign_summaries.FirstOrDefault() })
+                         .ToList();
 
                     if (startDate.HasValue && endDate.HasValue)
                     {
@@ -206,30 +209,33 @@ namespace Services.Broadcast.Repositories
                              item.campaign.created_date >= startDate.Value &&
                              item.campaign.created_date <= endDate.Value) ||
 
-                            (item.summary.flight_start_Date != null &&
+                            (item.summary != null &&
+                            item.summary.flight_start_Date != null &&
                              item.summary.flight_end_Date == null &&
                              item.summary.flight_start_Date >= startDate.Value &&
                              item.summary.flight_start_Date <= endDate.Value) ||
 
-                            (item.summary.flight_start_Date != null &&
+                            (item.summary != null &&
+                            item.summary.flight_start_Date != null &&
                              item.summary.flight_end_Date != null &&
                              item.summary.flight_start_Date <= endDate.Value &&
-                             item.summary.flight_end_Date >= startDate.Value));
+                             item.summary.flight_end_Date >= startDate.Value)).ToList();
                     }
 
                     if (campaignStatus.HasValue)
                     {
                         if (campaignStatus.Value == PlanStatusEnum.Working)
-                            campaignsWithSummary = campaignsWithSummary.Where(c => c.summary.campaign_status == (byte)campaignStatus || c.summary == null || !c.summary.campaign_status.HasValue);
+                            campaignsWithSummary = campaignsWithSummary.Where(c => c.summary.campaign_status == (byte)campaignStatus || c.summary == null || !c.summary.campaign_status.HasValue).ToList();
                         else
-                            campaignsWithSummary = campaignsWithSummary.Where(p => p.summary.campaign_status == (byte)campaignStatus);
+                            campaignsWithSummary = campaignsWithSummary.Where(p => p.summary.campaign_status == (byte)campaignStatus).ToList();
 
                     }
 
-                    return campaignsWithSummary.ToList()
+                    var result = campaignsWithSummary
                         .Select(x => _MapToCampaignAndCampaignSummary(x.campaign, x.summary))
                         .OrderByDescending(item => item.Campaign.ModifiedDate)
                         .ToList();
+                    return result;
                 });
         }
 
@@ -298,6 +304,8 @@ namespace Services.Broadcast.Repositories
 
         private CampaignDto _MapToDto(campaign campaign)
         {
+            var planVersions = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions);
+
             var campaignDto = new CampaignDto
             {
                 Id = campaign.id,
@@ -309,12 +317,12 @@ namespace Services.Broadcast.Repositories
                 AdvertiserMasterId = campaign.advertiser_master_id,
                 AgencyId = campaign.agency_id,
                 AgencyMasterId = campaign.agency_master_id,
-                Plans = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
-                                    .Where(x => x.id == x.plan.latest_version_id)
+                Plans = planVersions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle) && y.id == y.plan.latest_version_id)
                     .Select(version =>
                     {
                         var summary = version.plan_version_summaries.Single();
-                        var draft = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions)
+
+                        var draft = planVersions
                             .Where(x => x.plan_id == version.plan_id && x.is_draft == true).SingleOrDefault();
 
                         return new PlanSummaryDto
