@@ -526,6 +526,8 @@
     <Compile Include="ApplicationServices\SpotExceptionService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
+    <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
+    <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
     <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
     <Compile Include="Entities\ApiResponse\ApiItemResponseTyped.cs" />
     <Compile Include="Entities\ApiResponse\ApiListResponseTyped.cs" />
@@ -563,6 +565,7 @@
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\RatingsForecastResponseDto.cs" />
     <Compile Include="Entities\RatingsForecastRequestDto.cs" />
+    <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionSaveDecisionsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionOutOfSpecUnpostedRequestDto.cs" />

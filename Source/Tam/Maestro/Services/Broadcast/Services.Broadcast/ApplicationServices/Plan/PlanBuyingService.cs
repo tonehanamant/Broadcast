@@ -190,9 +190,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         Guid ExportPlanBuyingScx(PlanBuyingScxExportRequest request, string username,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
             PostingTypeEnum postingType = PostingTypeEnum.NSI);
-        /// <summary>
-        /// Generates the program lineup report.
-        /// </summary>
+
+        /// <summary>Generates the program lineup report.</summary>
         /// <param name="request">ProgramLineupReportRequest object contains selected plan ids</param>
         /// <param name="userName"></param>
         /// <param name="currentDate"></param>

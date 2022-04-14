@@ -9,6 +9,7 @@ using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Validators;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Converters.Scx;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -28,6 +29,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
                                   IPlanPricingProgramCalculationEngine planPricingProgramCalculationEngine,
                                   IPricingRequestLogClient pricingApiRequestSerializerClient,
+                                  IPlanPricingScxDataPrep planPricingScxDataPrep,
+                                  IPlanPricingScxDataConverter planPricingScxDataConverter,
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService, 
@@ -49,6 +52,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             planPricingMarketResultsEngine,
             planPricingProgramCalculationEngine,
             pricingApiRequestSerializerClient,
+            planPricingScxDataPrep,
+            planPricingScxDataConverter,
             planValidator,
             sharedFolderService,
             audienceService,

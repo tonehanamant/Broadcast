@@ -237,6 +237,17 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStationsForVersion_v2(planId, planVersionId, spotAllocationModelMode));
         }
 
+        [HttpPost]
+        [Route("ExportPricingScx")]
+        public BaseResponse<Guid> ExportPricingScx(int planId,
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        {
+            var username = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
+            .ExportPlanPricingScx(planId, username, spotAllocationModelMode, postingType));
+        }
+
         /// <summary>
         /// Generates the report with OpenMarket inventory prices.
         /// </summary>

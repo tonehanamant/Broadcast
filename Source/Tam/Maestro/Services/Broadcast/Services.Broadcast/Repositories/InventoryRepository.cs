@@ -83,6 +83,8 @@ namespace Services.Broadcast.Repositories
 
         List<StationInventoryManifest> GetInventoryScxDataForOAndO(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate);
 
+        List<StationInventoryManifest> GetPlanPricingScxInventory(int planPricingJobId);
+
         /// <summary>
         /// Gets the header information for an inventory file ids
         /// </summary>
@@ -1234,6 +1236,24 @@ namespace Services.Broadcast.Repositories
                     }
 
                     manifests = manifests.Where(m => m.ManifestWeeks.Any()).ToList();
+
+                    return manifests;
+                });
+        }
+
+        // to do, make more efficient
+        public List<StationInventoryManifest> GetPlanPricingScxInventory(int planPricingJobId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifests = context.plan_version_pricing_api_result_spots
+                        .Where(c => c.plan_version_pricing_api_results.plan_version_pricing_job_id == planPricingJobId)
+                        .Select(c => c.station_inventory_manifest)
+                        .Distinct()
+                        .ToList()
+                        .Select(c => _MapToInventoryManifest(c, null))
+                        .ToList();
 
                     return manifests;
                 });

@@ -44,6 +44,7 @@
             public const string INVENTORY_EXPORTS = "InventoryExports";
             public const string QUOTE_REPORTS = "QuoteReports";
             public const string PLAN_BUYING_SCX = "PlanBuyingScx";
+            public const string PLAN_PRICING_SCX = "PlanPricingScx";
             public const string POST_PROCESSING_FILE_STORE = "PostProcessingFileStore";
             public const string PRICING_RESULTS_REPORT = "PricingResultsReport";
             public const string BUYING_RESULTS_REPORT = "BuyingResultsReport";

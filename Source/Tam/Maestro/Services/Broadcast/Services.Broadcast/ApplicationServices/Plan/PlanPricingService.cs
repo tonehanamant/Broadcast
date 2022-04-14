@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Newtonsoft.Json;
+using Services.Broadcast.Converters.Scx;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -89,6 +90,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanPricingDefaults GetPlanPricingDefaults();
         bool IsPricingModelRunningForPlan(int planId);
         bool IsPricingModelRunningForJob(int jobId);
+
+        /// <summary>
+        /// Gets the latest pricing job.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
+        PlanPricingJob _GetLatestPricingJob(int planId);
+
         /// <summary>
         /// For troubleshooting
         /// </summary>
@@ -147,6 +156,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, int jobId, PlanPricingApiRequestDto_v3 pricingApiRequest, string apiVersion, SpotAllocationModelMode spotAllocationModelMode);
+
+        /// <summary>
+        /// Exports the plan pricing SCX.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">Type of the posting.</param>
+        /// <returns></returns>
+        Guid ExportPlanPricingScx(int planId, string username,
+            SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType = PostingTypeEnum.NSI);
+
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
 
         PlanPricingStationResultDto_v2 GetStations_v2(int planId,
@@ -188,6 +210,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanPricingMarketResultsEngine _PlanPricingMarketResultsEngine;
         private readonly IPlanPricingProgramCalculationEngine _PlanPricingProgramCalculationEngine;
         private readonly IPricingRequestLogClient _PricingRequestLogClient;
+        private readonly IPlanPricingScxDataPrep _PlanPricingScxDataPrep;
+        private readonly IPlanPricingScxDataConverter _PlanPricingScxDataConverter;
         private readonly IPlanValidator _PlanValidator;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IAudienceService _AudienceService;
@@ -214,6 +238,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
                                   IPlanPricingProgramCalculationEngine planPricingProgramCalculationEngine,
                                   IPricingRequestLogClient pricingRequestLogClient,
+                                  IPlanPricingScxDataPrep planPricingScxDataPrep,
+                                  IPlanPricingScxDataConverter planPricingScxDataConverter,
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService,
@@ -241,6 +267,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanPricingMarketResultsEngine = planPricingMarketResultsEngine;
             _PlanPricingProgramCalculationEngine = planPricingProgramCalculationEngine;
             _PricingRequestLogClient = pricingRequestLogClient;
+            _PlanPricingScxDataPrep = planPricingScxDataPrep;
+            _PlanPricingScxDataConverter = planPricingScxDataConverter;
             _PlanValidator = planValidator;
             _SharedFolderService = sharedFolderService;
             _AudienceService = audienceService;
@@ -461,6 +489,31 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
 
             return plan;
+        }
+
+        public Guid ExportPlanPricingScx(int planId, string username,
+            SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        {
+            const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var generated = _DateTimeEngine.GetCurrentMoment();
+
+            var scxData = _PlanPricingScxDataPrep.GetScxData(planId, generated, spotAllocationModelMode, postingType);
+            var scxFile = _PlanPricingScxDataConverter.ConvertData(scxData, spotAllocationModelMode);
+            scxFile.spotAllocationModelMode = spotAllocationModelMode.ToString().Substring(0, 1);
+            var sharedFile = new SharedFolderFile
+            {
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PLAN_PRICING_SCX),
+                FileNameWithExtension = scxFile.FileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.PlanPricingScx,
+                CreatedDate = generated,
+                CreatedBy = username,
+                FileContent = scxFile.ScxStream
+            };
+            var savedFileGuid = _SharedFolderService.SaveFile(sharedFile);
+
+            return savedFileGuid;
         }
 
         public async Task<PlanPricingJob> QueuePricingJobAsync(PlanPricingParametersDto planPricingParametersDto

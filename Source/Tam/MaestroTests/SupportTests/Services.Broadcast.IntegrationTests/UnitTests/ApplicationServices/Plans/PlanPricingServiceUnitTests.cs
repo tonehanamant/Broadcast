@@ -12,6 +12,7 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -67,6 +68,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingMarketResultsEngine> _PlanPricingMarketResultsEngine;
         private Mock<IPlanPricingProgramCalculationEngine> _PlanPricingProgramCalculationEngine;
         private Mock<IPricingRequestLogClient> _PricingRequestLogClient;
+        private Mock<IPlanPricingScxDataPrep> _PlanPricingScxDataPrepMock;
+        private Mock<IPlanPricingScxDataConverter> _PlanPricingScxDataConverterMock;
         private Mock<IPlanValidator> _PlanValidatorMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
         private Mock<IAudienceService> _AudienceServiceMock;
@@ -100,6 +103,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanPricingStationCalculationEngineMock = new Mock<IPlanPricingStationCalculationEngine>();
             _PlanPricingMarketResultsEngine = new Mock<IPlanPricingMarketResultsEngine>();
             _PricingRequestLogClient = new Mock<IPricingRequestLogClient>();
+            _PlanPricingScxDataPrepMock = new Mock<IPlanPricingScxDataPrep>();
+            _PlanPricingScxDataConverterMock = new Mock<IPlanPricingScxDataConverter>();
             _PlanValidatorMock = new Mock<IPlanValidator>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
             _AudienceServiceMock = new Mock<IAudienceService>();
@@ -1123,6 +1128,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingMarketResultsEngine.Object,
                 _PlanPricingProgramCalculationEngine.Object,
                 _PricingRequestLogClient.Object,
+                _PlanPricingScxDataPrepMock.Object,
+                _PlanPricingScxDataConverterMock.Object,
                 _PlanValidatorMock.Object,
                 _SharedFolderServiceMock.Object,
                 _AudienceServiceMock.Object,

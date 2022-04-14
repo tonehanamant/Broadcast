@@ -258,6 +258,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanPricingProgramCalculationEngine, PlanPricingProgramCalculationEngine>();
             unityContainer.RegisterType<IHealthService, HealthService>();
 
+            unityContainer.RegisterType<IPlanPricingScxDataPrep, PlanPricingScxDataPrep>();
+            unityContainer.RegisterType<IPlanPricingScxDataConverter, PlanPricingScxDataConverter>();
+
             //plan buying tab
             unityContainer.RegisterType<IPlanBuyingApiClient, PlanBuyingJobQueueApiClient>();
             unityContainer.RegisterType<IPlanBuyingRequestLogClient, PlanBuyingRequestLogClientAmazonS3>();
