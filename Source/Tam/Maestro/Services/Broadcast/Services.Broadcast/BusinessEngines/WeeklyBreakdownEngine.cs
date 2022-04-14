@@ -760,7 +760,7 @@ namespace Services.Broadcast.BusinessEngines
 
             // Remove dayparts not in use from the remain weeks
             _RemoveDaypartsInTheExistingWeeks(request, result);
-            
+            request.Weeks = result.Weeks;
             // Recalculate fields in the existing weeks
             _RecalculateExistingWeeks(request, out bool redistributeCustom);
 
@@ -1197,6 +1197,7 @@ namespace Services.Broadcast.BusinessEngines
                         default:
                             var totalUnlockedActiveRowsCount = request.Weeks.Count(w => w.IsLocked.Equals(false) && w.NumberOfActiveDays > 0);
                             var daypartWeigitingGoalPercentage = request.Dayparts.Where(x => x.DaypartCodeId == week.DaypartCodeId).Select(x => x.WeightingGoalPercent).FirstOrDefault();
+                            var spotLengthWeight = request.CreativeLengths.Where(x => x.SpotLengthId == week.SpotLengthId).Select(x => x.Weight).FirstOrDefault();
                             if (redistributeCustom && oldImpressionTotals > 0)
                             {
                                 var totalLockedRowsCount = request.Weeks.Count(w => w.IsLocked);                                
@@ -1206,11 +1207,13 @@ namespace Services.Broadcast.BusinessEngines
                                     var totalLockedImpressions = request.Weeks.Where(w => w.IsLocked).Sum(w => w.WeeklyImpressions);
                                     week.WeeklyImpressions = Math.Floor((totalImpressions - totalLockedImpressions) / totalUnlockedActiveRowsCount);
                                     week.WeeklyImpressions = daypartWeigitingGoalPercentage.HasValue ? Math.Floor((week.WeeklyImpressions * daypartWeigitingGoalPercentage.Value) / 100) : week.WeeklyImpressions;
+                                    week.WeeklyImpressions = spotLengthWeight.HasValue ? Math.Floor((week.WeeklyImpressions * spotLengthWeight.Value) / 100) : week.WeeklyImpressions;
                                 }
                                 else
                                 {
                                     week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnlockedActiveRowsCount);
                                     week.WeeklyImpressions = daypartWeigitingGoalPercentage.HasValue ? Math.Floor((week.WeeklyImpressions * daypartWeigitingGoalPercentage.Value) / 100) : week.WeeklyImpressions;
+                                    week.WeeklyImpressions = spotLengthWeight.HasValue ? Math.Floor((week.WeeklyImpressions * spotLengthWeight.Value) / 100) : week.WeeklyImpressions;
                                 }
                             }
                             else
@@ -1223,6 +1226,7 @@ namespace Services.Broadcast.BusinessEngines
                                 {
                                     week.WeeklyImpressions = Math.Floor(request.TotalImpressions / totalUnlockedActiveRowsCount);
                                     week.WeeklyImpressions = daypartWeigitingGoalPercentage.HasValue ? Math.Floor((week.WeeklyImpressions * daypartWeigitingGoalPercentage.Value) / 100) : week.WeeklyImpressions;
+                                    week.WeeklyImpressions = spotLengthWeight.HasValue ? Math.Floor((week.WeeklyImpressions * spotLengthWeight.Value) / 100) : week.WeeklyImpressions;
                                 }
                             }
 

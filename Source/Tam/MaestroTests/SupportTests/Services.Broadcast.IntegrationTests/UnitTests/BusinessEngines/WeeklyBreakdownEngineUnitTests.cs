@@ -1025,23 +1025,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void WeeklyGoalBreakdown_ByDaypartModifyDayparts()
-        {//CalculatePlanWeeklyGoalBreakdown_ByWeekByDaypart_ModifyDayparts
-            var request = _GetWeeklyBreakdownRequest_CustomByWeekByDaypart();
-            request.Dayparts.RemoveAt(0);
-            request.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1 });
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(_GetDisplayMediaWeeks());
-
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
         /// <summary>
         /// Days are Monday(1) through Sunday(7)
         /// </summary>
@@ -3397,6 +3380,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void WeeklyGoalBreakdown_AddDaypart()
+        {
+            var request = _GetWeeklyBreakdownRequest_CustomByWeekByDaypart();
+            request.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1 });
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetDisplayMediaWeeks());
+
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void WeeklyGoalBreakdown_RemoveDaypart()
+        {
+            var request = _GetWeeklyBreakdownRequest_CustomByWeekByDaypart();
+            request.Dayparts.RemoveAt(0);
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetDisplayMediaWeeks());
+
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }
