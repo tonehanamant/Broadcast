@@ -193,7 +193,7 @@ namespace Services.Broadcast.Repositories
                          .ToList();
 
                     var campaignsWithSummary = campaigns
-                         .Select(item => new { campaign = item, summary = item.campaign_summaries.FirstOrDefault() })
+                         .Select(item => new { campaign = item, summary = item.campaign_summaries.FirstOrDefault() ?? new campaign_summaries() })
                          .ToList();
 
                     if (startDate.HasValue && endDate.HasValue)
