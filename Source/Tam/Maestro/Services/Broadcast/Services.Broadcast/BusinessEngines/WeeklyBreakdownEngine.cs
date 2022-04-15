@@ -1224,6 +1224,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var week in weeksToUpdate)
             {
                 week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
+                week.ActiveDays = activeDaysString;
                 if (week.NumberOfActiveDays < 1)
                 {
                     week.WeeklyImpressions = 0;
@@ -1233,8 +1234,7 @@ namespace Services.Broadcast.BusinessEngines
                     week.WeeklyAdu = 0;
                 }
                 if (!week.IsLocked && week.NumberOfActiveDays > 0)
-                {
-                    week.ActiveDays = activeDaysString;
+                {                    
                     switch (request.WeeklyBreakdownCalculationFrom)
                     {
                         case WeeklyBreakdownCalculationFrom.Ratings:

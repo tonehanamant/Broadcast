@@ -3703,5 +3703,111 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         }
 
         #endregion // #region Handling Delivery Type Change
+
+        #region Handling Hiatus Day Change
+
+        [Test]
+        public void CalculatePlanWeeklyGoalBreakdown_HiatusDayChange()
+        {
+            // arrange
+            var request = GetRequestFor_CalculatePlanWeeklyGoalBreakdown_HiatusDayChangeTests();
+
+            var cachedWeeks = GetCachedWeeksFor_CalculatePlanWeeklyGoalBreakdown_HiatusDayChangeTest();
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(cachedWeeks);
+
+            // Act
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            var lockedWeek = result.Weeks.Single(w => w.IsLocked);
+            Assert.AreEqual(6, lockedWeek.NumberOfActiveDays);
+            Assert.AreEqual("M-W,F-Su", lockedWeek.ActiveDays);
+        }
+
+        private WeeklyBreakdownRequest GetRequestFor_CalculatePlanWeeklyGoalBreakdown_HiatusDayChangeTests()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
+                CreativeLengths = new List<CreativeLength>()
+                {
+                    new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 3, Weight = 50 }
+                },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 12,
+                        WeightingGoalPercent = 50
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 6,
+                        WeightingGoalPercent = 50
+                    }
+                },
+                TotalBudget = 100000,
+                Equivalized = true,
+                ImpressionsPerUnit = 1,
+                TotalImpressions = 10000,
+                TotalRatings = 8.3,
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightStartDate = new DateTime(2020, 2, 24),
+                FlightEndDate = new DateTime(2020, 3, 1),
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2020, 2, 27)
+                },
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1,
+                        MediaWeekId = 844,
+                        StartDate =  new DateTime(2020, 2, 24),
+                        EndDate =  new DateTime(2020, 3, 1),
+                        NumberOfActiveDays = 7,
+                        ActiveDays = "M-Su",
+                        WeeklyImpressions = 10000,
+                        WeeklyImpressionsPercentage = 100,
+                        WeeklyBudget = 100000,
+                        WeeklyAdu = 0,
+                        AduImpressions = 0,
+                        PercentageOfWeek = 100,
+                        IsUpdated = false,
+                        UnitImpressions = 0,
+                        WeeklyUnits = 10000,
+                        IsLocked = true
+                    }
+                }
+            };
+            return request;
+        }
+
+        private List<DisplayMediaWeek> GetCachedWeeksFor_CalculatePlanWeeklyGoalBreakdown_HiatusDayChangeTest()
+        {
+            var cachedWeeks = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek
+                {
+                    Id = 844,
+                    Week = 1,
+                    MediaMonthId = 462,
+                    Year = 2020,
+                    Month = 3,
+                    WeekStartDate = new DateTime(2020, 2, 24),
+                    WeekEndDate = new DateTime(2020, 3, 1),
+                    MonthStartDate = new DateTime(2020, 2, 24),
+                    MonthEndDate = new DateTime(2020, 3, 29)
+                }
+            };
+            return cachedWeeks;
+        }
+
+        #endregion // #region Handling Hiatus Day Change
     }
 }
