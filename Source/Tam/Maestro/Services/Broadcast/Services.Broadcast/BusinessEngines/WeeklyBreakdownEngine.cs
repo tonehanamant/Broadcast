@@ -176,7 +176,9 @@ namespace Services.Broadcast.BusinessEngines
                 var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
                 var week = weeks.Single(w => w.MediaWeekId == weeklyBreakdown.MediaWeekId);
 
-                // In save plan it's distributing goals for spot length, so it's not necessary to call it again
+                // The given weeks is grouped by Week and Daypart with the Daypart weights distributed.
+                // Here we are "manufacturing" the Spot Length records in the grid and thus Manufacturing them.
+                // we will use the weights at the plan level to do this.
                 foreach (var distributedSpotLength in plan.CreativeLengths)
                 {
                     var weighting = GeneralMath.ConvertPercentageToFraction(distributedSpotLength.Weight.GetValueOrDefault());
@@ -246,6 +248,9 @@ namespace Services.Broadcast.BusinessEngines
 
                     double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyUnits == 0 ? 0 : breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
 
+                    // The given weeks is grouped by Week and Spot Length with the Spot Length weights distributed.
+                    // Here we are "manufacturing" the Daypart records in the grid and thus Manufacturing them.
+                    // we will use the weights at the plan level to do this.
                     foreach (var item in standardDaypardWeightingGoals)
                     {
                         var weighting = GeneralMath.ConvertPercentageToFraction(item.WeightingGoalPercent);
@@ -509,6 +514,52 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
+        internal bool _IsDeliveryTypeChange(WeeklyBreakdownRequest request)
+        {
+            // When the user changes the delivery type and Locking is enabled then 
+            // we will be given a Raw Weekly Breakdown instead of Weeks.
+            // We can detect that because the request.weeks will contain both SpotLengths and Dayparts 
+            // instead of being grouped to
+            //  - just SpotLengths (only has SpotLengths),
+            //  - just Dayparts (only has Dayparts),
+            //  - or just Weeks (doesn't have either SpotLengths or Dayparts)
+
+            if (!request.Weeks.Any())
+            {
+                return false;
+            }
+
+            var hasSpotLengths = request.Weeks.Any(w => w.SpotLengthId.HasValue);
+            var hasDayparts = request.Weeks.Any(w => w.DaypartCodeId.HasValue);
+
+            var isRawWeeklyBreakdown = hasSpotLengths && hasDayparts;
+            // if it's a RawWeeklyBreakdown then we know it's a Delivery Type Change.
+            return isRawWeeklyBreakdown;
+        }
+
+        private WeeklyBreakdownResponseDto _CalculateResponseWeeksForDeliveryTypeChange(WeeklyBreakdownRequest request)
+        {
+            // group to the target delivery type without changing the distributions
+            var plan = new PlanDto
+            {
+                GoalBreakdownType = request.DeliveryType,
+                CreativeLengths = request.CreativeLengths,
+                Dayparts = request.Dayparts,
+                WeeklyBreakdownWeeks = request.Weeks,
+                TargetRatingPoints = request.TotalRatings,
+                Budget = request.TotalBudget,
+                Equivalized = request.Equivalized,
+                ImpressionsPerUnit = request.ImpressionsPerUnit,
+                TargetImpressions = request.TotalImpressions,
+                FlightDays = request.FlightDays,
+                FlightEndDate = request.FlightEndDate,
+                FlightHiatusDays = request.FlightHiatusDays
+            };
+            var groupedWeeks = GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
+            var result = new WeeklyBreakdownResponseDto { Weeks = groupedWeeks };
+            return result;
+        }
+
         public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
             _PlanValidator.ValidateWeeklyBreakdown(request);
@@ -530,6 +581,8 @@ namespace Services.Broadcast.BusinessEngines
             request.FlightHiatusDays.AddRange(_GetDaysOutsideOfTheFlight(request.FlightStartDate, request.FlightEndDate, weeks));
 
             var isInitialLoad = request.Weeks.IsEmpty();
+            var isDeliveryTypeChange = _IsDeliveryTypeChange(request);
+
             WeeklyBreakdownResponseDto response;
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
             {
@@ -540,6 +593,8 @@ namespace Services.Broadcast.BusinessEngines
                 // we can use EvenDelivery calculation for the request because it has the same structure
                 if (isInitialLoad)
                     response = _CalculateEvenDeliveryPlanWeeklyGoalBreakdown(request, weeks);
+                else if (isDeliveryTypeChange)
+                    response = _CalculateResponseWeeksForDeliveryTypeChange(request);
                 else
                     response = _CalculateCustomByWeekPlanWeeklyGoalBreakdown(request, weeks);
             }
@@ -549,6 +604,8 @@ namespace Services.Broadcast.BusinessEngines
 
                 if (isInitialLoad)
                     response = _CalculateInitialCustomByWeekByAdLengthPlanWeeklyGoalBreakdown(request, weeks, creativeLengths);
+                else if (isDeliveryTypeChange)
+                    response = _CalculateResponseWeeksForDeliveryTypeChange(request);
                 else
                     response = _CalculateCustomByWeekByAdLengthPlanWeeklyGoalBreakdown(request, weeks, creativeLengths);
             }
@@ -557,6 +614,8 @@ namespace Services.Broadcast.BusinessEngines
                 var standardDaypart = PlanGoalHelper.GetStandardDaypardWeightingGoals(request.Dayparts);
                 if (isInitialLoad)
                     response = _CalculateInitialCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, standardDaypart);
+                else if (isDeliveryTypeChange)
+                    response = _CalculateResponseWeeksForDeliveryTypeChange(request);
                 else
                     response = _CalculateCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, standardDaypart);
             }
@@ -571,7 +630,17 @@ namespace Services.Broadcast.BusinessEngines
             _OrderWeeks(request, response);
             SetWeekNumberAndSpotLengthDuration(response.Weeks);
             _AddDaypartToWeeklyBreakdownResult(request, response);
-            response.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, response.Weeks);
+
+            if (isDeliveryTypeChange && request.DeliveryType != PlanGoalBreakdownTypeEnum.EvenDelivery)
+            {
+                // pass these back as they were the raw weekly breakdown
+                response.RawWeeklyBreakdownWeeks = request.Weeks;
+            }
+            else
+            {
+                response.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, response.Weeks);
+            }
+            
             return response;
         }
 
