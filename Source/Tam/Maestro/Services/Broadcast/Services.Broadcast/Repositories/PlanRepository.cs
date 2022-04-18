@@ -173,7 +173,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="postingType">The postingType of plan</param>
         /// <param name="spotAllocationModelMode">Spot allocation model mode as per user input</param>
         /// <returns>List of PlanPricingAllocatedSpot.</returns>
-        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planId,int planVersionId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
+        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planId, int planVersionId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode);
 
         int GetPlanVersionIdByVersionNumber(int planId, int versionNumber);
 
@@ -413,8 +413,8 @@ namespace Services.Broadcast.Repositories
                        if (plan.Id > 0)
                        {
                            planEntity = (from p in context.plans
-                                   where p.id == plan.Id
-                                   select p)
+                                         where p.id == plan.Id
+                                         select p)
                               .Include(p => p.plan_versions)
                               .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                               .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
@@ -448,7 +448,7 @@ namespace Services.Broadcast.Repositories
                            context.plans.Add(planEntity);
                        }
                        context.SaveChanges();
-                       
+
                        planEntity.latest_version_id = draftVersion.id;
                        context.SaveChanges();
 
@@ -494,7 +494,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
                 {
                     var entity = (from plan in context.plans
-                                  where plan.id == planId                                        
+                                  where plan.id == planId
                                   select plan)
                         .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
@@ -777,7 +777,10 @@ namespace Services.Broadcast.Repositories
                 VersionId = planVersion.id,
                 IsAduEnabled = planVersion.is_adu_enabled,
                 ImpressionsPerUnit = planVersion.impressions_per_unit ?? 0,
-                BuyingParameters = _MapBuyingParameters(planVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault())
+                BuyingParameters = _MapBuyingParameters(planVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
+                FluidityPercentage = planVersion.fluidity_percentage,
+                Category = planVersion.category,
+                FluidityChildCategory = planVersion.fluidity_child_category
             };
 
             if (dto.PricingParameters != null)
@@ -861,7 +864,10 @@ namespace Services.Broadcast.Repositories
                     Id = p.inventory_proprietary_summary_id
                 }).ToList(),
                 PostingType = (PostingTypeEnum)arg.posting_type,
-                BudgetCpmLever = (BudgetCpmLeverEnum)arg.budget_cpm_lever
+                BudgetCpmLever = (BudgetCpmLeverEnum)arg.budget_cpm_lever,
+                FluidityPercentage = arg.fluidity_percentage,
+                Category = arg.category,
+                FluidityChildCategory = arg.fluidity_child_category
             };
         }
 
@@ -930,6 +936,9 @@ namespace Services.Broadcast.Repositories
             version.version_number = planDto.VersionNumber;
             version.is_adu_enabled = planDto.IsAduEnabled;
             version.impressions_per_unit = planDto.ImpressionsPerUnit;
+            version.fluidity_percentage = planDto.FluidityPercentage;
+            version.category = planDto.Category;
+            version.fluidity_child_category = planDto.FluidityChildCategory;
 
             _MapCreativeLengths(version, planDto, context);
             _MapPlanAudienceInfo(version, planDto);
@@ -1056,8 +1065,8 @@ namespace Services.Broadcast.Repositories
                     })
                     .ToList()
             };
-           
-            if ((int)DaypartTypeEnum.Sports==entity.daypart_type)
+
+            if ((int)DaypartTypeEnum.Sports == entity.daypart_type)
             {
                 dto.VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
                      .Where(x => x.standard_daypart_id == entity.standard_daypart_id && x.daypart_customization_id == planVersionDaypartCustomization.id)
@@ -1072,8 +1081,8 @@ namespace Services.Broadcast.Repositories
                     .ToList();
             }
 
-                // if the contain type has ever been set
-                if (entity.show_type_restrictions_contain_type.HasValue)
+            // if the contain type has ever been set
+            if (entity.show_type_restrictions_contain_type.HasValue)
             {
                 dto.Restrictions.ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
                 {
@@ -1115,18 +1124,18 @@ namespace Services.Broadcast.Repositories
         private PlanCustomDaypartDto _MapPlanCustomDaypartDto(plan_version_dayparts entity)
         {
             var planVersionDaypartCustomization = entity.plan_version_daypart_customizations.SingleOrDefault();
-            PlanCustomDaypartDto dto =new PlanCustomDaypartDto();
+            PlanCustomDaypartDto dto = new PlanCustomDaypartDto();
             if (planVersionDaypartCustomization != null)
             {
                 dto.Id = planVersionDaypartCustomization.id;
                 dto.CustomDaypartOrganizationId = planVersionDaypartCustomization.custom_daypart_organization_id;
                 dto.CustomDaypartName = planVersionDaypartCustomization.custom_daypart_name;
-               
+
             }
             return dto;
         }
-        
-            private static LookupDto _MapToLookupDto(show_types show_Type)
+
+        private static LookupDto _MapToLookupDto(show_types show_Type)
         {
             return new LookupDto
             {
@@ -1208,7 +1217,7 @@ namespace Services.Broadcast.Repositories
             var planVersionDaypartCustomization = new plan_version_daypart_customizations
             {
                 custom_daypart_organization_id = Convert.ToInt32(planDaypart.DaypartOrganizationId),
-                custom_daypart_name = planDaypart.CustomName                
+                custom_daypart_name = planDaypart.CustomName
             };
             planVersionDaypart.plan_version_daypart_customizations.Add(planVersionDaypartCustomization);
         }
@@ -1218,26 +1227,26 @@ namespace Services.Broadcast.Repositories
             context.plan_version_audience_daypart_vpvh.RemoveRange(entity.plan_version_audience_daypart_vpvh);
 
             foreach (var daypart in planDto.Dayparts)
-            {               
+            {
                 if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()))
                 {
                     var planVersionDaypartCustomizations = entity.plan_version_dayparts.SelectMany(customDayparts => customDayparts.plan_version_daypart_customizations);
-                    
-                    var planVersionDaypartCustomization = planVersionDaypartCustomizations.Single(customDaypart => customDaypart.custom_daypart_name== daypart.CustomName 
-                    && customDaypart.custom_daypart_organization_id == daypart.DaypartOrganizationId
-                    );                   
-                        foreach (var vpvhForAudience in daypart.VpvhForAudiences)
-                        {
-                            planVersionDaypartCustomization.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
-                            {
-                                audience_id = vpvhForAudience.AudienceId,
-                                standard_daypart_id = daypart.DaypartCodeId,
-                                vpvh_type = (int)vpvhForAudience.VpvhType,
-                                vpvh_value = vpvhForAudience.Vpvh,
-                                starting_point = vpvhForAudience.StartingPoint,
 
-                            });
-                        }                   
+                    var planVersionDaypartCustomization = planVersionDaypartCustomizations.Single(customDaypart => customDaypart.custom_daypart_name == daypart.CustomName
+                    && customDaypart.custom_daypart_organization_id == daypart.DaypartOrganizationId
+                    );
+                    foreach (var vpvhForAudience in daypart.VpvhForAudiences)
+                    {
+                        planVersionDaypartCustomization.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
+                        {
+                            audience_id = vpvhForAudience.AudienceId,
+                            standard_daypart_id = daypart.DaypartCodeId,
+                            vpvh_type = (int)vpvhForAudience.VpvhType,
+                            vpvh_value = vpvhForAudience.Vpvh,
+                            starting_point = vpvhForAudience.StartingPoint,
+
+                        });
+                    }
                 }
                 else
                 {
@@ -1342,7 +1351,7 @@ namespace Services.Broadcast.Repositories
                 }
             }
         }
-        
+
         private static void _MapPlanSecondaryAudiences(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_secondary_audiences.RemoveRange(entity.plan_version_secondary_audiences);
@@ -1712,7 +1721,10 @@ namespace Services.Broadcast.Repositories
                 MarketGroup = (MarketGroupEnum)entity.market_group,
                 ProprietaryInventory = entity.plan_version_pricing_parameter_inventory_proprietary_summaries.Where(p => p.inventory_proprietary_summary.is_active)
                     .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id, NumberOfUnit = x.unit_number })
-                    .ToList()
+                    .ToList(),
+                FluidityPercentage = entity.fluidity_percentage,
+                Category = entity.category,
+                FluidityChildCategory = entity.fluidity_child_category
             };
             return dto;
         }
@@ -1750,7 +1762,10 @@ namespace Services.Broadcast.Repositories
                         })
                         .ToList(),
                     posting_type = (int)planPricingParametersDto.PostingType,
-                    budget_cpm_lever = (int)planPricingParametersDto.BudgetCpmLever
+                    budget_cpm_lever = (int)planPricingParametersDto.BudgetCpmLever,
+                    fluidity_percentage = planPricingParametersDto.FluidityPercentage,
+                    category = planPricingParametersDto.Category,
+                    fluidity_child_category = planPricingParametersDto.FluidityChildCategory
                 };
 
                 context.plan_version_pricing_parameters.Add(planPricingParameters);
@@ -2574,7 +2589,7 @@ namespace Services.Broadcast.Repositories
         }
 
         public decimal GetGoalCpm(int jobId, PostingTypeEnum postingType, int? planVersionId = null)
-        {            
+        {
             var planId = GetPlanIdFromPricingJob(jobId);
 
             if (!planId.HasValue) return 0;
@@ -2642,7 +2657,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planId,int planVersionId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planId, int planVersionId, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -2941,7 +2956,7 @@ namespace Services.Broadcast.Repositories
                 planToDelete.deleted_at = deletedAt;
 
                 var deletedCount = context.SaveChanges();
-                
+
                 var result = deletedCount > 0;
                 return result;
             });

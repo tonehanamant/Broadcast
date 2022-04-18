@@ -42,6 +42,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int market_group { get; set; }
         public int posting_type { get; set; }
         public int budget_cpm_lever { get; set; }
+        public Nullable<double> fluidity_percentage { get; set; }
+        public Nullable<int> category { get; set; }
+        public Nullable<int> fluidity_child_category { get; set; }
     
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
         public virtual plan_versions plan_versions { get; set; }

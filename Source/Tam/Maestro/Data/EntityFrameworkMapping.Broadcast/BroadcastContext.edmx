@@ -1416,6 +1416,9 @@
           <Property Name="market_group" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
           <Property Name="budget_cpm_lever" Type="int" Nullable="false" />
+          <Property Name="fluidity_percentage" Type="float" />
+          <Property Name="category" Type="int" />
+          <Property Name="fluidity_child_category" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_pricing_result_spots">
           <Key>
@@ -1593,6 +1596,9 @@
           <Property Name="is_adu_enabled" Type="bit" />
           <Property Name="impressions_per_unit" Type="float" />
           <Property Name="flight_notes_internal" Type="nvarchar" MaxLength="1024" />
+          <Property Name="fluidity_percentage" Type="float" />
+          <Property Name="category" Type="int" />
+          <Property Name="fluidity_child_category" Type="int" />
         </EntityType>
         <EntityType Name="plans">
           <Key>
@@ -15288,6 +15294,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" FromRole="plan_versions" ToRole="plan_version_audience_daypart_vpvh" />
           <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_versions" FromRole="plan_versions" ToRole="plan_version_buying_job" />
+          <Property Name="fluidity_percentage" Type="Double" />
+          <Property Name="category" Type="Int32" />
+          <Property Name="fluidity_child_category" Type="Int32" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -16206,6 +16215,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_parameter_inventory_proprietary_summaries" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameters" ToRole="plan_version_pricing_parameter_inventory_proprietary_summaries" />
           <Property Name="posting_type" Type="Int32" Nullable="false" />
           <Property Name="budget_cpm_lever" Type="Int32" Nullable="false" />
+          <Property Name="fluidity_percentage" Type="Double" />
+          <Property Name="category" Type="Int32" />
+          <Property Name="fluidity_child_category" Type="Int32" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_api_results_plan_version_pricing_job">
           <End Type="BroadcastModel.plan_version_pricing_job" Role="plan_version_pricing_job" Multiplicity="0..1" />
@@ -20459,6 +20471,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
+                <ScalarProperty Name="fluidity_child_category" ColumnName="fluidity_child_category" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="fluidity_percentage" ColumnName="fluidity_percentage" />
                 <ScalarProperty Name="flight_notes_internal" ColumnName="flight_notes_internal" />
                 <ScalarProperty Name="impressions_per_unit" ColumnName="impressions_per_unit" />
                 <ScalarProperty Name="is_adu_enabled" ColumnName="is_adu_enabled" />
@@ -20777,6 +20792,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_parameters">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_parameters">
               <MappingFragment StoreEntitySet="plan_version_pricing_parameters">
+                <ScalarProperty Name="fluidity_child_category" ColumnName="fluidity_child_category" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="fluidity_percentage" ColumnName="fluidity_percentage" />
                 <ScalarProperty Name="budget_cpm_lever" ColumnName="budget_cpm_lever" />
                 <ScalarProperty Name="posting_type" ColumnName="posting_type" />
                 <ScalarProperty Name="market_group" ColumnName="market_group" />

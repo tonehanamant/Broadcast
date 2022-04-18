@@ -68,6 +68,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<bool> is_adu_enabled { get; set; }
         public Nullable<double> impressions_per_unit { get; set; }
         public string flight_notes_internal { get; set; }
+        public Nullable<double> fluidity_percentage { get; set; }
+        public Nullable<int> category { get; set; }
+        public Nullable<int> fluidity_child_category { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual media_months media_months { get; set; }

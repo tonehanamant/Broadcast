@@ -1007,13 +1007,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 GoalBreakdownType = plan.GoalBreakdownType,
                 SecondaryAudiences = plan.SecondaryAudiences,
                 Dayparts = plan.Dayparts,
-                CustomDayparts=plan.CustomDayparts,
+                CustomDayparts = plan.CustomDayparts,
                 CoverageGoalPercent = plan.CoverageGoalPercent,
                 AvailableMarkets = plan.AvailableMarkets,
                 BlackoutMarkets = plan.BlackoutMarkets,
                 AvailableMarketsSovTotal = plan.AvailableMarketsSovTotal,
                 WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks,
-                RawWeeklyBreakdownWeeks= plan.RawWeeklyBreakdownWeeks,
+                RawWeeklyBreakdownWeeks = plan.RawWeeklyBreakdownWeeks,
                 WeeklyBreakdownTotals = plan.WeeklyBreakdownTotals,
                 ModifiedBy = plan.ModifiedBy,
                 ModifiedDate = plan.ModifiedDate,
@@ -1034,7 +1034,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 ImpressionsPerUnit = plan.ImpressionsPerUnit,
                 BuyingParameters = plan.BuyingParameters,
                 JobId = plan.JobId,
-                SpotAllocationModelMode = plan.SpotAllocationModelMode
+                SpotAllocationModelMode = plan.SpotAllocationModelMode,
+                FluidityPercentage = plan.FluidityPercentage,
+                Category = plan.Category,
+                FluidityChildCategory = plan.FluidityChildCategory
             };
 
             dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);

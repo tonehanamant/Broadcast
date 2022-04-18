@@ -534,6 +534,10 @@ namespace Services.Broadcast.Entities.Plan
             var result = BuyingParameters?.BudgetCpmLever ?? BudgetCpmLeverEnum.Cpm;
             return result;
         }
+
+        public double? FluidityPercentage { get; set; }
+        public int? Category { get; set; }
+        public int? FluidityChildCategory { get; set; }
     }
 
     public class PlanDto_v2 : PlanDto

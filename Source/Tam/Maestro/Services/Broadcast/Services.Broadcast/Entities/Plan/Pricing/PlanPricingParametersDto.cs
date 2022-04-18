@@ -30,5 +30,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PostingTypeEnum PostingType { get; set; }
         public BudgetCpmLeverEnum BudgetCpmLever { get; set; } = BudgetCpmLeverEnum.Cpm;
         public List<InventoryProprietarySummary> ProprietaryInventory { get; set; } = new List<InventoryProprietarySummary>();
+        public double? FluidityPercentage { get; set; }
+        public int? Category { get; set; }
+        public int? FluidityChildCategory { get; set; }
     }
 }

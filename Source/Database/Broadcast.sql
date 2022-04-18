@@ -665,6 +665,26 @@ GO
 
 /*************************************** END BP-4198 ***************************************/
 
+/*************************************** START BP-4418 ***************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_versions' AND (COLUMN_NAME= 'fluidity_percentage' OR COLUMN_NAME='category' OR COLUMN_NAME='fluidity_child_category'))
+BEGIN
+	ALTER TABLE plan_versions
+	ADD fluidity_percentage float NULL,
+	category int NULL,
+	fluidity_child_category int NULL
+END
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_pricing_parameters' AND (COLUMN_NAME= 'fluidity_percentage' OR COLUMN_NAME='category' OR COLUMN_NAME='fluidity_child_category'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	ADD fluidity_percentage float NULL,
+	category int NULL,
+	fluidity_child_category int NULL
+END
+
+/*************************************** END BP-4418 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
