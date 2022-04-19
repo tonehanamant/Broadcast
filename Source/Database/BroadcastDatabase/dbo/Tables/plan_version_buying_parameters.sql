@@ -22,6 +22,9 @@
     [market_group]               INT             NOT NULL,
     [posting_type] INT NOT NULL, 
     [budget_cpm_lever] INT NOT NULL, 
+    [share_book_id] INT NULL, 
+    [hut_book_id] INT NULL, 
+    [fluidity_percentage] FLOAT NULL, 
     CONSTRAINT [PK_plan_version_buying_parameters] PRIMARY KEY CLUSTERED ([id] ASC),
     CONSTRAINT [FK_plan_version_buying_parameters_plan_version_buying_job] FOREIGN KEY ([plan_version_buying_job_id]) REFERENCES [dbo].[plan_version_buying_job] ([id]),
     CONSTRAINT [FK_plan_version_buying_parameters_plan_versions] FOREIGN KEY ([plan_version_id]) REFERENCES [dbo].[plan_versions] ([id])

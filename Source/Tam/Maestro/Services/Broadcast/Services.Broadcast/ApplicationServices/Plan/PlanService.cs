@@ -838,7 +838,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Margin = pricingDefaults.Margin,
                 PlanVersionId = plan.VersionId,
                 MarketGroup = pricingDefaults.MarketGroup,
-                PostingType = plan.PostingType
+                PostingType = plan.PostingType,
+                share_book_id = plan.ShareBookId,
+                hut_book_id = plan.HUTBookId
             };
 
             _PlanBuyingService.ValidateAndApplyMargin(plan.BuyingParameters);

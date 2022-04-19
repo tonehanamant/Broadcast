@@ -42,9 +42,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int market_group { get; set; }
         public int posting_type { get; set; }
         public int budget_cpm_lever { get; set; }
+        public Nullable<int> share_book_id { get; set; }
+        public Nullable<int> hut_book_id { get; set; }
+        public Nullable<double> fluidity_percentage { get; set; }
     
-        public virtual plan_versions plan_versions { get; set; }
-        public virtual ICollection<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
         public virtual plan_version_buying_job plan_version_buying_job { get; set; }
+        public virtual ICollection<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

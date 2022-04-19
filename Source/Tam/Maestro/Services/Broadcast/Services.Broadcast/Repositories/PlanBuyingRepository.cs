@@ -630,7 +630,9 @@ namespace Services.Broadcast.Repositories
                         })
                         .ToList(),
                     posting_type = (int)planBuyingParametersDto.PostingType,
-                    budget_cpm_lever = (int)planBuyingParametersDto.BudgetCpmLever
+                    budget_cpm_lever = (int)planBuyingParametersDto.BudgetCpmLever,
+                    share_book_id = planBuyingParametersDto.share_book_id,
+                    hut_book_id = planBuyingParametersDto.hut_book_id
                 };
 
                 context.plan_version_buying_parameters.Add(planBuyingParameters);

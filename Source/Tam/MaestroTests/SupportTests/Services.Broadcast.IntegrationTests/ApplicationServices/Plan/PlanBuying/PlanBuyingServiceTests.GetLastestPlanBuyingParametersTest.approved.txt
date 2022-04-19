@@ -2101,6 +2101,7 @@
     "Currency": 1,
     "DeliveryImpressions": 20000.0,
     "DeliveryRatingPoints": 8.2,
+    "hut_book_id": null,
     "InflationFactor": 0.5,
     "Margin": null,
     "MarketGroup": 5,
@@ -2111,6 +2112,7 @@
     "PostingType": 2,
     "ProprietaryBlend": 0.2,
     "ProprietaryInventory": [],
+    "share_book_id": null,
     "UnitCaps": 10,
     "UnitCapsType": 4
   },

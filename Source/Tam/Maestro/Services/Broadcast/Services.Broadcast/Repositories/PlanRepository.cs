@@ -820,7 +820,9 @@ namespace Services.Broadcast.Repositories
                 AdjustedCPM = arg.cpm_adjusted,
                 AdjustedBudget = arg.budget_adjusted,
                 MarketGroup = (MarketGroupEnum)arg.market_group,
-                PostingType = (PostingTypeEnum)arg.posting_type
+                PostingType = (PostingTypeEnum)arg.posting_type,
+                share_book_id = arg.share_book_id,
+                hut_book_id = arg.hut_book_id
             };
         }
 

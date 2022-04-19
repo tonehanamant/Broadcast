@@ -9,6 +9,7 @@
   "Currency": 1,
   "DeliveryImpressions": "Infinity",
   "DeliveryRatingPoints": 1000.0,
+  "hut_book_id": null,
   "InflationFactor": null,
   "JobId": null,
   "Margin": 20.0,
@@ -20,6 +21,7 @@
   "PostingType": 1,
   "ProprietaryBlend": 0.0,
   "ProprietaryInventory": [],
+  "share_book_id": null,
   "UnitCaps": 1,
   "UnitCapsType": 1
 }
