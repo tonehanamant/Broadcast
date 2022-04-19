@@ -516,7 +516,6 @@
     <Compile Include="UnitTests\ApplicationServices\NtiUniverseServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanBuyingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanIsciServiceUnitTests.cs" />
-    <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceUnitTests.cs" />
@@ -566,6 +565,8 @@
     <Compile Include="UnitTests\Converters\RateImport\InventoryImportManifestDuplicateHandlerUnitTests.cs" />
     <Compile Include="UnitTests\Converters\Scx\PlanBuyingScxDataConverterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\Scx\PlanBuyingScxDataPrepUnitTests.cs" />
+    <Compile Include="UnitTests\Converters\Scx\PlanPricingScxDataConverterUnitTests.cs" />
+    <Compile Include="UnitTests\Converters\Scx\PlanPricingScxDataPrepUnitTests.cs" />
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\CampaignReportDataUnitTest.cs" />

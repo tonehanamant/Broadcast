@@ -1910,7 +1910,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             /***
             * Finalize and Save
             */
-            var currentDateTime = _GetCurrentDateTime();
+            var currentDateTime = _DateTimeEngine.GetCurrentMoment();
             // use the service, not the repo, so all validations, etc are used.
             _DoSavePlan(beforePlan, username, currentDateTime, aggregatePlanSynchronously, shouldPromotePlanPricingResults: true, shouldPromotePlanBuyingResults: false);
 

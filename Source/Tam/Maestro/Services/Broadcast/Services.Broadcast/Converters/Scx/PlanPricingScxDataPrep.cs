@@ -1,7 +1,6 @@
 ﻿using BroadcastLogging;
 using Common.Services.Repositories;
 using log4net;
-using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
@@ -23,16 +22,15 @@ namespace Services.Broadcast.Converters.Scx
     {
 
         /// <summary>
-        /// Gets the SCX data
-        /// .</summary>
-        /// <param name="request">The request.</param>
+        /// Gets the SCX data.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
         /// <param name="generated">The generated.</param>
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <param name="postingType">Type of the posting.</param>
         /// <returns></returns>
-        PlanScxData GetScxData(int planId, DateTime generated,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI);
+        PlanScxData GetScxData(int planId, DateTime generated, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType);
     }
 
     public class PlanPricingScxDataPrep : BaseScxDataPrep, IPlanPricingScxDataPrep
@@ -43,7 +41,6 @@ namespace Services.Broadcast.Converters.Scx
         private readonly IPlanRepository _PlanRepository;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IStationRepository _StationRepository;
-        private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
         public PlanPricingScxDataPrep(
             IDataRepositoryFactory broadcastDataDataRepositoryFactory,
@@ -61,31 +58,27 @@ namespace Services.Broadcast.Converters.Scx
             _PlanRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _StationRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IStationRepository>();
-            _StandardDaypartRepository = broadcastDataDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         }
 
+        /// <inheritdoc/>
         public PlanScxData GetScxData(int planId, DateTime generated,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+            SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
         {
             _GetValidatedPlanAndPricingJob(planId, out var plan, out var job);
             var spots = _GetPricingSpots(job.Id, spotAllocationModelMode, postingType);
-            var inventory = _InventoryRepository.GetPlanPricingScxInventory(job.Id);
+            var stationInventoryManifestIds = spots.Select(s => s.StationInventoryManifestId).ToList();
+            var inventory = _InventoryRepository.GetStationInventoryManifestsByIds(stationInventoryManifestIds);
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
             var demos = _GetDemos(audienceIds);
             var demoRanksDictionary = demos.ToDictionary(x => x.Demo?.Id, x => x.DemoRank);
             var dmaMarketNames = GetDmaMarketNames(inventory);
-            var standardDaypartDaypartIds = _StandardDaypartRepository.GetStandardDaypartIdDaypartIds();
-            var standardDaypartCodes = _StandardDaypartRepository.GetAllStandardDayparts()
-                    .ToDictionary(d => d.Id, d => d.Code);
 
             var stationIds = inventory.Select(s => s.Station.Id).Distinct().ToList();
             var stations = _StationRepository.GetBroadcastStationsByIds(stationIds);
 
             var surveyString = GetSurveyString(plan.ShareBookId, PLAYBACK_TYPE);
-            var orders = _GetOrders(plan, inventory, spots, demoRanksDictionary, dmaMarketNames, standardDaypartDaypartIds, standardDaypartCodes,
-                stations, sortedMediaWeeks, surveyString);
+            var orders = _GetOrders(plan, inventory, spots, demoRanksDictionary, dmaMarketNames, stations, sortedMediaWeeks, surveyString);
 
             var scxData = new PlanScxData
             {
@@ -104,7 +97,6 @@ namespace Services.Broadcast.Converters.Scx
 
         internal List<OrderData> _GetOrders(PlanDto plan, List<StationInventoryManifest> inventory, List<PlanPricingAllocatedSpot> spots,
             Dictionary<int?, int> demoRanksDictionary, Dictionary<int, string> dmaMarketNames,
-            Dictionary<int, int> standardDaypartDaypartIds, Dictionary<int, string> standardDaypartCodes,
             List<DisplayBroadcastStation> stations, IOrderedEnumerable<MediaWeek> sortedMediaWeeks,
             string surveyString)
         {
@@ -265,13 +257,12 @@ namespace Services.Broadcast.Converters.Scx
         }
 
         internal List<PlanPricingAllocatedSpot> _GetPricingSpots(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+            SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
         {
-            var jobSpotsResults = _PlanRepository.GetPricingApiResultsByJobId_v2(jobId, spotAllocationModelMode);
+            var jobSpotsResults = _PlanRepository.GetPricingApiResultsByJobId(jobId, spotAllocationModelMode, postingType);
 
-            var nsiSpots = jobSpotsResults.NsiResults.Spots;
-            return nsiSpots;
+            var spots = jobSpotsResults.Spots;
+            return spots;
         }
 
         internal void _UnEquivalizeSpots(PlanPricingAllocationResult jobSpotsResults)
@@ -290,12 +281,6 @@ namespace Services.Broadcast.Converters.Scx
                 var deliveryMultiplier = deliveryMultipliers[spot.SpotLengthId];
                 spot.Impressions /= deliveryMultiplier;
             }
-        }
-
-        private decimal _CalculateSpotCostPer30s(decimal spotCost, decimal spotCostMultiplier)
-        {
-            var costPer30s = spotCost * spotCostMultiplier;
-            return costPer30s;
         }
 
         public class ExpandedSpot

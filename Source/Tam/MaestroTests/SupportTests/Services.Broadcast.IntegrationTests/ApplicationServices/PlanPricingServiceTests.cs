@@ -1895,10 +1895,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return jsonSettings;
         }
 
-        /// <summary>
-        /// Saves the pricing results test.
-        /// This is V1
-        /// </summary>
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
@@ -1912,7 +1908,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var job = await _SavePlanAndRunPricingJobAsync(plan);
 
-                var result = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
+                var resultQNSI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality, PostingTypeEnum.NSI);
+                var resultQNTI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality, PostingTypeEnum.NTI);
+
+                var result = new
+                {
+                    QualityNSI = resultQNSI,
+                    QualityNTI = resultQNTI
+                };
 
                 resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
             }
@@ -1935,17 +1938,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var job = await _SavePlanAndRunPricingJobAsync(plan);
 
-                var resultDefault = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
-                var resultQ = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality);
-                var resultE = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency);
-                var resultF = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Floor);
+                var resultQNSI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality, PostingTypeEnum.NSI);
+                var resultENSI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NSI);
+                var resultFNSI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Floor, PostingTypeEnum.NSI);
+                var resultQNTI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Quality, PostingTypeEnum.NTI);
+                var resultENTI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Efficiency, PostingTypeEnum.NTI);
+                var resultFNTI = _PlanRepository.GetPricingApiResultsByJobId(job.Id, SpotAllocationModelMode.Floor, PostingTypeEnum.NTI);
 
                 var result = new
                 {
-                    Default = resultDefault,
-                    Quality = resultQ,
-                    Efficiency = resultE,
-                    Floor = resultF
+                    QualityNSI = resultQNSI,
+                    EfficiencyNSI = resultENSI,
+                    FloorNSI = resultFNSI,
+                    QualityNTI = resultQNTI,
+                    EfficiencyNTI = resultENTI,
+                    FloorNTI = resultFNTI
                 };
 
                 resultsToVerify = IntegrationTestHelper.ConvertToJson(result, jsonSettings);

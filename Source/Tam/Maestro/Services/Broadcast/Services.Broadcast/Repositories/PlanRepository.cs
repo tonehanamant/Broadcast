@@ -216,11 +216,15 @@ namespace Services.Broadcast.Repositories
 
         void SavePricingApiResults(PlanPricingAllocationResult result);
 
-        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
-
-        PlanPricingAllocationResultDto GetPricingApiResultsByJobId_v2(int jobId,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+        /// <summary>
+        /// Gets the pricing API results by job identifier.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
+        /// <param name="postingType">Type of the posting.</param>
+        /// <returns></returns>
+        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType);
 
 
         void SavePricingAggregateResults(PlanPricingResultBaseDto result);
@@ -1809,46 +1813,23 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        /// <inheritdoc/>
+        public PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var postingType = context.plan_version_pricing_job
-                        .Include(x => x.plan_versions)
-                        .First(x => x.id == jobId)
-                        .plan_versions?.posting_type ?? (int)PostingTypeEnum.NSI; //If there is no saved plan yet default to NSI;
-
                 var entities = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(y => y.plan_version_pricing_api_result_spot_frequencies))
                     .Where(x => x.plan_version_pricing_job_id == jobId
                         && x.spot_allocation_model_mode == (int)spotAllocationModelMode
-                        && x.posting_type == postingType)
-                    .OrderByDescending(p => p.id);
-
-                return _GetPostingTypePlanPricingAllocationResult(entities, (PostingTypeEnum)postingType);
-            });
-        }
-
-        public PlanPricingAllocationResultDto GetPricingApiResultsByJobId_v2(int jobId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var entities = context.plan_version_pricing_api_results
-                    .Include(x => x.plan_version_pricing_api_result_spots)
-                    .Include(x => x.plan_version_pricing_api_result_spots.Select(y => y.plan_version_pricing_api_result_spot_frequencies))
-                    .Where(x => x.plan_version_pricing_job_id == jobId
-                        && x.spot_allocation_model_mode == (int)spotAllocationModelMode)
+                        && x.posting_type == (int)postingType)
                     .OrderByDescending(p => p.id);
 
                 if (entities == null || !entities.Any())
                     return null;
 
-                return new PlanPricingAllocationResultDto
-                {
-                    NsiResults = _GetPostingTypePlanPricingAllocationResult(entities, PostingTypeEnum.NSI),
-                    NtiResults = _GetPostingTypePlanPricingAllocationResult(entities, PostingTypeEnum.NTI)
-                };
+                return _GetPostingTypePlanPricingAllocationResult(entities, postingType);
             });
         }
 

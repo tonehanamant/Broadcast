@@ -239,9 +239,8 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ExportPricingScx")]
-        public BaseResponse<Guid> ExportPricingScx(int planId,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        public BaseResponse<Guid> ExportPricingScx(int planId, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType)
         {
             var username = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()

@@ -165,9 +165,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="spotAllocationModelMode">The spot allocation model mode.</param>
         /// <param name="postingType">Type of the posting.</param>
         /// <returns></returns>
-        Guid ExportPlanPricingScx(int planId, string username,
-            SpotAllocationModelMode spotAllocationModelMode,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI);
+        Guid ExportPlanPricingScx(int planId, string username, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType);
 
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
 
@@ -491,9 +490,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return plan;
         }
 
-        public Guid ExportPlanPricingScx(int planId, string username,
-            SpotAllocationModelMode spotAllocationModelMode,
-            PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        /// <inheritdoc/>
+        public Guid ExportPlanPricingScx(int planId, string username, SpotAllocationModelMode spotAllocationModelMode,
+            PostingTypeEnum postingType)
         {
             const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var generated = _DateTimeEngine.GetCurrentMoment();
@@ -808,7 +807,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return false;
             }
 
-            DateTime thresholdMinutesAgo = _GetCurrentDateTime().AddMinutes(-1 * thresholdMinutes);
+            DateTime thresholdMinutesAgo = _DateTimeEngine.GetCurrentMoment().AddMinutes(-1 * thresholdMinutes);
             var jobCompletedWithinLastFiveMinutes = job.Completed.Value >= thresholdMinutesAgo;
             return jobCompletedWithinLastFiveMinutes;
         }
@@ -935,7 +934,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             job.Status = BackgroundJobProcessingStatus.Canceled;
-            job.Completed = _GetCurrentDateTime();
+            job.Completed = _DateTimeEngine.GetCurrentMoment();
 
             _PlanRepository.UpdatePlanPricingJob(job);
 

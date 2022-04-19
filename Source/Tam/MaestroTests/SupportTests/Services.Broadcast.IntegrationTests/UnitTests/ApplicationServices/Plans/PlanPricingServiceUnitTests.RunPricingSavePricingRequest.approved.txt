@@ -1,8 +1,6 @@
 [
   {
-    "<>4__this": {
-      "UT_CurrentDateTime": null
-    },
+    "<>4__this": {},
     "allocationResult": {
       "JobId": 1,
       "PlanVersionId": 0,

@@ -838,7 +838,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             job.Status = BackgroundJobProcessingStatus.Canceled;
-            job.Completed = _GetCurrentDateTime();
+            job.Completed = _DateTimeEngine.GetCurrentMoment();
 
             _PlanBuyingRepository.UpdatePlanBuyingJob(job);
 

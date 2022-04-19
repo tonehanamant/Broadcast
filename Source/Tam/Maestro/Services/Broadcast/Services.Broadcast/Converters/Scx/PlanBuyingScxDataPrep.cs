@@ -79,8 +79,8 @@ namespace Services.Broadcast.Converters.Scx
             _GetValidatedPlanAndJob(request, out var plan, out var job);
             var optimalCPM = _GetOptimalCPM(job.Id, spotAllocationModelMode, postingType);
             var spots = _GetSpots(request.UnallocatedCpmThreshold, optimalCPM, job.Id, spotAllocationModelMode, plan.Equivalized, postingType);
-            var stationInventoryManifestId = spots.Select(s => s.StationInventoryManifestId).ToList();
-            var inventory = _InventoryRepository.GetStationInventoryManifestsByIds(stationInventoryManifestId);
+            var stationInventoryManifestIds = spots.Select(s => s.StationInventoryManifestId).ToList();
+            var inventory = _InventoryRepository.GetStationInventoryManifestsByIds(stationInventoryManifestIds);
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
             var demos = _GetDemos(audienceIds);

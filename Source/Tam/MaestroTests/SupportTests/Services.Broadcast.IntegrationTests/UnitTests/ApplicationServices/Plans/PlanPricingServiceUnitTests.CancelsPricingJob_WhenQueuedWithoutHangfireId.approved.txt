@@ -2,7 +2,6 @@
   "cancelCurrentPricingExecutionResult": {
     "IsPricingModelRunning": false,
     "Job": {
-      "Completed": "2020-02-04T15:32:52",
       "DiagnosticResult": null,
       "ErrorMessage": null,
       "HangfireJobId": null,
@@ -36,7 +35,6 @@
   "hanfgireJobUpdates": [],
   "jobUpdates": [
     {
-      "Completed": "2020-02-04T15:32:52",
       "DiagnosticResult": null,
       "ErrorMessage": null,
       "HangfireJobId": null,

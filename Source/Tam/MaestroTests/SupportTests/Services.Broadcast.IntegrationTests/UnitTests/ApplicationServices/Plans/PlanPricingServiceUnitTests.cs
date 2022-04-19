@@ -21,6 +21,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
+using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -29,7 +30,9 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
@@ -79,6 +82,46 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private AsyncTaskHelperStub _AsyncTaskHelperStub;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
+
+        protected PlanPricingService _GetService(bool useTrueIndependentStations = false,
+                                                                bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
+        {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
+
+            _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)).Returns("c:\\TempFolder");
+
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+
+            return new PlanPricingService(
+                _DataRepositoryFactoryMock.Object,
+                _SpotLengthEngineMock.Object,
+                _PricingApiClientMock.Object,
+                _BackgroundJobClientMock.Object,
+                _PlanPricingInventoryEngineMock.Object,
+                _BroadcastLockingManagerApplicationServiceMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _DateTimeEngineMock.Object,
+                _WeeklyBreakdownEngineMock.Object,
+                _PlanPricingBandCalculationEngineMock.Object,
+                _PlanPricingStationCalculationEngineMock.Object,
+                _PlanPricingMarketResultsEngine.Object,
+                _PlanPricingProgramCalculationEngine.Object,
+                _PricingRequestLogClient.Object,
+                _PlanPricingScxDataPrepMock.Object,
+                _PlanPricingScxDataConverterMock.Object,
+                _PlanValidatorMock.Object,
+                _SharedFolderServiceMock.Object,
+                _AudienceServiceMock.Object,
+                _CreativeLengthEngineMock.Object,
+                _AsyncTaskHelperStub,
+                featureToggleHelper, _ConfigurationSettingsHelperMock.Object);
+        }
 
         [SetUp]
         public void SetUp()
@@ -1098,44 +1141,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 ContractResolver = jsonResolver
             };
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates, settings));
-        }
-
-        protected PlanPricingServiceUnitTestClass _GetService(bool useTrueIndependentStations = false,
-                                                                bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
-        {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
-
-            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
-
-            return new PlanPricingServiceUnitTestClass(
-                _DataRepositoryFactoryMock.Object,
-                _SpotLengthEngineMock.Object,
-                _PricingApiClientMock.Object,
-                _BackgroundJobClientMock.Object,
-                _PlanPricingInventoryEngineMock.Object,
-                _BroadcastLockingManagerApplicationServiceMock.Object,
-                _MediaMonthAndWeekAggregateCacheMock.Object,
-                _DateTimeEngineMock.Object,
-                _WeeklyBreakdownEngineMock.Object,
-                _PlanPricingBandCalculationEngineMock.Object,
-                _PlanPricingStationCalculationEngineMock.Object,
-                _PlanPricingMarketResultsEngine.Object,
-                _PlanPricingProgramCalculationEngine.Object,
-                _PricingRequestLogClient.Object,
-                _PlanPricingScxDataPrepMock.Object,
-                _PlanPricingScxDataConverterMock.Object,
-                _PlanValidatorMock.Object,
-                _SharedFolderServiceMock.Object,
-                _AudienceServiceMock.Object,
-                _CreativeLengthEngineMock.Object,
-                _AsyncTaskHelperStub,
-                featureToggleHelper, _ConfigurationSettingsHelperMock.Object);
         }
 
         private PlanPricingParametersDto _GetPlanPricingParametersDto()
@@ -8450,7 +8455,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             const int planId = 6;
             const string hangfireJobId = "#w2e3r4";
+            var currentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
             _PlanRepositoryMock
                 .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
@@ -8472,8 +8480,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.ChangeState(It.IsAny<string>(), It.IsAny<IState>(), It.IsAny<string>()))
                 .Callback<string, IState, string>((jobId, state, expectedState) => hanfgireJobUpdates.Add(new { jobId, state, expectedState }));
 
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
             var service = _GetService();
-            service.UT_CurrentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
             // Act
             var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
@@ -8484,7 +8499,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 cancelCurrentPricingExecutionResult,
                 jobUpdates,
                 hanfgireJobUpdates
-            }));
+            }, settings));
         }
 
         /// <summary>
@@ -8497,7 +8512,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             const int planId = 6;
             const string hangfireJobId = null;
+            var currentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
             _PlanRepositoryMock
                 .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
@@ -8528,8 +8546,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     hanfgireJobUpdates.Add(new { jobId, state, expectedState });
                 });
 
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
             var service = _GetService();
-            service.UT_CurrentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
             // Act
             var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
@@ -8542,7 +8567,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 cancelCurrentPricingExecutionResult,
                 jobUpdates,
                 hanfgireJobUpdates
-            }));
+            }, settings));
         }
 
         /// <summary>
@@ -8555,7 +8580,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             const int planId = 6;
             const string hangfireJobId = "#w2e3r4";
+            var currentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
             _PlanRepositoryMock
                 .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
@@ -8581,8 +8609,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     throw new Exception("Throwing a test exception.");
                 });
 
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
             var service = _GetService();
-            service.UT_CurrentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
             // Act
             var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
@@ -8595,7 +8630,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 cancelCurrentPricingExecutionResult,
                 jobUpdates,
                 hanfgireJobUpdates
-            }));
+            }, settings));
         }
 
         [Test]
@@ -9911,6 +9946,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(WaitHandle), "Handle");
+            jsonResolver.Ignore(typeof(object), "UT_CurrentDateTime");
             var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -11151,8 +11187,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Completed = completedWhen
             };
 
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
             var service = _GetService();
-            service.UT_CurrentDateTime = currentDateTime;
 
             var result = service._DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
 
@@ -12527,6 +12565,54 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual(expectedResult, plan.Dayparts.Count);
+        }
+
+        [Test]
+        [TestCase(SpotAllocationModelMode.Quality, "PlanPricing_Test Plan Name_20201030_121523_Q", PostingTypeEnum.NSI)]
+        [TestCase(SpotAllocationModelMode.Efficiency, "PlanPricing_Test Plan Name_20201030_121523_E", PostingTypeEnum.NSI)]
+        [TestCase(SpotAllocationModelMode.Floor, "PlanPricing_Test Plan Name_20201030_121523_F", PostingTypeEnum.NSI)]
+        public void ExportPlanPricingScx(SpotAllocationModelMode spotAllocationModelMode, string expectedFileName, PostingTypeEnum postingType)
+        {
+            const string username = "testUser";
+            const string planName = "Test Plan Name";
+            const string testStreamContent = "<xml>TestContent<xml/>";
+            int planId = 21;
+
+            var currentDateTime = new DateTime(2020, 10, 30, 12, 15, 23);
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(currentDateTime);
+
+            _PlanPricingScxDataPrepMock.Setup(s => s.GetScxData(It.IsAny<int>(), It.IsAny<DateTime>(),
+                It.IsAny<SpotAllocationModelMode>(),
+                It.IsAny<PostingTypeEnum>()))
+                .Returns<int, DateTime, SpotAllocationModelMode, PostingTypeEnum>((a, b, c, d) => new PlanScxData { PlanName = planName, Generated = b });
+
+            _PlanPricingScxDataConverterMock.Setup(s => s.ConvertData(It.IsAny<PlanScxData>(), It.IsAny<SpotAllocationModelMode>()))
+                .Returns<PlanScxData, SpotAllocationModelMode>((d, e) => new PlanPricingScxFile
+                {
+                    PlanName = d.PlanName,
+
+                    GeneratedTimeStamp = d.Generated,
+                    ScxStream = new MemoryStream(Encoding.UTF8.GetBytes(testStreamContent))
+                });
+
+            var savedSharedFiles = new List<SharedFolderFile>();
+            var testGuid = Guid.NewGuid();
+            _SharedFolderServiceMock.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
+                .Callback<SharedFolderFile>((f) => savedSharedFiles.Add(f))
+                .Returns(testGuid);
+
+            var service = _GetService();
+
+            // Act
+            var savedFileGuid = service.ExportPlanPricingScx(planId, username, spotAllocationModelMode, postingType);
+
+            //// Assert           
+            var savedSharedFile = savedSharedFiles[0];
+            Assert.IsTrue(savedSharedFile.FolderPath.EndsWith(@"\PlanPricingScx"));
+
+            Assert.AreEqual(1, savedSharedFiles.Count);
+            Assert.AreEqual(expectedFileName, savedSharedFile.FileName);
         }
 
         [Test]
