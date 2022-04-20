@@ -30,5 +30,6 @@
         public static string ENABLE_KEEP_ORPHANED_ISCI_MAPPING = "broadcast-keep-orphaned-isci-mappings";
         public static string ENABLE_AAB_CORE_API = "broadcast-enable-aab-core-api";
         public static string ENABLE_PARTIAL_PLAN_SAVE = "broadcast-enable-partial-plan-save";
+        public static string ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2 = "broadcast-weekly-breakdown-engine-v-2";
     }
 }

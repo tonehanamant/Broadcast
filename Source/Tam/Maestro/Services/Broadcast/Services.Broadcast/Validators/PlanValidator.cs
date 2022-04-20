@@ -55,18 +55,27 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="plan">The plan.</param>
         void ValidatePlanForBuying(PlanDto plan);
+
+        /// <summary>
+        /// Validates the weekly breakdown item weights are 100% each.
+        /// </summary>
+        /// <param name="dayparts">The dayparts.</param>
+        /// <param name="creativeLengths">The creative lengths.</param>
+        /// <param name="deliveryType">Type of the delivery.</param>
+        void ValidateWeeklyBreakdownItemWeights(List<StandardDaypartWeightingGoal> dayparts, List<CreativeLength> creativeLengths, PlanGoalBreakdownTypeEnum deliveryType);
     }
 
     public class PlanValidator : IPlanValidator
     {
         private readonly IBroadcastAudiencesCache _AudienceCache;
-        private readonly List<MediaMonth> _PostingBooks;
+        private readonly Lazy<List<MediaMonth>> _PostingBooks;
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
 
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
+        private readonly IRatingForecastService _RatingForecastService;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_PRODUCT = "Invalid product";
@@ -111,6 +120,7 @@ namespace Services.Broadcast.Validators
         const string AFFILIATE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the affiliate restrictions is not valid";
 
         const string INVALID_CUSTOM_DAYPART_NAME = "Invalid daypart name";
+        const string INVALID_DAYPART_WEIGHT_TOTAL = "Sum Weight of all Dayparts must equal 100%.";
 
         public PlanValidator(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
@@ -121,18 +131,26 @@ namespace Services.Broadcast.Validators
             , IPlanMarketSovCalculator planMarketSovCalculator
             )
         {
+            _RatingForecastService = ratingForecastService;
             _AudienceCache = broadcastAudiencesCache;
             _CreativeLengthEngine = creativeLengthEngine;
-            _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
-                .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
-                .Select(m => m.MediaMonth)
-                .ToList();
+            _PostingBooks = new Lazy<List<MediaMonth>>(() => _GetPostingBooks());
 
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
 
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
+        }
+
+        private List<MediaMonth> _GetPostingBooks()
+        {
+            var result = _RatingForecastService.GetMediaMonthCrunchStatuses()
+                .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
+                .Select(m => m.MediaMonth)
+                .ToList();
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -300,21 +318,21 @@ namespace Services.Broadcast.Validators
                 throw new PlanValidationException(INVALID_AUDIENCE);
             }
 
-            if (!_PostingBooks.Any(x => x.Id == plan.ShareBookId))
+            if (!_PostingBooks.Value.Any(x => x.Id == plan.ShareBookId))
             {
                 throw new PlanValidationException(INVALID_SHARE_BOOK);
             }
 
             //if the hutbook is set but it's 0 or a value not available throw exception
-            if (plan.HUTBookId.HasValue && (plan.HUTBookId <= 0 || !_PostingBooks.Any(x => x.Id == plan.HUTBookId)))
+            if (plan.HUTBookId.HasValue && (plan.HUTBookId <= 0 || !_PostingBooks.Value.Any(x => x.Id == plan.HUTBookId)))
             {
                 throw new PlanValidationException(INVALID_HUT_BOOK);
             }
 
             if (plan.HUTBookId.HasValue)
             {
-                var shareBook = _PostingBooks.Single(x => x.Id == plan.ShareBookId);
-                var hutBook = _PostingBooks.Single(x => x.Id == plan.HUTBookId);
+                var shareBook = _PostingBooks.Value.Single(x => x.Id == plan.ShareBookId);
+                var hutBook = _PostingBooks.Value.Single(x => x.Id == plan.HUTBookId);
                 if (hutBook.StartDate > shareBook.StartDate)
                 {
                     throw new PlanValidationException(INVALID_SHARE_HUT_BOOKS);
@@ -640,6 +658,22 @@ namespace Services.Broadcast.Validators
             catch (Exception ex)
             {
                 throw new PlanValidationException(ex.Message, ex);
+            }
+        }
+
+        public void ValidateWeeklyBreakdownItemWeights(List<StandardDaypartWeightingGoal> dayparts, List<CreativeLength> creativeLengths, PlanGoalBreakdownTypeEnum deliveryType)
+        {
+            if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
+            {
+                _CreativeLengthEngine.ValidateCreativeLengthsForPlanSave(creativeLengths);
+            }
+            else if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
+            {
+                var totalDaypartWeights = dayparts.Sum(d => d.WeightingGoalPercent);
+                if (totalDaypartWeights != 100)
+                {
+                    throw new ApplicationException(INVALID_DAYPART_WEIGHT_TOTAL);
+                }
             }
         }
     }

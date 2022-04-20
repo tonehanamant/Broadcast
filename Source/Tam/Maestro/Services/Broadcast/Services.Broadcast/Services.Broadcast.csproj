@@ -525,6 +525,7 @@
     <Compile Include="ApplicationServices\Plan\PlanIsciService.cs" />
     <Compile Include="ApplicationServices\SpotExceptionService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
+    <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
