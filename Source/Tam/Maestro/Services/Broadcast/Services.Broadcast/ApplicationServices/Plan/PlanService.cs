@@ -815,7 +815,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Margin = pricingDefaults.Margin,
                 PlanVersionId = plan.VersionId,
                 MarketGroup = pricingDefaults.MarketGroup,
-                PostingType = plan.PostingType
+                PostingType = plan.PostingType,
+                FluidityPercentage = plan.FluidityPercentage
             };
 
             _PlanPricingService.ValidateAndApplyMargin(plan.PricingParameters);
@@ -839,8 +840,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PlanVersionId = plan.VersionId,
                 MarketGroup = pricingDefaults.MarketGroup,
                 PostingType = plan.PostingType,
-                share_book_id = plan.ShareBookId,
-                hut_book_id = plan.HUTBookId
+                ShareBookId = plan.ShareBookId,
+                HUTBookId = plan.HUTBookId,
+                FluidityPercentage = plan.FluidityPercentage
             };
 
             _PlanBuyingService.ValidateAndApplyMargin(plan.BuyingParameters);
@@ -1038,7 +1040,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 JobId = plan.JobId,
                 SpotAllocationModelMode = plan.SpotAllocationModelMode,
                 FluidityPercentage = plan.FluidityPercentage,
-                Category = plan.Category,
+                FluidityCategory = plan.FluidityCategory,
                 FluidityChildCategory = plan.FluidityChildCategory
             };
 

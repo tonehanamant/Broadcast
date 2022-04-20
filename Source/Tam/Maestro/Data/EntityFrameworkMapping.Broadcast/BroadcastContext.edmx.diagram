@@ -378,19 +378,6 @@
         <EntityTypeShape EntityType="BroadcastModel.program_name_exceptions" Width="1.5" PointX="30.25" PointY="50.75" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_show_types" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_versions" Width="1.5" PointX="12.25" PointY="0.75" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_versions_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_versions_hut_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_versions_share_media_months" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_available_markets_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_blackout_markets_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_dayparts_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_days_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_hiatus_days_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_market_details" Width="1.5" PointX="19.375" PointY="58.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_station_details" Width="1.5" PointX="19.375" PointY="58.625" />
@@ -404,13 +391,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_job" Width="1.5" PointX="14.5" PointY="49.5" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_parameters" Width="1.5" PointX="33.75" PointY="37.5" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_bands_plan_version_pricing_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_version_pricing_stations" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_markets_pricing_job" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_version_pricing_job" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_result_spot_frequencies" Width="1.5" PointX="27.5" PointY="51.375" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_result_spots" Width="1.5" PointX="24.25" PointY="62.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_results" Width="1.5" PointX="16.75" PointY="95" />
@@ -460,7 +443,6 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_summary_station_audiences" Width="1.5" PointX="10.25" PointY="48" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" />
@@ -509,7 +491,6 @@
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_weekly_breakdown" Width="1.5" PointX="38.25" PointY="33.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" />
@@ -549,7 +530,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_audience_daypart_vpvh" Width="1.5" PointX="44.875" PointY="18.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" />
         <AssociationConnector Association="BroadcastModel.FK__plan_version_audience_daypart_vpvh_plan_version_daypart_customizations" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_standard_dayparts" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_station_dayparts" Width="1.5" PointX="19.25" PointY="81.125" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_inventory_stations" Width="1.5" PointX="17" PointY="84.625" />
@@ -567,12 +547,32 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_job" Width="1.5" PointX="14.5" PointY="54.625" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_parameters" Width="1.5" PointX="23.75" PointY="43.25" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_parameters" Width="1.5" PointX="33.75" PointY="47.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_versions" Width="1.5" PointX="12.25" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_versions_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_versions_hut_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_versions_share_media_months" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_available_markets_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_blackout_markets_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_dayparts_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_days_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_hiatus_days_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

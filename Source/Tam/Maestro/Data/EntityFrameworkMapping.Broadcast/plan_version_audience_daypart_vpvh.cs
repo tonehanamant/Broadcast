@@ -25,7 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual audience audience { get; set; }
         public virtual plan_version_daypart_customizations plan_version_daypart_customizations { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
         public virtual standard_dayparts standard_dayparts { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

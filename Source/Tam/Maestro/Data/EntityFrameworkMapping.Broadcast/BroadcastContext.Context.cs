@@ -171,7 +171,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_flight_days> plan_version_flight_days { get; set; }
         public virtual DbSet<station_mappings> station_mappings { get; set; }
         public virtual DbSet<station_month_details> station_month_details { get; set; }
-        public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
         public virtual DbSet<inventory_export_jobs> inventory_export_jobs { get; set; }
@@ -193,7 +192,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_api_result_spot_frequencies> plan_version_pricing_api_result_spot_frequencies { get; set; }
         public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
-        public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
@@ -245,5 +243,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
         public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
+        public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
+        public virtual DbSet<plan_versions> plan_versions { get; set; }
     }
 }

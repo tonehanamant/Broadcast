@@ -46,7 +46,6 @@
   "BuyingParameters": null,
   "CampaignId": 2,
   "CampaignName": "Test Campaign 2",
-  "Category": null,
   "CoverageGoalPercent": 80.5,
   "CreativeLengths": [
     {
@@ -227,6 +226,7 @@
   "FlightNotes": "Sample notes",
   "FlightNotesInternal": null,
   "FlightStartDate": "2019-01-01T00:00:00",
+  "FluidityCategory": null,
   "FluidityChildCategory": null,
   "FluidityPercentage": null,
   "GoalBreakdownType": 1,

@@ -2948,8 +2948,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PlanVersionId = plan.VersionId,
                 MarketGroup = buyingDefaults.MarketGroup,
                 PostingType = plan.PostingType,
-                share_book_id = plan.ShareBookId,
-                hut_book_id = plan.HUTBookId
+                ShareBookId = plan.ShareBookId,
+                HUTBookId = plan.HUTBookId,
+                FluidityPercentage = plan.FluidityPercentage
             };
 
             ValidateAndApplyMargin(plan.BuyingParameters);

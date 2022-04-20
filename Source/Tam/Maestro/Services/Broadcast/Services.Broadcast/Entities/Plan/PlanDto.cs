@@ -536,7 +536,7 @@ namespace Services.Broadcast.Entities.Plan
         }
 
         public double? FluidityPercentage { get; set; }
-        public int? Category { get; set; }
+        public int? FluidityCategory { get; set; }
         public int? FluidityChildCategory { get; set; }
     }
 

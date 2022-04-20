@@ -34,8 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
         public virtual ICollection<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_buying_results> plan_version_buying_results { get; set; }
         public virtual ICollection<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

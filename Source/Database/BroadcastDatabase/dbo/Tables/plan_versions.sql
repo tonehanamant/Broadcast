@@ -36,7 +36,7 @@
     [impressions_per_unit]  FLOAT (53)      NULL,
     [flight_notes_internal] NVARCHAR (1024) NULL,
     [fluidity_percentage] FLOAT NULL, 
-    [category] INT NULL, 
+    [fluidity_category] INT NULL, 
     [fluidity_child_category] INT NULL, 
     CONSTRAINT [PK_plan_versions] PRIMARY KEY CLUSTERED ([id] ASC) WITH (FILLFACTOR = 90),
     CONSTRAINT [FK_plan_versions_audiences] FOREIGN KEY ([target_audience_id]) REFERENCES [dbo].[audiences] ([id]),

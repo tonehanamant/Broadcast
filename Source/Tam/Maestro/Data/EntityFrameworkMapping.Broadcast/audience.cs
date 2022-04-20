@@ -37,7 +37,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.detection_post_details = new HashSet<detection_post_details>();
             this.nti_universe_audience_mappings = new HashSet<nti_universe_audience_mappings>();
             this.nti_universes = new HashSet<nti_universes>();
-            this.plan_versions = new HashSet<plan_versions>();
             this.vpvhs = new HashSet<vpvh>();
             this.vpvh_quarters = new HashSet<vpvh_quarters>();
             this.vpvh_audience_mappings = new HashSet<vpvh_audience_mappings>();
@@ -46,6 +45,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
             this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
+            this.plan_versions = new HashSet<plan_versions>();
         }
     
         public int id { get; set; }
@@ -79,7 +79,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<detection_post_details> detection_post_details { get; set; }
         public virtual ICollection<nti_universe_audience_mappings> nti_universe_audience_mappings { get; set; }
         public virtual ICollection<nti_universes> nti_universes { get; set; }
-        public virtual ICollection<plan_versions> plan_versions { get; set; }
         public virtual ICollection<vpvh> vpvhs { get; set; }
         public virtual ICollection<vpvh_quarters> vpvh_quarters { get; set; }
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
@@ -88,5 +87,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual ICollection<plan_versions> plan_versions { get; set; }
     }
 }

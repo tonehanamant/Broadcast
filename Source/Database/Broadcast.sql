@@ -704,6 +704,26 @@ ALTER TABLE plan_version_buying_parameters
 ADD fluidity_percentage float NULL
 END
 
+IF EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'category'
+        AND OBJECT_ID = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+		ALTER TABLE plan_version_pricing_parameters
+		DROP COLUMN category
+		ALTER TABLE plan_version_pricing_parameters
+		DROP COLUMN fluidity_child_category
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'category'
+        AND OBJECT_ID = OBJECT_ID('plan_versions'))
+BEGIN
+		ALTER TABLE plan_versions
+		DROP COLUMN category
+		ALTER TABLE plan_versions
+		ADD fluidity_category int null
+END
+
 GO
 /*************************************** END BP-4419 ***************************************/
 

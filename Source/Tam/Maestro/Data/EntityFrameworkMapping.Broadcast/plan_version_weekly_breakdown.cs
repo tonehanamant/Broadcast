@@ -33,8 +33,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string custom_daypart_name { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual standard_dayparts standard_dayparts { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

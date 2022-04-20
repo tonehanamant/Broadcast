@@ -9,7 +9,8 @@
   "Currency": 0,
   "DeliveryImpressions": 50000.0,
   "DeliveryRatingPoints": 0.0,
-  "hut_book_id": null,
+  "FluidityPercentage": null,
+  "HUTBookId": null,
   "InflationFactor": 0.5,
   "JobId": null,
   "Margin": null,
@@ -21,7 +22,7 @@
   "PostingType": 2,
   "ProprietaryBlend": 0.2,
   "ProprietaryInventory": [],
-  "share_book_id": null,
+  "ShareBookId": null,
   "UnitCaps": 10,
   "UnitCapsType": 1
 }

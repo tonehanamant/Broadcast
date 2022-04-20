@@ -19,7 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int spot_length_id { get; set; }
         public Nullable<int> weight { get; set; }
     
-        public virtual plan_versions plan_versions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

@@ -783,7 +783,7 @@ namespace Services.Broadcast.Repositories
                 ImpressionsPerUnit = planVersion.impressions_per_unit ?? 0,
                 BuyingParameters = _MapBuyingParameters(planVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
                 FluidityPercentage = planVersion.fluidity_percentage,
-                Category = planVersion.category,
+                FluidityCategory = planVersion.fluidity_category,
                 FluidityChildCategory = planVersion.fluidity_child_category
             };
 
@@ -821,8 +821,9 @@ namespace Services.Broadcast.Repositories
                 AdjustedBudget = arg.budget_adjusted,
                 MarketGroup = (MarketGroupEnum)arg.market_group,
                 PostingType = (PostingTypeEnum)arg.posting_type,
-                share_book_id = arg.share_book_id,
-                hut_book_id = arg.hut_book_id
+                ShareBookId = arg.share_book_id,
+                HUTBookId = arg.hut_book_id,
+                FluidityPercentage=arg.fluidity_percentage
             };
         }
 
@@ -871,9 +872,7 @@ namespace Services.Broadcast.Repositories
                 }).ToList(),
                 PostingType = (PostingTypeEnum)arg.posting_type,
                 BudgetCpmLever = (BudgetCpmLeverEnum)arg.budget_cpm_lever,
-                FluidityPercentage = arg.fluidity_percentage,
-                Category = arg.category,
-                FluidityChildCategory = arg.fluidity_child_category
+                FluidityPercentage = arg.fluidity_percentage
             };
         }
 
@@ -943,7 +942,7 @@ namespace Services.Broadcast.Repositories
             version.is_adu_enabled = planDto.IsAduEnabled;
             version.impressions_per_unit = planDto.ImpressionsPerUnit;
             version.fluidity_percentage = planDto.FluidityPercentage;
-            version.category = planDto.Category;
+            version.fluidity_category = planDto.FluidityCategory;
             version.fluidity_child_category = planDto.FluidityChildCategory;
 
             _MapCreativeLengths(version, planDto, context);
@@ -1728,9 +1727,7 @@ namespace Services.Broadcast.Repositories
                 ProprietaryInventory = entity.plan_version_pricing_parameter_inventory_proprietary_summaries.Where(p => p.inventory_proprietary_summary.is_active)
                     .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id, NumberOfUnit = x.unit_number })
                     .ToList(),
-                FluidityPercentage = entity.fluidity_percentage,
-                Category = entity.category,
-                FluidityChildCategory = entity.fluidity_child_category
+                FluidityPercentage = entity.fluidity_percentage
             };
             return dto;
         }
@@ -1769,9 +1766,7 @@ namespace Services.Broadcast.Repositories
                         .ToList(),
                     posting_type = (int)planPricingParametersDto.PostingType,
                     budget_cpm_lever = (int)planPricingParametersDto.BudgetCpmLever,
-                    fluidity_percentage = planPricingParametersDto.FluidityPercentage,
-                    category = planPricingParametersDto.Category,
-                    fluidity_child_category = planPricingParametersDto.FluidityChildCategory
+                    fluidity_percentage = planPricingParametersDto.FluidityPercentage
                 };
 
                 context.plan_version_pricing_parameters.Add(planPricingParameters);

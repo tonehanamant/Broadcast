@@ -29,7 +29,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public PostingTypeEnum PostingType { get; set; }
         public BudgetCpmLeverEnum BudgetCpmLever { get; set; } = BudgetCpmLeverEnum.Cpm;
         public List<InventoryProprietarySummary> ProprietaryInventory { get; set; } = new List<InventoryProprietarySummary>();
-        public int? share_book_id { get; set; }
-        public int? hut_book_id { get; set; }
+        public int? ShareBookId { get; set; }
+        public int? HUTBookId { get; set; }
+        public double? FluidityPercentage { get; set; }
     }
 }

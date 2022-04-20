@@ -1160,9 +1160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.All,
                 PostingType = PostingTypeEnum.NSI,
-                FluidityPercentage = 40,
-                Category = 1,
-                FluidityChildCategory = 1
+                FluidityPercentage = 40
             };
         }
 
@@ -5329,9 +5327,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
                 MarketGroup = MarketGroupEnum.Top100,
-                FluidityPercentage = 30,
-                Category = 1,
-                FluidityChildCategory = 1
+                FluidityPercentage = 30
             };
 
             _PlanRepositoryMock
@@ -5882,9 +5878,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
                 MarketGroup = MarketGroupEnum.Top100,
-                FluidityPercentage = 50,
-                Category = 1,
-                FluidityChildCategory = 1
+                FluidityPercentage = 50
             };
 
             _PlanRepositoryMock
