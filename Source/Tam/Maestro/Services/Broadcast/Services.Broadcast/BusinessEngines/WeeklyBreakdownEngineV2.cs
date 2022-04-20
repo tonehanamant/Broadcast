@@ -1435,8 +1435,8 @@ namespace Services.Broadcast.BusinessEngines
            List<WeeklyBreakdownWeek> weeks,
            double totalImpressions)
         {
-            var unlockedWeeks = weeks.Where(w => w.IsLocked == false).ToList();
-            if (!unlockedWeeks.Any())
+            var availableWeeks = weeks.Where(w => w.IsLocked == false && w.NumberOfActiveDays > 0).ToList();
+            if (!availableWeeks.Any())
             {
                 return;
             }
@@ -1452,8 +1452,8 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             // get all the components for the first week
-            var firstWeekStart = unlockedWeeks.Min(w => w.StartDate);
-            var firstWeek = unlockedWeeks.Where(w => w.StartDate.Equals(firstWeekStart)).ToList();
+            var firstWeekStart = availableWeeks.Min(w => w.StartDate);
+            var firstWeek = availableWeeks.Where(w => w.StartDate.Equals(firstWeekStart)).ToList();
 
             // distribute the remainder accross the week
             foreach(var weekItem in firstWeek)
