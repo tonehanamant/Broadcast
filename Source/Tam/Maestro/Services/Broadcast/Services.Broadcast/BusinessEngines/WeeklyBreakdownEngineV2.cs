@@ -1424,7 +1424,6 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var breakdownItem in activeWeeks)
             {
                 var impressions = impressionsByWeeks[breakdownItem.MediaWeekId];
-                breakdownItem.IsLocked = (breakdownItem.EndDate < DateTime.Now) ? true : false;
                 _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
                     , request.TotalBudget, breakdownItem, impressions, roundRatings: true);
             }
