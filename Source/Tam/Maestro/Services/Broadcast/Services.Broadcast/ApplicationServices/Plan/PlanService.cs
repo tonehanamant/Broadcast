@@ -748,6 +748,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal bool _ShouldPromotePricingResultsOnPlanSave(SaveState saveState, PlanDto beforePlan, PlanDto afterPlan)
         {
+            if (beforePlan?.IsDraft == true && afterPlan.IsDraft == false)
+            {
+                return false;
+            }
+
             var shouldPromotePricingResults = false;
             if (saveState != SaveState.CreatingNewPlan)
             {
