@@ -66,7 +66,7 @@ namespace Services.Broadcast.Converters.Scx
         {
             _GetValidatedPlanAndPricingJob(planId, out var plan, out var job);
             var spots = _GetPricingSpots(job.Id, spotAllocationModelMode, postingType);
-            var stationInventoryManifestIds = spots.Select(s => s.StationInventoryManifestId).ToList();
+            var stationInventoryManifestIds = spots.Select(s => s.StationInventoryManifestId).Distinct().ToList();
             var inventory = _InventoryRepository.GetStationInventoryManifestsByIds(stationInventoryManifestIds);
             var sortedMediaWeeks = GetSortedMediaWeeks(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
             var audienceIds = _GetAudienceIds(plan);
