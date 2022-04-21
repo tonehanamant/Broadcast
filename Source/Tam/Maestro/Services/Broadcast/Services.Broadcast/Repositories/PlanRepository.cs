@@ -263,6 +263,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="deletedAt">The datetime when user is deleting plan</param>
         /// <returns>True if plan has been deleted sucessfully, otherwise false.</returns>
         bool DeletePlan(int planId, string deletedBy, DateTime deletedAt);
+        /// <summary>
+        /// Append genres to default exclusion list for daypart type: ROS, ENTERTAINMENT/NON-NEWS.
+        /// </summary>       
+        /// <returns></returns>
+        bool GenresDefaultExclusion();
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -2936,6 +2941,85 @@ namespace Services.Broadcast.Repositories
                 var deletedCount = context.SaveChanges();
 
                 var result = deletedCount > 0;
+                return result;
+            });
+        }
+        public bool GenresDefaultExclusion()
+        {
+            bool result = false;
+            return _InReadUncommitedTransaction(context =>
+            {
+                var genres = context.genres.ToList();
+                var daypartsToUpdate = (from pvd in context.plan_version_dayparts
+                                                            join pv in context.plan_versions on pvd.plan_version_id equals pv.id
+                                                            where (pvd.daypart_type == (int)DaypartTypeEnum.EntertainmentNonNews || pvd.daypart_type == (int)DaypartTypeEnum.ROS)
+                                                            && (pv.status == (int?)PlanStatusEnum.Contracted || pv.status == (int?)PlanStatusEnum.Live || pv.status == (int?)PlanStatusEnum.Complete)
+                                                            select pvd).ToList();
+
+                if (daypartsToUpdate.Any())
+                {
+                    var religiousRestrictionToAdd = daypartsToUpdate.Select(daypart =>
+                    {
+                        int genereId = genres.Single(g => g.name == "Religious" && g.program_source_id==1).id;
+                        plan_version_daypart_genre_restrictions genreRestrictions = new plan_version_daypart_genre_restrictions();
+                        if (!context.plan_version_daypart_genre_restrictions.Any(f => f.plan_version_daypart_id == daypart.id && f.genre_id == genereId))
+                        {
+                            genreRestrictions.plan_version_daypart_id = daypart.id;
+                            genreRestrictions.genre_id = genereId;
+                        }
+                        return genreRestrictions;
+                    }).ToList();
+                    religiousRestrictionToAdd = religiousRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
+                    if (religiousRestrictionToAdd.Count > 0)
+                    { context.plan_version_daypart_genre_restrictions.AddRange(religiousRestrictionToAdd); }
+
+                    var childrenRestrictionToAdd = daypartsToUpdate.Select(daypart =>
+                    {
+                        int genereId = genres.Single(g => g.name == "Children" && g.program_source_id == 1).id;
+                        plan_version_daypart_genre_restrictions genreRestrictions = new plan_version_daypart_genre_restrictions();
+                        if (!context.plan_version_daypart_genre_restrictions.Any(f => f.plan_version_daypart_id == daypart.id && f.genre_id == genereId))
+                        {
+                            genreRestrictions.plan_version_daypart_id = daypart.id;
+                            genreRestrictions.genre_id = genereId;
+                        }
+                        return genreRestrictions;
+                    }).ToList();
+                    childrenRestrictionToAdd = childrenRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
+                    if (childrenRestrictionToAdd.Count > 0)
+                    { context.plan_version_daypart_genre_restrictions.AddRange(childrenRestrictionToAdd); }
+
+                    var paidProgramRestrictionToAdd = daypartsToUpdate.Select(daypart =>
+                    {
+                        int genereId = genres.Single(g => g.name == "Paid Program" && g.program_source_id == 1).id;
+                        plan_version_daypart_genre_restrictions genreRestrictions = new plan_version_daypart_genre_restrictions();
+                        if (!context.plan_version_daypart_genre_restrictions.Any(f => f.plan_version_daypart_id == daypart.id && f.genre_id == genereId))
+                        {
+                            genreRestrictions.plan_version_daypart_id = daypart.id;
+                            genreRestrictions.genre_id = genereId;
+                        }
+                        return genreRestrictions;
+                    }).ToList();
+                    paidProgramRestrictionToAdd=paidProgramRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
+                    if (paidProgramRestrictionToAdd.Count > 0)
+                    { context.plan_version_daypart_genre_restrictions.AddRange(paidProgramRestrictionToAdd); }
+
+                    var spanishRestrictionToAdd = daypartsToUpdate.Select(daypart =>
+                    {
+                        int genereId = genres.Single(g => g.name == "Spanish" && g.program_source_id == 1).id;
+                        plan_version_daypart_genre_restrictions genreRestrictions = new plan_version_daypart_genre_restrictions();
+                        if (!context.plan_version_daypart_genre_restrictions.Any(f => f.plan_version_daypart_id == daypart.id && f.genre_id == genereId))
+                        {
+                            genreRestrictions.plan_version_daypart_id = daypart.id;
+                            genreRestrictions.genre_id = genereId;
+                        }
+                        return genreRestrictions;
+                    }).ToList();
+                    spanishRestrictionToAdd= spanishRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
+                    if (spanishRestrictionToAdd.Count > 0)
+                    { context.plan_version_daypart_genre_restrictions.AddRange(spanishRestrictionToAdd); }
+                    context.SaveChanges();
+                    result = true;
+                }
                 return result;
             });
         }

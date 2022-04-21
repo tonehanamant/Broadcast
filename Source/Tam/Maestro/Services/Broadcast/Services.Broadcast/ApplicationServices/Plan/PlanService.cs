@@ -256,6 +256,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="afterVersionId">The after version identifier.</param>
         /// <returns></returns>
         bool ComparePlanVersionForShouldPromotePricing(int planId, int beforeVersionId, int afterVersionId);
+        /// <summary>
+        /// Append genres to default exclusion list for daypart type: ROS, ENTERTAINMENT/NON-NEWS.
+        /// </summary>       
+        /// <returns></returns>
+        bool GenresDefaultExclusion();
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -2080,6 +2085,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planDaypartUpdateResponseDto.Weeks.Add(item);
             }
             return planDaypartUpdateResponseDto;
+        }
+
+        public bool GenresDefaultExclusion()
+        {
+            var result = _PlanRepository.GenresDefaultExclusion();
+            return result;
         }
     }
 }

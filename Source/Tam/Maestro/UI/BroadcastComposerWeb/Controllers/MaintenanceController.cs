@@ -1060,7 +1060,22 @@ namespace BroadcastComposerWeb.Controllers
             TempData["TabId"] = "planning";
             return RedirectToAction("Index");
         }
-
+        [HttpPost]
+        public ActionResult GenresDefaultExclusion()
+        {
+            TempData["TabId"] = "migrations";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanService>();
+                service.GenresDefaultExclusion();
+                TempData["Message"] = $"Default Genres have been appended to exclusion list!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
         #region Aab Utilities
 
         [HttpPost]
