@@ -134,5 +134,69 @@
   {
     "ClassTypeName": "PlanDto",
     "PropertyName": "BuyingBudgetCpmLever"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "AduImpressions"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "CustomName"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "DaypartOrganizationId"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "DaypartOrganizationName"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "DaypartUniquekey"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "EndDate"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "IsUpdated"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "PercentageOfWeek"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "PlanDaypartId"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "UnitImpressions"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "WeeklyAdu"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "WeeklyCpm"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "WeeklyImpressionsPercentage"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "WeeklyRatings"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "WeeklyUnits"
+  },
+  {
+    "ClassTypeName": "WeeklyBreakdownWeek",
+    "PropertyName": "WeekNumber"
   }
 ]

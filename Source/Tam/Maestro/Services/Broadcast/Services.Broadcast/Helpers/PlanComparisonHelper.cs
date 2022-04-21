@@ -44,6 +44,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "FlightNotesInternal"),
             new ComparisonMinorProperty(typeof(PlanDto), "Status"),
             new ComparisonMinorProperty(typeof(PlanDto), "GoalBreakdownType"),
+
             // ignored - out of scope for this compare
             new ComparisonMinorProperty(typeof(PlanDto), "PricingParameters"),
             new ComparisonMinorProperty(typeof(PlanDto), "BuyingParameters"),
@@ -52,6 +53,24 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "CustomDayparts"),
             new ComparisonMinorProperty(typeof(PlanDto), "PricingBudgetCpmLever"),
             new ComparisonMinorProperty(typeof(PlanDto), "BuyingBudgetCpmLever"),
+
+            // ignored - not affecting pricing goals or inventory
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "AduImpressions"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "CustomName"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "DaypartOrganizationId"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "DaypartOrganizationName"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "DaypartUniquekey"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "EndDate"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "IsUpdated"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "PercentageOfWeek"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "PlanDaypartId"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "UnitImpressions"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "WeeklyAdu"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "WeeklyCpm"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "WeeklyImpressionsPercentage"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "WeeklyRatings"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "WeeklyUnits"),
+            new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "WeekNumber"),
 
         };
 
