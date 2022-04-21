@@ -534,7 +534,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var week in groupedWeeks)
             {
                 // use Math.Round in this context.  Math.Floor lost impressions in many weeks.
-                var roundedWeeklyImpressions = Math.Round(week.WeeklyImpressions);
+                var roundedWeeklyImpressions = Math.Floor(week.WeeklyImpressions);
                 week.WeeklyImpressions = roundedWeeklyImpressions;
             }
 
