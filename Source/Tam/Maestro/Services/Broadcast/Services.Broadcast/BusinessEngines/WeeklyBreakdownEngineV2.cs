@@ -506,12 +506,18 @@ namespace Services.Broadcast.BusinessEngines
 
             // sometimes there is a remainder
             // spread this out accross the first week.
-            var totalExistingImpressions = groupedWeeks.Sum(w => w.WeeklyImpressions);
-            var impressionsRemainder = request.TotalImpressions - totalExistingImpressions;
-            if (impressionsRemainder > 0)
+            var shouldRedistributeRemainder = _ShouldRedistribute(groupedWeeks, redistributeCustom: true);
+
+            if (shouldRedistributeRemainder)
             {
-                _UpdateFirstWeekAndBudgetAdjustment(request, groupedWeeks, request.TotalImpressions);
+                var totalExistingImpressions = groupedWeeks.Sum(w => w.WeeklyImpressions);
+                var impressionsRemainder = request.TotalImpressions - totalExistingImpressions;
+                if (impressionsRemainder > 0)
+                {
+                    _UpdateFirstWeekAndBudgetAdjustment(request, groupedWeeks, request.TotalImpressions);
+                }
             }
+            
             return groupedWeeks;
         }
 
