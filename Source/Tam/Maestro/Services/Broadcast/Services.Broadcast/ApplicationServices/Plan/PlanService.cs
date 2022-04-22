@@ -261,6 +261,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>       
         /// <returns></returns>
         bool GenresDefaultExclusion();
+
+        /// <summary>
+        /// Get the fluidity parent categories.
+        /// </summary>       
+        /// <returns>List of fluidity parent category</returns>
+        List<FluidityCategoriesDto> GetFluidityParentCategory();
+
+        /// <summary>
+        /// Get the fluidity child Categories.
+        /// </summary>
+        /// <param name="parentCategoryId">The parent category id.</param>
+        /// <returns>List of fluidity child category</returns>
+        List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -2096,6 +2109,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = _PlanRepository.GenresDefaultExclusion();
             return result;
+        }
+
+        /// <inheritdoc />
+        public List<FluidityCategoriesDto> GetFluidityParentCategory()
+        {
+            var fluidityParentCategory = _PlanRepository.GetFluidityParentCategory();
+
+            return fluidityParentCategory;
+        }
+
+        /// <inheritdoc />
+        public List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId)
+        {
+            var fluidityChildCategory = _PlanRepository.GetFluidityChildCategory(parentCategoryId);
+
+            return fluidityChildCategory;
         }
     }
 }

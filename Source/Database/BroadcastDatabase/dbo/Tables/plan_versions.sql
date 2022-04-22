@@ -42,7 +42,8 @@
     CONSTRAINT [FK_plan_versions_audiences] FOREIGN KEY ([target_audience_id]) REFERENCES [dbo].[audiences] ([id]),
     CONSTRAINT [FK_plan_versions_hut_media_months] FOREIGN KEY ([hut_book_id]) REFERENCES [dbo].[media_months] ([id]),
     CONSTRAINT [FK_plan_versions_plans] FOREIGN KEY ([plan_id]) REFERENCES [dbo].[plans] ([id]),
-    CONSTRAINT [FK_plan_versions_share_media_months] FOREIGN KEY ([share_book_id]) REFERENCES [dbo].[media_months] ([id])
+    CONSTRAINT [FK_plan_versions_share_media_months] FOREIGN KEY ([share_book_id]) REFERENCES [dbo].[media_months] ([id]),
+    CONSTRAINT [FK_plan_versions_fluidity_categories] FOREIGN KEY ([fluidity_category]) REFERENCES [dbo].[fluidity_categories] ([id])
 );
 
 

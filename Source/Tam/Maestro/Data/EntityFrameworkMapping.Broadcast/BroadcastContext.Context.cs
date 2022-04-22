@@ -245,5 +245,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
+        public virtual DbSet<fluidity_categories> fluidity_categories { get; set; }
     }
 }

@@ -558,6 +558,7 @@
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramFlightDaypartIntersectInfo.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ProgramInventoryDaypart.cs" />
     <Compile Include="Entities\Plan\CustomDaypartOrganizationDto.cs" />
+    <Compile Include="Entities\Plan\FluidityCategoriesDto.cs" />
     <Compile Include="Entities\Plan\PlanCustomDaypartDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateRequestDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateResultDto.cs" />

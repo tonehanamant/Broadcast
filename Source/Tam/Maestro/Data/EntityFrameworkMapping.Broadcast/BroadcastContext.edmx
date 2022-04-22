@@ -342,6 +342,15 @@
           <Property Name="completed_at" Type="datetime2" Precision="7" />
           <Property Name="error_message" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="fluidity_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
+          <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="parent_category_id" Type="int" />
+        </EntityType>
         <EntityType Name="genre_mappings">
           <Key>
             <PropertyRef Name="maestro_genre_id" />
@@ -5170,6 +5179,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_versions_fluidity_categories">
+          <End Role="fluidity_categories" Type="Self.fluidity_categories" Multiplicity="0..1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fluidity_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_versions">
+              <PropertyRef Name="fluidity_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_versions_hut_media_months">
           <End Role="media_months" Type="Self.media_months" Multiplicity="0..1" />
           <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="*" />
@@ -7352,6 +7373,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="detection_maps" EntityType="Self.detection_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="detection_post_details" EntityType="Self.detection_post_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="export_unmapped_program_names_jobs" EntityType="Self.export_unmapped_program_names_jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fluidity_categories" EntityType="Self.fluidity_categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genre_mappings" EntityType="Self.genre_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_export_jobs" EntityType="Self.inventory_export_jobs" Schema="dbo" store:Type="Tables" />
@@ -8264,6 +8286,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <AssociationSet Name="FK_plan_versions_audiences" Association="Self.FK_plan_versions_audiences">
             <End Role="audiences" EntitySet="audiences" />
+            <End Role="plan_versions" EntitySet="plan_versions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_versions_fluidity_categories" Association="Self.FK_plan_versions_fluidity_categories">
+            <End Role="fluidity_categories" EntitySet="fluidity_categories" />
             <End Role="plan_versions" EntitySet="plan_versions" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_versions_hut_media_months" Association="Self.FK_plan_versions_hut_media_months">
@@ -10534,6 +10560,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <AssociationSet Name="FK_plan_versions_plans" Association="BroadcastModel.FK_plan_versions_plans">
             <End Role="plan" EntitySet="plans" />
+            <End Role="plan_versions" EntitySet="plan_versions" />
+          </AssociationSet>
+          <EntitySet Name="fluidity_categories" EntityType="BroadcastModel.fluidity_categories" />
+          <AssociationSet Name="FK_plan_versions_fluidity_categories" Association="BroadcastModel.FK_plan_versions_fluidity_categories">
+            <End Role="fluidity_categories" EntitySet="fluidity_categories" />
             <End Role="plan_versions" EntitySet="plan_versions" />
           </AssociationSet>
           </EntityContainer>
@@ -18203,6 +18234,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_summaries" Relationship="BroadcastModel.FK_plan_version_summaries_plan_versions" FromRole="plan_versions" ToRole="plan_version_summaries" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan_versions" ToRole="plan" />
+          <NavigationProperty Name="fluidity_categories" Relationship="BroadcastModel.FK_plan_versions_fluidity_categories" FromRole="plan_versions" ToRole="fluidity_categories" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -18467,6 +18499,28 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_versions">
               <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="fluidity_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="parent_category_id" Type="Int32" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_fluidity_categories" FromRole="fluidity_categories" ToRole="plan_versions" />
+        </EntityType>
+        <Association Name="FK_plan_versions_fluidity_categories">
+          <End Type="BroadcastModel.fluidity_categories" Role="fluidity_categories" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fluidity_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_versions">
+              <PropertyRef Name="fluidity_category" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21604,6 +21658,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="equivalized" ColumnName="equivalized" />
                 <ScalarProperty Name="is_draft" ColumnName="is_draft" />
                 <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fluidity_categories">
+            <EntityTypeMapping TypeName="BroadcastModel.fluidity_categories">
+              <MappingFragment StoreEntitySet="fluidity_categories">
+                <ScalarProperty Name="parent_category_id" ColumnName="parent_category_id" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

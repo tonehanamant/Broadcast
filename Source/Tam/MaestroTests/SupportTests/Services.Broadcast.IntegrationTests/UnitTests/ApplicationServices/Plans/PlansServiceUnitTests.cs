@@ -3766,7 +3766,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                      {
                         Id = 1,
                         OrganizationName = "NFL"
-                     },                     
+                     },
                      new CustomDaypartOrganizationDto
                      {
                         Id = 2,
@@ -3823,9 +3823,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         [TestCase(0, 1, false, false, 0, 1)]
         [TestCase(1, 0, false, false, 0, 1)]
-        [TestCase(1, 1, false, true, 2, 2)] 
-        [TestCase(1, 1, true, false, 1, 1)] 
-        [TestCase(1, 1, true, true, 2, 2)] 
+        [TestCase(1, 1, false, true, 2, 2)]
+        [TestCase(1, 1, true, false, 1, 1)]
+        [TestCase(1, 1, true, true, 2, 2)]
         [TestCase(1, 1, false, false, 1, 1)]
         public void SavePlan_FilterCustomDaypart_BeforeVerifyingPlanPricingInputsChange(int planId, int planVersionId, bool isDraftBefore, bool isDraftNow, int expectedBeforePlanDaypartCount, int expectedAfterPlanDaypartCount)
         {
@@ -3991,7 +3991,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
-                { 
+                {
                     HasPlans = true
                 });
 
@@ -4055,6 +4055,60 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetFluidityParentCategory()
+        {
+            _PlanRepositoryMock
+                .Setup(x => x.GetFluidityParentCategory())
+                .Returns(new List<FluidityCategoriesDto>() 
+                {
+                    new FluidityCategoriesDto
+                    {
+                        Id = 2,
+                        Category = "Arts & Entertainment"
+                    },
+                    new FluidityCategoriesDto
+                    {
+                        Id = 3,
+                        Category = "Automotive"
+                    }
+                });
+            // Act
+            var result = _PlanService.GetFluidityParentCategory();
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetFluidityChildCategory()
+        {
+            // Arrange
+            int parentCategoryId = 2;
+            _PlanRepositoryMock
+                .Setup(x => x.GetFluidityChildCategory(It.IsAny<int>()))
+                .Returns(new List<FluidityCategoriesDto>()
+                {
+                    new FluidityCategoriesDto
+                    {
+                        Id = 36,
+                        Category = "Humor"
+                    },
+                    new FluidityCategoriesDto
+                    {
+                        Id = 37,
+                        Category = "Movie"
+                    }
+                });
+            // Act
+            var result = _PlanService.GetFluidityChildCategory(parentCategoryId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

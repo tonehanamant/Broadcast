@@ -359,5 +359,21 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().UpdatePlanDaypart(planDaypartUpdateRequest));
         }
+
+        [Authorize]
+        [HttpPost]
+        [Route("fluidity-parent-category")]
+        public BaseResponse<List<FluidityCategoriesDto>> GetFluidityParentCategory()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetFluidityParentCategory());
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("fluidity-child-category/{parentCategoryId}")]
+        public BaseResponse<List<FluidityCategoriesDto>> GetFluidityChildCategory(int parentCategoryId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetFluidityChildCategory(parentCategoryId));
+        }
     }
 }

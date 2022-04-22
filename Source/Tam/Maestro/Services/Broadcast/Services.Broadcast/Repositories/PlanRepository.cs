@@ -268,6 +268,19 @@ namespace Services.Broadcast.Repositories
         /// </summary>       
         /// <returns></returns>
         bool GenresDefaultExclusion();
+
+        /// <summary>
+        /// Get the fluidity parent categories.
+        /// </summary>       
+        /// <returns>List of fluidity parent category</returns>
+        List<FluidityCategoriesDto> GetFluidityParentCategory();
+
+        /// <summary>
+        /// Get the fluidity child Categories.
+        /// </summary>
+        /// <param name="parentCategoryId">The parent category id.</param>
+        /// <returns>List of fluidity child category</returns>
+        List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -2951,10 +2964,10 @@ namespace Services.Broadcast.Repositories
             {
                 var genres = context.genres.ToList();
                 var daypartsToUpdate = (from pvd in context.plan_version_dayparts
-                                                            join pv in context.plan_versions on pvd.plan_version_id equals pv.id
-                                                            where (pvd.daypart_type == (int)DaypartTypeEnum.EntertainmentNonNews || pvd.daypart_type == (int)DaypartTypeEnum.ROS)
-                                                            && (pv.status == (int?)PlanStatusEnum.Contracted || pv.status == (int?)PlanStatusEnum.Live || pv.status == (int?)PlanStatusEnum.Complete)
-                                                            select pvd).ToList();
+                                        join pv in context.plan_versions on pvd.plan_version_id equals pv.id
+                                        where (pvd.daypart_type == (int)DaypartTypeEnum.EntertainmentNonNews || pvd.daypart_type == (int)DaypartTypeEnum.ROS)
+                                        && (pv.status == (int?)PlanStatusEnum.Contracted || pv.status == (int?)PlanStatusEnum.Live || pv.status == (int?)PlanStatusEnum.Complete)
+                                        select pvd).ToList();
 
                 if (daypartsToUpdate.Any())
                 {
@@ -3022,6 +3035,41 @@ namespace Services.Broadcast.Repositories
                 }
                 return result;
             });
+        }
+
+        /// <inheritdoc />
+        public List<FluidityCategoriesDto> GetFluidityParentCategory()
+        {
+            return _InReadUncommitedTransaction(
+              context => {
+                  var fluidityParentCategory = context.fluidity_categories
+                    .Where(p => p.parent_category_id == null)
+                    .OrderBy(p => p.category)
+                    .Select(_MapFluidityCategoriesToDto).ToList();
+                  return fluidityParentCategory;
+              });
+        }
+
+        /// <inheritdoc />
+        public List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId)
+        {
+            return _InReadUncommitedTransaction(
+              context => {
+                  var fluidityChildCategory = context.fluidity_categories
+                    .Where(p => p.parent_category_id == parentCategoryId)
+                    .OrderBy(p => p.category)
+                    .Select(_MapFluidityCategoriesToDto).ToList();
+                  return fluidityChildCategory;
+              });
+        }
+
+        private FluidityCategoriesDto _MapFluidityCategoriesToDto(fluidity_categories fluidityCategories)
+        {
+            return new FluidityCategoriesDto
+            {
+                Id = fluidityCategories.id,
+                Category = fluidityCategories.category
+            };
         }
     }
 }

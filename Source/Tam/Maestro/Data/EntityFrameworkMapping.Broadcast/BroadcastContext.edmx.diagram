@@ -573,6 +573,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.fluidity_categories" Width="1.5" PointX="32.375" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_versions_fluidity_categories" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

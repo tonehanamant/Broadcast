@@ -305,6 +305,7 @@
     <Build Include="dbo\Tables\plan_version_daypart_available_markets.sql" />
     <Build Include="dbo\Tables\plan_version_buying_band_inventory_stations.sql" />
     <Build Include="dbo\Tables\plan_version_buying_band_inventory_station_dayparts.sql" />
+    <Build Include="dbo\Tables\fluidity_categories.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
