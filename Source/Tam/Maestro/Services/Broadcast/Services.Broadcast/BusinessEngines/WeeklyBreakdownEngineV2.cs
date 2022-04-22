@@ -452,6 +452,12 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
+        private bool _IsDeliveryTypeChangeRequest(WeeklyBreakdownRequest request)
+        {
+            var isDeliveryTypeChangeRequest = _IsRawWeeklyBreakdownRequest(request);
+            return isDeliveryTypeChangeRequest;
+        }
+
         private bool _IsRawWeeklyBreakdownRequest(WeeklyBreakdownRequest request)
         {
             // If all week items are present then this is a raw weekly breakdown.
@@ -468,46 +474,6 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return true;
-        }
-
-        private bool _IsGlobalDaypartUpdateRequest(WeeklyBreakdownRequest request)
-        {
-            // Raw Weekly Breakdown is sent for Global Daypart Weight Changes and Removal and DeliveryType changes.
-            // given the raw weekly breakdown, let's determine if this was a global daypart change or not...
-
-            // was a daypart removed?
-            // a daypart exists in the grid that doesn't exist in the request
-            var gridDaypartsKeys = request.Weeks.Select(w => w.DaypartUniquekey).Distinct().ToList();
-            var requestDaypartKeys = request.Dayparts.Select(s => s.DaypartUniquekey).ToList();
-
-            var removedDayparts = gridDaypartsKeys.Where(gd => !requestDaypartKeys.Contains(gd)).ToList();
-            if (removedDayparts.Any())
-            {
-                return true;
-            }
-
-            // was a daypart weight changed?
-            var weightedDayparts = PlanGoalHelper.GetStandardDaypardWeightingGoals(request.Dayparts);
-            
-            // group and setup for compare
-            var daypartGroupedWeeks = _CalculateResponseWeeksForDeliveryTypeChange(request, PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart);
-            RecalculatePercentageOfWeekBasedOnImpressions(daypartGroupedWeeks);
-
-            var unlockeWeeks = daypartGroupedWeeks.Where(w => !w.IsLocked).ToList();
-            foreach (var weekItem in unlockeWeeks)
-            {
-                var weightedDaypart = weightedDayparts.SingleOrDefault(d => d.DaypartUniquekey == weekItem.DaypartUniquekey);
-                var weekItemWeightMatchesGlobalWeight = weekItem.PercentageOfWeek == weightedDaypart.WeightingGoalPercent;
-                if (!weekItemWeightMatchesGlobalWeight)
-                {
-                    return true;
-                }
-            }
-
-            // if we're here then
-            // sensors did not detect a global daypart change
-            // that would send the Raw Weekly Breakdown
-            return false;
         }
 
         private List<WeeklyBreakdownWeek> _CalculateResponseWeeksForDeliveryTypeChange(WeeklyBreakdownRequest request, PlanGoalBreakdownTypeEnum deliveryType)
@@ -589,28 +555,13 @@ namespace Services.Broadcast.BusinessEngines
 
             // determine what state we are going towards.
             var isInitialLoad = false;
-            var isRawWeeklyBreakdown = false;
             var isDeliveryTypeChange = false;
-            var isGlobalDaypartChange = false;
 
             isInitialLoad = request.Weeks.IsEmpty();
+
             if (!isInitialLoad)
             {
-                isRawWeeklyBreakdown = _IsRawWeeklyBreakdownRequest(request);
-                if (isRawWeeklyBreakdown)
-                {
-                    // either a Global Daypart was modified
-                    isGlobalDaypartChange = _IsGlobalDaypartUpdateRequest(request);
-                    // or delivery type was changed
-                    isDeliveryTypeChange = !isGlobalDaypartChange;
-                }
-            }
-
-            // if this is a global daypart change then must group to the requested daypart before proceeding
-            if (isGlobalDaypartChange)
-            {
-                var groupedWeeks = _CalculateResponseWeeksForDeliveryTypeChange(request, request.DeliveryType);
-                request.Weeks = groupedWeeks;
+                isDeliveryTypeChange = _IsDeliveryTypeChangeRequest(request);
             }
 
             /*** Calculate per the Delivery Type  ***/
