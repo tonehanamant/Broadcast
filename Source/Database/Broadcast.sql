@@ -727,6 +727,21 @@ END
 GO
 /*************************************** END BP-4419 ***************************************/
 
+/*************************************** START BP-4406 ***************************************/
+BEGIN TRANSACTION  
+update station_inventory_manifest_dayparts set primary_program_id=null where primary_program_id
+in (select id from station_inventory_manifest_daypart_programs where [name]='unattached')
+
+Delete from station_inventory_manifest_daypart_programs where [name]='unattached'
+
+COMMIT TRANSACTION 
+
+BEGIN
+Delete from program_name_mappings where official_program_name='unattached'
+END
+GO
+/*************************************** END BP-4406 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
