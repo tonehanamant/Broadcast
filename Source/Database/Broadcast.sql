@@ -752,6 +752,7 @@ BEGIN
 		category VARCHAR(50) NOT NULL,
 		parent_category_id INT NULL
 	)
+
 	ALTER TABLE plan_versions
 		ADD CONSTRAINT FK_fluidity_categories_plan_versions
 		FOREIGN KEY (fluidity_category) REFERENCES fluidity_categories(id)
@@ -1164,6 +1165,11 @@ IF NOT Exists(select * from fluidity_categories where id =1)
 
 GO
 
+IF Exists(select * from fluidity_categories where id =1)
+	BEGIN
+		UPDATE fluidity_categories SET code = 'All',category= 'All' WHERE id = 1
+	END
+GO
 
 /*************************************** END BP-4491 ***************************************/
 

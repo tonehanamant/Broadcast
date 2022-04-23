@@ -361,7 +361,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         [Route("fluidity-parent-category")]
         public BaseResponse<List<FluidityCategoriesDto>> GetFluidityParentCategory()
         {
@@ -369,7 +369,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         [Route("fluidity-child-category/{parentCategoryId}")]
         public BaseResponse<List<FluidityCategoriesDto>> GetFluidityChildCategory(int parentCategoryId)
         {
