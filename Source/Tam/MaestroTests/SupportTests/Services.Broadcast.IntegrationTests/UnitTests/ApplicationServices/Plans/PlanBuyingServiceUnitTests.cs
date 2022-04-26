@@ -3169,8 +3169,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int firstPlanId = 1;
             const int secondPlanId = 2;
             const int campaignId = 3;
-            const int agencyId = 4;
-            const int advertiserId = 5;
             const int audienceId = 6;
 
             var request = new ProgramLineupReportRequest

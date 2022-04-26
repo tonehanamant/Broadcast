@@ -26,9 +26,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         //[Test]
         public void AddSpotExceptionData()
         {
-            var minPlanId = 215;
-            var maxPlanId = 233;
-
             _SpotExceptionService.ClearSpotExceptionData();
             _SpotExceptionService.AddSpotExceptionData(isIntegrationTestDatabase: true);
 

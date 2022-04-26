@@ -45,7 +45,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="pBroadcastContextFactory">The p broadcast context factory.</param>
         /// <param name="pTransactionHelper">The p transaction helper.</param>
-        /// <param name="pConfigurationWebApiClient">The p configuration web API client.</param>
+        /// <param name="configurationSettingsHelper">The p configuration web API client.</param>
         public VpvhRepository(
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper)

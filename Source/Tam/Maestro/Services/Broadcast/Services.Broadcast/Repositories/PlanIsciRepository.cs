@@ -33,7 +33,7 @@ namespace Services.Broadcast.Repositories
         /// <summary>
         /// Save Plan Isci mapping
         /// </summary>
-        /// <param name="IsciPlanMappingSaveDto">The List which contains save parameters</param>
+        /// <param name="isciPlanMappings">The List which contains save parameters</param>
         /// /// <param name="createdBy">Created By</param>
         /// /// <param name="createdAt">Created At</param>
         /// <returns>Total number of inserted Plan Mappings</returns>

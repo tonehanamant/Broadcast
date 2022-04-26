@@ -37,7 +37,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static InventorySource _openMarketInventorySource;
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
-        private ConfigurationSettingsHelper _ConfigurationSettingsHelper;
 
         [SetUp]
         public void SetUp()

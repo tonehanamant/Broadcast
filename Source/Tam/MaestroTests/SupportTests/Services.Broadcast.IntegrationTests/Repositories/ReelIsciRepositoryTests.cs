@@ -21,7 +21,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var lastIngestedDateTime = new DateTime(2010, 10, 12); // put this way out there for our control
             var startDate = new DateTime(2021, 8, 9);
             var endDate = new DateTime(2021, 8, 15);
-            var expectedDeleteCount = 2;
             var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscisForDelete(lastIngestedDateTime);
 
@@ -52,7 +51,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var lastIngestedDateTime = new DateTime(2010, 10, 12); // put this way out there for our control
             var startDate = new DateTime(2021, 7, 28);
             var endDate = new DateTime(2021, 8, 10);
-            var expectedDeleteCount = 2;
             var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscisForDelete(lastIngestedDateTime);
 
@@ -83,7 +81,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var lastIngestedDateTime = new DateTime(2010, 10, 12); // put this way out there for our control
             var startDate = new DateTime(2021, 8, 22, 1, 0, 0);
             var endDate = new DateTime(2021, 8, 26);
-            var expectedDeleteCount = 2;
             var reelIsciRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
             var reelIscis = _GetReelIscisForDelete(lastIngestedDateTime);
 

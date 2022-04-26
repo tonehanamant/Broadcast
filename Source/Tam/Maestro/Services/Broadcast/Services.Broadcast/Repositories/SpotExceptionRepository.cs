@@ -83,9 +83,12 @@ namespace Services.Broadcast.Repositories
         int AddOutOfSpecs(List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs);
 
         /// <summary>
-        /// <param name="userName">The User Name</param>
-        /// <param name="createdAt">Created at Date</param>
-        /// <returns>true or false</returns>
+        /// Saves the Out of spec decision spots.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecDecisionsPostsRequest"></param>
+        /// <param name="userName"></param>
+        /// <param name="createdAt"></param>
+        /// <returns></returns>
         bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName, DateTime createdAt);
 
         /// <summary>
@@ -226,8 +229,7 @@ namespace Services.Broadcast.Repositories
                     }).ToList();
 
                 context.spot_exceptions_recommended_plans.AddRange(spotExceptionsRecommendedPlansToAdd);
-
-                var uniqueExternalIdOos = 1;
+                
                 var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs =>
                 {
                     var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs
@@ -748,7 +750,6 @@ namespace Services.Broadcast.Repositories
         public int AddOutOfSpecs(List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs)
         {
             // these are dummy entries until we plug in the real ingest ETL.
-            var uniqueExternalId = 1;
             var executionId = Guid.NewGuid();
 
             return _InReadUncommitedTransaction(context =>

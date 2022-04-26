@@ -22,7 +22,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
     {
         private Mock<IBroadcastLockingManagerApplicationService> _LockingManager;
         private Mock<IBroadcastLockingService> _LockingService;
-        internal Lazy<bool> _IsLockingConsolidationEnabled;
         private Mock<IBroadcastLockingManagerApplicationService> _LockingManagerApplicationService;
         private Mock<IPlanRepository> _PlanRepository;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;

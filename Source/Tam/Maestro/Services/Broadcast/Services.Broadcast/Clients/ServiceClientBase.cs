@@ -13,7 +13,11 @@ namespace Services.Broadcast.Clients
     {
         /// <summary>
         /// Returns a HttpClient for use in calling other services.  Will set all required headers.
-        /// <returns></returns>
+        /// </summary>
+        /// <param name="svcBaseUrl">svcBaseUrl</param>
+        /// <param name="applicationId">applicationId</param>
+        /// <param name="bearerToken">bearerToken</param>
+        /// <returns>HttpClient</returns>
         public HttpClient GetServiceHttpClient(string svcBaseUrl, string applicationId, string bearerToken = "")
         {
             if (string.IsNullOrEmpty(svcBaseUrl))

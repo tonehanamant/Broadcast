@@ -60,7 +60,6 @@ namespace Services.Broadcast.ApplicationServices
     public class InventoryProgramsProcessingService : BroadcastBaseClass,  IInventoryProgramsProcessingService
     {
         // PRI-25264 : disabling sending the email
-        private bool _IsEmailEnabled = false;
 
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IInventoryRepository _InventoryRepository;
