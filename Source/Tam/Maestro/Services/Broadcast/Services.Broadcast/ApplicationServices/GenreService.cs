@@ -35,14 +35,13 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> GetGenres(int sourceId)
         {
             var genres = _GenreRepository.GetGenresBySourceId(sourceId);
-            _RemoveVariousAndUnmatched(genres);
+            _RemoveUnmatched(genres);
             return genres;
         }
             
-        private void _RemoveVariousAndUnmatched(List<LookupDto> genres)
+        private void _RemoveUnmatched(List<LookupDto> genres)
         {
-            genres.RemoveAll(x => x.Display.Equals("Various", StringComparison.OrdinalIgnoreCase)
-                    || x.Display.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
+            genres.RemoveAll(x => x.Display.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
         }
 
     }
