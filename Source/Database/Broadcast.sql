@@ -1173,6 +1173,16 @@ GO
 
 /*************************************** END BP-4491 ***************************************/
 
+/*************************************** START BP-4560 ***************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_version_summaries' AND (COLUMN_NAME= 'fluidity_percentage'))
+	BEGIN
+		ALTER TABLE plan_version_summaries
+		ADD fluidity_percentage float NULL
+	END
+GO
+/*************************************** END BP-4560 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
