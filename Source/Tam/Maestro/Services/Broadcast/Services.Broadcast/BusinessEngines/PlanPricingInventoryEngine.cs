@@ -206,6 +206,8 @@ namespace Services.Broadcast.BusinessEngines
             var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic, processingId);
 
             _LogInfo($"Completed gathering inventory.  Gathered {allPrograms.Count} records. Plan Id : {plan.Id};", processingId);
+            
+            ProgramRestrictionsHelper.ApplyGeneralFilterForPricingPrograms(allPrograms);
 
             // we don't expect spots other than 30 length spots for OpenMarket
             //var thirtySecondSpotPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();

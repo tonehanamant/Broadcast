@@ -6,7 +6,9 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -1247,6 +1249,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             Assert.AreEqual(programs.Count, result.Count);
         }
 
+        [Test]
+        public void ApplyGeneralFilterForPricingPrograms()
+        {
+            const int expectedCount = 2;
+            List<PlanPricingInventoryProgram> allPrograms = _GetProgramsForApplyGeneralFilterForPricingProgramsTests();
+            var result = ProgramRestrictionsHelper.ApplyGeneralFilterForPricingPrograms(allPrograms);
+            Assert.AreEqual(expectedCount, result.Count);
+        }
+
+        public void ApplyGeneralFilterForBuyingPrograms()
+        {
+            const int expectedCount = 2;
+            List<PlanBuyingInventoryProgram> allPrograms = _GetProgramsForApplyGeneralFilterForBuyingProgramsTests();
+            var result = ProgramRestrictionsHelper.ApplyGeneralFilterForBuyingPrograms(allPrograms);
+            Assert.AreEqual(expectedCount, result.Count);
+        }
+
         private List<BasePlanInventoryProgram> _GetProgramsForGenreOrProgramsTests()
         {
             var programs = new List<BasePlanInventoryProgram>
@@ -1437,6 +1456,235 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
                     Name = "Sunday"
                 }
             };
+        }
+
+
+        private List<PlanPricingInventoryProgram> _GetProgramsForApplyGeneralFilterForPricingProgramsTests()
+        {
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Series",
+                                Name = "Friends",
+                                Genre = "Comedy"
+                            },
+                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Series",
+                                    Name = "Friends",
+                                    Genre = "Comedy"
+                                }
+                            }
+                        }
+                    }
+                },new PlanPricingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Series",
+                                Name = "Friends",
+                                Genre = "Comedy"
+                            },
+                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Series",
+                                    Name = "Friends",
+                                    Genre = "Comedy"
+                                }
+                            }
+                        }
+                    }
+                },new PlanPricingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Series",
+                                Name = "Friends",
+                                Genre = "Comedy"
+                            },
+                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Series",
+                                    Name = "Friends",
+                                    Genre = "Unmatched"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            return programs;
+        }
+
+        private List<PlanBuyingInventoryProgram> _GetProgramsForApplyGeneralFilterForBuyingProgramsTests()
+        {
+            var programs = new List<PlanBuyingInventoryProgram>
+            {
+                new PlanBuyingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanBuyingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanBuyingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Series",
+                                Name = "Friends",
+                                Genre = "Comedy"
+                            },
+                            Programs = new List<PlanBuyingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Series",
+                                    Name = "Friends",
+                                    Genre = "Comedy"
+                                }
+                            }
+                        }
+                    }
+                },new PlanBuyingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanBuyingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanBuyingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Series",
+                                Name = "Friends",
+                                Genre = "Comedy"
+                            },
+                            Programs = new List<PlanBuyingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Series",
+                                    Name = "Friends",
+                                    Genre = "Comedy"
+                                }
+                            }
+                        }
+                    }
+                },new PlanBuyingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanBuyingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanBuyingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Series",
+                                Name = "Friends",
+                                Genre = "Comedy"
+                            },
+                            Programs = new List<PlanBuyingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Series",
+                                    Name = "Friends",
+                                    Genre = "Unmatched"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            return programs;
         }
     }
 }

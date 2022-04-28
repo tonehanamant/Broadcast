@@ -1,7 +1,9 @@
 ﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -410,6 +412,42 @@ namespace Services.Broadcast.Helpers
                 .Select(x => x.Name);
             var coveredDayNamesHashSet = new HashSet<string>(coveredDayNames);
             return coveredDayNamesHashSet;
+        }
+
+        /// <summary>
+        /// The method is used to filter PricingInventoryProgram list based on genres
+        /// </summary>
+        /// <param name="allPrograms"></param>
+        /// <returns>The method will return filtered PricingInventoryProgram list</returns>
+        public static List<PlanPricingInventoryProgram> ApplyGeneralFilterForPricingPrograms(List<PlanPricingInventoryProgram> allPrograms)
+        {
+            List<PlanPricingInventoryProgram> filteredPrograms = new List<PlanPricingInventoryProgram>();
+            foreach (var program in allPrograms)
+            {
+                if (program.ManifestDayparts.SelectMany(d => d.Programs).Any(prgrm => prgrm.Genre != "Unmatched"))
+                {
+                    filteredPrograms.Add(program);
+                }
+            }
+            return filteredPrograms;
+        }
+
+        /// <summary>
+        /// The method is used to filter BuyingInventoryProgram list based on genres
+        /// </summary>
+        /// <param name="allPrograms"></param>
+        /// <returns>The method will return filtered BuyingInventoryProgram list</returns>
+        public static List<PlanBuyingInventoryProgram> ApplyGeneralFilterForBuyingPrograms(List<PlanBuyingInventoryProgram> allPrograms)
+        {
+            List<PlanBuyingInventoryProgram> filteredPrograms = new List<PlanBuyingInventoryProgram>();
+            foreach (var program in allPrograms)
+            {
+                if (program.ManifestDayparts.SelectMany(d => d.Programs).Any(prgrm => prgrm.Genre != "Unmatched"))
+                {
+                    filteredPrograms.Add(program);
+                }
+            }
+            return filteredPrograms;
         }
     }
 }
