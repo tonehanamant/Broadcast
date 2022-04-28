@@ -134,20 +134,15 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         public PlanBuyingResultMarketsDto CalculateAggregatedResultOfMarket(PlanBuyingStationResultDto planBuyingStationResult, List<MarketCoverage> marketCoverages, PlanDto plan)
         {
             var groupOfMarkets = planBuyingStationResult.Details.GroupBy(u => u.Market, StringComparer.InvariantCultureIgnoreCase).Select(grp => grp.ToList()).ToList();
-            var planBuyingStationDetails = new List<PlanBuyingStationDto>();
             var planBuyingResultMarketDetails = new List<PlanBuyingResultMarketDetailsDto>();
-            planBuyingStationDetails = groupOfMarkets.Select(market => new PlanBuyingStationDto
+            var planBuyingStationDetails = groupOfMarkets.Select(market => new
             {
                 Spots = market.Sum(x => x.Spots),
                 Impressions = market.Sum(x => x.Impressions),
                 Budget = market.Sum(x => x.Budget),
                 Cpm = ProposalMath.CalculateCpm(market.Sum(x => x.Budget), market.Sum(x => x.Impressions)),
                 ImpressionsPercentage = market.Sum(x => x.ImpressionsPercentage),
-                Affiliate = market.Select(x => x.Affiliate).FirstOrDefault(),
-                RepFirm = market.Select(x => x.RepFirm).FirstOrDefault(),
-                OwnerName = market.Select(x => x.OwnerName).FirstOrDefault(),
-                LegacyCallLetters = market.Select(x => x.LegacyCallLetters).FirstOrDefault(),
-                Station = market.Select(x => x.Station).FirstOrDefault(),
+                StationCount = market.Select(x => x.Station).Count(),
                 Market = market.Select(x => x.Market).FirstOrDefault()
             }).ToList();
             
@@ -160,7 +155,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                                         m.PercentageOfUS,
                                         m.MarketCode,
                                         m.Rank,
-                                        d.Station,
+                                        d.StationCount,
                                         d.Spots,
                                         d.Impressions,
                                         d.Cpm,
@@ -175,6 +170,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 var planMarket = plan.AvailableMarkets.SingleOrDefault(c => c.MarketCode == code);
                 var marketCoverage = marketCoverages.Single(c => c.MarketCode == code);
                 var marketGroup = planBuyingMarketList.Where(s => s.MarketCode == code).ToList();
+                var stationCount = marketGroup.Select(s => s.StationCount).Single();
                 var aggregatedSpotCostWithMargin = marketGroup.Sum(s => s.Budget);
                 var aggregatedImpressions = marketGroup.Sum(s => s.Impressions);
                 var aggPlanBuyingResultMarketDetails = new PlanBuyingResultMarketDetailsDto
@@ -182,7 +178,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                     MarketName = marketCoverage.Market,
                     Rank = marketCoverage.Rank ?? default(int),
                     MarketCoveragePercent = marketCoverage.PercentageOfUS,
-                    StationCount = marketGroup.Select(s => s.Station).Distinct().Count(),
+                    StationCount = stationCount,
                     SpotCount = marketGroup.Sum(k => k.Spots),
                     Impressions = aggregatedImpressions,
                     Budget = aggregatedSpotCostWithMargin,
