@@ -478,6 +478,11 @@ namespace Services.Broadcast.BusinessEngines
 
         private List<WeeklyBreakdownWeek> _CalculateResponseWeeksForDeliveryTypeChange(WeeklyBreakdownRequest request, PlanGoalBreakdownTypeEnum deliveryType)
         {
+            // determine up front if we need to worry about handling a remainder.
+            var incomingTotalImpressions = request.Weeks.Sum(w => w.WeeklyImpressions);
+            var incomingHasRemainder = (request.TotalImpressions - incomingTotalImpressions) > 0;
+            var shouldDistributeRemainder = !incomingHasRemainder;
+
             // group to the target delivery type without changing the distributions
             var plan = new PlanDto
             {
@@ -504,11 +509,9 @@ namespace Services.Broadcast.BusinessEngines
                 week.WeeklyImpressions = roundedWeeklyImpressions;
             }
 
-            // sometimes there is a remainder
-            // spread this out accross the first week.
-            var shouldRedistributeRemainder = _ShouldRedistribute(groupedWeeks, redistributeCustom: true);
-
-            if (shouldRedistributeRemainder)
+            // handle the remainder
+            // when the "unseen" were calculated it could result in a remainder.
+            if (shouldDistributeRemainder)
             {
                 var totalExistingImpressions = groupedWeeks.Sum(w => w.WeeklyImpressions);
                 var impressionsRemainder = request.TotalImpressions - totalExistingImpressions;
@@ -517,7 +520,7 @@ namespace Services.Broadcast.BusinessEngines
                     _UpdateFirstWeekAndBudgetAdjustment(request, groupedWeeks, request.TotalImpressions);
                 }
             }
-            
+
             return groupedWeeks;
         }
 
