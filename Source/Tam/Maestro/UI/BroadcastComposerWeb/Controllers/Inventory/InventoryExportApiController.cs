@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.Entities.Inventory;
+using Services.Broadcast.Entities.InventoryMarketsAffiliates;
 using Services.Broadcast.Entities.InventorySummary;
 using System;
 using System.Collections.Generic;
@@ -56,13 +57,13 @@ namespace BroadcastComposerWeb.Controllers.Inventory
 		///<summary>
 		/// Get Genres for OpenMarket
 		/// </summary>
-
 		[HttpGet]
 		[Route("GenreTypes")]
 		public BaseResponse<List<LookupDto>> GetGenresForInventoryExport()
 		{
 			return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryExportService>().GetOpenMarketExportGenreTypes());
 		}
+
 		///<summary>
 		/// Export OpenMarket Inventory File
 		/// </summary>
@@ -120,6 +121,22 @@ namespace BroadcastComposerWeb.Controllers.Inventory
 
 				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message, ex);
 			}
+		}
+
+        /// <summary>
+		/// Generates the inventory market affiliates report.
+		/// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost]
+		[Route("GenerateMarketAffiliatesReport")]
+		public BaseResponse<Guid> GenerateInventoryMarketAffiliatesReport([FromBody] InventoryMarketAffiliatesReportRequest request)
+		{
+			var fullName = _GetCurrentUserFullName();
+			var appDataPath = _GetAppDataPath();
+
+			return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventoryMarketAffiliatesExportService>()
+				.GenerateMarketAffiliatesReport(request, fullName, DateTime.Now, appDataPath));
 		}
 		#endregion
 	}

@@ -11,6 +11,7 @@
         UploadedInventory = 7,
         InventoryErrorFile = 8,
         PricingResultsReport = 9,
-        PlanPricingScx = 10
+        PlanPricingScx = 10,
+        InventoryMarketAffiliatesReport = 11
     }
 }

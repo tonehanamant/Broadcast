@@ -102,6 +102,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAssemblyScheduleConverter, AssemblyScheduleConverter>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();
             unityContainer.RegisterType<IInventoryExportService, InventoryExportService>();
+            unityContainer.RegisterType<IInventoryMarketAffiliatesExportService, InventoryMarketAffiliatesExportService>();
             unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();

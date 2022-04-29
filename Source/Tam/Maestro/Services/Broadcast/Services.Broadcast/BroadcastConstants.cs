@@ -48,6 +48,7 @@
             public const string POST_PROCESSING_FILE_STORE = "PostProcessingFileStore";
             public const string PRICING_RESULTS_REPORT = "PricingResultsReport";
             public const string BUYING_RESULTS_REPORT = "BuyingResultsReport";
+            public const string INVENTORY_MARKET_AFFILIATES_REPORT = "InventoryMarketAffiliatesReport";
         }
     }
 }

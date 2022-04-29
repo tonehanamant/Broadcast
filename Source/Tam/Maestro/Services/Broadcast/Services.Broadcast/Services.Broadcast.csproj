@@ -509,6 +509,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Inventory\InventoryMarketAffiliatesExportService.cs" />
     <Compile Include="ApplicationServices\ReelIsciIngestService.cs" />
     <Compile Include="ApplicationServices\AdvertiserService.cs" />
     <Compile Include="ApplicationServices\AffiliateService.cs" />
@@ -542,6 +543,8 @@
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\DTO\PlanBuyingDto.cs" />
     <Compile Include="Entities\DTO\PlanPricingDto.cs" />
+    <Compile Include="Entities\InventoryMarketAffiliates\InventoryMarketAffiliatesData.cs" />
+    <Compile Include="Entities\InventoryMarketAffiliates\InventoryMarketAffiliatesRequest.cs" />
     <Compile Include="Entities\Isci\IsciMappedPlanCountDto.cs" />
     <Compile Include="Entities\Isci\PlanIsciMappingsDetailsDto.cs" />
     <Compile Include="Entities\Isci\PlanIsciDto.cs" />
@@ -1007,6 +1010,7 @@
     <Compile Include="ReportGenerators\CampaignExport\CampaignReportGenerator.cs" />
     <Compile Include="ReportGenerators\DetectionExcelReportGenerator.cs" />
     <Compile Include="ReportGenerators\InventoryExport\InventoryExportGenerator.cs" />
+    <Compile Include="ReportGenerators\InventoryExport\InventoryMarketAffiliatesReportGenerator.cs" />
     <Compile Include="ReportGenerators\InventoryExport\InventoryViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\BuyingResults\BuyingResultsReportGenerator.cs" />
     <Compile Include="ReportGenerators\BuyingResults\BuyingSpotAllocationViewReportGenerator.cs" />
