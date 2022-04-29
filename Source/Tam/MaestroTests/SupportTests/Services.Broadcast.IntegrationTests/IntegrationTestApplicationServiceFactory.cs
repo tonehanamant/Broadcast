@@ -111,7 +111,7 @@ namespace Services.Broadcast.IntegrationTests
             launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = true;
 
             // this is only enabled for test
-            launchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SAVE_INGESTED_INVENTORY_FILE] = true;
+            launchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SAVE_INGESTED_INVENTORY_FILE] = false;
         }
     }
 

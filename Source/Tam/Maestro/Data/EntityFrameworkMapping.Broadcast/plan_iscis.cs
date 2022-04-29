@@ -25,7 +25,9 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime flight_end_date { get; set; }
         public System.DateTime modified_at { get; set; }
         public string modified_by { get; set; }
+        public int spot_length_id { get; set; }
     
         public virtual plan plan { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

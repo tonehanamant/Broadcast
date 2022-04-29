@@ -235,7 +235,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_daypart_flight_days> plan_version_daypart_flight_days { get; set; }
         public virtual DbSet<plan_version_daypart_flight_hiatus_days> plan_version_daypart_flight_hiatus_days { get; set; }
         public virtual DbSet<plan_version_daypart_weekly_breakdown> plan_version_daypart_weekly_breakdown { get; set; }
-        public virtual DbSet<plan_iscis> plan_iscis { get; set; }
         public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual DbSet<plan_version_buying_band_inventory_station_dayparts> plan_version_buying_band_inventory_station_dayparts { get; set; }
         public virtual DbSet<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
@@ -246,5 +245,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<fluidity_categories> fluidity_categories { get; set; }
+        public virtual DbSet<plan_iscis> plan_iscis { get; set; }
     }
 }

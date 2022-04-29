@@ -1183,6 +1183,36 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan
 GO
 /*************************************** END BP-4560 ***************************************/
 
+/*************************************** START BP-4492 ***************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_iscis' AND (COLUMN_NAME= 'spot_length_id'))
+	BEGIN
+		ALTER TABLE plan_iscis
+		ADD spot_length_id int NULL
+		CONSTRAINT [FK_plan_iscis_spot_lengths] FOREIGN KEY ([spot_length_id]) REFERENCES [dbo].[spot_lengths]([ID])
+	END
+	Go
+	IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_iscis' AND (COLUMN_NAME= 'spot_length_id'))
+	BEGIN
+		UPDATE plan_iscis
+    SET plan_iscis.spot_length_id = reel_iscis.spot_length_id
+           FROM
+        reel_iscis
+    WHERE
+        plan_iscis.isci = reel_iscis.isci
+	END
+	IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'plan_iscis' 
+	AND COLUMN_NAME= 'spot_length_id' 
+	AND UPPER(IS_NULLABLE) = UPPER('YES'))
+BEGIN
+	ALTER TABLE plan_iscis
+		ALTER COLUMN spot_length_id int NOT NULL
+END
+GO
+/*************************************** END BP-4492 ***************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
