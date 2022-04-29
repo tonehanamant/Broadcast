@@ -15,5 +15,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
     {
         public int Id { get; set; }
         public bool AcceptAsInSpec { get; set; }
+        public string Comments { get; set; }
     }
 }

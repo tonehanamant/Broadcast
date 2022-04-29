@@ -35,6 +35,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string ProgramName { get; set; }
         public string SpotLengthString { get; set; }
         public string DaypartCode { get; set; }
+        public string Comments { get; set; }
     }
     public class SpotExceptionsOutOfSpecQueuedPlanSpotsDto
     {
@@ -58,6 +59,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string SpotLengthString { get; set; }
         public string DaypartCode { get; set; }
         public string DecisionString { get; set; }
+        public string Comments { get; set; }
     }
     public class SpotExceptionsOutOfSpecSyncedPlanSpotsDto
     {
@@ -82,5 +84,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string DaypartCode { get; set; }
         public string DecisionString { get; set; }
         public string SyncedTimestamp { get; set; }
+        public string Comments { get; set; }
     }
 }

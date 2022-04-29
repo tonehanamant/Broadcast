@@ -534,14 +534,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_station_dayparts_plan_version_buying_band_inventory_station_id" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" Width="1.5" PointX="45.125" PointY="31" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="42.875" PointY="28.625" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_job" Width="1.5" PointX="14.5" PointY="54.625" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_inventory_stations_plan_version_buying_job_id" />
@@ -576,6 +568,14 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="33.5" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.875" PointY="29.75" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

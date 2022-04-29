@@ -1212,6 +1212,25 @@ END
 GO
 /*************************************** END BP-4492 ***************************************/
 
+/*************************************** END BP-3842 ***************************************/
+
+IF EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'Comments'
+        AND OBJECT_ID = OBJECT_ID('spot_exceptions_out_of_specs'))
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+		DROP COLUMN Comments
+END
+
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'comment')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+			ADD comment nvarchar(1024) NULL
+END
+
+/*************************************** END BP-3842 ***************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

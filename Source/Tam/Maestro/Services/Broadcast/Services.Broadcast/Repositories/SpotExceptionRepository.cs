@@ -450,7 +450,8 @@ namespace Services.Broadcast.Repositories
                     Id = spotExceptionsOutOfSpecEntity.genre.id,
                     Name = spotExceptionsOutOfSpecEntity.genre.name,
                     ProgramSourceId = spotExceptionsOutOfSpecEntity.genre.program_source_id
-                }
+                },
+                Comments = spotExceptionsOutOfSpecEntity.comment
             };
             return spotExceptionsOutOfSpec;
         }
@@ -897,25 +898,34 @@ namespace Services.Broadcast.Repositories
                 {
                     var alreadyRecordExists = context.spot_exceptions_out_of_spec_decisions.SingleOrDefault(x =>
                         x.spot_exceptions_out_of_spec_id == spotExceptionsOutOfSpecId.Id);
-                    if (alreadyRecordExists == null)
+                    var outOfSpecId = context.spot_exceptions_out_of_specs.SingleOrDefault(x =>
+                        x.recommended_plan_id == spotExceptionsOutOfSpecId.Id);
+                    if (spotExceptionsOutOfSpecId.Comments == null)
                     {
-                        context.spot_exceptions_out_of_spec_decisions.Add(new spot_exceptions_out_of_spec_decisions
+                        if (alreadyRecordExists == null)
                         {
-                            spot_exceptions_out_of_spec_id = spotExceptionsOutOfSpecId.Id,
-                            accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec,
-                            decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out",
-                            username = userName,
-                            created_at = createdAt
-                        });
+                            context.spot_exceptions_out_of_spec_decisions.Add(new spot_exceptions_out_of_spec_decisions
+                            {
+                                spot_exceptions_out_of_spec_id = spotExceptionsOutOfSpecId.Id,
+                                accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec,
+                                decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out",
+                                username = userName,
+                                created_at = createdAt
+                            });
+                        }
+                        else
+                        {
+                            alreadyRecordExists.accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec;
+                            alreadyRecordExists.username = userName;
+                            alreadyRecordExists.created_at = createdAt;
+                            alreadyRecordExists.decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out";
+                            alreadyRecordExists.synced_at = null;
+                            alreadyRecordExists.synced_by = null;
+                        }
                     }
                     else
                     {
-                        alreadyRecordExists.accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec;
-                        alreadyRecordExists.username = userName;
-                        alreadyRecordExists.created_at = createdAt;
-                        alreadyRecordExists.decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out";
-                        alreadyRecordExists.synced_at = null;
-                        alreadyRecordExists.synced_by = null;
+                        outOfSpecId.comment = spotExceptionsOutOfSpecId.Comments;
                     }
                 }
 

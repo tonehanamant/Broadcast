@@ -45,6 +45,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public Genre ProgramGenre { get; set; } = new Genre();
         public string TimeZone { get; set; } = "EST"; // TODO: Populate this for real
         public int DMA { get; set; } = 58; // TODO: Populate this for real
+        public string Comments { get; set; }
     }
 }
 

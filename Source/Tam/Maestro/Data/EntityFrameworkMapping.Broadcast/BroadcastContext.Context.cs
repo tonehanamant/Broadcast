@@ -239,12 +239,12 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_band_inventory_station_dayparts> plan_version_buying_band_inventory_station_dayparts { get; set; }
         public virtual DbSet<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
-        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
         public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<fluidity_categories> fluidity_categories { get; set; }
         public virtual DbSet<plan_iscis> plan_iscis { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
     }
 }

@@ -3,6 +3,7 @@
     {
       "Affiliate": "CBS",
       "ClientIsci": "CC44ZZPT4",
+      "Comments": "test Comment",
       "Day": "Friday",
       "DaypartCode": "CUS",
       "DMA": 58,
@@ -25,6 +26,7 @@
     {
       "Affiliate": "CBS",
       "ClientIsci": "CC44ZZPT4",
+      "Comments": "test Comment",
       "Day": "Friday",
       "DaypartCode": "CUS",
       "DecisionString": "",
@@ -49,6 +51,7 @@
     {
       "Affiliate": "CBS",
       "ClientIsci": "CC44ZZPT4",
+      "Comments": "test Comment",
       "Day": "Friday",
       "DaypartCode": "CUS",
       "DecisionString": "",

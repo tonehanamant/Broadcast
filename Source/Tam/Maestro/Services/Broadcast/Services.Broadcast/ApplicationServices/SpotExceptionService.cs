@@ -1356,7 +1356,8 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
                         ProgramName = activePlan.ProgramName,
                         SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
-                        DaypartCode = activePlan.DaypartDetail.Code
+                        DaypartCode = activePlan.DaypartDetail.Code,
+                        Comments = activePlan.Comments
                     };
                 }).ToList();
 
@@ -1384,7 +1385,8 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramName = queuedPlan.ProgramName,
                         SpotLengthString = queuedPlan.SpotLength != null ? $":{queuedPlan.SpotLength.Length}" : null,
                         DaypartCode = queuedPlan.DaypartDetail.Code,
-                        DecisionString = queuedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes
+                        DecisionString = queuedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
+                        Comments = queuedPlan.Comments
                     };
                 }).ToList();
 
@@ -1413,7 +1415,8 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthString = syncedPlan.SpotLength != null ? $":{syncedPlan.SpotLength.Length}" : null,
                         DaypartCode = syncedPlan.DaypartDetail.Code,
                         DecisionString = syncedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
-                        SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDecision.SyncedAt.ToString()
+                        SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDecision.SyncedAt.ToString(),
+                        Comments = syncedPlan.Comments
                     };
                 }).ToList();
             }
