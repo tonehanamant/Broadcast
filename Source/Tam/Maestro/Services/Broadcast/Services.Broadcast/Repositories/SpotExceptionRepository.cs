@@ -899,7 +899,7 @@ namespace Services.Broadcast.Repositories
                     var alreadyRecordExists = context.spot_exceptions_out_of_spec_decisions.SingleOrDefault(x =>
                         x.spot_exceptions_out_of_spec_id == spotExceptionsOutOfSpecId.Id);
                     var outOfSpecId = context.spot_exceptions_out_of_specs.SingleOrDefault(x =>
-                        x.recommended_plan_id == spotExceptionsOutOfSpecId.Id);
+                        x.id == spotExceptionsOutOfSpecId.Id);
                     if (spotExceptionsOutOfSpecId.Comments == null)
                     {
                         if (alreadyRecordExists == null)
