@@ -13,6 +13,7 @@
   "Equivalized": null,
   "FlightEndDate": null,
   "FlightStartDate": null,
+  "FluidityPercentage": null,
   "HasHiatus": false,
   "HHCPM": null,
   "HHImpressions": null,

@@ -359,7 +359,8 @@ namespace Services.Broadcast.Repositories
                             {
                                 Quarter = q.quarter,
                                 Year = q.year
-                            }).OrderBy(x => x.Year).ThenBy(x => x.Quarter).ToList()
+                            }).OrderBy(x => x.Year).ThenBy(x => x.Quarter).ToList(),
+                            FluidityPercentage = summary.fluidity_percentage
                         };
                     }).ToList()
             };

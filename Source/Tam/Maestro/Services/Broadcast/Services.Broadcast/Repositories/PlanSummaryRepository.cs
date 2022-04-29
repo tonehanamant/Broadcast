@@ -126,6 +126,7 @@ namespace Services.Broadcast.Repositories
             entity.blackout_market_total_us_coverage_percent = dto.BlackoutMarketTotalUsCoveragePercent;
             entity.product_name = dto.ProductName;
             entity.processing_status = (int)dto.ProcessingStatus;
+            entity.fluidity_percentage = dto.FluidityPercentage;
             _HydrateQuartersFromDto(entity, dto, context);
         }
 

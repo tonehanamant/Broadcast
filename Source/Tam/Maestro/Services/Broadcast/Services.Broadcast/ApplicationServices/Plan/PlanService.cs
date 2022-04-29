@@ -1608,6 +1608,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var summary = _PlanAggregator.Aggregate(plan);
                 summary.ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle;
+                summary.FluidityPercentage = plan.FluidityPercentage;
                 _PlanSummaryRepository.SaveSummary(summary);
             }
             catch (Exception)

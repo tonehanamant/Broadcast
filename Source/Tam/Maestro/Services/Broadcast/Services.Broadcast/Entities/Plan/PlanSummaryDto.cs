@@ -176,5 +176,10 @@ namespace Services.Broadcast.Entities.Plan
         /// The draft identifier.
         /// </value>
         public int? DraftId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Fluidity Percentage.
+        /// </summary>
+        public double? FluidityPercentage { get; set; }
     }
 }
