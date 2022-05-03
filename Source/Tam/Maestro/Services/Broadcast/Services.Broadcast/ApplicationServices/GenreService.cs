@@ -1,6 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,10 +25,12 @@ namespace Services.Broadcast.ApplicationServices
     public class GenreService : IGenreService
     {
         private readonly IGenreRepository _GenreRepository;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        public GenreService(IDataRepositoryFactory dataRepositoryFactory)
+        public GenreService(IDataRepositoryFactory dataRepositoryFactory, IFeatureToggleHelper featureToggleHelper)
         {
             _GenreRepository = dataRepositoryFactory.GetDataRepository<IGenreRepository>();
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc />
@@ -36,12 +38,23 @@ namespace Services.Broadcast.ApplicationServices
         {
             var genres = _GenreRepository.GetGenresBySourceId(sourceId);
             _RemoveUnmatched(genres);
+
+            if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_VARIOUS_GENRE_RESTRICTION))
+            {
+                _RemoveVarious(genres);
+            }
+
             return genres;
         }
             
         private void _RemoveUnmatched(List<LookupDto> genres)
         {
             genres.RemoveAll(x => x.Display.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private void _RemoveVarious(List<LookupDto> genres)
+        {
+            genres.RemoveAll(x => x.Display.Equals("Various", StringComparison.OrdinalIgnoreCase));
         }
 
     }

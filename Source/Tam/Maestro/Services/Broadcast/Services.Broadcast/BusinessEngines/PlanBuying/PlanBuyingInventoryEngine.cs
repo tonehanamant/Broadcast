@@ -107,7 +107,10 @@ namespace Services.Broadcast.BusinessEngines
             var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
-            ProgramRestrictionsHelper.ApplyGeneralFilterForBuyingPrograms(allPrograms);
+            if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_REMOVE_UNMATCHED))
+            {
+                ProgramRestrictionsHelper.ApplyGeneralFilterForBuyingPrograms(allPrograms);
+            }
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
             
