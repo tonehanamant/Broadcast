@@ -49,6 +49,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "planbuying",
                 "savebuyingrequest",
                 "reelisciingest",
+                "planstatustransitionv2",
                 "default"
             };
         }

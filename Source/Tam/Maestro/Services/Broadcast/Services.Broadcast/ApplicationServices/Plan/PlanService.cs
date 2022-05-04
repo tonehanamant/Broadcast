@@ -133,9 +133,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <summary>
         /// Automatics the status transitions hangfire job entry point.
+        /// 
+        /// This v1 will stop if Feature Toggle "broadcast-enable-auto-plan-status-transition-v2" is enabled.
         /// </summary>
         [Queue("planstatustransition")]
         void AutomaticStatusTransitionsJobEntryPoint();
+
+        /// <summary>
+        /// Automatics the status transitions hangfire job entry point.
+        /// 
+        /// This v2 will stop if Feature Toggle "broadcast-enable-auto-plan-status-transition-v2" is disabled.
+        /// </summary>
+        [Queue("planstatustransitionv2")]
+        void AutomaticStatusTransitionsJobEntryPointV2();
 
         /// <summary>
         /// The logic for automatic status transitioning
@@ -1527,8 +1537,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void AutomaticStatusTransitionsJobEntryPoint()
         {
+            var isV2Enabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2);
+            if (isV2Enabled)
+            {
+                _LogInfo("Automatic Status Tranitions Job V2 is enabled.  V1 is stopping.");
+                return;
+            }
+
+            _LogInfo("Automatic Status Tranitions Job V2 is disabled.  V1 is running.");
+
             var transitionDate = DateTime.Today;
             var updatedBy = "automated status update";
+            var updatedDate = DateTime.Now;
+            AutomaticStatusTransitions(transitionDate, updatedBy, updatedDate, false);
+        }
+
+        // attribute has to be on the class instead of the interface because this is a recurring job.
+        [AutomaticRetry(Attempts = 0, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public void AutomaticStatusTransitionsJobEntryPointV2()
+        {
+            var isV2Enabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2);
+            if (!isV2Enabled)
+            {
+                _LogInfo("Automatic Status Tranitions Job V2 is disabled.  V2 is stopping.");
+                return;
+            }
+
+            _LogInfo("Automatic Status Tranitions Job V2 is enabled.  V2 is running.");
+
+            var transitionDate = DateTime.Today;
+            var updatedBy = "automated status update v2";
             var updatedDate = DateTime.Now;
             AutomaticStatusTransitions(transitionDate, updatedBy, updatedDate, false);
         }

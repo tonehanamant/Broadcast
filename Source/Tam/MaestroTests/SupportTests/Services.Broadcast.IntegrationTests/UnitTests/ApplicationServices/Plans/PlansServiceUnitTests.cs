@@ -928,9 +928,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void PlanStatusTransitionTriggersPlanSaveAndCampaignAggregation()
+        [TestCase(false, 2)]
+        [TestCase(true, 0)]
+        public void PlanStatusTransitionTriggersPlanSaveAndCampaignAggregation(bool v2IsEnabled, int expectedCallCount)
         {
             // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = v2IsEnabled;
+
             var savePlanCalls = new List<DateTime>();
             _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => savePlanCalls.Add(DateTime.Now));
@@ -966,9 +970,57 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Thread.Sleep(200);
 
             // Assert
-            Assert.AreEqual(2, savePlanCalls.Count, "Invalid call count.");
-            Assert.AreEqual(2, aggregateCallCount, "Invalid call count.");
-            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(1, "automated status update"), Times.Exactly(2));
+            Assert.AreEqual(expectedCallCount, savePlanCalls.Count, "Invalid call count.");
+            Assert.AreEqual(expectedCallCount, aggregateCallCount, "Invalid call count.");
+            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(1, "automated status update"), Times.Exactly(expectedCallCount));
+        }
+
+        [Test]
+        [TestCase(false, 0)]
+        [TestCase(true, 2)]
+        public void PlanStatusTransitionV2TriggersPlanSaveAndCampaignAggregation(bool v2IsEnabled, int expectedCallCount)
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = v2IsEnabled;
+
+            var savePlanCalls = new List<DateTime>();
+            _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() => savePlanCalls.Add(DateTime.Now));
+
+            var plansToReturn = new List<PlanDto> { _GetNewPlan(), _GetNewPlan() };
+            plansToReturn[0].Id = 1;
+            plansToReturn[1].Id = 2;
+            plansToReturn[0].CampaignId = plansToReturn[1].CampaignId = 1;
+            plansToReturn[0].Status = PlanStatusEnum.Contracted;
+            plansToReturn[1].Status = PlanStatusEnum.Live;
+            plansToReturn[1].Dayparts.ForEach(d => d.PlanDaypartId++);
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlansForAutomaticTransition(It.IsAny<DateTime>()))
+                .Returns(plansToReturn);
+
+            var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
+
+            var planAggregator = new Mock<IPlanAggregator>();
+            var aggregateCallCount = 0;
+            var aggregateReturn = new PlanSummaryDto();
+            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Callback(() =>
+                {
+                    aggregateCallCount++;
+                    throw new Exception("Test exception thrown during aggregation.");
+                })
+                .Returns(aggregateReturn);
+
+            // Act
+            _PlanService.AutomaticStatusTransitionsJobEntryPointV2();
+            Thread.Sleep(200);
+
+            // Assert
+            Assert.AreEqual(expectedCallCount, savePlanCalls.Count, "Invalid call count.");
+            Assert.AreEqual(expectedCallCount, aggregateCallCount, "Invalid call count.");
+            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(1, "automated status update v2"), Times.Exactly(expectedCallCount));
         }
 
         [Test]
@@ -1127,6 +1179,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void PlanStatusTransitionFailsOnLockedPlans()
         {
             // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = false;
+
             var planToReturn = _GetNewPlan();
             planToReturn.Id = 1;
             planToReturn.CampaignId = 1;
@@ -1145,6 +1199,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var exception = Assert.Throws<Exception>(() => _PlanService.AutomaticStatusTransitionsJobEntryPoint());
+
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        public void PlanStatusTransitionV2FailsOnLockedPlans()
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = true;
+
+            var planToReturn = _GetNewPlan();
+            planToReturn.Id = 1;
+            planToReturn.CampaignId = 1;
+            planToReturn.Status = PlanStatusEnum.Live;
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlansForAutomaticTransition(It.IsAny<DateTime>()))
+                .Returns(new List<PlanDto> { planToReturn });
+
+            const string expectedMessage = "The chosen plan has been locked by IntegrationUser";
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = "IntegrationUser"
+                });
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => _PlanService.AutomaticStatusTransitionsJobEntryPointV2());
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);

@@ -1,6 +1,7 @@
 ﻿using BroadcastJobScheduler.JobQueueMonitors;
 using Hangfire;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Plan;
 using System;
 
 namespace BroadcastJobScheduler
@@ -14,24 +15,24 @@ namespace BroadcastJobScheduler
         private readonly ILongRunQueueMonitors _LongRunQueueMonitors;
         private readonly IInventoryAggregationQueueMonitor _InventoryAggregationQueueMonitor;
 
-        private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IStationService _StationService;
         private readonly IReelIsciIngestService _IsciIngestService;
+        private readonly IPlanService _IPlanService;
 
         public WindowsServiceJobsServiceHost(IRecurringJobManager recurringJobManager,
             ILongRunQueueMonitors longRunQueueMonitors,
             IInventoryAggregationQueueMonitor inventoryAggregationQueueMonitor,
-            IInventoryProgramsProcessingService inventoryProgramsProcessingService,
             IStationService stationService,
-            IReelIsciIngestService isciIngestService)
+            IReelIsciIngestService isciIngestService,
+            IPlanService planService)
             : base(recurringJobManager)
         {
             _LongRunQueueMonitors = longRunQueueMonitors;
             _InventoryAggregationQueueMonitor = inventoryAggregationQueueMonitor;
 
-            _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _StationService = stationService;
             _IsciIngestService = isciIngestService;
+            _IPlanService = planService;
         }
 
         protected override void OnStart()
@@ -62,6 +63,13 @@ namespace BroadcastJobScheduler
                Cron.Daily(_ReelIsciiUpdateJobRunHour()),
                TimeZoneInfo.Local,
                queue: "reelisciingest");
+
+            _RecurringJobManager.AddOrUpdate(
+                "plan-automatic-status-transition-v2",
+                () => _IPlanService.AutomaticStatusTransitionsJobEntryPointV2(),
+                Cron.Daily(_GetPlanAutomaticStatusTransitionJobRunHour()),
+                TimeZoneInfo.Local,
+                queue: "planstatustransitionv2");
         }
 
         private int _StationsUpdateJobRunHour()
@@ -71,6 +79,10 @@ namespace BroadcastJobScheduler
         private int _ReelIsciiUpdateJobRunHour()
         {
             return AppSettingHelper.GetConfigSetting("ReelIsciiImportJobRunHour", 1);
+        }
+        private int _GetPlanAutomaticStatusTransitionJobRunHour()
+        {
+            return AppSettingHelper.GetConfigSetting("PlanAutomaticStatusTransitionJobRunHour", 0);
         }
     }
 }

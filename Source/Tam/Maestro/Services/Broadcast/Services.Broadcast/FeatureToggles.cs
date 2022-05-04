@@ -33,5 +33,6 @@
         public static string ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2 = "broadcast-weekly-breakdown-engine-v-2";
         public static string ENABLE_PRICING_REMOVE_UNMATCHED = "broadcast-enable-pricing-remove-unmatched";
         public static string ENABLE_VARIOUS_GENRE_RESTRICTION = "broadcast-enable-various-genre-restriction";
+        public static string ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2 = "broadcast-enable-auto-plan-status-transition-v2";
     }
 }
