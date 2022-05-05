@@ -1,4 +1,6 @@
 ﻿using Remotion.Linq.Clauses.ResultOperators;
+using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Isci
 {
@@ -6,8 +8,9 @@ namespace Services.Broadcast.Entities.Isci
     {
         public int PlanId { get; set; }
         public string Isci { get; set; }
+        public List<IsciPlanMappingFlightsDto> IsciPlanMappingFlights { get; set; }
 
-        public override bool Equals(object obj)
+    public override bool Equals(object obj)
         {
             if (obj == null)
             {

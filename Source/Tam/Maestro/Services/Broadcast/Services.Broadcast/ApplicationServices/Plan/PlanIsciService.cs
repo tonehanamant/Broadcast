@@ -60,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
         private readonly IReelIsciRepository _ReelIsciRepository;
+        private readonly Lazy<bool> _IsEnableISCIMappingFlightSelectAndMapping;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
@@ -96,6 +97,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
+            _IsEnableISCIMappingFlightSelectAndMapping = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping));
         }
 
         /// <inheritdoc />
@@ -230,7 +232,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             isciPlanSummaries.ForEach(x =>
                 x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
         }
-        
+
 
         private int _HandleDeleteIsciPlanMapping(List<int> toDelete, string deletedBy, DateTime deletedAt)
         {
@@ -249,24 +251,35 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return 0;
             }
-
-            var dedupedListMappings = _RemoveDuplicateListItemMappings(mappings);
-            var flightedMappings = _PopulateIsciPlanMappingFlights(dedupedListMappings);
-            var toSaveMappings = _RemoveDuplicateDatabaseMappings(flightedMappings);
-            var separatedMappings = _SeparateSoftDeletedIsciMappings(toSaveMappings);
-
-            var unDeletedCount = 0;
-            if (separatedMappings.ToUnDeleteIds.Any())
-            {
-                unDeletedCount = _PlanIsciRepository.UnDeleteIsciPlanMappings(separatedMappings.ToUnDeleteIds);
-            }
-
             var savedCount = 0;
-            if (separatedMappings.ToSave.Any())
+            var unDeletedCount = 0;
+            if (!_IsEnableISCIMappingFlightSelectAndMapping.Value)
             {
-                savedCount = _PlanIsciRepository.SaveIsciPlanMappings(separatedMappings.ToSave, createdBy, createdAt);
-            }
+                var dedupedListMappings = _RemoveDuplicateListItemMappings(mappings);
+                var flightedMappings = _PopulateIsciPlanMappingFlights(dedupedListMappings);
+                var toSaveMappings = _RemoveDuplicateDatabaseMappings(flightedMappings);
+                var separatedMappings = _SeparateSoftDeletedIsciMappings(toSaveMappings);
 
+                var iscis = mappings.Select(s => s.Isci).Distinct().ToList();
+                var allReelIscis = _ReelIsciRepository.GetReelIscis(iscis);
+                if (separatedMappings.ToUnDeleteIds.Any())
+                {
+                    unDeletedCount = _PlanIsciRepository.UnDeleteIsciPlanMappings(separatedMappings.ToUnDeleteIds);
+                }
+
+                if (separatedMappings.ToSave.Any())
+                {
+                    separatedMappings.ToSave.ForEach(m =>
+                    m.SpotLengthId = allReelIscis.FirstOrDefault(s => s.Isci.Equals(m.Isci)).SpotLengthId
+                        );
+                    savedCount = _PlanIsciRepository.SaveIsciPlanMappings(separatedMappings.ToSave, createdBy, createdAt);
+                }
+            }
+            else
+            {
+                List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
+                savedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);
+            }
             var totalChangedCount = unDeletedCount + savedCount;
             return totalChangedCount;
         }
@@ -285,9 +298,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             var potentialDuplicates = _PlanIsciRepository.GetPlanIsciDuplicates(modified);
-
-
-            modified.ForEach(m =>
+                modified.ForEach(m =>
             {
                 if (!potentialDuplicates.Any())
                 {
@@ -325,7 +336,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             FlightEndDate = m.FlightEndDate
                         }).ToList();
                 }
-            });
+            });           
 
             if (noDuplicateList.Any())
             {
@@ -347,19 +358,86 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
+        internal IsciPlanMappingModifiedCountsDto _HandleEditedIsciPlanMappings(List<IsciPlanEditMappingDto> modified, DateTime modifiedAt, string modifiedBy)
+        {
+            var saveCount = 0;
+            var modifiedCount = 0;
+            var editList = new List<PlanIsciDto>();
+            List<PlanIsciDto> toSaveList = new List<PlanIsciDto>();
+            var result = new IsciPlanMappingModifiedCountsDto();
+
+            if (!modified.Any())
+            {
+                return result;
+            }
+            modified.ForEach(m =>
+                {
+                    var flightMappingList = m.IsciPlanMappingFlights.ToList();
+                    flightMappingList.ForEach(s =>
+                    {
+                        var editItem = new PlanIsciDto();
+                        if ((s.MappingId ?? 0) != 0)
+                        {
+                            editItem.Id = s.MappingId ?? 0;
+                            editItem.PlanId = m.PlanId;
+                            editItem.Isci = m.Isci;
+                            editItem.FlightStartDate = s.FlightStartDate;
+                            editItem.FlightEndDate = s.FlightEndDate;
+                            editItem.SpotLengthId = s.SpotLengthId;
+                            editList.Add(editItem);
+                        }
+                        else
+                        {
+                            editItem.Id = s.MappingId ?? 0;
+                            editItem.PlanId = m.PlanId;
+                            editItem.Isci = m.Isci;
+                            editItem.FlightStartDate = s.FlightStartDate;
+                            editItem.FlightEndDate = s.FlightEndDate;
+                            editItem.SpotLengthId = s.SpotLengthId;
+                            toSaveList.Add(editItem);
+                        }
+                    });
+                });
+
+            if (editList.Any())
+            {
+                modifiedCount = _PlanIsciRepository.UpdateIsciPlanMappings(editList, modifiedAt, modifiedBy);
+            }
+            if (toSaveList.Any())
+            {
+                saveCount = _PlanIsciRepository.SaveIsciPlanMappings(toSaveList, modifiedBy, modifiedAt);
+            }
+
+            result = new IsciPlanMappingModifiedCountsDto
+            {
+                TotalChangedCount = modifiedCount + saveCount,
+                NoDuplicateCount = modifiedCount + saveCount,
+                DuplicateCount = 0
+            };
+
+            return result;
+        }
+
         public bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy)
         {
             var createdAt = _DateTimeEngine.GetCurrentMoment();
             var deletedAt = _DateTimeEngine.GetCurrentMoment();
             var modifiedAt = _DateTimeEngine.GetCurrentMoment();
+            IsciPlanMappingModifiedCountsDto modifiedCount = null;
 
             var isciPlanMappingsDeletedCount = _HandleDeleteIsciPlanMapping(saveRequest.IsciPlanMappingsDeleted, createdBy, deletedAt);
             _LogInfo($"{isciPlanMappingsDeletedCount } IsciPlanMappings are deleted.");
 
             var addedCount = _HandleNewIsciPlanMapping(saveRequest.IsciPlanMappings, createdBy, createdAt);
             _LogInfo($"{addedCount} IsciPlanMappings were added.");
-
-            var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
+            if (!_IsEnableISCIMappingFlightSelectAndMapping.Value)
+            {
+                modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
+            }
+            else
+            {
+                modifiedCount = _HandleEditedIsciPlanMappings(saveRequest.IsciPlanMappingsEdited, modifiedAt, createdBy);
+            }
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
 
             return true;
@@ -381,6 +459,27 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
+        /// <summary>
+        /// populate the ISCI-Plan and flights collection for save.
+        /// </summary>
+        private List<PlanIsciDto> _PoplateListItemMappings(List<IsciPlanMappingDto> mappings)
+        {
+            var result = new List<PlanIsciDto>();
+            mappings.ForEach(m =>
+            {
+                foreach (var flight in m.IsciPlanMappingFlights)
+                {
+                    PlanIsciDto itemToAdd = new PlanIsciDto();
+                    itemToAdd.PlanId = m.PlanId;
+                    itemToAdd.FlightStartDate = flight.FlightStartDate;
+                    itemToAdd.FlightEndDate = flight.FlightEndDate;
+                    itemToAdd.SpotLengthId = flight.SpotLengthId;
+                    itemToAdd.Isci = m.Isci;
+                    result.Add(itemToAdd);
+                }
+            });
+            return result;
+        }
         private SeparatedMappings _SeparateSoftDeletedIsciMappings(List<PlanIsciDto> flightedMappings)
         {
             var result = new SeparatedMappings();
@@ -427,7 +526,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     s.PlanId.Equals(m.PlanId) &&
                     s.Isci.Equals(m.Isci) &&
                     _GetOverlappingDateRange(new DateRange(m.FlightStartDate, m.FlightEndDate)
-                        ,new DateRange(s.FlightStartDate, s.FlightEndDate)) != null
+                        , new DateRange(s.FlightStartDate, s.FlightEndDate)) != null
                     ))
                 {
                     result.Add(m);
@@ -584,7 +683,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private string _GetAudienceString(int audienceId)
         {
-            var audience = _AudienceRepository.GetAudiencesByIds(new List<int> {audienceId}).First();
+            var audience = _AudienceRepository.GetAudiencesByIds(new List<int> { audienceId }).First();
             return audience.Display;
         }
 

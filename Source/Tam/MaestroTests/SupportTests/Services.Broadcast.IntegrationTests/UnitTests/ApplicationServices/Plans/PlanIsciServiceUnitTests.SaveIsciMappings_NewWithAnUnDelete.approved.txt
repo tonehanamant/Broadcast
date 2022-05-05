@@ -7,7 +7,8 @@
       "FlightStartDate": "2021-11-22T00:00:00",
       "Id": 0,
       "Isci": "MyIsci1",
-      "PlanId": 1
+      "PlanId": 1,
+      "SpotLengthId": 1
     },
     {
       "DeletedAt": null,
@@ -16,7 +17,8 @@
       "FlightStartDate": "2021-11-01T00:00:00",
       "Id": 0,
       "Isci": "MyIsci2",
-      "PlanId": 1
+      "PlanId": 1,
+      "SpotLengthId": 1
     }
   ],
   "unDeletedIds": [

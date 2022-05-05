@@ -251,6 +251,7 @@ namespace Services.Broadcast.Repositories
                         created_by = createdBy,
                         flight_start_date = isciPlanMapping.FlightStartDate,
                         flight_end_date = isciPlanMapping.FlightEndDate,
+                        spot_length_id= isciPlanMapping.SpotLengthId,
                         modified_at = createdAt,
                         modified_by = createdBy
                     });
@@ -354,6 +355,7 @@ namespace Services.Broadcast.Repositories
 
                     foundPlan.flight_start_date = plan.FlightStartDate;
                     foundPlan.flight_end_date = plan.FlightEndDate;
+                    foundPlan.spot_length_id = plan.SpotLengthId;
                     foundPlan.modified_at = modifiedAt;
                     foundPlan.modified_by = modifiedBy;
                     updatedCount++;

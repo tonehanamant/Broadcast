@@ -7,6 +7,7 @@ namespace Services.Broadcast.Entities.Isci
         public List<IsciPlanMappingDto> IsciPlanMappings { get; set; } = new List<IsciPlanMappingDto>();
         public List<int> IsciPlanMappingsDeleted { get; set; } = new List<int>();
         public List<IsciPlanModifiedMappingDto> IsciPlanMappingsModified { get; set; } = new List<IsciPlanModifiedMappingDto>();
+        public List<IsciPlanEditMappingDto> IsciPlanMappingsEdited { get; set; } = new List<IsciPlanEditMappingDto>();
         public List<IsciProductMappingDto> IsciProductMappings { get; set; } = new List<IsciProductMappingDto>();
     }
 

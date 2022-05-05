@@ -866,7 +866,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(result);
             _PlanIsciRepositoryMock.Verify(s =>
                 s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
-            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Once);
+            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Exactly(2));
             _PlanIsciRepositoryMock.Verify(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()), Times.Once);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(saved));
         }
@@ -1313,7 +1313,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(result);
             _PlanIsciRepositoryMock.Verify(s =>
                 s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
-            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Once);
+            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Exactly(2));
             _PlanIsciRepositoryMock.Verify(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()), Times.Once);
             _PlanIsciRepositoryMock.Verify(s => s.UnDeleteIsciPlanMappings(It.IsAny<List<int>>()), Times.Once);
 
