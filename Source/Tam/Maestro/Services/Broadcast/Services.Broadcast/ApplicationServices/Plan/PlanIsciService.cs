@@ -597,19 +597,53 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
-            var mappingsDetails = new PlanIsciMappingsDetailsDto
+            var isciMappings = mappedIscis.GroupBy(x => x.Isci).ToList();
+            var mappingsDetails = new PlanIsciMappingsDetailsDto();
+
+            if (!_IsEnableISCIMappingFlightSelectAndMapping.Value)
             {
-                PlanId = plan.Id,
-                PlanName = plan.Name,
-                AdvertiserName = advertiserName,
-                SpotLengthString = spotLengthsString,
-                DaypartCode = daypartsString,
-                DemoString = demoString,
-                FlightStartDate = plan.FlightStartDate.Value,
-                FlightEndDate = plan.FlightEndDate.Value,
-                FlightString = flightString,
-                MappedIscis = mappedIscis
-            };
+                mappingsDetails = new PlanIsciMappingsDetailsDto
+                {
+                    PlanId = plan.Id,
+                    PlanName = plan.Name,
+                    AdvertiserName = advertiserName,
+                    SpotLengthString = spotLengthsString,
+                    DaypartCode = daypartsString,
+                    DemoString = demoString,
+                    FlightStartDate = plan.FlightStartDate.Value,
+                    FlightEndDate = plan.FlightEndDate.Value,
+                    FlightString = flightString,
+                    MappedIscis = mappedIscis
+                };
+            }
+            else
+            {
+                mappingsDetails = new PlanIsciMappingsDetailsDto
+                {
+                    PlanId = plan.Id,
+                    PlanName = plan.Name,
+                    AdvertiserName = advertiserName,
+                    SpotLengthString = spotLengthsString,
+                    DaypartCode = daypartsString,
+                    DemoString = demoString,
+                    FlightStartDate = plan.FlightStartDate.Value,
+                    FlightEndDate = plan.FlightEndDate.Value,
+                    FlightString = flightString,
+                    IsciMappings = isciMappings.Select(isciMappingsDetail => new IsciMappingDetailsDto
+                    {
+                        Isci = isciMappingsDetail.Key,
+                        Mappings = isciMappingsDetail.Select(mappingDetail => new MappingDetailsDto
+                        {
+                            MappingId = mappingDetail.PlanIsciMappingId,
+                            Length = mappingDetail.SpotLengthId,
+                            StartDate = mappingDetail.FlightStartDate,
+                            EndDate = mappingDetail.FlightEndDate,
+                            StartTime = null,
+                            EndTime = null
+                        }).ToList()
+                    }).ToList(),
+                };
+            }
             return mappingsDetails;
         }
 

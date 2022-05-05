@@ -5,7 +5,8 @@
     "FlightEndDate": "2019-10-13T00:00:00",
     "FlightStartDate": "2019-10-07T00:00:00",
     "Isci": "AB82TXT2H",
-    "PlanId": 1540
+    "PlanId": 1540,
+    "SpotLengthId": 0
   },
   {
     "DeletedAt": null,
@@ -13,7 +14,8 @@
     "FlightEndDate": "2019-10-13T00:00:00",
     "FlightStartDate": "2019-10-07T00:00:00",
     "Isci": "AB82VR58",
-    "PlanId": 1540
+    "PlanId": 1540,
+    "SpotLengthId": 0
   },
   {
     "DeletedAt": null,
@@ -21,6 +23,7 @@
     "FlightEndDate": "2020-03-02T00:00:00",
     "FlightStartDate": "2020-02-17T00:00:00",
     "Isci": "AE67VR14",
-    "PlanId": 7009
+    "PlanId": 7009,
+    "SpotLengthId": 0
   }
 ]

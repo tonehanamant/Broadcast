@@ -202,6 +202,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci1",
                     FlightStartDate = new DateTime(2020, 02, 17),
                     FlightEndDate = new DateTime(2020, 03, 02),
+                    SpotLengthId = 1
                 },
                 new PlanIsciDto()
                 {
@@ -209,6 +210,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci2",
                     FlightStartDate = new DateTime(2020, 02, 17),
                     FlightEndDate = new DateTime(2020, 03, 02),
+                    SpotLengthId = 1
                 }
             };
 
@@ -274,6 +276,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci1",
                     FlightStartDate = new DateTime(2020, 02, 17),
                     FlightEndDate = new DateTime(2020, 03, 02),
+                    SpotLengthId = 1
                 },
                 new PlanIsciDto()
                 {
@@ -281,6 +284,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci2",
                     FlightStartDate = new DateTime(2020, 02, 17),
                     FlightEndDate = new DateTime(2020, 03, 02),
+                    SpotLengthId = 1
                 }
             };
 
@@ -322,6 +326,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 Isci = s.Isci,
                 FlightStartDate = new DateTime(2020, 2, 17),
                 FlightEndDate = new DateTime(2020, 3, 2),
+                SpotLengthId = 1
             }).ToList();
 
             // Act
@@ -361,6 +366,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 Isci = s.Isci,
                 FlightStartDate = new DateTime(2020, 2, 17),
                 FlightEndDate = new DateTime(2020, 3, 2),
+                SpotLengthId = 1
             }).ToList();
 
             // Act
@@ -383,7 +389,14 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         new IsciPlanMappingDto()
                         {
                             PlanId = 7009,
-                            Isci= "AE67VR14"
+                            Isci= "AE67VR14",
+                            IsciPlanMappingFlights = new List<IsciPlanMappingFlightsDto>
+                            { 
+                                new IsciPlanMappingFlightsDto()
+                                { 
+                                 SpotLengthId= 1
+                                }
+                            }
                         }
                     },
                 IsciProductMappings = new List<IsciProductMappingDto>
@@ -492,6 +505,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci1",
                     FlightStartDate = new DateTime(2020, 2, 17),
                     FlightEndDate = new DateTime(2020, 3, 2),
+                    SpotLengthId = 1,
                 },
                 new PlanIsciDto()
                 {
@@ -499,6 +513,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci2",
                     FlightStartDate = new DateTime(2020, 2, 17),
                     FlightEndDate = new DateTime(2020, 3, 2),
+                    SpotLengthId = 1,
                 }
             };
             var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
@@ -575,6 +590,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci1",
                     FlightStartDate = new DateTime(2020, 2, 17),
                     FlightEndDate = new DateTime(2020, 3, 2),
+                    SpotLengthId = 1
                 },
                 new PlanIsciDto()
                 {
@@ -582,6 +598,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     Isci = "UniqueIsci2",
                     FlightStartDate = new DateTime(2020, 2, 17),
                     FlightEndDate = new DateTime(2020, 3, 2),
+                    SpotLengthId = 1
                 }
             };
             var deletedCount = 0;

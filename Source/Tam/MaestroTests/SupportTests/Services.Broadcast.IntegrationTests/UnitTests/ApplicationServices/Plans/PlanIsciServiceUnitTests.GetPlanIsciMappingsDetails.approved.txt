@@ -5,6 +5,7 @@
   "FlightEndDate": "2021-11-10T00:00:00",
   "FlightStartDate": "2021-11-01T00:00:00",
   "FlightString": "11/01 - 11/10/2021",
+  "IsciMappings": null,
   "MappedIscis": [
     {
       "FlightEndDate": "2021-11-10T00:00:00",

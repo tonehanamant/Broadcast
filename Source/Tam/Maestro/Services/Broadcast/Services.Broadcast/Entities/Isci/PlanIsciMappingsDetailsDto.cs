@@ -15,5 +15,6 @@ namespace Services.Broadcast.Entities.Isci
         public DateTime FlightEndDate { get; set; }
         public string FlightString { get; set; }
         public List<PlanMappedIsciDetailsDto> MappedIscis { get; set; }
+        public List<IsciMappingDetailsDto> IsciMappings { get; set; }
     }
 }

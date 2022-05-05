@@ -1,0 +1,69 @@
+{
+  "AdvertiserName": "Acme",
+  "DaypartCode": "EMN,MDN",
+  "DemoString": "Women 50-54",
+  "FlightEndDate": "2021-11-10T00:00:00",
+  "FlightStartDate": "2021-11-01T00:00:00",
+  "FlightString": "11/01 - 11/10/2021",
+  "IsciMappings": [
+    {
+      "Isci": "Isci123",
+      "Mappings": [
+        {
+          "EndDate": "2021-11-10T00:00:00",
+          "EndTime": null,
+          "Length": 1,
+          "MappingId": 1,
+          "StartDate": "2021-11-01T00:00:00",
+          "StartTime": null
+        },
+        {
+          "EndDate": "2021-11-10T00:00:00",
+          "EndTime": null,
+          "Length": 1,
+          "MappingId": 4,
+          "StartDate": "2021-11-01T00:00:00",
+          "StartTime": null
+        },
+        {
+          "EndDate": "2021-11-10T00:00:00",
+          "EndTime": null,
+          "Length": 1,
+          "MappingId": 5,
+          "StartDate": "2021-11-01T00:00:00",
+          "StartTime": null
+        }
+      ]
+    },
+    {
+      "Isci": "Isci456",
+      "Mappings": [
+        {
+          "EndDate": "2021-11-10T00:00:00",
+          "EndTime": null,
+          "Length": 1,
+          "MappingId": 2,
+          "StartDate": "2021-11-01T00:00:00",
+          "StartTime": null
+        }
+      ]
+    },
+    {
+      "Isci": "Isci789",
+      "Mappings": [
+        {
+          "EndDate": "2021-11-10T00:00:00",
+          "EndTime": null,
+          "Length": 1,
+          "MappingId": 3,
+          "StartDate": "2021-11-01T00:00:00",
+          "StartTime": null
+        }
+      ]
+    }
+  ],
+  "MappedIscis": null,
+  "PlanId": 23,
+  "PlanName": "TestPlanForGetPlanIsciMappingsDetails",
+  "SpotLengthString": ":30,:15"
+}
