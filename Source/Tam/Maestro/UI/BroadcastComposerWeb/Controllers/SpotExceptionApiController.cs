@@ -167,5 +167,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetQueuedDecisionCount());
         }
+
+        [HttpPost]
+        [Route("spot-exception-recommanded-plans")]
+        public BaseResponse<SpotExceptionsRecommendedPlansResultsDto> GetSpotExceptionRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetRecommendedPlans(spotExceptionsRecommendedPlansRequest));
+        }
     }
 }

@@ -2336,5 +2336,203 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual(expectedResult, result);
         }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlans_Exist()
+        {
+            // Arrange
+            SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedRequest = new SpotExceptionsRecommendedPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>
+                {
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 2,
+                        EstimateId =191757,
+                        IsciName = "BB82TXT4P",
+                        RecommendedPlanId = 215,
+                        RecommendedPlanName = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        ProgramName = "FOX 13 10:00 News",
+                        AdvertiserName="Beachbody",
+                        ProgramAirTime = new DateTime(2020,1,4,8,7,15),
+                        StationLegacyCallLetters = "KSTP",
+                        Affiliate = "ABC",
+                        Market = "Lincoln & Hastings-Krny",
+                        Cost = 700,
+                        Impressions = 1000,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 14,
+                            Length = 15
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 425,
+                            Code = "M18-24",
+                            Name = "Men 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71657,
+                            Code = "PMN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        EstimateId =191758,
+                        IsciName = "CC42TXT4P",
+                        RecommendedPlanId = 216,
+                        RecommendedPlanName = "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reynolds Foil @9",
+                        ProgramAirTime = new DateTime(2020,1,6,11,15,30),
+                        StationLegacyCallLetters = "WDAY",
+                        Affiliate = "NBC",
+                        Market = "Phoenix (Prescott)",
+                        Cost = 800,
+                        Impressions = 1500,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 15,
+                            Length = 30
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 426,
+                            Code = "W18-24",
+                            Name = "Women 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71658,
+                            Code = "EN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 4,
+                        EstimateId =191760,
+                        IsciName = "CC44ZZPT4",
+                        RecommendedPlanId = 217,
+                        RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reckitt HYHO",
+                        ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                        StationLegacyCallLetters = "KXMC",
+                        Affiliate = "CBS",
+                        Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                        Cost = 450,
+                        Impressions = 1752,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 427,
+                            Code = "M50-64",
+                            Name = "Men 50-64"
+                        },
+                        Product = "Nike",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71659,
+                            Code = "PMN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 4,
+                                IsRecommendedPlan = false,
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            }
+                        }
+                    }
+                });
+
+            // Act
+            var result = _SpotExceptionService.GetRecommendedPlans(spotExceptionsRecommendedRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(result.Active.Count, 2);
+            Assert.AreEqual(result.Completed.Count, 1);
+        }
+
+        [Test]
+        public void GetSpotExceptionRecommendedPlans_DoesNotExist()
+        {
+            // Arrange
+            List<SpotExceptionsRecommendedPlansDto> outofSpecData = null;
+            SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outofSpecData);
+
+            // Act
+            var result = _SpotExceptionService.GetRecommendedPlans(spotExceptionsRecommendedPlansRequest);
+
+            // Assert            
+            Assert.AreEqual(result.Active.Count, 0);
+            Assert.AreEqual(result.Completed.Count,0);
+        }
+
+        [Test]
+        public void GetSpotExceptionRecommendedPlans_ThrowsException()
+        {
+            // Arrange
+            SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(x => x.GetSpotExceptionsRecommendedPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act           
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetRecommendedPlans(spotExceptionsRecommendedPlansRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
     }
 }

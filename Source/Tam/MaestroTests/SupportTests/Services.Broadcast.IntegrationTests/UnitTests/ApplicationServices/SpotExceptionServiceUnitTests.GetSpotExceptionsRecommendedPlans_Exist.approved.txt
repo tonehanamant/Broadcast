@@ -1,0 +1,39 @@
+{
+  "Active": [
+    {
+      "AdvertiserName": "Beachbody",
+      "AffectedSpotsCount": 1,
+      "AudienceName": "Men 18-24",
+      "FlightString": "12/01 - 02/01/2020 (9 Weeks)",
+      "Impressions": 1.0,
+      "Pacing": "0%",
+      "PlanId": 215,
+      "PlanName": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+      "SpotLengthString": ":15"
+    },
+    {
+      "AdvertiserName": null,
+      "AffectedSpotsCount": 1,
+      "AudienceName": "Women 18-24",
+      "FlightString": "12/01 - 02/01/2020 (9 Weeks)",
+      "Impressions": 1.5,
+      "Pacing": "0%",
+      "PlanId": 216,
+      "PlanName": "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+      "SpotLengthString": ":30"
+    }
+  ],
+  "Completed": [
+    {
+      "AdvertiserName": null,
+      "AffectedSpotsCount": 1,
+      "AudienceName": "Men 50-64",
+      "FlightString": "12/01 - 02/01/2020 (9 Weeks)",
+      "Impressions": 1.752,
+      "Pacing": "0%",
+      "PlanId": 217,
+      "PlanName": "3Q' 21 Reckitt HYHO Early Morning Upfront",
+      "SpotLengthString": ":45"
+    }
+  ]
+}

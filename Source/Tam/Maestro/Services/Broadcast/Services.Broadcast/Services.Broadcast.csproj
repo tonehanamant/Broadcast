@@ -594,6 +594,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsStationRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlansResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDecisionDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDetailsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDetailsResultDto.cs" />

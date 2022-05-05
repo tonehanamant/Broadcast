@@ -148,6 +148,13 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>Count of Decision Data</returns>
         int GetQueuedDecisionCount();
+
+        /// <summary>
+        /// Gets the Spot exceptions recommanded plans in active and completed mode.
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlansRequest">Week start and End date</param>
+        /// <returns>Return list of Active and completed Plans</returns>
+        SpotExceptionsRecommendedPlansResultsDto GetRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1501,6 +1508,60 @@ namespace Services.Broadcast.ApplicationServices
             var recommandedPlanDecisonQueuedCount = _SpotExceptionRepository.GetRecommandedPlanDecisionQueuedCount();
             int totalDecisionCount = outOfSpecDecisonQueuedCount + recommandedPlanDecisonQueuedCount;
             return totalDecisionCount;
+        }
+
+        /// <inheritdoc />
+        public SpotExceptionsRecommendedPlansResultsDto GetRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
+        {
+            var spotExceptionsRecommendedPlansResults = new SpotExceptionsRecommendedPlansResultsDto();
+            const string flightStartDateFormat = "MM/dd";
+            const string flightEndDateFormat = "MM/dd/yyyy";
+            List<SpotExceptionsRecommendedPlansDto> activePlans = null;
+            List<SpotExceptionsRecommendedPlansDto> completedPlans = null;
+
+            var spotExceptionsoutRecommendedPlans = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
+            if (spotExceptionsoutRecommendedPlans?.Any() ?? false)
+            {
+                activePlans = spotExceptionsoutRecommendedPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
+                completedPlans = spotExceptionsoutRecommendedPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
+
+                spotExceptionsRecommendedPlansResults.Active = activePlans.GroupBy(activePlan => new { activePlan.RecommendedPlanId })
+                .Select(activePlan =>
+                {
+                    var planDetails = activePlan.First();
+                    return new SpotExceptionsRecommandedToDoPlansDto
+                    {
+                        PlanId = planDetails.RecommendedPlanId,
+                        AdvertiserName = planDetails.AdvertiserName,
+                        PlanName = planDetails.RecommendedPlanName,
+                        AffectedSpotsCount = activePlan.Count(),
+                        Impressions = planDetails.Impressions / 1000,
+                        SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
+                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x=>x.MetricPercent).FirstOrDefault().ToString()+"%",
+                        AudienceName = planDetails.Audience?.Name,
+                        FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+                    };
+                }).ToList();
+
+                spotExceptionsRecommendedPlansResults.Completed = completedPlans.GroupBy(completedPlan => new { completedPlan.RecommendedPlanId })
+                .Select(completedPlan =>
+                {
+                    var planDetails = completedPlan.First();
+                    return new SpotExceptionsRecommandedCompletedPlansDto
+                    {
+                        PlanId = planDetails.RecommendedPlanId,
+                        AdvertiserName = planDetails.AdvertiserName,
+                        PlanName = planDetails.RecommendedPlanName,
+                        AffectedSpotsCount = completedPlan.Count(),
+                        Impressions = planDetails.Impressions / 1000,
+                        SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
+                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString()+"%",
+                        AudienceName = planDetails.Audience?.Name,
+                        FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+                    };
+                }).ToList();
+            }
+            return spotExceptionsRecommendedPlansResults;
         }
     }
 }
