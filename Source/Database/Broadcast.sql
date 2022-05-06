@@ -60,12 +60,17 @@ GO
 /*************************************** END BP-4119 ***************************************/
 
 /*************************************** START BP-3285 ***************************************/
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-        WHERE Name = 'spot_unique_hash'
-        AND OBJECT_ID = OBJECT_ID('staged_recommended_plans'))
-BEGIN
-	DROP TABLE staged_recommended_plan_details
-	DROP TABLE staged_recommended_plans
+
+IF OBJECT_ID('staged_recommended_plans') IS NOT NULL
+BEGIN 
+	IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			WHERE Name = 'spot_unique_hash'
+			AND OBJECT_ID = OBJECT_ID('staged_recommended_plans'))
+	BEGIN
+		DROP TABLE staged_recommended_plan_details
+		DROP TABLE staged_recommended_plans
+	END
+
 END
 
 IF OBJECT_ID('staged_recommended_plans') IS NULL
@@ -120,11 +125,15 @@ BEGIN
 		FOREIGN KEY (staged_recommended_plan_id) REFERENCES staged_recommended_plans(id)
 END
 
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-        WHERE Name = 'spot_unique_hash'
-        AND OBJECT_ID = OBJECT_ID('staged_out_of_specs'))
-BEGIN
-	DROP TABLE staged_out_of_specs	
+IF OBJECT_ID('staged_out_of_specs') IS NOT NULL
+BEGIN 
+
+	IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			WHERE Name = 'spot_unique_hash'
+			AND OBJECT_ID = OBJECT_ID('staged_out_of_specs'))
+	BEGIN
+		DROP TABLE staged_out_of_specs	
+	END
 END
 
 IF OBJECT_ID('staged_out_of_specs') IS NULL
@@ -170,13 +179,16 @@ BEGIN
 	)
 END
 
-IF NOT EXISTS(SELECT 1 FROM sys.columns 
-        WHERE Name = 'client_spot_length_id'
-        AND OBJECT_ID = OBJECT_ID('staged_unposted_no_plan'))
-BEGIN
-	DROP TABLE staged_unposted_no_plan	
-	DROP TABLE spot_exceptions_unposted_no_plan	
-	DROP TABLE spot_exceptions_unposted_no_reel_roster	
+IF OBJECT_ID('staged_unposted_no_plan') IS NOT NULL
+BEGIN 
+	IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			WHERE Name = 'client_spot_length_id'
+			AND OBJECT_ID = OBJECT_ID('staged_unposted_no_plan'))
+	BEGIN
+		DROP TABLE staged_unposted_no_plan	
+		DROP TABLE spot_exceptions_unposted_no_plan	
+		DROP TABLE spot_exceptions_unposted_no_reel_roster	
+	END
 END
 
 IF OBJECT_ID('staged_unposted_no_plan') IS NULL
@@ -1212,7 +1224,7 @@ END
 GO
 /*************************************** END BP-4492 ***************************************/
 
-/*************************************** END BP-3842 ***************************************/
+/*************************************** START BP-3842 ***************************************/
 
 IF EXISTS(SELECT 1 FROM sys.columns 
         WHERE Name = 'Comments'
@@ -1229,8 +1241,24 @@ BEGIN
 			ADD comment nvarchar(1024) NULL
 END
 
+GO
+
 /*************************************** END BP-3842 ***************************************/
 
+/*************************************** START BP-4494 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plan_iscis' AND COLUMN_NAME= 'start_time')
+BEGIN
+	ALTER TABLE plan_iscis
+		ADD start_time INT NULL
+
+	ALTER TABLE plan_iscis
+		ADD end_time INT NULL			
+END
+
+GO
+
+/*************************************** END BP-4494 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
@@ -1269,4 +1297,3 @@ BEGIN
 	RAISERROR('Database Update Failed. Transaction rolled back.', 11, 1)
 END
 GO
-
