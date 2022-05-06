@@ -1,0 +1,32 @@
+[
+  {
+    "DeletedAt": null,
+    "DeletedBy": null,
+    "FlightEndDate": "2022-07-03T00:00:00",
+    "FlightStartDate": "2022-06-27T00:00:00",
+    "Id": 0,
+    "Isci": "MyIsci1",
+    "PlanId": 1,
+    "SpotLengthId": 1
+  },
+  {
+    "DeletedAt": null,
+    "DeletedBy": null,
+    "FlightEndDate": "2022-07-03T00:00:00",
+    "FlightStartDate": "2022-06-27T00:00:00",
+    "Id": 0,
+    "Isci": "MyIsci2",
+    "PlanId": 1,
+    "SpotLengthId": 1
+  },
+  {
+    "DeletedAt": null,
+    "DeletedBy": null,
+    "FlightEndDate": "2022-07-03T00:00:00",
+    "FlightStartDate": "2022-06-27T00:00:00",
+    "Id": 0,
+    "Isci": "MyIsci3",
+    "PlanId": 1,
+    "SpotLengthId": 1
+  }
+]

@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
+using Unity;
 using IsciPlanMappingDto = Services.Broadcast.Entities.Isci.IsciPlanMappingDto;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -41,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<ISpotLengthEngine> _SpotLengthEngine;
         private Mock<IAudienceRepository> _AudienceRepository;
         private Mock<IReelIsciRepository> _ReelIsciRepository;
-
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
         [SetUp]
         public void SetUp()
@@ -82,9 +83,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _StandardDaypartService.Setup(s => s.GetAllStandardDayparts())
                 .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
 
-            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns<int>(MediaMonthAndWeekTestData.GetMediaMonthById);
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();            
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping, false);
 
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+            
+                        
             _PlanIsciService = new PlanIsciService(
                 _DataRepositoryFactoryMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
@@ -94,10 +98,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _SpotLengthEngine.Object,
                 _DateTimeEngineMock.Object,
                 _AabEngineMock.Object,
-                _FeatureToggleMock.Object,
+                featureToggleHelper,
                 _ConfigurationSettingsHelperMock.Object);
         }
-
+        
         [Test]
         public void GetMediaMonth()
         {
@@ -673,7 +677,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         public void SaveIsciMappings_ModifyFlight()
-        {
+        {           
             var modifiedAt = DateTime.Now;
             var modifiedBy = "Test User";
 
@@ -794,7 +798,166 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanIsciRepositoryMock.Verify(s => s.UpdateIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Exactly(2));
             Assert.AreEqual(2, isciPlanMappingsToUpdate.Count);
         }
+        [Test]
+        public void SaveIsciMappings_ModifyFlight_ToggleOn()
+        {
+            var modifiedAt = DateTime.Now;
+            var modifiedBy = "Test User";
 
+             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping] = true;
+            var modified = new List<IsciPlanEditMappingDto>
+            {
+                new IsciPlanEditMappingDto
+                {
+                   PlanId = 1,
+                   Isci = "MyIsci1",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingEditFlightsDto>
+                   {
+                           new IsciPlanMappingEditFlightsDto
+                           {
+                               MappingId=1,
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },
+                new IsciPlanEditMappingDto
+                {
+                   PlanId = 1,
+                   Isci = "MyIsci2",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingEditFlightsDto>
+                   {
+                           new IsciPlanMappingEditFlightsDto
+                           {
+                               MappingId=2,
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },
+                new IsciPlanEditMappingDto
+                {
+                   PlanId = 1,
+                   Isci = "MyIsci3",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingEditFlightsDto>
+                   {
+                           new IsciPlanMappingEditFlightsDto
+                           {
+                               MappingId=null,
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },
+                 new IsciPlanEditMappingDto
+                {
+                   PlanId = 1,
+                   Isci = "MyIsci4",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingEditFlightsDto>
+                   {
+                           new IsciPlanMappingEditFlightsDto
+                           {
+                               MappingId=0,
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },
+            };
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis())
+                .Returns(new List<PlanIsciDto>
+                {
+                    new PlanIsciDto
+                    {
+                        Id = 1,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16)
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 2,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16),
+                        DeletedAt = new DateTime(2022,01,16),
+                        DeletedBy = "Test User"
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 3,
+                        PlanId = 2,
+                        Isci = "myIsci2",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,13)
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 4,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,09)
+                    }
+                });
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetPlanIsciDuplicates(It.IsAny<List<IsciPlanModifiedMappingDto>>()))
+                .Returns(new List<PlanIsciDto>
+                {
+                    new PlanIsciDto
+                    {
+                        Id = 1,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16)
+                    },
+                    new PlanIsciDto
+                    {
+                        Id = 2,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,16),
+                        DeletedAt = new DateTime(2022,01,16),
+                        DeletedBy = "Test User"
+                    },
+                     new PlanIsciDto
+                    {
+                        Id = 4,
+                        PlanId = 2,
+                        Isci = "myIsci1",
+                        FlightStartDate = new DateTime(2022,01,03),
+                        FlightEndDate = new DateTime(2022,01,09)
+                    }
+                });
+
+            var saveRequest = new IsciPlanMappingsSaveRequestDto()
+            {
+                IsciPlanMappingsEdited = modified
+            };
+
+            var isciPlanMappingsToUpdate = new List<PlanIsciDto>();
+            _PlanIsciRepositoryMock.Setup(s => s.UpdateIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback<List<PlanIsciDto>, DateTime, string>((a, b, c) => isciPlanMappingsToUpdate = a)
+                .Returns(2);
+
+            //Act
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, modifiedBy);
+
+            //Assert
+            Assert.IsTrue(result);
+            _PlanIsciRepositoryMock.Verify(s => s.UpdateIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Exactly(1));
+            Assert.AreEqual(2, isciPlanMappingsToUpdate.Count);
+        }
         [Test]
         public void SaveIsciMappings_NewSimple()
         {
@@ -868,6 +1031,120 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
             _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Exactly(2));
             _PlanIsciRepositoryMock.Verify(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()), Times.Once);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(saved));
+        }
+
+        [Test]
+        public void SaveIsciMappings_NewSimple_ToggleOn()
+        {
+            var createdBy = "Test User";
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping] = true;
+            var mappings = new List<IsciPlanMappingDto>
+            {
+                new IsciPlanMappingDto 
+                { 
+                   PlanId = 1,
+                   Isci = "MyIsci1",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingFlightsDto>
+                   {
+                           new IsciPlanMappingFlightsDto
+                           {
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },
+                new IsciPlanMappingDto
+                {
+                   PlanId = 1,
+                   Isci = "MyIsci2",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingFlightsDto>
+                   {
+                           new IsciPlanMappingFlightsDto
+                           {
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },
+                new IsciPlanMappingDto
+                {
+                   PlanId = 1,
+                   Isci = "MyIsci3",
+                   IsciPlanMappingFlights =new List<IsciPlanMappingFlightsDto>
+                   {
+                           new IsciPlanMappingFlightsDto
+                           {
+                               FlightStartDate=new DateTime(2022,06,27),
+                               FlightEndDate=new DateTime(2022,07,03),
+                               SpotLengthId=1
+                           }
+                   }
+                },                
+            };
+
+            _ReelIsciRepository.Setup(s => s.GetReelIscis(It.IsAny<List<string>>()))
+                .Returns(new List<ReelIsciDto>
+                {
+                    new ReelIsciDto
+                    {
+                        Id = 1,
+                        Isci = "MyIsci1",
+                        SpotLengthId = 1,
+                        ActiveStartDate = new DateTime(2021,11,22),
+                        ActiveEndDate = new DateTime(2021, 11, 28)
+                    },
+                    new ReelIsciDto
+                    {
+                        Id = 2,
+                        Isci = "MyIsci2",
+                        SpotLengthId = 1,
+                        ActiveStartDate = new DateTime(2021,10,15),
+                        ActiveEndDate = new DateTime(2021, 11, 20)
+                    },
+                    new ReelIsciDto
+                    {
+                        Id = 3,
+                        Isci = "MyIsci3",
+                        SpotLengthId = 1,
+                        ActiveStartDate = new DateTime(2021,11,22),
+                        ActiveEndDate = new DateTime(2021, 12, 15)
+                    }
+                });
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns<int, int?>((a, b) => new PlanDto()
+                {
+                    Id = a,
+                    FlightStartDate = new DateTime(2021, 11, 1),
+                    FlightEndDate = new DateTime(2021, 11, 30)
+                });
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
+
+            var saved = new List<PlanIsciDto>();
+            _PlanIsciRepositoryMock.Setup(s =>
+                    s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<List<PlanIsciDto>, string, DateTime>((a, b, c) => saved = a)
+                .Returns(2);
+
+            _PlanIsciRepositoryMock.Setup(s => s.GetDeletedPlanIscis(It.IsAny<List<int>>()))
+                .Returns(new List<PlanIsciDto>());
+
+            var saveRequest = new IsciPlanMappingsSaveRequestDto()
+            {
+                IsciPlanMappings = mappings
+            };
+
+            //Act
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
+
+            //Assert
+            Assert.IsTrue(result);
+            _PlanIsciRepositoryMock.Verify(s =>
+                s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Exactly(0));           
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(saved));
         }
 
@@ -1348,8 +1625,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             const int planId = 23;
             const int campaignId = 32;
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping))
-                .Returns(true);
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping] = true;
 
             _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<int>()))
                 .Returns(new List<PlanIsciDto>
