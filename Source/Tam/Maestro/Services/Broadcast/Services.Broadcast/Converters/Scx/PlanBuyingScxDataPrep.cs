@@ -282,12 +282,9 @@ namespace Services.Broadcast.Converters.Scx
             var allocatedSpotsByJob = _PlanBuyingRepository.GetBuyingApiResultsByJobId(jobId, spotAllocationModelMode, postingType);
             var jobSpotsResultsRaw = _GetBuyingRawInventory(jobId);
 
-            if (jobSpotsResultsRaw.SpotAllocationModelMode != spotAllocationModelMode)
-            {
-                jobSpotsResultsRaw = _UpdateAllocationBuckets(allocatedSpotsByJob.AllocatedSpots,
-                    jobSpotsResultsRaw.AllocatedSpotsRaw.Concat(jobSpotsResultsRaw.UnallocatedSpotsRaw).ToList(),
-                    jobSpotsResultsRaw.SpotAllocationModelMode, jobSpotsResultsRaw.PostingType);
-            }
+            jobSpotsResultsRaw = _UpdateAllocationBuckets(allocatedSpotsByJob.AllocatedSpots,
+                jobSpotsResultsRaw.AllocatedSpotsRaw.Concat(jobSpotsResultsRaw.UnallocatedSpotsRaw).ToList(),
+                jobSpotsResultsRaw.SpotAllocationModelMode, jobSpotsResultsRaw.PostingType);
 
             if (jobSpotsResultsRaw.PostingType != postingType)
             {
