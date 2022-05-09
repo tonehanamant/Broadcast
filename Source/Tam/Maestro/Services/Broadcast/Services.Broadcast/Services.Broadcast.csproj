@@ -545,6 +545,9 @@
     <Compile Include="Entities\DTO\PlanPricingDto.cs" />
     <Compile Include="Entities\InventoryMarketAffiliates\InventoryMarketAffiliatesData.cs" />
     <Compile Include="Entities\InventoryMarketAffiliates\InventoryMarketAffiliatesRequest.cs" />
+    <Compile Include="Entities\InventoryMarketAffiliates\IsAggregateDto.cs" />
+    <Compile Include="Entities\InventoryMarketAffiliates\MarketAffiliatesDto.cs" />
+    <Compile Include="Entities\InventoryMarketAffiliates\MarketInventoryDto.cs" />
     <Compile Include="Entities\Isci\IsciMappedPlanCountDto.cs" />
     <Compile Include="Entities\Isci\IsciMappingDetailsDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanEditMappingDto.cs" />
@@ -992,6 +995,7 @@
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FeatureToggleHelper.cs" />
     <Compile Include="Helpers\FrequencyCapHelper.cs" />
+    <Compile Include="Helpers\GenreHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\BroadcastStreamHelper.cs" />
     <Compile Include="Helpers\CompressionHelper.cs" />
@@ -1047,6 +1051,7 @@
     <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />
     <Compile Include="Repositories\Inventory\InventoryExportRepository.cs" />
+    <Compile Include="Repositories\Inventory\InventoryMarketAffiliatesExportRepository.cs" />
     <Compile Include="Repositories\NsiStationRepository.cs" />
     <Compile Include="Repositories\NtiToNsiConversionRepository.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />

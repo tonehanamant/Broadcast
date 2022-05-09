@@ -1,0 +1,14 @@
+[
+  {
+    "isAggregate": "Yes",
+    "marketCode": 101
+  },
+  {
+    "isAggregate": "No",
+    "marketCode": 102
+  },
+  {
+    "isAggregate": "No",
+    "marketCode": 103
+  }
+]

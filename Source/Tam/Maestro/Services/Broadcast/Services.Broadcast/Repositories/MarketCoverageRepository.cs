@@ -41,6 +41,12 @@ namespace Services.Broadcast.Repositories
         MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId);
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
         List<MarketCoverageFile> GetMarketCoverageFiles();
+
+        /// <summary>
+        /// Gets the latest market coverage file.
+        /// </summary>
+        /// <returns></returns>
+        MarketCoverageFile GetLatestMarketCoverageFile();
         MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);
 
         MarketCoverageDto GetLatestTop100MarketCoverages();
@@ -242,6 +248,19 @@ namespace Services.Broadcast.Repositories
                         Id = x.id,
                         CreatedDate = x.created_date
                     }).ToList();                    
+                });
+        }
+
+        public MarketCoverageFile GetLatestMarketCoverageFile()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.market_coverage_files.OrderBy(x => x.created_date).Select(x => new MarketCoverageFile
+                    {
+                        Id = x.id,
+                        CreatedDate = x.created_date
+                    }).First();
                 });
         }
 

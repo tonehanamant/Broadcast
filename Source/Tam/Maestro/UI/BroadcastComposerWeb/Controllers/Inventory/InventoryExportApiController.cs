@@ -1,7 +1,7 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.Entities.Inventory;
-using Services.Broadcast.Entities.InventoryMarketsAffiliates;
+using Services.Broadcast.Entities.InventoryMarketAffiliates;
 using Services.Broadcast.Entities.InventorySummary;
 using System;
 using System.Collections.Generic;
@@ -130,7 +130,7 @@ namespace BroadcastComposerWeb.Controllers.Inventory
         /// <returns></returns>
         [HttpPost]
 		[Route("GenerateMarketAffiliatesReport")]
-		public BaseResponse<Guid> GenerateInventoryMarketAffiliatesReport([FromBody] InventoryMarketAffiliatesReportRequest request)
+		public BaseResponse<Guid> GenerateInventoryMarketAffiliatesReport([FromBody] InventoryMarketAffiliatesRequest request)
 		{
 			var fullName = _GetCurrentUserFullName();
 			var appDataPath = _GetAppDataPath();

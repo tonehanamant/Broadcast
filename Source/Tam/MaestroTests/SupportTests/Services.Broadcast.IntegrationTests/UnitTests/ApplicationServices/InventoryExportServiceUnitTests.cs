@@ -51,6 +51,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     EndDate = new DateTime(2020, 6, 28)
                 }
             };
+            List<int> genreIds = new List<int> { 34 };
             var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);
 
             // instantiate our mocks.
@@ -535,44 +536,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Assert.AreEqual("TestFileName.xlsx", fileServiceCreateFilesCalled[0].Item2);
                 Assert.IsNotNull(fileServiceCreateFilesCalled[0].Item3);
             }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetExportGenreIds_NotNews()
-        {
-            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
-            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
-            var inventoryExportEngine = new Mock<IInventoryExportEngine>();
-            var fileService = new Mock<IFileService>();
-            var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            var daypartCache = new Mock<IDaypartCache>();
-            var marketService = new Mock<IMarketService>();
-            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
-            var featureToggle = new Mock<IFeatureToggleHelper>();
-            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
-            var sharedFolderService = new Mock<ISharedFolderService>();
-            var dateTimeEngine = new Mock<IDateTimeEngine>();
-
-            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
-                quarterCalculationEngine.Object,
-                mediaMonthAndWeekAggregateCache.Object,
-                inventoryExportEngine.Object,
-                fileService.Object,
-                sharedFolderService.Object,
-                spotLengthEngine.Object,
-                daypartCache.Object,
-                marketService.Object,
-                nsiPostingBooksService.Object,
-                dateTimeEngine.Object,
-                featureToggle.Object,configurationSettingsHelper.Object);
-
-            var genres = _GetAllGenres();
-
-            var result = service._GetExportGenreIds(InventoryExportGenreTypeEnum.NonNews, genres);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         private InventoryExportDto _GetInventoryExportDto(int inventoryId, int mediaWeekId, int stationId, int daypartId, string programNameSeed, string inventoryProgramNameSeed)

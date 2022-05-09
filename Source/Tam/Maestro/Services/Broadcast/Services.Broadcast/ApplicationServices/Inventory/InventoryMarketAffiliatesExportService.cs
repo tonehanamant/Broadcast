@@ -1,13 +1,18 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.InventoryMarkets;
-using Services.Broadcast.Entities.InventoryMarketsAffiliates;
+using Services.Broadcast.Entities.Enums.Inventory;
+using Services.Broadcast.Entities.InventoryMarketAffiliates;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.InventoryExport;
+using Services.Broadcast.Repositories;
+using Services.Broadcast.Repositories.Inventory;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices.Inventory
 {
@@ -21,38 +26,54 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         /// <param name="currentDate">The current date.</param>
         /// <param name="templatesFilePath">The templates file path.</param>
         /// <returns></returns>
-        Guid GenerateMarketAffiliatesReport(InventoryMarketAffiliatesReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
+        Guid GenerateMarketAffiliatesReport(InventoryMarketAffiliatesRequest request, string userName, DateTime currentDate, string templatesFilePath);
 
         /// <summary>
         /// Gets the market affiliates report data.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        InventoryMarketAffiliatesReportData GetMarketAffiliatesReportData(InventoryMarketAffiliatesReportRequest request);
+        InventoryMarketAffiliatesData GetMarketAffiliatesReportData(InventoryMarketAffiliatesRequest request);
     };
 
     public class InventoryMarketAffiliatesExportService : BroadcastBaseClass, IInventoryMarketAffiliatesExportService
     {
+        private static readonly List<string> affiliates = new List<string> { "ABC", "NBC", "FOX", "CBS", "CW" };
+
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IInventoryMarketAffiliatesExportRepository _InventoryMarketAffiliatesExportRepository;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IGenreRepository _GenreRepository;
+        protected readonly IMarketCoverageRepository _MarketCoverageRepository;
 
         public InventoryMarketAffiliatesExportService(
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISharedFolderService sharedFolderService,
             IDateTimeEngine dateTimeEngine,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SharedFolderService = sharedFolderService;
             _DateTimeEngine = dateTimeEngine;
+            _InventoryMarketAffiliatesExportRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryMarketAffiliatesExportRepository>();
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
+            _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
         }
 
         /// <inheritdoc />
-        public Guid GenerateMarketAffiliatesReport(InventoryMarketAffiliatesReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
+        public Guid GenerateMarketAffiliatesReport(InventoryMarketAffiliatesRequest request, string userName, DateTime currentDate, string templatesFilePath)
         {
+            _LogInfo($"Gathering the report data...");
             var marketAffiliateReportData = GetMarketAffiliatesReportData(request);
             var reportGenerator = new InventoryMarketAffiliatesReportGenerator(templatesFilePath);
+            _LogInfo($"Preparing to generate the file.  templatesFilePath='{templatesFilePath}'");
             var report = reportGenerator.Generate(marketAffiliateReportData);
             var folderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.INVENTORY_MARKET_AFFILIATES_REPORT);
+
+            _LogInfo($"Saving generated file '{report.Filename}' to folder '{folderPath}'");
 
             return _SharedFolderService.SaveFile(new SharedFolderFile
             {
@@ -67,13 +88,89 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         }
 
         /// <inheritdoc />
-        public InventoryMarketAffiliatesReportData GetMarketAffiliatesReportData(InventoryMarketAffiliatesReportRequest request)
-        {
-            var marketAffiliatesData = new InventoryMarketAffiliatesReportData()
+        public InventoryMarketAffiliatesData GetMarketAffiliatesReportData(InventoryMarketAffiliatesRequest request)
+        {         
+            var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(request.Quarter.StartDate, request.Quarter.EndDate);
+            var mediaWeekIds = mediaWeeks.Select(w => w.Id).ToList();
+
+            var allGenres = _GenreRepository.GetAllMaestroGenres();
+            var newsGenreIds = GenreHelper.GetGenreIds(InventoryExportGenreTypeEnum.News, allGenres);
+            var nonNewsGenreIds = GenreHelper.GetGenreIds(InventoryExportGenreTypeEnum.NonNews, allGenres);
+
+            var marketCoverage = _MarketCoverageRepository.GetLatestMarketCoverageFile();
+
+            var newsMarkets = _GetMarketAffiliates(request.InventorySourceId, mediaWeekIds, affiliates, newsGenreIds, marketCoverage.Id);
+            var nonNewsMarket = _GetMarketAffiliates(request.InventorySourceId, mediaWeekIds, affiliates, nonNewsGenreIds, marketCoverage.Id);
+
+            var marketAffiliatesData = new InventoryMarketAffiliatesData()
             {
-                // todo add getting data
+                NewsMarketAffiliates = newsMarkets,
+                NonNewsMarketAffiliates = nonNewsMarket
             };
             return marketAffiliatesData;
+        }
+
+
+        /// <summary>
+        /// Gets the market affiliates.
+        /// </summary>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>
+        /// <param name="mediaWeekIds">The media week ids.</param>
+        /// <param name="affiliates">The affiliates.</param>
+        /// <param name="genreIds">The genre ids.</param>
+        /// <param name="MarketCoverageFileId">The market coverage.</param>
+        /// <returns></returns>
+        internal List<InventoryMarketAffiliates> _GetMarketAffiliates(int inventorySourceId, List<int> mediaWeekIds, List<string> affiliates, List<int> genreIds, int MarketCoverageFileId)
+        {
+            var rowData = new List<InventoryMarketAffiliates>();
+                        
+            var marketInventoryList = _InventoryMarketAffiliatesExportRepository.GetMarketInvenoryList(inventorySourceId, mediaWeekIds, affiliates, genreIds);
+            var marketAffiliatesList = _InventoryMarketAffiliatesExportRepository.GetMarketAffiliateList(affiliates, MarketCoverageFileId);
+
+            var isAggregateList = _GetIsAggregateList(marketInventoryList);
+
+            foreach (var test in marketAffiliatesList)
+            {
+                var isInventory = marketInventoryList
+                    .Where(x => x.marketCode == test.marketCode && x.affiliation == test.affiliation)
+                    .Select(x => x.isInventory).SingleOrDefault();
+
+                var isAggregate = isAggregateList
+                    .Where(x => x.marketCode == test.marketCode)
+                    .Select(x => x.isAggregate).SingleOrDefault();
+
+                rowData.Add(
+                    new InventoryMarketAffiliates
+                    {
+                        marketName = test.marketName,
+                        marketRank = test.rank,
+                        affiliates = test.affiliation,
+                        inventory = isInventory == null ? "No" : isInventory,
+                        aggregate = isAggregate
+                    }
+                );
+            }
+            return rowData;
+        }
+
+        /// <summary>
+        /// Gets the is aggregate list.
+        /// </summary>
+        /// <param name="marketInventoryList">The market inventory list.</param>
+        /// <returns></returns>
+        internal List<IsAggregateDto> _GetIsAggregateList(List<MarketInventoryDto> marketInventoryList)
+        {
+            var isAggregateList = (from market in marketInventoryList
+                                   group market by new
+                                   {
+                                       market.marketCode
+                                   } into markets
+                                   select new IsAggregateDto
+                                   {
+                                       marketCode = markets.Key.marketCode,
+                                       isAggregate = markets.Where(x => x.isInventory == "Yes").Count() == 5 ? "Yes" : "No"
+                                   }).ToList();
+            return isAggregateList;
         }
     }
 }

@@ -512,6 +512,7 @@
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\Inventory\InventoryMarketAffiliatesExportServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Inventory\ProgramMapping\Engines\ProgramMappingCleanupEngineUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\NtiUniverseServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanBuyingServiceUnitTests.cs" />
@@ -589,6 +590,7 @@
     <Compile Include="UnitTests\Extensions\StringExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\DaypartHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\GenreHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\KeyHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\PlanComparisonHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\PlanGoalHelperUnitTests.cs" />

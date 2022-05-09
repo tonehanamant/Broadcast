@@ -1,9 +1,9 @@
 ﻿using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 
-namespace Services.Broadcast.Entities.InventoryMarkets
+namespace Services.Broadcast.Entities.InventoryMarketAffiliates
 {
-    public class InventoryMarketAffiliatesReportData
+    public class InventoryMarketAffiliatesData
     {
         private const string FILENAME_FORMAT = "Open_Market_Affiliate_Availability_Per_Market.xlsx";
 
@@ -17,19 +17,19 @@ namespace Services.Broadcast.Entities.InventoryMarkets
         /// Gets or sets the news market affiliates.
         /// </summary>
         /// <value>The news market affiliates.</value>
-        public List<InventoryMarketAffiliatesData> NewsMarketAffiliates { get; set; } = new List<InventoryMarketAffiliatesData>();
+        public List<InventoryMarketAffiliates> NewsMarketAffiliates { get; set; } = new List<InventoryMarketAffiliates>();
 
         /// <summary>
         /// Gets or sets the non news market affiliates.
         /// </summary>
         /// <value>The non news market affiliates.</value>
-        public List<InventoryMarketAffiliatesData> NonNewsMarketAffiliates { get; set; } = new List<InventoryMarketAffiliatesData>();
+        public List<InventoryMarketAffiliates> NonNewsMarketAffiliates { get; set; } = new List<InventoryMarketAffiliates>();
 
         /// <summary>
         /// Initializes a new instance of the 
-        /// <see cref="InventoryMarketAffiliatesReportData" /> class.
+        /// <see cref="InventoryMarketAffiliatesData" /> class.
         /// </summary>
-        public InventoryMarketAffiliatesReportData()
+        public InventoryMarketAffiliatesData()
         {
             MarketAffiliatesExportFileName = _GetMarketAffiliatesExportFileName();
         }
@@ -46,7 +46,7 @@ namespace Services.Broadcast.Entities.InventoryMarkets
         }
     }
 
-    public class InventoryMarketAffiliatesData
+    public class InventoryMarketAffiliates
     {
         /// <summary>
         /// Gets or sets the name of the market.

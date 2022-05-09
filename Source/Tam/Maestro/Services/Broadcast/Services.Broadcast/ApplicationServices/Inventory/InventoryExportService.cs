@@ -162,7 +162,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 }
                 else
                 {
-                    var exportGenreIds = _GetExportGenreIds(request.Genre, genres);
+                    var exportGenreIds = GenreHelper.GetGenreIds(request.Genre, genres);
                     inventory = _InventoryExportRepository.GetInventoryForExportOpenMarket(spotLengthIds, exportGenreIds, mediaWeekIds);
                 }
 
@@ -313,15 +313,6 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             var fileStream = _FileService.GetFileStream(saveDirectory, fileName);
 
             var result = _BuildPackageReturn(fileStream, fileName);
-            return result;
-        }
-
-        internal List<int> _GetExportGenreIds(InventoryExportGenreTypeEnum genreType, List<LookupDto> genres)
-        {
-            const string newsGenreName = "NEWS";
-            var result = genreType == InventoryExportGenreTypeEnum.News
-                ? genres.Where(g => g.Display.ToUpper().Equals(newsGenreName)).Select(g => g.Id).ToList()
-                : genres.Where(g => g.Display.ToUpper().Equals(newsGenreName) == false).Select(g => g.Id).ToList();
             return result;
         }
 

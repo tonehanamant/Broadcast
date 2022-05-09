@@ -320,5 +320,13 @@ namespace Services.Broadcast.IntegrationTests.TestData
 
             return marketCoverages;
         }
+
+        public static MarketCoverageFile GetLatestMarketCoverageFile()
+        {
+            return new MarketCoverageFile
+            {
+                Id = 1
+            };
+        }
     }
 }

@@ -1,0 +1,107 @@
+[
+  {
+    "affiliates": "ABC",
+    "aggregate": "Yes",
+    "inventory": "Yes",
+    "marketName": "New York",
+    "marketRank": 1
+  },
+  {
+    "affiliates": "CBS",
+    "aggregate": "Yes",
+    "inventory": "Yes",
+    "marketName": "New York",
+    "marketRank": 1
+  },
+  {
+    "affiliates": "CW",
+    "aggregate": "Yes",
+    "inventory": "Yes",
+    "marketName": "New York",
+    "marketRank": 1
+  },
+  {
+    "affiliates": "FOX",
+    "aggregate": "Yes",
+    "inventory": "Yes",
+    "marketName": "New York",
+    "marketRank": 1
+  },
+  {
+    "affiliates": "NBC",
+    "aggregate": "Yes",
+    "inventory": "Yes",
+    "marketName": "New York",
+    "marketRank": 1
+  },
+  {
+    "affiliates": "ABC",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Binghamton",
+    "marketRank": 161
+  },
+  {
+    "affiliates": "CBS",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Binghamton",
+    "marketRank": 161
+  },
+  {
+    "affiliates": "CW",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Binghamton",
+    "marketRank": 161
+  },
+  {
+    "affiliates": "FOX",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Binghamton",
+    "marketRank": 161
+  },
+  {
+    "affiliates": "NBC",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Binghamton",
+    "marketRank": 161
+  },
+  {
+    "affiliates": "ABC",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Macon",
+    "marketRank": 120
+  },
+  {
+    "affiliates": "CBS",
+    "aggregate": "No",
+    "inventory": "No",
+    "marketName": "Macon",
+    "marketRank": 120
+  },
+  {
+    "affiliates": "CW",
+    "aggregate": "No",
+    "inventory": "Yes",
+    "marketName": "Macon",
+    "marketRank": 120
+  },
+  {
+    "affiliates": "FOX",
+    "aggregate": "No",
+    "inventory": "Yes",
+    "marketName": "Macon",
+    "marketRank": 120
+  },
+  {
+    "affiliates": "NBC",
+    "aggregate": "No",
+    "inventory": "Yes",
+    "marketName": "Macon",
+    "marketRank": 120
+  }
+]
