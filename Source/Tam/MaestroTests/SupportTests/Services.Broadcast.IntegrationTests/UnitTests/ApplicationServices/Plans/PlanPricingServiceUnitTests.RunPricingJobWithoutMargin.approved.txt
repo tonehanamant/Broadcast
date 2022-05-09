@@ -18,7 +18,7 @@
         ],
         "frequency_cap": 20,
         "impression_goal": 150.0,
-        "market_coverage_goal": 0.8,
+        "market_coverage_goal": 0.48,
         "share_of_voice": [
           {
             "market_code": 403,
@@ -56,7 +56,7 @@
         ],
         "frequency_cap": 20,
         "impression_goal": 250.0,
-        "market_coverage_goal": 0.8,
+        "market_coverage_goal": 0.48,
         "share_of_voice": [
           {
             "market_code": 403,
@@ -94,7 +94,7 @@
         ],
         "frequency_cap": 20,
         "impression_goal": 100.0,
-        "market_coverage_goal": 0.8,
+        "market_coverage_goal": 0.48,
         "share_of_voice": [
           {
             "market_code": 403,
