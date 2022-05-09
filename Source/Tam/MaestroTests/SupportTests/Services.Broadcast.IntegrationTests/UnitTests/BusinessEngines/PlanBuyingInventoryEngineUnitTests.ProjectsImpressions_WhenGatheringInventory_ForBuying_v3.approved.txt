@@ -178,8 +178,8 @@
     ],
     "request": {
       "PlaybackType": 4,
-      "ShareProjectionBookId": 201,
-      "HutProjectionBookId": 202,
+      "ShareProjectionBookId": 102,
+      "HutProjectionBookId": 101,
       "Equivalized": false,
       "SpotLengthId": 5,
       "PostType": 1

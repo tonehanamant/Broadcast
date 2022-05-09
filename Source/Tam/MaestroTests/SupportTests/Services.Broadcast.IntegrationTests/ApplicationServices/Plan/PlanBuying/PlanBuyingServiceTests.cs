@@ -170,12 +170,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.Per30Min
+                    UnitCapsType = UnitCapEnum.Per30Min,
+                    HUTBookId = 437,
+                    ShareBookId = 437
                 };
-
+                BuyingInventoryGetRequestParametersDto parameters = new BuyingInventoryGetRequestParametersDto();
+                parameters.HUTBookId = 437;
+                parameters.ShareBookId = 437;
                 var job = _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "integration test user");
 
-                var result = _PlanBuyingService.GetBuyingApiRequestPrograms_v3(1197, new BuyingInventoryGetRequestParametersDto());
+                var result = _PlanBuyingService.GetBuyingApiRequestPrograms_v3(1197, parameters);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -307,7 +311,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.Per30Min,
                     MarketGroup = MarketGroupEnum.None,
-                    PostingType =PostingTypeEnum.NTI
+                    PostingType =PostingTypeEnum.NTI,
+                    HUTBookId = 437,
+                    ShareBookId = 437
                 };
 
                 var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -720,7 +726,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.None,
                 Margin = 20,
-                PostingType = PostingTypeEnum.NTI
+                PostingType = PostingTypeEnum.NTI,
+                HUTBookId=437,
+                ShareBookId=437
             };
         }
 
@@ -747,7 +755,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.Per30Min,
                 MarketGroup = MarketGroupEnum.None,
-                PostingType = PostingTypeEnum.NSI
+                PostingType = PostingTypeEnum.NSI,
+                ShareBookId=437,
+                HUTBookId=437               
             };
 
             var job = await _PlanBuyingService.QueueBuyingJobAsync(planBuyingRequest, savedDate, "test user");

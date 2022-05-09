@@ -1102,6 +1102,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var inventorySourceIds = new List<int>();
             var diagnostic = new PlanBuyingJobDiagnostic();
 
+            parameters.HUTBookId = 101;
+            parameters.ShareBookId = 102;
             var plan = _GetPlan();
             plan.Equivalized = true;
             plan.HUTBookId = null;
@@ -1247,6 +1249,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             plan.HUTBookId = 202;
             plan.PostingType = PostingTypeEnum.NSI;
             plan.ShareBookId = 201;
+            parameters.HUTBookId = 202;
+            parameters.ShareBookId = 201;
+
             plan.CreativeLengths = new List<CreativeLength>
             {
                 new CreativeLength { SpotLengthId = 5, Weight = 50 },
@@ -1398,7 +1403,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var parameters = new ProgramInventoryOptionalParametersDto();
             var inventorySourceIds = new List<int>();
             var diagnostic = new PlanBuyingJobDiagnostic();
-
+            parameters.HUTBookId = 101;
+            parameters.ShareBookId = 102;
             var plan = _GetPlan();
             plan.Equivalized = true;
             plan.HUTBookId = 202;
@@ -1686,7 +1692,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var parameters = new ProgramInventoryOptionalParametersDto();
             var inventorySourceIds = new List<int>();
             var diagnostic = new PlanBuyingJobDiagnostic();
-
+            parameters.HUTBookId = 101;
+            parameters.ShareBookId = 102;
             var planQuarter = new QuarterDetailDto
             {
                 Quarter = 4,
@@ -2033,7 +2040,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
-
+            parameters.HUTBookId = 101;
+            parameters.ShareBookId = 102;
             var plan = _GetPlan();
             plan.Equivalized = true;
             plan.HUTBookId = 101;
@@ -2366,7 +2374,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
-
+            parameters.HUTBookId = 101;
+            parameters.ShareBookId = 102;
             var plan = _GetPlan();
             plan.Equivalized = true;
             plan.HUTBookId = 101;

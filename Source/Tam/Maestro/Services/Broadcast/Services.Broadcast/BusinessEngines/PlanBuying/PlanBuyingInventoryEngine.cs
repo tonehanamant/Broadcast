@@ -101,7 +101,7 @@ namespace Services.Broadcast.BusinessEngines
             var planDaypartDayIds = _GetDaypartDayIds(plan.Dayparts);
 
             var daypartDays = _GetDaypartDaysFromFlight(plan.FlightDays, flightDateRanges, planDaypartDayIds);
-            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);          
+            diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
             var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
@@ -113,7 +113,7 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
-            
+
             var programs = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, allPrograms, daypartDays,
                 _CadentDayDefinitions.Value, _DaypartDefaultDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value,
                 _UseTrueIndependentStations.Value, _EnableRestrictionsProgramOr.Value);
@@ -130,7 +130,7 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
-            _ApplyProjectedImpressions(programs, plan);
+            _ApplyProjectedImpressions(programs, plan, parameters);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
@@ -155,7 +155,7 @@ namespace Services.Broadcast.BusinessEngines
                 program.PostingType = postingType;
             }
         }
-        private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
+        private void _SetProgramDayparts<T>(List<T> programs) where T : BasePlanInventoryProgram
         {
             var daypartIds = programs.SelectMany(p => p.ManifestDayparts)
                 .Select(m => m.Daypart.Id)
@@ -171,7 +171,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
+        private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T : BasePlanInventoryProgram
         {
             var daypartDefaultIds = _DaypartDefaultDayIds.Value;
 
@@ -257,11 +257,11 @@ namespace Services.Broadcast.BusinessEngines
         /// This does not  address if a plan's flight extends beyond a single quarter.
         /// </remarks>
         internal List<PlanBuyingInventoryProgram> _GetFullPrograms(
-            List<DateRange> dateRanges, 
+            List<DateRange> dateRanges,
             List<int> spotLengthIds,
-            IEnumerable<int> inventorySourceIds, 
-            List<short> availableMarkets, 
-            QuarterDetailDto planQuarter, 
+            IEnumerable<int> inventorySourceIds,
+            List<short> availableMarkets,
+            QuarterDetailDto planQuarter,
             List<QuarterDetailDto> fallbackQuarters)
         {
             var totalInventory = new List<PlanBuyingInventoryProgram>();
@@ -273,9 +273,9 @@ namespace Services.Broadcast.BusinessEngines
 
                 // look for inventory from plan quarter
                 var planInventoryForDateRange = _StationProgramRepository.GetProgramsForBuyingModel(
-                    dateRange.Start.Value, 
+                    dateRange.Start.Value,
                     dateRange.End.Value,
-                    spotLengthIds, 
+                    spotLengthIds,
                     inventorySourceIds,
                     ungatheredStationIds);
 
@@ -385,7 +385,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private List<PlanBuyingInventoryProgram.ManifestWeek> _GetInventoryWeeksByMediaWeeks(
-            List<PlanBuyingInventoryProgram.ManifestWeek> allInventoryWeeks, 
+            List<PlanBuyingInventoryProgram.ManifestWeek> allInventoryWeeks,
             List<MediaWeek> mediaWeeks)
         {
             var mediaWeekIdsSet = new HashSet<int>(mediaWeeks.Select(x => x.Id));
@@ -402,9 +402,9 @@ namespace Services.Broadcast.BusinessEngines
             List<short> marketCodes)
         {
             var programs = _GetFullPrograms(
-                flightDateRanges, 
-                spotLengthIds, 
-                inventorySourceIds, 
+                flightDateRanges,
+                spotLengthIds,
+                inventorySourceIds,
                 marketCodes);
 
             // so that programs are not repeated
@@ -418,8 +418,8 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private List<PlanBuyingInventoryProgram> _GetPrograms(
-            PlanDto plan, 
-            List<DateRange> planFlightDateRanges, 
+            PlanDto plan,
+            List<DateRange> planFlightDateRanges,
             IEnumerable<int> inventorySourceIds,
             PlanBuyingJobDiagnostic diagnostic)
         {
@@ -469,7 +469,7 @@ namespace Services.Broadcast.BusinessEngines
             return programs;
         }
 
-        private void _SetProgramStationLatestMonthDetails<T>(List<T> programs) where T: BasePlanInventoryProgram
+        private void _SetProgramStationLatestMonthDetails<T>(List<T> programs) where T : BasePlanInventoryProgram
         {
             var distinctIds = programs.Select(x => x.Station.Id).Distinct().ToList();
             var latestStationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(distinctIds);
@@ -486,7 +486,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _SetPrimaryProgramForDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
+        private void _SetPrimaryProgramForDayparts<T>(List<T> programs) where T : BasePlanInventoryProgram
         {
             foreach (var manifestDaypart in programs.SelectMany(x => x.ManifestDayparts))
             {
@@ -720,7 +720,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private void _ApplyProvidedImpressions(
-            List<PlanBuyingInventoryProgram> programs, 
+            List<PlanBuyingInventoryProgram> programs,
             PlanDto plan)
         {
             // we don`t want to equivalize impressions
@@ -744,16 +744,16 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _ApplyProjectedImpressions(
             IEnumerable<PlanBuyingInventoryProgram> programs,
-            PlanDto plan)
+            PlanDto plan, ProgramInventoryOptionalParametersDto parameters)
         {
             var impressionsRequest = new ImpressionsRequestDto
             {
                 // we don`t want to equivalize impressions when allows MultiLength, because this is done by the buying endpoint
                 Equivalized = false,
-                HutProjectionBookId = plan.HUTBookId,
+                HutProjectionBookId = parameters.HUTBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,
-                ShareProjectionBookId = plan.ShareBookId,
+                ShareProjectionBookId = parameters.ShareBookId,
 
                 // SpotLengthId does not matter for the buying v3, so this code is for the v2
                 SpotLengthId = plan.CreativeLengths.First().SpotLengthId

@@ -1089,7 +1089,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     MinCPM = planBuyingParametersDto.MinCpm,
                     MaxCPM = planBuyingParametersDto.MaxCpm,
                     InflationFactor = planBuyingParametersDto.InflationFactor,
-                    MarketGroup = planBuyingParametersDto.MarketGroup
+                    MarketGroup = planBuyingParametersDto.MarketGroup,
+                    ShareBookId= planBuyingParametersDto.ShareBookId,
+                    HUTBookId= planBuyingParametersDto.HUTBookId
                 };
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
 
@@ -2307,7 +2309,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
-                MarketGroup = requestParameters.MarketGroup
+                MarketGroup = requestParameters.MarketGroup,
+                HUTBookId= requestParameters.HUTBookId,
+                ShareBookId=requestParameters.ShareBookId
             };
             var parameters = new PlanBuyingParametersDto
             {

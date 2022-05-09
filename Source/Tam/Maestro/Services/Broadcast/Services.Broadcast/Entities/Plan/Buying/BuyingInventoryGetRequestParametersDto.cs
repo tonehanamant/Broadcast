@@ -13,5 +13,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double Margin { get; set; }
 
         public MarketGroupEnum MarketGroup { get; set; }
+        public int? ShareBookId { get; set; }
+        public int? HUTBookId { get; set; }
     }
 }

@@ -11,5 +11,7 @@ namespace Services.Broadcast.Entities.Plan.CommonPricingEntities
         public double? InflationFactor { get; set; }
 
         public MarketGroupEnum MarketGroup { get; set; }
+        public int? ShareBookId { get; set; }
+        public int? HUTBookId { get; set; }
     }
 }

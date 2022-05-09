@@ -39,6 +39,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("short_running")]
         public void GetsFallbackInventoryForBuying()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
@@ -46,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 plan.CreativeLengths.First().SpotLengthId = 2;
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new ProgramInventoryOptionalParametersDto(),
+                   parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -58,6 +61,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetsInventoryForBuying()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
@@ -79,7 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new ProgramInventoryOptionalParametersDto(),
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -102,13 +108,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void RunWithHiatusDayTest()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
+
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1199);
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
-                    plan, 
-                    new ProgramInventoryOptionalParametersDto(),
+                    plan,
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -120,13 +130,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void RunSpotLengthTest()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new ProgramInventoryOptionalParametersDto(),
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -138,6 +151,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void RunAffilitateContentRestrictionTest()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
@@ -152,7 +168,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // Result has affiliates CW and FOX.
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new ProgramInventoryOptionalParametersDto(),
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -164,6 +180,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void RunAffilitateContentRestrictionUpdateMonthDetailsTest()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
@@ -187,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 // Result has affiliates CW and FOX.
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new ProgramInventoryOptionalParametersDto(),
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -199,6 +218,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetInventoryForPlanFlightDaysTest()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
@@ -209,7 +231,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 2, 27));
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new ProgramInventoryOptionalParametersDto(),
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
@@ -221,13 +243,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void RunWithProgramWithMultipleAudiencesTest()
         {
+            ProgramInventoryOptionalParametersDto parameters = new ProgramInventoryOptionalParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
             using (new TransactionScopeWrapper())
             {
                 var diagnostic = new PlanBuyingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1200);
                 var result = _PlanBuyingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new ProgramInventoryOptionalParametersDto(),
+                    parameters,
                     _GetAvailableInventorySources(),
                     diagnostic);
 
