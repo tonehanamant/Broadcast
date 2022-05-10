@@ -17,6 +17,7 @@
   "HasHiatus": false,
   "HHCPM": null,
   "HHImpressions": null,
+  "IsDraft": null,
   "ModifiedBy": null,
   "ModifiedDate": null,
   "Name": null,
@@ -43,5 +44,6 @@
   "TargetImpressions": null,
   "TotalActiveDays": 20,
   "TotalHiatusDays": 2,
-  "TRP": null
+  "TRP": null,
+  "VersionNumber": null
 }

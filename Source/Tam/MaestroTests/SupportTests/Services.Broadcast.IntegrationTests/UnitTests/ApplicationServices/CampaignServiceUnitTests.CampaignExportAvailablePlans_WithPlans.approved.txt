@@ -1,0 +1,26 @@
+{
+  "HasPlans": true,
+  "Id": 2,
+  "Plans": [
+    {
+      "DraftId": 2354,
+      "IsDraft": false,
+      "Name": "PS-2001",
+      "PlanId": 574,
+      "PlanSummaryQuarters": [],
+      "Status": 5,
+      "VersionId": 2354,
+      "VersionNumber": 4
+    },
+    {
+      "DraftId": 2347,
+      "IsDraft": false,
+      "Name": "Plan-2002",
+      "PlanId": 575,
+      "PlanSummaryQuarters": [],
+      "Status": 5,
+      "VersionId": 2347,
+      "VersionNumber": 2
+    }
+  ]
+}

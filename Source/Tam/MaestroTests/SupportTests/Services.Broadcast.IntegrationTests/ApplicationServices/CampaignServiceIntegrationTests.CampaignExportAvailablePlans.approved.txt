@@ -1,0 +1,29 @@
+{
+  "HasPlans": true,
+  "Id": 2,
+  "Plans": [
+    {
+      "DraftId": null,
+      "IsDraft": false,
+      "Name": "New Plan",
+      "PlanId": 524,
+      "PlanSummaryQuarters": [
+        {
+          "Quarter": 1,
+          "Year": 2019
+        },
+        {
+          "Quarter": 2,
+          "Year": 2019
+        },
+        {
+          "Quarter": 3,
+          "Year": 2019
+        }
+      ],
+      "Status": 1,
+      "VersionId": 2,
+      "VersionNumber": 1
+    }
+  ]
+}

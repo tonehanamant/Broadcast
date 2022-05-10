@@ -154,6 +154,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
+        public void CampaignExportAvailablePlans_WithPlans()
+        {
+            // Data already exists for campaign id 2 : campaign, summary, plan
+            var campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                var foundCampaign = _CampaignService.CampaignExportAvailablePlans(campaignId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
+        [Test]
+        [Category("short_running")]
+        public void CampaignExportAvailablePlans_WithoutPlans()
+        {
+            // Data already exists for campaign id 5 : campaign
+            var campaignId = 5;
+            using (new TransactionScopeWrapper())
+            {
+                var foundCampaign = _CampaignService.CampaignExportAvailablePlans(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [Category("short_running")]
         public void CreateCampaignValidCampaignTest()
         {
             using (new TransactionScopeWrapper())
@@ -380,6 +406,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns, _GetJsonSettings()));
             }
         }
+        [Test]
+        [Category("short_running")]
+        public void GetCampaignsWithAllStatus()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var filter = new CampaignFilterDto
+                {
+                    PlanStatus = null,
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 3,
+                        Year = 2019
+                    }
+                };
+
+                var campaigns = _CampaignService.GetCampaigns(filter, new DateTime(2019, 02, 01));
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns, _GetJsonSettings()));
+            }
+        }
 
         [Test]
         [Category("short_running")]
@@ -514,7 +561,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "VersionId");
             jsonResolver.Ignore(typeof(CampaignSummaryDto), "QueuedAt");
-
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "Is_Draft");
+            jsonResolver.Ignore(typeof(PlanSummaryDto), "Version_Number");
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

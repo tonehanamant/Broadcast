@@ -153,6 +153,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="createdDate">The created date.</param>
         /// <returns>Id of the new campaign</returns>
         int SaveCampaignCopy(SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate);
+        /// <summary>
+        /// Get the campaign along with plans excluded draft
+        /// </summary>
+        /// <param name="campaignId">campaignId</param>
+        /// <returns>campaign with plans</returns>
+        CampaignExportDto CampaignExportAvailablePlans(int campaignId);
     }
 
     /// <summary>
@@ -237,7 +243,6 @@ namespace Services.Broadcast.ApplicationServices
             var quarterDateRange = _GetQuarterDateRange(filter.Quarter);
             var campaigns = _CampaignRepository.GetCampaignsWithSummary(quarterDateRange.Start, quarterDateRange.End, filter.PlanStatus)
                 .Select(x => _MapToCampaignListItemDto(x)).ToList();
-
             foreach (var campaign in campaigns)
             {
                 if (!campaign.CampaignStatus.HasValue)
@@ -252,6 +257,7 @@ namespace Services.Broadcast.ApplicationServices
             return campaigns;
         }
 
+      
         private DateRange _GetQuarterDateRange(QuarterDto quarter)
         {
             if (quarter == null)
@@ -316,6 +322,24 @@ namespace Services.Broadcast.ApplicationServices
                 Plans = campaignAndCampaignSummary.Campaign.Plans,
             };
             campaign.Plans?.ForEach(plan => plan.HasHiatus = plan.TotalHiatusDays.HasValue && plan.TotalHiatusDays.Value > 0);
+            List<PlanSummaryDto> filteredPlans = new List<PlanSummaryDto>();
+            if(campaign.Plans != null && campaign.HasPlans)
+            {
+                campaign.Plans.RemoveAll(x => x.IsDraft == true);
+                foreach (var plan in campaign.Plans)
+                {
+                    if ((!filteredPlans.Any(x => x.PlanId == plan.PlanId)))
+                    {
+                        var latestplan = campaign.Plans.Where(x => x.PlanId == plan.PlanId && (x.IsDraft == false || x.IsDraft == null))
+                               .OrderByDescending(p => p.VersionId).FirstOrDefault();
+                        if(latestplan != null)
+                        {
+                            filteredPlans.Add(latestplan);
+                        }
+                    }
+                }
+                campaign.Plans = filteredPlans;
+            }
 
             if (campaignAndCampaignSummary.CampaignSummary != null)
             {
@@ -950,6 +974,36 @@ namespace Services.Broadcast.ApplicationServices
             }
             _CampaignAggregationJobTrigger.TriggerJob(campaignId, createdBy);
             return campaignId;
+        }
+
+        public CampaignExportDto CampaignExportAvailablePlans(int campaignId)
+        {
+            var campaign = _CampaignRepository.GetCampaignPlanForExport(campaignId);
+            if (campaign.HasPlans) { campaign.Plans = GetFilteredPlanwithdraftExcluded(campaign); }
+            return campaign;
+        }
+
+        private List<PlanExportSummaryDto> GetFilteredPlanwithdraftExcluded(CampaignExportDto campaign)
+        {
+            campaign.Plans.RemoveAll(x => x.IsDraft == true);
+            List<PlanExportSummaryDto> filteredPlans = new List<PlanExportSummaryDto>();
+            if (campaign.Plans != null)
+            {
+                foreach (var plan in campaign.Plans)
+                {
+                    if ((!filteredPlans.Any(x => x.PlanId == plan.PlanId)))
+                    {
+                        var latestplan = campaign.Plans.Where(x => x.PlanId == plan.PlanId && (x.IsDraft == false || x.IsDraft == null))
+                                .OrderByDescending(p => p.VersionId).FirstOrDefault();
+                        if(latestplan != null)
+                        {
+                            filteredPlans.Add(latestplan);
+                        }
+                    }
+                }
+                campaign.Plans = filteredPlans;
+            }
+            return filteredPlans;
         }
     }
 }

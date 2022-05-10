@@ -122,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
-                .Returns(_SpotLengthRepositoryMock.Object); 
+                .Returns(_SpotLengthRepositoryMock.Object);
         }
 
         [Test]
@@ -206,6 +206,215 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(It.IsAny<CampaignFilterDto>(), _CurrentDate));
 
             // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void ReturnFilteredCampaignsWithDraftExcluded()
+        {
+            // Arrange
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithPlanswithdraftExcludedReturn(agency, advertiser));
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)));
+
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency);
+
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser);
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetCampaigns(new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Year = 2019,
+                    Quarter = 2
+                },
+                PlanStatus = (PlanStatusEnum)1
+            }, _CurrentDate); ;
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private static List<CampaignWithSummary> _GetCampaignWithPlanswithdraftExcludedReturn(AgencyDto agency, AdvertiserDto advertiser)
+        {
+            return new List<CampaignWithSummary>
+            {
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 1,
+                        Name = "CampaignOne",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignOne.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = true,
+                        Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2354,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2354,
+                            IsDraft = false,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2355,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = null,
+                            IsDraft = true,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 575,
+                            Name = "plan-2002",
+                            VersionId = 2278,
+                            Status = (PlanStatusEnum)1,
+                            DraftId = 2278,
+                            IsDraft = false,
+                            VersionNumber = 1
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 575,
+                            Name = "plan-2002",
+                            VersionId = 2347,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2347,
+                            IsDraft = false,
+                            VersionNumber = 2
+                        }
+                    }
+
+                    },
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 2,
+                        Name = "CampaignTwo",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignTwo.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = true,
+                         Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2354,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2354,
+                            IsDraft = false,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2355,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = null,
+                            IsDraft = true,
+                            VersionNumber = 4
+                        }
+                        
+                    }
+                    }
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 3,
+                        Name = "CampaignThree",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignThree.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = false
+                    }
+                }
+            };
+        }
+
+        [Test]
+        public void ThrowException_WhenReturnFilteredCampaignsWithDraftExcluded()
+        {
+            // Arrange
+            const string expectedMessage = "This is a test exception thrown from ReturnFilteredCampaignsWithDraftExcluded.";
+            // Arrange
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithPlanswithdraftExcludedReturn(agency, advertiser))
+                .Callback(() => throw new Exception(expectedMessage));
+
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)))
+                .Callback(() => throw new Exception(expectedMessage));
+
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency)
+                .Callback(() => throw new Exception(expectedMessage));
+
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser)
+                .Callback(() => throw new Exception(expectedMessage));
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Year = 2019,
+                    Quarter = 2
+                },
+                PlanStatus = (PlanStatusEnum)1
+            }, _CurrentDate)); 
+            
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
+
             Assert.AreEqual(expectedMessage, caught.Message);
         }
 
@@ -949,7 +1158,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
             _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()),Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
             var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
@@ -1471,7 +1680,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetCurrentMoment())
                 .Returns(new DateTime(2020, 01, 01));
 
-            var tc = _BuildCampaignService();   
+            var tc = _BuildCampaignService();
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST] = true;
             // Act
             var response = tc.GetAndValidateCampaignReportData(request);
@@ -2534,7 +2743,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                 };
         }
-        
+
         private CampaignService _BuildCampaignService(bool isAabEnabled = false, bool isLockingConsolidationEnabled = false)
         {
             // Tie in base data.
@@ -2566,10 +2775,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns<DateTime, DateTime>(MediaMonthAndWeekTestData.GetMediaMonthsIntersecting);
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeeksByMediaMonth(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeeksByMediaMonth);
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();            
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION, false);
-            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub); 
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             return new CampaignService(
                 _DataRepositoryFactoryMock.Object,
                 _CampaignValidatorMock.Object,
@@ -2706,7 +2915,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Notes = "Notes for CampaignOne.",
                         ModifiedBy = "TestUser",
                         ModifiedDate = new DateTime(2017,10,17),
-                        CampaignStatus = PlanStatusEnum.Working
+                        CampaignStatus = PlanStatusEnum.Working,
                     },
                 },
                 new CampaignWithSummary
@@ -2883,13 +3092,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         private static CampaignCopyDto _GetCampaignCopy(int campaignId)
         {
-            return new CampaignCopyDto 
+            return new CampaignCopyDto
             {
-                    Id = 2,
-                    Name = "3765 campaign",
-                    AdvertiserMasterId = "d6dbbe81-eeb3-482d-98eb-69b24c2f7020",
-                    AgencyMasterId = "abca9fae-367e-4c11-8bf2-03a92412a5a7",
-                    Plans = new List<PlansCopyDto>
+                Id = 2,
+                Name = "3765 campaign",
+                AdvertiserMasterId = "d6dbbe81-eeb3-482d-98eb-69b24c2f7020",
+                AgencyMasterId = "abca9fae-367e-4c11-8bf2-03a92412a5a7",
+                Plans = new List<PlansCopyDto>
                     {
                         new PlansCopyDto
                         {
@@ -2911,14 +3120,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
         }
 
+
+
         [Test]
         public void SaveCampaignCopy()
         {
             // Arrange
             const int campaignId = 0;
             const string campaignName = "CampaignOne";
-            Guid? advertiserMasterId = Guid.NewGuid(); 
-            Guid? agencyMasterId = Guid.NewGuid(); 
+            Guid? advertiserMasterId = Guid.NewGuid();
+            Guid? agencyMasterId = Guid.NewGuid();
             var campaign = new SaveCampaignCopyDto
             {
                 Name = campaignName,
@@ -2927,7 +3138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             _CampaignRepositoryMock
                 .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
-                .Returns(new CampaignDto { Id= campaignId });
+                .Returns(new CampaignDto { Id = campaignId });
             var tc = _BuildCampaignService();
 
             // Act
@@ -2935,7 +3146,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             _CampaignRepositoryMock.Verify(x => x.CreateCampaign(
-                It.Is<SaveCampaignDto>(c => c.Name == campaignName &&                                       
+                It.Is<SaveCampaignDto>(c => c.Name == campaignName &&
                                         c.AdvertiserMasterId == advertiserMasterId &&
                                         campaign.AgencyMasterId == agencyMasterId),
                 _User,
@@ -2946,7 +3157,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             // Arrange
             const int campaignId = 0;
-            const string expectedMessage = "This is a test exception thrown from Validate.";           
+            const string expectedMessage = "This is a test exception thrown from Validate.";
             const string campaignName = "CampaignOne";
             Guid? advertiserMasterId = Guid.NewGuid();
             Guid? agencyMasterId = Guid.NewGuid();
@@ -3030,7 +3241,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _CampaignRepositoryMock
                 .Setup(s => s.CheckCampaignExist(It.IsAny<SaveCampaignDto>()))
                 .Returns(new CampaignDto { Id = 0 });
-            
+
             var tc = _BuildCampaignService();
 
             // Act
@@ -3066,9 +3277,115 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Act
             var caught = Assert.Throws<InvalidOperationException>(() => tc.SaveCampaignCopy(campaign, _User, _CurrentDate));
-            
+
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
-        }       
+        }
+
+        [Test]
+        public void CampaignExportAvailablePlans_WithPlans()
+        {
+            // Arrange
+            int campaignId = 2;
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignPlanForExport(It.IsAny<int>())).Returns(_GetCampaignExport(campaignId));
+            var tc = _BuildCampaignService();
+            // Act
+            var result = tc.CampaignExportAvailablePlans(campaignId);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        private static CampaignExportDto _GetCampaignExport(int campaignId)
+        {
+            return new CampaignExportDto
+            {
+                Id = 2,
+                HasPlans = true,
+                Plans = new List<PlanExportSummaryDto>
+                    {
+                        new PlanExportSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2354,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2354,
+                            IsDraft = false,
+                            VersionNumber = 4
+                        },
+                        new PlanExportSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2355,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 0,
+                            IsDraft = true,
+                            VersionNumber = 4
+                        },
+                        new PlanExportSummaryDto
+                        {
+                            PlanId = 575,
+                            Name = "Plan-2002",
+                            VersionId = 2278,
+                            Status = (PlanStatusEnum)1,
+                            DraftId = 2278,
+                            IsDraft =false,
+                            VersionNumber = 1
+                        },
+                        new PlanExportSummaryDto
+                        {
+                            PlanId = 575,
+                            Name = "Plan-2002",
+                            VersionId = 2347,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2347,
+                            IsDraft =false,
+                            VersionNumber = 2
+                        }
+                    }
+            };
+        }
+
+        [Test]
+        public void CampaignExportAvailablePlans_NoPlans()
+        {
+            // Arrange
+            int campaignId = 2;
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignPlanForExport(It.IsAny<int>())).Returns(_GetCampaignWithNoPlanExport(campaignId));
+            var tc = _BuildCampaignService();
+            // Act
+            var result = tc.CampaignExportAvailablePlans(campaignId);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        private static CampaignExportDto _GetCampaignWithNoPlanExport(int campaignId)
+        {
+            return new CampaignExportDto
+            {
+                Id = 2,
+                HasPlans = false,
+                Plans = new List<PlanExportSummaryDto>
+                {
+                }
+            };
+        }
+
+        [Test]
+        public void CampaignExportAvailablePlans_ThrowsException()
+        {
+            // Arrange
+            int campaignId = 2;
+            const string expectedMessage = "This is a test exception thrown from GetFilteredPlanwithdraftExcluded.";
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignPlanForExport(It.IsAny<int>())).
+                Returns(_GetCampaignWithNoPlanExport(campaignId))
+                .Callback(() => throw new Exception(expectedMessage));
+            var tc = _BuildCampaignService();
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.CampaignExportAvailablePlans(campaignId));
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignPlanForExport(
+               It.IsAny<int>()));
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
     }
 }

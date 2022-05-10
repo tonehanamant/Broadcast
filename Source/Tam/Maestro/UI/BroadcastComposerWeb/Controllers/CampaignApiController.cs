@@ -63,6 +63,14 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignById(campaignId));
         }
+        [HttpGet]
+        [Route("CampaignExportAvailablePlans")]
+        public BaseResponse<CampaignExportDto> CampaignExportAvailablePlans(int campaignId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().CampaignExportAvailablePlans(campaignId));
+        }
 
         /// <summary>
         /// Endpoint for creating new campaigns

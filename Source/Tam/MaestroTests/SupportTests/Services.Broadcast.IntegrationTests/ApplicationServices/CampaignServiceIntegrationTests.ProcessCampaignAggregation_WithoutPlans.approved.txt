@@ -42,6 +42,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -65,7 +66,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8479
+      "VersionId": 8479,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -89,6 +91,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -112,7 +115,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8534
+      "VersionId": 8534,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -136,6 +140,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -159,7 +164,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8591
+      "VersionId": 8591,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -183,6 +189,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -206,7 +213,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8647
+      "VersionId": 8647,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -230,6 +238,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -253,7 +262,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8709
+      "VersionId": 8709,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -277,6 +287,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -300,7 +311,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8765
+      "VersionId": 8765,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -324,6 +336,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -347,7 +360,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8824
+      "VersionId": 8824,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -371,6 +385,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -394,7 +409,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8880
+      "VersionId": 8880,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -418,6 +434,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -441,7 +458,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8936
+      "VersionId": 8936,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -465,6 +483,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -488,7 +507,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 8992
+      "VersionId": 8992,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -512,6 +532,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -535,7 +556,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 9048
+      "VersionId": 9048,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -559,6 +581,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -582,7 +605,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 9104
+      "VersionId": 9104,
+      "VersionNumber": 1
     },
     {
       "AudienceId": 31,
@@ -606,6 +630,7 @@
       "HasHiatus": false,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
+      "IsDraft": false,
       "ModifiedBy": "integration_test",
       "ModifiedDate": "2020-01-01T00:00:00",
       "Name": "New Plan",
@@ -629,7 +654,8 @@
       "TotalActiveDays": 35,
       "TotalHiatusDays": 0,
       "TRP": 4.1,
-      "VersionId": 9166
+      "VersionId": 9166,
+      "VersionNumber": 1
     }
   ],
   "PlanStatuses": [

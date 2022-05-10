@@ -539,6 +539,7 @@
     <Compile Include="Clients\PlanBuyingJobQueueApiClient.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
     <Compile Include="Entities\CampaignCopyDto.cs" />
+    <Compile Include="Entities\Campaign\CampaignExportDto.cs" />
     <Compile Include="Entities\Campaign\SaveCampaignCopyDto.cs" />
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\DTO\PlanBuyingDto.cs" />
@@ -573,6 +574,7 @@
     <Compile Include="Entities\Plan\PlanCustomDaypartDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateRequestDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateResultDto.cs" />
+    <Compile Include="Entities\Plan\PlanExportSummaryDto.cs" />
     <Compile Include="Entities\Plan\PlansCopyDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultsReportRequest.cs" />
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />

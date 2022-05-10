@@ -88,6 +88,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="saveCampaignDto">The campaign dto.</param>
         /// <returns>CampaignDto object</returns>
         CampaignDto CheckCampaignExist(SaveCampaignDto saveCampaignDto);
+        /// <summary>
+        /// Gets the campaign with plans
+        /// </summary>
+        /// <param name="campaignId">campaignId</param>
+        /// <returns>returns CampaignExportDto object</returns>
+        CampaignExportDto GetCampaignPlanForExport(int campaignId);
     }
 
     /// <summary>
@@ -241,7 +247,7 @@ namespace Services.Broadcast.Repositories
         {
             var item = new CampaignWithSummary
             {
-                Campaign = _MapToDto(campaign)
+                Campaign = _MapToDto(campaign,true)
             };
             if (summary != null)
             {
@@ -300,7 +306,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private CampaignDto _MapToDto(campaign campaign)
+        private CampaignDto _MapToDto(campaign campaign, bool IsCampaignAndCampaignSummary = false)
         {
             var planVersions = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions);
 
@@ -315,7 +321,7 @@ namespace Services.Broadcast.Repositories
                 AdvertiserMasterId = campaign.advertiser_master_id,
                 AgencyId = campaign.agency_id,
                 AgencyMasterId = campaign.agency_master_id,
-                Plans = planVersions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle) && y.id == y.plan.latest_version_id)
+                Plans = planVersions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle) && y.id == (IsCampaignAndCampaignSummary == false ? y.plan.latest_version_id : y.id))
                     .Select(version =>
                     {
                         var summary = version.plan_version_summaries.Single();
@@ -355,6 +361,8 @@ namespace Services.Broadcast.Repositories
                             DraftModifiedBy = draft?.modified_by ?? draft?.created_by,
                             DraftModifiedDate = draft?.modified_date ?? draft?.created_date,
                             DraftId = draft?.id,
+                            IsDraft = version.is_draft,
+                            VersionNumber = version.version_number,
                             PlanSummaryQuarters = summary.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto
                             {
                                 Quarter = q.quarter,
@@ -579,6 +587,64 @@ namespace Services.Broadcast.Repositories
                 campaignDto.AdvertiserMasterId = campaign.advertiser_master_id;
                 campaignDto.AgencyMasterId = campaign.agency_master_id;
             }
+            return campaignDto;
+        }
+
+        public CampaignExportDto GetCampaignPlanForExport(int campaignId)
+        {
+            
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    CampaignExportDto obj = new CampaignExportDto(); 
+                    var campaign = context.campaigns
+                        .Include(x => x.plans)
+                        .Include(z => z.plans.Select(x => x.plan_versions))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths.Select(w => w.spot_lengths))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t => t.standard_dayparts))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t => t.standard_dayparts.daypart))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(t => t.plan_version_summary_quarters))))
+                        .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
+
+                     return _MapCampaignPlanForExportToDto(campaign);
+
+                });
+        }
+
+        private CampaignExportDto _MapCampaignPlanForExportToDto(campaign campaign)
+        {
+            var planVersions = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions);
+
+            var campaignDto = new CampaignExportDto
+            {
+                Id = campaign.id,                
+                Plans = planVersions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle) )
+                    .Select(version =>
+                    {
+                        var summary = version.plan_version_summaries.Single();
+                        var draft = planVersions
+                            .Where(x => x.plan_id == version.plan_id && x.is_draft == true).SingleOrDefault();
+                        return new PlanExportSummaryDto
+                        {
+                            VersionId = version.id,
+                            PlanId = version.plan.id,
+                            Name = version.plan.name,
+                            Status = (PlanStatusEnum)version.status,
+                            DraftId = draft?.id,
+                            IsDraft = version.is_draft,
+                            VersionNumber = version.version_number,
+                            PlanSummaryQuarters = summary.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto
+                            {
+                                Quarter = q.quarter,
+                                Year = q.year
+                            }).OrderBy(x => x.Year).ThenBy(x => x.Quarter).ToList()
+                        };
+                    }).ToList()
+            };
+            campaignDto.HasPlans = campaignDto.Plans.Any();
             return campaignDto;
         }
     }

@@ -41,6 +41,7 @@
       "HasHiatus": true,
       "HHCPM": 10.0000,
       "HHImpressions": 10000.0,
+      "IsDraft": false,
       "ModifiedBy": "IntegrationTestUser",
       "ModifiedDate": "2019-05-14T00:00:00",
       "Name": "New Plan",
@@ -69,7 +70,8 @@
       "TargetImpressions": 100.0,
       "TotalActiveDays": 210,
       "TotalHiatusDays": 2,
-      "TRP": 6.0
+      "TRP": 6.0,
+      "VersionNumber": 1
     }
   ],
   "PlanStatuses": [
