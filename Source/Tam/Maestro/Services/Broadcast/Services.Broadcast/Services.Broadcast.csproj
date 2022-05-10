@@ -528,6 +528,7 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
+    <Compile Include="Clients\CampaignServiceApiConfigKeys.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
     <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
@@ -576,6 +577,7 @@
     <Compile Include="Entities\Plan\PlanDaypartUpdateResultDto.cs" />
     <Compile Include="Entities\Plan\PlanExportSummaryDto.cs" />
     <Compile Include="Entities\Plan\PlansCopyDto.cs" />
+    <Compile Include="Entities\Plan\PostDSPDTO.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultsReportRequest.cs" />
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\RatingsForecastResponseDto.cs" />

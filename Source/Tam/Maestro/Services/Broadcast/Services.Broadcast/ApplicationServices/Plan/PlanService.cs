@@ -2,6 +2,7 @@
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Hangfire;
+using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
@@ -21,8 +22,11 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -317,6 +321,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IPlanIsciRepository _PlanIsciRepository;
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
+        private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
+        private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
+        private readonly IServiceClientBase _ServiceClientBase;
+        private readonly IApiTokenManager _ApiTokenManager;
+        private const string _CoreApiVersion = "api/v1";
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -336,7 +345,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IPlanMarketSovCalculator planMarketSovCalculator
             , IConfigurationSettingsHelper configurationSettingsHelper
             , ILockingEngine lockingEngine
-            , IDateTimeEngine dateTimeEngine) : base(featureToggleHelper, configurationSettingsHelper)
+            , IDateTimeEngine dateTimeEngine
+            , IServiceClientBase serviceClientBase
+            , IApiTokenManager apiTokenManager) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -368,6 +379,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _DateTimeEngine = dateTimeEngine;
             _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _IsPartialPlanSaveEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE));
+            _IsBroadcastEnableFluidityIntegrationEnabled = new Lazy<bool>(() =>
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_INTEGRATION));
+            _IsBroadcastEnableFluidityExternalIntegrationEnabled = new Lazy<bool>(() =>
+                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_EXTERNAL_INTEGRATION));
+            _ServiceClientBase = serviceClientBase;
+            _ApiTokenManager = apiTokenManager;
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -561,6 +578,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePlanBuyingResults);
                 }
 
+                if (_IsBroadcastEnableFluidityExternalIntegrationEnabled.Value && _IsBroadcastEnableFluidityIntegrationEnabled.Value)
+                {
+                    if (plan.Status == PlanStatusEnum.Contracted && plan.FluidityPercentage != null)
+                    {
+                        var requestSerialized = new PostDSPDTO
+                        {
+                            PlanId = plan.Id,
+                            PlanVersionId = plan.VersionId
+                        };
+
+                        var httpClient = _GetSecureHttpClient();
+                        var apiResult = httpClient.PostAsync($"{_CoreApiVersion}/BroadcastPlans/PublishBroadcastMessage", new StringContent(JsonConvert.SerializeObject(requestSerialized), Encoding.UTF8, "application/json")).GetAwaiter().GetResult(); 
+                        if (apiResult.IsSuccessStatusCode)
+                        {
+                            _LogInfo("Successfully Called the api For post the DSP");
+                        }
+                    }
+                }
+
                 processTimers.End(SW_KEY_POST_PLAN_SAVE);
                 processTimers.End(SW_KEY_TOTAL_DURATION);
                 var timersReport = processTimers.ToString();
@@ -617,7 +653,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                     _CalculateDeliveryDataPerAudience(plan);
                 }
-                
+
                 _SetPlanFlightDays(plan);
 
                 if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
@@ -652,7 +688,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
-                _DispatchPlanAggregation(plan, aggregatePlanSynchronously:false);
+                _DispatchPlanAggregation(plan, aggregatePlanSynchronously: false);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
 
                 return plan.Id;
@@ -666,6 +702,42 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
                 throw new Exception("Error saving the plan draft.  Please see your administrator to check logs.");
             }
+        }
+
+        private HttpClient _GetSecureHttpClient()
+        {
+            var apiBaseUrl = _GetCampaignServiceApiBaseUrl();
+            var applicationId = _GetCampaignServiceApiApplicationId();
+            var appName = _GetCampaignServiceApiAppName();
+
+            var umUrl = _GetUmUrl();
+            var accessToken = _ApiTokenManager.GetOrRefreshTokenAsync(umUrl, appName, applicationId)
+                .GetAwaiter().GetResult();
+
+            return _ServiceClientBase.GetServiceHttpClient(apiBaseUrl, applicationId, accessToken);
+        }
+
+        private string _GetCampaignServiceApiBaseUrl()
+        {
+            var apiBaseUrl = _ConfigurationSettingsHelper.GetConfigValue<string>(CampaignServiceApiConfigKeys.ApiBaseUrl);
+            return apiBaseUrl;
+        }
+
+        private string _GetCampaignServiceApiApplicationId()
+        {
+            var applicationId = _ConfigurationSettingsHelper.GetConfigValue<string>(CampaignServiceApiConfigKeys.ApplicationId);
+            return applicationId;
+        }
+
+        private string _GetCampaignServiceApiAppName()
+        {
+            var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(CampaignServiceApiConfigKeys.AppName);
+            return appName;
+        }
+
+        private string _GetUmUrl()
+        {
+            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.UmUrl);
         }
 
         internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
@@ -1125,7 +1197,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 DaypartCodeId = x.DaypartCodeId,
                 DaypartTypeId = x.DaypartTypeId,
-                PlanDaypartId=x.PlanDaypartId,
+                PlanDaypartId = x.PlanDaypartId,
                 StartTimeSeconds = x.StartTimeSeconds,
                 EndTimeSeconds = x.EndTimeSeconds,
                 IsEndTimeModified = x.IsEndTimeModified,
@@ -1521,7 +1593,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // Detect this scenario and do the default balancing.
             if ((request?.CreativeLengths?.Any(s => !s.Weight.HasValue) ?? false))
             {
-                var weightedLengths = CalculateCreativeLengthWeight(request.CreativeLengths, removeNonCalculatedItems:false);
+                var weightedLengths = CalculateCreativeLengthWeight(request.CreativeLengths, removeNonCalculatedItems: false);
                 if (weightedLengths != null)
                 {
                     request.CreativeLengths = weightedLengths;
@@ -1822,7 +1894,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //we only return the values for placeholders
                 result.RemoveAll(x => creativeLengthsWithWeightSet.Contains(x.SpotLengthId));
             }
-            
+
             return result;
         }
 
@@ -2010,9 +2082,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var customDaypartOrganizations = _PlanRepository.GetAllCustomDaypartOrganizations();
 
             if (customDaypartOrganizations == null)
-                return null;;
+                return null; ;
 
-            var result = customDaypartOrganizations.GroupBy(x=>x.OrganizationName).Select(x=>x.FirstOrDefault()).OrderBy(x=>x.OrganizationName).ToList();
+            var result = customDaypartOrganizations.GroupBy(x => x.OrganizationName).Select(x => x.FirstOrDefault()).OrderBy(x => x.OrganizationName).ToList();
 
             return result;
 

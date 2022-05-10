@@ -24,6 +24,7 @@ using System.Threading;
 using Castle.Components.DictionaryAdapter;
 using Services.Broadcast.Exceptions;
 using Tam.Maestro.Services.ContractInterfaces;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -60,6 +61,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
+        private Mock<IServiceClientBase> _ServiceClientBase;
+        private Mock<IApiTokenManager> _ApiTokenManager;
 
         [SetUp]
         public void CreatePlanService()
@@ -91,6 +94,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
+            _ServiceClientBase = new Mock<IServiceClientBase>();
+            _ApiTokenManager = new Mock<IApiTokenManager>();
 
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
@@ -221,7 +226,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _PlanMarketSovCalculator.Object,
                     _ConfigurationSettingsHelperMock.Object,
                     _LockingEngineMock.Object,
-                    _DateTimeEngineMock.Object
+                    _DateTimeEngineMock.Object,
+                    _ServiceClientBase.Object,
+                    _ApiTokenManager.Object
                 );
 
             _SpotLengthEngineMock
