@@ -2,18 +2,17 @@
   "AdvertiserName": "Acme",
   "DaypartCode": "EMN,MDN",
   "DemoString": "Women 50-54",
-  "FlightEndDate": "2021-11-10T00:00:00",
-  "FlightStartDate": "2021-11-01T00:00:00",
+  "FlightEndDate": "2021-11-10",
+  "FlightStartDate": "2021-11-01",
   "FlightString": "11/01 - 11/10/2021",
-  "PlanId": 23,
-  "PlanIsciMappings": [
+  "IsciPlanMappings": [
     {
       "Isci": "Isci123",
-      "PlanIsciMappingsFlights": [
+      "IsciPlanMappingFlights": [
         {
           "EndTime": null,
-          "FlightEndDate": "2021-11-10T00:00:00",
-          "FlightStartDate": "2021-11-01T00:00:00",
+          "FlightEndDate": "2021-11-10",
+          "FlightStartDate": "2021-11-01",
           "FlightString": "11/01 - 11/10/2021",
           "PlanIsciMappingId": 1,
           "StartTime": null
@@ -24,11 +23,11 @@
     },
     {
       "Isci": "Isci456",
-      "PlanIsciMappingsFlights": [
+      "IsciPlanMappingFlights": [
         {
           "EndTime": null,
-          "FlightEndDate": "2021-11-10T00:00:00",
-          "FlightStartDate": "2021-11-01T00:00:00",
+          "FlightEndDate": "2021-11-10",
+          "FlightStartDate": "2021-11-01",
           "FlightString": "11/01 - 11/10/2021",
           "PlanIsciMappingId": 2,
           "StartTime": null
@@ -39,11 +38,11 @@
     },
     {
       "Isci": "Isci789",
-      "PlanIsciMappingsFlights": [
+      "IsciPlanMappingFlights": [
         {
           "EndTime": null,
-          "FlightEndDate": "2021-11-10T00:00:00",
-          "FlightStartDate": "2021-11-01T00:00:00",
+          "FlightEndDate": "2021-11-10",
+          "FlightStartDate": "2021-11-01",
           "FlightString": "11/01 - 11/10/2021",
           "PlanIsciMappingId": 3,
           "StartTime": null
@@ -53,6 +52,7 @@
       "SpotLengthString": ":30"
     }
   ],
+  "PlanId": 23,
   "PlanName": "TestPlanForGetPlanIsciMappingsDetails",
   "SpotLengthString": ":30,:15"
 }
