@@ -83,8 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _StandardDaypartService.Setup(s => s.GetAllStandardDayparts())
                 .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
 
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();            
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping, false);
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             
@@ -803,7 +802,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void SaveIsciMappings_NewSimple()
         {
             var createdBy = "Test User";
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping] = true;
             var mappings = new List<IsciPlanMappingDto>
             {
                 new IsciPlanMappingDto 
@@ -1020,115 +1018,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual(expectedFlightString, result);
-        }
-
-        [Test]
-        public void GetPlanIsciMappingsDetails_WithToggleOn()
-        {
-            // Arrange
-            const int planId = 23;
-            const int campaignId = 32;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping] = true;
-
-            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<int>()))
-                .Returns(new List<PlanIsciDto>
-                {
-                    new PlanIsciDto
-                    {
-                        Id = 1,
-                        PlanId = planId,
-                        Isci = "Isci123",
-                        FlightStartDate = DateTime.Parse("11/1/2021"),
-                        FlightEndDate = DateTime.Parse("11/10/2021"),
-                    },
-                    new PlanIsciDto
-                    {
-                        Id = 2,
-                        PlanId = planId,
-                        Isci = "Isci456",
-                        FlightStartDate = DateTime.Parse("11/1/2021"),
-                        FlightEndDate = DateTime.Parse("11/10/2021"),
-                    },
-                    new PlanIsciDto
-                    {
-                        Id = 3,
-                        PlanId = planId,
-                        Isci = "Isci789",
-                        FlightStartDate = DateTime.Parse("11/1/2021"),
-                        FlightEndDate = DateTime.Parse("11/10/2021"),
-                    },
-                    new PlanIsciDto
-                    {
-                        Id = 4,
-                        PlanId = planId,
-                        Isci = "Isci123",
-                        FlightStartDate = DateTime.Parse("11/1/2021"),
-                        FlightEndDate = DateTime.Parse("11/10/2021"),
-                    },
-                    new PlanIsciDto
-                    {
-                        Id = 5,
-                        PlanId = planId,
-                        Isci = "Isci123",
-                        FlightStartDate = DateTime.Parse("11/1/2021"),
-                        FlightEndDate = DateTime.Parse("11/10/2021"),
-                    }
-
-                });
-
-            _PlanIsciRepositoryMock.Setup(s => s.GetIsciSpotLengths(It.IsAny<List<string>>()))
-                .Returns<List<string>>((iscis) => iscis
-                    .Select(i => new IsciSpotLengthDto { Isci = i, SpotLengthId = 1 })
-                    .ToList());
-
-            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(new PlanDto
-                {
-                    Id = planId,
-                    CampaignId = campaignId,
-                    ProductMasterId = new Guid("A1CA207C-250E-4C4E-ACB0-A94200693344"),
-                    Name = "TestPlanForGetPlanIsciMappingsDetails",
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto {DaypartCodeId = 1 },
-                        new PlanDaypartDto {DaypartCodeId = 2 }
-                    },
-                    FlightStartDate = DateTime.Parse("11/1/2021"),
-                    FlightEndDate = DateTime.Parse("11/10/2021"),
-                    AudienceId = 13,
-                    CreativeLengths = new List<CreativeLength>
-                    {
-                        new CreativeLength
-                        {
-                            SpotLengthId = 1,
-                            Weight = 25
-                        },
-                        new CreativeLength
-                        {
-                            SpotLengthId = 3,
-                            Weight = 75
-                        }
-                    }
-                });
-
-            _CampaignService.Setup(s => s.GetCampaignById(It.IsAny<int>()))
-                .Returns(new CampaignDto
-                {
-                    Id = campaignId,
-                    AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460")
-                });
-
-            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(new AdvertiserDto() { Name = "Acme" });
-
-            _AabEngineMock.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
-                .Returns(new ProductDto { Name = "KaBlam!!!" });
-
-            // Act
-            var result = _PlanIsciService.GetPlanIsciMappingsDetails(planId);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

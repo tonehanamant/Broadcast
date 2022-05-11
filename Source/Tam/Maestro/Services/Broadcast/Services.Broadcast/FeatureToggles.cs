@@ -34,7 +34,6 @@
         public static string ENABLE_PRICING_REMOVE_UNMATCHED = "broadcast-enable-pricing-remove-unmatched";
         public static string ENABLE_VARIOUS_GENRE_RESTRICTION = "broadcast-enable-various-genre-restriction";
         public static string ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2 = "broadcast-enable-auto-plan-status-transition-v2";
-        public static string Enable_ISCI_Mapping_Flight_Select_and_Mapping = "broadcast-enable-isci-mapping-flight-select-and-mapping";
         public static string ENABLE_FLUIDITY_EXTERNAL_INTEGRATION = "broadcast-enable-fluidity-external-integration";
         public static string ENABLE_FLUIDITY_INTEGRATION = "broadcast-enable-fluidity-integration";
     }

@@ -5,37 +5,54 @@
   "FlightEndDate": "2021-11-10T00:00:00",
   "FlightStartDate": "2021-11-01T00:00:00",
   "FlightString": "11/01 - 11/10/2021",
-  "IsciMappings": null,
-  "MappedIscis": [
+  "PlanId": 23,
+  "PlanIsciMappings": [
     {
-      "FlightEndDate": "2021-11-10T00:00:00",
-      "FlightStartDate": "2021-11-01T00:00:00",
-      "FlightString": "11/01 - 11/10/2021",
       "Isci": "Isci123",
-      "PlanIsciMappingId": 1,
+      "PlanIsciMappingsFlights": [
+        {
+          "EndTime": null,
+          "FlightEndDate": "2021-11-10T00:00:00",
+          "FlightStartDate": "2021-11-01T00:00:00",
+          "FlightString": "11/01 - 11/10/2021",
+          "PlanIsciMappingId": 1,
+          "StartTime": null
+        }
+      ],
       "SpotLengthId": 1,
       "SpotLengthString": ":30"
     },
     {
-      "FlightEndDate": "2021-11-10T00:00:00",
-      "FlightStartDate": "2021-11-01T00:00:00",
-      "FlightString": "11/01 - 11/10/2021",
       "Isci": "Isci456",
-      "PlanIsciMappingId": 2,
+      "PlanIsciMappingsFlights": [
+        {
+          "EndTime": null,
+          "FlightEndDate": "2021-11-10T00:00:00",
+          "FlightStartDate": "2021-11-01T00:00:00",
+          "FlightString": "11/01 - 11/10/2021",
+          "PlanIsciMappingId": 2,
+          "StartTime": null
+        }
+      ],
       "SpotLengthId": 1,
       "SpotLengthString": ":30"
     },
     {
-      "FlightEndDate": "2021-11-10T00:00:00",
-      "FlightStartDate": "2021-11-01T00:00:00",
-      "FlightString": "11/01 - 11/10/2021",
       "Isci": "Isci789",
-      "PlanIsciMappingId": 3,
+      "PlanIsciMappingsFlights": [
+        {
+          "EndTime": null,
+          "FlightEndDate": "2021-11-10T00:00:00",
+          "FlightStartDate": "2021-11-01T00:00:00",
+          "FlightString": "11/01 - 11/10/2021",
+          "PlanIsciMappingId": 3,
+          "StartTime": null
+        }
+      ],
       "SpotLengthId": 1,
       "SpotLengthString": ":30"
     }
   ],
-  "PlanId": 23,
   "PlanName": "TestPlanForGetPlanIsciMappingsDetails",
   "SpotLengthString": ":30,:15"
 }

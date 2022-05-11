@@ -59,7 +59,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
-        private readonly Lazy<bool> _IsEnableISCIMappingFlightSelectAndMapping;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
@@ -95,7 +94,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
-            _IsEnableISCIMappingFlightSelectAndMapping = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.Enable_ISCI_Mapping_Flight_Select_and_Mapping));
         }
 
         /// <inheritdoc />
@@ -339,12 +337,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
-            var isciMappings = mappedIscis.GroupBy(x => x.Isci).ToList();
-            var mappingsDetails = new PlanIsciMappingsDetailsDto();
-
-            if (!_IsEnableISCIMappingFlightSelectAndMapping.Value)
-            {
-                mappingsDetails = new PlanIsciMappingsDetailsDto
+            var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString }).ToList();
+            var mappingsDetails = new PlanIsciMappingsDetailsDto
                 {
                     PlanId = plan.Id,
                     PlanName = plan.Name,
@@ -355,37 +349,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     FlightStartDate = plan.FlightStartDate.Value,
                     FlightEndDate = plan.FlightEndDate.Value,
                     FlightString = flightString,
-                    MappedIscis = mappedIscis
-                };
-            }
-            else
-            {
-                mappingsDetails = new PlanIsciMappingsDetailsDto
-                {
-                    PlanId = plan.Id,
-                    PlanName = plan.Name,
-                    AdvertiserName = advertiserName,
-                    SpotLengthString = spotLengthsString,
-                    DaypartCode = daypartsString,
-                    DemoString = demoString,
-                    FlightStartDate = plan.FlightStartDate.Value,
-                    FlightEndDate = plan.FlightEndDate.Value,
-                    FlightString = flightString,
-                    IsciMappings = isciMappings.Select(isciMappingsDetail => new IsciMappingDetailsDto
+                    PlanIsciMappings = isciMappings.Select(isciMappingsDetail => new IsciMappingDetailsDto
                     {
-                        Isci = isciMappingsDetail.Key,
-                        Mappings = isciMappingsDetail.Select(mappingDetail => new MappingDetailsDto
+                        Isci = isciMappingsDetail.Key.Isci,
+                        SpotLengthString = isciMappingsDetail.Key.SpotLengthString,
+                        SpotLengthId = isciMappingsDetail.Key.SpotLengthId,
+                        PlanIsciMappingsFlights = isciMappingsDetail.Select(mappingDetail => new MappingDetailsDto
                         {
-                            MappingId = mappingDetail.PlanIsciMappingId,
-                            Length = mappingDetail.SpotLengthId,
-                            StartDate = mappingDetail.FlightStartDate,
-                            EndDate = mappingDetail.FlightEndDate,
+                            PlanIsciMappingId = mappingDetail.PlanIsciMappingId,
+                            FlightStartDate = mappingDetail.FlightStartDate,
+                            FlightEndDate = mappingDetail.FlightEndDate,
+                            FlightString = mappingDetail.FlightString,
                             StartTime = null,
                             EndTime = null
                         }).ToList()
                     }).ToList(),
                 };
-            }
             return mappingsDetails;
         }
 
