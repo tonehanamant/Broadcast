@@ -8,6 +8,7 @@ namespace Services.Broadcast.Entities.Isci
     {
         public int PlanId { get; set; }
         public string Isci { get; set; }
+        public int SpotLengthId { get; set; }
         public List<IsciPlanMappingFlightsDto> IsciPlanMappingFlights { get; set; }
 
     public override bool Equals(object obj)

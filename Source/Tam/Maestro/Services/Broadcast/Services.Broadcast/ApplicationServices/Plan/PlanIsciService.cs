@@ -59,7 +59,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
-        private readonly IReelIsciRepository _ReelIsciRepository;
         private readonly Lazy<bool> _IsEnableISCIMappingFlightSelectAndMapping;
 
         /// <summary>
@@ -87,8 +86,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-            _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();
-            _ReelIsciRepository = dataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
+            _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();            
 
             _StandardDaypartService = standardDaypartService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -233,7 +231,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
         }
 
-
         private int _HandleDeleteIsciPlanMapping(List<int> toDelete, string deletedBy, DateTime deletedAt)
         {
             if (!toDelete.Any())
@@ -251,212 +248,62 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return 0;
             }
-            var savedCount = 0;
-            var unDeletedCount = 0;
-            if (!_IsEnableISCIMappingFlightSelectAndMapping.Value)
-            {
-                var dedupedListMappings = _RemoveDuplicateListItemMappings(mappings);
-                var flightedMappings = _PopulateIsciPlanMappingFlights(dedupedListMappings);
-                var toSaveMappings = _RemoveDuplicateDatabaseMappings(flightedMappings);
-                var separatedMappings = _SeparateSoftDeletedIsciMappings(toSaveMappings);
-
-                var iscis = mappings.Select(s => s.Isci).Distinct().ToList();
-                var allReelIscis = _ReelIsciRepository.GetReelIscis(iscis);
-                if (separatedMappings.ToUnDeleteIds.Any())
-                {
-                    unDeletedCount = _PlanIsciRepository.UnDeleteIsciPlanMappings(separatedMappings.ToUnDeleteIds);
-                }
-
-                if (separatedMappings.ToSave.Any())
-                {
-                    separatedMappings.ToSave.ForEach(m =>
-                    m.SpotLengthId = allReelIscis.FirstOrDefault(s => s.Isci.Equals(m.Isci)).SpotLengthId
-                        );
-                    savedCount = _PlanIsciRepository.SaveIsciPlanMappings(separatedMappings.ToSave, createdBy, createdAt);
-                }
-            }
-            else
-            {
-                List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
-                savedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);
-            }
-            var totalChangedCount = unDeletedCount + savedCount;
+                  
+            List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
+            var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);            
             return totalChangedCount;
         }
 
-        internal IsciPlanMappingModifiedCountsDto _HandleModifiedIsciPlanMappings(List<IsciPlanModifiedMappingDto> modified, DateTime modifiedAt, string modifiedBy)
+        internal int _HandleModifiedIsciPlanMappings(List<IsciPlanModifiedMappingDto> modified, DateTime modifiedAt, string modifiedBy)
         {
-            var duplicateCount = 0;
-            var noDuplicateCount = 0;
-            var noDuplicateList = new List<PlanIsciDto>();
-            var duplicateList = new List<PlanIsciDto>();
-            var result = new IsciPlanMappingModifiedCountsDto();
+            var modifiedCount = 0;
+            var toModifyList = new List<PlanIsciDto>();
 
             if (!modified.Any())
             {
-                return result;
+                return modifiedCount;
             }
 
-            var potentialDuplicates = _PlanIsciRepository.GetPlanIsciDuplicates(modified);
                 modified.ForEach(m =>
-            {
-                if (!potentialDuplicates.Any())
+            {                
+                var isci = _PlanIsciRepository.GetPlanIscisByMappingId(m.PlanIsciMappingId);
+                isci.ForEach(isc =>
                 {
-                    var isci = _PlanIsciRepository.GetPlanIscisByMappingId(m.PlanIsciMappingId);
-                    noDuplicateList = isci.Select(p => new PlanIsciDto
-                    {
-                        Id = m.PlanIsciMappingId,
-                        PlanId = p.PlanId,
-                        Isci = p.Isci,
-                        FlightStartDate = m.FlightStartDate,
-                        FlightEndDate = m.FlightEndDate
-                    }).ToList();
-                }
-                else
-                {
-                    noDuplicateList = potentialDuplicates
-                        .Where(p => p.DeletedAt != null)
-                        .Select(p => new PlanIsciDto
-                        {
-                            Id = m.PlanIsciMappingId,
-                            PlanId = p.PlanId,
-                            Isci = p.Isci,
-                            FlightStartDate = m.FlightStartDate,
-                            FlightEndDate = m.FlightEndDate
-                        }).ToList();
-
-                    duplicateList = potentialDuplicates
-                        .Where(p => p.DeletedAt == null)
-                        .Select(p => new PlanIsciDto
-                        {
-                            Id = p.Id,
-                            PlanId = p.PlanId,
-                            Isci = p.Isci,
-                            FlightStartDate = m.FlightStartDate,
-                            FlightEndDate = m.FlightEndDate
-                        }).ToList();
-                }
+                    var toModifyItem = new PlanIsciDto();
+                    toModifyItem.Id = m.PlanIsciMappingId;
+                    toModifyItem.PlanId = isc.PlanId;
+                    toModifyItem.Isci = isc.Isci;
+                    toModifyItem.FlightStartDate = m.FlightStartDate;
+                    toModifyItem.FlightEndDate = m.FlightEndDate;
+                    toModifyItem.SpotLengthId = isc.SpotLengthId;
+                    toModifyList.Add(toModifyItem);
+                });              
             });           
 
-            if (noDuplicateList.Any())
+            if (toModifyList.Any())
             {
-                noDuplicateCount = _PlanIsciRepository.UpdateIsciPlanMappings(noDuplicateList, modifiedAt, modifiedBy);
-            }
-
-            if (duplicateList.Any())
-            {
-                duplicateCount = _PlanIsciRepository.UpdateIsciPlanMappings(duplicateList, modifiedAt, modifiedBy);
-            }
-
-            result = new IsciPlanMappingModifiedCountsDto
-            {
-                TotalChangedCount = noDuplicateCount + duplicateCount,
-                NoDuplicateCount = noDuplicateCount,
-                DuplicateCount = duplicateCount
-            };
-
-            return result;
+                modifiedCount = _PlanIsciRepository.UpdateIsciPlanMappings(toModifyList, modifiedAt, modifiedBy);
+            }           
+            return modifiedCount;
         }
-
-        internal IsciPlanMappingModifiedCountsDto _HandleEditedIsciPlanMappings(List<IsciPlanEditMappingDto> modified, DateTime modifiedAt, string modifiedBy)
-        {
-            var saveCount = 0;
-            var modifiedCount = 0;
-            var editList = new List<PlanIsciDto>();
-            List<PlanIsciDto> toSaveList = new List<PlanIsciDto>();
-            var result = new IsciPlanMappingModifiedCountsDto();
-
-            if (!modified.Any())
-            {
-                return result;
-            }
-            modified.ForEach(m =>
-                {
-                    var flightMappingList = m.IsciPlanMappingFlights.ToList();
-                    flightMappingList.ForEach(s =>
-                    {
-                        var editItem = new PlanIsciDto();
-                        if ((s.MappingId ?? 0) != 0)
-                        {
-                            editItem.Id = s.MappingId ?? 0;
-                            editItem.PlanId = m.PlanId;
-                            editItem.Isci = m.Isci;
-                            editItem.FlightStartDate = s.FlightStartDate;
-                            editItem.FlightEndDate = s.FlightEndDate;
-                            editItem.SpotLengthId = s.SpotLengthId;
-                            editList.Add(editItem);
-                        }
-                        else
-                        {
-                            editItem.Id = s.MappingId ?? 0;
-                            editItem.PlanId = m.PlanId;
-                            editItem.Isci = m.Isci;
-                            editItem.FlightStartDate = s.FlightStartDate;
-                            editItem.FlightEndDate = s.FlightEndDate;
-                            editItem.SpotLengthId = s.SpotLengthId;
-                            toSaveList.Add(editItem);
-                        }
-                    });
-                });
-
-            if (editList.Any())
-            {
-                modifiedCount = _PlanIsciRepository.UpdateIsciPlanMappings(editList, modifiedAt, modifiedBy);
-            }
-            if (toSaveList.Any())
-            {
-                saveCount = _PlanIsciRepository.SaveIsciPlanMappings(toSaveList, modifiedBy, modifiedAt);
-            }
-
-            result = new IsciPlanMappingModifiedCountsDto
-            {
-                TotalChangedCount = modifiedCount + saveCount,
-                NoDuplicateCount = modifiedCount + saveCount,
-                DuplicateCount = 0
-            };
-
-            return result;
-        }
-
+    
         public bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy)
         {
             var createdAt = _DateTimeEngine.GetCurrentMoment();
             var deletedAt = _DateTimeEngine.GetCurrentMoment();
-            var modifiedAt = _DateTimeEngine.GetCurrentMoment();
-            IsciPlanMappingModifiedCountsDto modifiedCount = null;
+            var modifiedAt = _DateTimeEngine.GetCurrentMoment();           
 
             var isciPlanMappingsDeletedCount = _HandleDeleteIsciPlanMapping(saveRequest.IsciPlanMappingsDeleted, createdBy, deletedAt);
             _LogInfo($"{isciPlanMappingsDeletedCount } IsciPlanMappings are deleted.");
 
             var addedCount = _HandleNewIsciPlanMapping(saveRequest.IsciPlanMappings, createdBy, createdAt);
             _LogInfo($"{addedCount} IsciPlanMappings were added.");
-            if (!_IsEnableISCIMappingFlightSelectAndMapping.Value)
-            {
-                modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
-            }
-            else
-            {
-                modifiedCount = _HandleEditedIsciPlanMappings(saveRequest.IsciPlanMappingsEdited, modifiedAt, createdBy);
-            }
+            
+               var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
+           
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
 
             return true;
-        }
-
-        /// <summary>
-        /// Removes duplicate entries from the given list.
-        /// </summary>
-        private List<IsciPlanMappingDto> _RemoveDuplicateListItemMappings(List<IsciPlanMappingDto> mappings)
-        {
-            var result = new List<IsciPlanMappingDto>();
-            mappings.ForEach(m =>
-            {
-                if (!result.Any(s => s.PlanId.Equals(m.PlanId) && s.Isci.Equals(m.Isci)))
-                {
-                    result.Add(m);
-                }
-            });
-            return result;
         }
 
         /// <summary>
@@ -473,118 +320,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     itemToAdd.PlanId = m.PlanId;
                     itemToAdd.FlightStartDate = flight.FlightStartDate;
                     itemToAdd.FlightEndDate = flight.FlightEndDate;
-                    itemToAdd.SpotLengthId = flight.SpotLengthId;
+                    itemToAdd.SpotLengthId = m.SpotLengthId;
                     itemToAdd.Isci = m.Isci;
                     result.Add(itemToAdd);
                 }
             });
             return result;
         }
-        private SeparatedMappings _SeparateSoftDeletedIsciMappings(List<PlanIsciDto> flightedMappings)
-        {
-            var result = new SeparatedMappings();
-            var planIds = flightedMappings.Select(m => m.PlanId).Distinct().ToList();
-            var softDeletedIscis = _PlanIsciRepository.GetDeletedPlanIscis(planIds);
-
-            foreach (var candidate in softDeletedIscis)
-            {
-                foreach (var mapping in flightedMappings)
-                {
-                    if (mapping.Equals(candidate))
-                    {
-                        result.ToUnDeleteIds.Add(candidate.Id);
-                        // set the id to indicate we can soft delete it
-                        mapping.Id = candidate.Id;
-                    }
-                }
-            }
-
-            result.ToSave = flightedMappings;
-            result.ToSave.RemoveAll(s => s.Id > 0);
-            return result;
-        }
-
-        private class SeparatedMappings
-        {
-            public List<PlanIsciDto> ToSave { get; set; } = new List<PlanIsciDto>();
-            public List<int> ToUnDeleteIds { get; set; } = new List<int>();
-        }
-
-        /// <summary>
-        /// Removes the list items if already exist in teh database.
-        /// </summary>
-        private List<PlanIsciDto> _RemoveDuplicateDatabaseMappings(List<PlanIsciDto> mappings)
-        {
-            var planIds = mappings.Select(s => s.PlanId).Distinct().ToList();
-            var planIscis = _PlanIsciRepository.GetPlanIscis(planIds);
-
-            var result = new List<PlanIsciDto>();
-
-            mappings.ForEach(m =>
-            {
-                if (!planIscis.Any(s =>
-                    s.PlanId.Equals(m.PlanId) &&
-                    s.Isci.Equals(m.Isci) &&
-                    _GetOverlappingDateRange(new DateRange(m.FlightStartDate, m.FlightEndDate)
-                        , new DateRange(s.FlightStartDate, s.FlightEndDate)) != null
-                    ))
-                {
-                    result.Add(m);
-                }
-            });
-            return result;
-        }
-
-        /// <summary>
-        /// Populates the mappings flight dates.  Creates multiple entries if needed.
-        /// </summary>
-        private List<PlanIsciDto> _PopulateIsciPlanMappingFlights(List<IsciPlanMappingDto> isciPlanMappings)
-        {
-            var result = new List<PlanIsciDto>();
-
-            var iscis = isciPlanMappings.Select(s => s.Isci).Distinct().ToList();
-            var allReelIscis = _ReelIsciRepository.GetReelIscis(iscis);
-
-            foreach (var mapping in isciPlanMappings)
-            {
-                var plan = _PlanService.GetPlan(mapping.PlanId);
-                var reelIsciDetails = allReelIscis.Where(s => s.Isci.Equals(mapping.Isci)).ToList();
-
-                var fullMappings = _PopulateIsciPlanMappingFlightsForMapping(plan.Id, plan.FlightStartDate.Value, plan.FlightEndDate.Value, reelIsciDetails);
-
-                result.AddRange(fullMappings);
-            }
-
-            return result;
-        }
-
-        internal List<PlanIsciDto> _PopulateIsciPlanMappingFlightsForMapping(int planId, DateTime planFlightStartDate, DateTime planFlightEndDate,
-            List<ReelIsciDto> reelIsciDetails)
-        {
-            var result = new List<PlanIsciDto>();
-
-            foreach (var reelIsci in reelIsciDetails)
-            {
-                var overlap = _GetOverlappingDateRange(new DateRange(planFlightStartDate, planFlightEndDate),
-                    new DateRange(reelIsci.ActiveStartDate, reelIsci.ActiveEndDate));
-
-                if (overlap.IsEmpty())
-                {
-                    continue;
-                }
-
-                result.Add(new PlanIsciDto
-                {
-                    PlanId = planId,
-                    Isci = reelIsci.Isci,
-                    FlightStartDate = overlap.Start.Value,
-                    FlightEndDate = overlap.End.Value
-                });
-            }
-
-            return result;
-        }
-
         public PlanIsciMappingsDetailsDto GetPlanIsciMappingsDetails(int planId)
         {
             var plan = _PlanService.GetPlan(planId);

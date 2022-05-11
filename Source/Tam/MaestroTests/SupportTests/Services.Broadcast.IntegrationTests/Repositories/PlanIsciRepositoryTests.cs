@@ -390,11 +390,12 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         {
                             PlanId = 7009,
                             Isci= "AE67VR14",
+                             SpotLengthId= 1,
                             IsciPlanMappingFlights = new List<IsciPlanMappingFlightsDto>
                             { 
                                 new IsciPlanMappingFlightsDto()
                                 { 
-                                 SpotLengthId= 1
+                                
                                 }
                             }
                         }

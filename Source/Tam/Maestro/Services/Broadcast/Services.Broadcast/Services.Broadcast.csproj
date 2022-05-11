@@ -552,8 +552,6 @@
     <Compile Include="Entities\InventoryMarketAffiliates\MarketInventoryDto.cs" />
     <Compile Include="Entities\Isci\IsciMappedPlanCountDto.cs" />
     <Compile Include="Entities\Isci\IsciMappingDetailsDto.cs" />
-    <Compile Include="Entities\Isci\IsciPlanEditMappingDto.cs" />
-    <Compile Include="Entities\Isci\IsciPlanMappingEditFlightsDto.cs" />
     <Compile Include="Entities\Isci\IsciPlanMappingFlightsDto.cs" />
     <Compile Include="Entities\Isci\MappingDetailsDto.cs" />
     <Compile Include="Entities\Isci\PlanIsciMappingsDetailsDto.cs" />

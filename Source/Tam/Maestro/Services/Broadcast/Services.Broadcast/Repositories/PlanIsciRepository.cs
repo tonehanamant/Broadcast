@@ -519,7 +519,8 @@ namespace Services.Broadcast.Repositories
                         PlanId = x.plan_id,
                         Isci = x.isci,
                         FlightStartDate = x.flight_start_date,
-                        FlightEndDate = x.flight_end_date
+                        FlightEndDate = x.flight_end_date,
+                        SpotLengthId=x.spot_length_id
                     })
                     .ToList();
                 return result;
