@@ -544,7 +544,6 @@ namespace Services.Broadcast.Repositories
                 AgencyMasterId = Convert.ToString(campaign.agency_master_id),
                 Plans = campaign.plans.Where(plan => !(plan.deleted_at.HasValue)).SelectMany(x => x.plan_versions
                             .Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle)))
-                                .Where(x => x.id == x.plan.latest_version_id)
                     .Select(version =>
                     {
                         return new PlansCopyDto
@@ -559,6 +558,9 @@ namespace Services.Broadcast.Repositories
                             Budget = version.budget,
                             SpotLengths = version.plan_version_creative_lengths.Select(x => x.spot_lengths.length).ToList(),
                             Status = (PlanStatusEnum)version.status,
+                            VersionId = version.id,
+                            IsDraft = version.is_draft,
+                            LatestVersionId =version.plan.latest_version_id
                         };
                     }).ToList()
             };

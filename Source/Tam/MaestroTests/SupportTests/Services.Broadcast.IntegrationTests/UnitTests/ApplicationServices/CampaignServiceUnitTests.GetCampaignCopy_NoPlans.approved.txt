@@ -1,0 +1,7 @@
+{
+  "AdvertiserMasterId": "20622E29-96DA-4F94-870D-AD83CC2E1335",
+  "AgencyMasterId": "68169E0A-98E8-4471-9AFD-37F71946E923",
+  "Id": 2,
+  "Name": "PS - Campaign",
+  "Plans": null
+}

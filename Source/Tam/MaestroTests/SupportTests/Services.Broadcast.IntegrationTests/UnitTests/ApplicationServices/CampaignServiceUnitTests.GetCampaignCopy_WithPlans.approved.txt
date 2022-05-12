@@ -1,0 +1,53 @@
+{
+  "AdvertiserMasterId": "20622E29-96DA-4F94-870D-AD83CC2E1335",
+  "AgencyMasterId": "68169E0A-98E8-4471-9AFD-37F71946E923",
+  "Id": 2,
+  "Name": "PS - Campaign",
+  "Plans": [
+    {
+      "Budget": null,
+      "CPM": null,
+      "EndDate": "06/26/2022 12:00:00 AM",
+      "Impressions": null,
+      "IsDraft": false,
+      "LatestVersionId": 2355,
+      "Name": "PS-2001",
+      "ProductMasterId": "D54EEDA7-DE7A-4866-8A5D-5C1B6176005B",
+      "SourcePlanId": 574,
+      "SpotLengths": null,
+      "StartDate": "05/22/2022 12:00:00 AM",
+      "Status": 0,
+      "VersionId": 2354
+    },
+    {
+      "Budget": null,
+      "CPM": null,
+      "EndDate": "06/26/2022 12:00:00 AM",
+      "Impressions": null,
+      "IsDraft": false,
+      "LatestVersionId": 2347,
+      "Name": "plan-2002",
+      "ProductMasterId": "D54EEDA7-DE7A-4866-8A5D-5C1B6176005B",
+      "SourcePlanId": 575,
+      "SpotLengths": null,
+      "StartDate": "05/02/2022 12:00:00 AM",
+      "Status": 0,
+      "VersionId": 2347
+    },
+    {
+      "Budget": null,
+      "CPM": null,
+      "EndDate": "06/26/2022 12:00:00 AM",
+      "Impressions": null,
+      "IsDraft": false,
+      "LatestVersionId": 2356,
+      "Name": "2004",
+      "ProductMasterId": "D54EEDA7-DE7A-4866-8A5D-5C1B6176005B",
+      "SourcePlanId": 578,
+      "SpotLengths": null,
+      "StartDate": "05/02/2022 12:00:00 AM",
+      "Status": 0,
+      "VersionId": 2350
+    }
+  ]
+}

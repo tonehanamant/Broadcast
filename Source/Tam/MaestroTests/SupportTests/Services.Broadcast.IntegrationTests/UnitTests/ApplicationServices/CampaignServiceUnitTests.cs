@@ -3387,5 +3387,114 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                It.IsAny<int>()));
             Assert.AreEqual(expectedMessage, caught.Message);
         }
+
+        [Test]
+        public void GetCampaignCopy_WithPlans()
+        {
+            // Arrange
+            int campaignId = 2;
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignCopy(It.IsAny<int>())).Returns(_GetCampaignCopyWithPlans(campaignId));
+            var tc = _BuildCampaignService();
+            // Act
+            var result = tc.GetCampaignCopy(campaignId);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        private static CampaignCopyDto _GetCampaignCopyWithPlans(int campaignId)
+        {
+            return new CampaignCopyDto
+            {
+                Id = 2,
+                Name = "PS - Campaign",
+                AdvertiserMasterId = "20622E29-96DA-4F94-870D-AD83CC2E1335",
+                AgencyMasterId = "68169E0A-98E8-4471-9AFD-37F71946E923",
+                Plans = new List<PlansCopyDto>
+                    {
+                        new PlansCopyDto
+                        {
+                            SourcePlanId = 574,
+                            Name = "PS-2001",
+                            ProductMasterId = "D54EEDA7-DE7A-4866-8A5D-5C1B6176005B",
+                            StartDate = "05/22/2022 12:00:00 AM",
+                            EndDate = "06/26/2022 12:00:00 AM",
+                            VersionId = 2354,
+                            IsDraft = false,
+                            LatestVersionId =2355
+                        },
+                        new PlansCopyDto
+                        {
+                           SourcePlanId = 575,
+                            Name = "plan-2002",
+                            ProductMasterId = "D54EEDA7-DE7A-4866-8A5D-5C1B6176005B",
+                            StartDate = "05/02/2022 12:00:00 AM",
+                            EndDate = "06/26/2022 12:00:00 AM",
+                            VersionId = 2347,
+                            IsDraft = false,
+                            LatestVersionId =2347
+                        },
+                        new PlansCopyDto
+                        {
+                           SourcePlanId = 578,
+                            Name = "2004",
+                            ProductMasterId = "D54EEDA7-DE7A-4866-8A5D-5C1B6176005B",
+                            StartDate = "05/02/2022 12:00:00 AM",
+                            EndDate = "06/26/2022 12:00:00 AM",
+                            VersionId = 2350,
+                            IsDraft = false,
+                            LatestVersionId =2356
+                        },
+                        new PlansCopyDto
+                        {
+                           SourcePlanId = 604,
+                            Name = "Srikanth",
+                            ProductMasterId = null,
+                            StartDate = "05/02/2022 12:00:00 AM",
+                            EndDate = "06/26/2022 12:00:00 AM",
+                            VersionId = 2392,
+                            IsDraft = true,
+                            LatestVersionId = 2392
+                        }
+                    }
+            };
+        }
+
+        [Test]
+        public void GetCampaignCopy_NoPlans()
+        {
+            // Arrange
+            int campaignId = 2;
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignCopy(It.IsAny<int>())).Returns(_GetCampaignCopyWithNoPlans(campaignId));
+            var tc = _BuildCampaignService();
+            // Act
+            var result = tc.GetCampaignCopy(campaignId);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        private static CampaignCopyDto _GetCampaignCopyWithNoPlans(int campaignId)
+        {
+            return new CampaignCopyDto
+            {
+                Id = 2,
+                Name = "PS - Campaign",
+                AdvertiserMasterId = "20622E29-96DA-4F94-870D-AD83CC2E1335",
+                AgencyMasterId = "68169E0A-98E8-4471-9AFD-37F71946E923",
+                Plans =null
+            };
+        }
+
+        [Test]
+        public void GetCampaignCopy_ThrowsException()
+        {
+            // Arrange
+            int campaignId = 2;
+            const string expectedMessage = "This is a test exception thrown from GetCampaignCopy.";
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignCopy(It.IsAny<int>())).
+                Returns(_GetCampaignCopyWithPlans(campaignId)).Callback(() => throw new Exception(expectedMessage));
+            var tc = _BuildCampaignService();
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.GetCampaignCopy(campaignId));
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
     }
 }

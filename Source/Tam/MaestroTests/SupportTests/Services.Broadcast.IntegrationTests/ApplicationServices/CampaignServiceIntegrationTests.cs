@@ -1093,6 +1093,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
             }
         }
+
+        [Test]
+        [Category("short_running")]
+        public void GetCampaignCopy_WithDraftExcluded()
+        {
+            var campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                var foundCampaign = _CampaignService.GetCampaignCopy(campaignId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
     }
 }
 

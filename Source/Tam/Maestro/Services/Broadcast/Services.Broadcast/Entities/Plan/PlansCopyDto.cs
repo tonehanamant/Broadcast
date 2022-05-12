@@ -19,6 +19,23 @@ namespace Services.Broadcast.Entities.Plan
         public decimal? Budget { get; set; }
         public List<int> SpotLengths { get; set; }
         public PlanStatusEnum Status { get; set; }
+        /// <summary>
+        /// Gets or sets the version identifier.
+        /// </summary>
+        /// <value>
+        /// The version identifier.
+        /// </value>
+        public int VersionId { get; set; }
+
+
+        /// <summary>
+        /// Specify whether Plan has saved as draft
+        /// </summary>
+        public bool? IsDraft { get; set; }
+        /// <summary>
+        /// Gets or sets the latest version id in the plan table that matches with version id
+        /// </summary>
+        public int LatestVersionId { get; set; }
 
     }
 }
