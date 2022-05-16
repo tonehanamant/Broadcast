@@ -116,6 +116,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_BUYING_NAVIGATION_PANEL_TOOLS, true);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             var testClass = new PlanBuyingInventoryEngineTestClass(
@@ -1400,6 +1401,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void ProjectsImpressions_WhenGatheringInventory_ForBuying_v3()
         {
             // Arrange
+            
             var parameters = new ProgramInventoryOptionalParametersDto();
             var inventorySourceIds = new List<int>();
             var diagnostic = new PlanBuyingJobDiagnostic();

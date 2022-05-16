@@ -746,14 +746,24 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<PlanBuyingInventoryProgram> programs,
             PlanDto plan, ProgramInventoryOptionalParametersDto parameters)
         {
+            var hutBookId = plan.HUTBookId;
+            var shareBookId = plan.ShareBookId;
+
+            var enableParameterBooks = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_BUYING_NAVIGATION_PANEL_TOOLS);
+            if (enableParameterBooks)
+            {
+                hutBookId = parameters.HUTBookId;
+                shareBookId = parameters.ShareBookId;
+            }
+
             var impressionsRequest = new ImpressionsRequestDto
             {
                 // we don`t want to equivalize impressions when allows MultiLength, because this is done by the buying endpoint
                 Equivalized = false,
-                HutProjectionBookId = parameters.HUTBookId,
+                HutProjectionBookId = hutBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,
-                ShareProjectionBookId = parameters.ShareBookId,
+                ShareProjectionBookId = shareBookId,
 
                 // SpotLengthId does not matter for the buying v3, so this code is for the v2
                 SpotLengthId = plan.CreativeLengths.First().SpotLengthId

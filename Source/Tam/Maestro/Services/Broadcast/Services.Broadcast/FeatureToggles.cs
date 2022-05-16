@@ -36,5 +36,6 @@
         public static string ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2 = "broadcast-enable-auto-plan-status-transition-v2";
         public static string ENABLE_FLUIDITY_EXTERNAL_INTEGRATION = "broadcast-enable-fluidity-external-integration";
         public static string ENABLE_FLUIDITY_INTEGRATION = "broadcast-enable-fluidity-integration";
+        public static string ENABLE_BUYING_NAVIGATION_PANEL_TOOLS = "broadcast-enable-buying-navigation-panel-tools";
     }
 }
