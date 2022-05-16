@@ -851,6 +851,8 @@
           <Property Name="modified_at" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="spot_length_id" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="int" />
+          <Property Name="end_time" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_audience_daypart_vpvh">
           <Key>
@@ -18416,6 +18418,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_iscis_spot_lengths" FromRole="plan_iscis" ToRole="spot_lengths" />
+          <Property Name="start_time" Type="Int32" />
+          <Property Name="end_time" Type="Int32" />
         </EntityType>
         <Association Name="FK_plan_iscis_plans">
           <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
@@ -21667,6 +21671,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_iscis">
             <EntityTypeMapping TypeName="BroadcastModel.plan_iscis">
               <MappingFragment StoreEntitySet="plan_iscis">
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="modified_at" ColumnName="modified_at" />

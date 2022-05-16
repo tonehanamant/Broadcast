@@ -930,6 +930,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Isci = "Isci123",
                         FlightStartDate = DateTime.Parse("11/1/2021"),
                         FlightEndDate = DateTime.Parse("11/10/2021"),
+                        SpotLengthId= 1
                     },
                     new PlanIsciDto
                     {
@@ -938,6 +939,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Isci = "Isci456",
                         FlightStartDate = DateTime.Parse("11/1/2021"),
                         FlightEndDate = DateTime.Parse("11/10/2021"),
+                        SpotLengthId = 2
                     },
                     new PlanIsciDto
                     {
@@ -946,13 +948,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Isci = "Isci789",
                         FlightStartDate = DateTime.Parse("11/1/2021"),
                         FlightEndDate = DateTime.Parse("11/10/2021"),
+                        SpotLengthId=1
                     }
-                });
-
-            _PlanIsciRepositoryMock.Setup(s => s.GetIsciSpotLengths(It.IsAny<List<string>>()))
-                .Returns<List<string>>((iscis) => iscis
-                    .Select(i => new IsciSpotLengthDto {Isci = i, SpotLengthId = 1})
-                    .ToList());
+                }) ;
 
             _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto

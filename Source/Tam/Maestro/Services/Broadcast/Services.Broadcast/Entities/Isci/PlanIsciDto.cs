@@ -15,6 +15,8 @@ namespace Services.Broadcast.Entities.Isci
         public int SpotLengthId { get; set; }
         public DateTime? DeletedAt { get; set; }
         public string DeletedBy { get; set; }
+        public int? StartTime { get; set; }
+        public int? EndTime { get; set; }
 
         public override bool Equals(object obj)
         {

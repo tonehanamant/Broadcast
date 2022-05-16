@@ -122,13 +122,6 @@ namespace Services.Broadcast.Repositories
         List<PlanIsciDto> GetPlanIsciDuplicates(List<IsciPlanModifiedMappingDto> modified);
 
         /// <summary>
-        /// Gets the isci spot lengths.
-        /// </summary>
-        /// <param name="iscis">The iscis.</param>
-        /// <returns></returns>
-        List<IsciSpotLengthDto> GetIsciSpotLengths(List<string> iscis);
-
-        /// <summary>
         /// Uns the delete isci plan mappings.
         /// </summary>
         /// <param name="idsToUnDelete">The ids to un delete.</param>
@@ -253,7 +246,9 @@ namespace Services.Broadcast.Repositories
                         flight_end_date = isciPlanMapping.FlightEndDate,
                         spot_length_id= isciPlanMapping.SpotLengthId,
                         modified_at = createdAt,
-                        modified_by = createdBy
+                        modified_by = createdBy,
+                        start_time = isciPlanMapping.StartTime,
+                        end_time = isciPlanMapping.EndTime
                     });
                 });
                 
@@ -358,6 +353,8 @@ namespace Services.Broadcast.Repositories
                     foundPlan.spot_length_id = plan.SpotLengthId;
                     foundPlan.modified_at = modifiedAt;
                     foundPlan.modified_by = modifiedBy;
+                    foundPlan.start_time = plan.StartTime;
+                    foundPlan.end_time = plan.EndTime;
                     updatedCount++;
                 });
 
@@ -432,8 +429,6 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var result = (from isciMappings in context.plan_iscis
-                              join iscis in context.reel_iscis
-                              on isciMappings.isci equals iscis.isci
                               where isciMappings.plan_id == planId
                               && isciMappings.deleted_at == null
                               select new PlanIsciDto
@@ -443,6 +438,9 @@ namespace Services.Broadcast.Repositories
                                   Isci = isciMappings.isci,
                                   FlightStartDate = isciMappings.flight_start_date,
                                   FlightEndDate = isciMappings.flight_end_date,
+                                  SpotLengthId = isciMappings.spot_length_id,
+                                  StartTime = isciMappings.start_time,
+                                  EndTime = isciMappings.end_time
                               }).Distinct().ToList();
                 return result;
             });
@@ -461,25 +459,6 @@ namespace Services.Broadcast.Repositories
                 var deletedByParameter = new SqlParameter("@deletedBy", deletedBy);
                 var deletedCount = context.Database.ExecuteSqlCommand(sql, deletedAtParameter, deletedByParameter);
                 return deletedCount;
-            });
-        }
-
-        /// <inheritdoc />
-        public List<IsciSpotLengthDto> GetIsciSpotLengths(List<string> iscis)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var isciDetails = context.reel_iscis
-                    .Where(s => iscis.Contains(s.isci))
-                    .Select(s => new IsciSpotLengthDto
-                    {
-                        Isci = s.isci,
-                        SpotLengthId = s.spot_length_id
-                    })
-                    .Distinct()
-                    .ToList();
-
-                return isciDetails;
             });
         }
 
@@ -520,7 +499,9 @@ namespace Services.Broadcast.Repositories
                         Isci = x.isci,
                         FlightStartDate = x.flight_start_date,
                         FlightEndDate = x.flight_end_date,
-                        SpotLengthId=x.spot_length_id
+                        SpotLengthId=x.spot_length_id,
+                        StartTime = x.start_time,
+                        EndTime = x.end_time
                     })
                     .ToList();
                 return result;

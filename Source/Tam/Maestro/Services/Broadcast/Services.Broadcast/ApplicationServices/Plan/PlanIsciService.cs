@@ -274,6 +274,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     toModifyItem.FlightStartDate = m.FlightStartDate;
                     toModifyItem.FlightEndDate = m.FlightEndDate;
                     toModifyItem.SpotLengthId = isc.SpotLengthId;
+                    toModifyItem.StartTime = m.StartTime;
+                    toModifyItem.EndTime = m.EndTime;
                     toModifyList.Add(toModifyItem);
                 });              
             });           
@@ -320,6 +322,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     itemToAdd.FlightEndDate = flight.FlightEndDate;
                     itemToAdd.SpotLengthId = m.SpotLengthId;
                     itemToAdd.Isci = m.Isci;
+                    itemToAdd.StartTime = flight.StartTime;
+                    itemToAdd.EndTime = flight.EndTime;
                     result.Add(itemToAdd);
                 }
             });
@@ -360,8 +364,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             FlightStartDate = mappingDetail.FlightStartDate.ToString("yyyy-MM-dd"),
                             FlightEndDate = mappingDetail.FlightEndDate.ToString("yyyy-MM-dd"),
                             FlightString = mappingDetail.FlightString,
-                            StartTime = null,
-                            EndTime = null
+                            StartTime = mappingDetail.StartTime,
+                            EndTime = mappingDetail.EndTime
                         }).ToList()
                     }).ToList(),
                 };
@@ -377,24 +381,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private List<PlanMappedIsciDetailsDto> _GetIsciPlanMappingIsciDetailsDto(int planId, DateTime planStartDate, DateTime planEndDate)
         {
             var planIscis = _PlanIsciRepository.GetPlanIscis(planId);
-            var iscis = planIscis.Select(s => s.Isci).ToList();
-            var isciSpotLengths = _PlanIsciRepository.GetIsciSpotLengths(iscis);
 
             var result = planIscis.Select(i =>
             {
                 // we are using .First() here as a reel isci should never have same isci with different spot id.
-                var spotLengthId = isciSpotLengths.Where(s => s.Isci.Equals(i.Isci)).Select(s => s.SpotLengthId).First();
-                var spotLengthString = _GetSpotLengthsString(spotLengthId);
+                var spotLengthString = _GetSpotLengthsString(i.SpotLengthId);
                 var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
                 var item = new PlanMappedIsciDetailsDto
                 {
                     PlanIsciMappingId = i.Id,
                     Isci = i.Isci,
-                    SpotLengthId = spotLengthId,
+                    SpotLengthId = i.SpotLengthId,
                     SpotLengthString = spotLengthString,
                     FlightStartDate = i.FlightStartDate,
                     FlightEndDate = i.FlightEndDate,
-                    FlightString = flightString
+                    FlightString = flightString,
+                    StartTime = i.StartTime,
+                    EndTime = i.EndTime
                 };
                 return item;
             })
