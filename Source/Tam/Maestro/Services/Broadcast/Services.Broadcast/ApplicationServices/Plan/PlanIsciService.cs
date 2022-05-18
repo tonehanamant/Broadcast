@@ -350,8 +350,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     SpotLengthString = spotLengthsString,
                     DaypartCode = daypartsString,
                     DemoString = demoString,
-                    FlightStartDate = plan.FlightStartDate.Value.ToString("yyyy-MM-dd"),
-                    FlightEndDate = plan.FlightEndDate.Value.ToString("yyyy-MM-dd"),
+                    FlightStartDate = plan.FlightStartDate.Value.ToString("MM/dd/yyyy"), 
+                    FlightEndDate = plan.FlightEndDate.Value.ToString("MM/dd/yyyy"),
                     FlightString = flightString,
                     IsciPlanMappings = isciMappings.Select(isciMappingsDetail => new IsciMappingDetailsDto
                     {
@@ -361,8 +361,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         IsciPlanMappingFlights = isciMappingsDetail.Select(mappingDetail => new MappingDetailsDto
                         {
                             PlanIsciMappingId = mappingDetail.PlanIsciMappingId,
-                            FlightStartDate = mappingDetail.FlightStartDate.ToString("yyyy-MM-dd"),
-                            FlightEndDate = mappingDetail.FlightEndDate.ToString("yyyy-MM-dd"),
+                            FlightStartDate = mappingDetail.FlightStartDate.ToString("MM/dd/yyyy"),
+                            FlightEndDate = mappingDetail.FlightEndDate.ToString("MM/dd/yyyy"),
                             FlightString = mappingDetail.FlightString,
                             StartTime = mappingDetail.StartTime,
                             EndTime = mappingDetail.EndTime
