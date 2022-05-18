@@ -348,7 +348,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             IsDraft = true,
                             VersionNumber = 4
                         }
-                        
+
                     }
                     }
                 },
@@ -408,8 +408,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Quarter = 2
                 },
                 PlanStatus = (PlanStatusEnum)1
-            }, _CurrentDate)); 
-            
+            }, _CurrentDate));
+
 
             // Assert
             _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
@@ -3494,6 +3494,476 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Act
             var caught = Assert.Throws<Exception>(() => tc.GetCampaignCopy(campaignId));
             // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void GetCampaign_PlanStatusesWithDrafts()
+        {
+            // Arrange
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+            
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithPlanStatusesWithDraftsReturns(agency, advertiser));
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)));
+
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency);
+
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser);
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetCampaigns(new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Year = 2019,
+                    Quarter = 2
+                },
+                PlanStatus = PlanStatusEnum.ClientApproval
+            }, _CurrentDate);
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        private static List<CampaignWithSummary> _GetCampaignWithPlanStatusesWithDraftsReturns(AgencyDto agency, AdvertiserDto advertiser)
+        {
+            return new List<CampaignWithSummary>
+            {
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 240,
+                        Name = "PS - Campaign",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignOne.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = true,
+                        PlanStatuses = new List<PlansStatusCountDto>
+                        {
+                            new PlansStatusCountDto
+                            {
+                                 PlanStatus =(PlanStatusEnum)1,
+                                 Count =1
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)6,
+                                Count =1
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)4,
+                                Count =3
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)5,
+                                Count =2
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)6,
+                                Count =1
+                            },
+
+                        },
+                        Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2354,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2354,
+                            IsDraft = false,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2355,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 0,
+                            IsDraft = true,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 575,
+                            Name = "Plan-2002",
+                            VersionId = 2278,
+                            Status = (PlanStatusEnum)1,
+                            DraftId = 2278,
+                            IsDraft =false,
+                            VersionNumber = 1
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 607,
+                            Name = "BP-4421",
+                            VersionId = 2404,
+                            Status = (PlanStatusEnum)4,
+                            DraftId = 2404,
+                            IsDraft =true,
+                            VersionNumber = null
+                        }
+                    },
+                       
+                    },
+                    CampaignSummary = new CampaignSummaryDto
+                    {
+                        CampaignId = 240,
+                        PlanStatusCountWorking =3,
+                        PlanStatusCountReserved =1,
+                        PlanStatusCountClientApproval=0,
+                        PlanStatusCountContracted= 3,
+                        PlanStatusCountLive = 2,
+                        PlanStatusCountComplete=1,
+                        PlanStatusCountCanceled = 0,
+                        PlanStatusCountRejected=0
+                    }
+                   
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 242,
+                        Name = "ST_04-05",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignTwo.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = true,
+                         PlanStatuses = new List<PlansStatusCountDto>
+                        {
+                            new PlansStatusCountDto
+                            {
+                                 PlanStatus =(PlanStatusEnum)1,
+                                 Count =1
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)6,
+                                Count =2
+                            }
+                        },
+                        Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = 585,
+                            Name = "BP-4421",
+                            VersionId = 2402,
+                            Status = (PlanStatusEnum)6,
+                            DraftId = 2402,
+                            IsDraft = false,
+                            VersionNumber = 14
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 585,
+                            Name = "BP-4421",
+                            VersionId = 2403,
+                            Status = (PlanStatusEnum)6,
+                            DraftId = 2403,
+                            IsDraft = true,
+                            VersionNumber = 15
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 606,
+                            Name = "pankaj-001",
+                            VersionId = 2395,
+                            Status = (PlanStatusEnum)1,
+                            DraftId = 0,
+                            IsDraft =true,
+                            VersionNumber = null
+                        }
+                    }
+                    },
+                     CampaignSummary = new CampaignSummaryDto
+                    {
+                        CampaignId = 242,
+                        PlanStatusCountWorking =1,
+                        PlanStatusCountReserved =0,
+                        PlanStatusCountClientApproval=0,
+                        PlanStatusCountContracted= 0,
+                        PlanStatusCountLive = 0,
+                        PlanStatusCountComplete=6,
+                        PlanStatusCountCanceled = 0,
+                        PlanStatusCountRejected=0
+                    }
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 3,
+                        Name = "CampaignThree",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignThree.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = false
+                    }
+                }
+            };
+        }
+        [Test]
+        public void GetCampaign_PlanStatusesWithoutDrafts()
+        {
+            // Arrange
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithPlanStatusesWithoutDraftsReturns(agency, advertiser));
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)));
+
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency);
+
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser);
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetCampaigns(new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Year = 2019,
+                    Quarter = 2
+                },
+                PlanStatus = PlanStatusEnum.ClientApproval
+            }, _CurrentDate);
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        private static List<CampaignWithSummary> _GetCampaignWithPlanStatusesWithoutDraftsReturns(AgencyDto agency, AdvertiserDto advertiser)
+        {
+            return new List<CampaignWithSummary>
+            {
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 240,
+                        Name = "PS - Campaign",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignOne.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = true,
+                        PlanStatuses = new List<PlansStatusCountDto>
+                        {
+                            new PlansStatusCountDto
+                            {
+                                 PlanStatus =(PlanStatusEnum)1,
+                                 Count =1
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)6,
+                                Count =1
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)4,
+                                Count =3
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)5,
+                                Count =2
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)6,
+                                Count =1
+                            },
+
+                        },
+                        Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2354,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 2354,
+                            IsDraft = false,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 574,
+                            Name = "PS-2001",
+                            VersionId = 2355,
+                            Status = (PlanStatusEnum)5,
+                            DraftId = 0,
+                            IsDraft = true,
+                            VersionNumber = 4
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 575,
+                            Name = "Plan-2002",
+                            VersionId = 2278,
+                            Status = (PlanStatusEnum)1,
+                            DraftId = 2278,
+                            IsDraft =false,
+                            VersionNumber = 1
+                        }
+                    }
+                    },
+                    CampaignSummary = new CampaignSummaryDto
+                    {
+                        CampaignId = 240,
+                        PlanStatusCountWorking =3,
+                        PlanStatusCountReserved =1,
+                        PlanStatusCountClientApproval=0,
+                        PlanStatusCountContracted= 3,
+                        PlanStatusCountLive = 2,
+                        PlanStatusCountComplete=1,
+                        PlanStatusCountCanceled = 0,
+                        PlanStatusCountRejected=0
+                    }
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 242,
+                        Name = "ST_04-05",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for CampaignTwo.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        HasPlans = true,
+                         PlanStatuses = new List<PlansStatusCountDto>
+                        {
+                            new PlansStatusCountDto
+                            {
+                                 PlanStatus =(PlanStatusEnum)1,
+                                 Count =1
+                            },
+                            new PlansStatusCountDto
+                            {
+                                PlanStatus = (PlanStatusEnum)6,
+                                Count =2
+                            }
+                        },
+                        Plans = new List<PlanSummaryDto>
+                    {
+                        new PlanSummaryDto
+                        {
+                            PlanId = 585,
+                            Name = "BP-4421",
+                            VersionId = 2402,
+                            Status = (PlanStatusEnum)6,
+                            DraftId = 2402,
+                            IsDraft = false,
+                            VersionNumber = 14
+                        },
+                        new PlanSummaryDto
+                        {
+                            PlanId = 606,
+                            Name = "pankaj-001",
+                            VersionId = 2395,
+                            Status = (PlanStatusEnum)1,
+                            DraftId = 0,
+                            IsDraft =true,
+                            VersionNumber = null
+                        }
+                    }
+                    }
+                    ,
+                     CampaignSummary = new CampaignSummaryDto
+                    {
+                        CampaignId = 242,
+                        PlanStatusCountWorking =1,
+                        PlanStatusCountReserved =0,
+                        PlanStatusCountClientApproval=0,
+                        PlanStatusCountContracted= 0,
+                        PlanStatusCountLive = 0,
+                        PlanStatusCountComplete=6,
+                        PlanStatusCountCanceled = 0,
+                        PlanStatusCountRejected=0
+                    }
+                },
+
+            };
+        }
+        [Test]
+        public void GetCampaignWithPlanStatusesWithDrafts_ThrowsException()
+        {
+            const string expectedMessage = "This is a test exception thrown from GetCampaigns.";
+            // Arrange
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithPlanStatusesWithDraftsReturns(agency, advertiser))
+                .Callback(() => throw new Exception(expectedMessage)); 
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29))).Callback(() => throw new Exception(expectedMessage)); 
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency).Callback(() => throw new Exception(expectedMessage));
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser).Callback(() => throw new Exception(expectedMessage)); 
+            var tc = _BuildCampaignService();
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.GetCampaigns(new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Year = 2019,
+                    Quarter = 2
+                },
+                PlanStatus = PlanStatusEnum.ClientApproval
+            }, _CurrentDate));
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
             Assert.AreEqual(expectedMessage, caught.Message);
         }
     }

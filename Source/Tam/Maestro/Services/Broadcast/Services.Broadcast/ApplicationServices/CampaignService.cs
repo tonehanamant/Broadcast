@@ -257,7 +257,7 @@ namespace Services.Broadcast.ApplicationServices
             return campaigns;
         }
 
-      
+
         private DateRange _GetQuarterDateRange(QuarterDto quarter)
         {
             if (quarter == null)
@@ -323,8 +323,10 @@ namespace Services.Broadcast.ApplicationServices
             };
             campaign.Plans?.ForEach(plan => plan.HasHiatus = plan.TotalHiatusDays.HasValue && plan.TotalHiatusDays.Value > 0);
             List<PlanSummaryDto> filteredPlans = new List<PlanSummaryDto>();
-            if(campaign.Plans != null && campaign.HasPlans)
+            bool isCampaignHasDraft = false;
+            if (campaign.Plans != null && campaign.HasPlans)
             {
+                isCampaignHasDraft = campaign.Plans.Where(x => x.IsDraft == true).Count() > 0 ? true : false;
                 campaign.Plans.RemoveAll(x => x.IsDraft == true);
                 foreach (var plan in campaign.Plans)
                 {
@@ -332,7 +334,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         var latestplan = campaign.Plans.Where(x => x.PlanId == plan.PlanId && (x.IsDraft == false || x.IsDraft == null))
                                .OrderByDescending(p => p.VersionId).FirstOrDefault();
-                        if(latestplan != null)
+                        if (latestplan != null)
                         {
                             filteredPlans.Add(latestplan);
                         }
@@ -356,11 +358,36 @@ namespace Services.Broadcast.ApplicationServices
                 campaign.HHImpressions = campaignAndCampaignSummary.CampaignSummary.HHImpressions;
                 campaign.HHRatingPoints = campaignAndCampaignSummary.CampaignSummary.HHRatingPoints;
                 campaign.CampaignStatus = campaignAndCampaignSummary.CampaignSummary.CampaignStatus;
-
-                campaign.PlanStatuses = _MapToPlanStatuses(campaignAndCampaignSummary.CampaignSummary);
+                if (isCampaignHasDraft)
+                {
+                    campaign.PlanStatuses = _MapToPlanStatusesWithDraftExluded(campaign.Plans);
+                }
+                else
+                {
+                    campaign.PlanStatuses = _MapToPlanStatuses(campaignAndCampaignSummary.CampaignSummary);
+                }
             }
-
             return campaign;
+        }
+
+        private List<PlansStatusCountDto> _MapToPlanStatusesWithDraftExluded(List<PlanSummaryDto> plans)
+        {
+            var statuses = new List<PlansStatusCountDto>();
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.Working, plans);
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.Reserved, plans);
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.ClientApproval, plans);
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.Contracted, plans);
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.Live, plans);
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.Complete, plans);
+            _EvaluateAndAddPlanStatusWithDraftExluded(statuses, PlanStatusEnum.Scenario, plans);
+            return statuses;
+        }
+        private void _EvaluateAndAddPlanStatusWithDraftExluded(List<PlansStatusCountDto> planStatuses, PlanStatusEnum status, List<PlanSummaryDto> plans)
+        {
+            if (plans.Any(x => x.Status == status))
+            {
+                planStatuses.Add(new PlansStatusCountDto { PlanStatus = status, Count = plans.Count(x => x.Status == status) });
+            }
         }
 
         private List<PlansStatusCountDto> _MapToPlanStatuses(CampaignSummaryDto summary)
@@ -1022,7 +1049,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         var latestplan = campaign.Plans.Where(x => x.PlanId == plan.PlanId && (x.IsDraft == false || x.IsDraft == null))
                                 .OrderByDescending(p => p.VersionId).FirstOrDefault();
-                        if(latestplan != null)
+                        if (latestplan != null)
                         {
                             filteredPlans.Add(latestplan);
                         }
