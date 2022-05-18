@@ -632,5 +632,121 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             };
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(resultToVerify, jsonSettings));
         }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlanWithRosterIsci_Exists()
+        {
+            // Arrange
+            DateTime mediaMonthStartDate = new DateTime(2019, 10, 07);
+            DateTime mediaMonthEndDate = new DateTime(2019, 10, 07);
+            var reelIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IReelIsciRepository>();
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var Iscis = new List<ReelIsciDto>
+            {
+                new ReelIsciDto()
+                {
+                    Isci = "UniqueIsci1",
+                    SpotLengthId = 1,
+                    ActiveStartDate = new DateTime(2019, 10, 07),
+                    ActiveEndDate = new DateTime(2019, 10, 08),
+                    IngestedAt = new DateTime(2010, 10, 12),
+                    ReelIsciAdvertiserNameReferences = new List<ReelIsciAdvertiserNameReferenceDto>
+                    {
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Colgate EM"
+                        },
+                        new ReelIsciAdvertiserNameReferenceDto()
+                        {
+                            AdvertiserNameReference = "Nature's Bounty"
+                        }
+                    }
+                }
+            };
+            // Act
+            List<IsciPlanDetailDto> result;
+            using (new TransactionScopeWrapper())
+            {
+                reelIsciRepository.AddReelIscis(Iscis);
+                result = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+            }
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetAvailableIsciPlans_PlanWithRosterIsci_NotExists()
+        {
+            // Arrange
+            var createdBy = "pankaj";
+            var createdAt = DateTime.Now;
+            DateTime mediaMonthStartDate = new DateTime(2020, 02, 18);
+            DateTime mediaMonthEndDate = new DateTime(2020, 02, 19);
+            var planIsciRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
+            var planRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+
+            var planDto = new PlanDto
+            {
+                CampaignId = 1,
+                Id = 7009,
+                Equivalized = true,
+                Name = "New Plan",
+                ProductId = 1,
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
+                AudienceType = AudienceTypeEnum.Nielsen,
+                AudienceId = 31,
+                ShareBookId = 437,
+                HUTBookId = 437,
+                PostingType = PostingTypeEnum.NSI,
+                Status = PlanStatusEnum.Contracted,
+                ModifiedBy = createdBy,
+                ModifiedDate = createdAt,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                FlightStartDate = new DateTime(2020, 02, 17),
+                FlightEndDate = new DateTime(2020, 03, 02),
+                Budget = 500000m,
+                TargetImpressions = 50000000,
+                TargetCPM = 10m,
+                CoverageGoalPercent = 60,
+                TargetRatingPoints = 0.00248816152650979,
+                TargetCPP = 200951583.9999m,
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+            };
+            var isciMappings = new List<PlanIsciDto>
+            {
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci1",
+                    FlightStartDate = new DateTime(2020, 02, 17),
+                    FlightEndDate = new DateTime(2020, 03, 02),
+                    SpotLengthId = 1
+                },
+                new PlanIsciDto()
+                {
+                    PlanId = 7009,
+                    Isci = "UniqueIsci2",
+                    FlightStartDate = new DateTime(2020, 02, 17),
+                    FlightEndDate = new DateTime(2020, 03, 02),
+                    SpotLengthId = 1
+                }
+            };
+            // Act
+            List<IsciPlanDetailDto> results;
+            using (new TransactionScopeWrapper())
+            {
+                planRepository.SavePlan(planDto, createdBy, createdAt);
+                planIsciRepository.SaveIsciPlanMappings(isciMappings, createdBy, createdAt);
+                results = planIsciRepository.GetAvailableIsciPlans(mediaMonthStartDate, mediaMonthEndDate);
+            }
+            // Assert
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
+        }
     }
 }
