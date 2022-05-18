@@ -1915,13 +1915,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 // call the plancalculatebudgetbymode to adjust impressions when goal is floor and efficiency
                 var budgetResponseByModes = PlanGoalHelper.PlanCalculateBudgetByMode(weeklyBudget, impressionGoal, spotAllocationModelMode, parameters.BudgetCpmLever);
-                var fluidityMarketGoal = planBuyingParameters.FluidityPercentage.HasValue ? (double)(marketCoverageGoal * (100 - planBuyingParameters.FluidityPercentage)) / 100 : marketCoverageGoal;
+                var fluidityImpressionGoal = planBuyingParameters.FluidityPercentage.HasValue ? (double)(budgetResponseByModes.ImpressionGoal * (100 - planBuyingParameters.FluidityPercentage)) / 100 : budgetResponseByModes.ImpressionGoal;
                 var buyingWeek = new PlanBuyingApiRequestWeekDto_v3
                 {
                     MediaWeekId = mediaWeekId,
-                    ImpressionGoal = budgetResponseByModes.ImpressionGoal,
+                    ImpressionGoal = fluidityImpressionGoal,
                     CpmGoal = budgetResponseByModes.CpmGoal,
-                    MarketCoverageGoal = fluidityMarketGoal,
+                    MarketCoverageGoal = marketCoverageGoal,
                     FrequencyCap = FrequencyCapHelper.GetFrequencyCap(planBuyingParameters.UnitCapsType, planBuyingParameters.UnitCaps),
                     ShareOfVoice = shareOfVoice,
                     DaypartWeighting = _GetDaypartGoals(plan, mediaWeekId),
