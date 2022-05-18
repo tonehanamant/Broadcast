@@ -1269,6 +1269,7 @@ namespace Services.Broadcast.Repositories
                     {
                         planVersionDaypartCustomization.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
                         {
+                            plan_version_id = entity.id,
                             audience_id = vpvhForAudience.AudienceId,
                             standard_daypart_id = daypart.DaypartCodeId,
                             vpvh_type = (int)vpvhForAudience.VpvhType,
@@ -1284,6 +1285,7 @@ namespace Services.Broadcast.Repositories
                     {
                         entity.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
                         {
+                            plan_version_id = entity.id,
                             audience_id = vpvhForAudience.AudienceId,
                             standard_daypart_id = daypart.DaypartCodeId,
                             vpvh_type = (int)vpvhForAudience.VpvhType,
