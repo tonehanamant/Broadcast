@@ -2419,7 +2419,6 @@
           <Property Name="station_legacy_call_letters" Type="varchar" MaxLength="15" />
           <Property Name="spot_length_id" Type="int" />
           <Property Name="audience_id" Type="int" />
-          <Property Name="daypart_id" Type="int" />
           <Property Name="program_network" Type="varchar" MaxLength="10" />
           <Property Name="program_air_time" Type="datetime" Nullable="false" />
           <Property Name="reason_code_id" Type="int" Nullable="false" />
@@ -2435,6 +2434,8 @@
           <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="modified_at" Type="datetime" Nullable="false" />
           <Property Name="comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="daypart_code" Type="nvarchar" MaxLength="20" />
+          <Property Name="genre_name" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -6484,18 +6485,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_dayparts">
-          <End Role="dayparts" Type="Self.dayparts" Multiplicity="0..1" />
-          <End Role="spot_exceptions_out_of_specs" Type="Self.spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="dayparts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_spot_exceptions_out_of_specs_plans">
           <End Role="plans" Type="Self.plans" Multiplicity="0..1" />
           <End Role="spot_exceptions_out_of_specs" Type="Self.spot_exceptions_out_of_specs" Multiplicity="*" />
@@ -8709,10 +8698,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="audiences" EntitySet="audiences" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_dayparts" Association="Self.FK_spot_exceptions_out_of_specs_dayparts">
-            <End Role="dayparts" EntitySet="dayparts" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_plans" Association="Self.FK_spot_exceptions_out_of_specs_plans">
             <End Role="plans" EntitySet="plans" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
@@ -10568,10 +10553,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="audience" EntitySet="audiences" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_dayparts" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts">
-            <End Role="daypart" EntitySet="dayparts" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_program_genre" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre">
             <End Role="genre" EntitySet="genres" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
@@ -10671,7 +10652,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="daypart" ToRole="station_inventory_manifest_dayparts" />
           <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_daypart_defaults_dayparts1" FromRole="daypart" ToRole="standard_dayparts" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_dayparts" FromRole="daypart" ToRole="spot_exceptions_recommended_plans" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" FromRole="daypart" ToRole="spot_exceptions_out_of_specs" />
           </EntityType>
         <EntityType Name="day">
           <Key>
@@ -18460,7 +18440,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="spot_length_id" Type="Int32" />
           <Property Name="audience_id" Type="Int32" />
-          <Property Name="daypart_id" Type="Int32" />
           <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="reason_code_id" Type="Int32" Nullable="false" />
@@ -18476,8 +18455,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="daypart_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="genre_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" FromRole="spot_exceptions_out_of_specs" ToRole="daypart" />
           <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre" FromRole="spot_exceptions_out_of_specs" ToRole="genre" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
@@ -18493,18 +18473,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="spot_exceptions_out_of_specs">
               <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="daypart_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21691,6 +21659,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_out_of_specs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
+                <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="modified_at" ColumnName="modified_at" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
@@ -21706,7 +21676,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
                 <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
                 <ScalarProperty Name="program_network" ColumnName="program_network" />
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
                 <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />

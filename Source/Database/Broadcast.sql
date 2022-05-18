@@ -1260,6 +1260,42 @@ GO
 
 /*************************************** END BP-4494 ***************************************/
 
+/*************************************** START BP-4689 ***************************************/
+
+IF (OBJECT_ID('FK_spot_exceptions_out_of_specs_dayparts') IS NOT NULL)
+BEGIN
+    ALTER TABLE [dbo].[spot_exceptions_out_of_specs]
+    DROP CONSTRAINT FK_spot_exceptions_out_of_specs_dayparts
+END
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'daypart_id')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+	DROP COLUMN daypart_id
+END
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'genre_id')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+	DROP COLUMN genre_id
+END
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'daypart_code')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+	ADD daypart_code nvarchar(20) null
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'genre_name')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+	ADD  genre_name  nvarchar(40) null
+END
+GO
+
+
+/*************************************** END BP-4689 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

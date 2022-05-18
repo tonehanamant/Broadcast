@@ -351,7 +351,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBuyingInventoryTest()
         {
-            var result = _PlanBuyingService.GetBuyingInventory(1197, new BuyingInventoryGetRequestParametersDto());
+            BuyingInventoryGetRequestParametersDto parameters = new BuyingInventoryGetRequestParametersDto();
+            parameters.HUTBookId = 437;
+            parameters.ShareBookId = 437;
+            var result = _PlanBuyingService.GetBuyingInventory(1197, parameters);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -607,7 +610,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.Per30Min,
-                    MarketGroup = MarketGroupEnum.Top25
+                    MarketGroup = MarketGroupEnum.Top25,
+                    HUTBookId=437,
+                    ShareBookId=437
                 };
 
                 var job = await planBuyingService.QueueBuyingJobAsync(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");

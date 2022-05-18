@@ -571,6 +571,7 @@
     <Compile Include="Entities\Plan\CustomDaypartOrganizationDto.cs" />
     <Compile Include="Entities\Plan\FluidityCategoriesDto.cs" />
     <Compile Include="Entities\Plan\PlanCustomDaypartDto.cs" />
+    <Compile Include="Entities\Plan\PlanDaypartDetailsDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateRequestDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartUpdateResultDto.cs" />
     <Compile Include="Entities\Plan\PlanExportSummaryDto.cs" />

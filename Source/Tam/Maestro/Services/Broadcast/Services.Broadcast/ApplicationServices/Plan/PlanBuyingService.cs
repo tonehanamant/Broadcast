@@ -2347,7 +2347,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
-                MarketGroup = requestParameters.MarketGroup
+                MarketGroup = requestParameters.MarketGroup,
+                HUTBookId= requestParameters.HUTBookId,
+                ShareBookId= requestParameters.ShareBookId
             };
             var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
 

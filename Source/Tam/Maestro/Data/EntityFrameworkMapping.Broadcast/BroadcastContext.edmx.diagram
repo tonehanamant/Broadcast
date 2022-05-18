@@ -568,9 +568,8 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="33.5" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_spot_lengths" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.875" PointY="29.75" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.875" PointY="30" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_dayparts" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_program_genre" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />

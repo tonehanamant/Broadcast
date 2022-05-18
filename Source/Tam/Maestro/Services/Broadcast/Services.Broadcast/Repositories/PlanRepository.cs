@@ -58,6 +58,13 @@ namespace Services.Broadcast.Repositories
         PlanDto GetPlan(int planId, int? versionId = null);
 
         /// <summary>
+        /// Gets all the dayparts by plan id's 
+        /// </summary>
+        /// <param name="planIds">The list of plan id's.</param>        
+        /// <returns></returns>
+        List<PlanDaypartDetailsDto> GetPlanDaypartsByPlanIds(List<int> planIds);
+
+        /// <summary>
         /// Gets the plans of a campaign excluding Canceled and Rejected.
         /// </summary>
         /// <param name="campaignId">The campaign identifier.</param>
@@ -841,7 +848,7 @@ namespace Services.Broadcast.Repositories
                 PostingType = (PostingTypeEnum)arg.posting_type,
                 ShareBookId = arg.share_book_id,
                 HUTBookId = arg.hut_book_id,
-                FluidityPercentage=arg.fluidity_percentage
+                FluidityPercentage = arg.fluidity_percentage
             };
         }
 
@@ -2973,7 +2980,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var religiousRestrictionToAdd = daypartsToUpdate.Select(daypart =>
                     {
-                        int genereId = genres.Single(g => g.name == "Religious" && g.program_source_id==1).id;
+                        int genereId = genres.Single(g => g.name == "Religious" && g.program_source_id == 1).id;
                         plan_version_daypart_genre_restrictions genreRestrictions = new plan_version_daypart_genre_restrictions();
                         if (!context.plan_version_daypart_genre_restrictions.Any(f => f.plan_version_daypart_id == daypart.id && f.genre_id == genereId))
                         {
@@ -3012,7 +3019,7 @@ namespace Services.Broadcast.Repositories
                         }
                         return genreRestrictions;
                     }).ToList();
-                    paidProgramRestrictionToAdd=paidProgramRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
+                    paidProgramRestrictionToAdd = paidProgramRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
                     if (paidProgramRestrictionToAdd.Count > 0)
                     { context.plan_version_daypart_genre_restrictions.AddRange(paidProgramRestrictionToAdd); }
 
@@ -3027,7 +3034,7 @@ namespace Services.Broadcast.Repositories
                         }
                         return genreRestrictions;
                     }).ToList();
-                    spanishRestrictionToAdd= spanishRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
+                    spanishRestrictionToAdd = spanishRestrictionToAdd.Where(d => d.plan_version_daypart_id > 0).ToList();
                     if (spanishRestrictionToAdd.Count > 0)
                     { context.plan_version_daypart_genre_restrictions.AddRange(spanishRestrictionToAdd); }
                     context.SaveChanges();
@@ -3041,7 +3048,8 @@ namespace Services.Broadcast.Repositories
         public List<FluidityCategoriesDto> GetFluidityParentCategory()
         {
             return _InReadUncommitedTransaction(
-              context => {
+              context =>
+              {
                   var fluidityParentCategory = context.fluidity_categories
                     .Where(p => p.parent_category_id == null)
                     .OrderBy(p => p.category)
@@ -3054,7 +3062,8 @@ namespace Services.Broadcast.Repositories
         public List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId)
         {
             return _InReadUncommitedTransaction(
-              context => {
+              context =>
+              {
                   var fluidityChildCategory = context.fluidity_categories
                     .Where(p => p.parent_category_id == parentCategoryId)
                     .OrderBy(p => p.category)
@@ -3063,13 +3072,33 @@ namespace Services.Broadcast.Repositories
               });
         }
 
-        private FluidityCategoriesDto _MapFluidityCategoriesToDto(fluidity_categories fluidityCategories)
+        /// <inheritdoc />
+        public List<PlanDaypartDetailsDto> GetPlanDaypartsByPlanIds(List<int> planIds)
         {
-            return new FluidityCategoriesDto
+            return _InReadUncommitedTransaction(context =>
             {
-                Id = fluidityCategories.id,
-                Category = fluidityCategories.category
-            };
+                var result = (from plan in context.plans
+                                   join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
+                                   join planDaypart in context.plan_version_dayparts on planVersion.id equals planDaypart.plan_version_id
+                                   join stdDayparts in context.standard_dayparts on planDaypart.standard_daypart_id equals stdDayparts.id
+                                   where !(plan.deleted_at.HasValue) && planDaypart.plan_version_id == planVersion.id && planIds.Contains(plan.id)
+                                   select new PlanDaypartDetailsDto
+                                   {
+                                       PlanId = plan.id,
+                                       Code = stdDayparts.code,
+                                       Name = stdDayparts.name
+                                   }).ToList();
+                   return result;
+                });
+            }
+
+        private FluidityCategoriesDto _MapFluidityCategoriesToDto(fluidity_categories fluidityCategories)
+            {
+                return new FluidityCategoriesDto
+                {
+                    Id = fluidityCategories.id,
+                    Category = fluidityCategories.category
+                };
+            }
         }
     }
-}

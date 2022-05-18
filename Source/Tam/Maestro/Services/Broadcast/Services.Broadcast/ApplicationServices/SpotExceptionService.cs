@@ -160,10 +160,11 @@ namespace Services.Broadcast.ApplicationServices
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
     {
         private readonly ISpotExceptionRepository _SpotExceptionRepository;
+        private readonly IPlanRepository _PlanRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
         public SpotExceptionService(
-            IDataRepositoryFactory dataRepositoryFactory,
+            IDataRepositoryFactory dataRepositoryFactory,            
             IAabEngine aabEngine,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper,
@@ -173,6 +174,7 @@ namespace Services.Broadcast.ApplicationServices
             _SpotExceptionRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
+            _PlanRepository= dataRepositoryFactory.GetDataRepository<IPlanRepository>();
         }
 
         public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
@@ -219,7 +221,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB82TXT2H",
                         RecommendedPlanId = 215,
                         ProgramName = "Q13 news at 10",
-                        ProgramAirTime = new DateTime(2021, 10, 4),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName="Abbott Labs (Original)",
                         StationLegacyCallLetters = "KOB",
                         Cost = 675,
@@ -274,7 +276,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB82VR58",
                         RecommendedPlanId = 216,
                         ProgramName = "FOX 13 10:00 News",
-                        ProgramAirTime = new DateTime(2021, 10, 04),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName="Allergan",
                         StationLegacyCallLetters = "KSTP",
                         Cost = 700,
@@ -311,7 +313,7 @@ namespace Services.Broadcast.ApplicationServices
                     IsciName = "AB44NR58",
                     RecommendedPlanId = 217,
                     ProgramName = "TEN O'CLOCK NEWS",
-                    ProgramAirTime = new DateTime(2021, 10, 10),
+                    ProgramAirTime = new DateTime(2022, 04, 10),
                     AdvertiserName="Ally Bank",
                     StationLegacyCallLetters="KHGI",
                     Cost = 0,
@@ -348,7 +350,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB21QR58",
                         RecommendedPlanId = 218,
                         ProgramName = "Product1",
-                        ProgramAirTime = new DateTime(2021, 09, 06),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName="Ally Bank",
                         StationLegacyCallLetters="KWCH" ,
                         Cost = 987,
@@ -385,7 +387,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB44NR58",
                         RecommendedPlanId = 219,
                         ProgramName = "TProduct2",
-                        ProgramAirTime = new DateTime(2021, 09, 13),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName="Amgen",
                         StationLegacyCallLetters="WDAY" ,
                         Cost = 555,
@@ -422,7 +424,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB33PR58",
                         RecommendedPlanId = 220,
                         ProgramName = "TEN O'CLOCK NEWS",
-                        ProgramAirTime = new DateTime(2021, 09, 20),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName="Boston Scientific",
                         StationLegacyCallLetters="KPNX" ,
                         Cost = 987,
@@ -459,7 +461,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB79PR58",
                         RecommendedPlanId = 221,
                         ProgramName = "Product4",
-                        ProgramAirTime = new DateTime(2021, 09, 27),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName="Chattem",
                         StationLegacyCallLetters="KELO" ,
                         Cost = 907,
@@ -496,7 +498,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB81GR58",
                         RecommendedPlanId = 222,
                         ProgramName = "Product3",
-                        ProgramAirTime = new DateTime(2021, 09, 27),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName=null,
                         StationLegacyCallLetters="KXMC" ,
                         Cost = 453,
@@ -533,7 +535,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB87GR58",
                         RecommendedPlanId = 223,
                         ProgramName = "Product6",
-                        ProgramAirTime = new DateTime(2021, 09, 13),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName=null,
                         StationLegacyCallLetters="WTTV" ,
                         Cost = 987,
@@ -584,7 +586,7 @@ namespace Services.Broadcast.ApplicationServices
                         IsciName = "AB83PR58",
                         RecommendedPlanId = 224,
                         ProgramName = "Product8",
-                        ProgramAirTime = new DateTime(2021, 09, 06),
+                        ProgramAirTime = new DateTime(2022, 04, 10),
                         AdvertiserName=null,
                         StationLegacyCallLetters="WCCO" ,
                         Cost = 767,
@@ -630,7 +632,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="KOB",
                   SpotLengthId= 12,
                   AudienceId= 431,
-                  DaypartId= 70612,
+                  DaypartCode="EMN",
+                  GenreName="Documentary",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -639,7 +642,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   Impressions=10000,
@@ -672,7 +675,8 @@ namespace Services.Broadcast.ApplicationServices
                   SpotLengthId= 11,
                   AudienceId= 430,
                   Product="Spotify",
-                  DaypartId= 70612,
+                  DaypartCode="TDNS",
+                  GenreName="Comedy",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -681,7 +685,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -707,7 +711,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="KHGI",
                   SpotLengthId= 12,
                   AudienceId= 430,
-                  DaypartId= 70612,
+                  DaypartCode="TDNS",
+                  GenreName="Comedy",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -716,7 +721,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -742,7 +747,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="KWCH",
                   SpotLengthId= 11,
                   AudienceId= 430,
-                  DaypartId= 70612,
+                  DaypartCode="TDNS",
+                  GenreName="Comedy",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -751,7 +757,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -777,7 +783,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="WDAY",
                   SpotLengthId= 10,
                   AudienceId= 429,
-                  DaypartId= 70612,
+                  DaypartCode="ROSP",
+                  GenreName="Crime",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -812,7 +819,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="KPNX",
                   SpotLengthId= 10,
                   AudienceId= 428,
-                  DaypartId= 70612,
+                  DaypartCode="EM",
+                  GenreName="Drama",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -821,7 +829,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -847,7 +855,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="KELO",
                   SpotLengthId= 09,
                   AudienceId= 427,
-                  DaypartId= 70612,
+                  DaypartCode="EM",
+                  GenreName="Drama",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -856,7 +865,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -882,7 +891,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="KXMC",
                   SpotLengthId= 08,
                   AudienceId= 426,
-                  DaypartId= 70612,
+                  DaypartCode="EM",
+                  GenreName="Drama",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -891,7 +901,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -917,7 +927,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="WTTV",
                   SpotLengthId= 07,
                   AudienceId= 425,
-                  DaypartId= 70612,
+                  DaypartCode="EM",
+                  GenreName="Entertainment",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -926,7 +937,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -952,7 +963,8 @@ namespace Services.Broadcast.ApplicationServices
                   StationLegacyCallLetters="WCCO",
                   SpotLengthId= 06,
                   AudienceId= 424,
-                  DaypartId= 70612,
+                  DaypartCode="PT",
+                  GenreName="Horror",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -961,7 +973,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2021, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 04, 10),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -978,6 +990,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return spotExceptionsOutOfSpecs;
         }
+
 
         private string _GetAdvertiserName(Guid? masterId)
         {
@@ -1338,6 +1351,8 @@ namespace Services.Broadcast.ApplicationServices
 
             if (spotExceptionsOutOfSpecsPlanSpots?.Any() ?? false)
             {
+                var planIds = spotExceptionsOutOfSpecsPlanSpots.Select(p => p.PlanId).Distinct().ToList();
+                var daypartsList = _PlanRepository.GetPlanDaypartsByPlanIds(planIds);
                 activePlans = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision == null).ToList();
                 queuedPlans = spotExceptionsOutOfSpecsPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsOutOfSpecDecision != null).ToList();
 
@@ -1356,15 +1371,16 @@ namespace Services.Broadcast.ApplicationServices
                         TimeZone = activePlan.TimeZone,
                         Affiliate = activePlan.Affiliate,
                         Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
-                        GenreName = activePlan.ProgramGenre.Name,
+                        GenreName = activePlan.GenreName,
                         HouseIsci = activePlan.HouseIsci,
                         ClientIsci = activePlan.IsciName,
                         ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
                         ProgramName = activePlan.ProgramName,
                         SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
-                        DaypartCode = activePlan.DaypartDetail.Code,
-                        Comments = activePlan.Comments
+                        DaypartCode = activePlan.DaypartCode,
+                        Comments = activePlan.Comments,
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == activePlan.PlanId).Select(s=>s.Code).Distinct().ToList()
                     };
                 }).ToList();
 
@@ -1383,7 +1399,7 @@ namespace Services.Broadcast.ApplicationServices
                         TimeZone = queuedPlan.TimeZone,
                         Affiliate = queuedPlan.Affiliate,
                         Day = queuedPlan.ProgramAirTime.DayOfWeek.ToString(),
-                        GenreName = queuedPlan.ProgramGenre.Name,
+                        GenreName = queuedPlan.GenreName,
                         HouseIsci = queuedPlan.HouseIsci,
                         ClientIsci = queuedPlan.IsciName,
                         ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
@@ -1391,9 +1407,10 @@ namespace Services.Broadcast.ApplicationServices
                         FlightEndDate = queuedPlan.FlightEndDate.ToString(),
                         ProgramName = queuedPlan.ProgramName,
                         SpotLengthString = queuedPlan.SpotLength != null ? $":{queuedPlan.SpotLength.Length}" : null,
-                        DaypartCode = queuedPlan.DaypartDetail.Code,
+                        DaypartCode = queuedPlan.DaypartCode,
                         DecisionString = queuedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
-                        Comments = queuedPlan.Comments
+                        Comments = queuedPlan.Comments,
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == queuedPlan.PlanId).Select(s => s.Code).Distinct().ToList()
                     };
                 }).ToList();
 
@@ -1412,7 +1429,7 @@ namespace Services.Broadcast.ApplicationServices
                         TimeZone = syncedPlan.TimeZone,
                         Affiliate = syncedPlan.Affiliate,
                         Day = syncedPlan.ProgramAirTime.DayOfWeek.ToString(),
-                        GenreName = syncedPlan.ProgramGenre.Name,
+                        GenreName = syncedPlan.GenreName,
                         HouseIsci = syncedPlan.HouseIsci,
                         ClientIsci = syncedPlan.IsciName,
                         ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
@@ -1420,10 +1437,11 @@ namespace Services.Broadcast.ApplicationServices
                         FlightEndDate = syncedPlan.FlightEndDate.ToString(),
                         ProgramName = syncedPlan.ProgramName,
                         SpotLengthString = syncedPlan.SpotLength != null ? $":{syncedPlan.SpotLength.Length}" : null,
-                        DaypartCode = syncedPlan.DaypartDetail.Code,
+                        DaypartCode = syncedPlan.DaypartCode,
                         DecisionString = syncedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
                         SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDecision.SyncedAt.ToString(),
-                        Comments = syncedPlan.Comments
+                        Comments = syncedPlan.Comments,
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == syncedPlan.PlanId).Select(s => s.Code).Distinct().ToList()
                     };
                 }).ToList();
             }

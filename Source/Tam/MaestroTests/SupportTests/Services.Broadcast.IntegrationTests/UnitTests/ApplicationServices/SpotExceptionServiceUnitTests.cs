@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -21,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     {
         private SpotExceptionService _SpotExceptionService;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
+        private Mock<IPlanRepository> _PlanRepositoryMock;
         private Mock<ISpotExceptionRepository> _SpotExceptionRepositoryMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
@@ -33,14 +35,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _AabEngine = new Mock<IAabEngine>();
             _SpotExceptionRepositoryMock = new Mock<ISpotExceptionRepository>();
+            _PlanRepositoryMock = new Mock<IPlanRepository>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionRepository>())
                 .Returns(_SpotExceptionRepositoryMock.Object);
+            _DataRepositoryFactoryMock
+              .Setup(x => x.GetDataRepository<IPlanRepository>())
+              .Returns(_PlanRepositoryMock.Object);
 
-            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object,
+            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, 
                 _AabEngine.Object,
                 _FeatureToggleMock.Object,
                 _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
@@ -792,7 +798,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70642,
+                  DaypartCode="PT",
+                  GenreName="Horror",
                   Audience = new AudienceDto
                     {
                         Id = 426,
@@ -849,7 +856,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70643,
+                  DaypartCode="PT",
+                  GenreName="Horror",
                   Audience = new AudienceDto
                     {
                         Id = 426,
@@ -914,7 +922,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Product = "Nike",
                     FlightStartDate = new DateTime(2019, 12, 1),
                     FlightEndDate = new DateTime(2019, 12, 9),
-                    DaypartId= 70642,
+                    DaypartCode="PT",
+                    GenreName="Horror",
                     Audience = new AudienceDto
                     {
                         Id = 426,
@@ -976,7 +985,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70642,
+                  DaypartCode="PT",
+                  GenreName="Horror",
                   ProgramNetwork = "",
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
@@ -1027,7 +1037,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70643,
+                  DaypartCode="PT",
+                  GenreName="Horror",
                   ProgramNetwork = "",
                   ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                   IngestedAt = new DateTime(2019,1,1),
@@ -1066,7 +1077,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                   Product="Spotify",
                   FlightStartDate =  new DateTime(2018, 7, 2),
                   FlightEndDate = new DateTime(2018, 8, 2),
-                  DaypartId= 70642,
+                  DaypartCode="PT",
+                  GenreName="Horror",
                   Audience = new AudienceDto
                     {
                         Id = 426,
@@ -1277,7 +1289,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
                     HouseIsci = "289J76GN16H",
                     ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
-                    Comments = "test Comment"
+                    Comments = "test Comment",
+                    GenreName="Comedy",
+                    DaypartCode="ROSP"
                 },
             };
         }
@@ -1932,7 +1946,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotExceptionRepositoryMock
                 .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecPlanSpotsData());
-
+            _PlanRepositoryMock
+               .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+               .Returns(new List<PlanDaypartDetailsDto>
+                   {
+                        new PlanDaypartDetailsDto
+                        {
+                        PlanId=215,
+                        Code="ROSP",
+                        Name="ROS Programming"
+                        },
+                         new PlanDaypartDetailsDto
+                        {
+                        PlanId=215,
+                        Code="TDNS",
+                        Name="Total Day News and Syndication"
+                        }
+                   }
+               );
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsOutofSpecSpots(spotExceptionsOutofSpecSpotsRequest);
 
@@ -2028,6 +2059,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetOutOfSpecPlanSpotsData());
 
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+                .Returns(new List<PlanDaypartDetailsDto>
+                    { 
+                        new PlanDaypartDetailsDto
+                        {
+                        PlanId=215,
+                        Code="ROSP",
+                        Name="ROS Programming"   
+                        }
+                    }
+                );
             // Act           
             var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecMarkets(spotExceptionsOutOfSpecSpotsRequest);
 

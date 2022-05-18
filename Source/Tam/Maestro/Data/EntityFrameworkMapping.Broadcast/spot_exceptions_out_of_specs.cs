@@ -30,7 +30,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string station_legacy_call_letters { get; set; }
         public Nullable<int> spot_length_id { get; set; }
         public Nullable<int> audience_id { get; set; }
-        public Nullable<int> daypart_id { get; set; }
         public string program_network { get; set; }
         public System.DateTime program_air_time { get; set; }
         public int reason_code_id { get; set; }
@@ -46,9 +45,10 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public System.DateTime modified_at { get; set; }
         public string comment { get; set; }
+        public string daypart_code { get; set; }
+        public string genre_name { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual daypart daypart { get; set; }
         public virtual genre genre { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }

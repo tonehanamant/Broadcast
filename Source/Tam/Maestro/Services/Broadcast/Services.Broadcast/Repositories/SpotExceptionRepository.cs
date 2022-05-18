@@ -250,7 +250,8 @@ namespace Services.Broadcast.Repositories
                         house_isci = outOfSpecs.HouseIsci,
                         program_genre_id = outOfSpecs.ProgramGenre?.Id,
                         spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
-                        daypart_id = outOfSpecs.DaypartId,
+                        daypart_code = outOfSpecs.DaypartCode,
+                        genre_name= outOfSpecs.GenreName,
                         market_code = outOfSpecs.MarketCode,
                         market_rank = outOfSpecs.MarketRank,
                         ingested_by = outOfSpecs.IngestedBy,
@@ -311,8 +312,7 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart)
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)                    
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
@@ -344,8 +344,8 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions.Select(x=>x.plan_version_dayparts))
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
@@ -375,7 +375,6 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.daypart)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
@@ -402,7 +401,7 @@ namespace Services.Broadcast.Repositories
             var planVersion = spotExceptionsOutOfSpecEntity.plan?.plan_versions.First(v => v.id == spotExceptionsOutOfSpecEntity.plan.latest_version_id);
 
             var spotExceptionsOutOfSpec = new SpotExceptionsOutOfSpecsDto
-            {
+            {                
                 Id = spotExceptionsOutOfSpecEntity.id,
                 SpotUniqueHashExternal = spotExceptionsOutOfSpecEntity.spot_unique_hash_external,
                 ReasonCodeMessage = spotExceptionsOutOfSpecEntity.reason_code_message,
@@ -413,11 +412,12 @@ namespace Services.Broadcast.Repositories
                 RecommendedPlanName = spotExceptionsOutOfSpecEntity.plan?.name,
                 ProgramName = spotExceptionsOutOfSpecEntity.program_name,
                 StationLegacyCallLetters = spotExceptionsOutOfSpecEntity.station_legacy_call_letters,
+                DaypartCode= spotExceptionsOutOfSpecEntity.daypart_code,
+                GenreName = spotExceptionsOutOfSpecEntity.genre_name,
                 Affiliate = stationEntity?.affiliation,
                 Market = stationEntity?.market?.geography_name,
                 SpotLength = _MapSpotLengthToDto(spotExceptionsOutOfSpecEntity.spot_lengths),
-                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience),
-                DaypartDetail = _MapDaypartToDto(spotExceptionsOutOfSpecEntity.daypart),
+                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience),               
                 ProgramAirTime = spotExceptionsOutOfSpecEntity.program_air_time,
                 IngestedBy = spotExceptionsOutOfSpecEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecEntity.ingested_at,
