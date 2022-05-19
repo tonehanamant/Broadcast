@@ -147,6 +147,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -210,6 +213,12 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Tam.Maestro.Common.Clients, Version=18.4.1.17, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Clients.18.4.1.17\lib\net45\Tam.Maestro.Common.Clients.dll</HintPath>
+    </Reference>
+    <Reference Include="Tam.Maestro.Common.Logging, Version=18.2.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Logging.18.2.1.1\lib\net45\Tam.Maestro.Common.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.18, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.18\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
@@ -247,10 +256,6 @@
     <ProjectReference Include="..\..\BroadcastLogging\BroadcastLogging.csproj">
       <Project>{0C5E321F-B0A7-4A91-8E01-174386AF40A3}</Project>
       <Name>BroadcastLogging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common.Clients\Common.Clients.csproj">
-      <Project>{b984aaac-0379-4ddc-9a55-ef7f047d2103}</Project>
-      <Name>Common.Clients</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

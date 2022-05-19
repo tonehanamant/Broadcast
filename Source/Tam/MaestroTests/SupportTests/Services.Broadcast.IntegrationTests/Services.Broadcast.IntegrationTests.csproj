@@ -1504,10 +1504,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Maestro\Common.Clients\Common.Clients.csproj">
-      <Project>{B984AAAC-0379-4DDC-9A55-EF7F047D2103}</Project>
-      <Name>Common.Clients</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Maestro\Common.DataLayer\Common.DataLayer.csproj">
       <Project>{ee3106ac-43d6-4ea7-b439-0ca5f06f9ba7}</Project>
       <Name>Common.DataLayer</Name>

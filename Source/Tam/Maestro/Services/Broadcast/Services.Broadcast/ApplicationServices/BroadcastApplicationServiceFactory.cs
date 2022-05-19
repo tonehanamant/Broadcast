@@ -27,7 +27,6 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
-using Tam.Maestro.Common.Clients;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
 using Unity;
@@ -300,7 +299,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>(TypeLifetime.Singleton);
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>(TypeLifetime.Singleton);
             unityContainer.RegisterType<IAabCache, AabCache>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
