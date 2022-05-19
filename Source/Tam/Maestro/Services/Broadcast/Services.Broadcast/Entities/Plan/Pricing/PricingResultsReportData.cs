@@ -40,7 +40,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             PlanId = plan.Id.ToString();
             PlanVersion = $"Version {plan.VersionNumber.Value}";
 
-            _PopulateSpotAllocationTotals(allocatedSpots);
+            _PopulateSpotAllocationTotals(allocatedSpots, plan);
 
             _PopulateSpotAllocations(
                 plan,
@@ -93,7 +93,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             }
         }
 
-        private void _PopulateSpotAllocationTotals(List<PlanPricingAllocatedSpot> allocatedSpots)
+        private void _PopulateSpotAllocationTotals(List<PlanPricingAllocatedSpot> allocatedSpots, PlanDto plan)
         {
             var impressions = allocatedSpots.Sum(x => x.TotalImpressions);
             var cost = allocatedSpots.Sum(x => x.TotalCost);
@@ -103,7 +103,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
                 Spots = allocatedSpots.Sum(x => x.TotalSpots),
                 Impressions = impressions,
                 Cost = cost,
-                CPM = ProposalMath.CalculateCpm(cost, impressions)
+                CPM = ProposalMath.CalculateCpm(cost, impressions),
+                Fluidity = plan.FluidityCategory == null ? "Not Allowed" : "Allowed"
             };
         }
     }
@@ -117,6 +118,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal Cost { get; set; }
 
         public decimal CPM { get; set; }
+
+        public string Fluidity { get; set; }
     }
 
     public class SpotsAllocation

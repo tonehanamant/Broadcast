@@ -15,7 +15,8 @@ namespace Services.Broadcast.ReportGenerators.PricingResults
         private readonly string TOTAL_IMPRESSIONS_CELL = "D5";
         private readonly string TOTAL_COST_CELL = "E5";
         private readonly string TOTAL_CPM_CELL = "F5";
-        
+        private readonly string TOTAL_Fluidity_CELL = "G5";
+
         private (int Row, int Column) TableTopLeftCell = (Row: 9, Column: 1);
         private (int Row, int Column) TableTopRightCell = (Row: 9, Column: 15);
         #endregion
@@ -39,6 +40,7 @@ namespace Services.Broadcast.ReportGenerators.PricingResults
             worksheet.Cells[TOTAL_IMPRESSIONS_CELL].Value = reportData.SpotAllocationTotals.Impressions;
             worksheet.Cells[TOTAL_COST_CELL].Value = reportData.SpotAllocationTotals.Cost;
             worksheet.Cells[TOTAL_CPM_CELL].Value = reportData.SpotAllocationTotals.CPM;
+            worksheet.Cells[TOTAL_Fluidity_CELL].Value = reportData.SpotAllocationTotals.Fluidity;
         }
 
         private void _PopulateTable(ExcelWorksheet worksheet, PricingResultsReportData reportData)

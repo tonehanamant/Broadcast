@@ -75,6 +75,7 @@
   "SpotAllocationTotals": {
     "Cost": 53.0,
     "CPM": 9.298245614035087719298245600,
+    "Fluidity": "Not Allowed",
     "Impressions": 5700.0,
     "Spots": 10
   }
