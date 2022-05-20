@@ -42,6 +42,7 @@ namespace Services.Broadcast.ApplicationServices
                     Error = lockResponse.Error,
                     Key = lockResponse.Key,
                     LockedUserId = lockResponse.LockedUserId,
+                    LockedUserName = lockResponse.LockedUserName,
                     LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
                     Success = lockResponse.Success
                 };

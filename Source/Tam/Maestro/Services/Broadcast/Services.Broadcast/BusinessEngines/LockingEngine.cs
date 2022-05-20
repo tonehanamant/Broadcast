@@ -152,6 +152,7 @@ namespace Services.Broadcast.BusinessEngines
                         Success = broadcastLockResponse.Success,
                         LockTimeoutInSeconds = broadcastLockResponse.LockTimeoutInSeconds,
                         LockedUserId = broadcastLockResponse.LockedUserId,
+                        LockedUserName = broadcastLockResponse.LockedUserName,
                         Error = broadcastLockResponse.Error,
                         PlanName = planName
                     };
