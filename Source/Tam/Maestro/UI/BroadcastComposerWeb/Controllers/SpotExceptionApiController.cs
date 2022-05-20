@@ -174,5 +174,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetRecommendedPlans(spotExceptionsRecommendedPlansRequest));
         }
+
+        [HttpGet]
+        [Route("out-of-spec-genres")]
+        public BaseResponse<List<SpotExceptionsOutOfSpecGenreDto>> GetGenres(string genre = "")
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecGenres(genre));
+        }
     }
 }

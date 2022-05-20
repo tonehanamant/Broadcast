@@ -155,6 +155,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsRecommendedPlansRequest">Week start and End date</param>
         /// <returns>Return list of Active and completed Plans</returns>
         SpotExceptionsRecommendedPlansResultsDto GetRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest);
+
+        /// <summary>
+        /// Gets all genres filter by source.
+        /// </summary>
+        /// <param name="genre">genre name</param>
+        /// <returns>List of genres</returns>
+        List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenres(string genre);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -163,6 +170,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanRepository _PlanRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         public SpotExceptionService(
             IDataRepositoryFactory dataRepositoryFactory,            
             IAabEngine aabEngine,
@@ -175,6 +183,7 @@ namespace Services.Broadcast.ApplicationServices
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
             _PlanRepository= dataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
@@ -1580,6 +1589,49 @@ namespace Services.Broadcast.ApplicationServices
                 }).ToList();
             }
             return spotExceptionsRecommendedPlansResults;
+        }
+
+        /// <inheritdoc />
+        public List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenres(string genre)
+        {
+            var genres = new List<SpotExceptionsOutOfSpecGenreDto>();
+            if (string.IsNullOrEmpty(genre))
+            {
+                genres = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecGenresBySourceId();
+                _RemoveUnmatched(genres);
+                if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_VARIOUS_GENRE_RESTRICTION))
+                {
+                    _RemoveVarious(genres);
+                }
+            }
+            else
+            {
+                genres = _GetGenresGroupMock(genre);
+            }
+            return genres;
+        }
+
+        private List<SpotExceptionsOutOfSpecGenreDto> _GetGenresGroupMock(string genre)
+        {
+            var mockedGenres = new List<SpotExceptionsOutOfSpecGenreDto>();
+            for (int genreCount = 0; genreCount < 3; genreCount++)
+            {
+                var mockedGenre = new SpotExceptionsOutOfSpecGenreDto()
+                {
+                    Id = genreCount + 1,
+                    GenreName = genreCount == 0 ? genre : genre + "" + genreCount
+                };
+                mockedGenres.Add(mockedGenre);
+            }
+            return mockedGenres;
+        }
+        private void _RemoveUnmatched(List<SpotExceptionsOutOfSpecGenreDto> genres)
+        {
+            genres.RemoveAll(x => x.GenreName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
+        }
+        private void _RemoveVarious(List<SpotExceptionsOutOfSpecGenreDto> genres)
+        {
+            genres.RemoveAll(x => x.GenreName.Equals("Various", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

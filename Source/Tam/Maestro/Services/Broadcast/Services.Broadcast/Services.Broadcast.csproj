@@ -596,6 +596,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDecisionsPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecDetailsResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecGenreDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlanSpotsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsResultDto.cs" />

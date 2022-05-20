@@ -158,6 +158,12 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>Count of Recommanded plan Decision Data</returns>
         int GetRecommandedPlanDecisionQueuedCount();
+
+        /// <summary>
+        /// Gets all genres filter by source.
+        /// </summary>
+        /// <returns>List of genres</returns>
+        List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenresBySourceId();
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -229,7 +235,7 @@ namespace Services.Broadcast.Repositories
                     }).ToList();
 
                 context.spot_exceptions_recommended_plans.AddRange(spotExceptionsRecommendedPlansToAdd);
-                
+
                 var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs =>
                 {
                     var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs
@@ -251,7 +257,7 @@ namespace Services.Broadcast.Repositories
                         program_genre_id = outOfSpecs.ProgramGenre?.Id,
                         spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
                         daypart_code = outOfSpecs.DaypartCode,
-                        genre_name= outOfSpecs.GenreName,
+                        genre_name = outOfSpecs.GenreName,
                         market_code = outOfSpecs.MarketCode,
                         market_rank = outOfSpecs.MarketRank,
                         ingested_by = outOfSpecs.IngestedBy,
@@ -312,7 +318,7 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)                    
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
@@ -344,7 +350,7 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions.Select(x=>x.plan_version_dayparts))
+                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions.Select(x => x.plan_version_dayparts))
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
@@ -401,7 +407,7 @@ namespace Services.Broadcast.Repositories
             var planVersion = spotExceptionsOutOfSpecEntity.plan?.plan_versions.First(v => v.id == spotExceptionsOutOfSpecEntity.plan.latest_version_id);
 
             var spotExceptionsOutOfSpec = new SpotExceptionsOutOfSpecsDto
-            {                
+            {
                 Id = spotExceptionsOutOfSpecEntity.id,
                 SpotUniqueHashExternal = spotExceptionsOutOfSpecEntity.spot_unique_hash_external,
                 ReasonCodeMessage = spotExceptionsOutOfSpecEntity.reason_code_message,
@@ -412,12 +418,12 @@ namespace Services.Broadcast.Repositories
                 RecommendedPlanName = spotExceptionsOutOfSpecEntity.plan?.name,
                 ProgramName = spotExceptionsOutOfSpecEntity.program_name,
                 StationLegacyCallLetters = spotExceptionsOutOfSpecEntity.station_legacy_call_letters,
-                DaypartCode= spotExceptionsOutOfSpecEntity.daypart_code,
+                DaypartCode = spotExceptionsOutOfSpecEntity.daypart_code,
                 GenreName = spotExceptionsOutOfSpecEntity.genre_name,
                 Affiliate = stationEntity?.affiliation,
                 Market = stationEntity?.market?.geography_name,
                 SpotLength = _MapSpotLengthToDto(spotExceptionsOutOfSpecEntity.spot_lengths),
-                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience),               
+                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecEntity.audience),
                 ProgramAirTime = spotExceptionsOutOfSpecEntity.program_air_time,
                 IngestedBy = spotExceptionsOutOfSpecEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecEntity.ingested_at,
@@ -978,7 +984,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                
+
                 var spotExceptionsRecommandedDecisionsEntities = context.spot_exceptions_recommended_plan_decision
                     .Where(spotExceptionsDecisionDb => spotExceptionsDecisionDb.synced_at == null).ToList();
 
@@ -1004,6 +1010,27 @@ namespace Services.Broadcast.Repositories
                   .Count();
                 return recommandedPlansDecisionCount;
             });
+        }
+
+        /// <inheritdoc />
+        public List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenresBySourceId()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                    context.genres
+                        .Where(g => g.program_source_id == 1)
+                        .OrderBy(x => x.name)
+                        .Select(_MapToDto)
+                        .ToList()
+                );
+        }
+        private SpotExceptionsOutOfSpecGenreDto _MapToDto(genre genre)
+        {
+            return new SpotExceptionsOutOfSpecGenreDto
+            {
+                GenreName = genre.name,
+                Id = genre.id
+            };
         }
     }
 }
