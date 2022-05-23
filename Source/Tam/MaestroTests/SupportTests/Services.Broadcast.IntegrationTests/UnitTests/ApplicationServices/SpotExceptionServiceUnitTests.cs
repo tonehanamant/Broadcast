@@ -7,12 +7,14 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -21,6 +23,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     public class SpotExceptionServiceUnitTests
     {
         private SpotExceptionService _SpotExceptionService;
+        private Mock<IProgramService> _ProgramService;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
         private Mock<ISpotExceptionRepository> _SpotExceptionRepositoryMock;
@@ -39,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
+            _ProgramService = new Mock<IProgramService>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionRepository>())
                 .Returns(_SpotExceptionRepositoryMock.Object);
@@ -46,8 +50,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
               .Setup(x => x.GetDataRepository<IPlanRepository>())
               .Returns(_PlanRepositoryMock.Object);
 
-            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object, 
+            _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object,
                 _AabEngine.Object,
+                _ProgramService.Object,
                 _FeatureToggleMock.Object,
                 _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
         }
@@ -2062,12 +2067,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock
                 .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
                 .Returns(new List<PlanDaypartDetailsDto>
-                    { 
+                    {
                         new PlanDaypartDetailsDto
                         {
                         PlanId=215,
                         Code="ROSP",
-                        Name="ROS Programming"   
+                        Name="ROS Programming"
                         }
                     }
                 );
@@ -2552,7 +2557,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert            
             Assert.AreEqual(result.Active.Count, 0);
-            Assert.AreEqual(result.Completed.Count,0);
+            Assert.AreEqual(result.Completed.Count, 0);
         }
 
         [Test]
@@ -2640,6 +2645,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert            
             Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecPrograms()
+        {
+            // Arrange
+            string programNameQuery = "ABC";
+            _ProgramService.Setup(s => s.GetPrograms(It.IsAny<SearchRequestProgramDto>(), It.IsAny<string>()))
+                .Returns(new List<ProgramDto>
+                    {
+                        new ProgramDto
+                        {
+                            Name = "23ABC NEWS",
+                           Genre= new LookupDto {
+                                    Id= 33,
+                                    Display= "News"
+                                   },
+                            ContentRating= null
+                        }
+                    }
+                );
+            // Act           
+            var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecPrograms(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

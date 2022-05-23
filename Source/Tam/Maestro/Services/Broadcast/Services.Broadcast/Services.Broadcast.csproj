@@ -600,6 +600,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlanSpotsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPostsResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecProgramsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecReasonCodeDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecReasonCodeResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecsDto.cs" />

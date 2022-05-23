@@ -1,0 +1,6 @@
+[
+  {
+    "GenreName": "News",
+    "ProgramName": "23ABC NEWS"
+  }
+]

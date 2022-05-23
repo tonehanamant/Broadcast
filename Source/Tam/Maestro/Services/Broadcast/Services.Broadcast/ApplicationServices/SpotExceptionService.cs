@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -162,6 +163,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="genre">genre name</param>
         /// <returns>List of genres</returns>
         List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenres(string genre);
+
+        /// <summary>
+        /// Get all the programs based on program search query.
+        /// </summary>       
+        /// <param name="programNameQuery">input program search query</param>
+        /// <param name="userName">The user name</param>
+        /// <returns>return all the programs based on program search query</returns>
+        List<SpotExceptionsOutOfSpecProgramsDto> GetSpotExceptionsOutOfSpecPrograms(string programNameQuery, string userName);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -171,9 +180,11 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IProgramService _ProgramService;
         public SpotExceptionService(
-            IDataRepositoryFactory dataRepositoryFactory,            
+            IDataRepositoryFactory dataRepositoryFactory,
             IAabEngine aabEngine,
+            IProgramService programService,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper,
             IDateTimeEngine dateTimeEngine)
@@ -182,8 +193,9 @@ namespace Services.Broadcast.ApplicationServices
             _SpotExceptionRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
-            _PlanRepository= dataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _FeatureToggleHelper = featureToggleHelper;
+            _ProgramService = programService;
         }
 
         public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
@@ -1389,7 +1401,7 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
                         DaypartCode = activePlan.DaypartCode,
                         Comments = activePlan.Comments,
-                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == activePlan.PlanId).Select(s=>s.Code).Distinct().ToList()
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == activePlan.PlanId).Select(s => s.Code).Distinct().ToList()
                     };
                 }).ToList();
 
@@ -1501,6 +1513,24 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
+        public List<SpotExceptionsOutOfSpecProgramsDto> GetSpotExceptionsOutOfSpecPrograms(string programNameQuery, string userName)
+        {
+            SearchRequestProgramDto searchRequest = new SearchRequestProgramDto();
+            List<SpotExceptionsOutOfSpecProgramsDto> result = new List<SpotExceptionsOutOfSpecProgramsDto>();
+            searchRequest.ProgramName = programNameQuery;
+            var programList = _ProgramService.GetPrograms(searchRequest, userName);
+            programList.ForEach(p =>
+                {
+                    SpotExceptionsOutOfSpecProgramsDto program = new SpotExceptionsOutOfSpecProgramsDto();
+                    program.ProgramName = p.Name;
+                    program.GenreName = p.Genre.Display;
+                    result.Add(program);
+                }
+                );
+            return result;
+        }
+
+        /// <inheritdoc />
         public bool SaveOutofSpecDecisionsPlans(SpotExceptionSaveDecisionsPlansRequestDto spotExceptionSaveDecisionsPlansRequest, string userName)
         {
             var createdAt = _DateTimeEngine.GetCurrentMoment();
@@ -1564,7 +1594,7 @@ namespace Services.Broadcast.ApplicationServices
                         AffectedSpotsCount = activePlan.Count(),
                         Impressions = planDetails.Impressions / 1000,
                         SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x=>x.MetricPercent).FirstOrDefault().ToString()+"%",
+                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                         AudienceName = planDetails.Audience?.Name,
                         FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
                     };
@@ -1582,7 +1612,7 @@ namespace Services.Broadcast.ApplicationServices
                         AffectedSpotsCount = completedPlan.Count(),
                         Impressions = planDetails.Impressions / 1000,
                         SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString()+"%",
+                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                         AudienceName = planDetails.Audience?.Name,
                         FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
                     };
