@@ -3997,6 +3997,7 @@
       ]
     }
   ],
+  "Fluidity": "Not Allowed",
   "GuaranteedDemo": [
     "A18+"
   ],

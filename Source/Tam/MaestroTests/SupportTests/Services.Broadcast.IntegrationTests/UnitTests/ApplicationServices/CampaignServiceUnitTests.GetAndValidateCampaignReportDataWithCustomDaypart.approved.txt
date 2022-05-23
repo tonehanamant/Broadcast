@@ -1121,6 +1121,7 @@
       ]
     }
   ],
+  "Fluidity": "Not Allowed",
   "GuaranteedDemo": [
     "A25-54"
   ],

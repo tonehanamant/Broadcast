@@ -28,6 +28,7 @@ namespace Services.Broadcast.Entities.Campaign
         public List<string> GuaranteedDemo { get; set; }
         public List<string> SpotLengths { get; set; }
         public string PostingType { get; set; }
+        public string Fluidity { get; set; }
         public string Status { get; set; }
         public List<ProposalQuarterTableData> ProposalQuarterTables { get; set; } = new List<ProposalQuarterTableData>();
         public ProposalQuarterTableData ProposalCampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
@@ -1443,7 +1444,7 @@ namespace Services.Broadcast.Entities.Campaign
             _SetCampaignFlightDate(plans);
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
-
+            Fluidity = plans.Any(x => x.FluidityPercentage > 0) ? "Allowed" : "Not Allowed";
             _SetGuaranteeedDemo(guaranteedDemos, orderedAudiences);
             _SetSpotLengths(plans);
         }

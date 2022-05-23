@@ -930,6 +930,7 @@
       ]
     }
   ],
+  "Fluidity": "Not Allowed",
   "GuaranteedDemo": [
     "A35-64"
   ],

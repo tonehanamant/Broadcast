@@ -493,6 +493,7 @@
       ]
     }
   ],
+  "Fluidity": "Not Allowed",
   "GuaranteedDemo": [
     "HH"
   ],
