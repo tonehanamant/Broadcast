@@ -1296,6 +1296,34 @@ GO
 
 /*************************************** END BP-4689 ***************************************/
 
+/*************************************** START BP-4692 ********************************************************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions' AND COLUMN_NAME= 'program_name')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_spec_decisions
+		ADD [program_name] nvarchar(500) NULL
+END
+
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions' AND COLUMN_NAME= 'genre_name')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_spec_decisions
+		ADD genre_name nvarchar(40) NULL
+END
+
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_spec_decisions' AND COLUMN_NAME= 'daypart_code')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_spec_decisions
+		ADD daypart_code nvarchar(20) NULL
+END
+
+GO
+
+/*************************************** END BP-4692 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

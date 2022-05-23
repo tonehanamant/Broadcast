@@ -22,6 +22,9 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_at { get; set; }
         public string synced_by { get; set; }
         public Nullable<System.DateTime> synced_at { get; set; }
+        public string program_name { get; set; }
+        public string genre_name { get; set; }
+        public string daypart_code { get; set; }
     
         public virtual spot_exceptions_out_of_specs spot_exceptions_out_of_specs { get; set; }
     }

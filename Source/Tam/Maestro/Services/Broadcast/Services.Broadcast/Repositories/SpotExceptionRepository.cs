@@ -906,7 +906,36 @@ namespace Services.Broadcast.Repositories
                         x.spot_exceptions_out_of_spec_id == spotExceptionsOutOfSpecId.Id);
                     var outOfSpecId = context.spot_exceptions_out_of_specs.SingleOrDefault(x =>
                         x.id == spotExceptionsOutOfSpecId.Id);
-                    if (spotExceptionsOutOfSpecId.Comments == null)
+                    if (!(string.IsNullOrEmpty(spotExceptionsOutOfSpecId.ProgramName) && string.IsNullOrEmpty(spotExceptionsOutOfSpecId.GenreName) && string.IsNullOrEmpty(spotExceptionsOutOfSpecId.DaypartCode)))
+                    {
+                        if (alreadyRecordExists == null)
+                        {
+                            context.spot_exceptions_out_of_spec_decisions.Add(new spot_exceptions_out_of_spec_decisions
+                            {
+                                spot_exceptions_out_of_spec_id = spotExceptionsOutOfSpecId.Id,
+                                accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec,
+                                decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out",
+                                username = userName,
+                                created_at = createdAt,
+                                program_name = spotExceptionsOutOfSpecId.ProgramName,
+                                genre_name = spotExceptionsOutOfSpecId.GenreName,
+                                daypart_code = spotExceptionsOutOfSpecId.DaypartCode
+                            });
+                        }
+                        else
+                        {
+                            alreadyRecordExists.accepted_as_in_spec = spotExceptionsOutOfSpecId.AcceptAsInSpec;
+                            alreadyRecordExists.username = userName;
+                            alreadyRecordExists.created_at = createdAt;
+                            alreadyRecordExists.decision_notes = spotExceptionsOutOfSpecId.AcceptAsInSpec ? "In" : "Out";
+                            alreadyRecordExists.synced_at = null;
+                            alreadyRecordExists.synced_by = null;
+                            alreadyRecordExists.program_name = spotExceptionsOutOfSpecId.ProgramName;
+                            alreadyRecordExists.genre_name = spotExceptionsOutOfSpecId.GenreName;
+                            alreadyRecordExists.daypart_code = spotExceptionsOutOfSpecId.DaypartCode;
+                        }
+                    }
+                    else if (spotExceptionsOutOfSpecId.Comments == null)
                     {
                         if (alreadyRecordExists == null)
                         {

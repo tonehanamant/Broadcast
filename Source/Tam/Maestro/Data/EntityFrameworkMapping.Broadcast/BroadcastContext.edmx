@@ -2394,6 +2394,9 @@
           <Property Name="created_at" Type="datetime" Nullable="false" />
           <Property Name="synced_by" Type="varchar" MaxLength="100" />
           <Property Name="synced_at" Type="datetime2" Precision="7" />
+          <Property Name="program_name" Type="nvarchar" MaxLength="500" />
+          <Property Name="genre_name" Type="nvarchar" MaxLength="40" />
+          <Property Name="daypart_code" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="spot_exceptions_out_of_spec_reason_codes">
           <Key>
@@ -17875,6 +17878,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="synced_at" Type="DateTime" Precision="7" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
+          <Property Name="program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="genre_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="daypart_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="plan_version_buying_job">
           <Key>
@@ -21493,6 +21499,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_out_of_spec_decisions">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_spec_decisions">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_spec_decisions">
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
+                <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
                 <ScalarProperty Name="synced_at" ColumnName="synced_at" />
                 <ScalarProperty Name="synced_by" ColumnName="synced_by" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />

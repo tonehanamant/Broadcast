@@ -2672,5 +2672,46 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        public void SaveOutofSpecDecisionsPlans_WithProgramGenreAndDaypart()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDecisionsPlansDto>
+            {
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 21,
+                    AcceptAsInSpec = true,
+                    ProgramName = "Program8",
+                    GenreName = "Horror",
+                    DaypartCode = "EMN"
+                },
+                new SpotExceptionsOutOfSpecDecisionsPlansDto
+                {
+                    Id = 22,
+                    AcceptAsInSpec = false,
+                    ProgramName = "Program9",
+                    GenreName = "Comedy",
+                    DaypartCode = "EMN"
+                }
+            };
+
+            var spotExceptionSaveDecisionsPlansRequest = new SpotExceptionSaveDecisionsPlansRequestDto();
+            spotExceptionSaveDecisionsPlansRequest.Decisions.AddRange(spotExceptionsOutOfSpecDecisionsPlansResult);
+
+            string userName = "Test User";
+            bool result = false;
+            bool expectedResult = true;
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecsDecisionsPlans(It.IsAny<SpotExceptionSaveDecisionsPlansRequestDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            result = _SpotExceptionService.SaveOutofSpecDecisionsPlans(spotExceptionSaveDecisionsPlansRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
     }
 }
