@@ -802,6 +802,11 @@ namespace Services.Broadcast.ApplicationServices
             var pricingJob = _GetLatestPricingJob(planId);
             var plan = _PlanRepository.GetPlan(planId);
 
+            if (plan?.Dayparts.Any() ?? false)
+            {
+                plan.Dayparts = plan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
+            }
+
             var postingType = request.PostingType ?? plan.PostingType;
             var spotAllocationModelMode = request.SpotAllocationModelMode ?? SpotAllocationModelMode.Quality;
 

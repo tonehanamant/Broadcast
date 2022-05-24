@@ -1554,25 +1554,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         {
                             DaypartCodeId = 30001,
                             StartTimeSeconds = 57600,
-                            EndTimeSeconds = 68399
+                            EndTimeSeconds = 68399,
+                            DaypartTypeId = DaypartTypeEnum.News
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 10001,
                             StartTimeSeconds = 14400,
-                            EndTimeSeconds = 35999
+                            EndTimeSeconds = 35999,
+                            DaypartTypeId = DaypartTypeEnum.ROS
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 20001,
                             StartTimeSeconds = 39600,
-                            EndTimeSeconds = 46799
+                            EndTimeSeconds = 46799,
+                            DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews
                         },
                         new PlanDaypartDto
                         {
                             DaypartCodeId = 40001,
                             StartTimeSeconds = 72000,
-                            EndTimeSeconds = 299
+                            EndTimeSeconds = 299,
+                            DaypartTypeId = DaypartTypeEnum.News
                         }
                     },
                     PricingParameters = new PlanPricingParametersDto { JobId = 1 },
@@ -3036,37 +3040,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     DaypartCodeId = 10001,
                     StartTimeSeconds = 50,
-                    EndTimeSeconds = 150
+                    EndTimeSeconds = 150,
+                    DaypartTypeId = DaypartTypeEnum.News
                 },
                 new PlanDaypartDto
                 {
                     DaypartCodeId = 20001,
                     StartTimeSeconds = 230,
-                    EndTimeSeconds = 280
+                    EndTimeSeconds = 280,
+                    DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews
                 },
                 new PlanDaypartDto
                 {
                     DaypartCodeId = 30002,
                     StartTimeSeconds = 350,
-                    EndTimeSeconds = 450
+                    EndTimeSeconds = 450,
+                    DaypartTypeId = DaypartTypeEnum.ROS
                 },
                 new PlanDaypartDto
                 {
                     DaypartCodeId = 40001,
                     StartTimeSeconds = 100,
-                    EndTimeSeconds = 200
+                    EndTimeSeconds = 200,
+                    DaypartTypeId = DaypartTypeEnum.News
                 },
                 new PlanDaypartDto
                 {
                     DaypartCodeId = 50001,
                     StartTimeSeconds = 100,
-                    EndTimeSeconds = 200
+                    EndTimeSeconds = 200,
+                    DaypartTypeId = DaypartTypeEnum.ROS
                 },
                 new PlanDaypartDto
                 {
                     DaypartCodeId = 60001,
                     StartTimeSeconds = 200,
-                    EndTimeSeconds = 299
+                    EndTimeSeconds = 299,
+                    DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews
                 }
             };
         }
@@ -4004,6 +4014,137 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
                 , It.IsAny<PlanStatusEnum>()), Times.Once);
             Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void ProgramLineup_WithCustomDaypart()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            Guid agencyId = new Guid("89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b");
+            Guid advertiserId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 50001,
+                            StartTimeSeconds = 39600,
+                            EndTimeSeconds = 46799,
+                            DaypartTypeId = DaypartTypeEnum.Sports
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 60001,
+                            StartTimeSeconds = 72000,
+                            EndTimeSeconds = 299,
+                            DaypartTypeId = DaypartTypeEnum.Sports
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 30001,
+                            StartTimeSeconds = 57600,
+                            EndTimeSeconds = 68399,
+                            DaypartTypeId = DaypartTypeEnum.News
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 10001,
+                            StartTimeSeconds = 14400,
+                            EndTimeSeconds = 35999,
+                            DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 20001,
+                            StartTimeSeconds = 39600,
+                            EndTimeSeconds = 46799,
+                            DaypartTypeId = DaypartTypeEnum.ROS
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 40001,
+                            StartTimeSeconds = 72000,
+                            EndTimeSeconds = 299,
+                            DaypartTypeId = DaypartTypeEnum.News
+                        }
+                    },
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupForRollupTestData();
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum>(), It.IsAny<SpotAllocationModelMode>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 4001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

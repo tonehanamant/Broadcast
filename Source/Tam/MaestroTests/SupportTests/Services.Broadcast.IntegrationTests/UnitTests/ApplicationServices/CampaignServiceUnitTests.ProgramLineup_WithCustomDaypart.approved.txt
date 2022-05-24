@@ -1,0 +1,158 @@
+{
+  "AccountExecutive": "",
+  "AccuracyEstimateDate": "2/12/20",
+  "Agency": "1st Image Marketing",
+  "AllocationByDaypartViewRows": [
+    {
+      "FilterLabel": "PRA",
+      "Weight": 0.99502463
+    },
+    {
+      "FilterLabel": "LN",
+      "Weight": 0.00199015
+    },
+    {
+      "FilterLabel": "EM",
+      "Weight": 0.00199015
+    },
+    {
+      "FilterLabel": "EMN",
+      "Weight": 0.00099507
+    }
+  ],
+  "AllocationByDMAViewRows": [
+    {
+      "FilterLabel": "NEW YORK",
+      "Weight": 0.00199015
+    },
+    {
+      "FilterLabel": "BINGHAMTON",
+      "Weight": 0.9960197
+    },
+    {
+      "FilterLabel": "MACON",
+      "Weight": 0.00199015
+    }
+  ],
+  "AllocationByGenreViewRows": [
+    {
+      "FilterLabel": "COMEDY",
+      "Weight": 0.99502463
+    },
+    {
+      "FilterLabel": "NEWS",
+      "Weight": 0.00497537
+    }
+  ],
+  "AllocationBySpotLengthViewRows": [
+    {
+      "FilterLabel": ":30",
+      "Weight": 1.0
+    }
+  ],
+  "Client": "PetMed Express, Inc",
+  "ClientContact": "",
+  "DefaultViewRows": [
+    {
+      "Genre": "COMEDY",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "THE BIG BANG THEORY",
+      "Weight": 0.99502463
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "MIDDAY NEWS",
+      "Weight": 0.00199015
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "MORNING NEWS",
+      "Weight": 0.00099507
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "EVENING NEWS",
+      "Weight": 0.00099507
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.00099507
+    }
+  ],
+  "DetailedViewRows": [
+    {
+      "Daypart": "LN",
+      "Days": "M-F",
+      "DMA": "NEW YORK",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "CBS",
+      "Program": "KPLR 2001 MIDDAY NEWS",
+      "Rank": 1,
+      "Station": "WTTV",
+      "TimePeriods": "11AM-1PM"
+    },
+    {
+      "Daypart": "PRA",
+      "Days": "M-Su",
+      "DMA": "BINGHAMTON",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "A101 AFFILIATION",
+      "Program": "THE BIG BANG THEORY",
+      "Rank": 2,
+      "Station": "WNBC",
+      "TimePeriods": "12:02AM-12:40PM"
+    },
+    {
+      "Daypart": "EMN",
+      "Days": "M-F",
+      "DMA": "BINGHAMTON",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "ABC",
+      "Program": "KPLR 1001 MORNING NEWS",
+      "Rank": 2,
+      "Station": "KSTP",
+      "TimePeriods": "4AM-10AM"
+    },
+    {
+      "Daypart": "EM",
+      "Days": "M-Su",
+      "DMA": "MACON",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "CBS",
+      "Program": "KPLR 3001 EVENING NEWS",
+      "Rank": 3,
+      "Station": "KELO",
+      "TimePeriods": "4PM-7PM"
+    },
+    {
+      "Daypart": "EM",
+      "Days": "M-Su",
+      "DMA": "MACON",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "CBS",
+      "Program": "KPLR 4001 LATE NEWS",
+      "Rank": 3,
+      "Station": "KELOW",
+      "TimePeriods": "8PM-12:05AM"
+    }
+  ],
+  "ExportFileName": "Program_Lineup_Report_Brave Plan_NTI_Q_10172017.xlsx",
+  "FlightEndDate": "03/14/20",
+  "FlightStartDate": "03/01/20",
+  "GuaranteedDemo": "W18-20",
+  "PlanHeaderName": "Brave Plan | Program Lineup*",
+  "PostingType": "NTI",
+  "ReportGeneratedDate": "10/17/17",
+  "SpotAllocationModelMode": "Quality",
+  "SpotLengths": ":30"
+}
