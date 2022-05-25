@@ -446,6 +446,7 @@
     <None Include="Files\Campaign export\BasePlanForCampaignExportUnitTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="UnitTests\Helpers\CompressionHelperTest.cs" />
     <Compile Include="Helpers\ConfigurationSettingsTestHelper.cs" />
     <Compile Include="Helpers\PostingTypeConversionHelperTests.cs" />
     <Compile Include="Helpers\ReflectionTestHelper.cs" />
