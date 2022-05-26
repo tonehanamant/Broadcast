@@ -96,7 +96,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
             _ServiceClientBase = new Mock<IServiceClientBase>();
             _ApiTokenManager = new Mock<IApiTokenManager>();
-
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -379,7 +378,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, setStatusCalls.Count, "Invalid call count.");
-            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
         }
 
         [Test]

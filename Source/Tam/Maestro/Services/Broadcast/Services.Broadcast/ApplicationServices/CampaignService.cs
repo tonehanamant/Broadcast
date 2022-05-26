@@ -512,7 +512,6 @@ namespace Services.Broadcast.ApplicationServices
                 throw;
             }
         }
-
         private List<DateRange> _ValidateDateRanges(List<DateRange> dateRanges)
         {
             var nonEmptyRanges = dateRanges.Where(x => !x.IsEmpty());
@@ -973,7 +972,7 @@ namespace Services.Broadcast.ApplicationServices
             List<PlansCopyDto> filteredPlans = new List<PlansCopyDto>();
             if (campaign.Plans != null && campaign.Plans.Count() > 0)
             {
-                if(campaign.Plans.Any(x=> x.IsDraft == true))
+                if(campaign.Plans.Any(x => x.IsDraft == true))
                 {
                     campaign.Plans.RemoveAll(x => x.IsDraft == true);
                     foreach (var plan in campaign.Plans)
@@ -992,13 +991,13 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
-                  campaign.Plans =  campaign.Plans.Where(x => x.VersionId == x.LatestVersionId).ToList();
+                    campaign.Plans =  campaign.Plans.Where(x => x.VersionId == x.LatestVersionId).ToList();
                 }
-                
+
             }
             return campaign;
         }
-        
+
 
         /// <inheritdoc />
         public int SaveCampaignCopy(SaveCampaignCopyDto campaignCopy, string createdBy, DateTime createdDate)

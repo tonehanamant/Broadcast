@@ -638,7 +638,8 @@ namespace Services.Broadcast.Repositories
                 var markets = context.markets.ToList();
                 var entitiesRaw = (from plan in context.plans
                                    join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
-                                   where !(plan.deleted_at.HasValue) && plan.campaign_id == campaignId && plan.latest_version_id == planVersion.id
+                                   where !(plan.deleted_at.HasValue) && plan.campaign_id == campaignId
+                                   && plan.latest_version_id == planVersion.id
                                    select plan)
                         .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
@@ -668,8 +669,89 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                     .ToList();
 
-                return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
+                return entitiesRaw.Select(e => _MapToDto(e, markets, null, true)).ToList();
             });
+        }
+        private PlanDto _MapToDto(plan entity, List<market> markets, int? versionId = null, bool isGetPlanForCampaign = false)
+        {
+            var planVersion = versionId != null
+                ? entity.plan_versions.Where(x => x.id == versionId).Single($"There is no version {versionId} available")
+                : entity.plan_versions.Where(x => x.id == entity.latest_version_id).Single("There is no latest version available");
+
+            if (isGetPlanForCampaign && entity.plan_versions.Any(x => x.plan_id == entity.id && x.is_draft == true))
+            {
+                planVersion = entity.plan_versions.Count > 1 ? entity.plan_versions.Where(x => x.plan_id == entity.id && (x.is_draft == false || x.is_draft == null))
+                    .OrderByDescending(p => p.id).FirstOrDefault() : planVersion;
+            }
+
+            //drafts don't have summary, so we're doing SingleOrDefault
+            var planSummary = planVersion.plan_version_summaries.SingleOrDefault();
+            var dto = new PlanDto
+            {
+                Id = entity.id,
+                CampaignId = entity.campaign.id,
+                CampaignName = entity.campaign.name,
+                Name = entity.name,
+                SpotAllocationModelMode = EnumHelper.GetEnum<SpotAllocationModelMode>(entity.spot_allocation_model_mode ?? (int)SpotAllocationModelMode.Quality),
+                CreativeLengths = planVersion.plan_version_creative_lengths.Select(_MapCreativeLengthsToDto).ToList(),
+                Equivalized = planVersion.equivalized,
+                Status = EnumHelper.GetNullableEnum<PlanStatusEnum>(planVersion.status),
+                ProductId = entity.product_id,
+                ProductMasterId = entity.product_master_id,
+                FlightDays = planVersion.plan_version_flight_days.Select(flightDay => flightDay.day.id).ToList(),
+                FlightStartDate = planVersion.flight_start_date,
+                FlightEndDate = planVersion.flight_end_date,
+                FlightNotes = planVersion.flight_notes,
+                FlightNotesInternal = planVersion.flight_notes_internal,
+                AudienceId = planVersion.target_audience_id ?? 0,
+                AudienceType = EnumHelper.GetNullableEnum<AudienceTypeEnum>(planVersion.audience_type),
+                HUTBookId = planVersion.hut_book_id,
+                ShareBookId = planVersion.share_book_id,
+                PostingType = EnumHelper.GetNullableEnum<PostingTypeEnum>(planVersion.posting_type),
+                FlightHiatusDays = planVersion.plan_version_flight_hiatus_days.Select(h => h.hiatus_day).ToList(),
+                Budget = planVersion.budget,
+                TargetImpressions = planVersion.target_impression,
+                TargetCPM = planVersion.target_cpm,
+                TargetRatingPoints = planVersion.target_rating_points,
+                TargetCPP = planVersion.target_cpp,
+                Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(planVersion.currency.Value),
+                GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(planVersion.goal_breakdown_type.Value),
+                SecondaryAudiences = planVersion.plan_version_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
+                Dayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanDaypartDto(d, planVersion)).ToList(),
+                CustomDayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanCustomDaypartDto(d)).ToList(),
+                CoverageGoalPercent = planVersion.coverage_goal_percent,
+                AvailableMarkets = planVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
+                BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
+                WeeklyBreakdownWeeks = planVersion.plan_version_weekly_breakdown.Select(_MapWeeklyBreakdownWeeks).ToList(),
+                ModifiedBy = planVersion.modified_by ?? planVersion.created_by,
+                ModifiedDate  = entity.plan_versions.Max(x=> x.modified_date) ?? entity.plan_versions.Max(x=> x.created_date), //planVersion.modified_date ?? planVersion.created_date,
+                Vpvh = planVersion.target_vpvh,
+                TargetUniverse = planVersion.target_universe,
+                HHCPM = planVersion.hh_cpm,
+                HHCPP = planVersion.hh_cpp,
+                HHImpressions = planVersion.hh_impressions,
+                HHRatingPoints = planVersion.hh_rating_points,
+                HHUniverse = planVersion.hh_universe,
+                AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
+                BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
+                BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
+                PricingParameters = _MapPricingParameters(planVersion.plan_version_pricing_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
+                IsDraft = planVersion.is_draft,
+                VersionNumber = planVersion.version_number,
+                VersionId = planVersion.id,
+                IsAduEnabled = planVersion.is_adu_enabled,
+                ImpressionsPerUnit = planVersion.impressions_per_unit ?? 0,
+                BuyingParameters = _MapBuyingParameters(planVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
+                FluidityPercentage = planVersion.fluidity_percentage,
+                FluidityCategory = planVersion.fluidity_category,
+                FluidityChildCategory = planVersion.fluidity_child_category,
+
+            };
+
+            if (dto.PricingParameters != null)
+                dto.JobId = dto.PricingParameters.JobId;
+
+            return dto;
         }
 
         /// <inheritdoc />
@@ -717,7 +799,6 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                     .ToList();
-
                 return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
             });
         }
@@ -743,80 +824,7 @@ namespace Services.Broadcast.Repositories
             context.SaveChanges();
         }
 
-        private PlanDto _MapToDto(plan entity, List<market> markets, int? versionId = null)
-        {
-            var planVersion = versionId != null
-                ? entity.plan_versions.Where(x => x.id == versionId).Single($"There is no version {versionId} available")
-                : entity.plan_versions.Where(x => x.id == entity.latest_version_id).Single("There is no latest version available");
 
-            //drafts don't have summary, so we're doing SingleOrDefault
-            var planSummary = planVersion.plan_version_summaries.SingleOrDefault();
-            var dto = new PlanDto
-            {
-                Id = entity.id,
-                CampaignId = entity.campaign.id,
-                CampaignName = entity.campaign.name,
-                Name = entity.name,
-                SpotAllocationModelMode = EnumHelper.GetEnum<SpotAllocationModelMode>(entity.spot_allocation_model_mode ?? (int)SpotAllocationModelMode.Quality),
-                CreativeLengths = planVersion.plan_version_creative_lengths.Select(_MapCreativeLengthsToDto).ToList(),
-                Equivalized = planVersion.equivalized,
-                Status = EnumHelper.GetNullableEnum<PlanStatusEnum>(planVersion.status),
-                ProductId = entity.product_id,
-                ProductMasterId = entity.product_master_id,
-                FlightDays = planVersion.plan_version_flight_days.Select(flightDay => flightDay.day.id).ToList(),
-                FlightStartDate = planVersion.flight_start_date,
-                FlightEndDate = planVersion.flight_end_date,
-                FlightNotes = planVersion.flight_notes,
-                FlightNotesInternal = planVersion.flight_notes_internal,
-                AudienceId = planVersion.target_audience_id ?? 0,
-                AudienceType = EnumHelper.GetNullableEnum<AudienceTypeEnum>(planVersion.audience_type),
-                HUTBookId = planVersion.hut_book_id,
-                ShareBookId = planVersion.share_book_id,
-                PostingType = EnumHelper.GetNullableEnum<PostingTypeEnum>(planVersion.posting_type),
-                FlightHiatusDays = planVersion.plan_version_flight_hiatus_days.Select(h => h.hiatus_day).ToList(),
-                Budget = planVersion.budget,
-                TargetImpressions = planVersion.target_impression,
-                TargetCPM = planVersion.target_cpm,
-                TargetRatingPoints = planVersion.target_rating_points,
-                TargetCPP = planVersion.target_cpp,
-                Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(planVersion.currency.Value),
-                GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(planVersion.goal_breakdown_type.Value),
-                SecondaryAudiences = planVersion.plan_version_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
-                Dayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanDaypartDto(d, planVersion)).ToList(),
-                CustomDayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanCustomDaypartDto(d)).ToList(),
-                CoverageGoalPercent = planVersion.coverage_goal_percent,
-                AvailableMarkets = planVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
-                BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
-                WeeklyBreakdownWeeks = planVersion.plan_version_weekly_breakdown.Select(_MapWeeklyBreakdownWeeks).ToList(),
-                ModifiedBy = planVersion.modified_by ?? planVersion.created_by,
-                ModifiedDate = planVersion.modified_date ?? planVersion.created_date,
-                Vpvh = planVersion.target_vpvh,
-                TargetUniverse = planVersion.target_universe,
-                HHCPM = planVersion.hh_cpm,
-                HHCPP = planVersion.hh_cpp,
-                HHImpressions = planVersion.hh_impressions,
-                HHRatingPoints = planVersion.hh_rating_points,
-                HHUniverse = planVersion.hh_universe,
-                AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
-                BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
-                BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
-                PricingParameters = _MapPricingParameters(planVersion.plan_version_pricing_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
-                IsDraft = planVersion.is_draft,
-                VersionNumber = planVersion.version_number,
-                VersionId = planVersion.id,
-                IsAduEnabled = planVersion.is_adu_enabled,
-                ImpressionsPerUnit = planVersion.impressions_per_unit ?? 0,
-                BuyingParameters = _MapBuyingParameters(planVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
-                FluidityPercentage = planVersion.fluidity_percentage,
-                FluidityCategory = planVersion.fluidity_category,
-                FluidityChildCategory = planVersion.fluidity_child_category
-            };
-
-            if (dto.PricingParameters != null)
-                dto.JobId = dto.PricingParameters.JobId;
-
-            return dto;
-        }
 
         private PlanBuyingParametersDto _MapBuyingParameters(plan_version_buying_parameters arg)
         {
@@ -3080,27 +3088,27 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var result = (from plan in context.plans
-                                   join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
-                                   join planDaypart in context.plan_version_dayparts on planVersion.id equals planDaypart.plan_version_id
-                                   join stdDayparts in context.standard_dayparts on planDaypart.standard_daypart_id equals stdDayparts.id
-                                   where !(plan.deleted_at.HasValue) && planDaypart.plan_version_id == planVersion.id && planIds.Contains(plan.id)
-                                   select new PlanDaypartDetailsDto
-                                   {
-                                       PlanId = plan.id,
-                                       Code = stdDayparts.code,
-                                       Name = stdDayparts.name
-                                   }).ToList();
-                   return result;
-                });
-            }
+                              join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
+                              join planDaypart in context.plan_version_dayparts on planVersion.id equals planDaypart.plan_version_id
+                              join stdDayparts in context.standard_dayparts on planDaypart.standard_daypart_id equals stdDayparts.id
+                              where !(plan.deleted_at.HasValue) && planDaypart.plan_version_id == planVersion.id && planIds.Contains(plan.id)
+                              select new PlanDaypartDetailsDto
+                              {
+                                  PlanId = plan.id,
+                                  Code = stdDayparts.code,
+                                  Name = stdDayparts.name
+                              }).ToList();
+                return result;
+            });
+        }
 
         private FluidityCategoriesDto _MapFluidityCategoriesToDto(fluidity_categories fluidityCategories)
+        {
+            return new FluidityCategoriesDto
             {
-                return new FluidityCategoriesDto
-                {
-                    Id = fluidityCategories.id,
-                    Category = fluidityCategories.category
-                };
-            }
+                Id = fluidityCategories.id,
+                Category = fluidityCategories.category
+            };
         }
     }
+}

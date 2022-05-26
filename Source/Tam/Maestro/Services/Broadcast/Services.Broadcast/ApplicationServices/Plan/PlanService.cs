@@ -352,7 +352,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
             _BudgetCalculator = planBudgetDeliveryCalculator;
-
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
@@ -589,7 +588,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         };
 
                         var httpClient = _GetSecureHttpClient();
-                        var apiResult = httpClient.PostAsync($"{_CoreApiVersion}/BroadcastPlans/PublishBroadcastMessage", new StringContent(JsonConvert.SerializeObject(requestSerialized), Encoding.UTF8, "application/json")).GetAwaiter().GetResult(); 
+                        var apiResult = httpClient.PostAsync($"{_CoreApiVersion}/BroadcastPlans/PublishBroadcastMessage", new StringContent(JsonConvert.SerializeObject(requestSerialized), Encoding.UTF8, "application/json")).GetAwaiter().GetResult();
                         if (apiResult.IsSuccessStatusCode)
                         {
                             _LogInfo("Successfully Called the api For post the DSP");
@@ -614,7 +613,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
             }
         }
-
         private int _DoSavePlanDraft(PlanDto plan, string createdBy, DateTime createdDate)
         {
             var logTxId = Guid.NewGuid();
@@ -687,11 +685,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
 
                 _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
-
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously: false);
-                _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
-
-                return plan.Id;
+                 return plan.Id;
             }
             catch (PlanSaveException)
             {
