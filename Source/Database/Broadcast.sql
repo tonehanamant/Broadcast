@@ -1324,6 +1324,22 @@ GO
 
 /*************************************** END BP-4692 **********************************************************************************************/
 
+/*************************************** START BP-4524 **********************************************************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' AND (COLUMN_NAME= 'inventory_source_id'))
+BEGIN
+ALTER TABLE spot_exceptions_recommended_plans
+ADD inventory_source_id int NOT NULL
+ALTER TABLE spot_exceptions_recommended_plans
+		ADD CONSTRAINT FK_inventory_sources_spot_exceptions_recommended_plans
+		FOREIGN KEY (inventory_source_id) REFERENCES inventory_sources(id)
+END
+
+GO
+
+/*************************************** END BP-4524 **********************************************************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

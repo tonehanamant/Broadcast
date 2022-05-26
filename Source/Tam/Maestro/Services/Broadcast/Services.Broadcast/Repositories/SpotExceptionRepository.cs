@@ -204,6 +204,7 @@ namespace Services.Broadcast.Repositories
                         ingested_at = recommendedPlan.IngestedAt,
                         unique_id_external = ++uniqueExternalIdRp,
                         execution_id_external = executionId.ToString(),
+                        inventory_source_id = recommendedPlan.InventorySourceId,
                         spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails
                             .Select(recommendedPlanDetails =>
                             {

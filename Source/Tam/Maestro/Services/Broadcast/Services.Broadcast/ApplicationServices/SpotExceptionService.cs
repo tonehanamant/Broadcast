@@ -289,7 +289,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 1
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
@@ -326,7 +327,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IsRecommendedPlan=false,
                                   SpotExceptionsRecommendedPlanDecision = null
                                 }
-                        }
+                        },
+                        InventorySourceId = 3
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
@@ -363,7 +365,8 @@ namespace Services.Broadcast.ApplicationServices
                             IsRecommendedPlan=false,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    }
+                    },
+                    InventorySourceId = 4
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
@@ -400,7 +403,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 5
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -437,7 +441,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 6
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -474,7 +479,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 7
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -511,7 +517,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 8
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -548,7 +555,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 9
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -599,7 +607,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=false,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 10
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -629,7 +638,8 @@ namespace Services.Broadcast.ApplicationServices
                                 IsRecommendedPlan=true,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
-                        }
+                        },
+                        InventorySourceId = 11
                     }
                 };
 
