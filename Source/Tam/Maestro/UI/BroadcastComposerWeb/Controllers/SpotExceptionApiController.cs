@@ -188,5 +188,12 @@ namespace BroadcastComposerWeb.Controllers
             var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecPrograms(programNameQuery, fullName));
         }
+
+        [HttpPost]
+        [Route("recommended-plan-spots")]
+        public BaseResponse<SpotExceptionsRecommendedPlanSpotsResultDto> GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequestDto RecomendedPlansRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequest));
+        }
     }
 }

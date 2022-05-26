@@ -588,6 +588,7 @@
     <Compile Include="Entities\RatingsForecastResponseDto.cs" />
     <Compile Include="Entities\RatingsForecastRequestDto.cs" />
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
+    <Compile Include="Entities\SpotExceptions\RecomendedPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionSaveDecisionsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionOutOfSpecUnpostedRequestDto.cs" />
@@ -608,6 +609,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsStationRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlansResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanSpotsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDecisionDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDetailsDto.cs" />

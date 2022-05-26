@@ -171,6 +171,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">The user name</param>
         /// <returns>return all the programs based on program search query</returns>
         List<SpotExceptionsOutOfSpecProgramsDto> GetSpotExceptionsOutOfSpecPrograms(string programNameQuery, string userName);
+
+        /// <summary>
+        /// Gets the Recommended Plan Spots
+        /// </summary>
+        /// <param name="recomendedPlansRequest">Plan Id, week start date and End date</param>
+        /// <returns>Returns the Recommended Plan Spots(Active,Synced,Queued)</returns>
+        SpotExceptionsRecommendedPlanSpotsResultDto GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequestDto recomendedPlansRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1672,6 +1679,85 @@ namespace Services.Broadcast.ApplicationServices
         private void _RemoveVarious(List<SpotExceptionsOutOfSpecGenreDto> genres)
         {
             genres.RemoveAll(x => x.GenreName.Equals("Various", StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <inheritdoc />
+        public SpotExceptionsRecommendedPlanSpotsResultDto GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequestDto recomendedPlansRequest)
+        {
+            var spotExceptionsRecommendedPlanSpotsResult = new SpotExceptionsRecommendedPlanSpotsResultDto();
+            List<SpotExceptionsRecommendedPlansDto> activePlans = null;
+            List<SpotExceptionsRecommendedPlansDto> queuedPlans = null;
+
+            var spotExceptionsRecommendedPlanSpots = _SpotExceptionRepository.GetSpotExceptionRecommendedPlanSpots(recomendedPlansRequest.PlanId,
+                recomendedPlansRequest.WeekStartDate, recomendedPlansRequest.WeekEndDate);
+
+            if (spotExceptionsRecommendedPlanSpots?.Any() ?? false)
+            {
+                activePlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
+                queuedPlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
+
+                spotExceptionsRecommendedPlanSpotsResult.Active = activePlans
+                .Select(activePlan =>
+                {
+                    return new SpotExceptionsRecommendedActivePlanSpotsDto
+                    {
+                        Id = activePlan.Id,
+                        EstimateId = activePlan.EstimateId,
+                        IsciName = activePlan.IsciName,
+                        ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
+                        ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
+                        RecommendedPlan = activePlan.RecommendedPlanName,
+                        Pacing = activePlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        ProgramName = activePlan.ProgramName,
+                        Affiliate = activePlan.Affiliate,
+                        Market = activePlan.Market,
+                        Station = activePlan.StationLegacyCallLetters,
+                        InventorySource = activePlan.InventorySourceName
+                    };
+                }).ToList();
+
+                spotExceptionsRecommendedPlanSpotsResult.Queued = queuedPlans.Where(syncedSpot => syncedSpot.SpotExceptionsRecommendedPlanDetails.Any(x => x.SpotExceptionsRecommendedPlanDecision != null && x.SpotExceptionsRecommendedPlanDecision.SyncedAt == null))
+                .Select(queuedPlan =>
+                {
+                    return new SpotExceptionsRecommendedQueuedPlanSpotsDto
+                    {
+                        Id = queuedPlan.Id,
+                        EstimateId = queuedPlan.EstimateId,
+                        IsciName = queuedPlan.IsciName,
+                        ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
+                        ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
+                        RecommendedPlan = queuedPlan.RecommendedPlanName,
+                        Pacing = queuedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        ProgramName = queuedPlan.ProgramName,
+                        Affiliate = queuedPlan.Affiliate,
+                        Market = queuedPlan.Market,
+                        Station = queuedPlan.StationLegacyCallLetters,
+                        InventorySource = queuedPlan.InventorySourceName
+                    };
+                }).ToList();
+
+                spotExceptionsRecommendedPlanSpotsResult.Synced = queuedPlans.Where(syncedSpot => syncedSpot.SpotExceptionsRecommendedPlanDetails.Any(x => x.SpotExceptionsRecommendedPlanDecision != null && x.SpotExceptionsRecommendedPlanDecision.SyncedAt != null))
+                .Select(syncedPlan =>
+                {
+                    return new SpotExceptionsRecommendedSyncedPlanSpotsDto
+                    {
+                        Id = syncedPlan.Id,
+                        EstimateId = syncedPlan.EstimateId,
+                        IsciName = syncedPlan.IsciName,
+                        ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
+                        ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
+                        RecommendedPlan = syncedPlan.RecommendedPlanName,
+                        Pacing = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        ProgramName = syncedPlan.ProgramName,
+                        Affiliate = syncedPlan.Affiliate,
+                        Market = syncedPlan.Market,
+                        Station = syncedPlan.StationLegacyCallLetters,
+                        SyncedTimestamp = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.SyncedAt).FirstOrDefault().ToString(),
+                        InventorySource = syncedPlan.InventorySourceName
+                    };
+                }).ToList();
+            }
+            return spotExceptionsRecommendedPlanSpotsResult;
         }
     }
 }
