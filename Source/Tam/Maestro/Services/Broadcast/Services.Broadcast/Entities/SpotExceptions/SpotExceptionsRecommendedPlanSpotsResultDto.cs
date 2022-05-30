@@ -30,6 +30,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Pacing { get; set; }
         public string ProgramName { get; set; }
         public string Affiliate { get; set; }
+        public int? PlanId { get; set; }
         public string Market { get; set; }
         public string Station { get; set; }
         public string InventorySource { get; set; }
@@ -45,9 +46,11 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Pacing { get; set; }
         public string ProgramName { get; set; }
         public string Affiliate { get; set; }
+        public int? PlanId { get; set; }
         public string Market { get; set; }
         public string Station { get; set; }
         public string InventorySource { get; set; }
+        public string DecisionString { get; set; }
     }
     public class SpotExceptionsRecommendedSyncedPlanSpotsDto
     {
@@ -60,9 +63,11 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Pacing { get; set; }
         public string ProgramName { get; set; }
         public string Affiliate { get; set; }
+        public int? PlanId { get; set; }
         public string Market { get; set; }
         public string Station { get; set; }
         public string InventorySource { get; set; }
         public string SyncedTimestamp { get; set; }
+        public string DecisionString { get; set; }
     }
 }

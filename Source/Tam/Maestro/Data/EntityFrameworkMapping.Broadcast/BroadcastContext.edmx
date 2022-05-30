@@ -2450,6 +2450,7 @@
           <Property Name="created_at" Type="datetime" Nullable="false" />
           <Property Name="synced_by" Type="varchar" MaxLength="100" />
           <Property Name="synced_at" Type="datetime2" Precision="7" />
+          <Property Name="accepted_as_in_spec" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_details">
           <Key>
@@ -17224,6 +17225,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" FromRole="spot_exceptions_recommended_plan_decision" ToRole="spot_exceptions_recommended_plan_details" />
           <Property Name="synced_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="synced_at" Type="DateTime" Precision="7" />
+          <Property Name="accepted_as_in_spec" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_details">
           <Key>
@@ -21271,6 +21273,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_recommended_plan_decision">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_decision">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_decision">
+                <ScalarProperty Name="accepted_as_in_spec" ColumnName="accepted_as_in_spec" />
                 <ScalarProperty Name="synced_at" ColumnName="synced_at" />
                 <ScalarProperty Name="synced_by" ColumnName="synced_by" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />

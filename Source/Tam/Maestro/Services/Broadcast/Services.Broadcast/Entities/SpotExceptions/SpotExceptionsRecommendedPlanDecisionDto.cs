@@ -11,5 +11,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public DateTime CreatedAt { get; set; }
         public string SyncedBy { get; set; }
         public DateTime? SyncedAt { get; set; }
+        public bool AcceptedAsInSpec { get; set; }
     }
 }

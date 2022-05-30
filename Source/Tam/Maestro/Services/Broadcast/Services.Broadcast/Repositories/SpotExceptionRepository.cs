@@ -234,7 +234,8 @@ namespace Services.Broadcast.Repositories
                                                 created_at = recommendedPlanDetails
                                                     .SpotExceptionsRecommendedPlanDecision.CreatedAt,
                                                 username = recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision
-                                                    .UserName
+                                                    .UserName,
+                                                accepted_as_in_spec = recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec
                                             }
                                         };
                                 }
@@ -591,7 +592,8 @@ namespace Services.Broadcast.Repositories
                             UserName = spotExceptionsRecommendedPlanDecisionDb.username,
                             CreatedAt = spotExceptionsRecommendedPlanDecisionDb.created_at,
                             SyncedBy = spotExceptionsRecommendedPlanDecisionDb.synced_by,
-                            SyncedAt = spotExceptionsRecommendedPlanDecisionDb.synced_at
+                            SyncedAt = spotExceptionsRecommendedPlanDecisionDb.synced_at,
+                            AcceptedAsInSpec = spotExceptionsRecommendedPlanDecisionDb.accepted_as_in_spec
                         }).SingleOrDefault()
                     };
                     return spotExceptionsRecommendedPlanDetail;

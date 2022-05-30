@@ -8,6 +8,7 @@
       "IsciName": "BB82TXT4P",
       "Market": "Lincoln & Hastings-Krny",
       "Pacing": "0%",
+      "PlanId": 215,
       "ProgramAirDate": "1/4/2020",
       "ProgramAirTime": "8:07:15 AM",
       "ProgramName": "FOX 13 10:00 News",
@@ -18,12 +19,14 @@
   "Queued": [
     {
       "Affiliate": "NBC",
+      "DecisionString": "Out",
       "EstimateId": 191758,
       "Id": 3,
       "InventorySource": "TTWN",
       "IsciName": "CC42TXT4P",
       "Market": "Phoenix (Prescott)",
       "Pacing": "0%",
+      "PlanId": 216,
       "ProgramAirDate": "1/6/2020",
       "ProgramAirTime": "11:15:30 AM",
       "ProgramName": "Reynolds Foil @9",
@@ -34,12 +37,14 @@
   "Synced": [
     {
       "Affiliate": "CBS",
+      "DecisionString": "Out",
       "EstimateId": 191760,
       "Id": 4,
       "InventorySource": "CNN",
       "IsciName": "CC44ZZPT4",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
       "Pacing": "0%",
+      "PlanId": 217,
       "ProgramAirDate": "1/10/2020",
       "ProgramAirTime": "11:45:00 PM",
       "ProgramName": "Reckitt HYHO",

@@ -272,7 +272,8 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                                 {
                                     UserName = "MockData",
-                                    CreatedAt = DateTime.Now
+                                    CreatedAt = DateTime.Now,
+                                    AcceptedAsInSpec = false
                                 }
                             },
                                 new SpotExceptionsRecommendedPlanDetailsDto
@@ -1695,8 +1696,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 activePlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
                 queuedPlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
-
-                spotExceptionsRecommendedPlanSpotsResult.Active = activePlans
+                
+                 spotExceptionsRecommendedPlanSpotsResult.Active = activePlans
                 .Select(activePlan =>
                 {
                     return new SpotExceptionsRecommendedActivePlanSpotsDto
@@ -1710,6 +1711,7 @@ namespace Services.Broadcast.ApplicationServices
                         Pacing = activePlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                         ProgramName = activePlan.ProgramName,
                         Affiliate = activePlan.Affiliate,
+                        PlanId = activePlan.RecommendedPlanId,
                         Market = activePlan.Market,
                         Station = activePlan.StationLegacyCallLetters,
                         InventorySource = activePlan.InventorySourceName
@@ -1730,9 +1732,11 @@ namespace Services.Broadcast.ApplicationServices
                         Pacing = queuedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                         ProgramName = queuedPlan.ProgramName,
                         Affiliate = queuedPlan.Affiliate,
+                        PlanId = queuedPlan.RecommendedPlanId,
                         Market = queuedPlan.Market,
                         Station = queuedPlan.StationLegacyCallLetters,
-                        InventorySource = queuedPlan.InventorySourceName
+                        InventorySource = queuedPlan.InventorySourceName,
+                        DecisionString = queuedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
                     };
                 }).ToList();
 
@@ -1750,10 +1754,12 @@ namespace Services.Broadcast.ApplicationServices
                         Pacing = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                         ProgramName = syncedPlan.ProgramName,
                         Affiliate = syncedPlan.Affiliate,
+                        PlanId = syncedPlan.RecommendedPlanId,
                         Market = syncedPlan.Market,
                         Station = syncedPlan.StationLegacyCallLetters,
                         SyncedTimestamp = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.SyncedAt).FirstOrDefault().ToString(),
-                        InventorySource = syncedPlan.InventorySourceName
+                        InventorySource = syncedPlan.InventorySourceName,
+                        DecisionString = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
                     };
                 }).ToList();
             }

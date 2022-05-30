@@ -20,6 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_at { get; set; }
         public string synced_by { get; set; }
         public Nullable<System.DateTime> synced_at { get; set; }
+        public bool accepted_as_in_spec { get; set; }
     
         public virtual spot_exceptions_recommended_plan_details spot_exceptions_recommended_plan_details { get; set; }
     }
