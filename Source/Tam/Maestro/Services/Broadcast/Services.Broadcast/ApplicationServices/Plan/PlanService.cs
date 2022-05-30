@@ -424,8 +424,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 result = _DoSavePlanDraft(plan, createdBy, createdDate);
             }
             else
-            {
-                result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
+            {               
+                try
+                {
+                    result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
+                }
+                catch (Exception e)
+                {                   
+                    throw new PlanSaveException(e.Message.ToString() + " Try to save the plan as draft");
+                }
             }
             return result;
         }
@@ -442,7 +449,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const string SW_KEY_POST_PLAN_SAVE = "Post Plan Save";
 
             _LogInfo($"SavePlan starting for planID '{plan.Id}'", logTxId, createdBy);
-
+           
             try
             {
                 var processTimers = new ProcessWorkflowTimers();
@@ -610,7 +617,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             catch (Exception ex)
             {
                 _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
-                throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
+               throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
             }
         }
         private int _DoSavePlanDraft(PlanDto plan, string createdBy, DateTime createdDate)

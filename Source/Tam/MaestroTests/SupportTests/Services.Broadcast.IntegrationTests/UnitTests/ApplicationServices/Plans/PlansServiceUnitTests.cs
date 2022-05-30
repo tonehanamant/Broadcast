@@ -1307,7 +1307,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void CanNotUpdateLockedPlan()
         {
-            const string expectedMessage = "The chosen plan has been locked by IntegrationUser";
+            const string expectedMessage = "The chosen plan has been locked by IntegrationUser Try to save the plan as draft";
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -1388,7 +1388,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void CanNotUpdatePlanWithPricingModelRunning()
         {
-            const string expectedMessage = "The pricing model is running for the plan";
+            const string expectedMessage = "The pricing model is running for the plan Try to save the plan as draft";
             _PlanPricingServiceMock.Setup(x => x.IsPricingModelRunningForPlan(It.IsAny<int>())).Returns(true);
 
             PlanDto plan = _GetNewPlan();
