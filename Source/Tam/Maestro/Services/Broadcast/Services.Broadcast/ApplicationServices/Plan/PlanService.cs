@@ -326,6 +326,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IServiceClientBase _ServiceClientBase;
         private readonly IApiTokenManager _ApiTokenManager;
         private const string _CoreApiVersion = "api/v1";
+        private readonly Lazy<bool> _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -384,6 +385,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_EXTERNAL_INTEGRATION));
             _ServiceClientBase = serviceClientBase;
             _ApiTokenManager = apiTokenManager;
+            _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS));
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -1678,6 +1681,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _SetPlanVersionNumber(plan);
                     _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
                     _PlanRepository.UpdatePlanPricingVersionId(plan.VersionId, oldPlanVersionId);
+                    if (_IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled.Value)
+                    {
+                        _PlanRepository.UpdatePlanBuyingVersionId(plan.VersionId, oldPlanVersionId);
+                    }
                     _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
                 }
