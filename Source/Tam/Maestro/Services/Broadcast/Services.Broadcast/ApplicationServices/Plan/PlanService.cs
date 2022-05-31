@@ -429,9 +429,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
                 }
-                catch (Exception e)
-                {                   
-                    throw new PlanSaveException(e.Message.ToString() + " Try to save the plan as draft");
+                catch (Exception ex)
+                {
+                    string exceptionType = ex.GetType().ToString();
+                    if (exceptionType == "Services.Broadcast.Exceptions.PlanValidationException")
+                    {
+                        throw new PlanValidationException(ex.Message.ToString() + " Try to save the plan as draft");
+                    }
+                    if (exceptionType == "Services.Broadcast.Exceptions.PlanSaveException")
+                    { 
+                        throw new PlanSaveException(ex.Message.ToString() + " Try to save the plan as draft"); 
+                    }
+                    throw new Exception(ex.Message.ToString() + " Try to save the plan as draft");
                 }
             }
             return result;

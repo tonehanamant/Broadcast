@@ -77,19 +77,19 @@ namespace Services.Broadcast.Validators
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
         private readonly IRatingForecastService _RatingForecastService;
 
-        const string INVALID_PLAN_NAME = "Invalid plan name";
+        const string INVALID_PLAN_NAME = "Invalid plan name.";
         const string INVALID_PRODUCT = "Invalid product";
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
-        const string INVALID_FLIGHT_DAYS = "Invalid flight days. The plan should have at least one flight day";
+        const string INVALID_FLIGHT_DAYS = "Invalid flight days. The plan should have at least one flight day.";
         const string INVALID_FLIGHT_DATES_WITH_FLIGHT_DAYS = "Invalid flight dates. The flight cannot start or end, with non-flight days";
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
         const string INVALID_FLIGHT_HIATUS_DAY =
             "Invalid flight hiatus day.  All days must be within the flight date range.";
         const string INVALID_FLIGHT_HIATUS_DAY_WITH_FLIGHT_DAYS = "Invalid flight hiatus day. Hiatus day cannot be a non-flight day.";
-        const string INVALID_AUDIENCE = "Invalid audience";
-        const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times";
+        const string INVALID_AUDIENCE = "Invalid audience.";
+        const string INVALID_AUDIENCE_DUPLICATE = "An audience cannot appear multiple times.";
         const string INVALID_SHARE_HUT_BOOKS = "HUT Book must be prior to Share Book";
         const string INVALID_DAYPART_NUMBER = "There should be at least one daypart selected.";
         const string INVALID_DAYPART_TIMES = "Invalid daypart times.";
@@ -111,7 +111,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_CPP = "Invalid CPP.";
         const string INVALID_DELIVERY_IMPRESSIONS = "Invalid Delivery Impressions.";
         const string INVALID_IMPRESSIONS_PER_UNIT = "Impressions per Unit must be less or equal to delivery impressions.";
-        const string INVALID_DRAFT_ON_NEW_PLAN = "Cannot create a new draft on a non existing plan";
+        const string INVALID_DRAFT_ON_NEW_PLAN = "Cannot create a new draft on a non existing plan.";
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
 
         const string SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the show types restrictions is not valid";

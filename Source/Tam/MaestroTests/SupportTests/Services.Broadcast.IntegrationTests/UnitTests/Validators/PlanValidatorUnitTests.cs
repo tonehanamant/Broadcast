@@ -104,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.Name = string.Empty;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid plan name"));
+                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid plan name."));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.IsDraft = true;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Cannot create a new draft on a non existing plan"));
+                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Cannot create a new draft on a non existing plan."));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit ex sed purus auctor rhoncus. Mauris lobortis nisi eget sollicitudin ultrices. Duis mollis blandit nisi id ultrices. Suspendisse molestie urna in enim egestas vehicula. Nulla facilisi.";
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid plan name"));
+                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid plan name."));
         }
 
         [Test]
@@ -192,7 +192,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.FlightDays = null;
 
             Assert.That(() => _planValidator.ValidatePlan(plan)
-                , Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day"));
+                , Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day."));
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.FlightDays = new List<int>();
 
             Assert.That(() => _planValidator.ValidatePlan(plan)
-                , Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day"));
+                , Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day."));
         }
 
         [Test]
@@ -256,7 +256,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<PlanValidationException>().With.Message
-                    .EqualTo("Invalid flight days. The plan should have at least one flight day"));
+                    .EqualTo("Invalid flight days. The plan should have at least one flight day."));
         }
 
         [Test]
@@ -793,7 +793,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.AudienceId = 0;
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid audience"));
+                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid audience."));
         }
 
         [Test]
@@ -860,7 +860,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid audience"));
+                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid audience."));
         }
 
         [Test]
@@ -882,7 +882,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("An audience cannot appear multiple times"));
+                Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("An audience cannot appear multiple times."));
         }
 
         [Test]
@@ -1153,7 +1153,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
                 Throws.TypeOf<PlanValidationException>().With.Message
-                    .EqualTo("Invalid flight days. The plan should have at least one flight day"));
+                    .EqualTo("Invalid flight days. The plan should have at least one flight day."));
         }
 
         [Test]
