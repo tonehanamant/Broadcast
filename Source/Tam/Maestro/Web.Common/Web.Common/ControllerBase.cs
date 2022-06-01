@@ -1,5 +1,6 @@
 ﻿using BroadcastLogging;
 using log4net;
+using Services.Broadcast.Exceptions;
 using System;
 using System.Runtime.CompilerServices;
 using System.Web;
@@ -59,12 +60,24 @@ namespace Tam.Maestro.Web.Common
             {
                 _LogError($"Exception from url '{HttpContext.Current.Request.RawUrl}'", e, _ControllerNameRetriever._GetControllerName());
 
-                return (new BaseResponse<T>
+                if (e.GetBaseException() is CadentException)
                 {
-                    Success = false,
-                    Message = e.Message,
-                    Data = default(T)
-                });
+                    return new BaseResponse<T>
+                    {
+                        Success = false,
+                        Message = e.Message,
+                        Data = default(T)
+                    };
+                } 
+                else
+                {
+                    return new BaseResponse<T>
+                    {
+                        Success = false,
+                        Message = "Call your administrator to check the log messages.",
+                        Data = default(T)
+                    };
+                }
             }
         }
 
@@ -74,24 +87,36 @@ namespace Tam.Maestro.Web.Common
             {
                 _ThrowIfModelStateInvalid();
                 var response = func();
-                return (new BaseResponseWithStackTrace<T>
+                return new BaseResponseWithStackTrace<T>
                 {
                     Success = true,
                     Message = null,
                     Data = response
-                });
+                };
             }
             catch (Exception e)
             {
                 _LogError($"Exception caught.", e, _ControllerNameRetriever._GetControllerName());
 
-                return new BaseResponseWithStackTrace<T>
+                if (e.GetBaseException() is CadentException)
                 {
-                    Success = false,
-                    Message = e.Message,
-                    Data = default(T),
-                    StackTrace = e.StackTrace
-                };
+                    return new BaseResponseWithStackTrace<T>
+                    {
+                        Success = false,
+                        Message = e.Message,
+                        Data = default(T),
+                        StackTrace = e.StackTrace
+                    };
+                } else
+                {
+                    return new BaseResponseWithStackTrace<T>
+                    {
+                        Success = false,
+                        Message = "Call your administrator to check the log messages.",
+                        Data = default(T),
+                        StackTrace = e.StackTrace
+                    };
+                }
             }
         }
 

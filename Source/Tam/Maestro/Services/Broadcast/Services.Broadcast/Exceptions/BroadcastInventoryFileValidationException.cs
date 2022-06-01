@@ -3,8 +3,8 @@ using System;
 
 namespace Services.Broadcast.Exceptions
 {
-    public class BroadcastInventoryFileValidationException : Exception
-        {
+    public class BroadcastInventoryFileValidationException : CadentException
+    {
         public BroadcastInventoryFileValidationException()
         {
         }

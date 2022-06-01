@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Exceptions
 {
-    public class BroadcastProgramFlightException: Exception
+    public class BroadcastProgramFlightException: CadentException
     {
         public BroadcastProgramFlightException()
         {

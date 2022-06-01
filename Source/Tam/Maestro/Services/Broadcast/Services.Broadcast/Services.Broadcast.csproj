@@ -624,6 +624,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionUnpostedNoReelRosterDto.cs" />
     <Compile Include="Entities\SpotExceptions\TriggerDecisionSyncRequestDto.cs" />
     <Compile Include="Entities\SpotLengthDto.cs" />
+    <Compile Include="Exceptions\CadentException.cs" />
     <Compile Include="Exceptions\PlanValidationException.cs" />
     <Compile Include="Exceptions\PlanSaveException.cs" />
     <Compile Include="FeatureToggles.cs" />

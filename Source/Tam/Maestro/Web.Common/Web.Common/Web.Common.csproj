@@ -257,6 +257,10 @@
       <Project>{0C5E321F-B0A7-4A91-8E01-174386AF40A3}</Project>
       <Name>BroadcastLogging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj">
+      <Project>{BA718C31-1F25-4DF1-A2AF-EEA92DA4DAB6}</Project>
+      <Name>Services.Broadcast</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

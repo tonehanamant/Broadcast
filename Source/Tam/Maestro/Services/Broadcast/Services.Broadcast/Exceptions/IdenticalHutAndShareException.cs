@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Exceptions
 {
-    public class IdenticalHutAndShareException : Exception
+    public class IdenticalHutAndShareException : CadentException
     {
         public IdenticalHutAndShareException(string message) : base(message) { }
     }

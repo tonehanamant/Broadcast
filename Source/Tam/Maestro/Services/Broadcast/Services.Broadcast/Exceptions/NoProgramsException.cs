@@ -2,5 +2,5 @@
 
 namespace Services.Broadcast.Exceptions
 {
-    public class NoProgramsException : Exception { }
+    public class NoProgramsException : CadentException { }
 }

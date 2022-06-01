@@ -6,7 +6,7 @@ namespace Services.Broadcast.Exceptions
     /// Exception describing an identified issue during the Plan Save Operation.
     /// </summary>
     /// <seealso cref="System.Exception" />
-    public class PlanSaveException : InvalidOperationException
+    public class PlanSaveException : CadentException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanSaveException"/> class.

@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Exceptions
 {
-    public class PricingModelException : Exception
+    public class PricingModelException : CadentException
     {
         public PricingModelException(string message) : base(message) { }
     }

@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Exceptions
 {
-    public class BroadcastDuplicateInventoryFileException : Exception
+    public class BroadcastDuplicateInventoryFileException : CadentException
     {
         public BroadcastDuplicateInventoryFileException()
         {

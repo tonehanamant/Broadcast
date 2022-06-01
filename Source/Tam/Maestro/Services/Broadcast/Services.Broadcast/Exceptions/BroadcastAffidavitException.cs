@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Broadcast.Exceptions
 {
-    public class BroadcastAffidavitException : Exception
+    public class BroadcastAffidavitException : CadentException
     {
         public List<string> ErrorList { get; set; } 
 

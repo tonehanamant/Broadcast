@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Exceptions
 {
-    public class BroadcastInventoryDataException : Exception
+    public class BroadcastInventoryDataException : CadentException
     {
         private int _inventoryFileId = 0;
 
