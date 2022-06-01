@@ -534,7 +534,9 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
+    <Compile Include="Clients\CampaignServiceApiClient.cs" />
     <Compile Include="Clients\CampaignServiceApiConfigKeys.cs" />
+    <Compile Include="Clients\CadentSecuredClientBase.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
     <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
@@ -542,7 +544,7 @@
     <Compile Include="Entities\ApiResponse\ApiListResponseTyped.cs" />
     <Compile Include="Entities\ApiResponse\TokenResponse.cs" />
     <Compile Include="Clients\AgencyAdvertiserBrandCoreApiConfigKeys.cs" />
-    <Compile Include="Clients\ServiceClientBase.cs" />
+    <Compile Include="Clients\CadentServiceClientHelper.cs" />
     <Compile Include="Clients\PlanBuyingJobQueueApiClient.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
     <Compile Include="Entities\CampaignCopyDto.cs" />

@@ -25,6 +25,7 @@ using Castle.Components.DictionaryAdapter;
 using Services.Broadcast.Exceptions;
 using Tam.Maestro.Services.ContractInterfaces;
 using Services.Broadcast.Clients;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -61,8 +62,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
-        private Mock<IServiceClientBase> _ServiceClientBase;
-        private Mock<IApiTokenManager> _ApiTokenManager;
+        private Mock<ICampaignServiceApiClient> _CampaignServiceApiClient;
 
         [SetUp]
         public void CreatePlanService()
@@ -94,8 +94,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
-            _ServiceClientBase = new Mock<IServiceClientBase>();
-            _ApiTokenManager = new Mock<IApiTokenManager>();
+            _CampaignServiceApiClient = new Mock<ICampaignServiceApiClient>();
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -226,8 +225,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _ConfigurationSettingsHelperMock.Object,
                     _LockingEngineMock.Object,
                     _DateTimeEngineMock.Object,
-                    _ServiceClientBase.Object,
-                    _ApiTokenManager.Object
+                    _CampaignServiceApiClient.Object
                 );
 
             _SpotLengthEngineMock
@@ -254,7 +252,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void SavePlanNew()
+        public async Task SavePlanNew()
         {
             // Arrange
             _WeeklyBreakdownEngineMock
@@ -311,7 +309,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(plan.Id);
 
             // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
@@ -332,7 +330,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void SavePlanDraft()
+        public async Task SavePlanDraft()
         {
             // Arrange
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE] = true;
@@ -373,7 +371,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(standardResult);
 
             // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
@@ -439,7 +437,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void SavePlanUpdatedVersionNoChangeToPlan()
+        public async Task SavePlanUpdatedVersionNoChangeToPlan()
         {
             // Arrange
             var modifiedWho = "ModificationUser";
@@ -543,7 +541,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             plan.IsOutOfSync = false;
 
             // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
             Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);
@@ -562,7 +560,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedSetPricingPlanVersionIdCallCount, setPricingPlanVersionIdCallCount, "Invalid setPricingPlanVersionIdCallCount Count.");
         }
         [Test]
-        public void SavePlanSetSpotAllocationModelModeToDefaultOnGoalChanged()
+        public async Task SavePlanSetSpotAllocationModelModeToDefaultOnGoalChanged()
         {
             // Arrange
             var modifiedWho = "ModificationUser";
@@ -663,7 +661,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             plan.IsOutOfSync = false;
 
             // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
             Assert.AreEqual(plan.SpotAllocationModelMode, SpotAllocationModelMode.Quality);
@@ -871,7 +869,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void DispatchAggregation_WasTriggeredOnSave()
+        public async Task DispatchAggregation_WasTriggeredOnSave()
         {
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
@@ -912,7 +910,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto { VersionId = 66 });
 
             // aggregatePlanSynchronously = false because we are testing that aggregation is on a separate thread.
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
             Thread.Sleep(200);
 
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
@@ -1239,7 +1237,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void DispatchAggregation_WithAggregationError()
+        public async Task DispatchAggregation_WithAggregationError()
         {
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
@@ -1284,7 +1282,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto { VersionId = 66 });
 
             // aggregatePlanSynchronously = false because we are testing that aggregation is on a separate thread.
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
             Thread.Sleep(200);
 
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
@@ -1305,7 +1303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void CanNotUpdateLockedPlan()
+        public async Task CanNotUpdateLockedPlan()
         {
             const string expectedMessage = "The chosen plan has been locked by IntegrationUser Try to save the plan as draft";
             _BroadcastLockingManagerApplicationServiceMock
@@ -1337,13 +1335,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
                 .Returns(standardResult);
 
-            var exception = Assert.Throws<PlanSaveException>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true));
+            PlanSaveException exception = null;
 
+            try
+            {
+                await _PlanService.SavePlanAsync(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true);
+            }
+            catch (PlanSaveException ex)
+            {
+                exception = ex;
+            }
+
+            Assert.IsNotNull(exception);
             Assert.AreEqual(expectedMessage, exception.Message);
         }
 
         [Test]
-        public void CanSavePlanWithFlightDaysDefaultingToSevedDays()
+        public async Task CanSavePlanWithFlightDaysDefaultingToSevedDays()
         {
             // Arrange
             var plan = _GetNewPlan();
@@ -1378,7 +1386,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(standardResult);
 
             // Act
-            _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true);
+            await _PlanService.SavePlanAsync(plan, "IntegrationUser", new DateTime(2019, 10, 23), aggregatePlanSynchronously: true);
 
             // Assert
             Assert.NotNull(plan.FlightDays, "FlightDays list should be initialized");
@@ -1386,7 +1394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void CanNotUpdatePlanWithPricingModelRunning()
+        public async Task CanNotUpdatePlanWithPricingModelRunning()
         {
             const string expectedMessage = "The pricing model is running for the plan Try to save the plan as draft";
             _PlanPricingServiceMock.Setup(x => x.IsPricingModelRunningForPlan(It.IsAny<int>())).Returns(true);
@@ -1395,8 +1403,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             plan.Id = 1;
             plan.VersionId = 1;
 
-            var exception = Assert.Throws<PlanSaveException>(() => _PlanService.SavePlan(plan, "IntegrationUser", new DateTime(2019, 10, 23)));
+            PlanSaveException exception = null;
 
+            try
+            {
+                await _PlanService.SavePlanAsync(plan, "IntegrationUser", new DateTime(2019, 10, 23));
+            }
+            catch (PlanSaveException ex)
+            {
+                exception = ex;
+            }
+
+            Assert.IsNotNull(exception);
             Assert.AreEqual(expectedMessage, exception.Message);
         }
 
@@ -2683,7 +2701,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void CommitPricingAllocationModel_NoJob()
+        public async Task CommitPricingAllocationModel_NoJob()
         {
             const string username = "testUser";
             const PostingTypeEnum testPostingType = PostingTypeEnum.NSI;
@@ -2749,15 +2767,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanPricingServiceMock.Setup(s => s.GetAllCurrentPricingExecutions(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new CurrentPricingExecutions());
 
-            var caught = Assert.Throws<InvalidOperationException>(() =>
-                _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode,
-                    testPostingType, username));
+            InvalidOperationException caught = null;
 
+            try
+            {
+                await _PlanService.CommitPricingAllocationModelAsync(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username);
+            }
+            catch (InvalidOperationException ex)
+            {
+                caught = ex;
+            }
+
+            Assert.IsNotNull(caught);
             Assert.IsTrue(caught.Message.Contains($"Did not find a pricing job for PlanId='{planId}'"));
         }
 
         [Test]
-        public void CommitPricingAllocationModel_NoJobResults()
+        public async Task CommitPricingAllocationModel_NoJobResults()
         {
             const string username = "testUser";
             const PostingTypeEnum testPostingType = PostingTypeEnum.NSI;
@@ -2827,15 +2853,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Job = new PlanPricingJob()
                 });
 
-            var caught = Assert.Throws<InvalidOperationException>(() =>
-                _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode,
-                    testPostingType, username));
 
+            InvalidOperationException caught = null;
+
+            try
+            {
+                await _PlanService.CommitPricingAllocationModelAsync(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username);
+            }
+            catch (InvalidOperationException ex)
+            {
+                caught = ex;
+            }
+
+            Assert.IsNotNull(caught);
             Assert.IsTrue(caught.Message.Contains($"Did not find pricing results for PlanId='{planId}'"));
         }
 
         [Test]
-        public void CommitPricingAllocationModel()
+        public async Task CommitPricingAllocationModel()
         {
             // Arrange
             const string username = "testUser";
@@ -2987,7 +3022,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
 
             // Act
-            var results = _PlanService.CommitPricingAllocationModel(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username,
+            var results = await _PlanService.CommitPricingAllocationModelAsync(beforePlan.Id, testSpotAllocationModelMode, testPostingType, username,
                 aggregatePlanSynchronously: true);
 
             // Assert
@@ -3417,7 +3452,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void SavePlan_WithLockedFlag()
+        public async Task SavePlan_WithLockedFlag()
         {
             // Arrange
             _WeeklyBreakdownEngineMock
@@ -3474,7 +3509,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(plan.Id);
 
             // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
 
             // Assert
             Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
@@ -3915,7 +3950,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(1, 1, true, false, 1, 1)]
         [TestCase(1, 1, true, true, 2, 2)]
         [TestCase(1, 1, false, false, 1, 1)]
-        public void SavePlan_FilterCustomDaypart_BeforeVerifyingPlanPricingInputsChange(int planId, int planVersionId, bool isDraftBefore, bool isDraftNow, int expectedBeforePlanDaypartCount, int expectedAfterPlanDaypartCount)
+        public async Task SavePlan_FilterCustomDaypart_BeforeVerifyingPlanPricingInputsChange(int planId, int planVersionId, bool isDraftBefore, bool isDraftNow, int expectedBeforePlanDaypartCount, int expectedAfterPlanDaypartCount)
         {
             // Arrange
             var modifiedWho = "ModificationUser";
@@ -4044,7 +4079,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(() => getPlanReturns.Dequeue());
 
             // Act
-            _PlanService.SavePlan(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: false);
 
             // Assert
             Assert.AreEqual(expectedBeforePlanDaypartCount, beforePlan.Dayparts.Count);

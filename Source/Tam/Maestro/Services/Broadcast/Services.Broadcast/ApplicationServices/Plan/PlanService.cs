@@ -2,8 +2,8 @@
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Hangfire;
-using Newtonsoft.Json;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.DTO;
@@ -22,11 +22,8 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -43,7 +40,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// because the transaction scope locks DB and summary data can not be saved from another thread
         /// </param>
         /// <returns></returns>
-        int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false);
+        Task<int> SavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false);
 
         /// <summary>
         /// Gets the plan.
@@ -226,7 +223,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="username">The username.</param>
         /// /// <param name="aggregatePlanSynchronously">if set to <c>true</c> [aggregate plan synchronously].</param>
         /// <returns>True if the operation was successful, otherwise false.</returns>
-        bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType,
+        Task<bool> CommitPricingAllocationModelAsync(int planId, SpotAllocationModelMode spotAllocationModelMode, PostingTypeEnum postingType,
             string username, bool aggregatePlanSynchronously = false);
 
         /// <summary>
@@ -323,9 +320,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
-        private readonly IServiceClientBase _ServiceClientBase;
-        private readonly IApiTokenManager _ApiTokenManager;
-        private const string _CoreApiVersion = "api/v1";
+        private readonly ICampaignServiceApiClient _CampaignServiceApiClient;        
         private readonly Lazy<bool> _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -347,8 +342,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IConfigurationSettingsHelper configurationSettingsHelper
             , ILockingEngine lockingEngine
             , IDateTimeEngine dateTimeEngine
-            , IServiceClientBase serviceClientBase
-            , IApiTokenManager apiTokenManager) : base(featureToggleHelper, configurationSettingsHelper)
+            , ICampaignServiceApiClient campaignServiceApiClient
+            ) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -383,8 +378,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_INTEGRATION));
             _IsBroadcastEnableFluidityExternalIntegrationEnabled = new Lazy<bool>(() =>
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_EXTERNAL_INTEGRATION));
-            _ServiceClientBase = serviceClientBase;
-            _ApiTokenManager = apiTokenManager;
+            _CampaignServiceApiClient = campaignServiceApiClient;
             _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS));
         }
@@ -419,7 +413,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         ///<inheritdoc/>
-        public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
+        public async Task<int> SavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
             int result;
             if (_IsPartialPlanSaveEnabled.Value && Convert.ToBoolean(plan.IsDraft))
@@ -430,7 +424,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {               
                 try
                 {
-                    result = _DoSavePlan(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
+                    result = await _DoSavePlanAsync(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
                 }
                 catch (Exception ex)
                 {
@@ -449,7 +443,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        private int _DoSavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool shouldPromotePlanPricingResults, bool shouldPromotePlanBuyingResults)
+        private async Task<int> _DoSavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool shouldPromotePlanPricingResults, bool shouldPromotePlanBuyingResults)
         {
             var logTxId = Guid.NewGuid();
 
@@ -600,18 +594,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     if (plan.Status == PlanStatusEnum.Contracted && plan.FluidityPercentage != null)
                     {
-                        var requestSerialized = new PostDSPDTO
-                        {
-                            PlanId = plan.Id,
-                            PlanVersionId = plan.VersionId
-                        };
-
-                        var httpClient = _GetSecureHttpClient();
-                        var apiResult = httpClient.PostAsync($"{_CoreApiVersion}/BroadcastPlans/PublishBroadcastMessage", new StringContent(JsonConvert.SerializeObject(requestSerialized), Encoding.UTF8, "application/json")).GetAwaiter().GetResult();
-                        if (apiResult.IsSuccessStatusCode)
-                        {
-                            _LogInfo("Successfully Called the api For post the DSP");
-                        }
+                        await _CampaignServiceApiClient.NotifyFluidityPlanAsync(plan.Id, plan.VersionId);
                     }
                 }
 
@@ -632,6 +615,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
             }
         }
+
         private int _DoSavePlanDraft(PlanDto plan, string createdBy, DateTime createdDate)
         {
             var logTxId = Guid.NewGuid();
@@ -717,43 +701,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("Error saving the plan draft.  Please see your administrator to check logs.");
             }
         }
-
-        private HttpClient _GetSecureHttpClient()
-        {
-            var apiBaseUrl = _GetCampaignServiceApiBaseUrl();
-            var applicationId = _GetCampaignServiceApiApplicationId();
-            var appName = _GetCampaignServiceApiAppName();
-
-            var umUrl = _GetUmUrl();
-            var accessToken = _ApiTokenManager.GetOrRefreshTokenAsync(umUrl, appName, applicationId)
-                .GetAwaiter().GetResult();
-
-            return _ServiceClientBase.GetServiceHttpClient(apiBaseUrl, applicationId, accessToken);
-        }
-
-        private string _GetCampaignServiceApiBaseUrl()
-        {
-            var apiBaseUrl = _ConfigurationSettingsHelper.GetConfigValue<string>(CampaignServiceApiConfigKeys.ApiBaseUrl);
-            return apiBaseUrl;
-        }
-
-        private string _GetCampaignServiceApiApplicationId()
-        {
-            var applicationId = _ConfigurationSettingsHelper.GetConfigValue<string>(CampaignServiceApiConfigKeys.ApplicationId);
-            return applicationId;
-        }
-
-        private string _GetCampaignServiceApiAppName()
-        {
-            var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(CampaignServiceApiConfigKeys.AppName);
-            return appName;
-        }
-
-        private string _GetUmUrl()
-        {
-            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.UmUrl);
-        }
-
+        
         internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
         {
             var filteredDayparts = new List<PlanDaypartDto>();
@@ -1990,7 +1938,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         /// <inheritdoc />
-        public bool CommitPricingAllocationModel(int planId, SpotAllocationModelMode spotAllocationModelMode,
+        public async Task<bool> CommitPricingAllocationModelAsync(int planId, SpotAllocationModelMode spotAllocationModelMode,
             PostingTypeEnum postingType, string username, bool aggregatePlanSynchronously = false)
         {
             // use the service, not the repo, so that transformations happen.
@@ -2068,7 +2016,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             */
             var currentDateTime = _DateTimeEngine.GetCurrentMoment();
             // use the service, not the repo, so all validations, etc are used.
-            _DoSavePlan(beforePlan, username, currentDateTime, aggregatePlanSynchronously, shouldPromotePlanPricingResults: true, shouldPromotePlanBuyingResults: false);
+            await _DoSavePlanAsync(beforePlan, username, currentDateTime, aggregatePlanSynchronously, shouldPromotePlanPricingResults: true, shouldPromotePlanBuyingResults: false);
 
             return true;
         }

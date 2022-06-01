@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Net.Http;
@@ -16,20 +15,16 @@ namespace Services.Broadcast.Clients
         public DateTime? ExpirationDate { get; set; }
 
     }
+
     public interface IApiTokenManager
     {
         Task<string> GetOrRefreshTokenAsync(string umApiBaseUrl, string appName, string applicationId);
     }
+
     public class ApiTokenManager :  IApiTokenManager
     {
         private const string _UmServiceEndpoint = "api/v1/Security/svcToken";
         private static readonly ConcurrentDictionary<string, ApiTokenInfo> _apiTokenMap = new ConcurrentDictionary<string, ApiTokenInfo>(StringComparer.OrdinalIgnoreCase);
-        private readonly IServiceClientBase _ServiceClientBase;
-
-        public ApiTokenManager(IServiceClientBase serviceClientBase)
-        {
-            _ServiceClientBase = serviceClientBase;
-        }
 
         public async Task<string> GetOrRefreshTokenAsync(string umApiBaseUrl, string appName, string applicationId)
         {
@@ -75,7 +70,7 @@ namespace Services.Broadcast.Clients
 
         public TokenResponse _GetAccessToken(string umUrl,string appName, string applicationId)
         {
-            using (var client = _ServiceClientBase.GetServiceHttpClient(umUrl.EndsWith("/") ? umUrl : $"{umUrl}/", applicationId))
+            using (var client = CadentServiceClientHelper.GetServiceHttpClient(umUrl.EndsWith("/") ? umUrl : $"{umUrl}/", applicationId))
             {
                 var req = new SvcTokenRequest
                 {

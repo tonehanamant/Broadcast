@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.Clients
 {
@@ -37,27 +38,23 @@ namespace Services.Broadcast.Clients
     /// <summary>
     /// A client for retrieving the data.
     /// </summary>
-    public class AgencyAdvertiserBrandApiClient : BroadcastBaseClass, IAgencyAdvertiserBrandApiClient
+    public class AgencyAdvertiserBrandApiClient : CadentSecuredClientBase, IAgencyAdvertiserBrandApiClient
     {
         private const string _CoreApiVersion = "api/v2";
         private readonly Lazy<string> _AABApiUrl;
         private readonly HttpClient _HttpClient;
         private readonly bool _IsAABCoreAPIEnabled;
-        private readonly IApiTokenManager _ApiTokenManager;
-        private readonly IServiceClientBase _ServiceClientBase;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgencyAdvertiserBrandApiClient"/> class.
         /// </summary>
-        public AgencyAdvertiserBrandApiClient(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient,
-            IApiTokenManager apiTokenManager, IServiceClientBase serviceClientBase)
-                : base(featureToggleHelper, configurationSettingsHelper)
+        public AgencyAdvertiserBrandApiClient(HttpClient httpClient,
+            IApiTokenManager apiTokenManager, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+                : base(apiTokenManager, featureToggleHelper, configurationSettingsHelper)
         {
             _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
              _HttpClient = httpClient;
             _IsAABCoreAPIEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_CORE_API);
-            _ApiTokenManager = apiTokenManager;
-            _ServiceClientBase = serviceClientBase;
         }
 
         /// <inheritdoc/>
@@ -68,7 +65,7 @@ namespace Services.Broadcast.Clients
                 List<aab_agency> apiResult = new List<aab_agency>();
                 if (_IsAABCoreAPIEnabled)
                 {
-                    var httpClient = _GetSecureHttpClient();
+                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
                     apiResult = httpClient.Get<ApiListResponseTyped<aab_agency>>($"{_CoreApiVersion}/agencies").ResultList;
                 }
                 else
@@ -99,7 +96,7 @@ namespace Services.Broadcast.Clients
                 List<aab_advertiser> apiResult = new List<aab_advertiser>();
                 if (_IsAABCoreAPIEnabled)
                 {
-                    var httpClient = _GetSecureHttpClient();
+                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
                     apiResult = httpClient.Get<ApiListResponseTyped<aab_advertiser>>($"{_CoreApiVersion}/advertisers").ResultList;
                 }
                 else
@@ -130,7 +127,7 @@ namespace Services.Broadcast.Clients
                 aab_advertiser advertiserFullInfo = new aab_advertiser();
                 if (_IsAABCoreAPIEnabled)
                 {
-                    var httpClient = _GetSecureHttpClient();
+                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
                     advertiserFullInfo = httpClient.Get<ApiItemResponseTyped<aab_advertiser>>
                         ($"{_CoreApiVersion}/advertisers/company/{advertiserMasterId}")
                         .Result;
@@ -158,17 +155,14 @@ namespace Services.Broadcast.Clients
             }
         }
 
-        private HttpClient _GetSecureHttpClient()
+        private async Task<HttpClient> _GetSecureHttpClientAsync()
         {
             var apiBaseUrl = _GetAgencyAdvertiserBrandCoreApiBaseUrl();
             var applicationId = _GetAgencyAdvertiserBrandCoreApiApplicationId();
             var appName = _GetAgencyAdvertiserBrandCoreApiAppName();
 
-            var umUrl = _GetUmUrl();
-            var accessToken = _ApiTokenManager.GetOrRefreshTokenAsync(umUrl, appName, applicationId)
-                .GetAwaiter().GetResult();
-
-            return _ServiceClientBase.GetServiceHttpClient(apiBaseUrl, applicationId, accessToken);
+            var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);
+            return client;
         }
 
         private string _GetAgencyAdvertiserBrandApiUrl()
@@ -192,11 +186,6 @@ namespace Services.Broadcast.Clients
         {
             var applicationId = _ConfigurationSettingsHelper.GetConfigValue<string>(AgencyAdvertiserBrandCoreApiConfigKeys.ApplicationId);
             return applicationId;
-        }
-
-        private string _GetUmUrl()
-        {
-            return _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.UmUrl);
         }
     }
 }

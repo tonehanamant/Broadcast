@@ -19,6 +19,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Unity;
@@ -69,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void CreateNewPlan()
+        public async Task CreateNewPlan()
         {
             using (new TransactionScopeWrapper())
             {
@@ -77,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 DateTime nowDate = new DateTime(2019, 01, 01);
                 string username = "integration_test";
-                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, username, nowDate);
                 var campaign = _CampaignService.GetCampaignById(newPlan.CampaignId);
                 Assert.IsTrue(newPlanId > 0);
                 Assert.AreEqual(username, campaign.ModifiedBy);
@@ -87,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void CreateNewPlan_ContractedPlan()
+        public async Task CreateNewPlan_ContractedPlan()
         {
             using (new TransactionScopeWrapper())
             {
@@ -96,7 +97,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 DateTime nowDate = new DateTime(2019, 01, 01);
                 string username = "integration_test";
-                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, username, nowDate);
                 var plan = _PlanService.GetPlan(newPlanId);
 
                 Assert.IsTrue(newPlanId > 0);
@@ -108,7 +109,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CreateNewPlan_DefaultWeight()
+        public async Task CreateNewPlan_DefaultWeight()
         {
             using (new TransactionScopeWrapper())
             {
@@ -117,7 +118,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 DateTime nowDate = new DateTime(2019, 01, 01);
                 string username = "integration_test";
-                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, username, nowDate);
                 var savedPlan = _PlanService.GetPlan(newPlanId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
@@ -127,14 +128,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CreateNewPlan_WithAduDisabled()
+        public async Task CreateNewPlan_WithAduDisabled()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.IsAduEnabled = false;
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
 
@@ -146,13 +147,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CreateNewPlan_NullHutBook()
+        public async Task CreateNewPlan_NullHutBook()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.HUTBookId = null;
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 var planVersion = _PlanService.GetPlan(newPlanId);
 
@@ -163,7 +164,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void CreateNewDraft()
+        public async Task CreateNewDraft()
         {
             using (new TransactionScopeWrapper())
             {
@@ -172,7 +173,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newPlan.VersionId = 1;
                 newPlan.IsDraft = true;
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 var draftId = _PlanService.CheckForDraft(newPlanId);
 
                 Assert.IsTrue(draftId > 0);
@@ -182,7 +183,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void SavePlan_InvalidMarketCoverage_PRI17598()
+        public async Task SavePlan_InvalidMarketCoverage_PRI17598()
         {
             using (new TransactionScopeWrapper())
             {
@@ -197,7 +198,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 newPlan.CoverageGoalPercent = 0.2;
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
             }
@@ -205,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_InvalidDayparts_DuplicateDayparts()
+        public async Task SavePlan_InvalidDayparts_DuplicateDayparts()
         {
             using (new TransactionScopeWrapper())
             {
@@ -214,8 +215,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newPlan.Dayparts.Add(daypart);
                 var hasDuplicates = newPlan.Dayparts.GroupBy(d => d.DaypartCodeId).Any(d => d.Count() > 1);
 
-                var exception = Assert.Throws<PlanValidationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
+                PlanValidationException exception = null;
 
+                try
+                {
+                    await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                }
+                catch (PlanValidationException ex)
+                {
+                    exception = ex;
+                }
+
+                Assert.IsNotNull(exception);
                 Assert.IsTrue(hasDuplicates);
                 Assert.AreEqual(exception.Message, "Invalid dayparts.  Each daypart can be entered only once. Try to save the plan as draft");
             }
@@ -224,7 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan_GoalBreakdownType_ByWeekByDaypart()
+        public async Task SavePlan_GoalBreakdownType_ByWeekByDaypart()
         {
             using (new TransactionScopeWrapper())
             {
@@ -419,7 +430,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var nowDate = new DateTime(2020, 01, 01);
                 var username = "integration_test";
-                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, username, nowDate);
 
                 var savedPlan = _PlanService.GetPlan(newPlanId);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
@@ -428,14 +439,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void DeleteDraft()
+        public async Task DeleteDraft()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
 
                 //save version 1
-                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                int newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan and format the impressions
@@ -443,7 +454,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save draft
                 plan.IsDraft = true;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 07));
+                await _PlanService.SavePlanAsync(plan, "integration_test", new DateTime(2019, 01, 07));
 
                 var draftId = _PlanService.CheckForDraft(newPlanId);
                 Assert.IsTrue(draftId > 0);
@@ -488,14 +499,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CanCreateNewPlanWithCanceledStatus()
+        public async Task CanCreateNewPlanWithCanceledStatus()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Status = PlanStatusEnum.Canceled;
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
@@ -521,20 +532,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void GetPlanHistory_WithDraft()
+        public async Task GetPlanHistory_WithDraft()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
 
                 //save version 1
-                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                int newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 //save draft
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
                 plan.IsDraft = true;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+                await _PlanService.SavePlanAsync(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 var planHistory = _PlanService.GetPlanHistory(newPlanId);
 
@@ -545,14 +556,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CreatingPlanSetsVersionNumber()
+        public async Task CreatingPlanSetsVersionNumber()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
 
                 //save version 1
-                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                int newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
 
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
@@ -564,14 +575,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CreatingNewVersionForPlanSetsVersionNumber()
+        public async Task CreatingNewVersionForPlanSetsVersionNumber()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
 
                 //save version 1
-                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                int newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan
@@ -580,7 +591,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //save version 2
                 plan.Budget = 222;
                 plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+                await _PlanService.SavePlanAsync(plan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan again
@@ -594,14 +605,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CreatingDraftForPlanDoesntUpdateVersionNumber()
+        public async Task CreatingDraftForPlanDoesntUpdateVersionNumber()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
 
                 //save version 1
-                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                int newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
 
                 _ForceCompletePlanPricingJob(newPlanId);
 
@@ -612,7 +623,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.Budget = 222;
                 plan.WeeklyBreakdownWeeks.LastOrDefault().WeeklyBudget = 142;
                 plan.IsDraft = true;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+                await _PlanService.SavePlanAsync(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 //get the plan again
                 plan = _PlanService.GetPlan(newPlanId);
@@ -624,24 +635,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
-        public void CreatingPlansCheckCampaignAggregation()
+        public async Task CreatingPlansCheckCampaignAggregation()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto firstNewPlan = _GetNewPlan();
                 firstNewPlan.Status = PlanStatusEnum.Canceled;
 
-                var firstNewPlanId = _PlanService.SavePlan(firstNewPlan, "integration_test", new DateTime(2019, 10, 17));
+                var firstNewPlanId = await _PlanService.SavePlanAsync(firstNewPlan, "integration_test", new DateTime(2019, 10, 17));
 
                 PlanDto secondNewPlan = _GetNewPlan();
                 secondNewPlan.Status = PlanStatusEnum.Rejected;
 
-                var secondNewPlanId = _PlanService.SavePlan(secondNewPlan, "integration_test", new DateTime(2019, 10, 17));
+                var secondNewPlanId = await _PlanService.SavePlanAsync(secondNewPlan, "integration_test", new DateTime(2019, 10, 17));
 
                 PlanDto thirdNewPlan = _GetNewPlan();
                 thirdNewPlan.Status = PlanStatusEnum.Scenario;
 
-                var thirdNewPlanId = _PlanService.SavePlan(thirdNewPlan, "integration_test", new DateTime(2019, 10, 17));
+                var thirdNewPlanId = await _PlanService.SavePlanAsync(thirdNewPlan, "integration_test", new DateTime(2019, 10, 17));
 
                 Assert.IsTrue(firstNewPlanId > 0);
                 Assert.IsTrue(secondNewPlanId > 0);
@@ -657,7 +668,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void CreatingASingleCanceledPlanFiltersCampaignsCorrectly()
+        public async Task CreatingASingleCanceledPlanFiltersCampaignsCorrectly()
         {
             using (new TransactionScopeWrapper())
             {
@@ -672,7 +683,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newCanceledPlan.CampaignId = newCampaignId;
                 newCanceledPlan.Status = PlanStatusEnum.Canceled;
 
-                var newPlanId = _PlanService.SavePlan(newCanceledPlan, "integration_test", new DateTime(2019, 10, 30));
+                var newPlanId = await _PlanService.SavePlanAsync(newCanceledPlan, "integration_test", new DateTime(2019, 10, 30));
 
                 Assert.IsTrue(newPlanId > 0);
 
@@ -693,7 +704,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void CreatingDraftPlanPopulatesGetCampaignFlagsCorrectly()
+        public async Task CreatingDraftPlanPopulatesGetCampaignFlagsCorrectly()
         {
             using (new TransactionScopeWrapper())
             {
@@ -704,13 +715,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CampaignId = newCampaignId;
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 10, 30), true);
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 10, 30), true);
 
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 var planFromDB = _PlanService.GetPlan(newPlanId);
                 planFromDB.IsDraft = true;
-                var draftPLan = _PlanService.SavePlan(planFromDB, "integration_test", new DateTime(2019, 10, 30), true);
+                var draftPLan = await _PlanService.SavePlanAsync(planFromDB, "integration_test", new DateTime(2019, 10, 30), true);
 
                 _CampaignService.ProcessCampaignAggregation(newCampaignId);
                 var campaign = _CampaignService.GetCampaignById(newCampaignId);
@@ -724,14 +735,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void CanCreateNewPlanWithRejectedStatus()
+        public async Task CanCreateNewPlanWithRejectedStatus()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Status = PlanStatusEnum.Rejected;
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
@@ -743,21 +754,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void CreatePlan_InvalidSpotLengthId()
+        public async Task CreatePlan_InvalidSpotLengthId()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 100, Weight = 50 } };
-                var exception = Assert.Throws<PlanValidationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
+                PlanValidationException exception = null;
+
+                try
+                {
+                    await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                }
+                catch (PlanValidationException ex)
+                {
+                    exception = ex;
+                }
+
+                Assert.IsNotNull(exception);
                 Assert.That(exception.Message, Is.EqualTo("Invalid spot length id 100 Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("long_running")]
-        public void CreatePlan_NotExistingProduct()
+        public async Task CreatePlan_NotExistingProduct()
         {
             Guid notExistingProductId = new Guid();
             using (new TransactionScopeWrapper())
@@ -770,22 +792,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.ProductMasterId = notExistingProductId;
 
-                Assert.That(() => planService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
-                    Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid product Try to save the plan as draft"));
+                PlanValidationException caught = null;
+
+                try
+                {
+                    await planService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                }
+                catch (PlanValidationException ex)
+                {
+                    caught = ex;
+                }
+
+                Assert.IsNotNull(caught);
+                Assert.AreEqual("Invalid product Try to save the plan as draft", caught.Message);
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void CreatePlan_InvalidName()
+        public async Task CreatePlan_InvalidName()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Name = null;
 
-                var exception = Assert.Throws<PlanValidationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
+                PlanValidationException exception = null;
 
+                try
+                {
+                    await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                }
+                catch (PlanValidationException ex)
+                {
+                    exception = ex;
+                }
+
+                Assert.IsNotNull(exception);
                 Assert.That(exception.Message, Is.EqualTo("Invalid plan name. Try to save the plan as draft"));
             }
         }
@@ -807,13 +850,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan()
+        public async Task SavePlan()
         {
             using (new TransactionScopeWrapper())
             {
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 // modify the plan
@@ -830,7 +873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(2019, 1, 4)
                 };
 
-                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var modifedPlanId = await _PlanService.SavePlanAsync(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
 
                 Assert.IsTrue(modifedPlanId > 0);
@@ -842,7 +885,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan_ProgramRestrictions_DuplicateProgramName()
+        public async Task SavePlan_ProgramRestrictions_DuplicateProgramName()
         {
             using (new TransactionScopeWrapper())
             {
@@ -907,7 +950,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
@@ -919,13 +962,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan_WithAduDisabled()
+        public async Task SavePlan_WithAduDisabled()
         {
             using (new TransactionScopeWrapper())
             {
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 // modify the plan
@@ -933,7 +976,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 testPlan.IsAduEnabled = false;
 
-                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var modifedPlanId = await _PlanService.SavePlanAsync(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
 
                 Assert.IsTrue(modifedPlanId > 0);
@@ -945,13 +988,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanAndRemoveHiatusDays()
+        public async Task SavePlanAndRemoveHiatusDays()
         {
             using (new TransactionScopeWrapper())
             {
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 // modify the plan
@@ -964,7 +1007,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.FlightNotesInternal = "Changed the internal flight notes";
                 testPlan.FlightHiatusDays = new List<DateTime>();
 
-                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var modifedPlanId = await _PlanService.SavePlanAsync(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
 
                 Assert.IsTrue(modifedPlanId > 0);
@@ -975,7 +1018,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithoutFlightInfo()
+        public async Task SavePlan_WithoutFlightInfo()
         {
             using (new TransactionScopeWrapper())
             {
@@ -986,14 +1029,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 testPlan.FlightNotesInternal = null;
                 testPlan.FlightHiatusDays.Clear();
 
-                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(testPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight start/end date. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidFlightDays()
+        public async Task SavePlan_WithInvalidFlightDays()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1001,14 +1044,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newPlan.FlightStartDate = new DateTime(2019, 10, 1);
                 newPlan.FlightEndDate = new DateTime(2018, 01, 01);
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight dates.  The end date cannot be before the start date. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidHiatusDays()
+        public async Task SavePlan_WithInvalidHiatusDays()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1019,7 +1062,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(1976, 6, 4)
                 };
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight hiatus day.  All days must be within the flight date range. Try to save the plan as draft"));
             }
         }
@@ -1027,13 +1070,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanWithDayparts()
+        public async Task SavePlanWithDayparts()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
@@ -1044,7 +1087,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanWithDayparts_WithoutRestrictions()
+        public async Task SavePlanWithDayparts_WithoutRestrictions()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1052,7 +1095,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 newPlan.Dayparts.First().Restrictions = null;
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
@@ -1063,7 +1106,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanWithDayparts_WithoutShowTypeRestrictions()
+        public async Task SavePlanWithDayparts_WithoutShowTypeRestrictions()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1071,7 +1114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 newPlan.Dayparts.First().Restrictions.ShowTypeRestrictions = null;
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
@@ -1095,7 +1138,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanWithDayparts_WithoutGenreRestrictions()
+        public async Task SavePlanWithDayparts_WithoutGenreRestrictions()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1103,7 +1146,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 newPlan.Dayparts.First().Restrictions.GenreRestrictions = null;
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
@@ -1114,7 +1157,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanWithDayparts_WithoutProgramRestrictions()
+        public async Task SavePlanWithDayparts_WithoutProgramRestrictions()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1122,7 +1165,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 newPlan.Dayparts.First().Restrictions.ProgramRestrictions = null;
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
@@ -1133,7 +1176,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanWithDayparts_WithoutAffiliateRestrictions()
+        public async Task SavePlanWithDayparts_WithoutAffiliateRestrictions()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1141,7 +1184,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 newPlan.Dayparts.First().Restrictions.AffiliateRestrictions = null;
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
@@ -1152,12 +1195,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
-        public void SavePlanAddDaypart()
+        public async Task SavePlanAddDaypart()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 _ForceCompletePlanPricingJob(planId);
 
                 PlanDto modifiedPlan = _PlanService.GetPlan(planId);
@@ -1193,7 +1236,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 });
 
-                var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var modifiedPlanId = await _PlanService.SavePlanAsync(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
 
                 Assert.AreEqual(4, finalPlan.Dayparts.Count);
@@ -1204,18 +1247,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlanRemoveDaypart()
+        public async Task SavePlanRemoveDaypart()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 _ForceCompletePlanPricingJob(planId);
                 PlanDto modifiedPlan = _OrderPlanData(_PlanService.GetPlan(planId));
                 modifiedPlan.Dayparts.RemoveAt(modifiedPlan.Dayparts.Count - 1);
 
 
-                var modifiedPlanId = _PlanService.SavePlan(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var modifiedPlanId = await _PlanService.SavePlanAsync(modifiedPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
 
                 Assert.AreEqual(2, finalPlan.Dayparts.Count);
@@ -1225,28 +1268,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidWeightingGoalTooLittle()
+        public async Task SavePlan_WithInvalidWeightingGoalTooLittle()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 4600, WeightingGoalPercent = 0.0 });
 
-                Assert.Throws<PlanValidationException>(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.Throws<PlanValidationException>(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), "Invalid daypart weighting goal.");
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidWeightingGoalTooHigh()
+        public async Task SavePlan_WithInvalidWeightingGoalTooHigh()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 4600, EndTimeSeconds = 8900, WeightingGoalPercent = 111.0 });
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid daypart weighting goal. Try to save the plan as draft"));
             }
         }
@@ -1254,7 +1297,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
-        public void SavePlan_WithSecondaryAudiences()
+        public async Task SavePlan_WithSecondaryAudiences()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1307,7 +1350,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
                 });
 
-                var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                var planId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 var finalPlan = _PlanService.GetPlan(planId);
                 Assert.IsTrue(planId > 0);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
@@ -1316,7 +1359,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidSecondaryAudience()
+        public async Task SavePlan_WithInvalidSecondaryAudience()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1326,14 +1369,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanAudienceDto {AudienceId = 0, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
                 };
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid audience. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidSecondaryAudienceDuplicate()
+        public async Task SavePlan_WithInvalidSecondaryAudienceDuplicate()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1343,39 +1386,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanAudienceDto {AudienceId = 31, Type = Entities.Enums.AudienceTypeEnum.Nielsen},
                 };
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("An audience cannot appear multiple times. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidFlightNotes()
+        public async Task SavePlan_WithInvalidFlightNotes()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto testPlan = _GetNewPlan();
                 testPlan.FlightNotes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor tellus at ante tempus vehicula ac at sapien. Pellentesque lorem velit, sodales in ex quis, laoreet dictum risus. Quisque odio sapien, dignissim a lacus et, dignissim auctor urna. Vestibulum tempus dui tortor, nec fermentum massa pharetra sit amet. Morbi fermentum ornare scelerisque. Proin ut lectus in nisl vulputate mattis in in ex. Nam erat sem, convallis condimentum velit blandit, scelerisque condimentum dolor. Maecenas fermentum feugiat lectus. Phasellus et sem in velit hendrerit sodales. Suspendisse porta nec felis ac blandit. In eu nisi ut dui tristique mattis. Vivamus vulputate, elit sit amet porta molestie, justo mauris cursus ipsum, et rhoncus arcu odio id enim. Pellentesque elementum posuere nibh ac rutrum. Donec eget erat nec lorem feugiat ornare vel congue nibh. Nulla cursus bibendum sollicitudin. Quisque viverra ante massa, sed molestie augue rutrum sed. Aenean tempus vitae purus sed lobortis. Sed cursus tempor erat ac pulvinar.";
 
-                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(testPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Flight notes cannot be longer than 1024 characters. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("long_running")]
-        public void SavePlan_NullFlightDays()
+        public async Task SavePlan_NullFlightDays()
         {
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
                 var testPlan = _PlanService.GetPlan(newPlanId);
 
                 testPlan.FlightDays = null;
 
-                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test", new DateTime(2019, 01, 15)),
+                Assert.That(async() => await _PlanService.SavePlanAsync(testPlan, "integration_test", new DateTime(2019, 01, 15)),
                     Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day. Try to save the plan as draft"));
             }
         }
@@ -1383,18 +1426,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan_EmptyFlightDays()
+        public async Task SavePlan_EmptyFlightDays()
         {
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
                 var testPlan = _PlanService.GetPlan(newPlanId);
 
                 testPlan.FlightDays = new List<int>();
 
-                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test", new DateTime(2019, 01, 15)),
+                Assert.That(async () => await _PlanService.SavePlanAsync(testPlan, "integration_test", new DateTime(2019, 01, 15)),
                     Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day. Try to save the plan as draft"));
             }
         }
@@ -1688,42 +1731,42 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidStartTime_TooLittle()
+        public async Task SavePlan_WithInvalidStartTime_TooLittle()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = -2, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid daypart times. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidStartTime_TooMuch()
+        public async Task SavePlan_WithInvalidStartTime_TooMuch()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 999999999, EndTimeSeconds = 4600, WeightingGoalPercent = 111.0 });
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid daypart times. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidEndTime_TooLittle()
+        public async Task SavePlan_WithInvalidEndTime_TooLittle()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = -2, WeightingGoalPercent = 111.0 });
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid daypart times. Try to save the plan as draft"));
             }
         }
@@ -1731,7 +1774,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void SavePlan_WithEmptyCoverageGoal()
+        public async Task SavePlan_WithEmptyCoverageGoal()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1739,35 +1782,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CoverageGoalPercent = null;
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid coverage goal value. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidCoverageGoalTooSmall()
+        public async Task SavePlan_WithInvalidCoverageGoalTooSmall()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CoverageGoalPercent = -1;
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid coverage goal value. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidCoverageGoalTooBig()
+        public async Task SavePlan_WithInvalidCoverageGoalTooBig()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.CoverageGoalPercent = 120;
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid coverage goal value. Try to save the plan as draft"));
             }
         }
@@ -1775,14 +1818,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan_WithEmptyBlackoutMarkets()
+        public async Task SavePlan_WithEmptyBlackoutMarkets()
         {
             using (new TransactionScopeWrapper())
             {
                 // generate a plan for test
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.BlackoutMarkets.Clear();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
                 // modify the plan
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
@@ -1797,7 +1840,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new DateTime(2019, 1, 4)
                 };
 
-                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                var modifedPlanId = await _PlanService.SavePlanAsync(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
 
                 Assert.IsTrue(modifedPlanId > 0);
@@ -1808,7 +1851,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithEmptyAvailableMarkets()
+        public async Task SavePlan_WithEmptyAvailableMarkets()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1816,49 +1859,49 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets.Clear();
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid total market coverage. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidAvailableMarketShareOfVoiceTooSmall()
+        public async Task SavePlan_WithInvalidAvailableMarketShareOfVoiceTooSmall()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets[0].ShareOfVoicePercent = -1;
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid share of voice for market. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidAvailableMarketShareOfVoiceTooBig()
+        public async Task SavePlan_WithInvalidAvailableMarketShareOfVoiceTooBig()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.AvailableMarkets[0].ShareOfVoicePercent = 120;
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid share of voice for market. Try to save the plan as draft"));
             }
         }
 
         [Test]
         [Category("short_running")]
-        public void SavePlan_WithInvalidEndTime_TooMuch()
+        public async Task SavePlan_WithInvalidEndTime_TooMuch()
         {
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.Dayparts.Add(new PlanDaypartDto { DaypartTypeId = DaypartTypeEnum.News, DaypartCodeId = 1, StartTimeSeconds = 8900, EndTimeSeconds = 999999999, WeightingGoalPercent = 111.0 });
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test",
+                Assert.That(async () => await _PlanService.SavePlanAsync(newPlan, "integration_test",
                     new DateTime(2019, 01, 01)), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid daypart times. Try to save the plan as draft"));
             }
         }
@@ -2830,13 +2873,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Ignore("PRI-23204 Pricing is not queued on save, anymore")]
         [UseReporter(typeof(DiffReporter))]
-        public void Plan_SaveNewPlan_PricingIsQueued()
+        public async Task Plan_SaveNewPlan_PricingIsQueued()
         {
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _GetNewPlan();
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 var execution = _PlanPricingService.GetCurrentPricingExecution(newPlanId);
 
@@ -2845,14 +2888,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void Plan_SaveNewPlan_FullWeekHiatus()
+        public async Task Plan_SaveNewPlan_FullWeekHiatus()
         {
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _GetNewPlan();
                 newPlan.FlightHiatusDays = new List<DateTime> { new DateTime(2019,1,7), new DateTime(2019, 1, 8) , new DateTime(2019, 1, 9),
                     new DateTime(2019,1,10), new DateTime(2019,1,11), new DateTime(2019,1,12), new DateTime(2019,1,13)};
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
             }
@@ -2860,16 +2903,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavePlan_VersionOutOfSync()
+        public async Task SavePlan_VersionOutOfSync()
         {
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _GetNewPlan();
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 var editPlan = _PlanService.GetPlan(newPlanId);
                 editPlan.IsOutOfSync = true;
-                var editPlanId = _PlanService.SavePlan(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var editPlanId = await _PlanService.SavePlanAsync(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 var finalPlan = _PlanService.GetPlan(newPlanId);
 
@@ -2879,13 +2922,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavePlan_NewPlanOutOfSync()
+        public async Task SavePlan_NewPlanOutOfSync()
         {
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _GetNewPlan();
                 newPlan.IsOutOfSync = true;
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 var finalPlan = _PlanService.GetPlan(newPlanId);
 

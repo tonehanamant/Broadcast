@@ -6,6 +6,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
@@ -30,7 +31,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("")]
         [Authorize]
-        public BaseResponse<int> SavePlan(PlanDto newPlan)
+        public async Task<BaseResponse<int>> SavePlan(PlanDto newPlan)
         {
             const string SW_KEY_TOTAL_DURATION = "Total duration";
             const string SW_KEY_GET_USER_NAME = "Get Username";
@@ -49,7 +50,9 @@ namespace BroadcastComposerWeb.Controllers
             processTimer.End(SW_KEY_GET_SERVICE);
 
             processTimer.Start(SW_KEY_SAVE_PLAN);
-            var result = _ConvertToBaseResponse(() => service.SavePlan(newPlan, fullName, DateTime.Now));
+            var rawResult = await service.SavePlanAsync(newPlan, fullName, DateTime.Now);
+
+            var result = _ConvertToBaseResponse(() => rawResult);
             processTimer.End(SW_KEY_SAVE_PLAN);
 
             processTimer.End(SW_KEY_TOTAL_DURATION);
@@ -324,13 +327,12 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("commit-pricing-allocation-model")]
         [Authorize]
-        public BaseResponse<bool> CommitPricingAllocationModel(CommitPricingAllocationModelRequest request)
+        public async Task<BaseResponse<bool>> CommitPricingAllocationModel(CommitPricingAllocationModelRequest request)
         {
             var username = _GetCurrentUserFullName();
-
-            var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                .CommitPricingAllocationModel(request.PlanId, request.SpotAllocationModelMode, request.PostingType, username));
-
+            var rawResult = await _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CommitPricingAllocationModelAsync(request.PlanId, request.SpotAllocationModelMode, request.PostingType, username);
+            var result = _ConvertToBaseResponse(() => rawResult);
             return result;
         }
         /// <summary>

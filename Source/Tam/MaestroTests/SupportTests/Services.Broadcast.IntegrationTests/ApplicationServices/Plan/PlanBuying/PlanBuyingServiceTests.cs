@@ -742,7 +742,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         private async Task<PlanBuyingJob> _SavePlanAndRunBuyingJobAsync(PlanDto plan)
         {
             var savedDate = new DateTime(2019, 11, 4);
-            var planId = _PlanService.SavePlan(plan, "testUser", savedDate, true);
+            var planId = await _PlanService.SavePlanAsync(plan, "testUser", savedDate, true);
             var savedPlan = _PlanService.GetPlan(planId);
 
             var planBuyingRequest = new PlanBuyingParametersDto

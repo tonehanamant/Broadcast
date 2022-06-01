@@ -1159,7 +1159,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var plan = _GetNewPlan();
             var currentDate = new DateTime(2019, 01, 01);
             var username = "integration_test";
-            var planId = _PlanService.SavePlan(plan, username, currentDate);
+            var planId = await _PlanService.SavePlanAsync(plan, username, currentDate);
             var pricingParameters = new PlanPricingParametersDto
             {
                 PlanId = planId,
@@ -1179,7 +1179,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             plan.VersionId = savedPlanAfter.VersionId;
             plan.IsDraft = true;
 
-            var draftId = _PlanService.SavePlan(plan, username, currentDate);
+            var draftId = await _PlanService.SavePlanAsync(plan, username, currentDate);
             var draftVersionId = _PlanService.CheckForDraft(planId);
 
             pricingParameters.DeliveryImpressions = 2000;
@@ -1850,7 +1850,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private async Task<PlanPricingJob> _SavePlanAndRunPricingJobAsync(PlanDto plan)
         {
             var savedDate = new DateTime(2019, 11, 4);
-            var planId = _PlanService.SavePlan(plan, "testUser", savedDate, true);
+            var planId = await _PlanService.SavePlanAsync(plan, "testUser", savedDate, true);
             var savedPlan = _PlanService.GetPlan(planId);
 
             var planPricingRequestDto = new PlanPricingParametersDto
