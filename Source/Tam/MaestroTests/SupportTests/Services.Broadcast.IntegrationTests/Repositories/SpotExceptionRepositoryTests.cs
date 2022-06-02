@@ -60,6 +60,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70615,
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
+                    InventorySourceId = 1,
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -95,6 +96,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70615,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
+                    InventorySourceId = 3,
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -130,6 +132,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70616,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
+                    InventorySourceId = 4,
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -165,6 +168,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70617,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
+                    InventorySourceId = 1,
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -198,7 +202,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     FlightEndDate = new DateTime(2010, 3, 3),
                     DaypartId = 70618,
                     IngestedBy = ingestedBy,
-                    IngestedAt = ingestedDateTime
+                    IngestedAt = ingestedDateTime,
+                    InventorySourceId = 1
                 }
             };
 

@@ -20,6 +20,8 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string ProgramName { get; set; }
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
+        public double? Impressions { get; set; }
+        public string InventorySourceName { get; set; }
         public List<RecommendedPlanDetailResultDto> Plans { get; set; }
     }
 
@@ -33,5 +35,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string FlightDateString { get; set; }
         public bool IsRecommendedPlan { get; set; }        
         public bool IsSelected { get; set; }
+        public string Pacing { get; set; }
+        public bool? AcceptedAsInSpec { get; set; }
     }
 }

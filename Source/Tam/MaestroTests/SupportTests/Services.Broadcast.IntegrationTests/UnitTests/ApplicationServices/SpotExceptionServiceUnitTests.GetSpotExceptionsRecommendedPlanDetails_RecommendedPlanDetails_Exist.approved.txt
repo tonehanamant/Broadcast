@@ -6,8 +6,11 @@
   "FlightEndDate": "2/1/2020 12:00:00 AM",
   "FlightStartDate": "12/1/2019 12:00:00 AM",
   "Id": 1,
+  "Impressions": 1752.0,
+  "InventorySourceName": null,
   "Plans": [
     {
+      "AcceptedAsInSpec": false,
       "FlightDateString": "12/01-02/01/2020",
       "FlightEndDate": "2/1/2020 12:00:00 AM",
       "FlightStartDate": "12/1/2019 12:00:00 AM",
@@ -15,9 +18,11 @@
       "IsRecommendedPlan": false,
       "IsSelected": true,
       "Name": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+      "Pacing": "0%",
       "SpotLengthString": ":45"
     },
     {
+      "AcceptedAsInSpec": null,
       "FlightDateString": "12/01-02/01/2020",
       "FlightEndDate": "2/1/2020 12:00:00 AM",
       "FlightStartDate": "12/1/2019 12:00:00 AM",
@@ -25,6 +30,7 @@
       "IsRecommendedPlan": true,
       "IsSelected": false,
       "Name": "2Q' 21 Reynolds",
+      "Pacing": "0%",
       "SpotLengthString": ":15, :30"
     }
   ],

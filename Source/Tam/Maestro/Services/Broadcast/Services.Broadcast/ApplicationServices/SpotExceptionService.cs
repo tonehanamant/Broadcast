@@ -1197,6 +1197,8 @@ namespace Services.Broadcast.ApplicationServices
                 ProgramName = spotExceptionsRecommendedPlan.ProgramName,
                 ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
                 ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat),
+                Impressions = spotExceptionsRecommendedPlan.Impressions,
+                InventorySourceName = spotExceptionsRecommendedPlan.InventorySourceName,
                 Plans = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(spotExceptionsRecommendedPlanDetail => new RecommendedPlanDetailResultDto
                 {
                     Id = spotExceptionsRecommendedPlanDetail.Id,
@@ -1206,7 +1208,9 @@ namespace Services.Broadcast.ApplicationServices
                     FlightEndDate = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightEndDate}",
                     FlightDateString = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
                     IsRecommendedPlan = spotExceptionsRecommendedPlanDetail.IsRecommendedPlan,
-                    IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null
+                    IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null,
+                    Pacing = spotExceptionsRecommendedPlanDetail.MetricPercent.ToString()+"%",
+                    AcceptedAsInSpec = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision?.AcceptedAsInSpec,
                 }).ToList()
             };
             return spotExceptionsRecommendedPlanDetailsResult;

@@ -755,6 +755,7 @@ namespace Services.Broadcast.Repositories
                     ingested_at = recommendedPlan.IngestedAt,
                     unique_id_external = ++uniqueExternalId,
                     execution_id_external = executionId.ToString(),
+                    inventory_source_id = recommendedPlan.InventorySourceId,
                     spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(recommendedPlanDetails => new spot_exceptions_recommended_plan_details()
                     {
                         recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
