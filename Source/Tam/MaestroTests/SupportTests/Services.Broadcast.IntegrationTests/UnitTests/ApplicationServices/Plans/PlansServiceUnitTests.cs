@@ -408,7 +408,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanDaypartDto
                 {
                     DaypartTypeId = DaypartTypeEnum.Sports,
-                    DaypartOrganizationId = 1
+                    DaypartOrganizationId = 1,
+                    CustomName="Custom"
                 },
             };
 

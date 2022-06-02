@@ -714,7 +714,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     continue;
                 }
-                if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()) && daypart.DaypartOrganizationId.HasValue && daypart.DaypartOrganizationId.Value > 0 && !string.IsNullOrEmpty(daypart.DaypartOrganizationName))
+                if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()) && daypart.DaypartOrganizationId.HasValue && daypart.DaypartOrganizationId.Value > 0 && !string.IsNullOrEmpty(daypart.CustomName))
                 {
                     isDaypartMatched = true;
                 }
