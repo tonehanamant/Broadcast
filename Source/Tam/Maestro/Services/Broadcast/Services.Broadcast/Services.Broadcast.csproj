@@ -531,12 +531,15 @@
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanIsciService.cs" />
     <Compile Include="ApplicationServices\SpotExceptionService.cs" />
+    <Compile Include="ApplicationServices\SpotExceptionsSyncService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
     <Compile Include="Clients\CampaignServiceApiClient.cs" />
     <Compile Include="Clients\CampaignServiceApiConfigKeys.cs" />
     <Compile Include="Clients\CadentSecuredClientBase.cs" />
+    <Compile Include="Clients\SpotExceptionsIngestApiClient.cs" />
+    <Compile Include="Clients\SpotExceptionsIngestApiConfigKeys.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
     <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
@@ -553,6 +556,11 @@
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\DTO\PlanBuyingDto.cs" />
     <Compile Include="Entities\DTO\PlanPricingDto.cs" />
+    <Compile Include="Entities\DTO\SpotExceptionsApi\IngestResultCounts.cs" />
+    <Compile Include="Entities\DTO\SpotExceptionsApi\IngestApiRequest.cs" />
+    <Compile Include="Entities\DTO\SpotExceptionsApi\IngestApiResponse.cs" />
+    <Compile Include="Entities\DTO\SpotExceptionsIngestTriggerRequest.cs" />
+    <Compile Include="Entities\DTO\SpotExceptionsIngestTriggerResponse.cs" />
     <Compile Include="Entities\InventoryMarketAffiliates\InventoryMarketAffiliatesData.cs" />
     <Compile Include="Entities\InventoryMarketAffiliates\InventoryMarketAffiliatesRequest.cs" />
     <Compile Include="Entities\InventoryMarketAffiliates\IsAggregateDto.cs" />
@@ -1007,6 +1015,7 @@
     <Compile Include="Extensions\QuarterDetailExtension.cs" />
     <Compile Include="BusinessEngines\CreativeLengthEngine.cs" />
     <Compile Include="Helpers\AsyncTaskHelper.cs" />
+    <Compile Include="Helpers\BroadcastWeekHelper.cs" />
     <Compile Include="Helpers\DaypartHelper.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FeatureToggleHelper.cs" />
@@ -1492,6 +1501,7 @@
     <Compile Include="Repositories\ProgramRepository.cs" />
     <Compile Include="Repositories\SharedFolderFilesRepository.cs" />
     <Compile Include="Repositories\SpotExceptionRepository.cs" />
+    <Compile Include="Repositories\SpotExceptionsIngestJobRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />

@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
@@ -1113,5 +1114,93 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         #endregion // #region Aab Utilities
+
+        #region Spot Exceptions Sync
+
+        [HttpPost]
+        public async Task<ActionResult> SpotExceptionSyncIngestWeek(bool chkRunInBackground = false)
+        {
+            var username = _GetCurrentUserFullName();
+            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsSyncService>();
+
+            var request = new SpotExceptionsIngestTriggerRequest
+            {
+                Username = username,
+                RunInBackground = chkRunInBackground
+            };
+
+            var result = await service.TriggerIngestForWeekAsync(request);
+
+            TempData["TabId"] = "spot_exceptions_sync";
+            TempData["Message"] = result.Message;
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SpotExceptionSyncIngestDateRange(string txtSESStartDate, string txtSESEndDate, bool chkRunInBackground = false)
+        {
+            var username = _GetCurrentUserFullName();
+            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsSyncService>();
+
+            string result;
+            if (!DateTime.TryParse(txtSESStartDate, out DateTime startDate))
+            {
+                result = $"Could not parse given StartDate '{txtSESStartDate}' to a valid Date.  Try format '{BroadcastConstants.DATE_FORMAT_STANDARD}'.";
+            }
+            else if (!DateTime.TryParse(txtSESEndDate, out DateTime endDate))
+            {
+                result = $"Could not parse given EndDate '{txtSESEndDate}' to a valid Date.  Try format '{BroadcastConstants.DATE_FORMAT_STANDARD}'.";
+            }
+            else
+            {
+                var request = new SpotExceptionsIngestTriggerRequest
+                {
+                    Username = username,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    RunInBackground = chkRunInBackground
+                };
+
+                var serviceResult = await service.TriggerIngestForDateRangeAsync(request);
+                result = serviceResult.Message;
+            }
+
+            TempData["TabId"] = "spot_exceptions_sync";
+            TempData["Message"] = result;
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SpotExceptionSyncIngestForceJobToError(string txtSESIngestJobId)
+        {
+            var username = _GetCurrentUserFullName();
+            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsSyncService>();
+
+            string result;
+            if (!int.TryParse(txtSESIngestJobId, out int jobId))
+            {
+                result = $"Could not parse given jobId '{txtSESIngestJobId}' to a valid integer.";
+            }
+            else
+            {
+                try
+                {
+                    result = service.SetJobToError(username, jobId);
+                }
+                catch (Exception ex)
+                {
+                    result = $"Error : {ex.Message}";
+                }                
+            }
+
+            TempData["TabId"] = "spot_exceptions_sync";
+            TempData["Message"] = result;
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion // #region Spot Exceptions Sync
     }
 }

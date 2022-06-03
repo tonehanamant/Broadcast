@@ -190,7 +190,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryWeekEngine, InventoryWeekEngine>();
 
             unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();
-            unityContainer.RegisterType<ISpotExceptionService, SpotExceptionService>();
+            unityContainer.RegisterType<ISpotExceptionService, SpotExceptionService>();            
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
             unityContainer.RegisterType<IInventoryProprietarySummaryService, InventoryProprietarySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
@@ -290,6 +290,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAgencyAdvertiserBrandApiClient, AgencyAdvertiserBrandApiClient>();
             unityContainer.RegisterType<IAabEngine, AabEngine>();
 
+            // Spot Exceptions Api
+            unityContainer.RegisterType<ISpotExceptionsSyncService, SpotExceptionsSyncService>();
+            unityContainer.RegisterType<ISpotExceptionsIngestApiClient, SpotExceptionsIngestApiClient>();
+
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
 
@@ -303,6 +307,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IConfigurationSettingsHelper, ConfigurationSettingsHelper>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ISpotLengthEngine, SpotLengthEngine>(TypeLifetime.Singleton);
+            unityContainer.RegisterType<IApiTokenManager, ApiTokenManager>(TypeLifetime.Singleton);
 
             _SetupMEdiaMonthCrunchCache(unityContainer);
 

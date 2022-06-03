@@ -50,6 +50,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "savebuyingrequest",
                 "reelisciingest",
                 "planstatustransitionv2",
+                "spotexceptionssyncingest",
                 "default"
             };
         }

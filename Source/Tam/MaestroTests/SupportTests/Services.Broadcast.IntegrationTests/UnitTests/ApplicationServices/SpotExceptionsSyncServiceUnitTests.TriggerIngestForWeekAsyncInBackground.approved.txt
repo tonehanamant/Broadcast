@@ -1,0 +1,22 @@
+[
+  {
+    "job": {
+      "Args": [
+        {
+          "EndDate": "2022-06-05T15:27:32",
+          "RequestId": "1469691c-cf2b-4f66-a210-f51cda7b142d",
+          "RunInBackground": true,
+          "StartDate": "2022-05-30T15:27:32",
+          "Username": "test-user"
+        }
+      ],
+      "Arguments": [
+        "{\"RequestId\":\"1469691c-cf2b-4f66-a210-f51cda7b142d\",\"Username\":\"test-user\",\"RunInBackground\":true,\"StartDate\":\"2022-05-30T15:27:32\",\"EndDate\":\"2022-06-05T15:27:32\"}"
+      ]
+    },
+    "state": {
+      "Queue": "default",
+      "Reason": null
+    }
+  }
+]

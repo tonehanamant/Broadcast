@@ -208,6 +208,7 @@
         <button class="tablinks" id="planning-tab" onclick="openTab('planning')">Plannning</button>
         <button class="tablinks" id="buying-tab" onclick="openTab('buying')">Buying</button>
         <button class="tablinks" id="posting-tab" onclick="openTab('posting')">Posting</button>
+        <button class="tablinks" id="spot_exceptions_sync-tab" onclick="openTab('spot_exceptions_sync')">Spot Exceptions Sync</button>
         <button class="tablinks" id="reference_data-tab" onclick="openTab('reference_data')">Reference Data</button>
         <button class="tablinks" id="settings-tab" onclick="openTab('settings')">Status & Configuration</button>
         <button class="tablinks" id="data-maintenance-tab" onclick="openTab('data_maintenance')">Data Maintenance</button>
@@ -833,10 +834,67 @@
                     <input class="button" type="submit" value="Genre Exclusions" id="txtGenreExclusions" />
                 </div>
             }
-           
         </div>
     </div>
 
+    <div id="spot_exceptions_sync" class="tabcontent">
+        <h1 class="heading">Spot Exceptions Sync</h1>
+        <h3 class="heading">Ingest</h3>
+        <div class="form">
+            <div class="form">
+                @using (Html.BeginForm("SpotExceptionSyncIngestWeek", "Maintenance", FormMethod.Post))
+                {
+                <div class="input-container">
+                    <h4 class="heading">Trigger Ingest for the Week</h4>
+                    Triggers an ingest for the current week as the seckboxeduled process would do.                    
+                    <div class="col-sm">
+                        <label class="label" for="chkRunInBackground">Run In Background</label>
+                        <input data-val="true"  class="input" type="checkbox" name="chkRunInBackground" checked="checked" value="true" />
+                        <input class="button" type="submit" value="Ingest" />
+                    </div>
+                </div>
+                }
+                @using (Html.BeginForm("SpotExceptionSyncIngestDateRange", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-container">
+                        <h4 class="heading">Trigger Ingest for a Date Range</h4>
+                        Triggers an ingest for the given Date Range (yyyy-mm-dd).
+                        <div class="row">
+                            <div class="col-sm">
+                                <label class="label" for="txtSESStartDate">Start Date:</label>
+                                <input class="input" type="text" name="txtSESStartDate" />
+                            </div>
+                            <div class="col-sm">
+                                <label class="label" for="txtSESEndDate">End Date:</label>
+                                <input class="input" type="text" name="txtSESEndDate" />
+                            </div>                            
+                            <label class="label" for="chkRunInBackground">Run In Background</label>
+                            <input data-val="true" class="input" type="checkbox" name="chkRunInBackground" checked="checked" value="true" />
+                            <input class="button" type="submit" value="Ingest" />
+                        </div>
+                    </div>
+                }
+                @using (Html.BeginForm("SpotExceptionSyncIngestForceJobToError", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-container">
+                        <h4 class="heading">Force Ingest Job to Error Status</h4>
+                        Forces the given job to Error in case it's been left in a Processing status.
+                        <div class="row">
+                            <div class="col-sm">
+                                <label class="label" for="txtSESIngestJobId">Inget Job Id:</label>
+                                <input class="input" type="text" name="txtSESIngestJobId" />
+                            </div>
+                            <input class="button" type="submit" value="Ingest" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <h4 class="heading">Results Sync</h4>
+        <div class="form">
+            TBD
+        </div>
+    </div>
 
 </content>
     <script>
