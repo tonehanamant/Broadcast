@@ -592,6 +592,7 @@
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\SpotExceptions\RecomendedPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />
+    <Compile Include="Entities\SpotExceptions\RecommendedPlanFiltersResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionSaveDecisionsPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionOutOfSpecUnpostedRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionOutOfSpecUnpostedResultDto.cs" />

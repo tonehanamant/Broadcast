@@ -178,6 +178,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="recomendedPlansRequest">Plan Id, week start date and End date</param>
         /// <returns>Returns the Recommended Plan Spots(Active,Synced,Queued)</returns>
         SpotExceptionsRecommendedPlanSpotsResultDto GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequestDto recomendedPlansRequest);
+        
+        /// <summary>
+        /// Get the Filters for Recommended Plans
+        /// </summary>
+        /// <param name="recomendedPlansRequest">PlanId, weekStartDate and weekEndDate</param>
+        /// <returns>Returns Filters string array</returns>
+        RecommendedPlanFiltersResultDto GetRecommendedPlansFilters(RecomendedPlansRequestDto recomendedPlansRequest);
     }
 
     public class SpotExceptionService : BroadcastBaseClass, ISpotExceptionService
@@ -1779,6 +1786,24 @@ namespace Services.Broadcast.ApplicationServices
                 }).ToList();
             }
             return spotExceptionsRecommendedPlanSpotsResult;
+        }
+
+        /// <inheritdoc />
+        public RecommendedPlanFiltersResultDto GetRecommendedPlansFilters(RecomendedPlansRequestDto recommendedPlansRequest)
+        {
+            var recommendedPlanFiltersResult = new RecommendedPlanFiltersResultDto();
+            var spotExceptionsRecommendedSpotsResult = GetSpotExceptionsRecommendedPlanSpots(recommendedPlansRequest);
+
+            if (spotExceptionsRecommendedSpotsResult?.Active == null)
+            {
+                return null;
+            }
+
+            recommendedPlanFiltersResult.Markets = spotExceptionsRecommendedSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
+            recommendedPlanFiltersResult.Stations = spotExceptionsRecommendedSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Station ?? "Unknown").Distinct().OrderBy(station => station).ToList();
+            recommendedPlanFiltersResult.InventorySources = spotExceptionsRecommendedSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.InventorySource ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
+            return recommendedPlanFiltersResult;
+
         }
     }
 }

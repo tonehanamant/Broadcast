@@ -195,5 +195,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequest));
         }
+
+        [HttpPost]
+        [Route("recommended-plan-filters")]
+        public BaseResponse<RecommendedPlanFiltersResultDto> GetRecommendedPlansFilters(RecomendedPlansRequestDto recomendedPlansFilterRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetRecommendedPlansFilters(recomendedPlansFilterRequest));
+        }
     }
 }

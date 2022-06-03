@@ -1,0 +1,11 @@
+{
+  "InventorySources": [
+    "TVB"
+  ],
+  "Markets": [
+    "Lincoln & Hastings-Krny"
+  ],
+  "Stations": [
+    "KSTP"
+  ]
+}
