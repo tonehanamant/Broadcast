@@ -457,7 +457,10 @@ namespace Services.Broadcast.Repositories
                     UserName = spotExceptionsOutOfSpecsDecisionDb.username,
                     CreatedAt = spotExceptionsOutOfSpecsDecisionDb.created_at,
                     SyncedBy = spotExceptionsOutOfSpecsDecisionDb.synced_by,
-                    SyncedAt = spotExceptionsOutOfSpecsDecisionDb.synced_at
+                    SyncedAt = spotExceptionsOutOfSpecsDecisionDb.synced_at,
+                    ProgramName = spotExceptionsOutOfSpecsDecisionDb.program_name,
+                    GenreName = spotExceptionsOutOfSpecsDecisionDb?.genre_name,
+                    DaypartCode = spotExceptionsOutOfSpecsDecisionDb.daypart_code
                 }).SingleOrDefault(),
                 SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_reason_codes),
                 MarketCode = spotExceptionsOutOfSpecEntity.market_code,

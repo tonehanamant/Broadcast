@@ -11,6 +11,9 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public DateTime CreatedAt { get; set; }
         public string SyncedBy { get; set; }
         public DateTime? SyncedAt { get; set; }
+        public string ProgramName { get; set; }
+        public string DaypartCode { get; set; }
+        public string GenreName { get; set; }
     }
 }
 		
