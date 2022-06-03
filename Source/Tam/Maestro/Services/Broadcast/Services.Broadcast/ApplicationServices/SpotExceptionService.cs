@@ -1229,26 +1229,37 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public bool SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveRequestDto spotExceptionsRecommendedPlanSaveRequest, string userName)
         {
-            var spotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+            int saveCount = 0;
+            bool isSaved = false; 
+            foreach(var spotExceptionsRecommendedPlan in spotExceptionsRecommendedPlanSaveRequest.SpotExceptionsRecommendedPlans)
             {
-                SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlanSaveRequest.Id,
-                SpotExceptionsRecommendedPlanDetailId = spotExceptionsRecommendedPlanSaveRequest.SelectedPlanId,
-                UserName = userName,
-                CreatedAt = _DateTimeEngine.GetCurrentMoment()
-            };
-
-            bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = false;
-            bool isSpotExceptionsRecommendedPlanDecisionSaved = _SpotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(spotExceptionsRecommendedPlanDecision);
-            if (isSpotExceptionsRecommendedPlanDecisionSaved)
-            {
-                var spotExceptionsRecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
+                var spotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                 {
-                    Id = spotExceptionsRecommendedPlanSaveRequest.SelectedPlanId,
-                    SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlanSaveRequest.Id
+                    SpotExceptionsId = spotExceptionsRecommendedPlan.Id,
+                    SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.SelectedPlanId,
+                    UserName = userName,
+                    CreatedAt = _DateTimeEngine.GetCurrentMoment(),
+                    AcceptedAsInSpec = spotExceptionsRecommendedPlanSaveRequest.AcceptAsInSpec,
+                    SyncedAt = null,
+                    SyncedBy = null
                 };
-                isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = _SpotExceptionRepository.UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanDetail);
+                bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = false;
+                bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
+                SpotExceptionsRecommendedPlanDecisionResponseDto spotExceptionsRecommendedPlanDecisionResponse  = _SpotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(spotExceptionsRecommendedPlanDecision);
+                isSpotExceptionsRecommendedPlanDecisionSaved = spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved;
+                if (isSpotExceptionsRecommendedPlanDecisionSaved)
+                {
+                    var spotExceptionsRecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
+                    {
+                        Id = spotExceptionsRecommendedPlanDecisionResponse.SpotExceptionsRecommendedPlanDetailsId, 
+                        SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.Id 
+                    };
+                    isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = _SpotExceptionRepository.UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanDetail);
+                    saveCount += isSpotExceptionsRecommendedPlanDecisionSaved == true ? 1 : 0;
+                }
             }
-            return isSpotExceptionsRecommendedPlanDecisionSaved && isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated;
+            isSaved = saveCount > 0 ? true : false;
+            return isSaved;
         }
 
         public bool SaveSpotExceptionsOutOfSpecsDecisions(SpotExceptionsOutOfSpecDecisionsPostsRequestDto spotExceptionsOutOfSpecDecisionsPostsRequest, string userName)
