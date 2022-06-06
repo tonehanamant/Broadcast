@@ -1,0 +1,26 @@
+{
+  "JobId": 24,
+  "ProcessedCounts": {
+    "OutOfSpecCount": 11,
+    "RecommendedPlansCount": 99,
+    "TotalCount": 165,
+    "UnpostedNoPlanCount": 22,
+    "UnpostedNoReelRosterCount": 33
+  },
+  "ReceivedCounts": {
+    "OutOfSpecCount": 22,
+    "RecommendedPlansCount": 11,
+    "TotalCount": 110,
+    "UnpostedNoPlanCount": 33,
+    "UnpostedNoReelRosterCount": 44
+  },
+  "SkipClearStaged": true,
+  "SkipIngestAndStaged": true,
+  "StagedCounts": {
+    "OutOfSpecCount": 66,
+    "RecommendedPlansCount": 55,
+    "TotalCount": 286,
+    "UnpostedNoPlanCount": 77,
+    "UnpostedNoReelRosterCount": 88
+  }
+}

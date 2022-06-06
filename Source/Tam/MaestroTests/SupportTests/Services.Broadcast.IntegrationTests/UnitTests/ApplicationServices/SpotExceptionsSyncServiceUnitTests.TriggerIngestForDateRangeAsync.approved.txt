@@ -1,0 +1,56 @@
+{
+  "apiRequests": [
+    {
+      "EndDate": "2022-06-05T00:00:00",
+      "StartDate": "2022-05-30T00:00:00",
+      "Username": "test-user"
+    },
+    {
+      "EndDate": "2022-06-12T00:00:00",
+      "StartDate": "2022-06-06T00:00:00",
+      "Username": "test-user"
+    },
+    {
+      "EndDate": "2022-06-19T00:00:00",
+      "StartDate": "2022-06-13T00:00:00",
+      "Username": "test-user"
+    }
+  ],
+  "result": {
+    "Message": "Request Id : '1469691c-cf2b-4f66-a210-f51cda7b142d' completed.",
+    "Request": {
+      "EndDate": "2022-06-16T00:00:00",
+      "RequestId": "1469691c-cf2b-4f66-a210-f51cda7b142d",
+      "RunInBackground": false,
+      "StartDate": "2022-05-30T00:00:00",
+      "Username": "test-user"
+    },
+    "Response": {
+      "JobId": 23,
+      "ProcessedCounts": {
+        "OutOfSpecCount": 0,
+        "RecommendedPlansCount": 0,
+        "TotalCount": 0,
+        "UnpostedNoPlanCount": 0,
+        "UnpostedNoReelRosterCount": 0
+      },
+      "ReceivedCounts": {
+        "OutOfSpecCount": 0,
+        "RecommendedPlansCount": 0,
+        "TotalCount": 0,
+        "UnpostedNoPlanCount": 0,
+        "UnpostedNoReelRosterCount": 0
+      },
+      "SkipClearStaged": false,
+      "SkipIngestAndStaged": false,
+      "StagedCounts": {
+        "OutOfSpecCount": 0,
+        "RecommendedPlansCount": 0,
+        "TotalCount": 0,
+        "UnpostedNoPlanCount": 0,
+        "UnpostedNoReelRosterCount": 0
+      }
+    },
+    "Success": true
+  }
+}

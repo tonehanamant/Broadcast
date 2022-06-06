@@ -638,6 +638,7 @@
     <Compile Include="Exceptions\CadentException.cs" />
     <Compile Include="Exceptions\PlanValidationException.cs" />
     <Compile Include="Exceptions\PlanSaveException.cs" />
+    <Compile Include="Extensions\SpotExceptionsIngestApiResponseExtensions.cs" />
     <Compile Include="FeatureToggles.cs" />
     <Compile Include="BusinessEngines\AabEngine.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />

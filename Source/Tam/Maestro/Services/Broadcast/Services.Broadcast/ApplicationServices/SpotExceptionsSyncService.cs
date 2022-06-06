@@ -6,6 +6,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -90,36 +91,53 @@ namespace Services.Broadcast.ApplicationServices
         {
             _LogInfo($"Performing ingest for request. RequestId : '{request.RequestId}';");
 
-            try
+            // we try to call the api with only one week at a time.
+            var totalApiResponse = new IngestApiResponse();
+            var requestWeeks = BroadcastWeeksHelper.GetContainingWeeks(request.StartDate.Value, request.EndDate.Value);
+
+            var weekIndex = 1;
+            var weeksCount = requestWeeks.Count;
+            foreach (var week in requestWeeks)
             {
-                var apiRequest = new IngestApiRequest
+                weekIndex++;
+                var msgSeed = $"Working on week {weekIndex} of {weeksCount} ; " +
+                        $"StartDate = '{week.WeekStartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}'; " +
+                        $"EndDate = '{week.WeekEndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}'; " +
+                        $"RequestId = '{request.RequestId}';";
+
+                try
                 {
-                    Username = request.Username,
-                    StartDate = request.StartDate.Value,
-                    EndDate = request.EndDate.Value
-                };
+                    var apiRequest = new IngestApiRequest
+                    {
+                        Username = request.Username,
+                        StartDate = week.WeekStartDate,
+                        EndDate = week.WeekEndDate
+                    };
 
-                var apiResponse = await _ApiClient.IngestAsync(apiRequest);
+                    _LogInfo($"Ingest is calling Api... {msgSeed}");
+                    var apiResponse = await _ApiClient.IngestAsync(apiRequest);
+                    _LogInfo($"Completed ingest Api call. {msgSeed}");
 
-                _LogInfo($"Completed ingest for request. RequestId : '{request.RequestId}';");
-
-                var response = new SpotExceptionsIngestTriggerResponse
+                    totalApiResponse.MergeIngestApiResponses(apiResponse);
+                }
+                catch (Exception ex)
                 {
-                    Request = request,
-                    Response = apiResponse,
-                    Success = true,
-                    Message = $"Request Id : '{request.RequestId}' completed."
-                };
+                    var message = $"Error caught calling Api. {msgSeed}";
+                    _LogError(message, ex);
 
-                return response;
+                    throw new CadentException(message, ex);
+                }
             }
-            catch (Exception ex)
+
+            var response = new SpotExceptionsIngestTriggerResponse
             {
-                var message = $"Error caught handling ingest request. RequestId : '{request.RequestId}';";
-                _LogError(message, ex);
+                Request = request,
+                Response = totalApiResponse,
+                Success = true,
+                Message = $"Request Id : '{request.RequestId}' completed."
+            };
 
-                throw new CadentException(message, ex);
-            }
+            return response;
         }
 
         private async Task<SpotExceptionsIngestTriggerResponse> _ExecuteOrEnqueueIngest(SpotExceptionsIngestTriggerRequest request)

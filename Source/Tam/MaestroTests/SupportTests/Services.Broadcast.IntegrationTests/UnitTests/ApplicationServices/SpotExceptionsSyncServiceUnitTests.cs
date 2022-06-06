@@ -132,7 +132,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsTrue(result.Request.RequestId.HasValue);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            //jsonResolver.Ignore(typeof(WaitHandle), "Handle");
             jsonResolver.Ignore(typeof(Job), "Type");
             jsonResolver.Ignore(typeof(Job), "Method");
             var settings = new JsonSerializerSettings
@@ -152,10 +151,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const bool runInBackground = false;
             const int jobId = 23;
             var service = _GetService();
-            const string dateformat = "yyyy-MM-dd";
-
-            var expectedStartDateString = "2022-05-30";
-            var expectedEndDateString = "2022-06-12";
 
             var apiRequests = new List<IngestApiRequest>();
             _ApiClient.Setup(s => s.IngestAsync(It.IsAny<IngestApiRequest>()))
@@ -168,19 +163,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Username = username,
                 RunInBackground = runInBackground,
                 StartDate = new DateTime(2022, 05, 30),
-                EndDate = new DateTime(2022, 06, 12)
+                EndDate = new DateTime(2022, 06, 16)
             };
 
             // Act
             var result = await service.TriggerIngestForDateRangeAsync(request);
 
             // Assert
-            _ApiClient.Verify(s => s.IngestAsync(It.IsAny<IngestApiRequest>()), Times.Once);
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Request.RequestId.HasValue);
-            Assert.AreEqual(expectedStartDateString, apiRequests.First().StartDate.ToString(dateformat));
-            Assert.AreEqual(expectedEndDateString, apiRequests.First().EndDate.ToString(dateformat));
+            _ApiClient.Verify(s => s.IngestAsync(It.IsAny<IngestApiRequest>()), Times.Exactly(3));
+            var toVerify = new
+            {
+                result,
+                apiRequests
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
         }
 
         [Test]
