@@ -1,11 +1,17 @@
 {
   "InventorySources": [
+    "CNN",
+    "TTWN",
     "TVB"
   ],
   "Markets": [
-    "Lincoln & Hastings-Krny"
+    "Lincoln & Hastings-Krny",
+    "Minot-Bsmrck-Dcknsn(Wlstn)",
+    "Phoenix (Prescott)"
   ],
   "Stations": [
-    "KSTP"
+    "KSTP",
+    "KXMC",
+    "WDAY"
   ]
 }

@@ -1218,6 +1218,7 @@ namespace Services.Broadcast.ApplicationServices
                     IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null,
                     Pacing = spotExceptionsRecommendedPlanDetail.MetricPercent.ToString()+"%",
                     AcceptedAsInSpec = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision?.AcceptedAsInSpec,
+                    RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId
                 }).ToList()
             };
             return spotExceptionsRecommendedPlanDetailsResult;
@@ -1792,18 +1793,18 @@ namespace Services.Broadcast.ApplicationServices
         public RecommendedPlanFiltersResultDto GetRecommendedPlansFilters(RecomendedPlansRequestDto recommendedPlansRequest)
         {
             var recommendedPlanFiltersResult = new RecommendedPlanFiltersResultDto();
-            var spotExceptionsRecommendedSpotsResult = GetSpotExceptionsRecommendedPlanSpots(recommendedPlansRequest);
+            var spotExceptionsRecommendedSpotsResult = _SpotExceptionRepository.GetSpotExceptionRecommendedPlanSpots(recommendedPlansRequest.PlanId,
+                recommendedPlansRequest.WeekStartDate, recommendedPlansRequest.WeekEndDate);
 
-            if (spotExceptionsRecommendedSpotsResult?.Active == null)
+            if (spotExceptionsRecommendedSpotsResult == null)
             {
                 return null;
             }
 
-            recommendedPlanFiltersResult.Markets = spotExceptionsRecommendedSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
-            recommendedPlanFiltersResult.Stations = spotExceptionsRecommendedSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Station ?? "Unknown").Distinct().OrderBy(station => station).ToList();
-            recommendedPlanFiltersResult.InventorySources = spotExceptionsRecommendedSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.InventorySource ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
+            recommendedPlanFiltersResult.Markets = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
+            recommendedPlanFiltersResult.Stations = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.StationLegacyCallLetters ?? "Unknown").Distinct().OrderBy(station => station).ToList();
+            recommendedPlanFiltersResult.InventorySources = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.InventorySourceName ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
             return recommendedPlanFiltersResult;
-
         }
     }
 }

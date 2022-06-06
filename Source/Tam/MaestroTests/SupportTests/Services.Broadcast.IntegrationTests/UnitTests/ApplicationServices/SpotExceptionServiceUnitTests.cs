@@ -3108,9 +3108,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Markets.Count, 1);
-            Assert.AreEqual(result.Stations.Count, 1);
-            Assert.AreEqual(result.InventorySources.Count, 1);
+            Assert.AreEqual(result.Markets.Count, 3);
+            Assert.AreEqual(result.Stations.Count, 3);
+            Assert.AreEqual(result.InventorySources.Count, 3);
         }
 
         [Test]
@@ -3132,9 +3132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = _SpotExceptionService.GetRecommendedPlansFilters(spotExceptionsRecommendedRequest);
 
             // Assert            
-            Assert.AreEqual(result.Markets.Count, 0);
-            Assert.AreEqual(result.Stations.Count, 0);
-            Assert.AreEqual(result.InventorySources.Count, 0);
+            Assert.AreEqual(null, result);
         }
 
         [Test]

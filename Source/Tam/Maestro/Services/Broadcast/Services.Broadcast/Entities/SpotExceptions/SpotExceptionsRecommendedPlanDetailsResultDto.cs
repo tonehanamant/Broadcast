@@ -37,5 +37,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public bool IsSelected { get; set; }
         public string Pacing { get; set; }
         public bool? AcceptedAsInSpec { get; set; }
+        public int RecommendedPlanId { get; set; }
     }
 }

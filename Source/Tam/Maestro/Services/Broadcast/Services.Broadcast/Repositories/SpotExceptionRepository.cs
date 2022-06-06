@@ -588,6 +588,7 @@ namespace Services.Broadcast.Repositories
                         },
                         MetricPercent = spotExceptionsRecommendedPlanDetailDb.metric_percent,
                         IsRecommendedPlan = spotExceptionsRecommendedPlanDetailDb.is_recommended_plan,
+                        RecommendedPlanId = spotExceptionsRecommendedPlanDetailDb.recommended_plan_id,
                         SpotExceptionsRecommendedPlanDecision = spotExceptionsRecommendedPlanDetailDb.spot_exceptions_recommended_plan_decision.Select(spotExceptionsRecommendedPlanDecisionDb => new SpotExceptionsRecommendedPlanDecisionDto
                         {
                             Id = spotExceptionsRecommendedPlanDecisionDb.id,

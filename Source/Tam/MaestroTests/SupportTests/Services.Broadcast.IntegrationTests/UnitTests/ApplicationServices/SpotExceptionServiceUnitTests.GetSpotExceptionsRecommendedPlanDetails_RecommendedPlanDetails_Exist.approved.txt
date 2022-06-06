@@ -19,6 +19,7 @@
       "IsSelected": true,
       "Name": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
       "Pacing": "0%",
+      "RecommendedPlanId": 0,
       "SpotLengthString": ":45"
     },
     {
@@ -31,6 +32,7 @@
       "IsSelected": false,
       "Name": "2Q' 21 Reynolds",
       "Pacing": "0%",
+      "RecommendedPlanId": 0,
       "SpotLengthString": ":15, :30"
     }
   ],
