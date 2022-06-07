@@ -1,8 +1,10 @@
 ﻿using Services.Broadcast.Entities.ReelRosterIscis;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Clients
@@ -12,24 +14,26 @@ namespace Services.Broadcast.Clients
         List<ReelRosterIsciDto> GetReelRosterIscis(DateTime startDate, int numberOfDays);
     }
 
-    public class ReelIsciApiClient : IReelIsciApiClient
+    public class ReelIsciApiClient : CadentSecuredClientBase,IReelIsciApiClient
     {
         public const string ReelIsciApiDateFormat = "yyyy-MM-dd";
         private const string headerKey_ApiKey = "x-api-key";
 
         private Lazy<string> _ApiUrl;
         private Lazy<string> _ApiKey;
-
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        
         private readonly HttpClient _HttpClient;
+        private readonly Lazy<bool> _IsUmReelRosterEnabled;
 
-        public ReelIsciApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
-        {
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
+        public ReelIsciApiClient(IApiTokenManager apiTokenManager,
+                IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+            : base(apiTokenManager, featureToggleHelper, configurationSettingsHelper) 
+        {          
 
             _ApiUrl = new Lazy<string>(_GetApiUrl);
             _ApiKey = new Lazy<string>(_GetApiKey);
             _HttpClient = httpClient;
+            _IsUmReelRosterEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UM_REEL_ROSTER));
         }
 
         public List<ReelRosterIsciDto> GetReelRosterIscis(DateTime startDate, int numberOfDays)
@@ -44,7 +48,7 @@ namespace Services.Broadcast.Clients
 
             var queryUrl = $"{_ApiUrl.Value}{apiOperation}{paramString}";
 
-            var apiReturnRaw = _PostAndGet(queryUrl, _ApiKey.Value);
+            var apiReturnRaw = _PostAndGet(queryUrl, _ApiKey.Value).Result;
 
             var result = apiReturnRaw.Select(r =>
                 new ReelRosterIsciDto
@@ -59,16 +63,24 @@ namespace Services.Broadcast.Clients
             return result;
         }
 
-        protected virtual List<ReelRosterIsciEntity> _PostAndGet(string url, string apiKey)
+        protected virtual async Task<List<ReelRosterIsciEntity>> _PostAndGet(string url, string apiKey)
         {
             List<ReelRosterIsciEntity> result = null;
-
+            HttpResponseMessage serviceResponse = null;
             try
             {
                 var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
                 httpRequestMessage.Headers.Add(headerKey_ApiKey, apiKey);
+                var httpClient = await _GetSecureHttpClientAsync(url);
+                if (_IsUmReelRosterEnabled.Value)
+                {
+                    serviceResponse = httpClient.SendAsync(httpRequestMessage).Result;
+                }
+                else
+                {
+                    serviceResponse = _HttpClient.SendAsync(httpRequestMessage).Result;
+                }
 
-                var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     throw new Exception($"Error connecting to ReelIsciApi for get. : {serviceResponse}");
@@ -90,6 +102,14 @@ namespace Services.Broadcast.Clients
             return result;
         }
 
+        private async Task<HttpClient> _GetSecureHttpClientAsync(string apiBaseUrl)
+        {           
+            var applicationId = _GetReelIsciApplicationId();
+            var appName = _GetReelIsciApiAppName();
+            var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);
+            return client;
+        }
+
         private string _GetApiUrl()
         {
             var apiUrl = _ConfigurationSettingsHelper.GetConfigValue<string>(ReelIsciApiClientConfigKeys.ApiUrlBase);
@@ -101,6 +121,18 @@ namespace Services.Broadcast.Clients
             var encryptedDevApiKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ReelIsciApiClientConfigKeys.EncryptedApiKey);
             var apiKey = EncryptionHelper.DecryptString(encryptedDevApiKey, EncryptionHelper.EncryptionKey); ;
             return apiKey;
+        }
+
+        private string _GetReelIsciApplicationId()
+        {
+            var applicationId = _ConfigurationSettingsHelper.GetConfigValue<string>(ReelIsciApiClientConfigKeys.ApplicationId);
+            return applicationId;
+        }
+
+        private string _GetReelIsciApiAppName()
+        {
+            var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(ReelIsciApiClientConfigKeys.AppName);
+            return appName;
         }
     }
 }

@@ -38,5 +38,7 @@
         public static string ENABLE_FLUIDITY_INTEGRATION = "broadcast-enable-fluidity-integration";
         public static string ENABLE_BUYING_NAVIGATION_PANEL_TOOLS = "broadcast-enable-buying-navigation-panel-tools";
         public static string ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS = "buying-auto-plan-status-transition-promotes-buying-results";
+        public static string ENABLE_UM_REEL_ROSTER = "broadcast-enable-um-reel-roster";
+        
     }
 }
