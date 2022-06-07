@@ -10,6 +10,7 @@ using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices
@@ -58,10 +59,13 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var currentDate = _DateTimeEngine.GetCurrentMoment();
-            var currentBroadcastWeek = BroadcastWeeksHelper.GetContainingWeek(currentDate);
+            var aWeekAgo = currentDate.AddDays(-7);
+            var weeks = BroadcastWeeksHelper.GetContainingWeeks(aWeekAgo, currentDate);
 
-            request.StartDate = currentBroadcastWeek.WeekStartDate;
-            request.EndDate = currentBroadcastWeek.WeekEndDate;
+            var previousWeek = weeks.First();
+
+            request.StartDate = previousWeek.WeekStartDate;
+            request.EndDate = previousWeek.WeekEndDate;
             
             var response = await _ExecuteOrEnqueueIngest(request);
             return response;

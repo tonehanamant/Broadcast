@@ -33,7 +33,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ISpotExceptionsIngestJobRepository> _SpotExceptionsIngestJobRepository;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ISpotExceptionsIngestApiClient> _ApiClient;
-        
 
         protected SpotExceptionsSyncService _GetService()
         {
@@ -48,10 +47,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionsIngestJobRepository>())
                 .Returns(_SpotExceptionsIngestJobRepository.Object);
-
-            _DateTimeEngineMock
-                .Setup(x => x.GetCurrentMoment())
-                .Returns(new DateTime(2022, 6, 3, 15, 27, 32));
 
             var service = new SpotExceptionsSyncService(
                 _DataRepositoryFactoryMock.Object,
@@ -74,6 +69,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int jobId = 23;
             var service = _GetService();
             const string dateformat = "yyyy-MM-dd";
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(new DateTime(2022, 6, 7, 15, 27, 32));
 
             var expectedStartDateString = "2022-05-30";
             var expectedEndDateString = "2022-06-05";
@@ -108,6 +106,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const string username = "test-user";
             const bool runInBackground = true;
             var service = _GetService();
+
+            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
+                .Returns(new DateTime(2022, 6, 7, 15, 27, 32));
 
             var passedParameters = new List<object>();
             _BackgroundJobClientMock
