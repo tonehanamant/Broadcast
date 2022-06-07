@@ -173,6 +173,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="weekEndDate">Week End Date</param>
         /// <returns></returns>
         List<SpotExceptionsRecommendedPlansDto> GetSpotExceptionRecommendedPlanSpots(int planId, DateTime weekStartDate, DateTime weekEndDate);
+        /// <summary>
+        /// Update is recommended plan for the spot exceptions recommended plan details
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlanDetail">The spot exceptoins recommended plan detail parameter</param>
+        /// <returns>True if is recommended plan of pot exceptions recommended plan details updates successfully otherwise false</returns>
+        bool UpdateSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanSaveDto spotExceptionsRecommendedPlanDetail);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -1130,6 +1136,31 @@ namespace Services.Broadcast.Repositories
 
                 var spotExceptionsRecommendedPlans = spotExceptionsRecommendedPlanEntities.Select(spotExceptionsRecommendedPlanEntity => _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan, spotExceptionsRecommendedPlanEntity.Station)).ToList();
                 return spotExceptionsRecommendedPlans;
+            });
+        }
+
+        public bool UpdateSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanSaveDto spotExceptionsRecommendedPlanDetail)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+
+                var spotExceptionsRecommendedPlanDetailList = context.spot_exceptions_recommended_plan_details.Where(x => x.spot_exceptions_recommended_plan_id == spotExceptionsRecommendedPlanDetail.Id).ToList();
+                if (spotExceptionsRecommendedPlanDetailList != null)
+                {
+                    foreach (var spotExceptionsRecommendedPlan in spotExceptionsRecommendedPlanDetailList)
+                    {
+                        if(spotExceptionsRecommendedPlan.spot_exceptions_recommended_plan_id == spotExceptionsRecommendedPlanDetail.Id && spotExceptionsRecommendedPlan.recommended_plan_id == spotExceptionsRecommendedPlanDetail.SelectedPlanId)
+                        {
+                            spotExceptionsRecommendedPlan.is_recommended_plan = true;
+                        }
+                        else
+                        {
+                            spotExceptionsRecommendedPlan.is_recommended_plan = false;
+                        }
+                    }
+                }
+                bool isSpotExceptionsRecommendedPlanDetailUpdated = context.SaveChanges() > 0;
+                return isSpotExceptionsRecommendedPlanDetailUpdated;
             });
         }
     }

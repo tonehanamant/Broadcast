@@ -1253,6 +1253,7 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = false;
                 bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
+                bool isSpotExceptionsRecommendedPlanDetailsSaved = false;
                 SpotExceptionsRecommendedPlanDecisionResponseDto spotExceptionsRecommendedPlanDecisionResponse  = _SpotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(spotExceptionsRecommendedPlanDecision);
                 isSpotExceptionsRecommendedPlanDecisionSaved = spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved;
                 if (isSpotExceptionsRecommendedPlanDecisionSaved)
@@ -1263,7 +1264,8 @@ namespace Services.Broadcast.ApplicationServices
                         SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.Id 
                     };
                     isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = _SpotExceptionRepository.UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanDetail);
-                    saveCount += isSpotExceptionsRecommendedPlanDecisionSaved == true ? 1 : 0;
+                    isSpotExceptionsRecommendedPlanDetailsSaved = _SpotExceptionRepository.UpdateSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlan);
+                    saveCount += isSpotExceptionsRecommendedPlanDecisionSaved || isSpotExceptionsRecommendedPlanDetailsSaved == true ? 1 : 0;
                 }
             }
             isSaved = saveCount > 0 ? true : false;
