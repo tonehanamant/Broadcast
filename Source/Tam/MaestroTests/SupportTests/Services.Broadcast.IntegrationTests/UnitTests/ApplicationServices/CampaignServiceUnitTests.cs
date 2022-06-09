@@ -1745,6 +1745,72 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
         }
+
+        [Test]
+        public void GetAndValidateCampaignReportData_WithDraft()
+        {
+            // Arrange
+            var planOne = _GetBasePlanForCampaignExport();
+            planOne.Name = "Plan One";
+            planOne.VersionId = 7235;
+
+            //change daypart start/end time
+            var planTwo = _GetBasePlanForCampaignExport();
+            planTwo.Id++;
+            planTwo.Name = "Plan Two";
+            planTwo.Dayparts.First().StartTimeSeconds = 42000;
+            planTwo.Dayparts.First().EndTimeSeconds = 44999;
+            planTwo.VersionId = 7236;
+            planTwo.IsDraft = true;
+
+            var plansDict = new Dictionary<int, PlanDto>
+            {
+                { planOne.Id, planOne },
+                { planTwo.Id, planTwo }
+            };
+            var plansVersionList = new List<int>
+            {
+                { planOne.VersionId },
+                { planTwo.VersionId }
+            };
+
+            var campaignId = planOne.CampaignId;
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                ExportType = CampaignExportTypeEnum.Proposal,
+                SelectedPlans = new List<int> { planOne.Id }
+            };
+            var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { planOne, planTwo });
+            campaign.HasPlans = true;
+            var campaignLocksWell = true;
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Agent1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Advertiser1", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(campaign);
+            _PlanRepositoryMock.Setup(x => x.GetLatestVersionIdForPlan(It.IsAny<int>()))
+                 .Returns<int>((i) => plansVersionList[i]);
+            _PlanRepositoryMock.Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns<int, int?>((i, b) => plansDict[i]);
+            _LockingManagerApplicationServiceMock
+                   .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                   .Returns(new LockResponse { Success = campaignLocksWell });
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency);
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser);
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2020, 01, 01));
+            var tc = _BuildCampaignService();
+            // Act
+            var response = tc.GetAndValidateCampaignReportData(request);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+        }
+
         [Test]
         public void GetAndValidateCampaignReportDataWithDuplicateProgramName()
         {

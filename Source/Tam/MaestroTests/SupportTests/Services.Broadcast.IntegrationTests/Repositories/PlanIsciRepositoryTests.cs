@@ -748,5 +748,26 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             };
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, jsonSettings));
         }
+
+        [Test]
+        public void GetLatestVersionIdForPlan()
+        {
+            // Arrange
+            var planRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            var planId = 1852;
+            // Act
+            int results;
+            using (new TransactionScopeWrapper())
+            {
+                var plan = planRepository.GetPlan(planId);
+                plan.IsDraft = true;
+                planRepository.SavePlan(plan, "IntegrationTestUser", System.DateTime.Now);
+                results = planRepository.GetLatestVersionIdForPlan(planId);
+            }
+            var expectedResult = 7239;
+            // Assert
+            Assert.AreEqual(expectedResult, results);
+        }
+
     }
 }

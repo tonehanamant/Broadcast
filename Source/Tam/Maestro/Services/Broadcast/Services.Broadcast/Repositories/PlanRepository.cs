@@ -134,6 +134,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId">The plan identifier.</param>
         /// <returns>Numeric value representing the plans latest version number</returns>
         int GetLatestVersionNumberForPlan(int planId);
+        /// <summary>
+        ///  Gets the latest version id for plan.
+        /// </summary>
+        /// <param name="planId">The plan identifier</param>
+        /// <returns>Numeric value representing the plans latest version id</returns>
+        int GetLatestVersionIdForPlan(int planId);
 
         int AddPlanPricingJob(PlanPricingJob planPricingJob);
 
@@ -817,6 +823,20 @@ namespace Services.Broadcast.Repositories
                 return latestPlanByVersion?.version_number.Value ?? 0;
             });
         }
+        public int GetLatestVersionIdForPlan(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var latestPlanByVersion =
+                    context.plan_versions
+                        .Where(p => p.plan_id == planId && (p.is_draft == false || p.is_draft == null))
+                        .OrderByDescending(p => p.version_number)
+                        .FirstOrDefault();
+
+                return latestPlanByVersion?.id ?? 0;
+            });
+        }
+
 
         private void _UpdateLatestVersionId(plan newPlan, QueryHintBroadcastContext context)
         {

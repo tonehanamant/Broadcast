@@ -598,7 +598,16 @@ namespace Services.Broadcast.ApplicationServices
             {
                 campaign.Plans = campaign.Plans.Where(x => request.SelectedPlans.Contains(x.PlanId)).ToList();
             }
-
+            if (campaign.Plans != null && campaign.HasPlans)
+            {
+                foreach (var plan in campaign.Plans)
+                {
+                    if (plan.DraftId > 0)
+                    {
+                        plan.VersionId = _PlanRepository.GetLatestVersionIdForPlan(plan.PlanId);
+                    }
+                }
+            }
             _ValidateCampaignLocking(campaign.Id);
             _ValidateSelectedPlans(request.ExportType, campaign.Plans);
 
@@ -608,7 +617,7 @@ namespace Services.Broadcast.ApplicationServices
             var plans = campaign.Plans
                 .Select(x =>
                 {
-                    var plan = _PlanRepository.GetPlan(x.PlanId);
+                    var plan = _PlanRepository.GetPlan(x.PlanId,x.VersionId);
                     DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
                     return plan;
                 }).ToList();
