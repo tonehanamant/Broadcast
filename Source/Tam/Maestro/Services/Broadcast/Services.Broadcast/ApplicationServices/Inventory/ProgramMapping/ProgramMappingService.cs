@@ -169,7 +169,8 @@ namespace Services.Broadcast.ApplicationServices
             if (programMappingErrors.Any())
             {
                 _SharedFolderService.RemoveFile(fileId);
-                throw new Exception(_GetErrorMessage(programMappingErrors));
+                var flatErrorMessages = _GetErrorMessage(programMappingErrors);
+                throw new InvalidOperationException(flatErrorMessages);
             }
 
             _PopulateShowTypes(uniqueProgramMappings, masterListPrograms, programNameExceptions);
@@ -245,6 +246,47 @@ namespace Services.Broadcast.ApplicationServices
             return fullErrorMessage.ToString();
         }
 
+        private List<ProgramMappingsDto> _GetCadentPrograms(string programName,
+            List<ProgramMappingsDto> masterListPrograms,
+            List<ProgramNameExceptionDto> programNameExceptions)
+        {
+            var result = new List<ProgramMappingsDto>();
+
+            // check the master list
+            var foundFromMasterList = masterListPrograms.FindAll(p => p.OfficialProgramName.Equals(programName, StringComparison.OrdinalIgnoreCase));
+            if (foundFromMasterList.Any())
+            {
+                result.AddRange(foundFromMasterList);
+            }
+
+            // check exceptions
+            var foundFromExceptions = programNameExceptions.FindAll(p => p.CustomProgramName.Equals(programName, StringComparison.OrdinalIgnoreCase));
+            if (foundFromExceptions.Any())
+            {
+                // transform for downstream usage.
+                var transformed = foundFromExceptions.Select(s => new ProgramMappingsDto
+                {
+                    OfficialProgramName = s.CustomProgramName,
+                    OfficialGenre = new Genre { Name = s.GenreName, ProgramSourceId = (int)ProgramSourceEnum.Maestro }
+                }).ToList();
+                result.AddRange(transformed);
+            }
+            return result;
+        }
+
+        private Genre _GetCadentGenre(string genreName)
+        {
+            try
+            {
+                var foundGenre = _GenreCache.GetMaestroGenreByName(genreName);
+                return foundGenre;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         private List<ProgramMappingValidationErrorDto> _ValidateProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings,
             List<ProgramMappingsDto> masterListPrograms, List<ProgramNameExceptionDto> programNameExceptions)
         {
@@ -252,67 +294,48 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var programMapping in uniqueProgramMappings)
             {
-                var masterListProgram = masterListPrograms.FindAll(p =>
-                            p.OfficialProgramName.Equals(programMapping.OfficialProgramName,
-                                                         StringComparison.OrdinalIgnoreCase));
-                
-
-                if (!(masterListProgram?.Any() ?? false))
+                // Validate the given Mapping Program Name
+                var cadentPrograms = _GetCadentPrograms(programMapping.OfficialProgramName, masterListPrograms, programNameExceptions);
+                if (!cadentPrograms.Any())
                 {
-                    var programNameException = programNameExceptions.FirstOrDefault(p =>
-                            p.CustomProgramName.Equals(programMapping.OfficialProgramName,
-                                                         StringComparison.OrdinalIgnoreCase));
-
-                    if (programNameException == null)
+                    programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
                     {
-                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
-                        {
-                            RateCardName = programMapping.OriginalProgramName,
-                            MappingProgramName = programMapping.OfficialProgramName,
-                            MappingGenreName = programMapping.OfficialGenre,
-                            ErrorMessage = "Mapping Program not found in master list or exception list."
-                        });
-                    }
+                        RateCardName = programMapping.OriginalProgramName,
+                        MappingProgramName = programMapping.OfficialProgramName,
+                        MappingGenreName = programMapping.OfficialGenre,
+                        ErrorMessage = "Mapping Program not found in master list or exception list."
+                    });
                     continue;
                 }
-                var masterGenreList = masterListProgram.Select(g => g.OfficialGenre).Select(g => g.Name).Distinct();
-                string foundGenreName = null;
-                try
+
+                // Validate given Mapping Genres
+                // does the given genre exist?
+                var cadentGenre = _GetCadentGenre(programMapping.OfficialGenre);
+                if (cadentGenre == null)
                 {
-                    var foundGenre = _GenreCache.GetMaestroGenreByName(programMapping.OfficialGenre);
-                    foundGenreName = foundGenre.Name;
+                    programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
+                    {
+                        RateCardName = programMapping.OriginalProgramName,
+                        MappingProgramName = programMapping.OfficialProgramName,
+                        MappingGenreName = programMapping.OfficialGenre,
+                        ErrorMessage = $"Mapping Genre not found: {programMapping.OfficialGenre}"
+                    });
+                    continue;
                 }
-                catch
+                
+                // does the given genre match CadentProgram.Genre
+                var masterGenreList = cadentPrograms.Select(g => g.OfficialGenre).Select(g => g.Name).Distinct().ToList();
+                var genresMatch = masterGenreList.Contains(cadentGenre.Name);
+                if (!genresMatch)
                 {
-                    try
+                    programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
                     {
-                        var foundGenre = _GenreCache.GetSourceGenreLookupDtoByName(programMapping.OfficialGenre, ProgramSourceEnum.Master);
-                        foundGenreName = foundGenre.Display;
-                    }
-                    catch
-                    {
-                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
-                        {
-                            RateCardName = programMapping.OriginalProgramName,
-                            MappingProgramName = programMapping.OfficialProgramName,
-                            MappingGenreName = programMapping.OfficialGenre,
-                            ErrorMessage = $"Mapping Genre not found: {programMapping.OfficialGenre}"
-                        });
-                    }
-                }
-                if (foundGenreName != null)
-                {
-                    bool matchedGenre = masterGenreList.Contains(foundGenreName);
-                    if (!matchedGenre)
-                    {
-                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
-                        {
-                            RateCardName = programMapping.OriginalProgramName,
-                            MappingProgramName = programMapping.OfficialProgramName,
-                            MappingGenreName = programMapping.OfficialGenre,
-                            ErrorMessage = $"Mapping Program name '{programMapping.OfficialProgramName}' found, but mistmatched on Genre.  Found expected genres : '{string.Join(", ",masterGenreList)}'."
-                        });
-                    }
+                        RateCardName = programMapping.OriginalProgramName,
+                        MappingProgramName = programMapping.OfficialProgramName,
+                        MappingGenreName = programMapping.OfficialGenre,
+                        ErrorMessage = $"Mapping Program name '{programMapping.OfficialProgramName}' found, but mistmatched on Genre. " +
+                        $"Found expected genres : '{string.Join(", ", masterGenreList)}'."
+                    });
                 }
             }
 

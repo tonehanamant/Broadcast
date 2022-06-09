@@ -777,6 +777,33 @@ GO
 
 /*************************************** END BP-4864 **********************************************************************************************/
 
+/*************************************** START BP-4864 - Take 2 **********************************************************************************************/
+
+DECLARE @created_by VARCHAR(100) = 'BP-4864_program_mappings_2022_06-Take2'
+
+IF NOT EXISTS (SELECT 1 FROM program_name_exceptions WHERE created_by = @created_by)
+BEGIN 
+	IF OBJECT_ID('tempdb..#new_exceptions') IS NOT NULL
+	BEGIN
+		DROP TABLE #new_exceptions
+	END
+
+	CREATE TABLE #new_exceptions (mapping_name NVARCHAR(500), genre_name NVARCHAR(100), show_type_name NVARCHAR(100),  genre_id INT, show_type_id INT)
+	INSERT INTO  #new_exceptions(mapping_name, genre_name, show_type_name, genre_id, show_type_id) VALUES
+		('A Saturday Night Live Mother''s Day', 'SPECIAL', 'Miscellaneous', (SELECT id FROM genres WHERE program_source_id = 1 AND name = 'SPECIAL'),(SELECT id FROM show_types WHERE program_source_id = 1 AND name = 'Miscellaneous'))
+		,('Venga la alegria', 'SPANISH', 'Miscellaneous', (SELECT id FROM genres WHERE program_source_id = 1 AND name = 'SPANISH'),(SELECT id FROM show_types WHERE program_source_id = 1 AND name = 'Miscellaneous'))
+		,('POPSTAR''S BEST OF 2018', 'SPECIAL', 'Miscellaneous', (SELECT id FROM genres WHERE program_source_id = 1 AND name = 'SPECIAL'),(SELECT id FROM show_types WHERE program_source_id = 1 AND name = 'Miscellaneous'))
+		,('NCIS: The Cases They Can''t Forget', 'DRAMA', 'Miscellaneous', (SELECT id FROM genres WHERE program_source_id = 1 AND name = 'DRAMA'),(SELECT id FROM show_types WHERE program_source_id = 1 AND name = 'Miscellaneous'))
+
+	INSERT INTO program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+		SELECT mapping_name, genre_id, show_type_id, @created_by, SYSDATETIME()
+		FROM #new_exceptions
+END 
+
+GO
+
+/*************************************** END BP-4864 - Take 2 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

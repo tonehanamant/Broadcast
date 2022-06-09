@@ -24,13 +24,13 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Drama",
+      "Name": "Sports",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Good Morning NFL",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Miscellaneous",
+      "Name": "Sports",
       "ShowTypeSource": 1
     },
     "OriginalProgramName": "Good Morning NFL"
@@ -60,7 +60,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Drama",
+      "Name": "Action",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "The Boys",
@@ -78,7 +78,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Drama",
+      "Name": "Comedy",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Community",

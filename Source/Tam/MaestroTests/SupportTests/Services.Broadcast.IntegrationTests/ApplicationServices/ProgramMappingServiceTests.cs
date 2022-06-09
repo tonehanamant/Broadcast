@@ -235,7 +235,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
                 
-                var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
+                var exception = Assert.Throws<InvalidOperationException>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
                 Assert.That(exception.Message, Is.EqualTo("Error parsing program 'ABBABAB': Mapping Program not found in master list or exception list.; MetaData=ABBABAB|ABBABAB|Drama;\r\n"));
             }
         }
@@ -260,7 +260,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
 
-                var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
+                var exception = Assert.Throws<InvalidOperationException>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
                 Assert.That(exception.Message, Is.EqualTo("Error parsing program 'America Undercover': Mapping Genre not found: Dramatic; MetaData=America Undercover|America Undercover|Dramatic;\r\n"));
             }
         }
