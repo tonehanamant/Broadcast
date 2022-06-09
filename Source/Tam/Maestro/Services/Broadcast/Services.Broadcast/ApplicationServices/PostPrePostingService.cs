@@ -11,6 +11,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Converters.Post;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators;
@@ -81,7 +82,7 @@ namespace Services.Broadcast.ApplicationServices
             try
             {
                 if (!request.FileName.EndsWith(".xlsx"))
-                    throw new ApplicationException(FileNotExcelErroMessage);
+                    throw new CadentException(FileNotExcelErroMessage);
 
                 timers.Start(TIMER_STEP_VALIDATE_REQUEST);
                 ValidateRequest(request);
@@ -134,7 +135,7 @@ namespace Services.Broadcast.ApplicationServices
         public int EditPost(PostRequest request)
         {
             if (!request.FileId.HasValue)
-                throw new ApplicationException(MissingId);
+                throw new CadentException(MissingId);
 
             ValidateRequest(request);
 
@@ -158,7 +159,7 @@ namespace Services.Broadcast.ApplicationServices
         private void ValidateRequest(PostRequest request)
         {
             if (request.Audiences == null || !request.Audiences.Any())
-                throw new ApplicationException(NoAudiencesErrorMessage);
+                throw new CadentException(NoAudiencesErrorMessage);
 
             var validAudiences = _AudiencesCache.GetAllLookups().Select(a => a.Id).ToList();
             foreach(var audience in request.Audiences)
@@ -166,7 +167,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (!validAudiences.Contains(audience))
                 {
                     _LogError($"Invalid audience Id: {audience} found while validating post file {request.FileName}.");
-                    throw new ApplicationException(InvalidAudienceErrorMessage);
+                    throw new CadentException(InvalidAudienceErrorMessage);
                 }
             }
 
@@ -176,10 +177,10 @@ namespace Services.Broadcast.ApplicationServices
                 request.PlaybackType != ProposalEnums.ProposalPlaybackType.LivePlus3 &&
                 request.PlaybackType != ProposalEnums.ProposalPlaybackType.LivePlus7 &&
                 request.PlaybackType != ProposalEnums.ProposalPlaybackType.LiveSameDay)
-                throw new ApplicationException(string.Format(InvalidPlaybackTypeErrorMessage, (char)request.PlaybackType));
+                throw new CadentException(string.Format(InvalidPlaybackTypeErrorMessage, (char)request.PlaybackType));
 
             if (_BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().PostExist(request.FileName))
-                throw new ApplicationException(string.Format(DuplicateFileErrorMessage, request.FileName));
+                throw new CadentException(string.Format(DuplicateFileErrorMessage, request.FileName));
         }
 
         public PostPrePostingDto GetInitialData()
