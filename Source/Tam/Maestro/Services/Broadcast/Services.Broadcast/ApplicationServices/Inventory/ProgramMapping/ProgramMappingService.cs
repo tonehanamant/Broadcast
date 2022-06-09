@@ -238,7 +238,8 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var programMappingError in programMappingErrors)
             {
                 fullErrorMessage.AppendLine(
-                    $"Error parsing program {programMappingError.OfficialProgramName}: {programMappingError.ErrorMessage}");
+                    $"Error parsing program '{programMappingError.MappingProgramName}': {programMappingError.ErrorMessage}; " +
+                    $"MetaData={programMappingError.RateCardName}|{programMappingError.MappingProgramName}|{programMappingError.MappingGenreName};");
             }
 
             return fullErrorMessage.ToString();
@@ -266,8 +267,10 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
                         {
-                            OfficialProgramName = programMapping.OfficialProgramName,
-                            ErrorMessage = "Program not found in master list or exception list"
+                            RateCardName = programMapping.OriginalProgramName,
+                            MappingProgramName = programMapping.OfficialProgramName,
+                            MappingGenreName = programMapping.OfficialGenre,
+                            ErrorMessage = "Mapping Program not found in master list or exception list."
                         });
                     }
                     continue;
@@ -290,8 +293,10 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
                         {
-                            OfficialProgramName = programMapping.OfficialProgramName,
-                            ErrorMessage = $"Genre not found: {programMapping.OfficialGenre}"
+                            RateCardName = programMapping.OriginalProgramName,
+                            MappingProgramName = programMapping.OfficialProgramName,
+                            MappingGenreName = programMapping.OfficialGenre,
+                            ErrorMessage = $"Mapping Genre not found: {programMapping.OfficialGenre}"
                         });
                     }
                 }
@@ -302,8 +307,10 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
                         {
-                            OfficialProgramName = programMapping.OfficialProgramName,
-                            ErrorMessage = $"Program name '{programMapping.OfficialProgramName}' validated, but not with the Genre '{string.Join(", ",masterGenreList)}'."
+                            RateCardName = programMapping.OriginalProgramName,
+                            MappingProgramName = programMapping.OfficialProgramName,
+                            MappingGenreName = programMapping.OfficialGenre,
+                            ErrorMessage = $"Mapping Program name '{programMapping.OfficialProgramName}' found, but mistmatched on Genre.  Found expected genres : '{string.Join(", ",masterGenreList)}'."
                         });
                     }
                 }

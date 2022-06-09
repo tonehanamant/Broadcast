@@ -670,7 +670,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
             
             var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now));
-            Assert.That(exception.Message, Is.EqualTo("Error parsing program Good Morning NFL: Program name 'Good Morning NFL' validated, but not with the Genre 'Sports'.\r\n"));
+            Assert.That(exception.Message, Is.EqualTo("Error parsing program 'Good Morning NFL': Mapping Program name 'Good Morning NFL' found, but mistmatched on Genre.  Found expected genres : 'Sports'.; MetaData=Good Morning NFL|Good Morning NFL|Sports;\r\n"));
             fileStream.Close();
         }
 
@@ -759,7 +759,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _GenreCache.Setup(s => s.GetSourceGenreLookupDtoByName(It.IsAny<string>(),It.IsAny<ProgramSourceEnum>())).Returns(LookupDto);
             
             var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now));
-            Assert.That(exception.Message, Is.EqualTo("Error parsing program Good Morning NFL: Program name 'Good Morning NFL' validated, but not with the Genre 'Sports'.\r\n"));
+            Assert.That(exception.Message, Is.EqualTo("Error parsing program 'Good Morning NFL': Mapping Program name 'Good Morning NFL' found, but mistmatched on Genre.  Found expected genres : 'Sports'.; MetaData=Good Morning NFL|Good Morning NFL|Sports;\r\n"));
             fileStream.Close();
         }
 
