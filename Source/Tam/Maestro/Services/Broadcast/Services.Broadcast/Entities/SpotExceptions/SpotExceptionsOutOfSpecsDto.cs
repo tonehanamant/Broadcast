@@ -47,6 +47,8 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string TimeZone { get; set; } = "EST"; // TODO: Populate this for real
         public int DMA { get; set; } = 58; // TODO: Populate this for real
         public string Comments { get; set; }
+        public int InventorySourceId { get; set; }
+        public string InventorySourceName { get; set; }
     }
 }
 

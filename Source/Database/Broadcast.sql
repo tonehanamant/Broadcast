@@ -804,6 +804,21 @@ GO
 
 /*************************************** END BP-4864 - Take 2 **********************************************************************************************/
 
+/*************************************** END BP-4848 **********************************************************************************************/
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND (COLUMN_NAME= 'inventory_source_id'))
+BEGIN
+DELETE FROM spot_exceptions_out_of_spec_decisions
+DELETE FROM spot_exceptions_out_of_specs
+ALTER TABLE spot_exceptions_out_of_specs
+ADD inventory_source_id int NOT NULL
+ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_inventory_sources_spot_exceptions_out_of_specs
+		FOREIGN KEY (inventory_source_id) REFERENCES inventory_sources(id)
+END
+
+GO
+/*************************************** END BP-4848 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -706,6 +706,7 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "sIncorrect Time",
                         Label = "Daypart"
                     },
+                  InventorySourceId = 1,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -742,7 +743,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 10,
                         Reason = "Incorrect Genre",
                         Label = "Genre"
-                    }
+                    },
+                  InventorySourceId = 3,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -778,7 +780,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 11,
                         Reason = "Incorrect Affiliate",
                         Label = "Affiliate"
-                    }
+                    },
+                  InventorySourceId = 4,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -814,7 +817,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 12,
                         Reason = "Incorrect Program",
                         Label = "Program"
-                    }
+                    },
+                  InventorySourceId = 5,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -850,7 +854,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 10,
                         Reason = "Incorrect Genre",
                         Label = "Genre"
-                    }
+                    },
+                  InventorySourceId = 6,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -886,7 +891,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 9,
                         Reason = "Incorrect Time",
                         Label = "Daypart"
-                    }
+                    },
+                  InventorySourceId = 7,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -922,7 +928,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 10,
                         Reason = "Incorrect Genre",
                         Label = "Genre"
-                    }
+                    },
+                  InventorySourceId = 8,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -958,7 +965,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 11,
                         Reason = "Incorrect Affiliate",
                         Label = "Affiliate"
-                    }
+                    },
+                  InventorySourceId = 9,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -994,7 +1002,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 12,
                         Reason = "Incorrect Program",
                         Label = "Program"
-                    }
+                    },
+                  InventorySourceId = 10,
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1030,7 +1039,8 @@ namespace Services.Broadcast.ApplicationServices
                         ReasonCode = 10,
                         Reason = "Incorrect Genre",
                         Label = "Genre"
-                    }
+                    },
+                  InventorySourceId = 11,
                 }
             };
 
@@ -1444,7 +1454,8 @@ namespace Services.Broadcast.ApplicationServices
                         SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
                         DaypartCode = activePlan.DaypartCode,
                         Comments = activePlan.Comments,
-                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == activePlan.PlanId).Select(s => s.Code).Distinct().ToList()
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == activePlan.PlanId).Select(s => s.Code).Distinct().ToList(),
+                        InventorySourceName = activePlan.InventorySourceName
                     };
                 }).ToList();
 
@@ -1474,7 +1485,8 @@ namespace Services.Broadcast.ApplicationServices
                         DaypartCode = queuedPlan.SpotExceptionsOutOfSpecDecision.DaypartCode == null ? queuedPlan.DaypartCode : queuedPlan.SpotExceptionsOutOfSpecDecision.DaypartCode,
                         DecisionString = queuedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
                         Comments = queuedPlan.Comments,
-                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == queuedPlan.PlanId).Select(s => s.Code).Distinct().ToList()
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == queuedPlan.PlanId).Select(s => s.Code).Distinct().ToList(),
+                        InventorySourceName = queuedPlan.InventorySourceName
                     };
                 }).ToList();
 
@@ -1505,7 +1517,8 @@ namespace Services.Broadcast.ApplicationServices
                         DecisionString = syncedPlan.SpotExceptionsOutOfSpecDecision.DecisionNotes,
                         SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDecision.SyncedAt.ToString(),
                         Comments = syncedPlan.Comments,
-                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == syncedPlan.PlanId).Select(s => s.Code).Distinct().ToList()
+                        PlanDaypartCodes = daypartsList.Where(d => d.PlanId == syncedPlan.PlanId).Select(s => s.Code).Distinct().ToList(),
+                        InventorySourceName = syncedPlan.InventorySourceName
                     };
                 }).ToList();
             }

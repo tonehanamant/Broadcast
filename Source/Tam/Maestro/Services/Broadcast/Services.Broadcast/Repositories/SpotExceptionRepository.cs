@@ -282,7 +282,8 @@ namespace Services.Broadcast.Repositories
                         created_by = outOfSpecs.CreatedBy,
                         created_at = outOfSpecs.CreatedAt,
                         modified_by = outOfSpecs.ModifiedBy,
-                        modified_at = outOfSpecs.ModifiedAt
+                        modified_at = outOfSpecs.ModifiedAt,
+                        inventory_source_id = outOfSpecs.InventorySourceId
                     };
                     if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
                     {
@@ -477,7 +478,8 @@ namespace Services.Broadcast.Repositories
                     Name = spotExceptionsOutOfSpecEntity.genre.name,
                     ProgramSourceId = spotExceptionsOutOfSpecEntity.genre.program_source_id
                 },
-                Comments = spotExceptionsOutOfSpecEntity.comment
+                Comments = spotExceptionsOutOfSpecEntity.comment,
+                InventorySourceName = spotExceptionsOutOfSpecEntity.inventory_sources.name,
             };
             return spotExceptionsOutOfSpec;
         }
@@ -826,7 +828,8 @@ namespace Services.Broadcast.Repositories
                     execution_id_external = executionId.ToString(),
                     spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
                     house_isci = outOfSpecs.HouseIsci,
-                    program_genre_id = outOfSpecs.ProgramGenre.Id
+                    program_genre_id = outOfSpecs.ProgramGenre.Id,
+                    inventory_source_id = outOfSpecs.InventorySourceId
                 }).ToList();
                 context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
                 context.SaveChanges();

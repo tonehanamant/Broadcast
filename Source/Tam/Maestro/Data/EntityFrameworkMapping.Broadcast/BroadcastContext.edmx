@@ -2439,6 +2439,7 @@
           <Property Name="comment" Type="nvarchar" MaxLength="1024" />
           <Property Name="daypart_code" Type="nvarchar" MaxLength="20" />
           <Property Name="genre_name" Type="nvarchar" MaxLength="40" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -3694,6 +3695,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="inventory_source_logos">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_sources_spot_exceptions_out_of_specs">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="spot_exceptions_out_of_specs" Type="Self.spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
               <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -7855,6 +7868,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_source_logos" EntitySet="inventory_source_logos" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_sources_spot_exceptions_out_of_specs" Association="Self.FK_inventory_sources_spot_exceptions_out_of_specs">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_sources_spot_exceptions_recommended_plans" Association="Self.FK_inventory_sources_spot_exceptions_recommended_plans">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
@@ -10598,6 +10615,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
           </AssociationSet>
+          <AssociationSet Name="FK_inventory_sources_spot_exceptions_out_of_specs" Association="BroadcastModel.FK_inventory_sources_spot_exceptions_out_of_specs">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -11462,6 +11483,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_proprietary_daypart_program_mappings" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_daypart_program_mappings" />
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_inventory_sources_spot_exceptions_recommended_plans" FromRole="inventory_sources" ToRole="spot_exceptions_recommended_plans" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_inventory_sources_spot_exceptions_out_of_specs" FromRole="inventory_sources" ToRole="spot_exceptions_out_of_specs" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -18495,6 +18517,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_sources_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="inventory_sources" />
         </EntityType>
         <Association Name="FK_spot_exceptions_out_of_specs_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -18576,6 +18600,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="spot_exceptions_recommended_plans">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_sources_spot_exceptions_out_of_specs">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
               <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -21708,6 +21744,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_out_of_specs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="genre_name" ColumnName="genre_name" />
                 <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="comment" ColumnName="comment" />

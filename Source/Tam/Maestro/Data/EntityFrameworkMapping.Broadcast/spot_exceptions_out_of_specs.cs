@@ -47,6 +47,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string comment { get; set; }
         public string daypart_code { get; set; }
         public string genre_name { get; set; }
+        public int inventory_source_id { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual genre genre { get; set; }
@@ -54,5 +55,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual inventory_sources inventory_sources { get; set; }
     }
 }

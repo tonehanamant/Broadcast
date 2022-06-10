@@ -11,6 +11,7 @@
       "GenreName": "Comedy",
       "HouseIsci": "289J76GN16H",
       "Id": 3,
+      "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
       "MarketRank": null,
       "PlanDaypartCodes": [
@@ -40,6 +41,7 @@
       "GenreName": null,
       "HouseIsci": "289J76GN16H",
       "Id": 2,
+      "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
       "MarketRank": null,
       "PlanDaypartCodes": [
@@ -69,6 +71,7 @@
       "GenreName": null,
       "HouseIsci": "289J76GN16H",
       "Id": 1,
+      "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
       "MarketRank": null,
       "PlanDaypartCodes": [

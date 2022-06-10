@@ -31,6 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_proprietary_daypart_program_mappings = new HashSet<inventory_proprietary_daypart_program_mappings>();
             this.inventory_proprietary_summary = new HashSet<inventory_proprietary_summary>();
             this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
+            this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
         }
     
         public int id { get; set; }
@@ -53,5 +54,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_proprietary_daypart_program_mappings> inventory_proprietary_daypart_program_mappings { get; set; }
         public virtual ICollection<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
+        public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
     }
 }
