@@ -891,6 +891,15 @@
     <Compile Include="spot_tracker_file_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="staged_out_of_specs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="staged_recommended_plans.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="staged_recommended_plan_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="staged_unposted_no_reel_roster.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

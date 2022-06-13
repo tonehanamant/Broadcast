@@ -39,13 +39,12 @@ namespace EntityFrameworkMapping.Broadcast
         public string advertiser_name { get; set; }
         public long unique_id_external { get; set; }
         public string execution_id_external { get; set; }
-        public int inventory_source_id { get; set; }
+        public string inventory_source_name { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
-        public virtual inventory_sources inventory_sources { get; set; }
     }
 }

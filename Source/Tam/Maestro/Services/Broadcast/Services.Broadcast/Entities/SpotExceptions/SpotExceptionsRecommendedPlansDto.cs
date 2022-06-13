@@ -37,7 +37,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
         public List<SpotExceptionsRecommendedPlanDetailsDto> SpotExceptionsRecommendedPlanDetails { get; set; }
-        public int InventorySourceId { get; set; }
         public string InventorySourceName { get; set; }
     }
 }

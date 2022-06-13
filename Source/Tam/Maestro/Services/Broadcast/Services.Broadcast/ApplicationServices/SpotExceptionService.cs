@@ -233,7 +233,7 @@ namespace Services.Broadcast.ApplicationServices
                 spotExceptionsOutOfSpecs.ForEach(s =>
                 {
                     s.RecommendedPlanId = 524;
-                    s.ProgramGenre.Id++; // these are 1 off 
+                    s.GenreName = "Comedy";
                 });
             }
 
@@ -305,7 +305,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 1
+                        InventorySourceName = "Open Market"
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
@@ -343,7 +343,7 @@ namespace Services.Broadcast.ApplicationServices
                                   SpotExceptionsRecommendedPlanDecision = null
                                 }
                         },
-                        InventorySourceId = 3
+                        InventorySourceName = "TTWN"
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
@@ -381,7 +381,7 @@ namespace Services.Broadcast.ApplicationServices
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     },
-                    InventorySourceId = 4
+                    InventorySourceName = "TTWN"
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
@@ -419,7 +419,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 5
+                        InventorySourceName = "CNN"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -457,7 +457,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 6
+                        InventorySourceName = "Sinclair"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -495,7 +495,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 7
+                        InventorySourceName = "LilaMax"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -533,7 +533,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 8
+                        InventorySourceName = "MLB"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -571,7 +571,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 9
+                        InventorySourceName = "Ference Media"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -623,7 +623,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 10
+                        InventorySourceName = "20th Century Fox (Twentieth Century)"
                     },
                     new SpotExceptionsRecommendedPlansDto
                     {
@@ -654,7 +654,7 @@ namespace Services.Broadcast.ApplicationServices
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         },
-                        InventorySourceId = 11
+                        InventorySourceName = "CBS Synd"
                     }
                 };
 
@@ -669,7 +669,6 @@ namespace Services.Broadcast.ApplicationServices
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzNzk3Nw==",
                   HouseIsci = "612NM15082H",
-                  ProgramGenre = new Entities.Genre { Id = 8, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191756,
                   IsciName="AB82TXT2H",
@@ -706,13 +705,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "sIncorrect Time",
                         Label = "Daypart"
                     },
-                  InventorySourceId = 1,
+                  InventorySourceName = "Open Market",
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzODk5MA==",
                   HouseIsci = "613NM15082H",
-                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191757,
                   IsciName="AB82VR58",
@@ -744,13 +742,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Genre",
                         Label = "Genre"
                     },
-                  InventorySourceId = 3,
+                  InventorySourceName = "TTWN",
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 13, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191758,
                   IsciName="AB44NR58",
@@ -781,13 +778,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Affiliate",
                         Label = "Affiliate"
                     },
-                  InventorySourceId = 4,
+                  InventorySourceName = "TTWN",
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191759,
                   IsciName="AB21QR58",
@@ -818,13 +814,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Program",
                         Label = "Program"
                     },
-                  InventorySourceId = 5,
+                  InventorySourceName = "CNN",
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191760,
                   IsciName="AB44NR58",
@@ -855,13 +850,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Genre",
                         Label = "Genre"
                     },
-                  InventorySourceId = 6,
+                  InventorySourceName = "Sinclair"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTA5ODgwOQ==",
                   HouseIsci = "613NM13290H",
-                  ProgramGenre = new Entities.Genre { Id = 8, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191761,
                   IsciName="AB33PR58",
@@ -892,13 +886,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Time",
                         Label = "Daypart"
                     },
-                  InventorySourceId = 7,
+                  InventorySourceName = "LilaMax"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 13, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191762,
                   IsciName="AB79PR58",
@@ -929,13 +922,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Genre",
                         Label = "Genre"
                     },
-                  InventorySourceId = 8,
+                  InventorySourceName = "MLB"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 8, Name = "Comedy", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191763,
                   IsciName="AB81GR58",
@@ -966,13 +958,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Affiliate",
                         Label = "Affiliate"
                     },
-                  InventorySourceId = 9,
+                  InventorySourceName = "Ference Media"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
                   HouseIsci = "OMGN1016000H",
-                  ProgramGenre = new Entities.Genre { Id = 33, Name = "News", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191764,
                   IsciName="AB87GR58",
@@ -1003,13 +994,12 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Program",
                         Label = "Program"
                     },
-                  InventorySourceId = 10,
+                  InventorySourceName = "20th Century Fox (Twentieth Century)",
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
                   HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 13, Name = "Drama", ProgramSourceId = 1},
                   ReasonCodeMessage="",
                   EstimateId= 191765,
                   IsciName="AB83PR58",
@@ -1040,7 +1030,7 @@ namespace Services.Broadcast.ApplicationServices
                         Reason = "Incorrect Genre",
                         Label = "Genre"
                     },
-                  InventorySourceId = 11,
+                  InventorySourceName = "CBS Synd",
                 }
             };
 

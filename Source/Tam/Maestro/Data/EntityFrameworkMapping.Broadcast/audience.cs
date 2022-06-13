@@ -42,10 +42,10 @@ namespace EntityFrameworkMapping.Broadcast
             this.vpvh_audience_mappings = new HashSet<vpvh_audience_mappings>();
             this.vpvh_audience_mappings1 = new HashSet<vpvh_audience_mappings>();
             this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
-            this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
             this.plan_versions = new HashSet<plan_versions>();
             this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
+            this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
         }
     
         public int id { get; set; }
@@ -84,9 +84,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings1 { get; set; }
         public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
-        public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
         public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
     }
 }

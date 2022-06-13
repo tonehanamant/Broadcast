@@ -1,7 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -749,7 +748,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
                     HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1 }
+                    GenreName = "News"
                 });
             // Act
             var result = _SpotExceptionService.GetSpotExceptionOutofSpecsDetails(spotExceptionsOutOfSpecId);
@@ -835,7 +834,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
                     HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
+                    GenreName = "Drama"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -892,8 +891,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Genre"
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
-                    HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1}
+                    HouseIsci = "289J76GN16H"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -950,8 +948,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Affiliate"
                     },
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
-                    HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
+                    HouseIsci = "289J76GN16H"
                 },
             };
         }
@@ -1009,8 +1006,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Daypart"
                     },
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
-                  HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
+                  HouseIsci = "289J76GN16H"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1061,8 +1057,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Genre"
                     },
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
-                  HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
+                  HouseIsci = "289J76GN16H"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1113,8 +1108,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Affiliate"
                     },
                   SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
-                  HouseIsci = "289J76GN16H",
-                  ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1}
+                  HouseIsci = "289J76GN16H"
                 },
                 new SpotExceptionsOutOfSpecsDto
                 {
@@ -1171,8 +1165,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Label = "Affiliate"
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
-                    HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1}
+                    HouseIsci = "289J76GN16H"
                 },
             };
         }
@@ -1238,7 +1231,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
                     HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
                     Comments = "test Comment",
                     InventorySourceName = "TVB"
                 },
@@ -1299,7 +1291,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
                     HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
                     Comments = "test Comment",
                     InventorySourceName = "TVB"
                 },
@@ -1351,7 +1342,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
                     HouseIsci = "289J76GN16H",
-                    ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
                     Comments = "test Comment",
                     GenreName="Comedy",
                     DaypartCode="ROSP",

@@ -36,7 +36,6 @@ namespace EntityFrameworkMapping.Broadcast
         public double impressions { get; set; }
         public Nullable<int> market_code { get; set; }
         public Nullable<int> market_rank { get; set; }
-        public Nullable<int> program_genre_id { get; set; }
         public string house_isci { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
@@ -45,16 +44,14 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public System.DateTime modified_at { get; set; }
         public string comment { get; set; }
-        public string daypart_code { get; set; }
         public string genre_name { get; set; }
-        public int inventory_source_id { get; set; }
+        public string daypart_code { get; set; }
+        public string inventory_source_name { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual genre genre { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
-        public virtual inventory_sources inventory_sources { get; set; }
     }
 }

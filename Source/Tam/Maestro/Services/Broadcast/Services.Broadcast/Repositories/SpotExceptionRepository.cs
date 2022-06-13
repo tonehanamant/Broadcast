@@ -219,7 +219,7 @@ namespace Services.Broadcast.Repositories
                         ingested_at = recommendedPlan.IngestedAt,
                         unique_id_external = ++uniqueExternalIdRp,
                         execution_id_external = executionId.ToString(),
-                        inventory_source_id = recommendedPlan.InventorySourceId,
+                        inventory_source_name = recommendedPlan.InventorySourceName,
                         spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails
                             .Select(recommendedPlanDetails =>
                             {
@@ -271,7 +271,6 @@ namespace Services.Broadcast.Repositories
                         execution_id_external = executionId.ToString(),
                         impressions = outOfSpecs.Impressions,
                         house_isci = outOfSpecs.HouseIsci,
-                        program_genre_id = outOfSpecs.ProgramGenre?.Id,
                         spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
                         daypart_code = outOfSpecs.DaypartCode,
                         genre_name = outOfSpecs.GenreName,
@@ -283,7 +282,7 @@ namespace Services.Broadcast.Repositories
                         created_at = outOfSpecs.CreatedAt,
                         modified_by = outOfSpecs.ModifiedBy,
                         modified_at = outOfSpecs.ModifiedAt,
-                        inventory_source_id = outOfSpecs.InventorySourceId
+                        inventory_source_name = outOfSpecs.InventorySourceName
                     };
                     if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
                     {
@@ -337,7 +336,6 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
@@ -370,7 +368,6 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions.Select(x => x.plan_version_dayparts))
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
@@ -399,7 +396,6 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.plan_versions)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.genre)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.audience)
                     .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
                     .GroupJoin(
@@ -472,14 +468,8 @@ namespace Services.Broadcast.Repositories
                 SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecEntity.spot_exceptions_out_of_spec_reason_codes),
                 MarketCode = spotExceptionsOutOfSpecEntity.market_code,
                 MarketRank = spotExceptionsOutOfSpecEntity.market_rank,
-                ProgramGenre = new Genre
-                {
-                    Id = spotExceptionsOutOfSpecEntity.genre.id,
-                    Name = spotExceptionsOutOfSpecEntity.genre.name,
-                    ProgramSourceId = spotExceptionsOutOfSpecEntity.genre.program_source_id
-                },
                 Comments = spotExceptionsOutOfSpecEntity.comment,
-                InventorySourceName = spotExceptionsOutOfSpecEntity.inventory_sources.name,
+                InventorySourceName = spotExceptionsOutOfSpecEntity.inventory_source_name
             };
             return spotExceptionsOutOfSpec;
         }
@@ -577,7 +567,7 @@ namespace Services.Broadcast.Repositories
                 DaypartDetail = _MapDaypartToDto(spotExceptionsRecommendedPlanEntity.daypart),
                 IngestedAt = spotExceptionsRecommendedPlanEntity.ingested_at,
                 IngestedBy = spotExceptionsRecommendedPlanEntity.ingested_by,
-                InventorySourceName = spotExceptionsRecommendedPlanEntity.inventory_sources.name,
+                InventorySourceName = spotExceptionsRecommendedPlanEntity.inventory_source_name,
                 SpotExceptionsRecommendedPlanDetails = spotExceptionsRecommendedPlanEntity.spot_exceptions_recommended_plan_details.Select(spotExceptionsRecommendedPlanDetailDb =>
                 {
                     var recommendedPlan = spotExceptionsRecommendedPlanDetailDb.plan;
@@ -784,7 +774,7 @@ namespace Services.Broadcast.Repositories
                     ingested_at = recommendedPlan.IngestedAt,
                     unique_id_external = ++uniqueExternalId,
                     execution_id_external = executionId.ToString(),
-                    inventory_source_id = recommendedPlan.InventorySourceId,
+                    inventory_source_name = recommendedPlan.InventorySourceName,
                     spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(recommendedPlanDetails => new spot_exceptions_recommended_plan_details()
                     {
                         recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
@@ -828,8 +818,7 @@ namespace Services.Broadcast.Repositories
                     execution_id_external = executionId.ToString(),
                     spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
                     house_isci = outOfSpecs.HouseIsci,
-                    program_genre_id = outOfSpecs.ProgramGenre.Id,
-                    inventory_source_id = outOfSpecs.InventorySourceId
+                    inventory_source_name = outOfSpecs.InventorySourceName
                 }).ToList();
                 context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
                 context.SaveChanges();
@@ -1128,7 +1117,6 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_lengths)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.daypart)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.audience)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.inventory_sources)
                     .GroupJoin(
                         context.stations
                         .Include(stationDb => stationDb.market),

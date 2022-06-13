@@ -28,8 +28,7 @@
     "Impressions": 0.0,
     "IngestedAt": "2010-10-12T00:00:00",
     "IngestedBy": "Repository Test User",
-    "InventorySourceId": 0,
-    "InventorySourceName": "Open Market",
+    "InventorySourceName": "TVB",
     "IsciName": "AB82TXT2H",
     "Market": "Albuquerque-Santa Fe",
     "MarketCode": null,
@@ -39,11 +38,6 @@
     "PlanId": 1196,
     "Product": null,
     "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramGenre": {
-      "Id": 14,
-      "Name": "Drama",
-      "ProgramSourceId": 1
-    },
     "ProgramName": "Q13 news at 10",
     "ProgramNetwork": null,
     "ReasonCodeMessage": "",
@@ -94,7 +88,6 @@
     "Impressions": 0.0,
     "IngestedAt": "2010-10-12T00:00:00",
     "IngestedBy": "Repository Test User",
-    "InventorySourceId": 0,
     "InventorySourceName": "TVB",
     "IsciName": "AB82VR58",
     "Market": "Minneapolis-St. Paul",
@@ -105,11 +98,6 @@
     "PlanId": 1197,
     "Product": null,
     "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramGenre": {
-      "Id": 34,
-      "Name": "News",
-      "ProgramSourceId": 1
-    },
     "ProgramName": "FOX 13 10:00 News",
     "ProgramNetwork": null,
     "ReasonCodeMessage": "",

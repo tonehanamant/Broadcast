@@ -60,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70615,
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
-                    InventorySourceId = 1,
+                    InventorySourceName = "Open Market",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -96,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70615,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
-                    InventorySourceId = 3,
+                    InventorySourceName = "TVB",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -132,7 +132,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70616,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
-                    InventorySourceId = 4,
+                    InventorySourceName = "TTWN",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -168,7 +168,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70617,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
-                    InventorySourceId = 1,
+                    InventorySourceName = "Open Market",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -203,7 +203,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70618,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
-                    InventorySourceId = 1
+                    InventorySourceName = "Open Market"
                 }
             };
 
@@ -286,9 +286,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       },
                      SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
                      HouseIsci = "OMGN1016000H",
-                     ProgramGenre = new Entities.Genre { Id = 14, Name = "Drama", ProgramSourceId = 1},
-                     InventorySourceName = "TVB",
-                     InventorySourceId = 1,
+                     InventorySourceName = "TVB"
                  },
                  new SpotExceptionsOutOfSpecsDto
                  {
@@ -323,9 +321,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       },
                      SpotUniqueHashExternal = "TE9DQUwtMTA1OTAyMDk1OQ==",
                      HouseIsci = "289J76GN16H",
-                     ProgramGenre = new Entities.Genre { Id = 34, Name = "News", ProgramSourceId = 1},
                      InventorySourceName = "TVB",
-                     InventorySourceId = 3,
                  },
                  new SpotExceptionsOutOfSpecsDto
                  {
@@ -360,9 +356,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                       },
                       SpotUniqueHashExternal = "TE9DQUwtMTA1OTAyMTE1NA==",
                      HouseIsci = "289J76GN16H",
-                     ProgramGenre = new Entities.Genre { Id = 9, Name = "Comedy", ProgramSourceId = 1},
                      InventorySourceName = "TVB",
-                     InventorySourceId = 4,
                  }
             };
             List<SpotExceptionsOutOfSpecsDto> result;
