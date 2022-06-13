@@ -150,21 +150,6 @@ GO
 
 /*************************************** END BP-4692 **********************************************************************************************/
 
-/*************************************** START BP-4524 **********************************************************************************************/
-
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' AND (COLUMN_NAME= 'inventory_source_id'))
-BEGIN
-ALTER TABLE spot_exceptions_recommended_plans
-ADD inventory_source_id int NOT NULL
-ALTER TABLE spot_exceptions_recommended_plans
-		ADD CONSTRAINT FK_inventory_sources_spot_exceptions_recommended_plans
-		FOREIGN KEY (inventory_source_id) REFERENCES inventory_sources(id)
-END
-
-GO
-
-/*************************************** END BP-4524 **********************************************************************************************/
-
 /*************************************** START BP-4774 **********************************************************************************************/
 
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_decision' AND (COLUMN_NAME= 'accepted_as_in_spec'))
@@ -803,21 +788,6 @@ END
 GO
 
 /*************************************** END BP-4864 - Take 2 **********************************************************************************************/
-
-/*************************************** START BP-4848 **********************************************************************************************/
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND (COLUMN_NAME= 'inventory_source_id'))
-BEGIN
-DELETE FROM spot_exceptions_out_of_spec_decisions
-DELETE FROM spot_exceptions_out_of_specs
-ALTER TABLE spot_exceptions_out_of_specs
-ADD inventory_source_id int NOT NULL
-ALTER TABLE spot_exceptions_out_of_specs
-		ADD CONSTRAINT FK_inventory_sources_spot_exceptions_out_of_specs
-		FOREIGN KEY (inventory_source_id) REFERENCES inventory_sources(id)
-END
-
-GO
-/*************************************** END BP-4848 **********************************************************************************************/
 
 /*************************************** START BP-4306 **********************************************************************************************/
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND (COLUMN_NAME= 'inventory_source_name'))
