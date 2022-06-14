@@ -55,6 +55,34 @@
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "TimeZone": "EST"
+    },
+    {
+      "Affiliate": "CBS",
+      "ClientIsci": "CC44ZZPT4",
+      "Comments": "test Comment",
+      "Day": "Friday",
+      "DaypartCode": null,
+      "DecisionString": "",
+      "DMA": 58,
+      "EstimateId": 191760,
+      "FlightEndDate": "12/9/2019 12:00:00 AM",
+      "GenreName": null,
+      "HouseIsci": "289J76GN16H",
+      "Id": 4,
+      "InventorySourceName": "TVB",
+      "Market": "Cincinnati",
+      "MarketRank": null,
+      "PlanDaypartCodes": [
+        "ROSP",
+        "TDNS"
+      ],
+      "ProgramAirDate": "1/10/2020",
+      "ProgramAirTime": "11:45:00 PM",
+      "ProgramName": "Reckitt HYHO",
+      "Reason": "spot aired outside daypart",
+      "SpotLengthString": ":45",
+      "Station": "KXMC",
+      "TimeZone": "EST"
     }
   ],
   "Synced": [

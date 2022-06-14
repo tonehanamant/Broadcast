@@ -1347,6 +1347,66 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     DaypartCode="ROSP",
                     InventorySourceName = "TVB"
                 },
+                new SpotExceptionsOutOfSpecsDto
+                {
+                    Id = 4,
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Cincinnati",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
+                    {
+                       SpotExceptionsOutOfSpecId = 4,
+                       AcceptedAsInSpec = true,
+                       DecisionNotes = "",
+                       UserName = "MockData",
+                       CreatedAt = new DateTime(2020, 2, 1),
+                       SyncedBy = null,
+                       SyncedAt = null,
+                    },
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
+                    HouseIsci = "289J76GN16H",
+                    Comments = "test Comment",
+                    InventorySourceName = "TVB"
+                },
             };
         }
 
@@ -2024,7 +2084,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             Assert.AreEqual(result.Active.Count, 1);
-            Assert.AreEqual(result.Queued.Count, 1);
+            Assert.AreEqual(result.Queued.Count, 2);
             Assert.AreEqual(result.Synced.Count, 1);
         }
 
@@ -2095,7 +2155,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecMarkets(spotExceptionsOutOfSpecSpotsRequest);
 
             // Assert
-            Assert.AreEqual(0, result.Count);
+            Assert.AreEqual(null, result);
         }
 
         [Test]

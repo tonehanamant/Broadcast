@@ -1518,14 +1518,15 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<string> GetSpotExceptionsOutOfSpecMarkets(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
         {
-            var spotExceptionsOutOfSpecSpotsResult = GetSpotExceptionsOutofSpecSpots(spotExceptionsOutOfSpecSpotsRequest);
+            var spotExceptionsOutOfSpecsPlanSpots = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPlanSpots(spotExceptionsOutOfSpecSpotsRequest.PlanId,
+                spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
 
-            if (spotExceptionsOutOfSpecSpotsResult?.Active == null)
+            if (spotExceptionsOutOfSpecsPlanSpots == null)
             {
                 return null;
             }
 
-            var markets = spotExceptionsOutOfSpecSpotsResult.Active.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
+            var markets = spotExceptionsOutOfSpecsPlanSpots.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
             return markets;
         }
 
