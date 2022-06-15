@@ -1,4 +1,5 @@
 ﻿using Cadent.Library.Utilities.Standard.Common.Launch_Darkly;
+using System;
 using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Clients
@@ -82,10 +83,17 @@ namespace Services.Broadcast.Clients
         }
 
         private string _GetSdkKey()
-        {           
-            var encryptedKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.LaunchDarklySdkKey);
-            var decryptedKey = EncryptionHelper.DecryptString(encryptedKey, EncryptionHelper.EncryptionKey);
-            return decryptedKey;
+        {
+            var globalKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.LaunchDarklyProjectSdkKey);
+            if (!string.IsNullOrEmpty(globalKey))
+            {
+                return globalKey;
+            } else
+            {
+                var encryptedKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.LaunchDarklySdkKey);
+                var decryptedKey = EncryptionHelper.DecryptString(encryptedKey, EncryptionHelper.EncryptionKey);
+                return decryptedKey;
+            }
         }
     }
 }

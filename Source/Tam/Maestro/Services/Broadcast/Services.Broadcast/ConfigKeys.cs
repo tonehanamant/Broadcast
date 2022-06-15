@@ -50,7 +50,8 @@
 		public static readonly string ScxGenerationFolder = "ScxGenerationFolder";
 		
 		public static readonly string LaunchDarklySdkKey = "LaunchDarklySdkKey";
-        public static readonly string ReelIsciIngestNumberOfDays = "ReelIsciIngestNumberOfDays";
+		public static readonly string LaunchDarklyProjectSdkKey = "LaunchDarklyProjectSdkKey";
+		public static readonly string ReelIsciIngestNumberOfDays = "ReelIsciIngestNumberOfDays";
         public static readonly string BroadcastNotificationEmail = "BroadcastNotificationEmail";
         public static readonly string DaypartCacheSlidingExpirationSeconds = "DaypartCacheSlidingExpirationSeconds";
 		public static readonly string TrackerServiceFtpDirectory = "TrackerService:FtpDirector";
