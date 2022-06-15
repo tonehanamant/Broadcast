@@ -1221,6 +1221,14 @@ namespace Services.Broadcast.ApplicationServices
                     RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId
                 }).ToList()
             };
+            if(spotExceptionsRecommendedPlanDetailsResult.Plans != null && 
+                spotExceptionsRecommendedPlanDetailsResult.Plans.Any(x=> x.IsSelected))
+            {
+                foreach(var planDetail in spotExceptionsRecommendedPlanDetailsResult.Plans)
+                {
+                    planDetail.IsRecommendedPlan = planDetail.IsSelected;
+                }
+            }
             return spotExceptionsRecommendedPlanDetailsResult;
         }
 
@@ -1251,22 +1259,9 @@ namespace Services.Broadcast.ApplicationServices
                     SyncedAt = null,
                     SyncedBy = null
                 };
-                bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = false;
                 bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
-                bool isSpotExceptionsRecommendedPlanDetailsSaved = false;
-                SpotExceptionsRecommendedPlanDecisionResponseDto spotExceptionsRecommendedPlanDecisionResponse  = _SpotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(spotExceptionsRecommendedPlanDecision);
-                isSpotExceptionsRecommendedPlanDecisionSaved = spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved;
-                if (isSpotExceptionsRecommendedPlanDecisionSaved)
-                {
-                    var spotExceptionsRecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
-                    {
-                        Id = spotExceptionsRecommendedPlanDecisionResponse.SpotExceptionsRecommendedPlanDetailsId, 
-                        SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.Id 
-                    };
-                    isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = _SpotExceptionRepository.UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanDetail);
-                    isSpotExceptionsRecommendedPlanDetailsSaved = _SpotExceptionRepository.UpdateSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlan);
-                    saveCount += isSpotExceptionsRecommendedPlanDecisionSaved || isSpotExceptionsRecommendedPlanDetailsSaved == true ? 1 : 0;
-                }
+                isSpotExceptionsRecommendedPlanDecisionSaved = _SpotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(spotExceptionsRecommendedPlanDecision);
+                saveCount += isSpotExceptionsRecommendedPlanDecisionSaved  ? 1 : 0;
             }
             isSaved = saveCount > 0 ? true : false;
             return isSaved;
@@ -1725,7 +1720,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 activePlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
                 queuedPlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
-                
+                foreach(var plan in queuedPlans)
+                {
+                    plan.RecommendedPlanId = _GetRecommendedPlanId(plan);
+                    plan.RecommendedPlanName = _GetRecommendedPlanName(plan);
+                }
                  spotExceptionsRecommendedPlanSpotsResult.Active = activePlans
                 .Select(activePlan =>
                 {
@@ -1765,7 +1764,7 @@ namespace Services.Broadcast.ApplicationServices
                         Market = queuedPlan.Market,
                         Station = queuedPlan.StationLegacyCallLetters,
                         InventorySource = queuedPlan.InventorySourceName,
-                        DecisionString = queuedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
+                        DecisionString = queuedPlan.SpotExceptionsRecommendedPlanDetails.Where(x=> x.SpotExceptionsRecommendedPlanDecision != null).Select(y=> y.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
                     };
                 }).ToList();
 
@@ -1786,15 +1785,14 @@ namespace Services.Broadcast.ApplicationServices
                         PlanId = syncedPlan.RecommendedPlanId,
                         Market = syncedPlan.Market,
                         Station = syncedPlan.StationLegacyCallLetters,
-                        SyncedTimestamp = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.SyncedAt).FirstOrDefault().ToString(),
+                        SyncedTimestamp = syncedPlan.SpotExceptionsRecommendedPlanDetails.Where(x=> x.SpotExceptionsRecommendedPlanDecision != null).Select(x => x.SpotExceptionsRecommendedPlanDecision.SyncedAt).FirstOrDefault().ToString(),
                         InventorySource = syncedPlan.InventorySourceName,
-                        DecisionString = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
+                        DecisionString = syncedPlan.SpotExceptionsRecommendedPlanDetails.Where(x => x.SpotExceptionsRecommendedPlanDecision != null).Select(y => y.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
                     };
                 }).ToList();
             }
             return spotExceptionsRecommendedPlanSpotsResult;
         }
-
         /// <inheritdoc />
         public RecommendedPlanFiltersResultDto GetRecommendedPlansFilters(RecomendedPlansRequestDto recommendedPlansRequest)
         {
@@ -1811,6 +1809,47 @@ namespace Services.Broadcast.ApplicationServices
             recommendedPlanFiltersResult.Stations = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.StationLegacyCallLetters ?? "Unknown").Distinct().OrderBy(station => station).ToList();
             recommendedPlanFiltersResult.InventorySources = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.InventorySourceName ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
             return recommendedPlanFiltersResult;
+        }
+        private string _GetRecommendedPlanName(SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans)
+        {
+            string planName = spotExceptionsRecommendedPlans.RecommendedPlanName;
+            if (spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails != null)
+            {
+                int planDetailId = 0;
+                var planDetail = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.
+                   FirstOrDefault(x => x.SpotExceptionsRecommendedPlanDecision != null);
+                if (planDetail != null)
+                {
+                    planDetailId = planDetail.SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId;
+                    var planDetails = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.FirstOrDefault(x => x.Id == planDetailId);
+                    if (planDetails != null)
+                    {
+                        planName = planDetail.RecommendedPlanDetail.Name;
+                    }
+                }
+            }
+            return planName;
+        }
+
+        private int _GetRecommendedPlanId(SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans)
+        {
+            int planId =  spotExceptionsRecommendedPlans.RecommendedPlanId ?? 0;
+            if (spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails != null)
+            {
+                int planDetailId = 0;
+                var planDetail = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails
+                    .FirstOrDefault(x => x.SpotExceptionsRecommendedPlanDecision != null);
+                if (planDetail != null)
+                {
+                    planDetailId = planDetail.SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId;
+                    var planDetails = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.FirstOrDefault(x => x.Id == planDetailId);
+                    if (planDetails != null)
+                    {
+                        planId = planDetails.RecommendedPlanId;
+                    }
+                }
+            }
+            return planId;
         }
     }
 }

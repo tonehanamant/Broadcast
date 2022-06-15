@@ -11,7 +11,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
     [Category("short_running")]
-    [UseReporter(typeof(DiffReporter))]
+    [UseReporter(typeof(DiffReporter))] 
     public class SpotExceptionRepositoryTests
     {
         [Test]
@@ -28,6 +28,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Assert
             Assert.AreEqual(0, result.Count);
         }
+
+      
 
         [Test]
         public void GetSpotExceptionsRecommendedPlans_RecommendedPlans_Exist()
@@ -377,6 +379,91 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, settings));
             Assert.AreEqual(2, result.Count);
 
+        }
+
+        [Test]
+        public void SaveSpotExceptionsRecommendedPlanDecision_RecommendedPlans_Exist()
+        {
+            // Arrange
+            var ingestedDateTime = new DateTime(2010, 10, 12);
+            var ingestedBy = "Repository Test User";
+            bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
+            DateTime weekStartDate = new DateTime(2010, 01, 04);
+            DateTime weekEndDate = new DateTime(2010, 01, 10);
+
+            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDto>
+            {
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    Id = 1,
+                    EstimateId =191756,
+                    IsciName = "AB82TXT2H",
+                    RecommendedPlanId = 1848,
+                    ProgramName = "Q13 news at 10",
+                    ProgramAirTime = new DateTime(2010,1,4,8,7,15),
+                    StationLegacyCallLetters = "KOB",
+                    Cost = 675,
+                    Impressions = 765,
+                    SpotLengthId = 12,
+                    AudienceId = 431,
+                    Product = "Pizza Hut",
+                    FlightStartDate = new DateTime(2010, 1, 1),
+                    FlightEndDate = new DateTime(2010, 3, 1),
+                    DaypartId = 70615,
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    InventorySourceName = "Open Market",
+                    SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 1848,
+                            MetricPercent = 20,
+                            IsRecommendedPlan = true
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 1853,
+                            MetricPercent = 40,
+                            IsRecommendedPlan = false
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 1199,
+                            MetricPercent = 24,
+                            IsRecommendedPlan = false
+                        },
+                         new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 1200,
+                            MetricPercent = 26,
+                            IsRecommendedPlan = false
+                        },
+                    }
+                }
+                
+            };
+            var SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+            {
+                SpotExceptionsRecommendedPlanId = 1848,
+                UserName = "Test User",
+                CreatedAt = new DateTime(2020, 10, 25),
+                AcceptedAsInSpec = true
+            };
+            List<SpotExceptionsRecommendedPlansDto> result;
+            var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                spotExceptionRepository.AddSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlans);
+                result = spotExceptionRepository.GetSpotExceptionsRecommendedPlans(weekStartDate, weekEndDate);
+                SpotExceptionsRecommendedPlanDecision.SpotExceptionsId = result[0].Id;
+                SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId = result[0].SpotExceptionsRecommendedPlanDetails[0].Id;
+                isSpotExceptionsRecommendedPlanDecisionSaved = spotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecision);
+            }
+            var expectedResult = true;
+            // Assert
+            Assert.AreEqual(expectedResult, isSpotExceptionsRecommendedPlanDecisionSaved);
         }
     }
 }

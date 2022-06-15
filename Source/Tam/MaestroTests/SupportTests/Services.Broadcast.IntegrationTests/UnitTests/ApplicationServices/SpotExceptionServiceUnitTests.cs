@@ -448,11 +448,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var currentDateTime = DateTime.Now;
             _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
                 .Returns(currentDateTime);
-            SpotExceptionsRecommendedPlanDecisionResponseDto spotExceptionsRecommendedPlanDecisionResponse = new SpotExceptionsRecommendedPlanDecisionResponseDto();
+            bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
             _SpotExceptionRepositoryMock
                 .Setup(s => s.SaveSpotExceptionsRecommendedPlanDecision(It.IsAny<SpotExceptionsRecommendedPlanDecisionDto>()))
-                .Callback(() => spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved = true)
-                .Returns(spotExceptionsRecommendedPlanDecisionResponse);
+                .Callback(() => isSpotExceptionsRecommendedPlanDecisionSaved = true)
+                .Returns(isSpotExceptionsRecommendedPlanDecisionSaved);
 
             var expectedResult = true;
 
@@ -460,111 +460,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = _SpotExceptionService.SaveSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanSaveRequest, userName);
 
             // Assert
-            Assert.AreEqual(expectedResult, spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved);
+            Assert.AreEqual(expectedResult, isSpotExceptionsRecommendedPlanDecisionSaved);
         }
 
-        [Test]
-        public void SaveSpotExceptionsRecommendedPlan_UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan()
-        {
-            // Arrange
-            var spotExceptionsRecommendedPlanSaveRequest = new SpotExceptionsRecommendedPlanSaveRequestDto
-            {
-                AcceptAsInSpec = true,
-                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
-                 {
-                     new SpotExceptionsRecommendedPlanSaveDto()
-                     {
-                          Id = 261,
-                          SelectedPlanId = 219
-                     },
-                     new SpotExceptionsRecommendedPlanSaveDto()
-                     {
-                         Id = 262,
-                         SelectedPlanId =220
-                     }
-                 }
-            };
-            var userName = "Test User";
-            var currentDateTime = DateTime.Now;
-
-            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
-                .Returns(currentDateTime);
-
-            SpotExceptionsRecommendedPlanDecisionResponseDto spotExceptionsRecommendedPlanDecisionResponse = new SpotExceptionsRecommendedPlanDecisionResponseDto();
-            _SpotExceptionRepositoryMock
-                .Setup(s => s.SaveSpotExceptionsRecommendedPlanDecision(It.IsAny<SpotExceptionsRecommendedPlanDecisionDto>()))
-               .Callback(() => spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved = true)
-                .Returns(spotExceptionsRecommendedPlanDecisionResponse);
-
-            bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = false;
-            _SpotExceptionRepositoryMock
-                .Setup(s => s.UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(It.IsAny<SpotExceptionsRecommendedPlanDetailsDto>()))
-                .Callback(() => isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = true)
-                .Returns(isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated);
-
-            var expectedResult = true;
-
-            // Act
-            var result = _SpotExceptionService.SaveSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanSaveRequest, userName);
-
-            // Assert
-            Assert.AreEqual(expectedResult, isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated);
-        }
-
-        [Test]
-        public void SaveSpotExceptionsRecommendedPlan_UpdateSpotExceptionsRecommendedPlanDetails()
-        {
-            // Arrange
-            var spotExceptionsRecommendedPlanSaveRequest = new SpotExceptionsRecommendedPlanSaveRequestDto
-            {
-                AcceptAsInSpec = true,
-                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
-                 {
-                     new SpotExceptionsRecommendedPlanSaveDto()
-                     {
-                          Id = 261,
-                          SelectedPlanId = 219
-                     },
-                     new SpotExceptionsRecommendedPlanSaveDto()
-                     {
-                         Id = 262,
-                         SelectedPlanId =220
-                     }
-                 }
-            };
-            var userName = "Test User";
-            var currentDateTime = DateTime.Now;
-
-            _DateTimeEngineMock.Setup(s => s.GetCurrentMoment())
-                .Returns(currentDateTime);
-
-            SpotExceptionsRecommendedPlanDecisionResponseDto spotExceptionsRecommendedPlanDecisionResponse = new SpotExceptionsRecommendedPlanDecisionResponseDto();
-            _SpotExceptionRepositoryMock
-                .Setup(s => s.SaveSpotExceptionsRecommendedPlanDecision(It.IsAny<SpotExceptionsRecommendedPlanDecisionDto>()))
-               .Callback(() => spotExceptionsRecommendedPlanDecisionResponse.IsSpotExceptionsRecommendedPlanDecisionSaved = true)
-                .Returns(spotExceptionsRecommendedPlanDecisionResponse);
-
-            bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = false;
-            _SpotExceptionRepositoryMock
-                .Setup(s => s.UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(It.IsAny<SpotExceptionsRecommendedPlanDetailsDto>()))
-                .Callback(() => isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = true)
-                .Returns(isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated);
-
-            bool isSpotExceptionsRecommendedPlanDetailsSaved = false;
-
-            _SpotExceptionRepositoryMock
-                .Setup(s => s.UpdateSpotExceptionsRecommendedPlanDetails(It.IsAny<SpotExceptionsRecommendedPlanSaveDto>()))
-                .Callback(() => isSpotExceptionsRecommendedPlanDetailsSaved = true)
-                .Returns(isSpotExceptionsRecommendedPlanDetailsSaved);
-
-            var expectedResult = true;
-
-            // Act
-            var result = _SpotExceptionService.SaveSpotExceptionsRecommendedPlan(spotExceptionsRecommendedPlanSaveRequest, userName);
-
-            // Assert
-            Assert.AreEqual(expectedResult, isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated);
-        }
+       
         [Test]
         public void SaveSpotExceptionsRecommendedPlan_ThrowsException()
         {
@@ -2920,13 +2819,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Id = 102,
                                 SpotExceptionsRecommendedPlanId = 3,
                                 IsRecommendedPlan = false,
+                                RecommendedPlanId = 216,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                 {
+                                    Name = "4Q' 21 Reynolds Foil TDN and SYN Upfront"
+                                 },
                                 SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                                 {
                                     Id = 202,
                                     SpotExceptionsRecommendedPlanDetailId = 102,
                                     UserName = "Test User",
-                                    CreatedAt = new DateTime(2020,10,25)
-                                }
+                                    CreatedAt = new DateTime(2020,10,25),
+
+                                },
                             }
                         }
                     },
@@ -2974,6 +2879,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Id = 102,
                                 SpotExceptionsRecommendedPlanId = 4,
                                 IsRecommendedPlan = false,
+                                RecommendedPlanId = 217,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Name = "3Q' 21 Reckitt HYHO Early Morning Upfront"
+                                },
                                 SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                                 {
                                     Id = 202,
@@ -2986,7 +2896,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             }
                         }
                     }
-                });
+                }); 
 
             // Act
             var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanSpots(spotExceptionsRecommendedRequest);
