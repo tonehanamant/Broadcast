@@ -10,7 +10,7 @@
   },
   {
     "Completed": "2020-02-04T15:31:27",
-    "DiagnosticResult": "System.Exception: The api returned no spots for request '#q1w2e3'.\r\n   at Services.Broadcast.Applica",
+    "DiagnosticResult": "Services.Broadcast.Exceptions.CadentException: The api returned no spots for request '#q1w2e3'.\r\n   ",
     "HangfireJobId": null,
     "Id": 1,
     "PlanVersionId": null,

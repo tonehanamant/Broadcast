@@ -10,7 +10,7 @@
   },
   {
     "Completed": "2020-02-04T15:31:27",
-    "DiagnosticResult": "System.Exception: No inventory found for pricing run\r\n   at ",
+    "DiagnosticResult": "Services.Broadcast.Exceptions.CadentException: No inventory ",
     "HangfireJobId": null,
     "Id": 1,
     "PlanVersionId": null,

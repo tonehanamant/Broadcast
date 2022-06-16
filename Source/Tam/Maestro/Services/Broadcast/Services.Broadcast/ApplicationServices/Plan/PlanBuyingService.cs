@@ -383,7 +383,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var planVersionNumberMsg = planVersionNumber.HasValue ? $" Version Number '{planVersionNumber.Value}'" : "";
                 var msg = $"Buying job not found for Plan Id '{planId}'{planVersionNumberMsg}.";
-                throw new InvalidOperationException(msg, ex);
+                throw new CadentException(msg, ex);
             }
 
             var runResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(buyingJob.Id, spotAllocationModelMode, postingType);
@@ -439,7 +439,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (request.UnallocatedCpmThreshold.HasValue &&
                 (request.UnallocatedCpmThreshold.Value < 1 || request.UnallocatedCpmThreshold.Value > 100))
             {
-                throw new InvalidOperationException($"Invalid value for UnallocatedCpmThreshold : '{request.UnallocatedCpmThreshold.Value}'; Valid range is 1-100.");
+                throw new CadentException($"Invalid value for UnallocatedCpmThreshold : '{request.UnallocatedCpmThreshold.Value}'; Valid range is 1-100.");
             }
         }
 
@@ -454,7 +454,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 if (IsBuyingModelRunning(planBuyingParametersDto.PlanId.Value))
                 {
-                    throw new Exception("The buying model is already running for the plan");
+                    throw new CadentException("The buying model is already running for the plan");
                 }
 
                 var plan = _PlanRepository.GetPlan(planBuyingParametersDto.PlanId.Value);
@@ -505,7 +505,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (parameters.Margin.Value > allowedMaxValue ||
                     parameters.Margin.Value < allowedMinValue)
                 {
-                    throw new InvalidOperationException("A provided Margin value must be between .01% And 100%.");
+                    throw new CadentException("A provided Margin value must be between .01% And 100%.");
                 }
             }
 
@@ -577,8 +577,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //in case the error is comming from the Buying Run model, the error message field will have better
                 //message then the generic we construct here
                 if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
-                    throw new Exception(job.ErrorMessage);
-                throw new Exception(
+                    throw new CadentException(job.ErrorMessage);
+                throw new CadentException(
                     "Error encountered while running Buying Model, please contact a system administrator for help");
             }
 
@@ -628,8 +628,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //in case the error is comming from the Buying Run model, the error message field will have better
                 //message then the generic we construct here
                 if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
-                    throw new Exception(job.ErrorMessage);
-                throw new Exception(
+                    throw new CadentException(job.ErrorMessage);
+                throw new CadentException(
                     "Error encountered while running Buying Model, please contact a system administrator for help");
             }
 
@@ -817,12 +817,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
-                throw new Exception("Error encountered while running Buying Model, please contact a system administrator for help");
+                throw new CadentException("Error encountered while running Buying Model, please contact a system administrator for help");
             }
 
             if (!IsBuyingModelRunning(job))
             {
-                throw new Exception("Error encountered while canceling Buying Model, process is not running");
+                throw new CadentException("Error encountered while canceling Buying Model, process is not running");
             }
 
             if (string.IsNullOrEmpty(job?.HangfireJobId) == false)
@@ -1425,7 +1425,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                     else
                     {
-                        throw new InvalidOperationException("Invalid target posting type.");
+                        throw new CadentException("Invalid target posting type.");
                     }
 
                     var impressionWeight = spotFrequency.Impressions / totalImpressions;
@@ -2128,7 +2128,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (!inventory.Any())
             {
-                throw new Exception("No inventory found for buying run");
+                throw new CadentException("No inventory found for buying run");
             }
         }
 
@@ -2297,7 +2297,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!string.IsNullOrEmpty(apiResponse.RequestId) && !apiResponse.AllocatedSpots.Any())
             {
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
-                throw new Exception(msg);
+                throw new CadentException(msg);
             }
         }
 
@@ -2715,7 +2715,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
         {
             if (request.SelectedPlans.IsEmpty())
-                throw new ApplicationException("Choose at least one plan");
+                throw new CadentException("Choose at least one plan");
 
             // for now we generate reports only for one plan
             var planId = request.SelectedPlans.First();
@@ -2775,7 +2775,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!lockObject.Success)
             {
                 var message = string.Format(PLAN_IS_LOCKED_EXCEPTION, planId, lockObject.LockedUserName);
-                throw new ApplicationException(message);
+                throw new CadentException(message);
             }
         }
 
@@ -2784,13 +2784,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
             if (job == null)
-                throw new ApplicationException("There are no completed buying runs for the chosen plan. Please run buying");
+                throw new CadentException("There are no completed buying runs for the chosen plan. Please run buying");
 
             if (job.Status == BackgroundJobProcessingStatus.Failed)
-                throw new ApplicationException("The latest buying run was failed. Please run buying again or contact the support");
+                throw new CadentException("The latest buying run was failed. Please run buying again or contact the support");
 
             if (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing)
-                throw new ApplicationException("There is a buying run in progress right now. Please wait until it is completed");
+                throw new CadentException("There is a buying run in progress right now. Please wait until it is completed");
 
             return job;
         }
@@ -2805,7 +2805,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!lockObject.Success)
             {
                 var message = string.Format(CAMPAIGN_IS_LOCKED_EXCEPTION, campaignId, lockObject.LockedUserName);
-                throw new ApplicationException(message);
+                throw new CadentException(message);
             }
         }
 
@@ -3014,7 +3014,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var afterCount = request.Spots.Count(s => s.SpotCost.Count != spotLengthCount);
             if (afterCount > 0)
             {
-                throw new ApplicationException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
+                throw new CadentException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
             }
         }
         public List<string> GetResultRepFirms(int planId, PostingTypeEnum? postingType,
@@ -3070,7 +3070,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (planBuyingResultsReportRequest.SpotAllocationModelMode != SpotAllocationModelMode.Efficiency && planBuyingResultsReportRequest.SpotAllocationModelMode != SpotAllocationModelMode.Floor)
             {
-                throw new Exception($"No results were found for the Spot Allocation Model Mode {planBuyingResultsReportRequest.SpotAllocationModelMode}");
+                throw new CadentException($"No results were found for the Spot Allocation Model Mode {planBuyingResultsReportRequest.SpotAllocationModelMode}");
             }
             var reportData = GetBuyingResultsReportData(planBuyingResultsReportRequest.PlanId, null, planBuyingResultsReportRequest.SpotAllocationModelMode, PostingTypeEnum.NSI);
             var reportGenerator = new BuyingResultsReportGenerator(templateFilePath);

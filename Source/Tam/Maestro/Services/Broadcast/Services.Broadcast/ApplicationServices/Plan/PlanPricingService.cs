@@ -327,7 +327,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 const string no_inventory_message = 
                     "There is no inventory available for the selected program restrictions in the requested quarter. " +
                     "Previous quarters might have available inventory that will be utilized when pricing is executed.";
-                throw new InvalidOperationException(no_inventory_message);
+                throw new CadentException(no_inventory_message);
             }
 
             var reportData = new QuoteReportData(request, generatedTimeStamp, allAudiences, allMarkets, programs);
@@ -399,7 +399,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (pricingParametersWithoutPlanDto.JobId.HasValue && IsPricingModelRunningForJob(pricingParametersWithoutPlanDto.JobId.Value))
             {
-                throw new Exception("The pricing model is already running");
+                throw new CadentException("The pricing model is already running");
             }
 
             var pricingParameters = _ConvertPricingWihtoutPlanParametersToPlanPricingParameters(pricingParametersWithoutPlanDto);
@@ -526,7 +526,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId.Value))
                 {
-                    throw new Exception("The pricing model is already running for the plan");
+                    throw new CadentException("The pricing model is already running for the plan");
                 }
 
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
@@ -585,7 +585,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if (parameters.Margin.Value > allowedMaxValue ||
                     parameters.Margin.Value < allowedMinValue)
                 {
-                    throw new InvalidOperationException("A provided Margin value must be between .01% And 100%.");
+                    throw new CadentException("A provided Margin value must be between .01% And 100%.");
                 }
             }
 
@@ -855,8 +855,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //in case the error is comming from the Pricing Run model, the error message field will have better
                 //message then the generic we construct here
                 if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
-                    throw new Exception(job.ErrorMessage);
-                throw new Exception(
+                    throw new CadentException(job.ErrorMessage);
+                throw new CadentException(
                     "Error encountered while running Pricing Model, please contact a system administrator for help");
             }
         }
@@ -913,12 +913,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
-                throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
+                throw new CadentException("Error encountered while running Pricing Model, please contact a system administrator for help");
             }
 
             if (!IsPricingModelRunning(job))
             {
-                throw new Exception("Error encountered while canceling Pricing Model, process is not running");
+                throw new CadentException("Error encountered while canceling Pricing Model, process is not running");
             }
 
             if (string.IsNullOrEmpty(job?.HangfireJobId) == false)
@@ -1536,7 +1536,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                     else
                     {
-                        throw new InvalidOperationException("Invalid target posting type.");
+                        throw new CadentException("Invalid target posting type.");
                     }
 
                     var impressionWeight = spotFrequency.Impressions / totalImpressions;
@@ -1691,7 +1691,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var afterCount = request.Spots.Count(s => s.SpotCost.Count != spotLengthCount);
             if (afterCount > 0)
             {
-                throw new ApplicationException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
+                throw new CadentException($"Unable to fill the inventory spot costs for sending to the data model.  {afterCount} inventory costs still missing.");
             }
         }
 
@@ -2152,7 +2152,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             if (!inventory.Any())
             {
-                throw new Exception("No inventory found for pricing run");
+                throw new CadentException("No inventory found for pricing run");
             }
         }
 
@@ -2175,20 +2175,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .FirstOrDefault(x => x.Any(y => y.Program.ManifestId == allocation.ManifestId));
 
                 if (originalProgramGroup == null)
-                    throw new Exception("Couldn't find the program in grouped inventory");
+                    throw new CadentException("Couldn't find the program in grouped inventory");
 
                 var originalProgram = originalProgramGroup
                     .FirstOrDefault(x => x.Program.ManifestWeeks.Select(y => y.ContractMediaWeekId).Contains(allocation.MediaWeekId));
 
                 if (originalProgram == null)
-                    throw new Exception("Couldn't find the program and week combination from the allocation data");
+                    throw new CadentException("Couldn't find the program and week combination from the allocation data");
 
                 var originalSpot = pricingApiRequest.Spots.FirstOrDefault(x =>
                     x.Id == allocation.ManifestId &&
                     x.MediaWeekId == allocation.MediaWeekId);
 
                 if (originalSpot == null)
-                    throw new Exception("Response from API contains manifest id not found in sent data");
+                    throw new CadentException("Response from API contains manifest id not found in sent data");
 
                 var program = inventoryPrograms.Single(x => x.ManifestId == originalProgram.Program.ManifestId);
                 var inventoryWeek = program.ManifestWeeks.Single(x => x.ContractMediaWeekId == originalSpot.MediaWeekId);
@@ -2240,20 +2240,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .FirstOrDefault(x => x.Any(y => y.Program.ManifestId == allocation.ManifestId));
 
                 if (originalProgramGroup == null)
-                    throw new Exception("Couldn't find the program in grouped inventory");
+                    throw new CadentException("Couldn't find the program in grouped inventory");
 
                 var originalProgram = originalProgramGroup
                     .FirstOrDefault(x => x.Program.ManifestWeeks.Select(y => y.ContractMediaWeekId).Contains(allocation.MediaWeekId));
 
                 if (originalProgram == null)
-                    throw new Exception("Couldn't find the program and week combination from the allocation data");
+                    throw new CadentException("Couldn't find the program and week combination from the allocation data");
 
                 var originalSpot = pricingApiRequest.Spots.FirstOrDefault(x =>
                     x.Id == allocation.ManifestId &&
                     x.MediaWeekId == allocation.MediaWeekId);
 
                 if (originalSpot == null)
-                    throw new Exception("Response from API contains manifest id not found in sent data");
+                    throw new CadentException("Response from API contains manifest id not found in sent data");
 
                 var program = inventoryPrograms.Single(x => x.ManifestId == originalProgram.Program.ManifestId);
                 var inventoryWeek = program.ManifestWeeks.Single(x => x.ContractMediaWeekId == originalSpot.MediaWeekId);
@@ -2292,7 +2292,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!string.IsNullOrEmpty(apiResponse.RequestId) && !apiResponse.Spots.Any())
             {
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
-                throw new Exception(msg);
+                throw new CadentException(msg);
             }
         }
 

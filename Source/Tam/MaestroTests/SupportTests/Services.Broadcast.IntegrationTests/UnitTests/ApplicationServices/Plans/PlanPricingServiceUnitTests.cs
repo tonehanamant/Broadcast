@@ -23,6 +23,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
@@ -796,7 +797,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var exception = Assert.Throws<Exception>(async () => await service.QueuePricingJobAsync(
+            var exception = Assert.Throws<CadentException>(async () => await service.QueuePricingJobAsync(
                 new PlanPricingParametersDto() { PlanId = 1 }
                 , new DateTime(2019, 10, 23)
                 , "test user"));
@@ -6031,7 +6032,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var exception = Assert.Throws<Exception>(() => service.GetCurrentPricingExecution(planId));
+            var exception = Assert.Throws<CadentException>(() => service.GetCurrentPricingExecution(planId));
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -6056,7 +6057,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var exception = Assert.Throws<Exception>(() => service.GetCurrentPricingExecution(planId));
+            var exception = Assert.Throws<CadentException>(() => service.GetCurrentPricingExecution(planId));
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -8413,7 +8414,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var exception = Assert.Throws<Exception>(() => service.CancelCurrentPricingExecution(planId));
+            var exception = Assert.Throws<CadentException>(() => service.CancelCurrentPricingExecution(planId));
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -8436,7 +8437,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var exception = Assert.Throws<Exception>(() => service.CancelCurrentPricingExecution(planId));
+            var exception = Assert.Throws<CadentException>(() => service.CancelCurrentPricingExecution(planId));
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -12630,7 +12631,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService(true, true);
 
             // Act
-            var caught = Assert.Throws<InvalidOperationException>(() => service.GetQuoteReportData(request));
+            var caught = Assert.Throws<CadentException>(() => service.GetQuoteReportData(request));
 
             // Assert
             const string expected_message = "There is no inventory available for the selected program restrictions in the requested quarter. " +

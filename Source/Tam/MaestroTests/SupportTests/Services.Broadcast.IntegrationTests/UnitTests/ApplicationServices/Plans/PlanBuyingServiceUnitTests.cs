@@ -21,6 +21,7 @@ using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
@@ -2761,7 +2762,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             }
             else
             {
-                Assert.Throws<InvalidOperationException>(() => service._ValidatePlanBuyingScxExportRequest(request));
+                Assert.Throws<CadentException>(() => service._ValidatePlanBuyingScxExportRequest(request));
             }
         }
 
@@ -2901,7 +2902,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = _GetService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -2934,7 +2935,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = _GetService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -2977,7 +2978,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var tc = _GetService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
