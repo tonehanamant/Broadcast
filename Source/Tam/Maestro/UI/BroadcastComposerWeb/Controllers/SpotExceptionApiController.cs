@@ -202,5 +202,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetRecommendedPlansFilters(recomendedPlansFilterRequest));
         }
+
+        [HttpPost]
+        [Route("out-of-spec-inventory-sources")]
+        public BaseResponse<List<string>> GetOutOfSpecInventorySources(SpotExceptionsOutofSpecSpotsRequestDto spotExceptionsOutofSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetOutOfSpecInventorySources(spotExceptionsOutofSpecSpotsRequest));
+        }
     }
 }

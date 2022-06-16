@@ -3176,5 +3176,74 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecInventorySources_Exist()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecSpotsRequest = new SpotExceptionsOutofSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetOutOfSpecPlanSpotsData());
+            
+            // Act           
+            var result = _SpotExceptionService.GetOutOfSpecInventorySources(spotExceptionsOutOfSpecSpotsRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecInventorySources_DoNotExist()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecSpotsRequest = new SpotExceptionsOutofSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsOutOfSpecsDto>());
+
+            // Act           
+            var result = _SpotExceptionService.GetOutOfSpecInventorySources(spotExceptionsOutOfSpecSpotsRequest);
+
+            // Assert
+            Assert.AreEqual(result.Count, 0);
+        }
+
+        [Test]
+        public void GetSpotExceptionsOutOfSpecInventorySources_ThrowsException()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecSpotsRequest = new SpotExceptionsOutofSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            // Act           
+            var result = Assert.Throws<Exception>(() => _SpotExceptionService.GetOutOfSpecInventorySources(spotExceptionsOutOfSpecSpotsRequest));
+
+            // Assert
+            Assert.AreEqual("Throwing a test exception.", result.Message);
+        }
     }
 }
