@@ -1,0 +1,22 @@
+{
+  "Active": [],
+  "Queued": [
+    {
+      "Affiliate": "NBC",
+      "DecisionString": "Out",
+      "EstimateId": 191758,
+      "Id": 3,
+      "InventorySource": "TTWN",
+      "IsciName": "CC42TXT4P",
+      "Market": "Phoenix (Prescott)",
+      "Pacing": "0%",
+      "PlanId": 216,
+      "ProgramAirDate": "1/6/2020",
+      "ProgramAirTime": "11:15:30 AM",
+      "ProgramName": "Reynolds Foil @9",
+      "RecommendedPlan": "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+      "Station": "WDAY"
+    }
+  ],
+  "Synced": []
+}

@@ -2957,6 +2957,291 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
+        public void GetSpotExceptionsRecommendedPlanSpotsWithPacing_Exist()
+        {
+            // Arrange
+            RecomendedPlansRequestDto spotExceptionsRecommendedRequest = new RecomendedPlansRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionRecommendedPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>
+                {
+                     new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 2,
+                        EstimateId =191757,
+                        IsciName = "BB82TXT4P",
+                        RecommendedPlanId = 215,
+                        RecommendedPlanName = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        ProgramName = "FOX 13 10:00 News",
+                        AdvertiserName="Beachbody",
+                        ProgramAirTime = new DateTime(2020,1,4,8,7,15),
+                        StationLegacyCallLetters = "KSTP",
+                        Affiliate = "ABC",
+                        Market = "Lincoln & Hastings-Krny",
+                        Cost = 700,
+                        Impressions = 1000,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 14,
+                            Length = 15
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 425,
+                            Code = "M18-24",
+                            Name = "Men 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71657,
+                            Code = "PMN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        InventorySourceName = "TVB",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        EstimateId =191758,
+                        IsciName = "CC42TXT4P",
+                        RecommendedPlanId = 216,
+                        RecommendedPlanName = "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reynolds Foil @9",
+                        ProgramAirTime = new DateTime(2020,1,6,11,15,30),
+                        StationLegacyCallLetters = "WDAY",
+                        Affiliate = "NBC",
+                        Market = "Phoenix (Prescott)",
+                        Cost = 800,
+                        Impressions = 1500,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 15,
+                            Length = 30
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 426,
+                            Code = "W18-24",
+                            Name = "Women 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71658,
+                            Code = "EN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        InventorySourceName = "TTWN",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                IsRecommendedPlan = false,
+                                RecommendedPlanId = 216,
+                                MetricPercent = 20,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                 {
+                                    Name = "4Q' 21 Reynolds Foil TDN and SYN Upfront"
+                                 },
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25),
+
+                                },
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 4,
+                        EstimateId =191760,
+                        IsciName = "CC44ZZPT4",
+                        RecommendedPlanId = 217,
+                        RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reckitt HYHO",
+                        ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                        StationLegacyCallLetters = "KXMC",
+                        Affiliate = "CBS",
+                        Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                        Cost = 450,
+                        Impressions = 1752,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 427,
+                            Code = "M50-64",
+                            Name = "Men 50-64"
+                        },
+                        Product = "Nike",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71659,
+                            Code = "PMN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        InventorySourceName = "CNN",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 4,
+                                IsRecommendedPlan = false,
+                                RecommendedPlanId = 217,
+                                MetricPercent =26,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Name = "3Q' 21 Reckitt HYHO Early Morning Upfront"
+                                },
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25),
+                                    SyncedAt = new DateTime(2022,05,24),
+                                    SyncedBy = "test User"
+                                }
+                            }
+                        }
+                    }
+                });
+            var expectedResult = 1;
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanSpots(spotExceptionsRecommendedRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(expectedResult, result.Active.Count);
+            Assert.AreEqual(expectedResult, result.Queued.Count);
+            Assert.AreEqual(expectedResult, result.Synced.Count);
+        }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlanSpotsWithPacing_DoesNotExist()
+        {
+            // Arrange
+            RecomendedPlansRequestDto spotExceptionsRecommendedRequest = new RecomendedPlansRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+            _SpotExceptionRepositoryMock
+                .Setup(s => s.GetSpotExceptionRecommendedPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<SpotExceptionsRecommendedPlansDto>
+                {
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        EstimateId =191758,
+                        IsciName = "CC42TXT4P",
+                        RecommendedPlanId = 216,
+                        RecommendedPlanName = "4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                        AdvertiserName=null,
+                        ProgramName = "Reynolds Foil @9",
+                        ProgramAirTime = new DateTime(2020,1,6,11,15,30),
+                        StationLegacyCallLetters = "WDAY",
+                        Affiliate = "NBC",
+                        Market = "Phoenix (Prescott)",
+                        Cost = 800,
+                        Impressions = 1500,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 15,
+                            Length = 30
+                        },
+                        Audience = new AudienceDto
+                        {
+                            Id = 426,
+                            Code = "W18-24",
+                            Name = "Women 18-24"
+                        },
+                        Product = "Spotify",
+                        FlightStartDate = new DateTime(2019, 12, 1),
+                        FlightEndDate = new DateTime(2020, 2, 1),
+                        DaypartDetail = new DaypartDetailDto
+                        {
+                            Id = 71658,
+                            Code = "EN"
+                        },
+                        IngestedAt = new DateTime(2019,1,1),
+                        IngestedBy = "Repository Test User",
+                        InventorySourceName = "TTWN",
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                IsRecommendedPlan = true,
+                                RecommendedPlanId = 216,                               
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                 {
+                                    Name = "4Q' 21 Reynolds Foil TDN and SYN Upfront"
+                                 },
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25),
+
+                                },
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 103,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                IsRecommendedPlan = false,
+                                RecommendedPlanId = 217,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                 {
+                                    Name = "3Q' 21 Reynolds Foil TDN and SYN Upfront"
+                                 }
+                            }
+                        }
+                    },
+                });
+            var expectedResult = 1;
+
+            // Act
+            var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanSpots(spotExceptionsRecommendedRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(expectedResult, result.Queued.Count);
+        }
+
+        [Test]
         public void GetSpotExceptionsRecommendedPlanFilters_Exist()
         {
             // Arrange

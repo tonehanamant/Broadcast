@@ -1569,12 +1569,12 @@ namespace Services.Broadcast.ApplicationServices
             searchRequest.ProgramName = programNameQuery;
             var programList = _ProgramService.GetPrograms(searchRequest, userName);
             programList.ForEach(p =>
-                {
-                    SpotExceptionsOutOfSpecProgramsDto program = new SpotExceptionsOutOfSpecProgramsDto();
-                    program.ProgramName = p.Name;
-                    program.GenreName = p.Genre.Display;
-                    result.Add(program);
-                }
+            {
+                SpotExceptionsOutOfSpecProgramsDto program = new SpotExceptionsOutOfSpecProgramsDto();
+                program.ProgramName = p.Name;
+                program.GenreName = p.Genre.Display;
+                result.Add(program);
+            }
                 );
             return result;
         }
@@ -1643,7 +1643,7 @@ namespace Services.Broadcast.ApplicationServices
                         AffectedSpotsCount = activePlan.Count(),
                         Impressions = planDetails.Impressions / 1000,
                         SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x=> x.IsRecommendedPlan).Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                         AudienceName = planDetails.Audience?.Name,
                         FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
                     };
@@ -1661,7 +1661,7 @@ namespace Services.Broadcast.ApplicationServices
                         AffectedSpotsCount = completedPlan.Count(),
                         Impressions = planDetails.Impressions / 1000,
                         SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        Pacing = _GetPacing(planDetails),
                         AudienceName = planDetails.Audience?.Name,
                         FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
                     };
@@ -1743,7 +1743,7 @@ namespace Services.Broadcast.ApplicationServices
                        ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
                        ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
                        RecommendedPlan = activePlan.RecommendedPlanName,
-                       Pacing = activePlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                       Pacing = activePlan.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
                        ProgramName = activePlan.ProgramName,
                        Affiliate = activePlan.Affiliate,
                        PlanId = activePlan.RecommendedPlanId,
@@ -1764,7 +1764,7 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
                         RecommendedPlan = queuedPlan.RecommendedPlanName,
-                        Pacing = queuedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        Pacing = _GetPacing(queuedPlan),
                         ProgramName = queuedPlan.ProgramName,
                         Affiliate = queuedPlan.Affiliate,
                         PlanId = queuedPlan.RecommendedPlanId,
@@ -1786,7 +1786,7 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
                         RecommendedPlan = syncedPlan.RecommendedPlanName,
-                        Pacing = syncedPlan.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                        Pacing = _GetPacing(syncedPlan),
                         ProgramName = syncedPlan.ProgramName,
                         Affiliate = syncedPlan.Affiliate,
                         PlanId = syncedPlan.RecommendedPlanId,
@@ -1857,6 +1857,26 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             return planId;
+        }
+        private string _GetPacing(SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans)
+        {
+            string pacing = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%";
+            if (spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.Any())
+            {
+                int planDetailId = 0;
+                var planDetail = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails
+                    .FirstOrDefault(x => x.SpotExceptionsRecommendedPlanDecision != null);
+                if (planDetail != null)
+                {
+                    planDetailId = planDetail.SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId;
+                    var planDetails = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.FirstOrDefault(x => x.Id == planDetailId);
+                    if (planDetails != null)
+                    {
+                        pacing = planDetail.MetricPercent.ToString() + "%";
+                    }
+                }
+            }
+            return pacing;
         }
 
         /// <inheritdoc />
