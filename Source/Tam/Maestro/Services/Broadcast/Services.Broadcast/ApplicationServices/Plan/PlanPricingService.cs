@@ -1422,22 +1422,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         _SavePricingArtifacts(allocationResults, aggregationTasks, diagnostic);
-
-                        //Finish up the job
-                        diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-                        var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
-                        pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
-                        pricingJob.Completed = _DateTimeEngine.GetCurrentMoment();
-                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
-
-                        diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
-                        pricingJob.DiagnosticResult = diagnostic.ToString();
-
-                        _PlanRepository.UpdatePlanPricingJob(pricingJob);
-
                         transaction.Complete();
                     }
                 }
+
+                //Finish up the job
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+                var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
+                pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
+                pricingJob.Completed = _DateTimeEngine.GetCurrentMoment();
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
+                pricingJob.DiagnosticResult = diagnostic.ToString();
+
+                _PlanRepository.UpdatePlanPricingJob(pricingJob);
+
             }
             catch (PricingModelException exception)
             {
