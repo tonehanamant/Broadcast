@@ -46,7 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<schedule_details> schedule_details { get; set; }
         public virtual DbSet<schedule_iscis> schedule_iscis { get; set; }
         public virtual DbSet<schedule_restriction_dayparts> schedule_restriction_dayparts { get; set; }
-        public virtual DbSet<schedule> schedules { get; set; }
         public virtual DbSet<spot_length_cost_multipliers> spot_length_cost_multipliers { get; set; }
         public virtual DbSet<station_contacts> station_contacts { get; set; }
         public virtual DbSet<system_component_parameters> system_component_parameters { get; set; }
@@ -249,5 +248,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
         public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
         public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
+        public virtual DbSet<schedule> schedules { get; set; }
     }
 }

@@ -259,101 +259,104 @@ namespace Services.Broadcast.ApplicationServices
             {
                 new SpotExceptionsRecommendedPlansDto
                 {
-                        EstimateId =191756,
-                        IsciName = "AB82TXT2H",
-                        RecommendedPlanId = 215,
-                        ProgramName = "Q13 news at 10",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName="Abbott Labs (Original)",
-                        StationLegacyCallLetters = "KOB",
-                        Cost = 675,
-                        Impressions = 765,
-                        SpotLengthId = 12,
-                        AudienceId = 431,
-                        Product = "Pizza Hut",
-                        FlightStartDate = new DateTime(2019, 8, 1),
-                        FlightEndDate = new DateTime(2019, 9, 1),
-                        DaypartId = 70615,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzNzk3Nw==",
+                    EstimateId =191756,
+                    IsciName = "AB82TXT2H",
+                    RecommendedPlanId = 215,
+                    ProgramName = "Q13 news at 10",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName="Abbott Labs (Original)",
+                    StationLegacyCallLetters = "KOB",
+                    Cost = 675,
+                    Impressions = 765,
+                    SpotLengthId = 12,
+                    AudienceId = 431,
+                    Product = "Pizza Hut",
+                    FlightStartDate = new DateTime(2019, 8, 1),
+                    FlightEndDate = new DateTime(2019, 9, 1),
+                    DaypartId = 70615,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            new SpotExceptionsRecommendedPlanDetailsDto
+                            RecommendedPlanId=215,
+                            MetricPercent=20,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
-                                RecommendedPlanId=215,
-                                MetricPercent=20,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
-                                {
-                                    UserName = "MockData",
-                                    CreatedAt = DateTime.Now,
-                                    AcceptedAsInSpec = false
-                                }
-                            },
-                                new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId=221,
-                                MetricPercent=22,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                                new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId=222,
-                                MetricPercent=24,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId=223,
-                                MetricPercent=26,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
+                                UserName = "MockData",
+                                CreatedAt = DateTime.Now,
+                                AcceptedAsInSpec = false
                             }
                         },
-                        InventorySourceName = "Open Market"
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                        EstimateId =191757,
-                        IsciName = "AB82VR58",
-                        RecommendedPlanId = 216,
-                        ProgramName = "FOX 13 10:00 News",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName="Allergan",
-                        StationLegacyCallLetters = "KSTP",
-                        Cost = 700,
-                        Impressions = 879,
-                        SpotLengthId = 11,
-                        AudienceId = 430,
-                        Product = "Spotify",
-                        FlightStartDate = new DateTime(2018, 7, 2),
-                        FlightEndDate = new DateTime(2018, 8, 2),
-                        DaypartId = 70615,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                            new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                                new SpotExceptionsRecommendedPlanDetailsDto
-                                {
-                                  RecommendedPlanId=216,
-                                  MetricPercent=45,
-                                  IsRecommendedPlan=true,
-                                  SpotExceptionsRecommendedPlanDecision = null
-                                },
-                                 new SpotExceptionsRecommendedPlanDetailsDto
-                                {
-                                  RecommendedPlanId=224,
-                                  MetricPercent=50,
-                                  IsRecommendedPlan=false,
-                                  SpotExceptionsRecommendedPlanDecision = null
-                                }
+                            RecommendedPlanId=221,
+                            MetricPercent=22,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "TTWN"
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId=222,
+                            MetricPercent=24,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId=223,
+                            MetricPercent=26,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    },
+                    InventorySourceName = "Open Market"
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzODk5MA==",
+                    EstimateId =191757,
+                    IsciName = "AB82VR58",
+                    RecommendedPlanId = 216,
+                    ProgramName = "FOX 13 10:00 News",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName="Allergan",
+                    StationLegacyCallLetters = "KSTP",
+                    Cost = 700,
+                    Impressions = 879,
+                    SpotLengthId = 11,
+                    AudienceId = 430,
+                    Product = "Spotify",
+                    FlightStartDate = new DateTime(2018, 7, 2),
+                    FlightEndDate = new DateTime(2018, 8, 2),
+                    DaypartId = 70615,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId=216,
+                            MetricPercent=45,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId=224,
+                            MetricPercent=50,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    },
+                    InventorySourceName = "TTWN"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
                     EstimateId =191758,
                     IsciName = "AB44NR58",
                     RecommendedPlanId = 217,
@@ -392,278 +395,285 @@ namespace Services.Broadcast.ApplicationServices
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                        EstimateId =191759,
-                        IsciName = "AB21QR58",
-                        RecommendedPlanId = 218,
-                        ProgramName = "Product1",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName="Ally Bank",
-                        StationLegacyCallLetters="KWCH" ,
-                        Cost = 987,
-                        Impressions = 987,
-                        SpotLengthId = 11,
-                        AudienceId = 430,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2018, 3, 6),
-                        FlightEndDate = new DateTime(2018, 4, 6),
-                        DaypartId = 70617,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-                        {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 218,
-                                MetricPercent=56,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 226,
-                                MetricPercent=60,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
-                        },
-                        InventorySourceName = "CNN"
-                    },
-                    new SpotExceptionsRecommendedPlansDto
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
+                    EstimateId =191759,
+                    IsciName = "AB21QR58",
+                    RecommendedPlanId = 218,
+                    ProgramName = "Product1",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName="Ally Bank",
+                    StationLegacyCallLetters="KWCH" ,
+                    Cost = 987,
+                    Impressions = 987,
+                    SpotLengthId = 11,
+                    AudienceId = 430,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2018, 3, 6),
+                    FlightEndDate = new DateTime(2018, 4, 6),
+                    DaypartId = 70617,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
-                        EstimateId =191760,
-                        IsciName = "AB44NR58",
-                        RecommendedPlanId = 219,
-                        ProgramName = "TProduct2",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName="Amgen",
-                        StationLegacyCallLetters="WDAY" ,
-                        Cost = 555,
-                        Impressions = 9878,
-                        SpotLengthId = 10,
-                        AudienceId = 429,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2019, 7, 3),
-                        FlightEndDate = new DateTime(2019, 8, 3),
-                        DaypartId = 70618,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 219,
-                                MetricPercent=76,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 227,
-                                MetricPercent=80,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
+                            RecommendedPlanId = 218,
+                            MetricPercent=56,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "Sinclair"
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 226,
+                            MetricPercent=60,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
                     },
-                    new SpotExceptionsRecommendedPlansDto
+                    InventorySourceName = "CNN"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
+                    EstimateId =191760,
+                    IsciName = "AB44NR58",
+                    RecommendedPlanId = 219,
+                    ProgramName = "TProduct2",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName="Amgen",
+                    StationLegacyCallLetters="WDAY" ,
+                    Cost = 555,
+                    Impressions = 9878,
+                    SpotLengthId = 10,
+                    AudienceId = 429,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 7, 3),
+                    FlightEndDate = new DateTime(2019, 8, 3),
+                    DaypartId = 70618,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
-                        EstimateId =191761,
-                        IsciName = "AB33PR58",
-                        RecommendedPlanId = 220,
-                        ProgramName = "TEN O'CLOCK NEWS",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName="Boston Scientific",
-                        StationLegacyCallLetters="KPNX" ,
-                        Cost = 987,
-                        Impressions = 999,
-                        SpotLengthId = 10,
-                        AudienceId = 428,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2019, 7, 1),
-                        FlightEndDate = new DateTime(2019, 8, 1),
-                        DaypartId = 70619,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 220,
-                                MetricPercent=87,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                                new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 228,
-                                MetricPercent=70,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
+                            RecommendedPlanId = 219,
+                            MetricPercent=76,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "LilaMax"
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 227,
+                            MetricPercent=80,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
                     },
-                    new SpotExceptionsRecommendedPlansDto
+                    InventorySourceName = "Sinclair"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA5ODgwOQ==",
+                    EstimateId =191761,
+                    IsciName = "AB33PR58",
+                    RecommendedPlanId = 220,
+                    ProgramName = "TEN O'CLOCK NEWS",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName="Boston Scientific",
+                    StationLegacyCallLetters="KPNX" ,
+                    Cost = 987,
+                    Impressions = 999,
+                    SpotLengthId = 10,
+                    AudienceId = 428,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 7, 1),
+                    FlightEndDate = new DateTime(2019, 8, 1),
+                    DaypartId = 70619,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
-                        EstimateId =191762,
-                        IsciName = "AB79PR58",
-                        RecommendedPlanId = 221,
-                        ProgramName = "Product4",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName="Chattem",
-                        StationLegacyCallLetters="KELO" ,
-                        Cost = 907,
-                        Impressions = 5467,
-                        SpotLengthId = 09,
-                        AudienceId = 427,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2021, 8, 6),
-                        FlightEndDate = new DateTime(2021, 9, 6),
-                        DaypartId = 70620,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 221,
-                                MetricPercent=82,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 229,
-                                MetricPercent=50,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
+                            RecommendedPlanId = 220,
+                            MetricPercent=87,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "MLB"
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 228,
+                            MetricPercent=70,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
                     },
-                    new SpotExceptionsRecommendedPlansDto
+                    InventorySourceName = "LilaMax"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
+                    EstimateId =191762,
+                    IsciName = "AB79PR58",
+                    RecommendedPlanId = 221,
+                    ProgramName = "Product4",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName="Chattem",
+                    StationLegacyCallLetters="KELO" ,
+                    Cost = 907,
+                    Impressions = 5467,
+                    SpotLengthId = 09,
+                    AudienceId = 427,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2021, 8, 6),
+                    FlightEndDate = new DateTime(2021, 9, 6),
+                    DaypartId = 70620,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
-                        EstimateId =191763,
-                        IsciName = "AB81GR58",
-                        RecommendedPlanId = 222,
-                        ProgramName = "Product3",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName=null,
-                        StationLegacyCallLetters="KXMC" ,
-                        Cost = 453,
-                        Impressions = 8795,
-                        SpotLengthId = 08,
-                        AudienceId = 426,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2020, 8, 2),
-                        FlightEndDate = new DateTime(2020, 9, 2),
-                        DaypartId = 70621,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 222,
-                                MetricPercent=75,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 230,
-                                MetricPercent=79,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
+                            RecommendedPlanId = 221,
+                            MetricPercent=82,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "Ference Media"
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 229,
+                            MetricPercent=50,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
                     },
-                    new SpotExceptionsRecommendedPlansDto
+                    InventorySourceName = "MLB"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                    EstimateId =191763,
+                    IsciName = "AB81GR58",
+                    RecommendedPlanId = 222,
+                    ProgramName = "Product3",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName=null,
+                    StationLegacyCallLetters="KXMC" ,
+                    Cost = 453,
+                    Impressions = 8795,
+                    SpotLengthId = 08,
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2020, 8, 2),
+                    FlightEndDate = new DateTime(2020, 9, 2),
+                    DaypartId = 70621,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
-                        EstimateId =191764,
-                        IsciName = "AB87GR58",
-                        RecommendedPlanId = 223,
-                        ProgramName = "Product6",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName=null,
-                        StationLegacyCallLetters="WTTV" ,
-                        Cost = 987,
-                        Impressions = 8767,
-                        SpotLengthId = 07,
-                        AudienceId = 425,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2020, 6, 6),
-                        FlightEndDate = new DateTime(2020, 7, 6),
-                        DaypartId = 70622,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 223,
-                                MetricPercent=90,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 231,
-                                MetricPercent=92,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 232,
-                                MetricPercent=94,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 233,
-                                MetricPercent=96,
-                                IsRecommendedPlan=false,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
+                            RecommendedPlanId = 222,
+                            MetricPercent=75,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "20th Century Fox (Twentieth Century)"
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 230,
+                            MetricPercent=79,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
                     },
-                    new SpotExceptionsRecommendedPlansDto
+                    InventorySourceName = "Ference Media"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
+                    EstimateId =191764,
+                    IsciName = "AB87GR58",
+                    RecommendedPlanId = 223,
+                    ProgramName = "Product6",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName=null,
+                    StationLegacyCallLetters="WTTV" ,
+                    Cost = 987,
+                    Impressions = 8767,
+                    SpotLengthId = 07,
+                    AudienceId = 425,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2020, 6, 6),
+                    FlightEndDate = new DateTime(2020, 7, 6),
+                    DaypartId = 70622,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
-                        EstimateId =191765,
-                        IsciName = "AB83PR58",
-                        RecommendedPlanId = 224,
-                        ProgramName = "Product8",
-                        ProgramAirTime = new DateTime(2022, 04, 10),
-                        AdvertiserName=null,
-                        StationLegacyCallLetters="WCCO" ,
-                        Cost = 767,
-                        Impressions = 9832,
-                        SpotLengthId = 06,
-                        AudienceId = 424,
-                        Product = "Nike",
-                        FlightStartDate = new DateTime(2020, 5, 6),
-                        FlightEndDate = new DateTime(2020, 6, 6),
-                        DaypartId = 70623,
-                        IngestedBy="Mock Data",
-                        IngestedAt=DateTime.Now,
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                                new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 224,
-                                MetricPercent=96,
-                                IsRecommendedPlan=true,
-                                SpotExceptionsRecommendedPlanDecision = null
-                            }
+                            RecommendedPlanId = 223,
+                            MetricPercent=90,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
-                        InventorySourceName = "CBS Synd"
-                    }
-                };
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 231,
+                            MetricPercent=92,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 232,
+                            MetricPercent=94,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 233,
+                            MetricPercent=96,
+                            IsRecommendedPlan=false,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    },
+                    InventorySourceName = "20th Century Fox (Twentieth Century)"
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
+                    EstimateId =191765,
+                    IsciName = "AB83PR58",
+                    RecommendedPlanId = 224,
+                    ProgramName = "Product8",
+                    ProgramAirTime = new DateTime(2022, 04, 10),
+                    AdvertiserName=null,
+                    StationLegacyCallLetters="WCCO" ,
+                    Cost = 767,
+                    Impressions = 9832,
+                    SpotLengthId = 06,
+                    AudienceId = 424,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2020, 5, 6),
+                    FlightEndDate = new DateTime(2020, 6, 6),
+                    DaypartId = 70623,
+                    IngestedBy="Mock Data",
+                    IngestedAt=DateTime.Now,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 224,
+                            MetricPercent=96,
+                            IsRecommendedPlan=true,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    },
+                    InventorySourceName = "CBS Synd"
+                }
+            };
 
             return spotExceptionsRecommendedPlans;
         }

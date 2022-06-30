@@ -2436,8 +2436,8 @@
           <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="modified_at" Type="datetime" Nullable="false" />
           <Property Name="comment" Type="nvarchar" MaxLength="1024" />
-          <Property Name="genre_name" Type="nvarchar" MaxLength="40" />
           <Property Name="daypart_code" Type="nvarchar" MaxLength="20" />
+          <Property Name="genre_name" Type="nvarchar" MaxLength="40" />
           <Property Name="inventory_source_name" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
@@ -2486,7 +2486,8 @@
           <Property Name="advertiser_name" Type="nvarchar" MaxLength="100" />
           <Property Name="unique_id_external" Type="bigint" Nullable="false" />
           <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="inventory_source_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="inventory_source_name" Type="varchar" MaxLength="100" />
+          <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_plan">
           <Key>
@@ -2659,6 +2660,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ambiguity_code" Type="int" Nullable="false" />
+          <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="estimate_id" Type="int" Nullable="false" />
           <Property Name="inventory_source" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="house_isci" Type="varchar" MaxLength="100" Nullable="false" />
@@ -9101,7 +9103,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="schedule_details" EntityType="BroadcastModel.schedule_details" />
           <EntitySet Name="schedule_iscis" EntityType="BroadcastModel.schedule_iscis" />
           <EntitySet Name="schedule_restriction_dayparts" EntityType="BroadcastModel.schedule_restriction_dayparts" />
-          <EntitySet Name="schedules" EntityType="BroadcastModel.schedule" />
           <EntitySet Name="spot_length_cost_multipliers" EntityType="BroadcastModel.spot_length_cost_multipliers" />
           <EntitySet Name="station_contacts" EntityType="BroadcastModel.station_contacts" />
           <EntitySet Name="system_component_parameters" EntityType="BroadcastModel.system_component_parameters" />
@@ -9125,18 +9126,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_schedule_detail_weeks_schedule_details" Association="BroadcastModel.FK_schedule_detail_weeks_schedule_details">
             <End Role="schedule_details" EntitySet="schedule_details" />
             <End Role="schedule_detail_weeks" EntitySet="schedule_detail_weeks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_details_schedule" Association="BroadcastModel.FK_schedule_details_schedule">
-            <End Role="schedule" EntitySet="schedules" />
-            <End Role="schedule_details" EntitySet="schedule_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_iscis_schedules" Association="BroadcastModel.FK_schedule_iscis_schedules">
-            <End Role="schedule" EntitySet="schedules" />
-            <End Role="schedule_iscis" EntitySet="schedule_iscis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_restriction_dayparts_schedules" Association="BroadcastModel.FK_schedule_restriction_dayparts_schedules">
-            <End Role="schedule" EntitySet="schedules" />
-            <End Role="schedule_restriction_dayparts" EntitySet="schedule_restriction_dayparts" />
           </AssociationSet>
           <AssociationSet Name="daypart_days" Association="BroadcastModel.daypart_days">
             <End Role="daypart" EntitySet="dayparts" />
@@ -9171,10 +9160,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="media_months" EntitySet="media_months" />
             <End Role="rating_adjustments" EntitySet="rating_adjustments" />
           </AssociationSet>
-          <AssociationSet Name="FK_schedules_media_months" Association="BroadcastModel.FK_schedules_media_months">
-            <End Role="media_months" EntitySet="media_months" />
-            <End Role="schedule" EntitySet="schedules" />
-          </AssociationSet>
           <AssociationSet Name="FK_proposal_version_flight_weeks_media_weeks" Association="BroadcastModel.FK_proposal_version_flight_weeks_media_weeks">
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="proposal_version_flight_weeks" EntitySet="proposal_version_flight_weeks" />
@@ -9204,10 +9189,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="schedule_audiences" EntityType="BroadcastModel.schedule_audiences" />
           <AssociationSet Name="FK_schedule_audiences_audiences" Association="BroadcastModel.FK_schedule_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
-            <End Role="schedule_audiences" EntitySet="schedule_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_schedule_audiences_schedule" Association="BroadcastModel.FK_schedule_audiences_schedule">
-            <End Role="schedule" EntitySet="schedules" />
             <End Role="schedule_audiences" EntitySet="schedule_audiences" />
           </AssociationSet>
           <EntitySet Name="inventory_sources" EntityType="BroadcastModel.inventory_sources" />
@@ -9664,10 +9645,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_station_inventory_spot_snapshots_markets" Association="BroadcastModel.FK_station_inventory_spot_snapshots_markets">
             <End Role="market" EntitySet="markets" />
             <End Role="station_inventory_spot_snapshots" EntitySet="station_inventory_spot_snapshots" />
-          </AssociationSet>
-          <AssociationSet Name="schedule_restriction_markets" Association="BroadcastModel.schedule_restriction_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="schedule" EntitySet="schedules" />
           </AssociationSet>
           <EntitySet Name="station_inventory_manifest_audiences" EntityType="BroadcastModel.station_inventory_manifest_audiences" />
           <EntitySet Name="station_inventory_manifest_rates" EntityType="BroadcastModel.station_inventory_manifest_rates" />
@@ -10672,6 +10649,31 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
             <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
           </AssociationSet>
+          <EntitySet Name="schedules" EntityType="BroadcastModel.schedule" />
+          <AssociationSet Name="FK_schedules_media_months" Association="BroadcastModel.FK_schedules_media_months">
+            <End Role="media_months" EntitySet="media_months" />
+            <End Role="schedule" EntitySet="schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_audiences_schedule" Association="BroadcastModel.FK_schedule_audiences_schedule">
+            <End Role="schedule" EntitySet="schedules" />
+            <End Role="schedule_audiences" EntitySet="schedule_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_details_schedule" Association="BroadcastModel.FK_schedule_details_schedule">
+            <End Role="schedule" EntitySet="schedules" />
+            <End Role="schedule_details" EntitySet="schedule_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_iscis_schedules" Association="BroadcastModel.FK_schedule_iscis_schedules">
+            <End Role="schedule" EntitySet="schedules" />
+            <End Role="schedule_iscis" EntitySet="schedule_iscis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_schedule_restriction_dayparts_schedules" Association="BroadcastModel.FK_schedule_restriction_dayparts_schedules">
+            <End Role="schedule" EntitySet="schedules" />
+            <End Role="schedule_restriction_dayparts" EntitySet="schedule_restriction_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="schedule_restriction_markets" Association="BroadcastModel.schedule_restriction_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="schedule" EntitySet="schedules" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -10787,7 +10789,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_media_weeks_media_months" FromRole="media_months" ToRole="media_weeks" />
           <NavigationProperty Name="post_files" Relationship="BroadcastModel.FK_post_files_media_months" FromRole="media_months" ToRole="post_files" />
           <NavigationProperty Name="rating_adjustments" Relationship="BroadcastModel.FK_rating_adjustments_media_months" FromRole="media_months" ToRole="rating_adjustments" />
-          <NavigationProperty Name="schedules" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="media_months" ToRole="schedule" />
           <NavigationProperty Name="proposal_version_details" Relationship="BroadcastModel.FK_proposal_version_details_hut_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_details1" Relationship="BroadcastModel.FK_proposal_version_details_posting_media_months" FromRole="media_months" ToRole="proposal_version_details" />
           <NavigationProperty Name="proposal_version_details2" Relationship="BroadcastModel.FK_proposal_version_details_share_media_months" FromRole="media_months" ToRole="proposal_version_details" />
@@ -10798,6 +10799,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_media_months" FromRole="media_months" ToRole="station_month_details" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_hut_media_months" FromRole="media_months" ToRole="plan_versions" />
           <NavigationProperty Name="plan_versions1" Relationship="BroadcastModel.FK_plan_versions_share_media_months" FromRole="media_months" ToRole="plan_versions" />
+          <NavigationProperty Name="schedules" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="media_months" ToRole="schedule" />
           </EntityType>
         <EntityType Name="media_weeks">
           <Key>
@@ -10992,9 +10994,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spot_length_id" Type="Int32" />
           <NavigationProperty Name="schedule_detail_audiences" Relationship="BroadcastModel.FK_schedule_detail_audiences_schedule_details" FromRole="schedule_details" ToRole="schedule_detail_audiences" />
           <NavigationProperty Name="schedule_detail_weeks" Relationship="BroadcastModel.FK_schedule_detail_weeks_schedule_details" FromRole="schedule_details" ToRole="schedule_detail_weeks" />
-          <NavigationProperty Name="schedule" Relationship="BroadcastModel.FK_schedule_details_schedule" FromRole="schedule_details" ToRole="schedule" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_schedule_details_dayparts" FromRole="schedule_details" ToRole="daypart" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_schedule_details_spot_lengths" FromRole="schedule_details" ToRole="spot_lengths" />
+          <NavigationProperty Name="schedule" Relationship="BroadcastModel.FK_schedule_details_schedule" FromRole="schedule_details" ToRole="schedule" />
         </EntityType>
         <EntityType Name="schedule_iscis">
           <Key>
@@ -11015,31 +11017,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="schedule_id" Type="Int32" Nullable="false" />
           <Property Name="daypart_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="schedule" Relationship="BroadcastModel.FK_schedule_restriction_dayparts_schedules" FromRole="schedule_restriction_dayparts" ToRole="schedule" />
-        </EntityType>
-        <EntityType Name="schedule">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="estimate_id" Type="Int32" />
-          <Property Name="advertiser_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="posting_book_id" Type="Int32" Nullable="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="post_type" Type="Byte" Nullable="false" />
-          <Property Name="inventory_source" Type="Byte" Nullable="false" />
-          <Property Name="equivalized" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_schedule" FromRole="schedule" ToRole="schedule_details" />
-          <NavigationProperty Name="schedule_iscis" Relationship="BroadcastModel.FK_schedule_iscis_schedules" FromRole="schedule" ToRole="schedule_iscis" />
-          <NavigationProperty Name="schedule_restriction_dayparts" Relationship="BroadcastModel.FK_schedule_restriction_dayparts_schedules" FromRole="schedule" ToRole="schedule_restriction_dayparts" />
-          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="schedule" ToRole="media_months" />
-          <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_schedule" FromRole="schedule" ToRole="schedule_audiences" />
-          <NavigationProperty Name="markets" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="schedule" ToRole="market" />
         </EntityType>
         <EntityType Name="spot_length_cost_multipliers">
           <Key>
@@ -11164,48 +11141,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_schedule_details_schedule">
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.schedule_details" Role="schedule_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_details">
-              <PropertyRef Name="schedule_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedule_iscis_schedules">
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.schedule_iscis" Role="schedule_iscis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_iscis">
-              <PropertyRef Name="schedule_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedule_restriction_dayparts_schedules">
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.schedule_restriction_dayparts" Role="schedule_restriction_dayparts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_restriction_dayparts">
-              <PropertyRef Name="schedule_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="daypart_days">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="*" />
           <End Type="BroadcastModel.day" Role="day" Multiplicity="*" />
@@ -11318,18 +11253,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="rating_adjustments">
               <PropertyRef Name="media_month_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedules_media_months">
-          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_months">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule">
-              <PropertyRef Name="posting_book_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11496,20 +11419,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="schedule_audiences">
               <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_schedule_audiences_schedule">
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.schedule_audiences" Role="schedule_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="schedule">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="schedule_audiences">
-              <PropertyRef Name="schedule_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13778,13 +13687,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_markets" FromRole="market" ToRole="pricing_guide_distribution_open_market_inventory" />
           <NavigationProperty Name="proposal_version_markets" Relationship="BroadcastModel.FK_proposal_version_markets_markets" FromRole="market" ToRole="proposal_version_markets" />
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_markets" FromRole="market" ToRole="station_inventory_spot_snapshots" />
-          <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
           <NavigationProperty Name="plan_version_available_markets" Relationship="BroadcastModel.FK_plan_available_markets_markets" FromRole="market" ToRole="plan_version_available_markets" />
           <NavigationProperty Name="plan_version_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_markets" FromRole="market" ToRole="plan_version_blackout_markets" />
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_markets" FromRole="market" ToRole="station_month_details" />
           <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
           <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" FromRole="market" ToRole="inventory_proprietary_summary_station_audiences" />
           <NavigationProperty Name="plan_version_daypart_available_markets" Relationship="BroadcastModel.FK_plan_version_daypart_available_markets_markets" FromRole="market" ToRole="plan_version_daypart_available_markets" />
+          <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
         </EntityType>
         <Association Name="FK_market_coverages_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -13847,10 +13756,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="station_market_code" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="schedule_restriction_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="*" />
-          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="*" />
         </Association>
         <Association Name="FK_station_inventory_manifest_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -18475,12 +18380,13 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="advertiser_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="unique_id_external" Type="Int64" Nullable="false" />
           <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="inventory_source_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="inventory_source_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_audiences" FromRole="spot_exceptions_recommended_plans" ToRole="audience" />
           <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_dayparts" FromRole="spot_exceptions_recommended_plans" ToRole="daypart" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_plans" FromRole="spot_exceptions_recommended_plans" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plans" ToRole="spot_exceptions_recommended_plan_details" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" FromRole="spot_exceptions_recommended_plans" ToRole="spot_lengths" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="staged_out_of_specs">
           <Key>
@@ -18571,6 +18477,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="staged_recommended_plan_details" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plans" ToRole="staged_recommended_plan_details" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_spot_exceptions_out_of_specs_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -18727,6 +18634,103 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="staged_recommended_plan_id" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estimate_id" Type="Int32" />
+          <Property Name="advertiser_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="posting_book_id" Type="Int32" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="post_type" Type="Byte" Nullable="false" />
+          <Property Name="inventory_source" Type="Byte" Nullable="false" />
+          <Property Name="equivalized" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="media_months" Relationship="BroadcastModel.FK_schedules_media_months" FromRole="schedule" ToRole="media_months" />
+          <NavigationProperty Name="schedule_audiences" Relationship="BroadcastModel.FK_schedule_audiences_schedule" FromRole="schedule" ToRole="schedule_audiences" />
+          <NavigationProperty Name="schedule_details" Relationship="BroadcastModel.FK_schedule_details_schedule" FromRole="schedule" ToRole="schedule_details" />
+          <NavigationProperty Name="schedule_iscis" Relationship="BroadcastModel.FK_schedule_iscis_schedules" FromRole="schedule" ToRole="schedule_iscis" />
+          <NavigationProperty Name="schedule_restriction_dayparts" Relationship="BroadcastModel.FK_schedule_restriction_dayparts_schedules" FromRole="schedule" ToRole="schedule_restriction_dayparts" />
+          <NavigationProperty Name="markets" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="schedule" ToRole="market" />
+        </EntityType>
+        <Association Name="FK_schedules_media_months">
+          <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_months">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule">
+              <PropertyRef Name="posting_book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_audiences_schedule">
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.schedule_audiences" Role="schedule_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_audiences">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_details_schedule">
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.schedule_details" Role="schedule_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_details">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_iscis_schedules">
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.schedule_iscis" Role="schedule_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_iscis">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_schedule_restriction_dayparts_schedules">
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.schedule_restriction_dayparts" Role="schedule_restriction_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="schedule_restriction_dayparts">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="schedule_restriction_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="*" />
+          <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -18985,26 +18989,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="schedule_restriction_dayparts">
                 <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
                 <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="schedules">
-            <EntityTypeMapping TypeName="BroadcastModel.schedule">
-              <MappingFragment StoreEntitySet="schedules">
-                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
-                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
-                <ScalarProperty Name="post_type" ColumnName="post_type" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="posting_book_id" ColumnName="posting_book_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -20050,14 +20034,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="schedule_restriction_markets" TypeName="BroadcastModel.schedule_restriction_markets" StoreEntitySet="schedule_restriction_markets">
-            <EndProperty Name="schedule">
-              <ScalarProperty Name="id" ColumnName="schedule_id" />
-            </EndProperty>
-            <EndProperty Name="market">
-              <ScalarProperty Name="market_code" ColumnName="market_code" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="station_inventory_manifest_weeks">
             <EntityTypeMapping TypeName="BroadcastModel.station_inventory_manifest_weeks">
               <MappingFragment StoreEntitySet="station_inventory_manifest_weeks">
@@ -21863,6 +21839,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_recommended_plans">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plans">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plans">
+                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
                 <ScalarProperty Name="inventory_source_name" ColumnName="inventory_source_name" />
                 <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
                 <ScalarProperty Name="unique_id_external" ColumnName="unique_id_external" />
@@ -21957,6 +21934,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="staged_recommended_plans">
             <EntityTypeMapping TypeName="BroadcastModel.staged_recommended_plans">
               <MappingFragment StoreEntitySet="staged_recommended_plans">
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
                 <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
                 <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="program_genre" ColumnName="program_genre" />
@@ -21978,6 +21956,34 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="schedules">
+            <EntityTypeMapping TypeName="BroadcastModel.schedule">
+              <MappingFragment StoreEntitySet="schedules">
+                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
+                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
+                <ScalarProperty Name="post_type" ColumnName="post_type" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="posting_book_id" ColumnName="posting_book_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="schedule_restriction_markets" TypeName="BroadcastModel.schedule_restriction_markets" StoreEntitySet="schedule_restriction_markets">
+            <EndProperty Name="schedule">
+              <ScalarProperty Name="id" ColumnName="schedule_id" />
+            </EndProperty>
+            <EndProperty Name="market">
+              <ScalarProperty Name="market_code" ColumnName="market_code" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

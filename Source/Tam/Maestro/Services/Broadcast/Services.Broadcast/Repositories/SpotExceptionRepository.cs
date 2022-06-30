@@ -203,6 +203,7 @@ namespace Services.Broadcast.Repositories
                         estimate_id = recommendedPlan.EstimateId,
                         isci_name = recommendedPlan.IsciName,
                         recommended_plan_id = recommendedPlan.RecommendedPlanId,
+                        spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
                         program_name = recommendedPlan.ProgramName,
                         program_air_time = recommendedPlan.ProgramAirTime,
                         advertiser_name = recommendedPlan.AdvertiserName,

@@ -905,6 +905,30 @@ END
 GO
 /*************************************** END BP-4306 **********************************************************************************************/
 
+/*************************************** START BP-4306 **********************************************************************************************/
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'staged_recommended_plans' 
+	AND COLUMN_NAME= 'program_genre' 
+	AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+	ALTER TABLE staged_recommended_plans
+		ALTER COLUMN program_genre VARCHAR(127) NULL
+END
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' AND (COLUMN_NAME= 'spot_unique_hash_external'))
+BEGIN	
+
+	DELETE FROM spot_exceptions_recommended_plan_decision
+	DELETE FROM spot_exceptions_recommended_plan_details
+	DELETE FROM spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD spot_unique_hash_external VARCHAR(255) NOT NULL
+END
+
+GO
+/*************************************** END BP-4306 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -18,7 +18,6 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.media_weeks = new HashSet<media_weeks>();
             this.post_files = new HashSet<post_files>();
-            this.schedules = new HashSet<schedule>();
             this.proposal_version_details = new HashSet<proposal_version_details>();
             this.proposal_version_details1 = new HashSet<proposal_version_details>();
             this.proposal_version_details2 = new HashSet<proposal_version_details>();
@@ -29,6 +28,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_month_details = new HashSet<station_month_details>();
             this.plan_versions = new HashSet<plan_versions>();
             this.plan_versions1 = new HashSet<plan_versions>();
+            this.schedules = new HashSet<schedule>();
         }
     
         public int id { get; set; }
@@ -41,7 +41,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<media_weeks> media_weeks { get; set; }
         public virtual ICollection<post_files> post_files { get; set; }
         public virtual rating_adjustments rating_adjustments { get; set; }
-        public virtual ICollection<schedule> schedules { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details1 { get; set; }
         public virtual ICollection<proposal_version_details> proposal_version_details2 { get; set; }
@@ -52,5 +51,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_month_details> station_month_details { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
         public virtual ICollection<plan_versions> plan_versions1 { get; set; }
+        public virtual ICollection<schedule> schedules { get; set; }
     }
 }

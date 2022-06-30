@@ -37,6 +37,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string program_genre { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
+        public string execution_id_external { get; set; }
     
         public virtual ICollection<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
     }

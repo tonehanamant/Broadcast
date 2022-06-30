@@ -14,6 +14,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         }
         public int Id { get; set; }
         public int EstimateId { get; set; }
+        public string SpotUniqueHashExternal { get; set; }
         public string IsciName { get; set; }
         public int? RecommendedPlanId { get; set; }
         public string RecommendedPlanName { get; set; }
