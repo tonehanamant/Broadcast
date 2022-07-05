@@ -521,8 +521,23 @@ namespace Services.Broadcast.Repositories
                        context.plan_versions.Remove(draftVersion);
                        context.SaveChanges();
                    });
+            UpdateLatestPlanVersionId(planId);
         }
 
+        private void UpdateLatestPlanVersionId(int planId)
+        {
+            _InReadUncommitedTransaction(
+                   context =>
+                   {
+                       var latestVersionId = context.plan_versions.Where(x => x.plan_id == planId).OrderByDescending(x => x.id).First();
+                       var mappingPlanId = context.plans.SingleOrDefault(x => x.id == planId);
+                       if (latestVersionId != null)
+                       {
+                           mappingPlanId.latest_version_id = latestVersionId.id;
+                       }
+                       context.SaveChanges();
+                   });
+        }
         /// <inheritdoc />
         public PlanDto GetPlan(int planId, int? versionId = null)
         {
@@ -730,7 +745,7 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
                 WeeklyBreakdownWeeks = planVersion.plan_version_weekly_breakdown.Select(_MapWeeklyBreakdownWeeks).ToList(),
                 ModifiedBy = planVersion.modified_by ?? planVersion.created_by,
-                ModifiedDate  = entity.plan_versions.Max(x=> x.modified_date) ?? entity.plan_versions.Max(x=> x.created_date), //planVersion.modified_date ?? planVersion.created_date,
+                ModifiedDate = entity.plan_versions.Max(x => x.modified_date) ?? entity.plan_versions.Max(x => x.created_date), //planVersion.modified_date ?? planVersion.created_date,
                 Vpvh = planVersion.target_vpvh,
                 TargetUniverse = planVersion.target_universe,
                 HHCPM = planVersion.hh_cpm,
