@@ -19,6 +19,7 @@ var TrackerScheduleViewModel = function (controller) {
     $scope.Markets = ko.observableArray();
     $scope.Demos = ko.observableArray();//tbd
 
+    $scope.AabAdvertisers = ko.observableArray();
     //stored observables - schedule shared -  upload/advertisers
     $scope.ScheduleName = ko.observable('');
 
@@ -65,6 +66,7 @@ var TrackerScheduleViewModel = function (controller) {
     $scope.AdvertiserId = ko.observable('');
     $scope.PostingBookId = ko.observable('');
     $scope.MarketRestrictions = ko.observableArray([]);
+    $scope.AdvertiserMasterId = ko.observable('');
 
     //on daypart selection; converted for observable/BE
     $scope.onDaypartSelect = function (dateValues) {
@@ -188,6 +190,7 @@ var TrackerScheduleViewModel = function (controller) {
         $scope.InventorySources(components.InventorySources);
         $scope.PostTypes(components.SchedulePostTypes);
         $scope.Demos(components.Audiences);
+        $scope.AabAdvertisers(components.AabAdvertisers);
         //set date wrapper inputs
         $scope.initDateWrappers();
     };
@@ -216,6 +219,7 @@ var TrackerScheduleViewModel = function (controller) {
         schedule.EstimateId = parseInt($scope.EstimateId());
         schedule.AdvertiserId = $scope.AdvertiserId();
         schedule.PostingBookId = $scope.PostingBookId();
+        schedule.AdvertiserMasterId = $scope.AdvertiserMasterId();
 
         schedule.MarketRestrictions = $scope.MarketRestrictions();
         schedule.DaypartRestriction = $scope.DaypartRestriction();
@@ -246,6 +250,7 @@ var TrackerScheduleViewModel = function (controller) {
         $scope.PostTypeId(schedule.PostType);
         $scope.InventorySourceId(schedule.InventorySource);
         $scope.Equivalized(schedule.IsEquivalized);
+        $scope.AdvertiserMasterId(schedule.AdvertiserMasterId);
 
         // sort by rank before initializing observable
         schedule.Audiences.sort(function (audience1, audience2) {
@@ -290,6 +295,7 @@ var TrackerScheduleViewModel = function (controller) {
         $scope.DaypartRestriction(schedule.DaypartRestriction);
         $scope.daypartWrap.init(schedule.DaypartRestriction, true);
         $scope.PostTypeId(schedule.PostType);
+        $scope.AdvertiserMasterId(schedule.AdvertiserMasterId);
         
         // sort by rank before initializing observable
         schedule.Audiences.sort(function (audience1, audience2) {
@@ -332,7 +338,8 @@ var TrackerScheduleViewModel = function (controller) {
             MarketRestrictions: $scope.MarketRestrictions(),
             DaypartRestriction: $scope.DaypartRestriction(),
             PostType: $scope.PostTypeId(),
-            Equivalized: $scope.Equivalized()
+            Equivalized: $scope.Equivalized(),
+            AdvertiserMasterId: $scope.AdvertiserMasterId()
         };
 
         if (isEdit) {
@@ -356,6 +363,8 @@ var TrackerScheduleViewModel = function (controller) {
             schedule.EstimateId = parseInt($scope.EstimateId());
             schedule.InventorySource = $scope.InventorySourceId();
         }
+        if (schedule.AdvertiserId === '') { delete schedule.AdvertiserId }
+        if (schedule.AdvertiserMasterId === '') { delete schedule.AdvertiserMasterId }
         return schedule;
     };
 

@@ -115,6 +115,12 @@ var TrackerMainView = BaseView.extend({
             me.scheduleGridAdvertiserFilter(val);
         });
 
+        // AabAdvertiser filter change
+        $("#schedule_view").on("change", '#aabadvertiser_filter_input', function (e) {
+            var val = $(this).val();
+            me.scheduleGridAabAdvertiserFilter(val);
+        });
+
         //handle menu clicks
         this.$ScheduleGrid.on('menuClick', this.onScheduleMenuClick.bind(this));
 
@@ -174,8 +180,10 @@ var TrackerMainView = BaseView.extend({
         var me = this;
         var quarters = this.scheduleComponents.Quarters;
         var advertisers = scheduledata.Advertisers;
+        var aabadvertisers = scheduledata.AabAdvertisers;
         var qSelect = $("#quarter_filter_input");
         var aSelect = $("#advertiser_filter_input");
+        var aabSelect = $("#aabadvertiser_filter_input");
 
         if (qtrReset) {
             qSelect.empty();
@@ -193,6 +201,14 @@ var TrackerMainView = BaseView.extend({
         });
 
         aSelect.html(aopts).val('all');
+
+        aabSelect.empty();
+        var aabopts = '<option value="all">All</option>';
+        $.each(aabadvertisers, function (index, aabad) {
+            aabopts += '<option value="' + aabad.Id + '">' + aabad.Display + '</option>';
+        });
+
+        aabSelect.html(aabopts).val('all');
     },
 
     // Executes a search in the W2UI grid
@@ -233,6 +249,26 @@ var TrackerMainView = BaseView.extend({
         } else {
             $.each(displayData, function (index, val) {
                 if (val.AdvertiserId == advertiser) {
+                    recs.push(val);
+                }
+            });
+        }
+
+        recs = this.prepareScheduleGridData(recs);
+        this.$ScheduleGrid.clear(false);
+        this.$ScheduleGrid.add(recs);
+        this.$ScheduleGrid.refresh();
+    },
+
+    scheduleGridAabAdvertiserFilter: function (aabadvertiser) {
+        this.clearScheduleGridSearch(true);
+        var recs = [];
+        var displayData = util.copyData(this.activeScheduleData.Schedules);
+        if (aabadvertiser == 'all') {
+            recs = displayData;
+        } else {
+            $.each(displayData, function (index, val) {
+                if (val.AdvertiserMasterId == aabadvertiser) {
                     recs.push(val);
                 }
             });
@@ -397,6 +433,11 @@ var TrackerMainView = BaseView.extend({
 
     addAdvertiser: function () {
         this.setScheduleModal('advertiser');
+    },
+
+    //AABADVERTISER
+    addAabAdvertiser: function () {
+        this.setScheduleModal('aabadvertiser');
     },
 
     //MAPPINGS

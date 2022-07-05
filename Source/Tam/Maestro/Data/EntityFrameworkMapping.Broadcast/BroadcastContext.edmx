@@ -2295,6 +2295,7 @@
           <Property Name="post_type" Type="tinyint" Nullable="false" />
           <Property Name="inventory_source" Type="tinyint" Nullable="false" />
           <Property Name="equivalized" Type="bit" Nullable="false" />
+          <Property Name="advertiser_master_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="scx_generation_job_files">
           <Key>
@@ -18659,6 +18660,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="schedule_iscis" Relationship="BroadcastModel.FK_schedule_iscis_schedules" FromRole="schedule" ToRole="schedule_iscis" />
           <NavigationProperty Name="schedule_restriction_dayparts" Relationship="BroadcastModel.FK_schedule_restriction_dayparts_schedules" FromRole="schedule" ToRole="schedule_restriction_dayparts" />
           <NavigationProperty Name="markets" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="schedule" ToRole="market" />
+          <Property Name="advertiser_master_id" Type="Guid" />
         </EntityType>
         <Association Name="FK_schedules_media_months">
           <End Type="BroadcastModel.media_months" Role="media_months" Multiplicity="1" />
@@ -21959,6 +21961,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="schedules">
             <EntityTypeMapping TypeName="BroadcastModel.schedule">
               <MappingFragment StoreEntitySet="schedules">
+                <ScalarProperty Name="advertiser_master_id" ColumnName="advertiser_master_id" />
                 <ScalarProperty Name="equivalized" ColumnName="equivalized" />
                 <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
                 <ScalarProperty Name="post_type" ColumnName="post_type" />

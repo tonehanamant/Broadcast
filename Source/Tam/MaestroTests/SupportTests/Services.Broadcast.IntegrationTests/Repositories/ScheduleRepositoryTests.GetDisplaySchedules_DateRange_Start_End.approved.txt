@@ -2,6 +2,7 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37674,
+    "AdvertiserMasterId": null,
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
@@ -29,6 +30,7 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37674,
+    "AdvertiserMasterId": null,
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
@@ -56,6 +58,7 @@
   {
     "Advertiser": null,
     "AdvertiserId": 37674,
+    "AdvertiserMasterId": null,
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
@@ -83,6 +86,7 @@
   {
     "Advertiser": null,
     "AdvertiserId": 38994,
+    "AdvertiserMasterId": null,
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,
@@ -119,6 +123,7 @@
   {
     "Advertiser": null,
     "AdvertiserId": 39279,
+    "AdvertiserMasterId": null,
     "Audiences": null,
     "DaypartRestriction": null,
     "DaypartRestrictionId": 0,

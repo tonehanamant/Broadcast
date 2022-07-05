@@ -1113,6 +1113,23 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult SyncAdvertisersToSchedules()
+        {
+            TempData["TabId"] = "aab_maintenance";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IAdvertiserService>();
+                service.SyncAdvertisersToSchedules();
+                TempData["Message"] = $"Advertisers Synced successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
         #endregion // #region Aab Utilities
 
         #region Spot Exceptions Sync

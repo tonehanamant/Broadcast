@@ -59,6 +59,7 @@ namespace Services.Broadcast.Converters
             returnSchedule.estimate_id = scheduleDto.EstimateId;
             returnSchedule.advertiser_id = scheduleDto.AdvertiserId;
             returnSchedule.posting_book_id = scheduleDto.PostingBookId;
+            returnSchedule.advertiser_master_id = scheduleDto.AdvertiserMasterId;
 
             var startDate = scheduleDto.StartDate != null ? (DateTime) scheduleDto.StartDate : DateTime.Now;
             returnSchedule.start_date = originalSchedule != null ? originalSchedule.start_date : startDate;

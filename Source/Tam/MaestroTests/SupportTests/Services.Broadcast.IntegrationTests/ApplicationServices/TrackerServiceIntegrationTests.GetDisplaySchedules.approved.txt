@@ -1,4 +1,5 @@
 ﻿{
+  "AabAdvertisers": [],
   "Advertisers": [
     {
       "Display": "1 Vision",
@@ -59,6 +60,7 @@
     {
       "Advertiser": "1 Vision",
       "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
@@ -84,6 +86,7 @@
     {
       "Advertiser": "1 Vision",
       "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,
@@ -109,6 +112,7 @@
     {
       "Advertiser": "1 Vision",
       "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
       "Audiences": null,
       "DaypartRestriction": null,
       "DaypartRestrictionId": 0,

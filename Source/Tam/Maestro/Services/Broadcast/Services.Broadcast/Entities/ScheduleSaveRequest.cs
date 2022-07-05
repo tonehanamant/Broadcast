@@ -63,6 +63,7 @@ namespace Services.Broadcast.Entities
         public DateTime? EndDate { get; set; }
         public bool IsBlank { get; set; }
         public List<IsciDto> ISCIs { get; set; }
+        public Guid? AdvertiserMasterId { get; set; }
 
         public bool ContainsIsci(string isci)
         {

@@ -1,0 +1,744 @@
+{
+  "AabAdvertisers": [],
+  "Advertisers": [
+    {
+      "Display": "1 Vision",
+      "Id": 37674
+    }
+  ],
+  "PostingBooks": [
+    {
+      "Display": "0215",
+      "Id": 401
+    },
+    {
+      "Display": "0515",
+      "Id": 404
+    },
+    {
+      "Display": "0715",
+      "Id": 406
+    },
+    {
+      "Display": "0216",
+      "Id": 413
+    },
+    {
+      "Display": "0516",
+      "Id": 416
+    },
+    {
+      "Display": "0716",
+      "Id": 418
+    },
+    {
+      "Display": "1116",
+      "Id": 422
+    },
+    {
+      "Display": "0217",
+      "Id": 425
+    },
+    {
+      "Display": "0517",
+      "Id": 428
+    },
+    {
+      "Display": "0717",
+      "Id": 430
+    },
+    {
+      "Display": "1117",
+      "Id": 434
+    },
+    {
+      "Display": "0218",
+      "Id": 437
+    }
+  ],
+  "Schedules": [
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2016-06-12T00:00:00",
+      "Estimate": 123456,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "Phillips Lifeline",
+      "OutOfSpec": 0,
+      "PostingBook": "0216",
+      "PostingBookDate": "2016-02-28T00:00:00",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 3301426.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 392,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-05-30T00:00:00"
+    },
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2016-07-24T00:00:00",
+      "Estimate": 3477,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "TEST3",
+      "OutOfSpec": 0,
+      "PostingBook": "",
+      "PostingBookDate": null,
+      "PostingBookId": 377,
+      "PostType": 1,
+      "PrimaryDemoBooked": 2880242.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 109,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-07-11T00:00:00"
+    },
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2016-07-24T00:00:00",
+      "Estimate": 123,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "TEST",
+      "OutOfSpec": 0,
+      "PostingBook": "",
+      "PostingBookDate": null,
+      "PostingBookId": 380,
+      "PostType": 1,
+      "PrimaryDemoBooked": 2880242.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 109,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-07-11T00:00:00"
+    },
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2016-08-07T00:00:00",
+      "Estimate": 3447,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "QWERTY",
+      "OutOfSpec": 208,
+      "PostingBook": "",
+      "PostingBookDate": null,
+      "PostingBookId": 377,
+      "PostType": 1,
+      "PrimaryDemoBooked": 6042379.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 750,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-07-18T00:00:00"
+    },
+    {
+      "Advertiser": "",
+      "AdvertiserId": 37441,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": 32250.3,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 32250.3,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 20470.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 21051.4,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 21760.8,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 17179.050000000003,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 22762.7,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 22535.65,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 22535.65,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 7510.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 37104.45,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 37104.45,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 13714.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 13714.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18399.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 10245.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 8793.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 10245.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 36805.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 36282.25,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 33644.65,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 34249.65,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 40643.35,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 40643.35,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 40899.35,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 47496.35,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5563.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5563.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 26868.8,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 27486.100000000002,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 30200.95,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 7925.8,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 9093.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18829.55,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 19636.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 9287.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 19667.35,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 23740.350000000002,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 24987.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 25831.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 32355.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 37066.450000000004,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 37066.450000000004,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 32355.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 22028.85,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 27818.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 22914.55,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 27818.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 29585.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 40263.85,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 15616.7,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 17194.8,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 17492.25,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 16223.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 16223.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18522.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18522.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18522.05,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 32258.85,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 31235.65,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5927.15,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 19702.55,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18425.8,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 19702.55,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 18425.8,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 15833.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 13527.15,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 13527.15,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 2494.1,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 2494.1,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 12345.900000000002,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 13073.65,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 3163.6,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 11930.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 3255.7000000000003,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 11776.9,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5683.15,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6860.3,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6680.25,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 11355.5,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 17178.1,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 13188.25,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 25651.4,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 25343.55,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 15106.95,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 14485.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5539.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5931.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6569.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 5931.0,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 8260.15,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 8260.15,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 11614.25,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 9555.75,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 11614.25,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 9745.95,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6935.9,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6754.4,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6935.9,
+          "SpotLength": 60
+        },
+        {
+          "Impressions": 6935.9,
+          "SpotLength": 60
+        }
+      ],
+      "EndDate": "2016-06-12T00:00:00",
+      "Estimate": 3417,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "test-mnorris-phillips",
+      "OutOfSpec": 211,
+      "PostingBook": "0216",
+      "PostingBookDate": "2016-02-28T00:00:00",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 3301426.0,
+      "PrimaryDemoDelivered": 1789592.33,
+      "SpotsBooked": 392,
+      "SpotsDelivered": 100,
+      "StartDate": "2016-05-30T00:00:00"
+    },
+    {
+      "Advertiser": "",
+      "AdvertiserId": 38994,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": 1772.3999999999999,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": 6010.8,
+          "SpotLength": 30
+        }
+      ],
+      "EndDate": "2016-08-07T00:00:00",
+      "Estimate": 3416,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "Bio Oil",
+      "OutOfSpec": 38,
+      "PostingBook": "0216",
+      "PostingBookDate": "2016-02-28T00:00:00",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 4064440.0,
+      "PrimaryDemoDelivered": 7394.04,
+      "SpotsBooked": 816,
+      "SpotsDelivered": 2,
+      "StartDate": "2016-07-18T00:00:00"
+    },
+    {
+      "Advertiser": "",
+      "AdvertiserId": 39279,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2018-01-20T00:00:00",
+      "Estimate": 3910,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": true,
+      "MarketRestrictions": null,
+      "Name": "Test Settings Schedule",
+      "OutOfSpec": 0,
+      "PostingBook": "0216",
+      "PostingBookDate": "2016-02-28T00:00:00",
+      "PostingBookId": 413,
+      "PostType": 2,
+      "PrimaryDemoBooked": null,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": null,
+      "SpotsDelivered": 0,
+      "StartDate": "2017-01-20T00:00:00"
+    },
+    {
+      "Advertiser": "1 Vision",
+      "AdvertiserId": 37674,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2018-01-20T00:00:00",
+      "Estimate": 4000,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": false,
+      "MarketRestrictions": null,
+      "Name": "Test Update (UPDATED)",
+      "OutOfSpec": 0,
+      "PostingBook": "",
+      "PostingBookDate": null,
+      "PostingBookId": 377,
+      "PostType": 1,
+      "PrimaryDemoBooked": null,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": null,
+      "SpotsDelivered": 0,
+      "StartDate": "2017-01-20T00:00:00"
+    },
+    {
+      "Advertiser": "",
+      "AdvertiserId": 39279,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [],
+      "EndDate": "2017-01-08T00:00:00",
+      "Estimate": 121220,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": true,
+      "MarketRestrictions": null,
+      "Name": "Assembly Schedule Template",
+      "OutOfSpec": 0,
+      "PostingBook": "0216",
+      "PostingBookDate": "2016-02-28T00:00:00",
+      "PostingBookId": 413,
+      "PostType": 2,
+      "PrimaryDemoBooked": 4390.0,
+      "PrimaryDemoDelivered": 0.0,
+      "SpotsBooked": 5,
+      "SpotsDelivered": 0,
+      "StartDate": "2016-12-26T00:00:00"
+    },
+    {
+      "Advertiser": "",
+      "AdvertiserId": 39597,
+      "AdvertiserMasterId": null,
+      "Audiences": null,
+      "DaypartRestriction": null,
+      "DaypartRestrictionId": 0,
+      "DeliveryDetails": [
+        {
+          "Impressions": 0.0,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": 0.0,
+          "SpotLength": 30
+        },
+        {
+          "Impressions": 1259.8500000000001,
+          "SpotLength": 30
+        }
+      ],
+      "EndDate": "2017-03-19T00:00:00",
+      "Estimate": 666555,
+      "InventorySource": 0,
+      "Iscis": null,
+      "IsEquivalized": true,
+      "MarketRestrictions": null,
+      "Name": "_Test Mappings",
+      "OutOfSpec": 3,
+      "PostingBook": "0216",
+      "PostingBookDate": "2016-02-28T00:00:00",
+      "PostingBookId": 413,
+      "PostType": 1,
+      "PrimaryDemoBooked": 6490.0,
+      "PrimaryDemoDelivered": 1196.8575,
+      "SpotsBooked": 6,
+      "SpotsDelivered": 3,
+      "StartDate": "2017-03-13T00:00:00"
+    }
+  ]
+}

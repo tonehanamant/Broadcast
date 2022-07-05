@@ -31,6 +31,7 @@ namespace Services.Broadcast.Entities
         public List<DetectionTrackingAudience> Audiences { get; set; }
         public List<IsciDto> Iscis { get; set; }
         public List<ScheduleDeliveryDetails> DeliveryDetails { get; set; }
+        public Guid? AdvertiserMasterId { get; set; }
 
         public bool IsBlank
         {

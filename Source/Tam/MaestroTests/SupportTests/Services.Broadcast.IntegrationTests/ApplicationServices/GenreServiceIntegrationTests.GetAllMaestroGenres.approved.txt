@@ -48,6 +48,14 @@
     "Id": 20
   },
   {
+    "Display": "GAME SHOW/ENTERTAINMENT",
+    "Id": 117
+  },
+  {
+    "Display": "GAME SHOW/REALITY",
+    "Id": 118
+  },
+  {
     "Display": "Horror",
     "Id": 25
   },

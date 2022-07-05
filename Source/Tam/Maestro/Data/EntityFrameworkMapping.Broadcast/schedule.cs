@@ -37,6 +37,7 @@ namespace EntityFrameworkMapping.Broadcast
         public byte post_type { get; set; }
         public byte inventory_source { get; set; }
         public bool equivalized { get; set; }
+        public Nullable<System.Guid> advertiser_master_id { get; set; }
     
         public virtual media_months media_months { get; set; }
         public virtual ICollection<schedule_audiences> schedule_audiences { get; set; }

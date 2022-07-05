@@ -1,6 +1,8 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.ApplicationServices
@@ -16,15 +18,22 @@ namespace Services.Broadcast.ApplicationServices
         /// Clears the advertisers cache.
         /// </summary>
         void ClearAdvertisersCache();
+
+        /// <summary>
+        /// Sync the schedules table
+        /// </summary>
+        bool SyncAdvertisersToSchedules();
     }
 
     public class AdvertiserService : IAdvertiserService
     {
         private readonly IAabEngine _AabEngine;
+        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
 
-        public AdvertiserService(IAabEngine aabEngine)
+        public AdvertiserService(IAabEngine aabEngine, IDataRepositoryFactory dataRepositoryFactory)
         {
             _AabEngine = aabEngine;
+            _BroadcastDataRepositoryFactory = dataRepositoryFactory;
         }
 
         /// <inheritdoc />
@@ -37,6 +46,12 @@ namespace Services.Broadcast.ApplicationServices
         public void ClearAdvertisersCache()
         {
             _AabEngine.ClearAdvertisersCache();
+        }
+
+        public bool SyncAdvertisersToSchedules()
+        {
+            var result = _BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>().SyncAdvertisersToSchedules();
+            return result;
         }
     }
 }

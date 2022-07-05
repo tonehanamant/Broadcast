@@ -542,6 +542,7 @@
     <Compile Include="Clients\SpotExceptionsIngestApiConfigKeys.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
+    <Compile Include="Entities\AabAdvertiserDto.cs" />
     <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
     <Compile Include="Entities\ApiResponse\ApiItemResponseTyped.cs" />
     <Compile Include="Entities\ApiResponse\ApiListResponseTyped.cs" />

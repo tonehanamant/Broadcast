@@ -929,6 +929,17 @@ END
 GO
 /*************************************** END BP-4306 **********************************************************************************************/
 
+/*************************************** Start BP-3101 **********************************************************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'schedules' AND COLUMN_NAME= 'advertiser_master_id')
+BEGIN
+	ALTER TABLE schedules
+	ADD advertiser_master_id uniqueidentifier null
+END
+GO
+
+/*************************************** END BP-3101 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

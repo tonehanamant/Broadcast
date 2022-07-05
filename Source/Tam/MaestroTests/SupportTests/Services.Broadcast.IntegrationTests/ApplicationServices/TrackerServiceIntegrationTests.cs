@@ -5,10 +5,13 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -32,7 +35,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IRatingAdjustmentsRepository _RatingAdjustmentsRepository;
         private readonly IDetectionRepository _DetectionRepository;
         private const int TRACKER_TEST_ESTIMATE_ID = 121220;
-
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private static IFeatureToggleHelper _FeatureToggleHelper;
         public TrackerServiceIntegrationTests()
         {
             _TrackerService = IntegrationTestApplicationServiceFactory.GetApplicationService<ITrackerService>();
@@ -40,6 +44,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ScheduleRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IScheduleRepository>();
             _RatingAdjustmentsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>();
             _DetectionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>();
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, false);
+            _FeatureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+        }
+
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -2117,6 +2132,125 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _TrackerService.SaveDetectionFiles(detectionRequest, "User", true);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetDisplaySchedules_WithToggleOn(bool toggleEnabled)
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, toggleEnabled);
+
+                var actual = _TrackerService.GetSchedulesByDate(new DateTime(2016, 5, 30), new DateTime(2017, 03, 19));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplaySchedule), "Id");
+                jsonResolver.Ignore(typeof(DisplaySchedule), "IsBlank");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(actual, jsonSettings));
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetDetectionInitialOptions_WithToggleOn(bool toggleEnabled)
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, toggleEnabled);
+                var response = _TrackerService.GetDetectionLoadData(new DateTime(2019, 01, 01));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(Quarter), "Id");
+                jsonResolver.Ignore(typeof(DetectionLoadDto), "CurrentQuarter");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Assert.AreEqual(response.CurrentQuarter.Display, "2019Q1");
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, jsonSettings));
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [UseReporter(typeof(DiffReporter))]
+        public void SaveSchedule_WithToggleOn(bool toggleEnabled)
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, toggleEnabled);
+                var saveRequest = new ScheduleSaveRequest
+                {
+                    Schedule = new ScheduleDTO
+                    {
+                        AdvertiserId = 39279,
+                        PostingBookId = 413,
+                        ScheduleName = "Blank Schedule",
+                        UserName = "User",
+                        MarketRestrictions = new List<int> { 101, 102 },
+                        // restrict NYC and Binghamton just because reasons
+                        DaypartRestriction = new DaypartDto
+                        {
+                            startTime = 0,
+                            endTime = BroadcastConstants.OneDayInSeconds - 1,
+                            mon = true,
+                            tue = true,
+                            wed = true,
+                            thu = true,
+                            fri = true,
+                            sat = true,
+                            sun = true
+                        },
+                        Equivalized = true,
+                        ISCIs = new List<IsciDto>
+                        {
+                            new IsciDto
+                            {
+                                House = "2TWNWEST000H",
+                                Client = "2TWNWEST000H"
+                            },
+                            new IsciDto
+                            {
+                                House = "37WEST1605H",
+                                Client = "37WEST1605H"
+                            }
+                        },
+                        PostType = PostingTypeEnum.NTI,
+                        InventorySource = InventorySourceEnum.CNN,
+                        Audiences = new List<DetectionTrackingAudience>
+                        {
+                           new DetectionTrackingAudience() {AudienceId = 31, Rank = 1},
+                           new DetectionTrackingAudience() {AudienceId = 42, Rank = 2}
+                        },
+                        StartDate = new DateTime(2017, 1, 20),
+                        EndDate = new DateTime(2018, 1, 20),
+                        IsBlank = true
+                    }
+                };
+
+                var scheduleId = _TrackerService.SaveSchedule(saveRequest);
+
+                var response = _ScheduleRepository.GetDisplayScheduleById(scheduleId);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplaySchedule), "Id");
+                jsonResolver.Ignore(typeof(IsciDto), "Id");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                var json = IntegrationTestHelper.ConvertToJson(response, jsonSettings);
+                Approvals.Verify(json);
             }
         }
     }

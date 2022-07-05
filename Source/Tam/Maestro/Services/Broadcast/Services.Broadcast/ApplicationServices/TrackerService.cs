@@ -71,6 +71,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IFileService _FileService;
         private readonly IProposalRepository _ProposalRepository;
+        private readonly IAabEngine _AabEngine;
+        protected Lazy<bool> _IsMigrateLegacyAABEnabled;
 
         private readonly Lazy<string> _FtpDirectory;
         private readonly Lazy<string> _FtpSaveFolder;
@@ -89,6 +91,7 @@ namespace Services.Broadcast.ApplicationServices
             , IBroadcastAudiencesCache audiencesCache, IDefaultScheduleConverter defaultScheduleConverter
             , IDaypartCache dayPartCache, IQuarterCalculationEngine quarterCalculationEngine
             , ISMSClient smsClient
+            , IAabEngine aabEngine
             , IImpressionAdjustmentEngine impressionAdjustmentEngine
             , INsiPostingBookService nsiPostingBookService
             , IFileService fileService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
@@ -106,10 +109,13 @@ namespace Services.Broadcast.ApplicationServices
             _DayPartCache = dayPartCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _SmsClient = smsClient;
+            _AabEngine = aabEngine;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _NsiPostingBookService = nsiPostingBookService;
             _FileService = fileService;
             _ProposalRepository = _BroadcastDataRepositoryFactory.GetDataRepository<IProposalRepository>();
+            _IsMigrateLegacyAABEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB));
 
             _FtpDirectory = new Lazy<string>(_GetFtpDirectory);
             _FtpSaveFolder = new Lazy<string>(_GetFtpSaveFolder);
@@ -156,20 +162,37 @@ namespace Services.Broadcast.ApplicationServices
             ret.Schedules = GetDisplaySchedulesWithAdjustedImpressions(startDate, endDate);
 
             var scheduleAdvertisers = ret.Schedules.Select(x => x.AdvertiserId).ToList();
-            ret.Advertisers = _SmsClient.GetActiveAdvertisers().Where(a => scheduleAdvertisers.Contains(a.Id)).ToList();
+            var scheduleMasterAdvertisers = ret.Schedules.Select(x => x.AdvertiserMasterId).ToList();
 
             var nsiPostingBooks = _NsiPostingBookService.GetNsiPostingMediaMonths();
             ret.PostingBooks = nsiPostingBooks.Select(d => new LookupDto() { Id = d.Id, Display = d.MediaMonthX }).ToList();
-            foreach (var schedule in ret.Schedules)
+            if (_IsMigrateLegacyAABEnabled.Value)
             {
-                var advertiser = ret.Advertisers.FirstOrDefault(a => a.Id == schedule.AdvertiserId);
-                var postingBook = nsiPostingBooks.FirstOrDefault(p => p.Id == schedule.PostingBookId);
+                var AabAdvertisers = _AabEngine.GetAdvertisers().Select(_MapToLoadSchedulesDto).ToList();
+                ret.AabAdvertisers = AabAdvertisers.Where(a => scheduleMasterAdvertisers.Contains(a.Id)).ToList();
+                foreach (var schedule in ret.Schedules)
+                {
+                    var aabadvertiser = ret.AabAdvertisers.FirstOrDefault(a => a.Id == schedule.AdvertiserMasterId);
+                    var postingBook = nsiPostingBooks.FirstOrDefault(p => p.Id == schedule.PostingBookId);
 
-                schedule.Advertiser = advertiser == null ? "" : advertiser.Display;
-                schedule.PostingBook = postingBook == null ? "" : postingBook.MediaMonthX;
-                schedule.PostingBookDate = postingBook == null ? (DateTime?)null : postingBook.EndDate;
+                    schedule.Advertiser = aabadvertiser == null ? "" : aabadvertiser.Display;
+                    schedule.PostingBook = postingBook == null ? "" : postingBook.MediaMonthX;
+                    schedule.PostingBookDate = postingBook == null ? (DateTime?)null : postingBook.EndDate;
+                }
             }
+            else
+            {
+                ret.Advertisers = _SmsClient.GetActiveAdvertisers().Where(a => scheduleAdvertisers.Contains(a.Id)).ToList();
+                foreach (var schedule in ret.Schedules)
+                {
+                    var advertiser = ret.Advertisers.FirstOrDefault(a => a.Id == schedule.AdvertiserId);
+                    var postingBook = nsiPostingBooks.FirstOrDefault(p => p.Id == schedule.PostingBookId);
 
+                    schedule.Advertiser = advertiser == null ? "" : advertiser.Display;
+                    schedule.PostingBook = postingBook == null ? "" : postingBook.MediaMonthX;
+                    schedule.PostingBookDate = postingBook == null ? (DateTime?)null : postingBook.EndDate;
+                }
+            }
             return ret;
         }
 
@@ -193,7 +216,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             var ret = new DetectionLoadDto
             {
-                Advertisers = _SmsClient.GetActiveAdvertisers(),
                 Quarters = _GetQuarters(),
                 PostingBooks = _NsiPostingBookService.GetNsiPostingBookMonths(),
                 InventorySources = Enum.GetValues(typeof(InventorySourceEnum))
@@ -208,6 +230,14 @@ namespace Services.Broadcast.ApplicationServices
                     .ToList(),
                 Audiences = _AudiencesCache.GetAllLookups()
             };
+            if (_IsMigrateLegacyAABEnabled.Value)
+            {
+                ret.AabAdvertisers = _AabEngine.GetAdvertisers().Select(_MapToLoadSchedulesDto).ToList();
+            }
+            else
+            {
+                ret.Advertisers = _SmsClient.GetActiveAdvertisers();
+            }
             ret.CurrentQuarter = ret.Quarters.Single(x => x.StartDate <= currentDateTime && x.EndDate >= currentDateTime);
 
             return ret;
@@ -300,6 +330,11 @@ namespace Services.Broadcast.ApplicationServices
 
         public int SaveSchedule(ScheduleSaveRequest request)
         {
+            if (_IsMigrateLegacyAABEnabled.Value)
+            {
+                var advertiserId = _AabEngine.GetAdvertisers().Where(x => x.MasterId == request.Schedule.AdvertiserMasterId).ToList().Select(a => a.Id).FirstOrDefault();
+                request.Schedule.AdvertiserId = advertiserId == null ? 0 : (int)advertiserId;
+            }
             var converter = GetScheduleConverter(request);
             var scheduleDto = request.Schedule;
 
@@ -923,6 +958,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().DeleteById(bvsFileId);
             return true;
+        }
+
+        private AabAdvertiserDto _MapToLoadSchedulesDto(AdvertiserDto advertiser)
+        {
+            return new AabAdvertiserDto
+            {
+                Id = advertiser.MasterId,
+                Display = advertiser.Name
+            };
         }
     }
 }

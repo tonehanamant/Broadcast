@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Common.Services.Repositories;
+using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
@@ -17,9 +18,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var advertisers = new List<AdvertiserDto> {new AdvertiserDto {Id = 1}, new AdvertiserDto {Id = 2}};
             var expectedReturnedItemCount = advertisers.Count;
             var aabEngine = new Mock<IAabEngine>();
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             aabEngine.Setup(s => s.GetAdvertisers())
                 .Returns(advertisers);
-            var tc = new AdvertiserService(aabEngine.Object);
+            var tc = new AdvertiserService(aabEngine.Object,dataRepositoryFactory.Object);
 
             // Act
             var result = tc.GetAdvertisers();

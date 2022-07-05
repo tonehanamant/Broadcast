@@ -14,5 +14,7 @@
         public bool DisplayBuyingLink { get; set; }
         public bool DisplayIsciMappingLink { get; set; }
         public bool DisplaySpotExceptionsLink { get; set; }
+        //This is refer by TrackerView.cshtml and ScheduleModal.cshtml
+        public bool DisplayAabAdvertiser { get; set; }
     }
 }

@@ -822,6 +822,12 @@
                     <input class="button" type="submit" value="Clear Advertisers Cache" id="txtClearAdvertisersCache" />
                 </div>
             }
+            @using (Html.BeginForm("SyncAdvertisersToSchedules", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="input-container">
+                    <input class="button" type="submit" value="Sync Advertisers" id="SyncAdvertiser" />
+                </div>
+            }
         </div>
     </div>
     <div id="migrations" class="tabcontent">

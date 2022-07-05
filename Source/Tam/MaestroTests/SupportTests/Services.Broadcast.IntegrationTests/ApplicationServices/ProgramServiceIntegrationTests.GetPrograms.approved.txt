@@ -1,6 +1,18 @@
 ﻿[
   {
     "Genre": {
+      "Display": "Special"
+    },
+    "Name": "JOHN DEERE SPECIAL"
+  },
+  {
+    "Genre": {
+      "Display": "Special"
+    },
+    "Name": "JOHN LEGEND SPECIAL"
+  },
+  {
+    "Genre": {
       "Display": "Comedy"
     },
     "Name": "Jojo Rabbit"

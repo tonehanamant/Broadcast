@@ -50,6 +50,7 @@ namespace Services.Broadcast.Repositories
         void UpdateScheduleMarketRestrictions(int scheduleId, List<int> marketIds);
         void UpdateSchedulePostingBook(int scheduleId, int postingBookId);
         DateTime GetMaxEndDate();
+        bool SyncAdvertisersToSchedules();
     }
 
     public class ScheduleRepository : BroadcastRepositoryBase, IScheduleRepository
@@ -104,6 +105,7 @@ namespace Services.Broadcast.Repositories
                         Id = s.id,
                         Name = s.name,
                         AdvertiserId = s.advertiser_id,
+                        AdvertiserMasterId = s.advertiser_master_id,
                         Estimate = s.estimate_id,
                         StartDate = s.start_date,
                         EndDate = s.end_date,
@@ -253,6 +255,7 @@ namespace Services.Broadcast.Repositories
                     {
                         ScheduleName = efSchedule.name,
                         AdvertiserId = efSchedule.advertiser_id,
+                        AdvertiserMasterId = efSchedule.advertiser_master_id,
                         EstimateId = efSchedule.estimate_id,
                         PostingBookId = efSchedule.posting_book_id,
                         Id = efSchedule.id,
@@ -718,6 +721,15 @@ namespace Services.Broadcast.Repositories
         public DateTime GetMaxEndDate()
         {
             return _InReadUncommitedTransaction(context => context.schedules.Max(s => s.end_date));
+        }
+
+        public bool SyncAdvertisersToSchedules()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                context.Database.ExecuteSqlCommand("IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'schedules' AND COLUMN_NAME= 'advertiser_master_id') BEGIN UPDATE broadcast.dbo.schedules SET broadcast.dbo.schedules.advertiser_master_id = C.master_id FROM broadcast.dbo.schedules S INNER JOIN Maestro.dbo.companies C ON S.advertiser_id = C.id WHERE S.advertiser_id = C.id END");
+                return true;
+            });
         }
     }
 }

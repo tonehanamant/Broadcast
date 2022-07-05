@@ -4,5 +4,29 @@
       "Display": "Animation"
     },
     "Name": "ANIMATION ROTATOR"
+  },
+  {
+    "Genre": {
+      "Display": "Court"
+    },
+    "Name": "Judge Mathis"
+  },
+  {
+    "Genre": {
+      "Display": "Special"
+    },
+    "Name": "Justice Matters"
+  },
+  {
+    "Genre": {
+      "Display": "Informational/News"
+    },
+    "Name": "MATTER OF FACT"
+  },
+  {
+    "Genre": {
+      "Display": "Movie"
+    },
+    "Name": "SATURDAY MATINEE"
   }
 ]
