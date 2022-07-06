@@ -2489,6 +2489,10 @@
           <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="inventory_source_name" Type="varchar" MaxLength="100" />
           <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="modified_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_plan">
           <Key>
@@ -18388,6 +18392,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plans" ToRole="spot_exceptions_recommended_plan_details" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" FromRole="spot_exceptions_recommended_plans" ToRole="spot_lengths" />
           <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="staged_out_of_specs">
           <Key>
@@ -21841,6 +21849,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_recommended_plans">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plans">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plans">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
                 <ScalarProperty Name="inventory_source_name" ColumnName="inventory_source_name" />
                 <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />

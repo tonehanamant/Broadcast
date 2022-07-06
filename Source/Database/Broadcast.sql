@@ -940,6 +940,32 @@ GO
 
 /*************************************** END BP-3101 **********************************************************************************************/
 
+/*************************************** START BP-4306 **********************************************************************************************/
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' 
+AND (COLUMN_NAME= 'created_by'))
+BEGIN	
+
+	DELETE FROM spot_exceptions_recommended_plan_decision
+	DELETE FROM spot_exceptions_recommended_plan_details
+	DELETE FROM spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD created_by VARCHAR(100) NOT NULL
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD created_at datetime NOT NULL
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD modified_by VARCHAR(100) NOT NULL
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD modified_at datetime NOT NULL
+END
+
+GO
+/*************************************** END BP-4306 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

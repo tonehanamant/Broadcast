@@ -41,6 +41,10 @@ namespace EntityFrameworkMapping.Broadcast
         public string execution_id_external { get; set; }
         public string inventory_source_name { get; set; }
         public string spot_unique_hash_external { get; set; }
+        public string created_by { get; set; }
+        public System.DateTime created_at { get; set; }
+        public string modified_by { get; set; }
+        public System.DateTime modified_at { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
