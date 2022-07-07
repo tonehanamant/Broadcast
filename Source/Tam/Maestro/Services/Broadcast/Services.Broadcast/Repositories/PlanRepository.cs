@@ -459,7 +459,12 @@ namespace Services.Broadcast.Repositories
                               .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
                           .Single(x => x.id == plan.Id, "Invalid plan id");
                        }
-
+                       var isCampaignDifferent = plan.CampaignId != planEntity.campaign_id ? true : false;
+                       if (isCampaignDifferent)
+                       {
+                           plan.Id = 0;
+                           planEntity = new plan();
+                       }
                        //there can be only 1 draft on a plan, so we're doing Single here
                        var draftVersion = planEntity.plan_versions.Where(x => x.is_draft == true).SingleOrDefault();
                        var isDraftExist = draftVersion != null;
@@ -475,8 +480,9 @@ namespace Services.Broadcast.Repositories
                            draftVersion.modified_by = createdBy;
                            draftVersion.modified_date = createdDate;
                        }
-
+                      
                        _MapFromDto(plan, context, planEntity, draftVersion);
+                      
 
                        if (plan.Id == 0)
                        {
