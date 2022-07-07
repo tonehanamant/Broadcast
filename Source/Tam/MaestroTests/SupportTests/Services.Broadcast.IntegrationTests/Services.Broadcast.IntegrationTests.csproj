@@ -447,6 +447,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="UnitTests\ApplicationServices\SpotExceptionsSyncServiceUnitTests.cs" />
+    <Compile Include="UnitTests\Cache\GeneralLockingCacheUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\SpotExceptionsIngestApiResponseExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\BroadcastWeeksHelperTests.cs" />
     <Compile Include="UnitTests\Helpers\CompressionHelperTest.cs" />

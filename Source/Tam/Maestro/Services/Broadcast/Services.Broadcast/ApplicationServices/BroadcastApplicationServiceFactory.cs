@@ -294,6 +294,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ISpotExceptionsSyncService, SpotExceptionsSyncService>();
             unityContainer.RegisterType<ISpotExceptionsIngestApiClient, SpotExceptionsIngestApiClient>();
 
+            //locking service
+            unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();
+
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
 

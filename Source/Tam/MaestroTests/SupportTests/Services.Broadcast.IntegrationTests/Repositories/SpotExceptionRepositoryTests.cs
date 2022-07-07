@@ -63,6 +63,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
                     InventorySourceName = "Open Market",
+                    SpotUniqueHashExternal = "Test",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -99,6 +100,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
                     InventorySourceName = "TVB",
+                    SpotUniqueHashExternal = "Test",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -135,6 +137,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
                     InventorySourceName = "TTWN",
+                    SpotUniqueHashExternal = "Test",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -171,6 +174,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
                     InventorySourceName = "Open Market",
+                    SpotUniqueHashExternal = "Test",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -205,7 +209,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     DaypartId = 70618,
                     IngestedBy = ingestedBy,
                     IngestedAt = ingestedDateTime,
-                    InventorySourceName = "Open Market"
+                    InventorySourceName = "Open Market",
+                    SpotUniqueHashExternal = "Test"
                 }
             };
 
@@ -413,6 +418,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
                     InventorySourceName = "Open Market",
+                    SpotUniqueHashExternal = "Test",
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto

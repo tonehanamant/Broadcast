@@ -569,6 +569,7 @@ namespace Services.Broadcast.Repositories
                 IngestedAt = spotExceptionsRecommendedPlanEntity.ingested_at,
                 IngestedBy = spotExceptionsRecommendedPlanEntity.ingested_by,
                 InventorySourceName = spotExceptionsRecommendedPlanEntity.inventory_source_name,
+                SpotUniqueHashExternal = spotExceptionsRecommendedPlanEntity.spot_unique_hash_external,
                 SpotExceptionsRecommendedPlanDetails = spotExceptionsRecommendedPlanEntity.spot_exceptions_recommended_plan_details.Select(spotExceptionsRecommendedPlanDetailDb =>
                 {
                     var recommendedPlan = spotExceptionsRecommendedPlanDetailDb.plan;
@@ -779,6 +780,7 @@ namespace Services.Broadcast.Repositories
                     unique_id_external = ++uniqueExternalId,
                     execution_id_external = executionId.ToString(),
                     inventory_source_name = recommendedPlan.InventorySourceName,
+                    spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
                     spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(recommendedPlanDetails => new spot_exceptions_recommended_plan_details()
                     {
                         recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,

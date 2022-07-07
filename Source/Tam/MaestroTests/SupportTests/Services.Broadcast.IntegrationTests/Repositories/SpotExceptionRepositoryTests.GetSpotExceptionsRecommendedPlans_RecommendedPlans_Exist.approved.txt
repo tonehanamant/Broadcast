@@ -81,6 +81,7 @@
       "Length": 5
     },
     "SpotLengthId": null,
+    "SpotUniqueHashExternal": "Test",
     "StationLegacyCallLetters": "KOB"
   },
   {
@@ -157,6 +158,7 @@
       "Length": 5
     },
     "SpotLengthId": null,
+    "SpotUniqueHashExternal": "Test",
     "StationLegacyCallLetters": "KHGI"
   },
   {
@@ -196,6 +198,7 @@
       "Length": 150
     },
     "SpotLengthId": null,
+    "SpotUniqueHashExternal": "Test",
     "StationLegacyCallLetters": "WDAY"
   }
 ]

@@ -10,18 +10,27 @@ using Tam.Maestro.Services.Clients;
 using ApprovalTests;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     public class BroadcastLockingServiceUnitTest
     {
         private Mock<ISMSClient> _SmsClientMock;
+        private Mock<IGeneralLockingApiClient> _GeneralLockingApiClient;
         private Mock<IBroadcastLockingService> _LockingManagerApplicationServiceMock;
-
+        private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
+        private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper;
         protected BroadcastLockingService _GetBroadcastLockingService()
         {
+            
             return new BroadcastLockingService(
-                _SmsClientMock.Object);
+                _SmsClientMock.Object,
+                _GeneralLockingApiClient.Object,
+                _ConfigurationSettingsHelper.Object,
+                _FeatureToggleHelper.Object
+                );
         }
 
         [SetUp]
@@ -29,7 +38,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             _LockingManagerApplicationServiceMock = new Mock<IBroadcastLockingService>();
             _SmsClientMock = new Mock<ISMSClient>();
-
+            _GeneralLockingApiClient = new Mock<IGeneralLockingApiClient>();
+            _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
         }
         [Test]
         public void GetLockObject_WhenNotLocked()

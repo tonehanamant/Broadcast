@@ -1,5 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Security.Principal;
@@ -18,57 +20,117 @@ namespace Services.Broadcast.ApplicationServices
         BroadcastLockResponse LockObject(string key);
         BroadcastReleaseLockResponse ReleaseObject(string key);
     }
-
-    public class BroadcastLockingService : IBroadcastLockingService
+    /// <summary>
+    /// Represents the broadcast locking service with smsclient and general locking microserivce managed by feature toggle
+    /// </summary>
+    public class BroadcastLockingService : BroadcastBaseClass, IBroadcastLockingService
     {
         private readonly ISMSClient _SmsClient;
+        private readonly IGeneralLockingApiClient _GeneralLockingApiClient;
         private readonly ConcurrentDictionary<string, object> _NotUserBasedLockObjects;
-
-        public BroadcastLockingService(ISMSClient smsClient)
+        private readonly Lazy<bool> _IsLockingMigrationEnabled;        
+        public BroadcastLockingService(ISMSClient smsClient, IGeneralLockingApiClient generalLockingApiClient
+            , IConfigurationSettingsHelper configurationSettingsHelper,
+            IFeatureToggleHelper featureToggleHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SmsClient = smsClient;
+            _GeneralLockingApiClient = generalLockingApiClient;
             _NotUserBasedLockObjects = new ConcurrentDictionary<string, object>();
+            _IsLockingMigrationEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_LOCKING_MIGRATION));
             System.Diagnostics.Debug.WriteLine("Initializing BroadcastLockingManagerApplicationService");
         }
 
         public BroadcastLockResponse LockObject(string key)
         {
             BroadcastLockResponse broadcastLockResponse = null;
-            var lockResponse = _SmsClient.LockObject(key, GetUserSID());
-            if (lockResponse != null)
+            if(_IsLockingMigrationEnabled.Value)
             {
-                broadcastLockResponse = new BroadcastLockResponse
+                LockingApiRequest lockingRequest = KeyHelper.GetLokcingRequest(key);
+                var lockResponse = _GeneralLockingApiClient.LockObject(lockingRequest);
+                if (lockResponse != null)
                 {
-                    Error = lockResponse.Error,
-                    Key = lockResponse.Key,
-                    LockedUserId = lockResponse.LockedUserId,
-                    LockedUserName = lockResponse.LockedUserName,
-                    LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
-                    Success = lockResponse.Success
-                };
+                    broadcastLockResponse = new BroadcastLockResponse
+                    {
+                        Error = lockResponse.Error,
+                        Key = lockResponse.Key,
+                        LockedUserId = lockResponse.LockedUserId,
+                        LockedUserName = lockResponse.LockedUserName,
+                        LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
+                        Success = lockResponse.Success
+                    };
+                }
             }
+            else
+            {
+                var lockResponse = _SmsClient.LockObject(key, GetUserSID());
+                if (lockResponse != null)
+                {
+                    broadcastLockResponse = new BroadcastLockResponse
+                    {
+                        Error = lockResponse.Error,
+                        Key = lockResponse.Key,
+                        LockedUserId = lockResponse.LockedUserId,
+                        LockedUserName = lockResponse.LockedUserName,
+                        LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
+                        Success = lockResponse.Success
+                    };
+                }
+            }
+            
             return broadcastLockResponse;
         }
 
         public BroadcastReleaseLockResponse ReleaseObject(string key)
         {
             BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
-            var releaseLockResponse = _SmsClient.ReleaseObject(key, GetUserSID());
-            if (releaseLockResponse != null)
+            if (_IsLockingMigrationEnabled.Value)
             {
-                broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                string[] lockObject = key.Split(':');
+                if(lockObject.Length > 0)
                 {
-                    Error = releaseLockResponse.Error,
-                    Key = releaseLockResponse.Key,
-                    Success = releaseLockResponse.Success
-                };
+                    var releaseLockResponse = _GeneralLockingApiClient.ReleaseObject(lockObject[0].ToString(), lockObject[1].ToString());
+                    if(releaseLockResponse != null)
+                    {
+                        broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                        {
+                            Error = releaseLockResponse.Error,
+                            Key = releaseLockResponse.Key,
+                            Success = releaseLockResponse.Success
+                        };
+                    }
+                }
+                return broadcastReleaseLockResponse;
             }
-            return broadcastReleaseLockResponse;
+            else
+            {
+                var releaseLockResponse = _SmsClient.ReleaseObject(key, GetUserSID());
+                if (releaseLockResponse != null)
+                {
+                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+                    {
+                        Error = releaseLockResponse.Error,
+                        Key = releaseLockResponse.Key,
+                        Success = releaseLockResponse.Success
+                    };
+                }
+                return broadcastReleaseLockResponse;
+            }
         }
 
         public bool IsObjectLocked(string key)
         {
-            return _SmsClient.IsObjectLocked(key, GetUserSID());
+            if (_IsLockingMigrationEnabled.Value)
+            {
+                string[] lockObject = key.Split(':');
+                string objectType = lockObject[0].ToString();
+                string objectId = lockObject[1].ToString();
+                return _GeneralLockingApiClient.IsObjectLocked(objectType, objectId);
+            }
+            else
+            {
+                return _SmsClient.IsObjectLocked(key, GetUserSID());
+            }
+                
         }
 
         private String GetUserSID()

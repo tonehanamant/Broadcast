@@ -1,4 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Security.Principal;
@@ -14,16 +16,23 @@ namespace Services.Broadcast.ApplicationServices
 
         LockResponse GetLockObject(string key);
     }
-
-    public class BroadcastLockingManagerApplicationService : IBroadcastLockingManagerApplicationService
+    /// <summary>
+    /// Represents the BroadcastLockingManagerApplicationService
+    /// </summary>
+    public class BroadcastLockingManagerApplicationService : BroadcastBaseClass, IBroadcastLockingManagerApplicationService
     {
         private readonly ISMSClient _SmsClient;
+        private readonly IGeneralLockingApiClient _GeneralLockingApiClient;
         private readonly ConcurrentDictionary<string, object> _NotUserBasedLockObjects;
-
-        public BroadcastLockingManagerApplicationService(ISMSClient smsClient)
+        private readonly Lazy<bool> _IsLockingMigrationEnabled;
+        public BroadcastLockingManagerApplicationService(ISMSClient smsClient,IGeneralLockingApiClient generalLockingApiClient
+             , IConfigurationSettingsHelper configurationSettingsHelper,
+            IFeatureToggleHelper featureToggleHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SmsClient = smsClient;
+            _GeneralLockingApiClient = generalLockingApiClient;
             _NotUserBasedLockObjects = new ConcurrentDictionary<string, object>();
+            _IsLockingMigrationEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_LOCKING_MIGRATION));
             System.Diagnostics.Debug.WriteLine("Initializing BroadcastLockingManagerApplicationService");
         }
 
@@ -39,7 +48,17 @@ namespace Services.Broadcast.ApplicationServices
 
         public bool IsObjectLocked(string key)
         {
-            return _SmsClient.IsObjectLocked(key, GetUserSID());
+            if(_IsLockingMigrationEnabled.Value)
+            {
+                string[] lockObject = key.Split(':');
+                string objectType = lockObject[0].ToString();
+                string objectId = lockObject[1].ToString();
+                return _GeneralLockingApiClient.IsObjectLocked(objectType, objectId);
+            }
+            else
+            {
+                return _SmsClient.IsObjectLocked(key, GetUserSID());
+            }
         }
 
         private String GetUserSID()

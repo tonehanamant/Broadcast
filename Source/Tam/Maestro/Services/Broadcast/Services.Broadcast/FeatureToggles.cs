@@ -39,6 +39,13 @@
         public static string ENABLE_BUYING_NAVIGATION_PANEL_TOOLS = "broadcast-enable-buying-navigation-panel-tools";
         public static string ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS = "buying-auto-plan-status-transition-promotes-buying-results";
         public static string ENABLE_UM_REEL_ROSTER = "broadcast-enable-um-reel-roster";
+        /// <summary>
+        /// This feature toggle is used to check new aab service
+        /// </summary>
         public static string ENABLE_MIGRATE_LEGACY_AAB = "broadcast-migrate-legacy-aab";
+        /// <summary>
+        /// This feature toggle is used to check the new locking microservice
+        /// </summary>
+        public static string ENABLE_LOCKING_MIGRATION = "broadcast-enable-locking-migration";
     }
 }

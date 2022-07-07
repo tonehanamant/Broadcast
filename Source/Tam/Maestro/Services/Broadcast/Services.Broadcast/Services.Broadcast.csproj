@@ -534,10 +534,13 @@
     <Compile Include="ApplicationServices\SpotExceptionsSyncService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
+    <Compile Include="Cache\LockingCache.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
     <Compile Include="Clients\CampaignServiceApiClient.cs" />
     <Compile Include="Clients\CampaignServiceApiConfigKeys.cs" />
     <Compile Include="Clients\CadentSecuredClientBase.cs" />
+    <Compile Include="Clients\GeneralLockingApiClient.cs" />
+    <Compile Include="Clients\GeneralLockingApiClientConfigKeys.cs" />
     <Compile Include="Clients\SpotExceptionsIngestApiClient.cs" />
     <Compile Include="Clients\SpotExceptionsIngestApiConfigKeys.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
@@ -578,6 +581,13 @@
     <Compile Include="Entities\Isci\PlanMappedIsciDetailsDto.cs" />
     <Compile Include="Clients\PricingJobQueueApiClient.cs" />
     <Compile Include="Entities\Enums\BudgetCpmLeverEnum.cs" />
+    <Compile Include="Entities\LockingApiRequest.cs" />
+    <Compile Include="Entities\Locking\LockingApIItemResponseTyped.cs" />
+    <Compile Include="Entities\Locking\LockingApiResponse.cs" />
+    <Compile Include="Entities\Locking\LockingResult.cs" />
+    <Compile Include="Entities\Locking\LockingResultResponse.cs" />
+    <Compile Include="Entities\Locking\ReleaseApiResponse.cs" />
+    <Compile Include="Entities\Locking\ReleaseLockResponse.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryRawDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationDaypartDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandInventoryStationsDto.cs" />
