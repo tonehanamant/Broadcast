@@ -221,6 +221,10 @@ namespace Services.Broadcast.Repositories
                         unique_id_external = ++uniqueExternalIdRp,
                         execution_id_external = executionId.ToString(),
                         inventory_source_name = recommendedPlan.InventorySourceName,
+                        created_by = recommendedPlan.CreatedBy,
+                        created_at = recommendedPlan.CreatedAt,
+                        modified_by = recommendedPlan.ModifiedBy,
+                        modified_at = recommendedPlan.ModifiedAt,
                         spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails
                             .Select(recommendedPlanDetails =>
                             {

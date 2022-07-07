@@ -224,6 +224,14 @@ namespace Services.Broadcast.ApplicationServices
             List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans = _GetSpotExceptionsRecommendedPlansMock();
             List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs = _GetSpotExceptionsOutOfSpecsMock();
 
+            spotExceptionsRecommendedPlans.ForEach(s =>
+            {
+                s.CreatedAt = DateTime.Now;
+                s.CreatedBy = "Mock Data";
+                s.ModifiedAt = DateTime.Now;
+                s.ModifiedBy = "Mock Date";
+            });
+
             spotExceptionsOutOfSpecs.ForEach(s =>
             {
                 s.CreatedAt = DateTime.Now;

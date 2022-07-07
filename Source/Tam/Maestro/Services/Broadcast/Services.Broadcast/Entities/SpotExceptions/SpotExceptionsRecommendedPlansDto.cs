@@ -37,6 +37,10 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public DaypartDetailDto DaypartDetail { get; set; }
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime ModifiedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
         public List<SpotExceptionsRecommendedPlanDetailsDto> SpotExceptionsRecommendedPlanDetails { get; set; }
         public string InventorySourceName { get; set; }
     }
