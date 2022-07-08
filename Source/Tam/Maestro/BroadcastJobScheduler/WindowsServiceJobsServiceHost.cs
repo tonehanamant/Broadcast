@@ -16,7 +16,7 @@ namespace BroadcastJobScheduler
         private readonly IInventoryAggregationQueueMonitor _InventoryAggregationQueueMonitor;
 
         private readonly IStationService _StationService;
-        private readonly IReelIsciIngestService _IsciIngestService;
+        //private readonly IReelIsciIngestService _IsciIngestService;
         private readonly IPlanService _IPlanService;
 
         public WindowsServiceJobsServiceHost(IRecurringJobManager recurringJobManager,
@@ -31,7 +31,7 @@ namespace BroadcastJobScheduler
             _InventoryAggregationQueueMonitor = inventoryAggregationQueueMonitor;
 
             _StationService = stationService;
-            _IsciIngestService = isciIngestService;
+           // _IsciIngestService = isciIngestService;
             _IPlanService = planService;
         }
 
@@ -57,12 +57,12 @@ namespace BroadcastJobScheduler
                 TimeZoneInfo.Local,
                 queue: "stationsupdate");
 
-            _RecurringJobManager.AddOrUpdate(
-               "reel-isci-ingest",
-               () => _IsciIngestService.PerformReelIsciIngest(RECURRING_JOBS_USERNAME),
-               Cron.Daily(_ReelIsciiUpdateJobRunHour()),
-               TimeZoneInfo.Local,
-               queue: "reelisciingest");
+            //_RecurringJobManager.AddOrUpdate(
+            //   "reel-isci-ingest",
+            //   () => _IsciIngestService.PerformReelIsciIngest(RECURRING_JOBS_USERNAME),
+            //   Cron.Daily(_ReelIsciiUpdateJobRunHour()),
+            //   TimeZoneInfo.Local,
+            //   queue: "reelisciingest");
 
             _RecurringJobManager.AddOrUpdate(
                 "plan-automatic-status-transition-v2",
@@ -76,10 +76,10 @@ namespace BroadcastJobScheduler
         {
             return AppSettingHelper.GetConfigSetting("StationImportJobRunHour", 0);
         }
-        private int _ReelIsciiUpdateJobRunHour()
-        {
-            return AppSettingHelper.GetConfigSetting("ReelIsciiImportJobRunHour", 1);
-        }
+        //private int _ReelIsciiUpdateJobRunHour()
+        //{
+        //    return AppSettingHelper.GetConfigSetting("ReelIsciiImportJobRunHour", 1);
+        //}
         private int _GetPlanAutomaticStatusTransitionJobRunHour()
         {
             return AppSettingHelper.GetConfigSetting("PlanAutomaticStatusTransitionJobRunHour", 0);
