@@ -55,9 +55,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         _instance = new UnityContainer();
 
-                        _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
-                        _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
-                        _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
+                        _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);                        
                         _instance.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
 
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
@@ -296,6 +294,10 @@ namespace Services.Broadcast.ApplicationServices
 
             //locking service
             unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();
+            unityContainer.RegisterType<IBroadcastLockingService, BroadcastLockingService>();
+            unityContainer.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
+            
+
 
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
