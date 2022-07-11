@@ -71,6 +71,8 @@ namespace Services.Broadcast.IntegrationTests
 
                     _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelperStub>();
 
+                    _instance.RegisterType<ILockingCacheStub, LockingCacheStub>();
+
                 }
             }
         }

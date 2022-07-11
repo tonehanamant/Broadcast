@@ -534,7 +534,6 @@
     <Compile Include="ApplicationServices\SpotExceptionsSyncService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
-    <Compile Include="Cache\LockingCache.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
     <Compile Include="Clients\CampaignServiceApiClient.cs" />
     <Compile Include="Clients\CampaignServiceApiConfigKeys.cs" />

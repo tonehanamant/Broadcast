@@ -446,6 +446,7 @@
     <None Include="Files\Campaign export\BasePlanForCampaignExportUnitTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Stubs\LockingCacheStub.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptionsSyncServiceUnitTests.cs" />
     <Compile Include="UnitTests\Cache\GeneralLockingCacheUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\SpotExceptionsIngestApiResponseExtensionsUnitTests.cs" />

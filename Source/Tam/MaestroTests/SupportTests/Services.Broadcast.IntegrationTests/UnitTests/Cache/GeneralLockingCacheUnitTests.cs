@@ -5,6 +5,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Locking;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using System.Net.Http;
 
@@ -26,8 +27,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var client = new Mock<HttpClient>();
             generalLockingApiclient.Setup(x => x.LockObject(lockRequest))
                 .Returns(lockResponse);
-
-            var tc = new LockingCache(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
+            
+            var tc = new LockingCacheStub(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
             // Act
             var result = tc.LockObject(lockRequest);
             // Assert
@@ -48,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var client = new Mock<HttpClient>();
             generalLockingApiclient.Setup(x => x.ReleaseObject(objectType, objectId))
                 .Returns(releaseResponse);
-            var tc = new LockingCache(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
+            var tc = new LockingCacheStub(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
             // Act
             var result = tc.ReleaseObject(objectType, objectId);
             // Assert
@@ -69,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             var client = new Mock<HttpClient>();
             generalLockingApiclient.Setup(x => x.IsObjectLocked(objectType, objectId))
                 .Returns(releaseResponse);
-            var tc = new LockingCache(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
+            var tc = new LockingCacheStub(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
             // Act
             var result = tc.IsObjectLocked(objectType, objectId);
             // Assert

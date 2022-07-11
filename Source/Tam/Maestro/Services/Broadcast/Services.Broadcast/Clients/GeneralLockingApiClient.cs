@@ -74,11 +74,11 @@ namespace Services.Broadcast.Clients
                 var lockingApiObjectResponse = result.Result.Result;
                 LockingResultResponse lockingResult = new LockingResultResponse()
                 {
-                    Key = _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId),                    
+                    Key = lockingApiObjectResponse != null ? _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId) : null,                    
                     Success = lockingApiItemResponse.Success,
-                    LockTimeoutInSeconds = lockingApiObjectResponse.expiresIn,
-                    LockedUserId = lockingApiItemResponse.TransactionId,
-                    LockedUserName = lockingApiObjectResponse.owner,
+                    LockTimeoutInSeconds = lockingApiObjectResponse != null ? lockingApiObjectResponse.expiresIn: 0,
+                    LockedUserId = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null,
+                    LockedUserName = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner: null,
                     Error = lockingApiItemResponse.Message
                 };
                 return lockingResult;
@@ -174,12 +174,12 @@ namespace Services.Broadcast.Clients
                 var lockingApiObjectResponse = result.Result.Result;
                 var lockingResult = new LockingResultResponse
                 {
-                    Key = _GetLockingKey(objectType,objectId),
-                    Success = lockingApiObjectResponse == null ? false : lockingApiItemResponse.Success,
-                    LockedUserId = lockingApiItemResponse.TransactionId,
-                    Error = lockingApiItemResponse.Message,
+                    Key = lockingApiObjectResponse != null ? _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId) : null,
+                    Success = lockingApiItemResponse.Success,
                     LockTimeoutInSeconds = lockingApiObjectResponse != null ? lockingApiObjectResponse.expiresIn : 0,
-                    LockedUserName = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null
+                    LockedUserId = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null,
+                    LockedUserName = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null,
+                    Error = lockingApiItemResponse.Message
                 };
                 return lockingResult;
             }

@@ -1,16 +1,17 @@
-﻿using Services.Broadcast.Clients;
+﻿using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Locking;
 using Services.Broadcast.Helpers;
 using System;
 using System.Runtime.Caching;
 
-namespace Services.Broadcast.Cache
+namespace Services.Broadcast.IntegrationTests.Stubs
 {
     /// <summary>
     /// This interface contains the methods which supports the unit test cases for General locking microservice
     /// </summary>
-    public interface ILockingCache
+    public interface ILockingCacheStub
     {
         /// <summary>
         /// Supports the unit test case for the locking an object
@@ -33,10 +34,7 @@ namespace Services.Broadcast.Cache
         /// <returns>Returns True if object is locked otherwise false</returns>
         bool IsObjectLocked(string objectType, string objectId);
     }
-    /// <summary>
-    /// This class contains the methods which supports the unit test cases for General locking microservice
-    /// </summary>
-    public class LockingCache : BroadcastBaseClass, ILockingCache
+    public class LockingCacheStub : BroadcastBaseClass, ILockingCacheStub
     {
         private const string CACHE_NAME_Lock = "Lock";
         private const string CACHE_NAME_Release = "Release";
@@ -46,7 +44,7 @@ namespace Services.Broadcast.Cache
         private readonly BaseMemoryCache<bool> _ViewLockedCache = new BaseMemoryCache<bool>(CACHE_NAME_ObjectLocked);
         private readonly IGeneralLockingApiClient _GeneralLockingApiClient;
         private readonly Lazy<int> _CacheItemTtlSeconds;
-        public LockingCache(IGeneralLockingApiClient generalLockingApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+        public LockingCacheStub(IGeneralLockingApiClient generalLockingApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _GeneralLockingApiClient = generalLockingApiClient;
@@ -88,7 +86,7 @@ namespace Services.Broadcast.Cache
         {
             var policy = _GetCacheItemPolicy();
             var result = _ViewLockedCache.GetOrCreate(CACHE_NAME_ObjectLocked, () =>
-            _GeneralLockingApiClient.IsObjectLocked(objectType, objectId), policy);            
+            _GeneralLockingApiClient.IsObjectLocked(objectType, objectId), policy);
             return result;
         }
         private int _GetCacheItemTtlSeconds()
