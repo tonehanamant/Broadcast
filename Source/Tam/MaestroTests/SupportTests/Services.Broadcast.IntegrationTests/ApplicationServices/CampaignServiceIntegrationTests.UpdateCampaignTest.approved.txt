@@ -14,6 +14,7 @@
   "HHCPM": 2500.0,
   "HHImpressions": 5500.0,
   "HHRatingPoints": 23.0,
+  "MaxFluidityPercent": null,
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2019-05-14T00:00:00",
   "Name": "Updated name of Campaign1",
@@ -28,5 +29,8 @@
       "Count": 1,
       "PlanStatus": 4
     }
-  ]
+  ],
+  "UnifiedCampaignLastReceivedAt": null,
+  "UnifiedCampaignLastSentAt": null,
+  "UnifiedId": null
 }

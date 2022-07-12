@@ -15,6 +15,9 @@
     "SpotLengthValues": [
       30
     ],
-    "Title": "New Plan"
+    "Title": "New Plan",
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedTacticLineId": null
   }
 ]

@@ -16,5 +16,8 @@ namespace Services.Broadcast.Entities.Isci
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
         public List<string> Iscis { get; set; } = new List<string>();
+        public string UnifiedTacticLineId { get; set; }
+        public DateTime? UnifiedCampaignLastSentAt { get; set; }
+        public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
     }
 }

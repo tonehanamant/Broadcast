@@ -24,6 +24,7 @@
     "HHImpressions": null,
     "HHRatingPoints": null,
     "Id": 240,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "PS - Campaign",
@@ -115,7 +116,10 @@
         "Count": 1,
         "PlanStatus": 5
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -142,6 +146,7 @@
     "HHImpressions": null,
     "HHRatingPoints": null,
     "Id": 242,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "ST_04-05",
@@ -191,6 +196,9 @@
         "Count": 1,
         "PlanStatus": 6
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   }
 ]

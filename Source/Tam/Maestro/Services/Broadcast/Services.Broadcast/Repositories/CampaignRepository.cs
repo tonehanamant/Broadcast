@@ -128,7 +128,11 @@ namespace Services.Broadcast.Repositories
                 created_by = createdBy,
                 created_date = createdDate,
                 modified_date = campaignDto.ModifiedDate,
-                modified_by = campaignDto.ModifiedBy
+                modified_by = campaignDto.ModifiedBy,
+                unified_id = campaignDto.UnifiedId,
+                max_fluidity_percent = campaignDto.MaxFluidityPercent,
+                unified_campaign_last_sent_at = campaignDto.UnifiedCampaignLastSentAt,
+                unified_campaign_last_received_at = campaignDto.UnifiedCampaignLastReceivedAt
             };
 
             return _InReadUncommitedTransaction(
@@ -156,6 +160,10 @@ namespace Services.Broadcast.Repositories
                    existingCampaign.notes = campaignDto.Notes;
                    existingCampaign.modified_by = campaignDto.ModifiedBy;
                    existingCampaign.modified_date = campaignDto.ModifiedDate;
+                   existingCampaign.unified_id = campaignDto.UnifiedId;
+                   existingCampaign.max_fluidity_percent = campaignDto.MaxFluidityPercent;
+                   existingCampaign.unified_campaign_last_sent_at = campaignDto.UnifiedCampaignLastSentAt;
+                   existingCampaign.unified_campaign_last_received_at = campaignDto.UnifiedCampaignLastReceivedAt;
 
                    context.SaveChanges();
 
@@ -321,6 +329,10 @@ namespace Services.Broadcast.Repositories
                 AdvertiserMasterId = campaign.advertiser_master_id,
                 AgencyId = campaign.agency_id,
                 AgencyMasterId = campaign.agency_master_id,
+                MaxFluidityPercent = campaign.max_fluidity_percent,
+                UnifiedId = campaign.unified_id,
+                UnifiedCampaignLastSentAt = campaign.unified_campaign_last_sent_at,
+                UnifiedCampaignLastReceivedAt = campaign.unified_campaign_last_received_at,
                 Plans = planVersions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle) && y.id == (IsCampaignAndCampaignSummary == false ? y.plan.latest_version_id : y.id))
                     .Select(version =>
                     {

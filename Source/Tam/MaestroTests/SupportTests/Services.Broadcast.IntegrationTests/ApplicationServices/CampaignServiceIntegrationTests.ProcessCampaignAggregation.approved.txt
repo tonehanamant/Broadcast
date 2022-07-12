@@ -14,6 +14,7 @@
   "HHCPM": 2500.0,
   "HHImpressions": 5500.0,
   "HHRatingPoints": 23.5,
+  "MaxFluidityPercent": null,
   "ModifiedBy": "CROSSMW\\bbotelho",
   "ModifiedDate": "2019-05-13T00:00:00",
   "Name": "Test Campaign 2",
@@ -91,5 +92,8 @@
       "Count": 2,
       "PlanStatus": 6
     }
-  ]
+  ],
+  "UnifiedCampaignLastReceivedAt": null,
+  "UnifiedCampaignLastSentAt": null,
+  "UnifiedId": null
 }

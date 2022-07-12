@@ -15,6 +15,7 @@
   "HHImpressions": 77638886.0,
   "HHRatingPoints": 63.699999999999989,
   "Id": 1,
+  "MaxFluidityPercent": null,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-10-17T00:00:00",
   "Name": "Test Campaign 1",
@@ -641,5 +642,8 @@
       "Count": 1,
       "PlanStatus": 7
     }
-  ]
+  ],
+  "UnifiedCampaignLastReceivedAt": null,
+  "UnifiedCampaignLastSentAt": null,
+  "UnifiedId": null
 }

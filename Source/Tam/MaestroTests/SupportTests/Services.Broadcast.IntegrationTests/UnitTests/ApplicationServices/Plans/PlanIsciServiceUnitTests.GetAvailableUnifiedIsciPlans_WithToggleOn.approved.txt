@@ -10,9 +10,9 @@
         "Iscis": [],
         "SpotLengthsString": ":15",
         "Title": "Colgate Daytime Upfront",
-        "UnifiedCampaignLastReceivedAt": null,
-        "UnifiedCampaignLastSentAt": null,
-        "UnifiedTacticLineId": null
+        "UnifiedCampaignLastReceivedAt": "2021-07-15T00:00:00",
+        "UnifiedCampaignLastSentAt": "2021-07-15T00:00:00",
+        "UnifiedTacticLineId": "4CDA98D1-2F34-4B72-A4AD-72A012817E3C"
       }
     ]
   },

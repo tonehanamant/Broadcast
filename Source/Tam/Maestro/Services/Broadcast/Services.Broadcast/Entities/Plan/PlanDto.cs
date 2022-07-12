@@ -538,6 +538,9 @@ namespace Services.Broadcast.Entities.Plan
         public double? FluidityPercentage { get; set; }
         public int? FluidityCategory { get; set; }
         public int? FluidityChildCategory { get; set; }
+        public string UnifiedTacticLineId { get; set; }
+        public DateTime? UnifiedCampaignLastSentAt { get; set; }
+        public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
     }
 
     public class PlanDto_v2 : PlanDto

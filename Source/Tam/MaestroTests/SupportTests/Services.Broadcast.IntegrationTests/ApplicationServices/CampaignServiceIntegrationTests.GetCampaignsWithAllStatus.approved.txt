@@ -23,6 +23,7 @@
     "HHCPM": 2500.0,
     "HHImpressions": 5500.0,
     "HHRatingPoints": 23.5,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "integration_test",
     "ModifiedDate": "2020-01-01T00:00:00",
     "Name": "Test Campaign 1",
@@ -657,7 +658,10 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -683,6 +687,7 @@
     "HHCPM": 7.40250000000001,
     "HHImpressions": 5106382978.7234049,
     "HHRatingPoints": 4632.9795669926189,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "Sebastian Roibu",
     "ModifiedDate": "2019-11-20T14:54:10.593",
     "Name": "Test Gorilla Glue",
@@ -851,7 +856,10 @@
         "Count": 1,
         "PlanStatus": 6
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -877,6 +885,7 @@
     "HHCPM": 2500.0,
     "HHImpressions": 5500.0,
     "HHRatingPoints": 23.5,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-08-27T00:00:00",
     "Name": "Test Campaign 4",
@@ -899,7 +908,10 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -925,6 +937,7 @@
     "HHCPM": 2500.0,
     "HHImpressions": 5500.0,
     "HHRatingPoints": 23.5,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "CROSSMW\\bbotelho",
     "ModifiedDate": "2019-05-13T00:00:00",
     "Name": "Test Campaign 2",
@@ -1002,7 +1015,10 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -1028,6 +1044,7 @@
     "HHCPM": 2500.0,
     "HHImpressions": 5500.0,
     "HHRatingPoints": 23.5,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "IntegrationTestUser",
     "ModifiedDate": "2017-06-05T00:00:00",
     "Name": "Test Campaign 3",
@@ -1050,6 +1067,9 @@
         "Count": 2,
         "PlanStatus": 6
       }
-    ]
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   }
 ]

@@ -219,6 +219,10 @@
           <Property Name="notes" Type="varchar" MaxLength="1024" />
           <Property Name="agency_master_id" Type="uniqueidentifier" />
           <Property Name="advertiser_master_id" Type="uniqueidentifier" />
+          <Property Name="unified_id" Type="varchar" MaxLength="50" />
+          <Property Name="max_fluidity_percent" Type="int" />
+          <Property Name="unified_campaign_last_sent_at" Type="datetime2" Precision="7" />
+          <Property Name="unified_campaign_last_received_at" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="custom_daypart_organizations">
           <Key>
@@ -1628,6 +1632,9 @@
           <Property Name="plan_mode" Type="int" Nullable="false" />
           <Property Name="deleted_by" Type="varchar" MaxLength="100" />
           <Property Name="deleted_at" Type="datetime2" Precision="7" />
+          <Property Name="unified_tactic_line_id" Type="varchar" MaxLength="50" />
+          <Property Name="unified_campaign_last_sent_at" Type="datetime2" Precision="7" />
+          <Property Name="unified_campaign_last_received_at" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -13969,6 +13976,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
           <Property Name="agency_master_id" Type="Guid" />
           <Property Name="advertiser_master_id" Type="Guid" />
+          <Property Name="unified_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="max_fluidity_percent" Type="Int32" />
+          <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
+          <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
         </EntityType>
         <Association Name="FK_proposals_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
@@ -14159,6 +14170,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plans" />
+          <Property Name="unified_tactic_line_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
+          <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -20116,6 +20130,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaigns">
             <EntityTypeMapping TypeName="BroadcastModel.campaign">
               <MappingFragment StoreEntitySet="campaigns">
+                <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
+                <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />
+                <ScalarProperty Name="max_fluidity_percent" ColumnName="max_fluidity_percent" />
+                <ScalarProperty Name="unified_id" ColumnName="unified_id" />
                 <ScalarProperty Name="advertiser_master_id" ColumnName="advertiser_master_id" />
                 <ScalarProperty Name="agency_master_id" ColumnName="agency_master_id" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
@@ -20256,6 +20274,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
+                <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />
+                <ScalarProperty Name="unified_tactic_line_id" ColumnName="unified_tactic_line_id" />
                 <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
                 <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
                 <ScalarProperty Name="plan_mode" ColumnName="plan_mode" />

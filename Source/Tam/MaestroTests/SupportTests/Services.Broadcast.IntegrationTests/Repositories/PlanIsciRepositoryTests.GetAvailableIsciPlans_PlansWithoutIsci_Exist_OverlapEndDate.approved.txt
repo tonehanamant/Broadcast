@@ -16,7 +16,10 @@
     "SpotLengthValues": [
       45
     ],
-    "Title": "Plan in contracted"
+    "Title": "Plan in contracted",
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedTacticLineId": null
   },
   {
     "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
@@ -35,7 +38,10 @@
     "SpotLengthValues": [
       30
     ],
-    "Title": "Plan in complete"
+    "Title": "Plan in complete",
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedTacticLineId": null
   },
   {
     "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
@@ -54,7 +60,10 @@
     "SpotLengthValues": [
       45
     ],
-    "Title": "Plan in contracted 45 uneq"
+    "Title": "Plan in contracted 45 uneq",
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedTacticLineId": null
   },
   {
     "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
@@ -75,6 +84,9 @@
       30,
       60
     ],
-    "Title": "Plan in live"
+    "Title": "Plan in live",
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedTacticLineId": null
   }
 ]

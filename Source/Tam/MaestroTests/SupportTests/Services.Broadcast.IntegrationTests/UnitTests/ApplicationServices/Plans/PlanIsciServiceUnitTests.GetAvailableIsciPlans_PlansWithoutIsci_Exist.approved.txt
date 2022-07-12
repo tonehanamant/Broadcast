@@ -9,7 +9,10 @@
         "Id": 221,
         "Iscis": [],
         "SpotLengthsString": ":30",
-        "Title": "Colgate Early Morning Upfront"
+        "Title": "Colgate Early Morning Upfront",
+        "UnifiedCampaignLastReceivedAt": null,
+        "UnifiedCampaignLastSentAt": null,
+        "UnifiedTacticLineId": null
       },
       {
         "DaypartsString": "EN",
@@ -18,7 +21,10 @@
         "Id": 220,
         "Iscis": [],
         "SpotLengthsString": ":15",
-        "Title": "Colgate Daytime Upfront"
+        "Title": "Colgate Daytime Upfront",
+        "UnifiedCampaignLastReceivedAt": null,
+        "UnifiedCampaignLastSentAt": null,
+        "UnifiedTacticLineId": null
       }
     ]
   },
@@ -32,7 +38,10 @@
         "Id": 219,
         "Iscis": [],
         "SpotLengthsString": ":15, :30",
-        "Title": "Wellcare CBS Shows"
+        "Title": "Wellcare CBS Shows",
+        "UnifiedCampaignLastReceivedAt": null,
+        "UnifiedCampaignLastSentAt": null,
+        "UnifiedTacticLineId": null
       }
     ]
   }

@@ -213,6 +213,9 @@ namespace Services.Broadcast.Repositories
                         FlightStartDate = planVersion.flight_start_date,
                         FlightEndDate = planVersion.flight_end_date,
                         ProductMasterId = plan.product_master_id,
+                        UnifiedTacticLineId = plan.unified_tactic_line_id,
+                        UnifiedCampaignLastSentAt = plan.unified_campaign_last_sent_at,
+                        UnifiedCampaignLastReceivedAt = plan.unified_campaign_last_received_at,
                         Iscis = plan.plan_iscis
                                         .Where(planIsci => planIsci.deleted_at == null 
                                                 && (planIsci.flight_start_date <= mediaMonthStartDate && planIsci.flight_end_date >= mediaMonthEndDate

@@ -47,5 +47,6 @@
         /// This feature toggle is used to check the new locking microservice
         /// </summary>
         public static string ENABLE_LOCKING_MIGRATION = "broadcast-enable-locking-migration";
+        public static string ENABLE_UNIFIED_CAMPAIGN = "broadcast-enable-unified-campaign";
     }
 }

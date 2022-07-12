@@ -3058,6 +3058,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ModifiedDate = new DateTime(2017,10,17),
                         CampaignStatus = PlanStatusEnum.Working
                     }
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 4,
+                        Name = "Unified Campaign",
+                        AgencyId = agency.Id,
+                        AgencyMasterId = agency.MasterId,
+                        AdvertiserId = advertiser.Id,
+                        AdvertiserMasterId = advertiser.MasterId,
+                        Notes = "Notes for Unified Campaign.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working,
+                        MaxFluidityPercent = 20,
+                        UnifiedId = "75653",
+                        UnifiedCampaignLastSentAt = new DateTime(2017,10,17),
+                        UnifiedCampaignLastReceivedAt = new DateTime(2017,10,17)
+                    },
                 }
             };
         }
@@ -4210,6 +4230,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
                 Times.Once);
 
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        [Test]
+        public void ReturnsFilteredUnifiedCampaigns_WithToggleOn()
+        {
+            // Arrange
+         
+            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Name1" };
+            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Name2", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
+
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)));
+
+            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
+                .Returns(agency);
+
+            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(advertiser);
+
+            var tc = _BuildCampaignService();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_UNIFIED_CAMPAIGN] = true;
+            // Act
+            var result = tc.GetCampaigns(new CampaignFilterDto
+            {
+                Quarter = new QuarterDto
+                {
+                    Year = 2019,
+                    Quarter = 2
+                },
+                PlanStatus = PlanStatusEnum.ClientApproval
+            }, _CurrentDate);
+
+            // Assert
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }

@@ -1018,6 +1018,9 @@ namespace Services.Broadcast.Repositories
             version.fluidity_percentage = planDto.FluidityPercentage;
             version.fluidity_category = planDto.FluidityCategory;
             version.fluidity_child_category = planDto.FluidityChildCategory;
+            plan.unified_tactic_line_id = planDto.UnifiedTacticLineId;
+            plan.unified_campaign_last_sent_at = planDto.UnifiedCampaignLastSentAt;
+            plan.unified_campaign_last_received_at = planDto.UnifiedCampaignLastReceivedAt;
 
             _MapCreativeLengths(version, planDto, context);
             _MapPlanAudienceInfo(version, planDto);

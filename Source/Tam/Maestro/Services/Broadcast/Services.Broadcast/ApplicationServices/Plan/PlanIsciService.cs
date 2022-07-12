@@ -59,6 +59,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
+        protected Lazy<bool> _IsUnifiedCampaignEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
@@ -94,6 +95,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
+            _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
 
         /// <inheritdoc />
@@ -183,6 +186,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             queryEndDate = isciPlanSearch.WeekEndDate.Value;
 
             var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(queryStartDate, queryEndDate);
+            if (!_IsUnifiedCampaignEnabled.Value)
+            {
+                isciPlans = isciPlans.Where(x => x.UnifiedTacticLineId == null).ToList();
+            }
             if (isciPlans?.Any() ?? false)
             {
                 if (isciPlanSearch.UnmappedOnly)
@@ -210,11 +217,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                     Title = isciPlanDetail.Title,
                                     DaypartsString = string.Join(", ", isciPlanDetail.Dayparts),
                                     FlightString = $"{isciPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{isciPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
-                                    Iscis = isciPlanDetail.Iscis
+                                    Iscis = isciPlanDetail.Iscis,
+                                    UnifiedTacticLineId = isciPlanDetail.UnifiedTacticLineId,
+                                    UnifiedCampaignLastSentAt = isciPlanDetail.UnifiedCampaignLastSentAt,
+                                    UnifiedCampaignLastReceivedAt = isciPlanDetail.UnifiedCampaignLastReceivedAt
                                 };
                                 return isciPlan;
                             }).ToList()
                         };
+
                         isciPlanResults.Add(isciPlanResult);
                     }
                 }

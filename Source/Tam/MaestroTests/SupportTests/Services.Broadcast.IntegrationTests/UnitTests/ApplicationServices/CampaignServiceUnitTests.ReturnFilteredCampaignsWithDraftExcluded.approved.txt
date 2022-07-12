@@ -24,6 +24,7 @@
     "HHImpressions": null,
     "HHRatingPoints": null,
     "Id": 1,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "CampaignOne",
@@ -106,7 +107,10 @@
         "VersionNumber": 2
       }
     ],
-    "PlanStatuses": null
+    "PlanStatuses": null,
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -133,6 +137,7 @@
     "HHImpressions": null,
     "HHRatingPoints": null,
     "Id": 2,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "CampaignTwo",
@@ -177,7 +182,10 @@
         "VersionNumber": 4
       }
     ],
-    "PlanStatuses": null
+    "PlanStatuses": null,
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   },
   {
     "Advertiser": {
@@ -204,11 +212,15 @@
     "HHImpressions": null,
     "HHRatingPoints": null,
     "Id": 3,
+    "MaxFluidityPercent": null,
     "ModifiedBy": "TestUser",
     "ModifiedDate": "2017-10-17T00:00:00",
     "Name": "CampaignThree",
     "Notes": "Notes for CampaignThree.",
     "Plans": null,
-    "PlanStatuses": null
+    "PlanStatuses": null,
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
   }
 ]

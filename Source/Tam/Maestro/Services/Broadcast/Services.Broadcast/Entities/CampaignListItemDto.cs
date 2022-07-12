@@ -79,5 +79,10 @@ namespace Services.Broadcast.Entities
         public PlanStatusEnum? CampaignStatus { get; set; }
 
         public List<PlansStatusCountDto> PlanStatuses { get; set; }
+        public string UnifiedId { get; set; }
+        public int? MaxFluidityPercent { get; set; }
+        public DateTime? UnifiedCampaignLastSentAt { get; set; }
+        public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
+
     }
 }

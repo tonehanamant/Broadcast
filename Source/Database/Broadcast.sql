@@ -966,6 +966,42 @@ END
 GO
 /*************************************** END BP-4306 **********************************************************************************************/
 
+/*************************************** START BP-4975 **********************************************************************************************/
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME= 'unified_id')
+BEGIN
+
+	ALTER TABLE campaigns
+	ADD unified_id VARCHAR(50) NULL
+
+	ALTER TABLE campaigns
+	ADD max_fluidity_percent INT NULL
+
+	ALTER TABLE campaigns
+	ADD unified_campaign_last_sent_at DATETIME2 NULL
+
+	ALTER TABLE campaigns
+	ADD unified_campaign_last_received_at DATETIME2 NULL
+
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plans' AND COLUMN_NAME= 'unified_tactic_line_id')
+BEGIN
+
+	ALTER TABLE plans
+	ADD unified_tactic_line_id VARCHAR(50) NULL
+	
+	ALTER TABLE plans
+	ADD unified_campaign_last_sent_at DATETIME2 NULL
+
+	ALTER TABLE plans
+	ADD unified_campaign_last_received_at DATETIME2 NULL
+
+END
+GO
+
+/*************************************** END BP-4975 **********************************************************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

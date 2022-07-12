@@ -14,10 +14,14 @@
   "HHCPM": null,
   "HHImpressions": null,
   "HHRatingPoints": null,
+  "MaxFluidityPercent": null,
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2018-01-01T00:00:00",
   "Name": "Test Campaign 5",
   "Notes": "This is a test note for a test campaign.",
   "Plans": [],
-  "PlanStatuses": null
+  "PlanStatuses": null,
+  "UnifiedCampaignLastReceivedAt": null,
+  "UnifiedCampaignLastSentAt": null,
+  "UnifiedId": null
 }

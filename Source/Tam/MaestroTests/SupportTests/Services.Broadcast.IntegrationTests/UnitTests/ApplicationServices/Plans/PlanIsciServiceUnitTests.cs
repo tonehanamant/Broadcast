@@ -1108,5 +1108,65 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        public void GetAvailableUnifiedIsciPlans_WithToggleOn()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciSearchDto
+            {
+                WeekStartDate = new DateTime(2021, 11, 01),
+                WeekEndDate = new DateTime(2021, 11, 7),
+                UnmappedOnly = true
+            };
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<IsciPlanDetailDto>()
+                {
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 219,
+                        Title = "Wellcare CBS Shows",
+                        AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        SpotLengthValues = new List<int>(){ 15, 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN", "PMN", "LN" },
+                        FlightStartDate = new DateTime(2021,08,29),
+                        FlightEndDate = new DateTime(2021, 08, 31),
+                        ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
+                        Iscis = new List<string>()
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 220,
+                        Title = "Colgate Daytime Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 15},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2021,08,20),
+                        FlightEndDate = new DateTime(2021, 08, 28),
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
+                        Iscis = new List<string>(),
+                        UnifiedTacticLineId = "4CDA98D1-2F34-4B72-A4AD-72A012817E3C",
+                        UnifiedCampaignLastSentAt = new DateTime(2021,07,15),
+                        UnifiedCampaignLastReceivedAt = new DateTime(2021,07,15)
+                    }
+                });
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertisers())
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()));
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_UNIFIED_CAMPAIGN] = true;
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }

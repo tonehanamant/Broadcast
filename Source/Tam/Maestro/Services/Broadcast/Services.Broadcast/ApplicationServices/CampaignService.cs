@@ -190,6 +190,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ILockingEngine _LockingEngine;
         private readonly IPlanService _PlanService;
         private readonly IPlanValidator _PlanValidator;
+        protected Lazy<bool> _IsUnifiedCampaignEnabled;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -231,6 +232,8 @@ namespace Services.Broadcast.ApplicationServices
             _LockingEngine = lockingEngine;
             _PlanService = PlanService;
             _PlanValidator = PlanValidator;
+            _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
 
 
@@ -252,6 +255,11 @@ namespace Services.Broadcast.ApplicationServices
 
                 campaign.Agency = _GetAgency(campaign);
                 campaign.Advertiser = _GetAdvertiser(campaign);
+            }
+            if (!_IsUnifiedCampaignEnabled.Value)
+            {
+                var FilterOutUnifiedCampaigns = campaigns.Where(x => x.UnifiedId == null).ToList();
+                return FilterOutUnifiedCampaigns;
             }
 
             return campaigns;
@@ -303,6 +311,10 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Id = campaignAndCampaignSummary.Campaign.Id,
                 Name = campaignAndCampaignSummary.Campaign.Name,
+                MaxFluidityPercent = campaignAndCampaignSummary.Campaign.MaxFluidityPercent,
+                UnifiedId = campaignAndCampaignSummary.Campaign.UnifiedId,
+                UnifiedCampaignLastSentAt = campaignAndCampaignSummary.Campaign.UnifiedCampaignLastSentAt,
+                UnifiedCampaignLastReceivedAt = campaignAndCampaignSummary.Campaign.UnifiedCampaignLastReceivedAt,
                 Advertiser = new AdvertiserDto
                 {
                     Id = campaignAndCampaignSummary.Campaign.AdvertiserId,

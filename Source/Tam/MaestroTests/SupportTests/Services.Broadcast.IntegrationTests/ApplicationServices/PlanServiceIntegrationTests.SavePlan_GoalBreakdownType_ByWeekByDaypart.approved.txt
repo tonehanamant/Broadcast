@@ -895,6 +895,9 @@
   "TotalActiveDays": 35,
   "TotalHiatusDays": 0,
   "TotalShareOfVoice": 100.0,
+  "UnifiedCampaignLastReceivedAt": null,
+  "UnifiedCampaignLastSentAt": null,
+  "UnifiedTacticLineId": null,
   "VersionNumber": 1,
   "Vpvh": 0.83720933347755655,
   "WeeklyBreakdownTotals": {

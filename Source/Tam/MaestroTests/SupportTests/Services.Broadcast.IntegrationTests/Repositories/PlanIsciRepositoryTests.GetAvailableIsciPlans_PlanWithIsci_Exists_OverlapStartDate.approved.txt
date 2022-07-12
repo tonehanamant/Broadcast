@@ -16,6 +16,9 @@
     "SpotLengthValues": [
       45
     ],
-    "Title": "Second plan"
+    "Title": "Second plan",
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedTacticLineId": null
   }
 ]

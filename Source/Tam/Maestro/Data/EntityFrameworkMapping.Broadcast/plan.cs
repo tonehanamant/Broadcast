@@ -33,6 +33,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_mode { get; set; }
         public string deleted_by { get; set; }
         public Nullable<System.DateTime> deleted_at { get; set; }
+        public string unified_tactic_line_id { get; set; }
+        public Nullable<System.DateTime> unified_campaign_last_sent_at { get; set; }
+        public Nullable<System.DateTime> unified_campaign_last_received_at { get; set; }
     
         public virtual campaign campaign { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }

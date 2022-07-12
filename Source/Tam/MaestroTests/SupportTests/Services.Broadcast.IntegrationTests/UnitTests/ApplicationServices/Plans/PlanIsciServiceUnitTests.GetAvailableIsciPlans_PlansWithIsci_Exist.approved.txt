@@ -12,7 +12,10 @@
           "CUSA1813000H"
         ],
         "SpotLengthsString": ":30",
-        "Title": "Colgate Early Morning Upfront"
+        "Title": "Colgate Early Morning Upfront",
+        "UnifiedCampaignLastReceivedAt": null,
+        "UnifiedCampaignLastSentAt": null,
+        "UnifiedTacticLineId": null
       },
       {
         "DaypartsString": "EN",
@@ -24,7 +27,10 @@
           "OKWL1704H"
         ],
         "SpotLengthsString": ":15",
-        "Title": "Colgate Daytime Upfront"
+        "Title": "Colgate Daytime Upfront",
+        "UnifiedCampaignLastReceivedAt": null,
+        "UnifiedCampaignLastSentAt": null,
+        "UnifiedTacticLineId": null
       }
     ]
   },
@@ -41,7 +47,10 @@
           "OKWL1702H"
         ],
         "SpotLengthsString": ":15, :30",
-        "Title": "Wellcare CBS Shows"
+        "Title": "Wellcare CBS Shows",
+        "UnifiedCampaignLastReceivedAt": null,
+        "UnifiedCampaignLastSentAt": null,
+        "UnifiedTacticLineId": null
       }
     ]
   }
