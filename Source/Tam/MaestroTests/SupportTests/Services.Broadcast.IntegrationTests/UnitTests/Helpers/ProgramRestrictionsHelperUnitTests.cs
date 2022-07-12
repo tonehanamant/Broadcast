@@ -303,19 +303,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
         }
 
         [Test]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, false, 1)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, true, 1)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, true, 1)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, false, 1)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, false, 3)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, true, 3)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, true, 3)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, false, 3)]
         [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, false, 0)]
         [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, true, 0)]
         [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, true, 0)]
         [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, false, 0)]
-        [TestCase("IND", ContainTypeEnum.Include, "IND", true, true, 1)]
-        [TestCase("IND", ContainTypeEnum.Include, "IND", true, false, 1)]
+        [TestCase("IND", ContainTypeEnum.Include, "IND", true, true, 3)]
+        [TestCase("IND", ContainTypeEnum.Include, "IND", true, false, 3)]
         [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, false, 0)]
         [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, true, 0)]
         [TestCase("IND", ContainTypeEnum.Exclude, "IND", false, false, 0)]
+        [TestCase("IND", ContainTypeEnum.Include, "CBS", true, true, 0)]
         public void AffiliateRestrictionsTest(
             string restrictedAffiliate,
             ContainTypeEnum containType,
@@ -343,6 +344,82 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var programs = new List<BasePlanInventoryProgram>
             {
+                new BasePlanInventoryProgram
+                {
+                    ManifestDayparts = new List<BasePlanInventoryProgram.ManifestDaypart>
+                    {
+                        new BasePlanInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new BasePlanInventoryProgram.ManifestDaypart.Program
+                            {
+                                Genre = "comedy"
+                            },
+                            // Make sure only the primary program is considered
+                            Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new BasePlanInventoryProgram.ManifestDaypart.Program
+                                {
+                                    Genre = "Comedy"
+                                }
+                            }
+                        }
+                    },
+                    Station = new DisplayBroadcastStation
+                    {
+                        Affiliation = inventoryAffiliate,
+                        IsTrueInd = isStationTrueIndependent
+                    }
+                },
+                 new BasePlanInventoryProgram
+                {
+                    ManifestDayparts = new List<BasePlanInventoryProgram.ManifestDaypart>
+                    {
+                        new BasePlanInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                StartTime = 36000, // 10am
+                                EndTime = 39599, // 11am
+                                Monday = true,
+                                Tuesday = true,
+                                Wednesday = true,
+                                Thursday = true,
+                                Friday = true,
+                                Saturday = true,
+                                Sunday = true,
+                            },
+                            PrimaryProgram = new BasePlanInventoryProgram.ManifestDaypart.Program
+                            {
+                                Genre = "comedy"
+                            },
+                            // Make sure only the primary program is considered
+                            Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new BasePlanInventoryProgram.ManifestDaypart.Program
+                                {
+                                    Genre = "Comedy"
+                                }
+                            }
+                        }
+                    },
+                    Station = new DisplayBroadcastStation
+                    {
+                        Affiliation = inventoryAffiliate,
+                        IsTrueInd = isStationTrueIndependent
+                    }
+                },
                 new BasePlanInventoryProgram
                 {
                     ManifestDayparts = new List<BasePlanInventoryProgram.ManifestDaypart>

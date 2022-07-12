@@ -189,7 +189,7 @@ namespace Services.Broadcast.Helpers
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;
-            if (restrictedAffiliates.Any(x => x.Equals("IND")) && useTrueIndependentStations)
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && useTrueIndependentStations && program.Station.Affiliation.Equals("IND"))
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }
