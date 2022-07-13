@@ -72,30 +72,27 @@ namespace Services.Broadcast.Clients
                 var result = apiResult.Content.ReadAsAsync<LockingApIItemResponseTyped<LockingResult>>();
                 var lockingApiItemResponse = result.Result;
                 var lockingApiObjectResponse = result.Result.Result;
-                LockingResultResponse lockingResult = new LockingResultResponse()
+                if(lockingApiObjectResponse == null)
                 {
-                    Key = lockingApiObjectResponse != null ? _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId) : null,                    
-                    Success = lockingApiItemResponse.Success,
-                    LockTimeoutInSeconds = lockingApiObjectResponse != null ? lockingApiObjectResponse.expiresIn: 0,
-                    LockedUserId = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null,
-                    LockedUserName = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner: null,
-                    Error = lockingApiItemResponse.Message
-                };
-                return lockingResult;
+                    throw new InvalidOperationException(String.Format("Error occured while locking object, message:{0}", lockingApiItemResponse.Message));
+                }
+                else
+                {
+                    LockingResultResponse lockingResult = new LockingResultResponse()
+                    {
+                        Key =  _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId),
+                        Success = lockingApiItemResponse.Success,
+                        LockTimeoutInSeconds =  lockingApiObjectResponse.expiresIn,
+                        LockedUserId =  lockingApiObjectResponse.owner,
+                        LockedUserName =  lockingApiObjectResponse.owner,
+                        Error = lockingApiItemResponse.Message
+                    };
+                    return lockingResult;
+                }
             }
             catch (Exception ex)
-            {
-                _LogInfo(String.Format("Error occured while locking object, message:{0}", ex.Message.ToString()));
-                LockingResultResponse lockingResult = new LockingResultResponse()
-                {
-                    Key = null,
-                    Success = false,
-                    LockTimeoutInSeconds = 0,
-                    LockedUserId = null,
-                    LockedUserName = null,
-                    Error = "Error occured while locking object, message:" + ex.Message.ToString()
-                };
-                return lockingResult;
+            {                
+                throw new InvalidOperationException(String.Format("Error occured while locking object, message:{0}", ex.Message.ToString()));                
             }
         }
 
@@ -132,15 +129,7 @@ namespace Services.Broadcast.Clients
             }
             catch (Exception ex)
             {
-                _LogInfo(String.Format("Error occured while releasing object, message:{0}", ex.Message.ToString()));
-                ReleaseLockResponse releaseLock = new ReleaseLockResponse()
-                {
-                    Error = "Error occured while releasing object, message:" + ex.Message.ToString(),
-                    Key = null,
-                    Success = false,
-
-                };
-                return releaseLock;
+                throw new InvalidOperationException(String.Format("Error occured while releasing object, message:{0}", ex.Message.ToString()));
             }
         }
         /// <summary>
@@ -172,30 +161,29 @@ namespace Services.Broadcast.Clients
                 var result = apiResult.Content.ReadAsAsync<LockingApIItemResponseTyped<LockingResult>>();
                 var lockingApiItemResponse = result.Result;
                 var lockingApiObjectResponse = result.Result.Result;
-                var lockingResult = new LockingResultResponse
+                LockingResultResponse lockingResult = new LockingResultResponse();
+                //If the lock does not exist, then a standard HTTP 200 response will be returned with an empty "result" node
+                if (lockingApiObjectResponse == null)
                 {
-                    Key = lockingApiObjectResponse != null ? _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId) : null,
-                    Success = lockingApiItemResponse.Success,
-                    LockTimeoutInSeconds = lockingApiObjectResponse != null ? lockingApiObjectResponse.expiresIn : 0,
-                    LockedUserId = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null,
-                    LockedUserName = lockingApiObjectResponse != null ? lockingApiObjectResponse.owner : null,
-                    Error = lockingApiItemResponse.Message
-                };
+                    lockingResult.Key = _GetLockingKey(objectType, objectId);                    
+                    lockingResult.LockTimeoutInSeconds = 0;
+                    lockingResult.LockedUserId = null;
+                    lockingResult.LockedUserName = null;                    
+                }
+                else
+                {
+                    lockingResult.Key = _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId);                    
+                    lockingResult.LockTimeoutInSeconds = lockingApiObjectResponse.expiresIn;
+                    lockingResult.LockedUserId = lockingApiObjectResponse.owner;
+                    lockingResult.LockedUserName = lockingApiObjectResponse.owner;                   
+                }
+                lockingResult.Success = lockingApiItemResponse.Success;
+                lockingResult.Error = lockingApiItemResponse.Message;
                 return lockingResult;
             }
             catch (Exception ex)
             {
-                _LogInfo(String.Format("Error occured while checking lock status, Error:{0}", ex.Message.ToString()));
-                var lockingResult = new LockingResultResponse
-                {
-                    Key = null,
-                    Success = false,
-                    LockedUserId = null,
-                    Error = String.Format("Error occured while checking lock status, Error:{0}",ex.Message.ToString()),
-                    LockTimeoutInSeconds = 0,
-                    LockedUserName = null
-                };
-                return lockingResult;
+                throw new InvalidOperationException(String.Format("Error occured while checking lock status, Error:{0}", ex.Message.ToString()));
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Concurrent;
@@ -38,7 +39,30 @@ namespace Services.Broadcast.ApplicationServices
 
         public LockResponse LockObject(string key)
         {
-            return _SmsClient.LockObject(key, GetUserSID());
+            LockResponse broadcastLockResponse = null;
+            if (_IsLockingMigrationEnabled.Value)
+            {
+                LockingApiRequest lockingRequest = KeyHelper.GetLokcingRequest(key);
+                var lockResponse = _GeneralLockingApiClient.LockObject(lockingRequest);
+                if (lockResponse != null)
+                {
+                    broadcastLockResponse = new LockResponse
+                    {
+                        Error = lockResponse.Error,
+                        Key = lockResponse.Key,
+                        LockedUserId = lockResponse.LockedUserId,
+                        LockedUserName = lockResponse.LockedUserName,
+                        LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
+                        Success = lockResponse.Success
+                    };                   
+                }
+               
+            }
+            else
+            {
+                broadcastLockResponse= _SmsClient.LockObject(key, GetUserSID());
+            }
+            return broadcastLockResponse;
         }
 
         public ReleaseLockResponse ReleaseObject(string key)
