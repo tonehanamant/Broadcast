@@ -1070,7 +1070,7 @@ namespace Services.Broadcast.Repositories
                     budget = d.WeeklyBudget,
                     adu_impressions = d.AduImpressions,
                     spot_length_id = d.SpotLengthId,
-                    standard_daypart_id = d.DaypartCodeId,
+                    standard_daypart_id = d.DaypartCodeId > 0 ? d.DaypartCodeId : 3,
                     percentage_of_week = d.PercentageOfWeek,
                     unit_impressions = d.UnitImpressions,
                     is_locked = d.IsLocked,
