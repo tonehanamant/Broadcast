@@ -72,23 +72,24 @@ namespace Services.Broadcast.Clients
                 var result = apiResult.Content.ReadAsAsync<LockingApIItemResponseTyped<LockingResult>>();
                 var lockingApiItemResponse = result.Result;
                 var lockingApiObjectResponse = result.Result.Result;
-                if(lockingApiObjectResponse == null)
-                {
-                    throw new InvalidOperationException(String.Format("Error occured while locking object, message:{0}", lockingApiItemResponse.Message));
+                LockingResultResponse lockingResult = new LockingResultResponse();                
+                if (lockingApiItemResponse != null && lockingApiItemResponse.Success == false)
+                {                    
+                    lockingResult.Key = _GetLockingKey(lockingRequest.ObjectType, lockingRequest.ObjectId);
+                    lockingResult.LockTimeoutInSeconds = 900;
+                    lockingResult.LockedUserId = _GetUserName(lockingApiItemResponse.Message);
+                    lockingResult.LockedUserName = _GetUserName(lockingApiItemResponse.Message);
                 }
                 else
                 {
-                    LockingResultResponse lockingResult = new LockingResultResponse()
-                    {
-                        Key =  _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId),
-                        Success = lockingApiItemResponse.Success,
-                        LockTimeoutInSeconds =  lockingApiObjectResponse.expiresIn,
-                        LockedUserId =  lockingApiObjectResponse.owner,
-                        LockedUserName =  lockingApiObjectResponse.owner,
-                        Error = lockingApiItemResponse.Message
-                    };
-                    return lockingResult;
+                    lockingResult.Key = _GetLockingKey(lockingApiObjectResponse.objectType, lockingApiObjectResponse.objectId);                   
+                    lockingResult.LockTimeoutInSeconds = lockingApiObjectResponse.expiresIn;
+                    lockingResult.LockedUserId = lockingApiObjectResponse.owner;
+                    lockingResult.LockedUserName = lockingApiObjectResponse.owner;                                   
                 }
+                lockingResult.Success = lockingApiItemResponse.Success;
+                lockingResult.Error = lockingApiItemResponse.Message;
+                return lockingResult;
             }
             catch (Exception ex)
             {                
@@ -217,6 +218,17 @@ namespace Services.Broadcast.Clients
         private string _GetLockingKey(string objectType, string objectId)
         {
             return string.Format("{0}:{1}", objectType, objectId);
+        }
+        private string _GetUserName(string errorMessage)
+        {
+            string toBeSearched = "user";
+            string userName = "A User"; 
+            int ix = errorMessage.IndexOf(toBeSearched);
+            if (ix != -1)
+            {
+                userName = errorMessage.Substring(ix + toBeSearched.Length).Replace(@"'",string.Empty).Trim();                
+            }
+            return userName;
         }
 
     }

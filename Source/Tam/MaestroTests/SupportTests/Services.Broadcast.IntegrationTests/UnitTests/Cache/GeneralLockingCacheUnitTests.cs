@@ -35,6 +35,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             Assert.AreEqual(lockResponse, result);
             generalLockingApiclient.Verify(s => s.LockObject(lockRequest), Times.Once);
         }
+
+        [Test]
+        public void LockObject_AlreadyLock()
+        {
+            // Arrange
+            var lockRequest = _GetLockRequest();
+            var lockResponse = _GetLockResponse_AlreadyLocked();
+            var apiTokenManager = new Mock<IApiTokenManager>();
+            var generalLockingApiclient = new Mock<IGeneralLockingApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            var client = new Mock<HttpClient>();
+            generalLockingApiclient.Setup(x => x.LockObject(lockRequest))
+                .Returns(lockResponse);
+
+            var tc = new LockingCacheStub(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
+            // Act
+            var result = tc.LockObject(lockRequest);
+            // Assert
+            Assert.AreEqual(lockResponse, result);
+            generalLockingApiclient.Verify(s => s.LockObject(lockRequest), Times.Once);
+        }
+
         [Test]
         public void ReleaseObject()
         {
@@ -111,6 +134,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
                 IsShared = false,
                 SharedApplications = null
             };
+        }
+
+        private LockingResultResponse _GetLockResponse_AlreadyLocked()
+        {
+            var result = new LockingResultResponse
+            {
+                Key = "Plan-550",
+                LockedUserId = "Test User",
+                Success = false,
+                Error = "Lock Request for 'Object Type: Plan ; Object ID:  550' is already locked by user 'Test User'",
+                LockedUserName = "Test User",
+                LockTimeoutInSeconds = 899
+            };
+            return result;
         }
     }
 }
