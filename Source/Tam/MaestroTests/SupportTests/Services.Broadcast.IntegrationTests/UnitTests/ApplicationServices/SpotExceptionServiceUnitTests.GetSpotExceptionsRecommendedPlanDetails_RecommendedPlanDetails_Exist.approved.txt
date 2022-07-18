@@ -1,13 +1,13 @@
 {
-  "AudienceName": "Men 50-64",
-  "DaypartCode": "PMN",
-  "EstimateId": 191760,
+  "AudienceName": "Women 25-54",
+  "DaypartCode": "EM",
+  "EstimateId": 6840,
   "FlightDateString": "12/01-02/01/2020",
   "FlightEndDate": "2/1/2020 12:00:00 AM",
   "FlightStartDate": "12/1/2019 12:00:00 AM",
   "Id": 1,
-  "Impressions": 1752.0,
-  "InventorySourceName": null,
+  "Impressions": 100000.0,
+  "InventorySourceName": "Tegna",
   "Plans": [
     {
       "AcceptedAsInSpec": false,
@@ -18,8 +18,8 @@
       "IsRecommendedPlan": true,
       "IsSelected": true,
       "Name": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
-      "Pacing": "0%",
-      "RecommendedPlanId": 0,
+      "Pacing": "30%",
+      "RecommendedPlanId": 301,
       "SpotLengthString": ":45"
     },
     {
@@ -31,14 +31,14 @@
       "IsRecommendedPlan": false,
       "IsSelected": false,
       "Name": "2Q' 21 Reynolds",
-      "Pacing": "0%",
-      "RecommendedPlanId": 0,
+      "Pacing": "30%",
+      "RecommendedPlanId": 302,
       "SpotLengthString": ":15, :30"
     }
   ],
-  "Product": "Nike",
-  "ProgramAirDate": "01/10/2020",
-  "ProgramAirTime": "11:45:00 PM",
-  "ProgramName": "Reckitt HYHO",
+  "Product": null,
+  "ProgramAirDate": "04/10/2022",
+  "ProgramAirTime": "08:28:28 AM",
+  "ProgramName": "CBS Mornings",
   "SpotLengthString": ":45"
 }

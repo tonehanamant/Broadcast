@@ -1,62 +1,43 @@
 [
   {
-    "AdvertiserName": null,
-    "Affiliate": "NBC",
-    "Audience": {
-      "Code": "W21-54",
-      "Id": 431,
-      "Name": "Women 21-54"
-    },
-    "AudienceId": null,
-    "Cost": 675.0000,
-    "DaypartDetail": {
-      "Code": "CUS",
-      "DaypartText": "M-F 11AM-12:59PM",
-      "Id": 70615,
-      "Name": "Custom"
-    },
-    "DaypartId": null,
-    "EstimateId": 191756,
-    "FlightEndDate": "2010-03-01T00:00:00",
-    "FlightStartDate": "2010-01-01T00:00:00",
-    "Impressions": 765.0,
-    "IngestedAt": "2010-10-12T00:00:00",
-    "IngestedBy": "Repository Test User",
-    "InventorySourceName": "Open Market",
-    "IsciName": "AB82TXT2H",
-    "Market": "Albuquerque-Santa Fe",
-    "Product": "Pizza Hut",
-    "ProgramAirTime": "2010-01-04T08:07:15",
-    "ProgramName": "Q13 news at 10",
-    "RecommendedPlanId": 1848,
-    "RecommendedPlanName": "Plan in Scenario",
+    "Affiliate": "CBS",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6840,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "840T42AY13H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "Tegna",
+    "MarketCode": 135,
+    "MarketRank": 33,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T08:28:28",
+    "ProgramGenre": "INFORMATIONAL/NEWS",
+    "ProgramName": "CBS Mornings",
     "SpotExceptionsRecommendedPlanDetails": [
       {
-        "IsRecommendedPlan": true,
-        "MetricPercent": 20.0,
-        "RecommendedPlanDetail": {
-          "FlightEndDate": "2019-12-29T23:59:59",
-          "FlightStartDate": "2019-12-23T00:00:00",
-          "Id": 1848,
-          "Name": "Plan in Scenario",
-          "SpotLengths": [
-            {
-              "Id": 1,
-              "Length": 30
-            }
-          ]
-        },
-        "RecommendedPlanId": 1848,
-        "SpotExceptionsRecommendedPlanDecision": null
-      },
-      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 73,
+        "Friday": 1,
         "IsRecommendedPlan": false,
-        "MetricPercent": 40.0,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
         "RecommendedPlanDetail": {
-          "FlightEndDate": "2020-04-12T00:00:00",
-          "FlightStartDate": "2020-03-14T00:00:00",
-          "Id": 1853,
-          "Name": "Plan in live",
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
           "SpotLengths": [
             {
               "Id": 3,
@@ -65,140 +46,1110 @@
             {
               "Id": 1,
               "Length": 30
-            },
-            {
-              "Id": 2,
-              "Length": 60
             }
           ]
         },
-        "RecommendedPlanId": 1853,
-        "SpotExceptionsRecommendedPlanDecision": null
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": {
+          "AcceptedAsInSpec": false,
+          "CreatedAt": "2022-07-13T07:31:04.803",
+          "SpotExceptionsId": 0,
+          "SpotExceptionsRecommendedPlanId": 0,
+          "SyncedAt": null,
+          "SyncedBy": null,
+          "UserName": "MockData"
+        },
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 75,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
       }
     ],
     "SpotLength": {
-      "Id": 12,
-      "Length": 5
+      "Id": 3,
+      "Length": 15
     },
-    "SpotLengthId": null,
-    "SpotUniqueHashExternal": "Test",
-    "StationLegacyCallLetters": "KOB"
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDA3MDYxNg=+",
+    "StationLegacyCallLetters": "WBNS"
   },
   {
-    "AdvertiserName": null,
-    "Affiliate": "ABC",
-    "Audience": {
-      "Code": "W21-54",
-      "Id": 431,
-      "Name": "Women 21-54"
-    },
-    "AudienceId": null,
-    "Cost": 0.0000,
-    "DaypartDetail": {
-      "Code": "CUS",
-      "DaypartText": "SA-SU 6AM-8:59AM",
-      "Id": 70616,
-      "Name": "Custom"
-    },
-    "DaypartId": null,
-    "EstimateId": 191758,
-    "FlightEndDate": "2020-03-01T00:00:00",
-    "FlightStartDate": "2010-01-02T00:00:00",
-    "Impressions": 877.0,
-    "IngestedAt": "2010-10-12T00:00:00",
-    "IngestedBy": "Repository Test User",
-    "InventorySourceName": "TTWN",
-    "IsciName": "AB44NR58",
-    "Market": "Lincoln & Hastings-Krny",
-    "Product": "Nike",
-    "ProgramAirTime": "2010-01-06T11:15:30",
-    "ProgramName": "TEN O'CLOCK NEWS",
-    "RecommendedPlanId": 1850,
-    "RecommendedPlanName": "Plan in reserved",
+    "Affiliate": "IND",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6616,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "616MAY2913H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "Ference POD",
+    "MarketCode": 232,
+    "MarketRank": 3873,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T08:41:57",
+    "ProgramGenre": "COMEDY",
+    "ProgramName": "Mike & Molly",
     "SpotExceptionsRecommendedPlanDetails": [
       {
-        "IsRecommendedPlan": true,
-        "MetricPercent": 70.0,
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 623,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
         "RecommendedPlanDetail": {
-          "FlightEndDate": "2020-06-28T00:00:00",
-          "FlightStartDate": "2019-12-30T00:00:00",
-          "Id": 1850,
-          "Name": "Plan in reserved",
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
           "SpotLengths": [
             {
-              "Id": 7,
-              "Length": 90
+              "Id": 3,
+              "Length": 15
             }
           ]
         },
-        "RecommendedPlanId": 1850,
-        "SpotExceptionsRecommendedPlanDecision": null
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
       },
       {
-        "IsRecommendedPlan": false,
-        "MetricPercent": 40.0,
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 624,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
         "RecommendedPlanDetail": {
-          "FlightEndDate": "2020-06-28T23:59:59",
-          "FlightStartDate": "2020-03-30T00:00:00",
-          "Id": 1855,
-          "Name": "Plan in canceled",
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
           "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
             {
               "Id": 1,
               "Length": 30
             }
           ]
         },
-        "RecommendedPlanId": 1855,
-        "SpotExceptionsRecommendedPlanDecision": null
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
       }
     ],
     "SpotLength": {
-      "Id": 12,
-      "Length": 5
+      "Id": 3,
+      "Length": 15
     },
-    "SpotLengthId": null,
-    "SpotUniqueHashExternal": "Test",
-    "StationLegacyCallLetters": "KHGI"
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDA5MTAwMQ=+",
+    "StationLegacyCallLetters": "WDKA"
   },
   {
-    "AdvertiserName": null,
     "Affiliate": "ABC",
-    "Audience": {
-      "Code": "A21-54",
-      "Id": 429,
-      "Name": "Adults 21-54"
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6289,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "289IT2Y3P2H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "Sinclair Corp - Day Syn 10a-4p",
+    "MarketCode": 419,
+    "MarketRank": 11,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T09:58:55",
+    "ProgramGenre": "TALK",
+    "ProgramName": "LIVE with Kelly and Ryan",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 1824,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 1923,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
     },
-    "AudienceId": null,
-    "Cost": 555.0000,
-    "DaypartDetail": {
-      "Code": "CUS",
-      "DaypartText": "M-F 4PM-4:59PM",
-      "Id": 70618,
-      "Name": "Custom"
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDI3MjQ2NQ=+",
+    "StationLegacyCallLetters": "KOMO"
+  },
+  {
+    "Affiliate": "CBS",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 5711,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "711N51AY18H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "TVB Syndication/ROS",
+    "MarketCode": 249,
+    "MarketRank": 106,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T08:29:23",
+    "ProgramGenre": "GAME SHOW",
+    "ProgramName": "Funny You Should Ask",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 2222,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 2223,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
     },
-    "DaypartId": null,
-    "EstimateId": 191760,
-    "FlightEndDate": "2010-03-03T00:00:00",
-    "FlightStartDate": "2010-01-05T00:00:00",
-    "Impressions": 9878.0,
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDIwMjA4Nw=+",
+    "StationLegacyCallLetters": "WEVV"
+  },
+  {
+    "Affiliate": "CW",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6718,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "718MAY2918H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "Ference POD - Scripps",
+    "MarketCode": 200,
+    "MarketRank": 130,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T09:45:23",
+    "ProgramGenre": "REALITY TALK",
+    "ProgramName": "The Steve Wilkos Show",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 0.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 0.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 2306,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 0.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 1.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 2305,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
+    },
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDIwODcxNw=+",
+    "StationLegacyCallLetters": "NRIS"
+  },
+  {
+    "Affiliate": "IND",
+    "AmbiguityCode": 1,
+    "ClientIsci": "DUPX0030000H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 2009,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "009UPX0030H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "Business First AM",
+    "MarketCode": 140,
+    "MarketRank": 118,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T11:44:35",
+    "ProgramGenre": "INFORMATIONAL/NEWS",
+    "ProgramName": "Business First AM",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 0.0,
+        "DaypartCode": "DAY",
+        "DeliveredImpressions": 1.0,
+        "EndTime": 57599,
+        "ExecutionTraceId": 2384,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "c56972b6-67f2-4986-a2be-4b1f199a1420",
+          "FlightEndDate": "2021-12-19T00:00:00",
+          "FlightStartDate": "2021-10-04T00:00:00",
+          "Id": 323,
+          "Name": "4Q'21 Dupixent Daytime",
+          "ProductMasterId": "7a07baae-d641-4fd8-831d-d48d056fa00b",
+          "SpotLengths": [
+            {
+              "Id": 2,
+              "Length": 60
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 323,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 36000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 0.0,
+        "DaypartCode": "MDN",
+        "DeliveredImpressions": 0.0,
+        "EndTime": 46799,
+        "ExecutionTraceId": 2385,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "c56972b6-67f2-4986-a2be-4b1f199a1420",
+          "FlightEndDate": "2021-12-19T00:00:00",
+          "FlightStartDate": "2021-10-04T00:00:00",
+          "Id": 322,
+          "Name": "4Q'21 Dupixent Early Morning News",
+          "ProductMasterId": "7a07baae-d641-4fd8-831d-d48d056fa00b",
+          "SpotLengths": [
+            {
+              "Id": 2,
+              "Length": 60
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 322,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 39600,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 2,
+      "Length": 60
+    },
+    "SpotLengthId": 2,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDIyMzAzMw=+",
+    "StationLegacyCallLetters": "WMNN"
+  },
+  {
+    "Affiliate": "IND",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6288,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "288R2Y1F81H",
+    "IngestedAt": "2022-07-13T07:31:04.803",
+    "IngestedBy": "Mock Data",
+    "InventorySource": "Sinclair Corp - Syn EM 6-10a",
+    "MarketCode": 439,
+    "MarketRank": 40,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T09:14:45",
+    "ProgramGenre": "GAME SHOW",
+    "ProgramName": "25 Words or Less",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 0.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 0.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 2553,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 0.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 1.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 2552,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
+    },
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDM2NTgwMw=+",
+    "StationLegacyCallLetters": "NVCW"
+  },
+  {
+    "Affiliate": "CBS",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6840,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "840T42AY13H",
     "IngestedAt": "2010-10-12T00:00:00",
     "IngestedBy": "Repository Test User",
-    "InventorySourceName": "Open Market",
-    "IsciName": "AB44NR58",
-    "Market": "Fargo-Valley City",
-    "Product": "Nike",
-    "ProgramAirTime": "2010-01-10T23:45:00",
-    "ProgramName": "TProduct2",
-    "RecommendedPlanId": null,
-    "RecommendedPlanName": null,
-    "SpotExceptionsRecommendedPlanDetails": [],
+    "InventorySource": "Tegna",
+    "MarketCode": 135,
+    "MarketRank": 33,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T08:28:28",
+    "ProgramGenre": "INFORMATIONAL/NEWS",
+    "ProgramName": "CBS Mornings",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 73,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": {
+          "AcceptedAsInSpec": false,
+          "CreatedAt": "2010-10-12T00:00:00",
+          "SpotExceptionsId": 0,
+          "SpotExceptionsRecommendedPlanId": 0,
+          "SyncedAt": null,
+          "SyncedBy": null,
+          "UserName": "Repository Test User"
+        },
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 75,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
     "SpotLength": {
-      "Id": 10,
-      "Length": 150
+      "Id": 3,
+      "Length": 15
     },
-    "SpotLengthId": null,
-    "SpotUniqueHashExternal": "Test",
-    "StationLegacyCallLetters": "WDAY"
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDA3MDYxNg=F",
+    "StationLegacyCallLetters": "WBNS"
+  },
+  {
+    "Affiliate": "IND",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6616,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "616MAY2913H",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "IngestedBy": "Repository Test User",
+    "InventorySource": "Ference POD",
+    "MarketCode": 232,
+    "MarketRank": 3873,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T08:41:57",
+    "ProgramGenre": "COMEDY",
+    "ProgramName": "Mike & Molly",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 623,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 624,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
+    },
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDA5MTAwMQ=F",
+    "StationLegacyCallLetters": "WDKA"
+  },
+  {
+    "Affiliate": "ABC",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 6289,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "289IT2Y3P2H",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "IngestedBy": "Repository Test User",
+    "InventorySource": "Sinclair Corp - Day Syn 10a-4p",
+    "MarketCode": 419,
+    "MarketRank": 11,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T09:58:55",
+    "ProgramGenre": "TALK",
+    "ProgramName": "LIVE with Kelly and Ryan",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 1824,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 1923,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
+    },
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDI3MjQ2NQ=F",
+    "StationLegacyCallLetters": "KOMO"
+  },
+  {
+    "Affiliate": "CBS",
+    "AmbiguityCode": 1,
+    "ClientIsci": "QMAY2913OS1H",
+    "CreatedAt": "0001-01-01T00:00:00",
+    "CreatedBy": null,
+    "EstimateId": 5711,
+    "ExecutionIdExternal": "220609090855BRt8EHXqSy",
+    "HouseIsci": "711N51AY18H",
+    "IngestedAt": "2010-10-12T00:00:00",
+    "IngestedBy": "Repository Test User",
+    "InventorySource": "TVB Syndication/ROS",
+    "MarketCode": 249,
+    "MarketRank": 106,
+    "ModifiedAt": "0001-01-01T00:00:00",
+    "ModifiedBy": null,
+    "ProgramAirTime": "2022-04-10T08:29:23",
+    "ProgramGenre": "GAME SHOW",
+    "ProgramName": "Funny You Should Ask",
+    "SpotExceptionsRecommendedPlanDetails": [
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "EM",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 35999,
+        "ExecutionTraceId": 2222,
+        "Friday": 1,
+        "IsRecommendedPlan": false,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 332,
+          "Name": "4Q'21 Macy's EM",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            }
+          ]
+        },
+        "RecommendedPlanId": 332,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 18000,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      },
+      {
+        "AudienceName": "Women 25-54",
+        "ContractedImpressions": 100000.0,
+        "DaypartCode": "SYN",
+        "DeliveredImpressions": 50000.0,
+        "EndTime": 7199,
+        "ExecutionTraceId": 2223,
+        "Friday": 1,
+        "IsRecommendedPlan": true,
+        "Monday": 1,
+        "PlanClearancePercentage": null,
+        "Rate": 0.0000,
+        "RecommendedPlanDetail": {
+          "AdvertiserMasterId": "b67c3c7b-e4f9-42ad-8ea5-cf18c83c61c0",
+          "FlightEndDate": "2021-12-26T23:59:59",
+          "FlightStartDate": "2021-09-28T00:00:00",
+          "Id": 334,
+          "Name": "4Q'21 Macy's SYN",
+          "ProductMasterId": "5ceb7e73-0d50-4c20-9f06-ff6a21049254",
+          "SpotLengths": [
+            {
+              "Id": 3,
+              "Length": 15
+            },
+            {
+              "Id": 1,
+              "Length": 30
+            }
+          ]
+        },
+        "RecommendedPlanId": 334,
+        "Saturday": 1,
+        "SpotExceptionsRecommendedPlanDecision": null,
+        "StartTime": 28800,
+        "Sunday": 1,
+        "Thursday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1
+      }
+    ],
+    "SpotLength": {
+      "Id": 3,
+      "Length": 15
+    },
+    "SpotLengthId": 3,
+    "SpotUniqueHashExternal": "TE9DQUwtMTE0MDIwMjA4Nw=F",
+    "StationLegacyCallLetters": "WEVV"
   }
 ]

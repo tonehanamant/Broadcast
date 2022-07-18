@@ -3,46 +3,160 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions
 {
+    /// <summary>
+    ///   <br />
+    /// </summary>
     public class SpotExceptionsRecommendedPlansDto
     {
         public SpotExceptionsRecommendedPlansDto()
         {
             SpotLength = new SpotLengthDto();
-            Audience = new AudienceDto();
-            DaypartDetail = new DaypartDetailDto();
             SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>();
         }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>The identifier.</value>
         public int Id { get; set; }
-        public int EstimateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot unique hash external.
+        /// </summary>
+        /// <value>The spot unique hash external.</value>
         public string SpotUniqueHashExternal { get; set; }
-        public string IsciName { get; set; }
-        public int? RecommendedPlanId { get; set; }
-        public string RecommendedPlanName { get; set; }
-        public string ProgramName { get; set; }
-        public string AdvertiserName { get; set; }
-        public DateTime ProgramAirTime { get; set; }
-        public string StationLegacyCallLetters { get; set; }
-        public string Affiliate { get; set; }
-        public string Market { get; set; }
-        public decimal? Cost { get; set; }
-        public double? Impressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ambiguity code.
+        /// </summary>
+        /// <value>The ambiguity code.</value>
+        public int AmbiguityCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the execution identifier external.
+        /// </summary>
+        /// <value>The execution identifier external.</value>
+        public string ExecutionIdExternal { get; set; }
+
+        /// <summary>
+        /// Gets or sets the estimate identifier.
+        /// </summary>
+        /// <value>The estimate identifier.</value>
+        public int EstimateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the inventory source.
+        /// </summary>
+        /// <value>The inventory source.</value>
+        public string InventorySource { get; set; }
+
+        /// <summary>
+        /// Gets or sets the house isci.
+        /// </summary>
+        /// <value>The house isci.</value>
+        public string HouseIsci { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client isci.
+        /// </summary>
+        /// <value>The client isci.</value>
+        public string ClientIsci { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot length identifier.
+        /// </summary>
+        /// <value>The spot length identifier.</value>
         public int? SpotLengthId { get; set; }
-        public SpotLengthDto SpotLength { get; set; }
-        public int? AudienceId { get; set; }
-        public AudienceDto Audience { get; set; }
-        public string Product { get; set; }
-        public DateTime? FlightStartDate { get; set; }
-        public DateTime? FlightEndDate { get; set; }
-        public int? DaypartId { get; set; }
-        public DaypartDetailDto DaypartDetail { get; set; }
+
+        /// <summary>
+        /// Gets or sets the program air time.
+        /// </summary>
+        /// <value>The program air time.</value>
+        public DateTime ProgramAirTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the station legacy call letters.
+        /// </summary>
+        /// <value>The station legacy call letters.</value>
+        public string StationLegacyCallLetters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the affiliate.
+        /// </summary>
+        /// <value>The affiliate.</value>
+        public string Affiliate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the market code.
+        /// </summary>
+        /// <value>The market code.</value>
+        public int? MarketCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the market rank.
+        /// </summary>
+        /// <value>The market rank.</value>
+        public int? MarketRank { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the program.
+        /// </summary>
+        /// <value>The name of the program.</value>
+        public string ProgramName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the program genre.
+        /// </summary>
+        /// <value>The program genre.</value>
+        public string ProgramGenre { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ingested by.
+        /// </summary>
+        /// <value>The ingested by.</value>
         public string IngestedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ingested at.
+        /// </summary>
+        /// <value>The ingested at.</value>
         public DateTime IngestedAt { get; set; }
-        public string ModifiedBy { get; set; }
-        public DateTime ModifiedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created by.
+        /// </summary>
+        /// <value>The created by.</value>
         public string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created at.
+        /// </summary>
+        /// <value>The created at.</value>
         public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified by.
+        /// </summary>
+        /// <value>The modified by.</value>
+        public string ModifiedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the modified at.
+        /// </summary>
+        /// <value>The modified at.</value>
+        public DateTime ModifiedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the length of the spot.
+        /// </summary>
+        /// <value>The length of the spot.</value>
+        public SpotLengthDto SpotLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot exceptions recommended plan details.
+        /// </summary>
+        /// <value>The spot exceptions recommended plan details.</value>
         public List<SpotExceptionsRecommendedPlanDetailsDto> SpotExceptionsRecommendedPlanDetails { get; set; }
-        public string InventorySourceName { get; set; }
     }
 }
-		
+

@@ -1002,6 +1002,116 @@ GO
 
 /*************************************** END BP-4975 **********************************************************************************************/
 
+/*************************************** START BP-4306 **********************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_details' 
+	AND (COLUMN_NAME= 'contracted_impressions'))
+
+BEGIN
+
+	DROP TABLE spot_exceptions_recommended_plan_decision;
+	DROP TABLE spot_exceptions_recommended_plan_details;
+	DROP TABLE spot_exceptions_recommended_plans;
+
+	CREATE TABLE spot_exceptions_recommended_plans
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		ambiguity_code int NOT NULL,
+		execution_id_external varchar(100) NOT NULL,
+		estimate_id int NOT NULL,
+		inventory_source varchar(100) NOT NULL,
+		house_isci varchar(100) NOT NULL,
+		client_isci varchar(100) NOT NULL,
+		spot_length_id int NULL,
+		program_air_time datetime NOT NULL,
+		station_legacy_call_letters varchar(30) NULL,
+		affiliate varchar(30) NULL,
+		market_code int NULL,
+		market_rank int NULL,
+		program_name varchar(500) NOT NULL,
+		program_genre varchar(127) NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		created_by VARCHAR(100) NOT NULL,
+		created_at datetime NOT NULL,
+		modified_by VARCHAR(100) NOT NULL,
+		modified_at datetime NOT NULL
+	)
+
+	ALTER TABLE spot_exceptions_recommended_plans WITH CHECK
+		ADD  CONSTRAINT FK_spot_exceptions_recommended_plans_spot_lengths
+		FOREIGN KEY(spot_length_id) REFERENCES spot_lengths(id)
+
+	CREATE TABLE spot_exceptions_recommended_plan_details
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_exceptions_recommended_plan_id int NOT NULL,
+		recommended_plan_id int NOT NULL,
+		execution_trace_id bigint NOT NULL,
+		rate money NULL,
+		audience_name varchar(127) NULL,
+		contracted_impressions float NULL,
+		delivered_impressions float NULL,
+		is_recommended_plan bit NOT NULL,
+		plan_clearance_percentage float NULL,
+		daypart_code varchar(10) NULL,
+		start_time int NULL,
+		end_time int NULL,
+		monday int NULL,
+		tuesday int NULL,
+		wednesday int NULL,
+		thursday int NULL,
+		friday int NULL,
+		saturday int NULL,
+		sunday int NULL,
+	)
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD  CONSTRAINT FK_spot_exceptions_recommended_plan_details_plans
+		FOREIGN KEY(recommended_plan_id) REFERENCES plans(id)
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD  CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
+		FOREIGN KEY(spot_exceptions_recommended_plan_id) REFERENCES spot_exceptions_recommended_plans(id)
+
+	CREATE TABLE spot_exceptions_recommended_plan_decision
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_exceptions_recommended_plan_detail_id int NOT NULL,
+		username varchar(63) NOT NULL,
+		created_at datetime NOT NULL,
+		synced_by varchar(100) NULL,
+		synced_at datetime2(7) NULL,
+		accepted_as_in_spec bit NOT NULL
+	)
+
+	ALTER TABLE spot_exceptions_recommended_plan_decision
+		ADD  CONSTRAINT FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details
+		FOREIGN KEY(spot_exceptions_recommended_plan_detail_id) REFERENCES spot_exceptions_recommended_plan_details(id)
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'staged_recommended_plan_details' 
+	AND (COLUMN_NAME = 'impressions'))
+BEGIN
+
+	ALTER TABLE staged_recommended_plan_details
+		DROP COLUMN impressions
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD contracted_impressions float NULL
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD delivered_impressions float NULL
+END
+
+GO
+
+/*************************************** END BP-4306 **********************************************************************************************/
+
+
 /*************************************** START BP-5086 ********************************************************/
 
 UPDATE plan_versions SET

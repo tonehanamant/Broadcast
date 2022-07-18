@@ -243,11 +243,11 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }
+        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
+        public virtual DbSet<schedule> schedules { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
-        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
-        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
         public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
-        public virtual DbSet<schedule> schedules { get; set; }
+        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
     }
 }

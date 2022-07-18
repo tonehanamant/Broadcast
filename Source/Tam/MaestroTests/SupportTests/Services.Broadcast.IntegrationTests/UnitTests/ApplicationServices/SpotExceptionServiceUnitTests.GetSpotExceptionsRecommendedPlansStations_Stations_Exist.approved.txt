@@ -1,5 +1,4 @@
 [
-  "KSTP",
-  "Unknown",
-  "WDAY"
+  "WDAY",
+  "KSTP"
 ]

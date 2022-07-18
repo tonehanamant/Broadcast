@@ -19,10 +19,12 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>   
         /// <param name="isIntegrationTestDatabase">True when we are running integration tests against an integration tests database.</param>
         bool AddSpotExceptionData(bool isIntegrationTestDatabase = false);
+
         /// <summary>
         /// Clear data from spot exceptions tables.
         /// </summary>   
         bool ClearSpotExceptionData();
+
         /// <summary>
         /// Gets the available outofspecPost within the start and end week
         /// </summary>
@@ -36,13 +38,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="spotExceptionsOutOfSpecId">The spot exceptions out of spec id</param>
         /// <returns>The spot exceptions out of spec details</returns>
         SpotExceptionsOutOfSpecDetailsResultDto GetSpotExceptionOutofSpecsDetails(int spotExceptionsOutOfSpecId);
-
-        /// <summary>
-        /// Gets spot exceptions recommended plans
-        /// </summary>
-        /// <param name="spotExceptionsRecommendedPlansRequest">The spot exceptions recommended plans request parameters</param>
-        /// <returns>The spot exceptions recommended plans</returns>
-        List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest);
 
         /// <summary>
         /// Gets spot exceptions recommended plan details
@@ -198,6 +193,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly ISpotExceptionRepository _SpotExceptionRepository;
         private readonly IPlanRepository _PlanRepository;
+        private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
@@ -215,6 +211,7 @@ namespace Services.Broadcast.ApplicationServices
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _FeatureToggleHelper = featureToggleHelper;
             _ProgramService = programService;
         }
@@ -243,7 +240,6 @@ namespace Services.Broadcast.ApplicationServices
             if (isIntegrationTestDatabase)
             {
                 // align this mock data with existing plan data within the integration tests databases                
-                spotExceptionsRecommendedPlans.ForEach(s => s.RecommendedPlanId = 524);
                 spotExceptionsRecommendedPlans.SelectMany(s => s.SpotExceptionsRecommendedPlanDetails).ToList().ForEach(s => s.RecommendedPlanId = 524);
                 spotExceptionsOutOfSpecs.ForEach(s =>
                 {
@@ -255,6 +251,7 @@ namespace Services.Broadcast.ApplicationServices
             var result = _SpotExceptionRepository.AddSpotExceptionData(spotExceptionsRecommendedPlans, spotExceptionsOutOfSpecs);
             return result;
         }
+
         public bool ClearSpotExceptionData()
         {
             var result = _SpotExceptionRepository.ClearSpotExceptionData();
@@ -267,31 +264,45 @@ namespace Services.Broadcast.ApplicationServices
             {
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzNzk3Nw==",
-                    EstimateId =191756,
-                    IsciName = "AB82TXT2H",
-                    RecommendedPlanId = 215,
-                    ProgramName = "Q13 news at 10",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Abbott Labs (Original)",
-                    StationLegacyCallLetters = "KOB",
-                    Cost = 675,
-                    Impressions = 765,
-                    SpotLengthId = 12,
-                    AudienceId = 431,
-                    Product = "Pizza Hut",
-                    FlightStartDate = new DateTime(2019, 8, 1),
-                    FlightEndDate = new DateTime(2019, 9, 1),
-                    DaypartId = 70615,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6840,
+                    InventorySource = "Tegna",
+                    HouseIsci = "840T42AY13H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                    StationLegacyCallLetters = "WBNS",
+                    Affiliate = "CBS",
+                    MarketCode = 135,
+                    MarketRank = 33,
+                    ProgramName = "CBS Mornings",
+                    ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId=215,
-                            MetricPercent=20,
-                            IsRecommendedPlan=true,
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 73,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
                                 UserName = "MockData",
@@ -299,387 +310,431 @@ namespace Services.Broadcast.ApplicationServices
                                 AcceptedAsInSpec = false
                             }
                         },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId=221,
-                            MetricPercent=22,
-                            IsRecommendedPlan=false,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        },
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId=222,
-                            MetricPercent=24,
-                            IsRecommendedPlan=false,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId=223,
-                            MetricPercent=26,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 75,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "Open Market"
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1ODgzODk5MA==",
-                    EstimateId =191757,
-                    IsciName = "AB82VR58",
-                    RecommendedPlanId = 216,
-                    ProgramName = "FOX 13 10:00 News",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Allergan",
-                    StationLegacyCallLetters = "KSTP",
-                    Cost = 700,
-                    Impressions = 879,
-                    SpotLengthId = 11,
-                    AudienceId = 430,
-                    Product = "Spotify",
-                    FlightStartDate = new DateTime(2018, 7, 2),
-                    FlightEndDate = new DateTime(2018, 8, 2),
-                    DaypartId = 70615,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6616,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "616MAY2913H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 41, 57),
+                    StationLegacyCallLetters = "WDKA",
+                    Affiliate = "IND",
+                    MarketCode = 232,
+                    MarketRank = 3873,
+                    ProgramName = "Mike & Molly",
+                    ProgramGenre = "COMEDY",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId=216,
-                            MetricPercent=45,
-                            IsRecommendedPlan=true,
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 623,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
-                            new SpotExceptionsRecommendedPlanDetailsDto
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId=224,
-                            MetricPercent=50,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 624,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "TTWN"
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDMwOA==",
-                    EstimateId =191758,
-                    IsciName = "AB44NR58",
-                    RecommendedPlanId = 217,
-                    ProgramName = "TEN O'CLOCK NEWS",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Ally Bank",
-                    StationLegacyCallLetters="KHGI",
-                    Cost = 0,
-                    Impressions = 877,
-                    SpotLengthId = 12,
-                    AudienceId = 431,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2021, 3, 6),
-                    FlightEndDate = new DateTime(2021, 4, 6),
-                    DaypartId = 70616,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6289,
+                    InventorySource = "Sinclair Corp - Day Syn 10a-4p",
+                    HouseIsci = "289IT2Y3P2H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
+                    StationLegacyCallLetters = "KOMO",
+                    Affiliate = "ABC",
+                    MarketCode = 419,
+                    MarketRank = 11,
+                    ProgramName = "LIVE with Kelly and Ryan",
+                    ProgramGenre = "TALK",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 217,
-                            MetricPercent=28,
-                            IsRecommendedPlan=true,
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 1824,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 225,
-                            MetricPercent=38,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 1923,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "TTWN"
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
-                    EstimateId =191759,
-                    IsciName = "AB21QR58",
-                    RecommendedPlanId = 218,
-                    ProgramName = "Product1",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Ally Bank",
-                    StationLegacyCallLetters="KWCH" ,
-                    Cost = 987,
-                    Impressions = 987,
-                    SpotLengthId = 11,
-                    AudienceId = 430,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2018, 3, 6),
-                    FlightEndDate = new DateTime(2018, 4, 6),
-                    DaypartId = 70617,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 5711,
+                    InventorySource = "TVB Syndication/ROS",
+                    HouseIsci = "711N51AY18H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 29, 23),
+                    StationLegacyCallLetters = "WEVV",
+                    Affiliate = "CBS",
+                    MarketCode = 249,
+                    MarketRank = 106,
+                    ProgramName = "Funny You Should Ask",
+                    ProgramGenre = "GAME SHOW",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 218,
-                            MetricPercent=56,
-                            IsRecommendedPlan=true,
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 2222,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 226,
-                            MetricPercent=60,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 2223,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "CNN"
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
-                    EstimateId =191760,
-                    IsciName = "AB44NR58",
-                    RecommendedPlanId = 219,
-                    ProgramName = "TProduct2",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Amgen",
-                    StationLegacyCallLetters="WDAY" ,
-                    Cost = 555,
-                    Impressions = 9878,
-                    SpotLengthId = 10,
-                    AudienceId = 429,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2019, 7, 3),
-                    FlightEndDate = new DateTime(2019, 8, 3),
-                    DaypartId = 70618,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwODcxNw=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6718,
+                    InventorySource = "Ference POD - Scripps",
+                    HouseIsci = "718MAY2918H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 45, 23),
+                    StationLegacyCallLetters = "NRIS",
+                    Affiliate = "CW",
+                    MarketCode = 200,
+                    MarketRank = 130,
+                    ProgramName = "The Steve Wilkos Show",
+                    ProgramGenre = "REALITY TALK",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 219,
-                            MetricPercent=76,
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 2306,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 0,
+                            DeliveredImpressions = 0,
                             IsRecommendedPlan=true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 227,
-                            MetricPercent=80,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 2305,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 0,
+                            DeliveredImpressions = 1,
+                            IsRecommendedPlan=true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "Sinclair"
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA5ODgwOQ==",
-                    EstimateId =191761,
-                    IsciName = "AB33PR58",
-                    RecommendedPlanId = 220,
-                    ProgramName = "TEN O'CLOCK NEWS",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Boston Scientific",
-                    StationLegacyCallLetters="KPNX" ,
-                    Cost = 987,
-                    Impressions = 999,
-                    SpotLengthId = 10,
-                    AudienceId = 428,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2019, 7, 1),
-                    FlightEndDate = new DateTime(2019, 8, 1),
-                    DaypartId = 70619,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDIyMzAzMw=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 2009,
+                    InventorySource = "Business First AM",
+                    HouseIsci = "009UPX0030H",
+                    ClientIsci = "DUPX0030000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 11, 44, 35),
+                    StationLegacyCallLetters = "WMNN",
+                    Affiliate = "IND",
+                    MarketCode = 140,
+                    MarketRank = 118,
+                    ProgramName = "Business First AM",
+                    ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 220,
-                            MetricPercent=87,
+                            RecommendedPlanId = 323,
+                            ExecutionTraceId = 2384,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 0,
+                            DeliveredImpressions = 1,
                             IsRecommendedPlan=true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "DAY",
+                            StartTime = 36000,
+                            EndTime = 57599,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
-                            new SpotExceptionsRecommendedPlanDetailsDto
+                        new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 228,
-                            MetricPercent=70,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 322,
+                            ExecutionTraceId = 2385,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 0,
+                            DeliveredImpressions = 0,
+                            IsRecommendedPlan=true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "MDN",
+                            StartTime = 39600,
+                            EndTime = 46799,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "LilaMax"
+                    }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
-                    EstimateId =191762,
-                    IsciName = "AB79PR58",
-                    RecommendedPlanId = 221,
-                    ProgramName = "Product4",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName="Chattem",
-                    StationLegacyCallLetters="KELO" ,
-                    Cost = 907,
-                    Impressions = 5467,
-                    SpotLengthId = 09,
-                    AudienceId = 427,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2021, 8, 6),
-                    FlightEndDate = new DateTime(2021, 9, 6),
-                    DaypartId = 70620,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDM2NTgwMw=+",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6288,
+                    InventorySource = "Sinclair Corp - Syn EM 6-10a",
+                    HouseIsci = "288R2Y1F81H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 14, 45),
+                    StationLegacyCallLetters = "NVCW",
+                    Affiliate = "IND",
+                    MarketCode = 439,
+                    MarketRank = 40,
+                    ProgramName = "25 Words or Less",
+                    ProgramGenre = "GAME SHOW",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 221,
-                            MetricPercent=82,
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 2553,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 0,
+                            DeliveredImpressions = 0,
                             IsRecommendedPlan=true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 229,
-                            MetricPercent=50,
-                            IsRecommendedPlan=false,
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 2552,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 0,
+                            DeliveredImpressions = 1,
+                            IsRecommendedPlan=true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
-                    },
-                    InventorySourceName = "MLB"
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
-                    EstimateId =191763,
-                    IsciName = "AB81GR58",
-                    RecommendedPlanId = 222,
-                    ProgramName = "Product3",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName=null,
-                    StationLegacyCallLetters="KXMC" ,
-                    Cost = 453,
-                    Impressions = 8795,
-                    SpotLengthId = 08,
-                    AudienceId = 426,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2020, 8, 2),
-                    FlightEndDate = new DateTime(2020, 9, 2),
-                    DaypartId = 70621,
-                    IngestedBy="Mock Data",
-                    IngestedAt=DateTime.Now,
-                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-                    {
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 222,
-                            MetricPercent=75,
-                            IsRecommendedPlan=true,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        },
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 230,
-                            MetricPercent=79,
-                            IsRecommendedPlan=false,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        }
-                    },
-                    InventorySourceName = "Ference Media"
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
-                    EstimateId =191764,
-                    IsciName = "AB87GR58",
-                    RecommendedPlanId = 223,
-                    ProgramName = "Product6",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName=null,
-                    StationLegacyCallLetters="WTTV" ,
-                    Cost = 987,
-                    Impressions = 8767,
-                    SpotLengthId = 07,
-                    AudienceId = 425,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2020, 6, 6),
-                    FlightEndDate = new DateTime(2020, 7, 6),
-                    DaypartId = 70622,
-                    IngestedBy="Mock Data",
-                    IngestedAt=DateTime.Now,
-                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-                    {
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 223,
-                            MetricPercent=90,
-                            IsRecommendedPlan=true,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        },
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 231,
-                            MetricPercent=92,
-                            IsRecommendedPlan=false,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        },
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 232,
-                            MetricPercent=94,
-                            IsRecommendedPlan=false,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        },
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 233,
-                            MetricPercent=96,
-                            IsRecommendedPlan=false,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        }
-                    },
-                    InventorySourceName = "20th Century Fox (Twentieth Century)"
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
-                    EstimateId =191765,
-                    IsciName = "AB83PR58",
-                    RecommendedPlanId = 224,
-                    ProgramName = "Product8",
-                    ProgramAirTime = new DateTime(2022, 04, 10),
-                    AdvertiserName=null,
-                    StationLegacyCallLetters="WCCO" ,
-                    Cost = 767,
-                    Impressions = 9832,
-                    SpotLengthId = 06,
-                    AudienceId = 424,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2020, 5, 6),
-                    FlightEndDate = new DateTime(2020, 6, 6),
-                    DaypartId = 70623,
-                    IngestedBy="Mock Data",
-                    IngestedAt=DateTime.Now,
-                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-                    {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 224,
-                            MetricPercent=96,
-                            IsRecommendedPlan=true,
-                            SpotExceptionsRecommendedPlanDecision = null
-                        }
-                    },
-                    InventorySourceName = "CBS Synd"
+                    }
                 }
             };
 
@@ -1073,6 +1128,27 @@ namespace Services.Broadcast.ApplicationServices
             return advertiserName;
         }
 
+        private string _GetProductName(Guid? productId, Guid? masterId)
+        {
+            string productName = null;
+            if (masterId.HasValue)
+            {
+                productName = _AabEngine.GetAdvertiserProduct(productId.Value, masterId.Value)?.Name;
+            }
+            return productName;
+        }
+
+        private List<string> _GetAdvertiserNames(List<Guid> masterIds)
+        {
+            List<string> advertiserNames = new List<string>();
+            foreach (var masterId in masterIds)
+            {
+                var advertiserName = _AabEngine.GetAdvertiser(masterId)?.Name;
+                advertiserNames.Add(advertiserName ?? "Unknown");
+            }
+            return advertiserNames;
+        }
+
         /// <inheritdoc />
         public List<SpotExceptionsOutOfSpecPostsResultDto> GetSpotExceptionsOutOfSpecsPosts(SpotExceptionsOutOfSpecPostsRequestDto spotExceptionsOutOfSpecPostsRequest)
         {
@@ -1162,75 +1238,39 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public List<SpotExceptionsRecommendedPlansResultDto> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
-        {
-            var spotExceptionsRecommendedPlansResults = new List<SpotExceptionsRecommendedPlansResultDto>();
-            const string programAirDateFormat = "MM/dd/yyyy";
-            const string programAirTimeFormat = "hh:mm:ss tt";
-
-            var spotExceptionsRecommendedPlans = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
-            if (spotExceptionsRecommendedPlans?.Any() ?? false)
-            {
-                spotExceptionsRecommendedPlansResults = spotExceptionsRecommendedPlans.Select(spotExceptionsRecommendedPlan =>
-                {
-                    var spotExceptionsRecommendedPlanDetailWithDecision = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.SingleOrDefault(spotExceptionsRecommendedPlanDetail => spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null);
-
-                    var spotExceptionsRecommendedPlansResult = new SpotExceptionsRecommendedPlansResultDto
-                    {
-                        Id = spotExceptionsRecommendedPlan.Id,
-                        Status = spotExceptionsRecommendedPlanDetailWithDecision != null,
-                        EstimateId = spotExceptionsRecommendedPlan.EstimateId,
-                        IsciName = spotExceptionsRecommendedPlan.IsciName,
-                        RecommendedPlan = spotExceptionsRecommendedPlan.RecommendedPlanName,
-                        Affiliate = spotExceptionsRecommendedPlan.Affiliate,
-                        Market = spotExceptionsRecommendedPlan.Market,
-                        Station = spotExceptionsRecommendedPlan.StationLegacyCallLetters,
-                        Cost = spotExceptionsRecommendedPlan.Cost ?? 0,
-                        Impressions = spotExceptionsRecommendedPlan.Impressions ?? 0,
-                        SpotLengthString = spotExceptionsRecommendedPlan.SpotLength != null ? $":{spotExceptionsRecommendedPlan.SpotLength.Length}" : null,
-                        AudienceName = spotExceptionsRecommendedPlan.Audience?.Name,
-                        ProductName = spotExceptionsRecommendedPlan.Product,
-                        AdvertiserName = spotExceptionsRecommendedPlan.AdvertiserName,
-                        ProgramName = spotExceptionsRecommendedPlan.ProgramName,
-                        ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
-                        ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat)
-                    };
-                    return spotExceptionsRecommendedPlansResult;
-                }).ToList();
-            }
-            return spotExceptionsRecommendedPlansResults;
-        }
-
-        /// <inheritdoc />
         public SpotExceptionsRecommendedPlanDetailsResultDto GetSpotExceptionsRecommendedPlanDetails(int spotExceptionsRecommendedPlanId)
         {
+            var spotExceptionsRecommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto();
+
             var spotExceptionsRecommendedPlan = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlanById(spotExceptionsRecommendedPlanId);
             if (spotExceptionsRecommendedPlan == null)
             {
-                return null;
+                return spotExceptionsRecommendedPlanDetailsResult;
             }
+
+            var recommendedPlan = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.First(x => x.IsRecommendedPlan);
 
             const string programAirDateFormat = "MM/dd/yyyy";
             const string programAirTimeFormat = "hh:mm:ss tt";
             const string flightStartDateFormat = "MM/dd";
             const string flightEndDateFormat = "MM/dd/yyyy";
 
-            var spotExceptionsRecommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
+            spotExceptionsRecommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
             {
                 Id = spotExceptionsRecommendedPlan.Id,
                 EstimateId = spotExceptionsRecommendedPlan.EstimateId,
                 SpotLengthString = spotExceptionsRecommendedPlan.SpotLength != null ? $":{spotExceptionsRecommendedPlan.SpotLength.Length}" : null,
-                DaypartCode = spotExceptionsRecommendedPlan.DaypartDetail?.Code,
-                AudienceName = spotExceptionsRecommendedPlan.Audience?.Name,
-                Product = spotExceptionsRecommendedPlan.Product,
-                FlightStartDate = spotExceptionsRecommendedPlan.FlightStartDate?.ToString(),
-                FlightEndDate = spotExceptionsRecommendedPlan.FlightEndDate?.ToString(),
-                FlightDateString = spotExceptionsRecommendedPlan.FlightStartDate.HasValue && spotExceptionsRecommendedPlan.FlightEndDate.HasValue ? $"{Convert.ToDateTime(spotExceptionsRecommendedPlan.FlightStartDate).ToString(flightStartDateFormat)}-{Convert.ToDateTime(spotExceptionsRecommendedPlan.FlightEndDate).ToString(flightEndDateFormat)}" : null,
+                DaypartCode = recommendedPlan.DaypartCode,
+                AudienceName = recommendedPlan.AudienceName,
+                Product = _GetProductName(recommendedPlan.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlan.RecommendedPlanDetail.ProductMasterId),
+                FlightStartDate = recommendedPlan.RecommendedPlanDetail.FlightStartDate.ToString(),
+                FlightEndDate = recommendedPlan.RecommendedPlanDetail.FlightEndDate.ToString(),
+                FlightDateString = $"{Convert.ToDateTime(recommendedPlan.RecommendedPlanDetail.FlightStartDate).ToString(flightStartDateFormat)}-{Convert.ToDateTime(recommendedPlan.RecommendedPlanDetail.FlightEndDate).ToString(flightEndDateFormat)}",
                 ProgramName = spotExceptionsRecommendedPlan.ProgramName,
                 ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
                 ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat),
-                Impressions = spotExceptionsRecommendedPlan.Impressions,
-                InventorySourceName = spotExceptionsRecommendedPlan.InventorySourceName,
+                Impressions = recommendedPlan.ContractedImpressions,
+                InventorySourceName = spotExceptionsRecommendedPlan.InventorySource,
                 Plans = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(spotExceptionsRecommendedPlanDetail => new RecommendedPlanDetailResultDto
                 {
                     Id = spotExceptionsRecommendedPlanDetail.Id,
@@ -1241,7 +1281,7 @@ namespace Services.Broadcast.ApplicationServices
                     FlightDateString = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
                     IsRecommendedPlan = spotExceptionsRecommendedPlanDetail.IsRecommendedPlan,
                     IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null,
-                    Pacing = spotExceptionsRecommendedPlanDetail.MetricPercent.ToString() + "%",
+                    Pacing = _GetPacing(),
                     AcceptedAsInSpec = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision?.AcceptedAsInSpec,
                     RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId
                 }).ToList()
@@ -1260,13 +1300,29 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<string> GetSpotExceptionsRecommendedPlansAdvertisers(SpotExceptionsRecommendedPlansAdvertisersRequestDto spotExceptionsRecommendedPlansAdvertisersRequest)
         {
+            List<string> advertisers = new List<string>();
+
             SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto();
             spotExceptionsRecommendedPlansRequest.WeekStartDate = spotExceptionsRecommendedPlansAdvertisersRequest.WeekStartDate;
             spotExceptionsRecommendedPlansRequest.WeekEndDate = spotExceptionsRecommendedPlansAdvertisersRequest.WeekEndDate;
-            var advertisers = GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest).Select(s => s.AdvertiserName ?? "Unknown").Distinct().ToList();
+            var recommendedPlanAdvertiserMasterIdsPerWeek = _GetRecommendedPlanAdvertiserMasterIdsPerWeek(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
 
+            if (recommendedPlanAdvertiserMasterIdsPerWeek == null)
+            {
+                return advertisers;
+            }
+            advertisers = _GetAdvertiserNames(recommendedPlanAdvertiserMasterIdsPerWeek);
             return advertisers;
         }
+
+        /// <inheritdoc />
+        protected List<Guid> _GetRecommendedPlanAdvertiserMasterIdsPerWeek (DateTime weekStartDate, DateTime weekEndDate)
+        {
+            var recommendedPlanIds = _SpotExceptionRepository.GetRecommendedPlanAdvertiserMasterIdsPerWeek(weekStartDate, weekEndDate);
+
+            return recommendedPlanIds;
+        }
+
         /// <inheritdoc />
         public bool SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveRequestDto spotExceptionsRecommendedPlanSaveRequest, string userName)
         {
@@ -1324,13 +1380,9 @@ namespace Services.Broadcast.ApplicationServices
                 WeekStartDate = spotExceptionsRecommendedPlansStationRequest.WeekStartDate,
                 WeekEndDate = spotExceptionsRecommendedPlansStationRequest.WeekEndDate
             };
-            var spotExceptionsRecommendedPlansResults = GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest);
-            if (spotExceptionsRecommendedPlansResults == null)
-            {
-                return null;
-            }
 
-            var stations = spotExceptionsRecommendedPlansResults.Select(spotExceptionsRecommendedPlansResult => spotExceptionsRecommendedPlansResult.Station ?? "Unknown").Distinct().OrderBy(station => station).ToList();
+            var stations = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlanStations(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
+
             return stations;
         }
 
@@ -1644,47 +1696,54 @@ namespace Services.Broadcast.ApplicationServices
             List<SpotExceptionsRecommendedPlansDto> completedPlans = null;
 
             var spotExceptionsoutRecommendedPlans = _SpotExceptionRepository.GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest.WeekStartDate, spotExceptionsRecommendedPlansRequest.WeekEndDate);
+
             if (spotExceptionsoutRecommendedPlans?.Any() ?? false)
             {
-                activePlans = spotExceptionsoutRecommendedPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
+                activePlans = spotExceptionsoutRecommendedPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Any(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
                 completedPlans = spotExceptionsoutRecommendedPlans.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
 
-                spotExceptionsRecommendedPlansResults.Active = activePlans.GroupBy(activePlan => new { activePlan.RecommendedPlanId })
-                .Select(activePlan =>
-                {
-                    var planDetails = activePlan.First();
-                    return new SpotExceptionsRecommandedToDoPlansDto
+                spotExceptionsRecommendedPlansResults.Active = activePlans.GroupBy(activePlan => new { activePlan.SpotExceptionsRecommendedPlanDetails.First(y => y.IsRecommendedPlan).RecommendedPlanId })
+                    .Select(activePlan =>
                     {
-                        PlanId = planDetails.RecommendedPlanId,
-                        AdvertiserName = planDetails.AdvertiserName,
-                        PlanName = planDetails.RecommendedPlanName,
-                        AffectedSpotsCount = activePlan.Count(),
-                        Impressions = planDetails.Impressions / 1000,
-                        SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        Pacing = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x=> x.IsRecommendedPlan).Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
-                        AudienceName = planDetails.Audience?.Name,
-                        FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
-                    };
-                }).ToList();
+                        var planDetails = activePlan.First();
+                        var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.AdvertiserMasterId).First();
+                        var flightStartDate = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightStartDate).First();
+                        var flightEndDate = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightEndDate).First();
+                        return new SpotExceptionsRecommandedToDoPlansDto
+                        {
+                            PlanId = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
+                            AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
+                            PlanName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
+                            AffectedSpotsCount = activePlan.Count(),
+                            Impressions = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
+                            SpotLengthString = $"{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
+                            Pacing = _GetPacing(),
+                            AudienceName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
+                            FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
+                        };
+                    }).ToList();
 
-                spotExceptionsRecommendedPlansResults.Completed = completedPlans.GroupBy(completedPlan => new { completedPlan.RecommendedPlanId })
+                spotExceptionsRecommendedPlansResults.Completed = completedPlans?.GroupBy(completedPlan => new { completedPlan.SpotExceptionsRecommendedPlanDetails.First(y => y.IsRecommendedPlan).RecommendedPlanId })
                 .Select(completedPlan =>
                 {
                     var planDetails = completedPlan.First();
+                    var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.AdvertiserMasterId).First();
+                    var flightStartDate = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightStartDate).First();
+                    var flightEndDate = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightEndDate).First();
                     return new SpotExceptionsRecommandedCompletedPlansDto
                     {
-                        PlanId = planDetails.RecommendedPlanId,
-                        AdvertiserName = planDetails.AdvertiserName,
-                        PlanName = planDetails.RecommendedPlanName,
+                        PlanId = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
+                        AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
+                        PlanName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
                         AffectedSpotsCount = completedPlan.Count(),
-                        Impressions = planDetails.Impressions / 1000,
-                        SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                        Pacing = _GetPacing(planDetails),
-                        AudienceName = planDetails.Audience?.Name,
-                        FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+                        Impressions = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
+                        SpotLengthString = $"{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
+                        Pacing = _GetPacing(),
+                        AudienceName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
+                        FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
                     };
                 }).ToList();
-            }
+            }         
             return spotExceptionsRecommendedPlansResults;
         }
 
@@ -1722,10 +1781,12 @@ namespace Services.Broadcast.ApplicationServices
             }
             return mockedGenres;
         }
+
         private void _RemoveUnmatched(List<SpotExceptionsOutOfSpecGenreDto> genres)
         {
             genres.RemoveAll(x => x.GenreName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
         }
+
         private void _RemoveVarious(List<SpotExceptionsOutOfSpecGenreDto> genres)
         {
             genres.RemoveAll(x => x.GenreName.Equals("Various", StringComparison.OrdinalIgnoreCase));
@@ -1743,81 +1804,114 @@ namespace Services.Broadcast.ApplicationServices
 
             if (spotExceptionsRecommendedPlanSpots?.Any() ?? false)
             {
-                activePlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
-                queuedPlans = spotExceptionsRecommendedPlanSpots.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
+                activePlans = spotExceptionsRecommendedPlanSpots?.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.All(x => x.SpotExceptionsRecommendedPlanDecision == null)).ToList();
+                queuedPlans = spotExceptionsRecommendedPlanSpots?.Where(spotExceptionDecisionPlans => spotExceptionDecisionPlans.SpotExceptionsRecommendedPlanDetails.Exists(x => x.SpotExceptionsRecommendedPlanDecision != null)).ToList();
                 foreach (var plan in queuedPlans)
                 {
-                    plan.RecommendedPlanId = _GetRecommendedPlanId(plan);
-                    plan.RecommendedPlanName = _GetRecommendedPlanName(plan);
+                    foreach (var detail in plan.SpotExceptionsRecommendedPlanDetails)
+                    {
+                        detail.RecommendedPlanId = _GetRecommendedPlanId(plan);
+                        detail.RecommendedPlanDetail.Name = _GetRecommendedPlanName(plan);
+                    }
                 }
                 spotExceptionsRecommendedPlanSpotsResult.Active = activePlans
                .Select(activePlan =>
                {
+                   var planDetails = activePlan.SpotExceptionsRecommendedPlanDetails;
                    return new SpotExceptionsRecommendedActivePlanSpotsDto
                    {
                        Id = activePlan.Id,
                        EstimateId = activePlan.EstimateId,
-                       IsciName = activePlan.IsciName,
+                       IsciName = activePlan.ClientIsci,
                        ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
                        ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
-                       RecommendedPlan = activePlan.RecommendedPlanName,
-                       Pacing = activePlan.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%",
+                       RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
+                       Pacing = _GetPacing(),
                        ProgramName = activePlan.ProgramName,
                        Affiliate = activePlan.Affiliate,
-                       PlanId = activePlan.RecommendedPlanId,
-                       Market = activePlan.Market,
+                       PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),
+                       Market = _GetMarketName(activePlan.MarketCode ?? 0),
                        Station = activePlan.StationLegacyCallLetters,
-                       InventorySource = activePlan.InventorySourceName
+                       InventorySource = activePlan.InventorySource
                    };
                }).ToList();
 
-                spotExceptionsRecommendedPlanSpotsResult.Queued = queuedPlans.Where(syncedSpot => syncedSpot.SpotExceptionsRecommendedPlanDetails.Any(x => x.SpotExceptionsRecommendedPlanDecision != null && x.SpotExceptionsRecommendedPlanDecision.SyncedAt == null))
+                spotExceptionsRecommendedPlanSpotsResult.Queued = queuedPlans?.Where(syncedSpot => syncedSpot.SpotExceptionsRecommendedPlanDetails.Any(x => x.SpotExceptionsRecommendedPlanDecision != null && x.SpotExceptionsRecommendedPlanDecision.SyncedAt == null))
                 .Select(queuedPlan =>
                 {
+                    var planDetails = queuedPlan.SpotExceptionsRecommendedPlanDetails;
                     return new SpotExceptionsRecommendedQueuedPlanSpotsDto
                     {
                         Id = queuedPlan.Id,
                         EstimateId = queuedPlan.EstimateId,
-                        IsciName = queuedPlan.IsciName,
+                        IsciName = queuedPlan.ClientIsci,
                         ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
-                        RecommendedPlan = queuedPlan.RecommendedPlanName,
-                        Pacing = _GetPacing(queuedPlan),
+                        RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
+                        Pacing = _GetPacing(),
                         ProgramName = queuedPlan.ProgramName,
                         Affiliate = queuedPlan.Affiliate,
-                        PlanId = queuedPlan.RecommendedPlanId,
-                        Market = queuedPlan.Market,
+                        PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),
+                        Market = _GetMarketName(queuedPlan.MarketCode ?? 0),
                         Station = queuedPlan.StationLegacyCallLetters,
-                        InventorySource = queuedPlan.InventorySourceName,
-                        DecisionString = queuedPlan.SpotExceptionsRecommendedPlanDetails.Where(x => x.SpotExceptionsRecommendedPlanDecision != null).Select(y => y.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
+                        InventorySource = queuedPlan.InventorySource,
+                        DecisionString = planDetails.Where(x => x.SpotExceptionsRecommendedPlanDecision != null).Select(y => y.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
                     };
                 }).ToList();
 
                 spotExceptionsRecommendedPlanSpotsResult.Synced = queuedPlans.Where(syncedSpot => syncedSpot.SpotExceptionsRecommendedPlanDetails.Any(x => x.SpotExceptionsRecommendedPlanDecision != null && x.SpotExceptionsRecommendedPlanDecision.SyncedAt != null))
                 .Select(syncedPlan =>
                 {
+                    var planDetails = syncedPlan.SpotExceptionsRecommendedPlanDetails;
                     return new SpotExceptionsRecommendedSyncedPlanSpotsDto
                     {
                         Id = syncedPlan.Id,
                         EstimateId = syncedPlan.EstimateId,
-                        IsciName = syncedPlan.IsciName,
+                        IsciName = syncedPlan.ClientIsci,
                         ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
-                        RecommendedPlan = syncedPlan.RecommendedPlanName,
-                        Pacing = _GetPacing(syncedPlan),
+                        RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
+                        Pacing = _GetPacing(),
                         ProgramName = syncedPlan.ProgramName,
                         Affiliate = syncedPlan.Affiliate,
-                        PlanId = syncedPlan.RecommendedPlanId,
-                        Market = syncedPlan.Market,
+                        PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),
+                        Market = _GetMarketName(syncedPlan.MarketCode ?? 0),
                         Station = syncedPlan.StationLegacyCallLetters,
                         SyncedTimestamp = syncedPlan.SpotExceptionsRecommendedPlanDetails.Where(x => x.SpotExceptionsRecommendedPlanDecision != null).Select(x => x.SpotExceptionsRecommendedPlanDecision.SyncedAt).FirstOrDefault().ToString(),
-                        InventorySource = syncedPlan.InventorySourceName,
+                        InventorySource = syncedPlan.InventorySource,
                         DecisionString = syncedPlan.SpotExceptionsRecommendedPlanDetails.Where(x => x.SpotExceptionsRecommendedPlanDecision != null).Select(y => y.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec).FirstOrDefault() ? "In" : "Out"
                     };
                 }).ToList();
             }
             return spotExceptionsRecommendedPlanSpotsResult;
         }
+
+        /// <summary>Gets the name of the market.</summary>
+        /// <param name="marketCode">The market code.</param>
+        /// <returns></returns>
+        private string _GetMarketName(int marketCode)
+        {
+            var marketName = _SpotExceptionRepository.GetMarketName(marketCode);
+            return marketName;
+        }
+
+        /// <summary>Gets the market names.</summary>
+        /// <param name="marketCodes">The market codes.</param>
+        /// <returns></returns>
+        protected List<string> _GetMarketNames(List<int> marketCodes)
+        {
+            var marketNames = new List<string>();
+            if (marketCodes != null)
+            {
+                foreach (var marketCode in marketCodes)
+                {
+                    var marketName = _SpotExceptionRepository.GetMarketName(marketCode);
+                    marketNames.Add(marketName ?? "Unknown");
+                }
+            }
+            return marketNames;
+        }
+
         /// <inheritdoc />
         public RecommendedPlanFiltersResultDto GetRecommendedPlansFilters(RecomendedPlansRequestDto recommendedPlansRequest)
         {
@@ -1827,17 +1921,19 @@ namespace Services.Broadcast.ApplicationServices
 
             if (spotExceptionsRecommendedSpotsResult == null)
             {
-                return null;
+                return recommendedPlanFiltersResult;
             }
 
-            recommendedPlanFiltersResult.Markets = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.Market ?? "Unknown").Distinct().OrderBy(market => market).ToList();
+            var marketCodes = spotExceptionsRecommendedSpotsResult.Select(x => x.MarketCode ?? 0).ToList();
+            recommendedPlanFiltersResult.Markets = _GetMarketNames(marketCodes).Distinct().OrderBy(market => market).ToList();
             recommendedPlanFiltersResult.Stations = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.StationLegacyCallLetters ?? "Unknown").Distinct().OrderBy(station => station).ToList();
-            recommendedPlanFiltersResult.InventorySources = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.InventorySourceName ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
+            recommendedPlanFiltersResult.InventorySources = spotExceptionsRecommendedSpotsResult.Select(activeSpotExceptionsOutOfSpecSpotsResult => activeSpotExceptionsOutOfSpecSpotsResult.InventorySource ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
             return recommendedPlanFiltersResult;
         }
+
         private string _GetRecommendedPlanName(SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans)
         {
-            string planName = spotExceptionsRecommendedPlans.RecommendedPlanName;
+            string planName = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail.Name).FirstOrDefault();
             if (spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails != null)
             {
                 int planDetailId = 0;
@@ -1858,12 +1954,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private int _GetRecommendedPlanId(SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans)
         {
-            int planId = spotExceptionsRecommendedPlans.RecommendedPlanId ?? 0;
+            int planId = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault();
             if (spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails != null)
             {
                 int planDetailId = 0;
-                var planDetail = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails
-                    .FirstOrDefault(x => x.SpotExceptionsRecommendedPlanDecision != null);
+                var planDetail = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.FirstOrDefault(x => x.SpotExceptionsRecommendedPlanDecision != null);
                 if (planDetail != null)
                 {
                     planDetailId = planDetail.SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId;
@@ -1876,24 +1971,10 @@ namespace Services.Broadcast.ApplicationServices
             }
             return planId;
         }
-        private string _GetPacing(SpotExceptionsRecommendedPlansDto spotExceptionsRecommendedPlans)
+
+        private string _GetPacing()
         {
-            string pacing = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.Select(x => x.MetricPercent).FirstOrDefault().ToString() + "%";
-            if (spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.Any())
-            {
-                int planDetailId = 0;
-                var planDetail = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails
-                    .FirstOrDefault(x => x.SpotExceptionsRecommendedPlanDecision != null);
-                if (planDetail != null)
-                {
-                    planDetailId = planDetail.SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId;
-                    var planDetails = spotExceptionsRecommendedPlans.SpotExceptionsRecommendedPlanDetails.FirstOrDefault(x => x.Id == planDetailId);
-                    if (planDetails != null)
-                    {
-                        pacing = planDetail.MetricPercent.ToString() + "%";
-                    }
-                }
-            }
+            string pacing = "30%";
             return pacing;
         }
 

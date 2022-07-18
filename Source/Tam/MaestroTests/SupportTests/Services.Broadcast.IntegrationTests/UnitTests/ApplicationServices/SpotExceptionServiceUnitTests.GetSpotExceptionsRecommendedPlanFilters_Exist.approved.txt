@@ -1,17 +1,20 @@
 {
   "InventorySources": [
-    "CNN",
-    "TTWN",
-    "TVB"
+    "Ference POD",
+    "Sinclair Corp - Day Syn 10a-4p",
+    "Tegna",
+    "TVB Syndication/ROS"
   ],
   "Markets": [
-    "Lincoln & Hastings-Krny",
-    "Minot-Bsmrck-Dcknsn(Wlstn)",
-    "Phoenix (Prescott)"
+    "Columbus, OH",
+    "Evansville",
+    "Paducah-Cape Girard-Harsbg",
+    "Seattle-Tacoma"
   ],
   "Stations": [
-    "KSTP",
-    "KXMC",
-    "WDAY"
+    "KOMO",
+    "WBNS",
+    "WDKA",
+    "WEVV"
   ]
 }

@@ -1,56 +1,56 @@
 {
   "Active": [
     {
-      "Affiliate": "ABC",
-      "EstimateId": 191757,
-      "Id": 2,
-      "InventorySource": "TVB",
-      "IsciName": "BB82TXT4P",
-      "Market": "Lincoln & Hastings-Krny",
-      "Pacing": "0%",
-      "PlanId": 215,
-      "ProgramAirDate": "1/4/2020",
-      "ProgramAirTime": "8:07:15 AM",
-      "ProgramName": "FOX 13 10:00 News",
-      "RecommendedPlan": "2Q' 21 Reynolds Foil TDN and SYN Upfront",
-      "Station": "KSTP"
+      "Affiliate": "CBS",
+      "EstimateId": 6840,
+      "Id": 0,
+      "InventorySource": "Tegna",
+      "IsciName": "QMAY2913OS1H",
+      "Market": null,
+      "Pacing": "30%",
+      "PlanId": 0,
+      "ProgramAirDate": "4/10/2022",
+      "ProgramAirTime": "8:28:28 AM",
+      "ProgramName": "CBS Mornings",
+      "RecommendedPlan": null,
+      "Station": "WBNS"
     }
   ],
   "Queued": [
     {
-      "Affiliate": "NBC",
+      "Affiliate": "IND",
       "DecisionString": "Out",
-      "EstimateId": 191758,
-      "Id": 3,
-      "InventorySource": "TTWN",
-      "IsciName": "CC42TXT4P",
-      "Market": "Phoenix (Prescott)",
-      "Pacing": "20%",
-      "PlanId": 216,
-      "ProgramAirDate": "1/6/2020",
-      "ProgramAirTime": "11:15:30 AM",
-      "ProgramName": "Reynolds Foil @9",
-      "RecommendedPlan": "4Q' 21 Reynolds Foil TDN and SYN Upfront",
-      "Station": "WDAY"
+      "EstimateId": 6616,
+      "Id": 0,
+      "InventorySource": "Ference POD",
+      "IsciName": "QMAY2913OS1H",
+      "Market": null,
+      "Pacing": "30%",
+      "PlanId": 0,
+      "ProgramAirDate": "4/10/2022",
+      "ProgramAirTime": "8:41:57 AM",
+      "ProgramName": "Mike & Molly",
+      "RecommendedPlan": null,
+      "Station": "WDKA"
     }
   ],
   "Synced": [
     {
-      "Affiliate": "CBS",
+      "Affiliate": "ABC",
       "DecisionString": "Out",
-      "EstimateId": 191760,
-      "Id": 4,
-      "InventorySource": "CNN",
-      "IsciName": "CC44ZZPT4",
-      "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "Pacing": "26%",
-      "PlanId": 217,
-      "ProgramAirDate": "1/10/2020",
-      "ProgramAirTime": "11:45:00 PM",
-      "ProgramName": "Reckitt HYHO",
-      "RecommendedPlan": "3Q' 21 Reckitt HYHO Early Morning Upfront",
-      "Station": "KXMC",
-      "SyncedTimestamp": "5/24/2022 12:00:00 AM"
+      "EstimateId": 6289,
+      "Id": 0,
+      "InventorySource": "Sinclair Corp - Day Syn 10a-4p",
+      "IsciName": "QMAY2913OS1H",
+      "Market": null,
+      "Pacing": "30%",
+      "PlanId": 332,
+      "ProgramAirDate": "4/10/2022",
+      "ProgramAirTime": "9:58:55 AM",
+      "ProgramName": "LIVE with Kelly and Ryan",
+      "RecommendedPlan": "4Q'21 Macy's EM",
+      "Station": "KOMO",
+      "SyncedTimestamp": "10/12/2010 12:00:00 AM"
     }
   ]
 }

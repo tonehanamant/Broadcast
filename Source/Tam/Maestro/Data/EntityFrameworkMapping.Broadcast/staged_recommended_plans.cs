@@ -22,6 +22,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public string spot_unique_hash_external { get; set; }
         public int ambiguity_code { get; set; }
+        public string execution_id_external { get; set; }
         public int estimate_id { get; set; }
         public string inventory_source { get; set; }
         public string house_isci { get; set; }
@@ -37,7 +38,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string program_genre { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public string execution_id_external { get; set; }
     
         public virtual ICollection<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
     }

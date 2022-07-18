@@ -20,7 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         public long execution_trace_id { get; set; }
         public Nullable<decimal> rate { get; set; }
         public string audience_name { get; set; }
-        public Nullable<double> impressions { get; set; }
         public bool is_recommended_plan { get; set; }
         public Nullable<double> plan_clearance_percentage { get; set; }
         public string daypart_code { get; set; }
@@ -33,6 +32,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> friday { get; set; }
         public Nullable<int> saturday { get; set; }
         public Nullable<int> sunday { get; set; }
+        public Nullable<double> contracted_impressions { get; set; }
+        public Nullable<double> delivered_impressions { get; set; }
     
         public virtual staged_recommended_plans staged_recommended_plans { get; set; }
     }

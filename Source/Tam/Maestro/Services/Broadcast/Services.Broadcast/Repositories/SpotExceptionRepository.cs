@@ -21,6 +21,7 @@ namespace Services.Broadcast.Repositories
         ///  <param name="spotExceptionsOutOfSpecs">Mock data collection for ExceptionsOutOfSpecs table.</param>
         bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans,
              List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs);
+
         /// <summary>
         /// Clear data from spot exceptions tables.
         /// </summary>   
@@ -60,13 +61,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="spotExceptionsRecommendedPlanDecision">The spot exceptions recommended plan decision parameters</param>
         /// <returns>IsSpotExceptionsRecommendedPlanDecisionSaved True if spot exception recommended plan decision saves successfully otherwise false</returns>
         bool SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecisionDto spotExceptionsRecommendedPlanDecision);
-
-        /// <summary>
-        /// Updates recommended plan of spot exceptions recommended plan
-        /// </summary>
-        /// <param name="spotExceptionsRecommendedPlanDetail">The spot exceptoins recommended plan detail parameter</param>
-        /// <returns>True if recommended plan of spot exception recommended plan updates successfully otherwise false</returns>
-        bool UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanDetailsDto spotExceptionsRecommendedPlanDetail);
 
         /// <summary>
         /// Adds spot exceptions recommended plans
@@ -173,12 +167,37 @@ namespace Services.Broadcast.Repositories
         /// <param name="weekEndDate">Week End Date</param>
         /// <returns></returns>
         List<SpotExceptionsRecommendedPlansDto> GetSpotExceptionRecommendedPlanSpots(int planId, DateTime weekStartDate, DateTime weekEndDate);
+
         /// <summary>
         /// Update is recommended plan for the spot exceptions recommended plan details
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlanDetail">The spot exceptoins recommended plan detail parameter</param>
         /// <returns>True if is recommended plan of pot exceptions recommended plan details updates successfully otherwise false</returns>
         bool UpdateSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanSaveDto spotExceptionsRecommendedPlanDetail);
+
+        /// <summary>
+        /// Gets the recommended plan advertiser m ids per week.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        List<Guid> GetRecommendedPlanAdvertiserMasterIdsPerWeek(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the spot exceptions recommended plan stations.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        List<string> GetSpotExceptionsRecommendedPlanStations(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the name of the market.
+        /// </summary>
+        /// <param name="marketCode">The market code.</param>
+        /// <returns>
+        /// </returns>
+        string GetMarketName(int marketCode);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -195,32 +214,26 @@ namespace Services.Broadcast.Repositories
 
             _InReadUncommitedTransaction(context =>
             {
-                var uniqueExternalIdRp = 1;
-
                 var spotExceptionsRecommendedPlansToAdd = spotExceptionsRecommendedPlans.Select(recommendedPlan =>
                     new spot_exceptions_recommended_plans()
                     {
-                        estimate_id = recommendedPlan.EstimateId,
-                        isci_name = recommendedPlan.IsciName,
-                        recommended_plan_id = recommendedPlan.RecommendedPlanId,
                         spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
-                        program_name = recommendedPlan.ProgramName,
-                        program_air_time = recommendedPlan.ProgramAirTime,
-                        advertiser_name = recommendedPlan.AdvertiserName,
-                        station_legacy_call_letters = recommendedPlan.StationLegacyCallLetters,
-                        cost = recommendedPlan.Cost,
-                        impressions = recommendedPlan.Impressions,
+                        ambiguity_code = recommendedPlan.AmbiguityCode,
+                        execution_id_external = recommendedPlan.ExecutionIdExternal,
+                        estimate_id = recommendedPlan.EstimateId,
+                        inventory_source = recommendedPlan.InventorySource,
+                        house_isci = recommendedPlan.HouseIsci,
+                        client_isci = recommendedPlan.ClientIsci,
                         spot_length_id = recommendedPlan.SpotLengthId,
-                        audience_id = recommendedPlan.AudienceId,
-                        product = recommendedPlan.Product,
-                        flight_start_date = recommendedPlan.FlightStartDate,
-                        flight_end_date = recommendedPlan.FlightEndDate,
-                        daypart_id = recommendedPlan.DaypartId,
+                        program_air_time = recommendedPlan.ProgramAirTime,
+                        station_legacy_call_letters = recommendedPlan.StationLegacyCallLetters,
+                        affiliate = recommendedPlan.Affiliate,
+                        market_code = recommendedPlan.MarketCode,
+                        market_rank = recommendedPlan.MarketRank,
+                        program_name = recommendedPlan.ProgramName,
+                        program_genre = recommendedPlan.ProgramGenre,
                         ingested_by = recommendedPlan.IngestedBy,
                         ingested_at = recommendedPlan.IngestedAt,
-                        unique_id_external = ++uniqueExternalIdRp,
-                        execution_id_external = executionId.ToString(),
-                        inventory_source_name = recommendedPlan.InventorySourceName,
                         created_by = recommendedPlan.CreatedBy,
                         created_at = recommendedPlan.CreatedAt,
                         modified_by = recommendedPlan.ModifiedBy,
@@ -230,10 +243,24 @@ namespace Services.Broadcast.Repositories
                             {
                                 var spotExceptionsRecommendedPlanDetail = new spot_exceptions_recommended_plan_details()
                                 {
-
                                     recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
-                                    metric_percent = recommendedPlanDetails.MetricPercent,
-                                    is_recommended_plan = recommendedPlanDetails.IsRecommendedPlan
+                                    execution_trace_id = recommendedPlanDetails.ExecutionTraceId,
+                                    rate = recommendedPlanDetails.Rate,
+                                    audience_name = recommendedPlanDetails.AudienceName,
+                                    contracted_impressions = recommendedPlanDetails.ContractedImpressions,
+                                    delivered_impressions = recommendedPlanDetails.DeliveredImpressions,
+                                    is_recommended_plan = recommendedPlanDetails.IsRecommendedPlan,
+                                    plan_clearance_percentage = recommendedPlanDetails.PlanClearancePercentage,
+                                    daypart_code = recommendedPlanDetails.DaypartCode,
+                                    start_time = recommendedPlanDetails.StartTime,
+                                    end_time = recommendedPlanDetails.EndTime,
+                                    monday = recommendedPlanDetails.Monday,
+                                    tuesday = recommendedPlanDetails.Tuesday,
+                                    wednesday = recommendedPlanDetails.Wednesday,
+                                    thursday = recommendedPlanDetails.Thursday,
+                                    friday = recommendedPlanDetails.Friday,
+                                    saturday = recommendedPlanDetails.Saturday,
+                                    sunday = recommendedPlanDetails.Sunday
                                 };
                                 if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
                                 {
@@ -491,14 +518,12 @@ namespace Services.Broadcast.Repositories
                     .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
+                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.campaign))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.spot_exceptions_recommended_plan_decision))
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.plan)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_lengths)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.daypart)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.audience)
                     .GroupJoin(
                         context.stations
                         .Include(stationDb => stationDb.market),
@@ -507,7 +532,7 @@ namespace Services.Broadcast.Repositories
                         (spotExceptionsRecommendedPlanDb, stationDb) => new { SpotExceptionsRecommendedPlan = spotExceptionsRecommendedPlanDb, Station = stationDb.FirstOrDefault() })
                     .ToList();
 
-                var spotExceptionsRecommendedPlans = spotExceptionsRecommendedPlanEntities.Select(spotExceptionsRecommendedPlanEntity => _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan, spotExceptionsRecommendedPlanEntity.Station)).ToList();
+                var spotExceptionsRecommendedPlans = spotExceptionsRecommendedPlanEntities.Select(spotExceptionsRecommendedPlanEntity => _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan)).ToList();
                 return spotExceptionsRecommendedPlans;
             });
         }
@@ -525,10 +550,7 @@ namespace Services.Broadcast.Repositories
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.spot_exceptions_recommended_plan_decision))
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.plan)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_lengths)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.daypart)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.audience)
                     .GroupJoin(
                         context.stations
                         .Include(stationDb => stationDb.market),
@@ -542,38 +564,34 @@ namespace Services.Broadcast.Repositories
                     return null;
                 }
 
-                var spotExceptionsRecommendedPlan = _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan, spotExceptionsRecommendedPlanEntity.Station);
+                var spotExceptionsRecommendedPlan = _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan);
                 return spotExceptionsRecommendedPlan;
             });
         }
 
-        private SpotExceptionsRecommendedPlansDto _MapSpotExceptionsRecommendedPlanToDto(spot_exceptions_recommended_plans spotExceptionsRecommendedPlanEntity, station stationEntity)
+        private SpotExceptionsRecommendedPlansDto _MapSpotExceptionsRecommendedPlanToDto(spot_exceptions_recommended_plans spotExceptionsRecommendedPlanEntity)
         {
             var spotExceptionsRecommendedPlan = new SpotExceptionsRecommendedPlansDto
             {
                 Id = spotExceptionsRecommendedPlanEntity.id,
+                SpotUniqueHashExternal = spotExceptionsRecommendedPlanEntity.spot_unique_hash_external,
+                AmbiguityCode = spotExceptionsRecommendedPlanEntity.ambiguity_code,
+                ExecutionIdExternal = spotExceptionsRecommendedPlanEntity.execution_id_external,
                 EstimateId = spotExceptionsRecommendedPlanEntity.estimate_id,
-                IsciName = spotExceptionsRecommendedPlanEntity.isci_name,
-                RecommendedPlanId = spotExceptionsRecommendedPlanEntity.recommended_plan_id,
-                RecommendedPlanName = spotExceptionsRecommendedPlanEntity.plan?.name,
-                ProgramName = spotExceptionsRecommendedPlanEntity.program_name,
-                AdvertiserName = spotExceptionsRecommendedPlanEntity.advertiser_name,
+                InventorySource = spotExceptionsRecommendedPlanEntity.inventory_source,
+                HouseIsci = spotExceptionsRecommendedPlanEntity.house_isci,
+                ClientIsci = spotExceptionsRecommendedPlanEntity.client_isci,
+                SpotLengthId = spotExceptionsRecommendedPlanEntity.spot_length_id,
                 ProgramAirTime = spotExceptionsRecommendedPlanEntity.program_air_time,
                 StationLegacyCallLetters = spotExceptionsRecommendedPlanEntity.station_legacy_call_letters,
-                Affiliate = stationEntity?.affiliation,
-                Market = stationEntity?.market?.geography_name,
-                Cost = spotExceptionsRecommendedPlanEntity.cost,
-                Impressions = spotExceptionsRecommendedPlanEntity.impressions,
-                SpotLength = _MapSpotLengthToDto(spotExceptionsRecommendedPlanEntity.spot_lengths),
-                Audience = _MapAudienceToDto(spotExceptionsRecommendedPlanEntity.audience),
-                Product = spotExceptionsRecommendedPlanEntity.product,
-                FlightStartDate = spotExceptionsRecommendedPlanEntity.flight_start_date,
-                FlightEndDate = spotExceptionsRecommendedPlanEntity.flight_end_date,
-                DaypartDetail = _MapDaypartToDto(spotExceptionsRecommendedPlanEntity.daypart),
-                IngestedAt = spotExceptionsRecommendedPlanEntity.ingested_at,
+                Affiliate = spotExceptionsRecommendedPlanEntity.affiliate,
+                MarketCode = spotExceptionsRecommendedPlanEntity.market_code,
+                MarketRank = spotExceptionsRecommendedPlanEntity.market_rank,
+                ProgramName = spotExceptionsRecommendedPlanEntity.program_name,
+                ProgramGenre = spotExceptionsRecommendedPlanEntity.program_genre,
                 IngestedBy = spotExceptionsRecommendedPlanEntity.ingested_by,
-                InventorySourceName = spotExceptionsRecommendedPlanEntity.inventory_source_name,
-                SpotUniqueHashExternal = spotExceptionsRecommendedPlanEntity.spot_unique_hash_external,
+                IngestedAt = spotExceptionsRecommendedPlanEntity.ingested_at,
+                SpotLength = _MapSpotLengthToDto(spotExceptionsRecommendedPlanEntity.spot_lengths),
                 SpotExceptionsRecommendedPlanDetails = spotExceptionsRecommendedPlanEntity.spot_exceptions_recommended_plan_details.Select(spotExceptionsRecommendedPlanDetailDb =>
                 {
                     var recommendedPlan = spotExceptionsRecommendedPlanDetailDb.plan;
@@ -582,17 +600,34 @@ namespace Services.Broadcast.Repositories
                     {
                         Id = spotExceptionsRecommendedPlanDetailDb.id,
                         SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlanDetailDb.spot_exceptions_recommended_plan_id,
+                        RecommendedPlanId = spotExceptionsRecommendedPlanDetailDb.recommended_plan_id,
+                        ExecutionTraceId = spotExceptionsRecommendedPlanDetailDb.execution_trace_id,
+                        Rate = spotExceptionsRecommendedPlanDetailDb.rate,
+                        AudienceName = spotExceptionsRecommendedPlanDetailDb.audience_name,
+                        ContractedImpressions = spotExceptionsRecommendedPlanDetailDb.contracted_impressions,
+                        DeliveredImpressions = spotExceptionsRecommendedPlanDetailDb.delivered_impressions,
+                        IsRecommendedPlan = spotExceptionsRecommendedPlanDetailDb.is_recommended_plan,
+                        PlanClearancePercentage = spotExceptionsRecommendedPlanDetailDb.plan_clearance_percentage,
+                        DaypartCode = spotExceptionsRecommendedPlanDetailDb.daypart_code,
+                        StartTime = spotExceptionsRecommendedPlanDetailDb.start_time,
+                        EndTime = spotExceptionsRecommendedPlanDetailDb.end_time,
+                        Monday = spotExceptionsRecommendedPlanDetailDb.monday,
+                        Tuesday = spotExceptionsRecommendedPlanDetailDb.tuesday,
+                        Wednesday = spotExceptionsRecommendedPlanDetailDb.wednesday,
+                        Thursday = spotExceptionsRecommendedPlanDetailDb.thursday,
+                        Friday = spotExceptionsRecommendedPlanDetailDb.friday,
+                        Saturday = spotExceptionsRecommendedPlanDetailDb.saturday,
+                        Sunday = spotExceptionsRecommendedPlanDetailDb.sunday,
                         RecommendedPlanDetail = new RecommendedPlanDetailDto
                         {
                             Id = spotExceptionsRecommendedPlanDetailDb.recommended_plan_id,
                             Name = recommendedPlan.name,
                             FlightStartDate = recommendedPlanVersion.flight_start_date,
                             FlightEndDate = recommendedPlanVersion.flight_end_date,
-                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList()
+                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
+                            AdvertiserMasterId = recommendedPlan.campaign.advertiser_master_id,
+                            ProductMasterId = recommendedPlan.product_master_id
                         },
-                        MetricPercent = spotExceptionsRecommendedPlanDetailDb.metric_percent,
-                        IsRecommendedPlan = spotExceptionsRecommendedPlanDetailDb.is_recommended_plan,
-                        RecommendedPlanId = spotExceptionsRecommendedPlanDetailDb.recommended_plan_id,
                         SpotExceptionsRecommendedPlanDecision = spotExceptionsRecommendedPlanDetailDb.spot_exceptions_recommended_plan_decision.Select(spotExceptionsRecommendedPlanDecisionDb => new SpotExceptionsRecommendedPlanDecisionDto
                         {
                             Id = spotExceptionsRecommendedPlanDecisionDb.id,
@@ -609,7 +644,7 @@ namespace Services.Broadcast.Repositories
             };
             return spotExceptionsRecommendedPlan;
         }
-       
+
         private SpotLengthDto _MapSpotLengthToDto(spot_lengths spotLengthEntity)
         {
             if (spotLengthEntity == null)
@@ -639,23 +674,6 @@ namespace Services.Broadcast.Repositories
                 Name = audienceEntity.name
             };
             return audience;
-        }
-
-        private DaypartDetailDto _MapDaypartToDto(daypart daypartEntity)
-        {
-            if (daypartEntity == null)
-            {
-                return null;
-            }
-
-            var daypart = new DaypartDetailDto
-            {
-                Id = daypartEntity.id,
-                Code = daypartEntity.code,
-                Name = daypartEntity.name,
-                DaypartText = daypartEntity.daypart_text
-            };
-            return daypart;
         }
 
         private SpotExceptionsOutOfSpecReasonCodeDto _MapSpotExceptionsOutOfSpecReasonCodeToDto(spot_exceptions_out_of_spec_reason_codes spotExceptionsOutOfSpecReasonCodesEntity)
@@ -723,75 +741,77 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public bool UpdateRecommendedPlanOfSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanDetailsDto spotExceptionsRecommendedPlanDetail)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var spotExceptionsRecommendedPlanEntity = context.spot_exceptions_recommended_plans
-                .Include(x => x.spot_exceptions_recommended_plan_details)
-                .SingleOrDefault(x => x.id == spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanId);
-                if (spotExceptionsRecommendedPlanEntity == null)
-                {
-                    return false;
-                }
-
-                var spotExceptionsRecommendedPlanDetailEntity = spotExceptionsRecommendedPlanEntity.spot_exceptions_recommended_plan_details
-                .SingleOrDefault(x => x.id == spotExceptionsRecommendedPlanDetail.Id);
-                if (spotExceptionsRecommendedPlanDetailEntity == null)
-                {
-                    return false;
-                }
-
-                if (spotExceptionsRecommendedPlanEntity.recommended_plan_id == spotExceptionsRecommendedPlanDetailEntity.recommended_plan_id)
-                {
-                    return true;
-                }
-
-                spotExceptionsRecommendedPlanEntity.recommended_plan_id = spotExceptionsRecommendedPlanDetailEntity.recommended_plan_id;
-
-                bool isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated = context.SaveChanges() > 0;
-                return isRecommendedPlanOfSpotExceptionsRecommendedPlanUpdated;
-            });
-        }
-
-        /// <inheritdoc />
         public int AddSpotExceptionsRecommendedPlans(List<SpotExceptionsRecommendedPlansDto> spotExceptionsRecommendedPlans)
         {
-            // these are dummy entries until we plug in the real ingest ETL.
-            var uniqueExternalId = 1;
-            var executionId = Guid.NewGuid();
-
             return _InReadUncommitedTransaction(context =>
             {
-                var spotExceptionsRecommendedPlansToAdd = spotExceptionsRecommendedPlans.Select(recommendedPlan => new spot_exceptions_recommended_plans()
-                {
-                    estimate_id = recommendedPlan.EstimateId,
-                    isci_name = recommendedPlan.IsciName,
-                    recommended_plan_id = recommendedPlan.RecommendedPlanId,
-                    program_name = recommendedPlan.ProgramName,
-                    program_air_time = recommendedPlan.ProgramAirTime,
-                    station_legacy_call_letters = recommendedPlan.StationLegacyCallLetters,
-                    cost = recommendedPlan.Cost,
-                    impressions = recommendedPlan.Impressions,
-                    spot_length_id = recommendedPlan.SpotLengthId,
-                    audience_id = recommendedPlan.AudienceId,
-                    product = recommendedPlan.Product,
-                    flight_start_date = recommendedPlan.FlightStartDate,
-                    flight_end_date = recommendedPlan.FlightEndDate,
-                    daypart_id = recommendedPlan.DaypartId,
-                    ingested_by = recommendedPlan.IngestedBy,
-                    ingested_at = recommendedPlan.IngestedAt,
-                    unique_id_external = ++uniqueExternalId,
-                    execution_id_external = executionId.ToString(),
-                    inventory_source_name = recommendedPlan.InventorySourceName,
-                    spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
-                    spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(recommendedPlanDetails => new spot_exceptions_recommended_plan_details()
+                var spotExceptionsRecommendedPlansToAdd = spotExceptionsRecommendedPlans.Select(recommendedPlan =>
+                    new spot_exceptions_recommended_plans()
                     {
-                        recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
-                        metric_percent = recommendedPlanDetails.MetricPercent,
-                        is_recommended_plan = recommendedPlanDetails.IsRecommendedPlan
-                    }).ToList()
-                }).ToList();
+                        spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
+                        ambiguity_code = recommendedPlan.AmbiguityCode,
+                        execution_id_external = recommendedPlan.ExecutionIdExternal,
+                        estimate_id = recommendedPlan.EstimateId,
+                        inventory_source = recommendedPlan.InventorySource,
+                        house_isci = recommendedPlan.HouseIsci,
+                        client_isci = recommendedPlan.ClientIsci,
+                        spot_length_id = recommendedPlan.SpotLengthId,
+                        program_air_time = recommendedPlan.ProgramAirTime,
+                        station_legacy_call_letters = recommendedPlan.StationLegacyCallLetters,
+                        affiliate = recommendedPlan.Affiliate,
+                        market_code = recommendedPlan.MarketCode,
+                        market_rank = recommendedPlan.MarketRank,
+                        program_name = recommendedPlan.ProgramName,
+                        program_genre = recommendedPlan.ProgramGenre,
+                        ingested_by = recommendedPlan.IngestedBy,
+                        ingested_at = recommendedPlan.IngestedAt,
+                        created_by = recommendedPlan.CreatedBy,
+                        created_at = recommendedPlan.CreatedAt,
+                        modified_by = recommendedPlan.ModifiedBy,
+                        modified_at = recommendedPlan.ModifiedAt,
+                        spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails
+                            .Select(recommendedPlanDetails =>
+                            {
+                                var spotExceptionsRecommendedPlanDetail = new spot_exceptions_recommended_plan_details()
+                                {
+                                    recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
+                                    execution_trace_id = recommendedPlanDetails.ExecutionTraceId,
+                                    rate = recommendedPlanDetails.Rate,
+                                    audience_name = recommendedPlanDetails.AudienceName,
+                                    contracted_impressions = recommendedPlanDetails.ContractedImpressions,
+                                    delivered_impressions = recommendedPlanDetails.DeliveredImpressions,
+                                    is_recommended_plan = recommendedPlanDetails.IsRecommendedPlan,
+                                    plan_clearance_percentage = recommendedPlanDetails.PlanClearancePercentage,
+                                    daypart_code = recommendedPlanDetails.DaypartCode,
+                                    start_time = recommendedPlanDetails.StartTime,
+                                    end_time = recommendedPlanDetails.EndTime,
+                                    monday = recommendedPlanDetails.Monday,
+                                    tuesday = recommendedPlanDetails.Tuesday,
+                                    wednesday = recommendedPlanDetails.Wednesday,
+                                    thursday = recommendedPlanDetails.Thursday,
+                                    friday = recommendedPlanDetails.Friday,
+                                    saturday = recommendedPlanDetails.Saturday,
+                                    sunday = recommendedPlanDetails.Sunday
+                                };
+                                if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
+                                {
+                                    spotExceptionsRecommendedPlanDetail.spot_exceptions_recommended_plan_decision =
+                                        new List<spot_exceptions_recommended_plan_decision>
+                                        {
+                                            new spot_exceptions_recommended_plan_decision
+                                            {
+                                                created_at = recommendedPlanDetails
+                                                    .SpotExceptionsRecommendedPlanDecision.CreatedAt,
+                                                username = recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision
+                                                    .UserName,
+                                                accepted_as_in_spec = recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision.AcceptedAsInSpec
+                                            }
+                                        };
+                                };
+                                return spotExceptionsRecommendedPlanDetail;
+                            }).ToList()
+                    }).ToList();
+
                 context.spot_exceptions_recommended_plans.AddRange(spotExceptionsRecommendedPlansToAdd);
                 context.SaveChanges();
 
@@ -803,7 +823,6 @@ namespace Services.Broadcast.Repositories
         {
             // these are dummy entries until we plug in the real ingest ETL.
             var executionId = Guid.NewGuid();
-
             return _InReadUncommitedTransaction(context =>
             {
                 var spotExceptionsOutOfSpecsToAdd = spotExceptionsOutOfSpecs.Select(outOfSpecs => new spot_exceptions_out_of_specs()
@@ -830,6 +849,7 @@ namespace Services.Broadcast.Repositories
                     house_isci = outOfSpecs.HouseIsci,
                     inventory_source_name = outOfSpecs.InventorySourceName
                 }).ToList();
+
                 context.spot_exceptions_out_of_specs.AddRange(spotExceptionsOutOfSpecsToAdd);
                 context.SaveChanges();
 
@@ -1116,17 +1136,14 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var spotExceptionsRecommendedPlanEntities = context.spot_exceptions_recommended_plans
-                    .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.recommended_plan_id == planId && spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details)
+                    .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
+                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details).Where(p => p.spot_exceptions_recommended_plan_details.Any(x => x.recommended_plan_id == planId))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.spot_exceptions_recommended_plan_decision))
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.plan)
                     .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_lengths)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.daypart)
-                    .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.audience)
                     .GroupJoin(
                         context.stations
                         .Include(stationDb => stationDb.market),
@@ -1135,11 +1152,12 @@ namespace Services.Broadcast.Repositories
                         (spotExceptionsRecommendedPlanDb, stationDb) => new { SpotExceptionsRecommendedPlan = spotExceptionsRecommendedPlanDb, Station = stationDb.FirstOrDefault() })
                     .ToList();
 
-                var spotExceptionsRecommendedPlans = spotExceptionsRecommendedPlanEntities.Select(spotExceptionsRecommendedPlanEntity => _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan, spotExceptionsRecommendedPlanEntity.Station)).ToList();
+                var spotExceptionsRecommendedPlans = spotExceptionsRecommendedPlanEntities.Select(spotExceptionsRecommendedPlanEntity => _MapSpotExceptionsRecommendedPlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan)).ToList();
                 return spotExceptionsRecommendedPlans;
             });
         }
 
+        /// <inheritdoc />
         public bool UpdateSpotExceptionsRecommendedPlanDetails(SpotExceptionsRecommendedPlanSaveDto spotExceptionsRecommendedPlanDetail)
         {
             return _InReadUncommitedTransaction(context =>
@@ -1162,6 +1180,53 @@ namespace Services.Broadcast.Repositories
                 }
                 bool isSpotExceptionsRecommendedPlanDetailUpdated = context.SaveChanges() > 0;
                 return isSpotExceptionsRecommendedPlanDetailUpdated;
+            });
+        }
+
+        /// <inheritdoc />
+        public List<Guid> GetRecommendedPlanAdvertiserMasterIdsPerWeek(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+
+                var recommendedPlanAdvertiserMasterIdsPerWeek = context.spot_exceptions_recommended_plans
+                                                .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
+                                                .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details)
+                                                .Include(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
+                                                .Select(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.campaign).Select(p => p.advertiser_master_id ?? default).FirstOrDefault()).ToList();
+                return recommendedPlanAdvertiserMasterIdsPerWeek;
+            });
+        }
+
+        /// <inheritdoc />
+        public List<string> GetSpotExceptionsRecommendedPlanStations(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                var recommendedPlanStations = context.spot_exceptions_recommended_plans
+                                            .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
+                                            .Select(rps => rps.station_legacy_call_letters ?? "Unknown")
+                                            .ToList();
+                return recommendedPlanStations;
+            });
+        }
+
+        /// <inheritdoc />
+        public string GetMarketName(int marketCode)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var marketName = context.markets
+                                .Where(m => m.market_code == marketCode)
+                                .Select(m => m.geography_name)
+                                .Single();
+                return marketName;
             });
         }
     }

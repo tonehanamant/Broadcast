@@ -26,7 +26,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.standard_dayparts = new HashSet<standard_dayparts>();
-            this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
         }
     
         public int id { get; set; }
@@ -48,6 +47,5 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<standard_dayparts> standard_dayparts { get; set; }
-        public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
     }
 }

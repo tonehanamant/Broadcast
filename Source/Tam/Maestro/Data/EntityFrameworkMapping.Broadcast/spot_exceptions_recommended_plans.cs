@@ -20,35 +20,28 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
+        public string spot_unique_hash_external { get; set; }
+        public int ambiguity_code { get; set; }
+        public string execution_id_external { get; set; }
         public int estimate_id { get; set; }
-        public string isci_name { get; set; }
-        public Nullable<int> recommended_plan_id { get; set; }
-        public string program_name { get; set; }
+        public string inventory_source { get; set; }
+        public string house_isci { get; set; }
+        public string client_isci { get; set; }
+        public Nullable<int> spot_length_id { get; set; }
         public System.DateTime program_air_time { get; set; }
         public string station_legacy_call_letters { get; set; }
-        public Nullable<decimal> cost { get; set; }
-        public Nullable<double> impressions { get; set; }
-        public Nullable<int> spot_length_id { get; set; }
-        public Nullable<int> audience_id { get; set; }
-        public string product { get; set; }
-        public Nullable<System.DateTime> flight_start_date { get; set; }
-        public Nullable<System.DateTime> flight_end_date { get; set; }
-        public Nullable<int> daypart_id { get; set; }
+        public string affiliate { get; set; }
+        public Nullable<int> market_code { get; set; }
+        public Nullable<int> market_rank { get; set; }
+        public string program_name { get; set; }
+        public string program_genre { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public string advertiser_name { get; set; }
-        public long unique_id_external { get; set; }
-        public string execution_id_external { get; set; }
-        public string inventory_source_name { get; set; }
-        public string spot_unique_hash_external { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_at { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_at { get; set; }
     
-        public virtual audience audience { get; set; }
-        public virtual daypart daypart { get; set; }
-        public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
     }

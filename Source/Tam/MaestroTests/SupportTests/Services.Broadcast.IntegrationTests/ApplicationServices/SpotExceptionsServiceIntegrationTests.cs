@@ -21,7 +21,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _SpotExceptionService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISpotExceptionService>();
         }
 
-        
         // This is temporary test : TODO: Shaun Cleanup
         //[Test]
         public void AddSpotExceptionData()

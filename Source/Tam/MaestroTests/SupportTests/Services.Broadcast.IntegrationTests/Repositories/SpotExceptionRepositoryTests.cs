@@ -29,8 +29,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Assert.AreEqual(0, result.Count);
         }
 
-      
-
         [Test]
         public void GetSpotExceptionsRecommendedPlans_RecommendedPlans_Exist()
         {
@@ -38,179 +36,299 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var ingestedDateTime = new DateTime(2010, 10, 12);
             var ingestedBy = "Repository Test User";
 
-            DateTime weekStartDate = new DateTime(2010, 01, 04);
-            DateTime weekEndDate = new DateTime(2010, 01, 10);
+            DateTime weekStartDate = new DateTime(2022, 04, 04);
+            DateTime weekEndDate = new DateTime(2022, 04, 10);
 
             var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDto>
             {
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    Id = 1,
-                    EstimateId =191756,
-                    IsciName = "AB82TXT2H",
-                    RecommendedPlanId = 1848,
-                    ProgramName = "Q13 news at 10",
-                    ProgramAirTime = new DateTime(2010,1,4,8,7,15),
-                    StationLegacyCallLetters = "KOB",
-                    Cost = 675,
-                    Impressions = 765,
-                    SpotLengthId = 12,
-                    AudienceId = 431,
-                    Product = "Pizza Hut",
-                    FlightStartDate = new DateTime(2010, 1, 1),
-                    FlightEndDate = new DateTime(2010, 3, 1),
-                    DaypartId = 70615,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6840,
+                    InventorySource = "Tegna",
+                    HouseIsci = "840T42AY13H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                    StationLegacyCallLetters = "WBNS",
+                    Affiliate = "CBS",
+                    MarketCode = 135,
+                    MarketRank = 33,
+                    ProgramName = "CBS Mornings",
+                    ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
-                    InventorySourceName = "Open Market",
-                    SpotUniqueHashExternal = "Test",
-                    SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1848,
-                            MetricPercent = 20,
-                            IsRecommendedPlan = true
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 73,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                            {
+                                UserName = ingestedBy,
+                                CreatedAt = ingestedDateTime,
+                                AcceptedAsInSpec = false
+                            }
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1853,
-                            MetricPercent = 40,
-                            IsRecommendedPlan = false
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 75,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    Id = 2,
-                    EstimateId =191757,
-                    IsciName = "AB82VR58",
-                    RecommendedPlanId = 1849,
-                    ProgramName = "FOX 13 10:00 News",
-                    ProgramAirTime = new DateTime(2010, 10, 10),
-                    StationLegacyCallLetters = "KSTP",
-                    Cost = 700,
-                    Impressions = 879,
-                    SpotLengthId = 11,
-                    AudienceId = 430,
-                    Product = "Spotify",
-                    FlightStartDate = new DateTime(2010, 7, 2, 4, 10, 30),
-                    FlightEndDate = new DateTime(2010, 11, 2),
-                    DaypartId = 70615,
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedDateTime,
-                    InventorySourceName = "TVB",
-                    SpotUniqueHashExternal = "Test",
-                    SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6616,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "616MAY2913H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 41, 57),
+                    StationLegacyCallLetters = "WDKA",
+                    Affiliate = "IND",
+                    MarketCode = 232,
+                    MarketRank = 3873,
+                    ProgramName = "Mike & Molly",
+                    ProgramGenre = "COMEDY",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1849,
-                            MetricPercent = 70,
-                            IsRecommendedPlan = true
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 623,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1854,
-                            MetricPercent = 40,
-                            IsRecommendedPlan = false
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 624,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    Id = 3,
-                    EstimateId =191758,
-                    IsciName = "AB44NR58",
-                    RecommendedPlanId = 1850,
-                    ProgramName = "TEN O'CLOCK NEWS",
-                    ProgramAirTime = new DateTime(2010,1,6,11,15,30),
-                    StationLegacyCallLetters="KHGI",
-                    Cost = 0,
-                    Impressions = 877,
-                    SpotLengthId = 12,
-                    AudienceId = 431,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2010, 1, 2),
-                    FlightEndDate = new DateTime(2020, 3, 1),
-                    DaypartId = 70616,
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedDateTime,
-                    InventorySourceName = "TTWN",
-                    SpotUniqueHashExternal = "Test",
-                    SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6289,
+                    InventorySource = "Sinclair Corp - Day Syn 10a-4p",
+                    HouseIsci = "289IT2Y3P2H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
+                    StationLegacyCallLetters = "KOMO",
+                    Affiliate = "ABC",
+                    MarketCode = 419,
+                    MarketRank = 11,
+                    ProgramName = "LIVE with Kelly and Ryan",
+                    ProgramGenre = "TALK",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1850,
-                            MetricPercent = 70,
-                            IsRecommendedPlan = true
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 1824,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1855,
-                            MetricPercent = 40,
-                            IsRecommendedPlan = false
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 1923,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    Id = 4,
-                    EstimateId =191759,
-                    IsciName = "AB21QR58",
-                    RecommendedPlanId = 1851,
-                    ProgramName = "Product1",
-                    ProgramAirTime = new DateTime(2010, 3, 10,2,5,15),
-                    StationLegacyCallLetters="KWCH" ,
-                    Cost = 987,
-                    Impressions = 987,
-                    SpotLengthId = 11,
-                    AudienceId = 430,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2010, 3, 6),
-                    FlightEndDate = new DateTime(2010, 4, 6),
-                    DaypartId = 70617,
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedDateTime,
-                    InventorySourceName = "Open Market",
-                    SpotUniqueHashExternal = "Test",
-                    SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 5711,
+                    InventorySource = "TVB Syndication/ROS",
+                    HouseIsci = "711N51AY18H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 29, 23),
+                    StationLegacyCallLetters = "WEVV",
+                    Affiliate = "CBS",
+                    MarketCode = 249,
+                    MarketRank = 106,
+                    ProgramName = "Funny You Should Ask",
+                    ProgramGenre = "GAME SHOW",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1851,
-                            MetricPercent = 80,
-                            IsRecommendedPlan = true
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 2222,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1856,
-                            MetricPercent = 40,
-                            IsRecommendedPlan = false
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 2223,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
-                },
-                new SpotExceptionsRecommendedPlansDto
-                {
-                    Id = 5,
-                    EstimateId =191760,
-                    IsciName = "AB44NR58",
-                    ProgramName = "TProduct2",
-                    ProgramAirTime = new DateTime(2010,1,10,23,45,00),
-                    StationLegacyCallLetters="WDAY" ,
-                    Cost = 555,
-                    Impressions = 9878,
-                    SpotLengthId = 10,
-                    AudienceId = 429,
-                    Product = "Nike",
-                    FlightStartDate = new DateTime(2010, 1, 5),
-                    FlightEndDate = new DateTime(2010, 3, 3),
-                    DaypartId = 70618,
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedDateTime,
-                    InventorySourceName = "Open Market",
-                    SpotUniqueHashExternal = "Test"
                 }
             };
 
@@ -230,9 +348,12 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlansDto), "Id");
             ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlanDetailsDto), "Id");
             ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlanDetailsDto), "SpotExceptionsRecommendedPlanId");
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlanDecisionDto), "Id");
+            ((IgnorableSerializerContractResolver)(settings.ContractResolver)).Ignore(typeof(SpotExceptionsRecommendedPlanDecisionDto), "SpotExceptionsRecommendedPlanDetailId");
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, settings));
         }
+
         [Test]
         public void GetSpotExceptionsOutOfSpecsPosts_OutOfSpec_DoesNotExist()
         {
@@ -393,71 +514,96 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var ingestedDateTime = new DateTime(2010, 10, 12);
             var ingestedBy = "Repository Test User";
             bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
-            DateTime weekStartDate = new DateTime(2010, 01, 04);
-            DateTime weekEndDate = new DateTime(2010, 01, 10);
+            DateTime weekStartDate = new DateTime(2022, 04, 04);
+            DateTime weekEndDate = new DateTime(2022, 04, 10);
 
             var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDto>
             {
                 new SpotExceptionsRecommendedPlansDto
                 {
-                    Id = 1,
-                    EstimateId =191756,
-                    IsciName = "AB82TXT2H",
-                    RecommendedPlanId = 1848,
-                    ProgramName = "Q13 news at 10",
-                    ProgramAirTime = new DateTime(2010,1,4,8,7,15),
-                    StationLegacyCallLetters = "KOB",
-                    Cost = 675,
-                    Impressions = 765,
-                    SpotLengthId = 12,
-                    AudienceId = 431,
-                    Product = "Pizza Hut",
-                    FlightStartDate = new DateTime(2010, 1, 1),
-                    FlightEndDate = new DateTime(2010, 3, 1),
-                    DaypartId = 70615,
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6840,
+                    InventorySource = "Tegna",
+                    HouseIsci = "840T42AY13H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                    StationLegacyCallLetters = "WBNS",
+                    Affiliate = "CBS",
+                    MarketCode = 135,
+                    MarketRank = 33,
+                    ProgramName = "CBS Mornings",
+                    ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
-                    InventorySourceName = "Open Market",
-                    SpotUniqueHashExternal = "Test",
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1848,
-                            MetricPercent = 20,
-                            IsRecommendedPlan = true
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 73,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
-                            RecommendedPlanId = 1853,
-                            MetricPercent = 40,
-                            IsRecommendedPlan = false
-                        },
-                        new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 1199,
-                            MetricPercent = 24,
-                            IsRecommendedPlan = false
-                        },
-                         new SpotExceptionsRecommendedPlanDetailsDto
-                        {
-                            RecommendedPlanId = 1200,
-                            MetricPercent = 26,
-                            IsRecommendedPlan = false
-                        },
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 75,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
                     }
-                }
-                
+                },
             };
+
             var SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
             {
-                SpotExceptionsRecommendedPlanId = 1848,
-                UserName = "Test User",
-                CreatedAt = new DateTime(2020, 10, 25),
+                SpotExceptionsRecommendedPlanId = 334,
+                UserName = ingestedBy,
+                CreatedAt = ingestedDateTime,
                 AcceptedAsInSpec = true
             };
+
+            var expectedResult = true;
             List<SpotExceptionsRecommendedPlansDto> result;
             var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+            
             // Act
             using (new TransactionScopeWrapper())
             {
@@ -467,9 +613,447 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 SpotExceptionsRecommendedPlanDecision.SpotExceptionsRecommendedPlanDetailId = result[0].SpotExceptionsRecommendedPlanDetails[0].Id;
                 isSpotExceptionsRecommendedPlanDecisionSaved = spotExceptionRepository.SaveSpotExceptionsRecommendedPlanDecision(SpotExceptionsRecommendedPlanDecision);
             }
-            var expectedResult = true;
+            
             // Assert
             Assert.AreEqual(expectedResult, isSpotExceptionsRecommendedPlanDecisionSaved);
+        }
+
+        [Test]
+        public void GetRecommendedPlanAdvertiserMasterIdsPerWeek()
+        {
+            // Arrange
+            var ingestedDateTime = new DateTime(2010, 10, 12);
+            var ingestedBy = "Repository Test User";
+
+            DateTime weekStartDate = new DateTime(2010, 04, 04);
+            DateTime weekEndDate = new DateTime(2010, 04, 10);
+
+            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDto>
+            {
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6840,
+                    InventorySource = "Tegna",
+                    HouseIsci = "840T42AY13H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2010, 04, 10, 08, 28, 28),
+                    StationLegacyCallLetters = "WBNS",
+                    Affiliate = "CBS",
+                    MarketCode = 135,
+                    MarketRank = 33,
+                    ProgramName = "CBS Mornings",
+                    ProgramGenre = "INFORMATIONAL/NEWS",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 73,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 75,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
+                }
+            };
+
+            List<Guid> result;
+
+            var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                spotExceptionRepository.AddSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlans);
+                result = spotExceptionRepository.GetRecommendedPlanAdvertiserMasterIdsPerWeek(weekStartDate, weekEndDate);
+            }
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlanStations()
+        {
+            // Arrange
+            var ingestedDateTime = new DateTime(2010, 10, 12);
+            var ingestedBy = "Repository Test User";
+
+            DateTime weekStartDate = new DateTime(2010, 04, 04);
+            DateTime weekEndDate = new DateTime(2010, 04, 10);
+
+            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDto>
+            {
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6840,
+                    InventorySource = "Tegna",
+                    HouseIsci = "840T42AY13H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2010, 04, 10, 08, 28, 28),
+                    StationLegacyCallLetters = "WBNS",
+                    Affiliate = "CBS",
+                    MarketCode = 135,
+                    MarketRank = 33,
+                    ProgramName = "CBS Mornings",
+                    ProgramGenre = "INFORMATIONAL/NEWS",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 73,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                            {
+                                UserName = ingestedBy,
+                                CreatedAt = ingestedDateTime,
+                                AcceptedAsInSpec = false
+                            }
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 75,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6616,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "616MAY2913H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2010, 04, 10, 08, 41, 57),
+                    StationLegacyCallLetters = "WDKA",
+                    Affiliate = "IND",
+                    MarketCode = 232,
+                    MarketRank = 3873,
+                    ProgramName = "Mike & Molly",
+                    ProgramGenre = "COMEDY",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 623,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 624,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 6289,
+                    InventorySource = "Sinclair Corp - Day Syn 10a-4p",
+                    HouseIsci = "289IT2Y3P2H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2010, 04, 10, 09, 58, 55),
+                    StationLegacyCallLetters = "KOMO",
+                    Affiliate = "ABC",
+                    MarketCode = 419,
+                    MarketRank = 11,
+                    ProgramName = "LIVE with Kelly and Ryan",
+                    ProgramGenre = "TALK",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 1824,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 1923,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
+                },
+                new SpotExceptionsRecommendedPlansDto
+                {
+                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=F",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                    EstimateId = 5711,
+                    InventorySource = "TVB Syndication/ROS",
+                    HouseIsci = "711N51AY18H",
+                    ClientIsci = "QMAY2913OS1H",
+                    SpotLengthId = 3,
+                    ProgramAirTime = new DateTime(2010, 04, 10, 08, 29, 23),
+                    StationLegacyCallLetters = null,
+                    Affiliate = "CBS",
+                    MarketCode = 249,
+                    MarketRank = 106,
+                    ProgramName = "Funny You Should Ask",
+                    ProgramGenre = "GAME SHOW",
+                    IngestedBy= ingestedBy,
+                    IngestedAt= ingestedDateTime,
+                    CreatedBy = ingestedBy,
+                    CreatedAt = ingestedDateTime,
+                    ModifiedBy = ingestedBy,
+                    ModifiedAt = ingestedDateTime,
+                    SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 332,
+                            ExecutionTraceId = 2222,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 18000,
+                            EndTime = 35999,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsDto
+                        {
+                            RecommendedPlanId = 334,
+                            ExecutionTraceId = 2223,
+                            Rate = 0.00m,
+                            AudienceName = "Women 25-54",
+                            ContractedImpressions = 100000,
+                            DeliveredImpressions = 50000,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "SYN",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotExceptionsRecommendedPlanDecision = null
+                        }
+                    }
+                }
+            };
+
+            List<string> result;
+
+            var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                spotExceptionRepository.AddSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlans);
+                result = spotExceptionRepository.GetSpotExceptionsRecommendedPlanStations(weekStartDate, weekEndDate);
+            }
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetSpotExceptionsRecommendedPlanMarkets()
+        {
+            // Arrange
+            int marketCode = 135;
+
+            var spotExceptionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
+
+            string result;
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                result = spotExceptionRepository.GetMarketName(marketCode);
+            }
+
+            // Assert
+            Assert.AreEqual(result, "Columbus, OH");
         }
     }
 }

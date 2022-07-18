@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.SpotExceptions;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
@@ -50,10 +51,12 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Obsolete]
         [Route("recommended-plans")]
         public BaseResponse<List<SpotExceptionsRecommendedPlansResultDto>> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest));
+            //return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest));
+            throw new NotSupportedException("We thought this operation is not used, this added 7/13/22 - BP-4306 !");
         }
 
         [HttpGet]
@@ -74,6 +77,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlansAdvertisers(spotExceptionsRecommendedPlansAdvertisersRequest));
         }
+
         [Authorize]
         [HttpPost]
         [Route("recommended-plans-save")]

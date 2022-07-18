@@ -22,8 +22,23 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int spot_exceptions_recommended_plan_id { get; set; }
         public int recommended_plan_id { get; set; }
-        public double metric_percent { get; set; }
+        public long execution_trace_id { get; set; }
+        public Nullable<decimal> rate { get; set; }
+        public string audience_name { get; set; }
+        public Nullable<double> contracted_impressions { get; set; }
+        public Nullable<double> delivered_impressions { get; set; }
         public bool is_recommended_plan { get; set; }
+        public Nullable<double> plan_clearance_percentage { get; set; }
+        public string daypart_code { get; set; }
+        public Nullable<int> start_time { get; set; }
+        public Nullable<int> end_time { get; set; }
+        public Nullable<int> monday { get; set; }
+        public Nullable<int> tuesday { get; set; }
+        public Nullable<int> wednesday { get; set; }
+        public Nullable<int> thursday { get; set; }
+        public Nullable<int> friday { get; set; }
+        public Nullable<int> saturday { get; set; }
+        public Nullable<int> sunday { get; set; }
     
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }

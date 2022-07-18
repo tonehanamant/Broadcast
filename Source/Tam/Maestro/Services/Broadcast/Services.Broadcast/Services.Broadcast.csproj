@@ -631,6 +631,7 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutofSpecsStationRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsOutOfSpecPlansResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanSpotsResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDecisionDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanDetailsDto.cs" />
@@ -639,7 +640,6 @@
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlanSaveRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansRequestDto.cs" />
-    <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionsRecommendedPlansStationRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionUnpostedNoPlanDto.cs" />
     <Compile Include="Entities\SpotExceptions\SpotExceptionUnpostedNoReelRosterDto.cs" />

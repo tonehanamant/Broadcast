@@ -848,7 +848,7 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost] 
+        [HttpPost]
         public ActionResult AddOrClearSpotExceptionsData(string Add, string Clear)
         {
             var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>();
