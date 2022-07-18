@@ -1002,6 +1002,41 @@ GO
 
 /*************************************** END BP-4975 **********************************************************************************************/
 
+/*************************************** START BP-5086 ********************************************************/
+
+UPDATE plan_versions SET
+	impressions_per_unit = 1,
+	modified_by = 'BP-5086-set impressions_per_unit to 1',
+	modified_date = SYSDATETIME()
+WHERE COALESCE(impressions_per_unit, 0) = 0
+
+INSERT INTO plan_version_audience_daypart_vpvh (plan_version_id, audience_id, standard_daypart_id, vpvh_type, vpvh_value, starting_point, daypart_customization_id)
+	SELECT 
+		s.plan_version_id, 
+		s.audience_id,
+		d.standard_daypart_id,
+		1 AS VPVH_Type, -- Custom
+		CASE 
+			WHEN s.audience_id = 31 THEN 1 -- HH
+			WHEN s.audience_id = 37 THEN 0.392 -- grepped from existing
+		ELSE NULL 
+		END AS vpvh_value,
+		vv.created_date AS starting_point,
+		null AS daypart_cusomization_id	
+	from plan_version_secondary_audiences s
+	left outer join plan_version_audience_daypart_vpvh v
+		ON s.plan_version_id = v.plan_version_id
+		AND s.audience_id = v.audience_id
+	join plan_version_dayparts d
+		on s.plan_Version_id = d.plan_version_id
+	join plan_versions vv
+		on vv.id = d.plan_version_id
+	WHERE v.id is null
+
+GO
+
+/*************************************** END BP-5086 ********************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
