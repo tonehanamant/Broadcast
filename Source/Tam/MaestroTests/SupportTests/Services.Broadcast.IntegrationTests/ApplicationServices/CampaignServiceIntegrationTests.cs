@@ -8,15 +8,14 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Exceptions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.ReportGenerators.CampaignExport;
@@ -28,11 +27,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Services.Broadcast.Helpers;
+using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
 using Unity;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -231,7 +229,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
 
-                var exception = Assert.Throws<ApplicationException>(() => service.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<CadentException>(() => service.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.AreEqual(expectedMessage, exception.Message);
             }
@@ -338,7 +336,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Invalid advertiser id.
                 campaign.AdvertiserMasterId = new Guid();
 
-                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<CadentException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidAdvertiserErrorMessage));
             }
@@ -379,7 +377,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 campaign.Name = campaignName;
 
-                var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
+                var exception = Assert.Throws<CadentException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
                 Assert.That(exception.Message, Is.EqualTo(CampaignValidator.InvalidCampaignNameErrorMessage));
             }
@@ -724,7 +722,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -741,7 +739,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -758,7 +756,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -775,7 +773,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -792,7 +790,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -809,7 +807,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -826,7 +824,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var exception = Assert.Throws<ApplicationException>(() =>
+                var exception = Assert.Throws<CadentException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,

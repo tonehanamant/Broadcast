@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Validators;
@@ -37,7 +38,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var tc = new CampaignValidator(aabEngine.Object, featureToggleHelper.Object);
 
             // Act
-            var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
+            var caughtException = Assert.Throws<CadentException>(() => tc.Validate(item));
 
             // Assert
             aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
@@ -70,7 +71,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var tc = new CampaignValidator(aabEngine.Object, featureToggleHelper.Object);
 
             // Act
-            var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
+            var caughtException = Assert.Throws<CadentException>(() => tc.Validate(item));
 
             // Assert
             aabEngine.Verify(s => s.GetAgency(It.IsAny<Guid>()), Times.Once);
@@ -149,7 +150,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             // Act
             if (throws)
             {
-                var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
+                var caughtException = Assert.Throws<CadentException>(() => tc.Validate(item));
                 // Assert
                 Assert.AreEqual(expectedMessage, caughtException.Message);
             }
@@ -185,7 +186,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             // Act
             if (throws)
             {
-                var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
+                var caughtException = Assert.Throws<CadentException>(() => tc.Validate(item));
 
                 // Assert
                 Assert.AreEqual(expectedMessage, caughtException.Message);

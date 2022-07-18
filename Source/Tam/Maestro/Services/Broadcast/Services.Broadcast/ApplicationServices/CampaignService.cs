@@ -10,6 +10,7 @@ using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.CampaignExport;
@@ -446,7 +447,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
-                    throw new ApplicationException($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
+                    throw new CadentException($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
                 }
             }
         }
@@ -674,7 +675,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!lockObject.Success)
             {
                 var message = string.Format(CAMPAIGN_IS_LOCKED_EXCEPTION, campaignId, lockObject.LockedUserName);
-                throw new ApplicationException(message);
+                throw new CadentException(message);
             }
         }
 
@@ -700,7 +701,7 @@ namespace Services.Broadcast.ApplicationServices
             if (!lockObject.Success)
             {
                 var message = string.Format(PLAN_IS_LOCKED_EXCEPTION, planId, lockObject.LockedUserName);
-                throw new ApplicationException(message);
+                throw new CadentException(message);
             }
         }
 
@@ -714,13 +715,13 @@ namespace Services.Broadcast.ApplicationServices
             if (processingStatus == PlanAggregationProcessingStatusEnum.InProgress)
             {
                 var message = string.Format(PLAN_AGGREGATION_IS_IN_PROGRESS_EXCEPTION, plan.PlanId);
-                throw new ApplicationException(message);
+                throw new CadentException(message);
             }
 
             if (processingStatus == PlanAggregationProcessingStatusEnum.Error)
             {
                 var message = string.Format(PLAN_AGGREGATION_FAILED_EXCEPTION, plan.PlanId);
-                throw new ApplicationException(message);
+                throw new CadentException(message);
             }
         }
 
@@ -730,7 +731,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (plans.Select(x => x.PostingType).Distinct().Count() != 1)
             {
-                throw new ApplicationException(MULTIPLE_POSTING_TYPES_EXCEPTION);
+                throw new CadentException(MULTIPLE_POSTING_TYPES_EXCEPTION);
             }
         }
 
@@ -740,7 +741,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (plans.Select(x => x.AudienceId).Distinct().Count() != 1)
             {
-                throw new ApplicationException(MULTIPLE_GUARANTEED_AUDIENCES_EXCEPTION);
+                throw new CadentException(MULTIPLE_GUARANTEED_AUDIENCES_EXCEPTION);
             }
         }
 
@@ -756,7 +757,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (plan.SecondaryAudiences.Count != firstPlanSecondaryAudiencesIds.Count ||
                     plan.SecondaryAudiences.Any(x => !firstPlanSecondaryAudiencesIds.Contains(x.AudienceId)))
                 {
-                    throw new ApplicationException(SECONDARY_AUDIENCES_EXCEPTION);
+                    throw new CadentException(SECONDARY_AUDIENCES_EXCEPTION);
                 }
             }
         }
@@ -771,7 +772,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (!exportType.Equals(CampaignExportTypeEnum.Proposal))
                 {
-                    throw new ApplicationException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                    throw new CadentException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
                 }
             }
             else if (distinctPlansStatuses.Contains(PlanStatusEnum.Complete)
@@ -780,14 +781,14 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (!exportType.Equals(CampaignExportTypeEnum.Contract))
                 {
-                    throw new ApplicationException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                    throw new CadentException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
                 }
             }
             else
             {
                 if (!exportType.Equals(CampaignExportTypeEnum.Proposal))
                 {
-                    throw new ApplicationException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
+                    throw new CadentException(INVALID_EXPORT_TYPE_FOR_SELECTED_PLANS);
                 }
             }
         }
@@ -814,7 +815,7 @@ namespace Services.Broadcast.ApplicationServices
         public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
         {
             if (request.SelectedPlans.IsEmpty())
-                throw new ApplicationException("Choose at least one plan");
+                throw new CadentException("Choose at least one plan");
 
             // for now we generate reports only for one plan
             var planId = request.SelectedPlans.First();
@@ -909,13 +910,13 @@ namespace Services.Broadcast.ApplicationServices
             var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             if (job == null)
-                throw new ApplicationException("There are no completed pricing runs for the chosen plan. Please run pricing");
+                throw new CadentException("There are no completed pricing runs for the chosen plan. Please run pricing");
 
             if (job.Status == BackgroundJobProcessingStatus.Failed)
-                throw new ApplicationException("The latest pricing run was failed. Please run pricing again or contact the support");
+                throw new CadentException("The latest pricing run was failed. Please run pricing again or contact the support");
 
             if (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing)
-                throw new ApplicationException("There is a pricing run in progress right now. Please wait until it is completed");
+                throw new CadentException("There is a pricing run in progress right now. Please wait until it is completed");
 
             return job;
         }
@@ -1042,7 +1043,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
-                    throw new InvalidOperationException($"The Campaign {campaignDto.Name} already exists.");
+                    throw new CadentException($"The Campaign {campaignDto.Name} already exists.");
                 }
                 if (campaignId > 0)
                 {

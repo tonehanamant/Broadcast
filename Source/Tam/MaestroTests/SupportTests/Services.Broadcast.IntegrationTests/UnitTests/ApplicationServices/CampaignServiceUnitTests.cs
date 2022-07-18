@@ -14,6 +14,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Helpers.Json;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -710,7 +711,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+            var caught = Assert.Throws<CadentException>(() => tc.GetAndValidateCampaignReportData(request));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -776,7 +777,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, DateTime.Now));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, DateTime.Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -834,7 +835,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, DateTime.Now));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, DateTime.Now));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -890,7 +891,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+            var caught = Assert.Throws<CadentException>(() => tc.GetAndValidateCampaignReportData(request));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -938,7 +939,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+            var caught = Assert.Throws<CadentException>(() => tc.GetAndValidateCampaignReportData(request));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -986,7 +987,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetAndValidateCampaignReportData(request));
+            var caught = Assert.Throws<CadentException>(() => tc.GetAndValidateCampaignReportData(request));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -1005,7 +1006,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -1038,7 +1039,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -1081,7 +1082,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.GetProgramLineupReportData(request, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
@@ -3411,7 +3412,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<InvalidOperationException>(() => tc.SaveCampaignCopy(campaign, _User, _CurrentDate));
+            var caught = Assert.Throws<CadentException>(() => tc.SaveCampaignCopy(campaign, _User, _CurrentDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);

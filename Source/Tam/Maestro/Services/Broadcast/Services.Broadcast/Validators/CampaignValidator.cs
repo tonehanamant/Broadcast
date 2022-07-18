@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using System;
 
@@ -56,13 +57,13 @@ namespace Services.Broadcast.Validators
         {
             if (string.IsNullOrWhiteSpace(campaign.Name))
             {
-                throw new InvalidOperationException(InvalidCampaignNameErrorMessage);
+                throw new CadentException(InvalidCampaignNameErrorMessage);
             }
 
             const int nameMaxLength = 255;
             if (campaign.Name.Length > nameMaxLength)
             {
-                throw new InvalidOperationException(InvalidCampaignNameLengthErrorMessage);
+                throw new CadentException(InvalidCampaignNameLengthErrorMessage);
             }
         }
 
@@ -74,7 +75,7 @@ namespace Services.Broadcast.Validators
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(InvalidAdvertiserErrorMessage, ex);
+                throw new CadentException(InvalidAdvertiserErrorMessage, ex);
             }
         }
 
@@ -86,7 +87,7 @@ namespace Services.Broadcast.Validators
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(InvalidAgencyErrorMessage, ex);
+                throw new CadentException(InvalidAgencyErrorMessage, ex);
             }
         }
 
@@ -95,7 +96,7 @@ namespace Services.Broadcast.Validators
             const int notesMaxLength = 1024;
             if ((campaign.Notes?.Length ?? 0) > notesMaxLength)
             {
-                throw new InvalidOperationException(InvalidCampaignNotesErrorMessage);
+                throw new CadentException(InvalidCampaignNotesErrorMessage);
             }
         }
     }
