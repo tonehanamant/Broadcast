@@ -31,7 +31,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("")]
         [Authorize]
-        public async Task<BaseResponse<int>> SavePlan(PlanDto newPlan)
+        public BaseResponse<int> SavePlan(PlanDto newPlan)
         {
             const string SW_KEY_TOTAL_DURATION = "Total duration";
             const string SW_KEY_GET_USER_NAME = "Get Username";
@@ -50,9 +50,8 @@ namespace BroadcastComposerWeb.Controllers
             processTimer.End(SW_KEY_GET_SERVICE);
 
             processTimer.Start(SW_KEY_SAVE_PLAN);
-            var rawResult = await service.SavePlanAsync(newPlan, fullName, DateTime.Now);
 
-            var result = _ConvertToBaseResponse(() => rawResult);
+            var result = _ConvertToBaseResponse(() => service.SavePlanAsync(newPlan, fullName, DateTime.Now).Result);
             processTimer.End(SW_KEY_SAVE_PLAN);
 
             processTimer.End(SW_KEY_TOTAL_DURATION);
@@ -327,12 +326,11 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         [Route("commit-pricing-allocation-model")]
         [Authorize]
-        public async Task<BaseResponse<bool>> CommitPricingAllocationModel(CommitPricingAllocationModelRequest request)
+        public BaseResponse<bool> CommitPricingAllocationModel(CommitPricingAllocationModelRequest request)
         {
             var username = _GetCurrentUserFullName();
-            var rawResult = await _ApplicationServiceFactory.GetApplicationService<IPlanService>()
-                .CommitPricingAllocationModelAsync(request.PlanId, request.SpotAllocationModelMode, request.PostingType, username);
-            var result = _ConvertToBaseResponse(() => rawResult);
+            var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                .CommitPricingAllocationModelAsync(request.PlanId, request.SpotAllocationModelMode, request.PostingType, username).Result);
             return result;
         }
         /// <summary>

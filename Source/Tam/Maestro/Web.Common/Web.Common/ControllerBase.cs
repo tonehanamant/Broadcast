@@ -62,6 +62,16 @@ namespace Tam.Maestro.Web.Common
 
                 if (e.GetBaseException() is CadentException)
                 {
+                    if (e.GetType() == typeof(AggregateException) && e.InnerException != null)
+                    {
+                        return new BaseResponse<T>
+                        {
+                            Success = false,
+                            Message = e.InnerException.Message,
+                            Data = default(T)
+                        };
+                    }
+
                     return new BaseResponse<T>
                     {
                         Success = false,
@@ -100,6 +110,17 @@ namespace Tam.Maestro.Web.Common
 
                 if (e.GetBaseException() is CadentException)
                 {
+                    if (e.GetType() == typeof(AggregateException) && e.InnerException != null)
+                    {
+                        return new BaseResponseWithStackTrace<T>
+                        {
+                            Success = false,
+                            Message = e.InnerException.Message,
+                            Data = default(T),
+                            StackTrace = e.StackTrace
+                        };
+                    }
+
                     return new BaseResponseWithStackTrace<T>
                     {
                         Success = false,
