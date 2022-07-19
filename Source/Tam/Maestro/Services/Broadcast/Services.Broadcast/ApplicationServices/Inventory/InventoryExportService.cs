@@ -292,6 +292,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 _LogInfo($"Translated jobId '{job.Id}' as sharedFolderFileId '{job.SharedFolderFileId.Value}'");
                 var file = _SharedFolderService.GetFile(job.SharedFolderFileId.Value);
                 result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                _SharedFolderService.RemoveFileFromFileShare(job.SharedFolderFileId.Value);
                 return result;
             }
 

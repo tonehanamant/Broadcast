@@ -24,6 +24,8 @@ namespace Services.Broadcast.ApplicationServices
         SharedFolderFile GetAndRemoveFile(Guid fileId);
 
         Stream CreateZipArchive(List<Guid> fileIdsToArchive);
+
+        void RemoveFileFromFileShare(Guid fileId);
     }
 
     public class SharedFolderService : ISharedFolderService
@@ -132,7 +134,18 @@ namespace Services.Broadcast.ApplicationServices
             var fullName = $@"{file.FolderPath}\{sharedFolderFileName}";
             _FileService.Delete(fullName);
         }
-        
+
+        public void RemoveFileFromFileShare(Guid fileId)
+        {
+            var file = _GetFileInfo(fileId);
+
+            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+            {
+                _RemoveFileContent(file);
+                transaction.Complete();
+            }
+        }
+
         // we use fileId as a file name so that we can store files with the same name
         private string _GetSharedFolderFileName(Guid fileId, string fileExtension) => fileId + fileExtension;
     }
