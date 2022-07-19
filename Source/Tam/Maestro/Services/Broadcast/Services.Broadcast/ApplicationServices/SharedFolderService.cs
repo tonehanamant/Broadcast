@@ -1,8 +1,8 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -28,17 +28,24 @@ namespace Services.Broadcast.ApplicationServices
         void RemoveFileFromFileShare(Guid fileId);
     }
 
-    public class SharedFolderService : ISharedFolderService
+    public class SharedFolderService : BroadcastBaseClass, ISharedFolderService
     {
         private readonly IFileService _FileService;
         private readonly ISharedFolderFilesRepository _SharedFolderFilesRepository;
+        private readonly IAttachmentMicroServiceApiClient _AttachmentMicroServiceApiClient;
+        protected Lazy<bool> _IsAttachementMicroServiceEnabled;
 
         public SharedFolderService(
             IFileService fileService,
-            IDataRepositoryFactory broadcastDataRepositoryFactory)
+            IDataRepositoryFactory broadcastDataRepositoryFactory, IAttachmentMicroServiceApiClient attachmentMicroServiceApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _FileService = fileService;
             _SharedFolderFilesRepository = broadcastDataRepositoryFactory.GetDataRepository<ISharedFolderFilesRepository>();
+            _AttachmentMicroServiceApiClient = attachmentMicroServiceApiClient;
+            _IsAttachementMicroServiceEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ATTACHMENT_MICRO_SERVICE));
+
         }
 
         public SharedFolderFile GetAndRemoveFile(Guid fileId)
@@ -74,9 +81,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
+                var registerResult = _AttachmentMicroServiceApiClient.RegisterAttachment(file.FileName, file.CreatedBy, "");
+                if (registerResult != null)
+                {
+                    file.AttachmentId = registerResult.AttachmentId;
+                }
+                _LogInfo($"Attachment is registered with AttachementId = '{file.AttachmentId}'");
                 file.Id = _SharedFolderFilesRepository.SaveFile(file);
                 _SaveFileContent(file);
-                
+
                 transaction.Complete();
 
                 return file.Id;
@@ -86,7 +99,7 @@ namespace Services.Broadcast.ApplicationServices
         public Stream CreateZipArchive(List<Guid> fileIdsToArchive)
         {
             var fileInfos = fileIdsToArchive.Select(_GetFileInfo).ToList();
-            var filePaths = fileInfos.ToDictionary(f => Path.Combine(f.FolderPath, f.Id.ToString()), f=> f.FileNameWithExtension);
+            var filePaths = fileInfos.ToDictionary(f => Path.Combine(f.FolderPath, f.Id.ToString()), f => f.FileNameWithExtension);
             var archiveFile = new MemoryStream();
             using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, leaveOpen: true))
             {
@@ -111,10 +124,27 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveFileContent(SharedFolderFile file)
         {
-            _CreateDirectory(file.FolderPath);
+            if (_IsAttachementMicroServiceEnabled.Value)
+            {
+                _LogInfo($"As we are using Attachment Microservice, Create Directory Functionality is not Required");
+                if (file.AttachmentId != null || file.AttachmentId != Guid.Empty)
+                {
+                    byte[] fileContent;
+                    using (BinaryReader br = new BinaryReader(file.FileContent))
+                    {
+                        fileContent = br.ReadBytes((int)file.FileContent.Length);
+                    }
+                    var storeResult = _AttachmentMicroServiceApiClient.StoreAttachment(file.AttachmentId, file.FileName, fileContent);
+                    _LogInfo($"Attachment is stored with AttachementId = '{file.AttachmentId}', Success = '{storeResult.success}', Message = '{storeResult.message}' ");
+                }
+            }
+            else
+            {
+                _CreateDirectory(file.FolderPath);
 
-            var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
-            _FileService.Create(file.FolderPath, sharedFolderFileName, file.FileContent);
+                var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
+                _FileService.Create(file.FolderPath, sharedFolderFileName, file.FileContent);
+            }
         }
 
         private void _CreateDirectory(string directoryPath)
@@ -124,15 +154,43 @@ namespace Services.Broadcast.ApplicationServices
 
         private Stream _GetFileContent(SharedFolderFile file)
         {
-            var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
-            return _FileService.GetFileStream(file.FolderPath, sharedFolderFileName);
+            if (_IsAttachementMicroServiceEnabled.Value)
+            {
+                if (file.AttachmentId != null || file.AttachmentId != Guid.Empty)
+                {
+                    var retriveResult = _AttachmentMicroServiceApiClient.RetrieveAttachment(file.AttachmentId);
+                    var memoryStream = new MemoryStream(retriveResult.result);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    return memoryStream;
+                }
+                else
+                {
+                    throw new Exception($"There is no file with attachment id: {file.AttachmentId}");
+                }
+            }
+            else
+            {
+                var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
+                return _FileService.GetFileStream(file.FolderPath, sharedFolderFileName);
+            }
         }
 
         private void _RemoveFileContent(SharedFolderFile file)
         {
-            var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
-            var fullName = $@"{file.FolderPath}\{sharedFolderFileName}";
-            _FileService.Delete(fullName);
+            if (_IsAttachementMicroServiceEnabled.Value)
+            {
+                if (file.AttachmentId != null || file.AttachmentId != Guid.Empty)
+                {
+                    var deleteResult = _AttachmentMicroServiceApiClient.DeleteAttachment(file.AttachmentId);
+                    _LogInfo($"Attachment is deleted with AttachementId = '{file.AttachmentId}', Success = '{deleteResult.success}', Message = '{deleteResult.message}' ");
+                }
+            }
+            else
+            {
+                var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
+                var fullName = $@"{file.FolderPath}\{sharedFolderFileName}";
+                _FileService.Delete(fullName);
+            }
         }
 
         public void RemoveFileFromFileShare(Guid fileId)

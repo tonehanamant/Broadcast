@@ -30,6 +30,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int file_usage { get; set; }
         public System.DateTime created_date { get; set; }
         public string created_by { get; set; }
+        public System.Guid attachment_id { get; set; }
     
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<inventory_export_jobs> inventory_export_jobs { get; set; }

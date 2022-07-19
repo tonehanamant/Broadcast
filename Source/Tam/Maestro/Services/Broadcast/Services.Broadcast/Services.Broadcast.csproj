@@ -187,6 +187,12 @@
     <Reference Include="LaunchDarkly.ServerSdk, Version=5.13.0.0, Culture=neutral, PublicKeyToken=f86add69004e6885, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\LaunchDarkly.ServerSdk.5.13.0\lib\net471\LaunchDarkly.ServerSdk.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=5.0.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.AspNetCore.Http.Features.5.0.9\lib\net461\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Primitives.5.0.1\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -260,9 +266,6 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=3.1.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Options.3.1.5\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Primitives.3.1.5\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.SemanticLogging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EnterpriseLibrary.SemanticLogging.2.0.1406.1\lib\net45\Microsoft.Practices.EnterpriseLibrary.SemanticLogging.dll</HintPath>
@@ -348,6 +351,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.IO.Pipelines, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.IO.Pipelines.5.0.1\lib\net461\System.IO.Pipelines.dll</HintPath>
+    </Reference>
     <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
       <Private>True</Private>
@@ -399,8 +405,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
@@ -535,6 +541,8 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
+    <Compile Include="Clients\AttachmentMicroServiceApiClient.cs" />
+    <Compile Include="Clients\AttachmentMicroServiceApiConfigKeys.cs" />
     <Compile Include="Clients\CampaignServiceApiClient.cs" />
     <Compile Include="Clients\CampaignServiceApiConfigKeys.cs" />
     <Compile Include="Clients\CadentSecuredClientBase.cs" />
@@ -553,6 +561,7 @@
     <Compile Include="Clients\CadentServiceClientHelper.cs" />
     <Compile Include="Clients\PlanBuyingJobQueueApiClient.cs" />
     <Compile Include="Entities\AudienceDto.cs" />
+    <Compile Include="Entities\BaseResponseDto.cs" />
     <Compile Include="Entities\CampaignCopyDto.cs" />
     <Compile Include="Entities\Campaign\CampaignExportDto.cs" />
     <Compile Include="Entities\Campaign\SaveCampaignCopyDto.cs" />
@@ -607,6 +616,9 @@
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\RatingsForecastResponseDto.cs" />
     <Compile Include="Entities\RatingsForecastRequestDto.cs" />
+    <Compile Include="Entities\RegisterRequestDto.cs" />
+    <Compile Include="Entities\RegisterResponseDto.cs" />
+    <Compile Include="Entities\RetrieveResponseDto.cs" />
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\SpotExceptions\RecomendedPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlanDetailDto.cs" />

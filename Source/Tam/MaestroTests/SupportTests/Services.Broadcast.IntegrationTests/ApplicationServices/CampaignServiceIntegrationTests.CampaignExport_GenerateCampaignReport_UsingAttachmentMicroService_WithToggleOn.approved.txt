@@ -1,5 +1,5 @@
-﻿{
-  "AttachmentId": "00000000-0000-0000-0000-000000000000",
+{
+  "AttachmentId": "a11a76ba-6594-4c62-9ad7-aa8589d8e97b",
   "CreatedBy": "IntegrationTestsUser",
   "FileContent": null,
   "FileExtension": ".xlsx",

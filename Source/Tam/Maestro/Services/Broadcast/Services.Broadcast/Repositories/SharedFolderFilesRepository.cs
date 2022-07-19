@@ -41,7 +41,8 @@ namespace Services.Broadcast.Repositories
                     FileMediaType = file.file_media_type,
                     FileUsage = (SharedFolderFileUsage)file.file_usage,
                     CreatedDate = file.created_date,
-                    CreatedBy = file.created_by
+                    CreatedBy = file.created_by,
+                    AttachmentId = file.attachment_id
                 };
             });
         }
@@ -73,7 +74,8 @@ namespace Services.Broadcast.Repositories
                     file_media_type = sharedFolderFile.FileMediaType,
                     file_usage = (int)sharedFolderFile.FileUsage,
                     created_date = sharedFolderFile.CreatedDate,
-                    created_by = sharedFolderFile.CreatedBy
+                    created_by = sharedFolderFile.CreatedBy,
+                    attachment_id = sharedFolderFile.AttachmentId
                 };
 
                 context.shared_folder_files.Add(fileToSave);

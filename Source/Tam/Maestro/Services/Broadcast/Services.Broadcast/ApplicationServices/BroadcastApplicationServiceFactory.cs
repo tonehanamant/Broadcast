@@ -302,6 +302,8 @@ namespace Services.Broadcast.ApplicationServices
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
 
+            unityContainer.RegisterType<IAttachmentMicroServiceApiClient, AttachmentMicroServiceApiClient>();
+
             // singletons
             unityContainer.RegisterType<IInventorySummaryCache, InventorySummaryCache>(new ContainerControlledLifetimeManager()); // singleton
             unityContainer.RegisterType<IMarketCoverageCache, MarketCoverageCache>(TypeLifetime.Singleton);

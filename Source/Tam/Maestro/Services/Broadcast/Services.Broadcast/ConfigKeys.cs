@@ -64,6 +64,7 @@
 		public static readonly string PlanPricingAllocationsEfficiencyModelFetchUrl = "PlanPricingAllocationsEfficiencyModelFetchUrl";
 
 		public static readonly string UmUrl = "UmUrl";
+		public static readonly string AttachmentMicroServiceApiUrl = "AttachmentMicroServiceApiUrl";
 	}
 }
 

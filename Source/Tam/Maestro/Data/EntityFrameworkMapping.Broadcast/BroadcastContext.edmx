@@ -2352,6 +2352,7 @@
           <Property Name="file_usage" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="attachment_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="show_type_mappings">
           <Key>
@@ -14952,6 +14953,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_export_jobs" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_files" />
           <NavigationProperty Name="inventory_files1" Relationship="BroadcastModel.FK_inventory_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_files" />
+          <Property Name="attachment_id" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="nti_universe_audience_mappings">
           <Key>
@@ -20520,6 +20522,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySetMapping Name="shared_folder_files">
             <EntityTypeMapping TypeName="BroadcastModel.shared_folder_files">
               <MappingFragment StoreEntitySet="shared_folder_files">
+                <ScalarProperty Name="attachment_id" ColumnName="attachment_id" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="file_usage" ColumnName="file_usage" />

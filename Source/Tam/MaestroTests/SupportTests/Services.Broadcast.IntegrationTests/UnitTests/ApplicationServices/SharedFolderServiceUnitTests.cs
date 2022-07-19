@@ -6,8 +6,10 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
@@ -21,6 +23,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private readonly Mock<IFileService> _FileServiceMock = new Mock<IFileService>();
         private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactory = new Mock<IDataRepositoryFactory>();
         private readonly Mock<ISharedFolderFilesRepository> _SharedFolderFilesRepository = new Mock<ISharedFolderFilesRepository>();
+        private readonly Mock<IAttachmentMicroServiceApiClient> _AttachmentMicroServiceApiClient = new Mock<IAttachmentMicroServiceApiClient>();
+        private readonly Mock<IFeatureToggleHelper> _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
+        private readonly Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
 
         public SharedFolderServiceUnitTests()
         {
@@ -34,7 +39,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _SharedFolderService = new SharedFolderService(
                 _FileServiceMock.Object,
-                _DataRepositoryFactory.Object);
+                _DataRepositoryFactory.Object,
+                _AttachmentMicroServiceApiClient.Object,
+                _FeatureToggleHelper.Object,
+                _ConfigurationSettingsHelper.Object);
         }
 
         [Test]

@@ -1000,7 +1000,25 @@ BEGIN
 END
 GO
 
-/*************************************** END BP-4975 **********************************************************************************************/
+/*************************************** START BP-3162 **********************************************************************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id')
+BEGIN
+	ALTER TABLE shared_folder_files ADD attachment_id UNIQUEIDENTIFIER NULL
+END
+GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id')
+BEGIN
+	UPDATE shared_folder_files SET attachment_id = '8f987933-9280-4c44-86cd-163b728aed2f' WHERE attachment_id IS NULL
+END
+GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id')
+BEGIN
+	ALTER TABLE shared_folder_files ALTER COLUMN attachment_id UNIQUEIDENTIFIER NOT NULL
+END
+GO
+
+/*************************************** END BP-3162 **********************************************************************************************/
 
 /*************************************** START BP-4306 **********************************************************************************************/
 

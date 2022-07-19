@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -18,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class ProgramMappingServiceTests
     {
-        private IProgramMappingService _ProgramMappingService; 
+        private IProgramMappingService _ProgramMappingService;
 
         [SetUp]
         public void SetUp()
@@ -98,6 +99,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IMasterProgramListImporter>(masterListImporterMock.Object);
 
             _ProgramMappingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+            var attachmentMicroServiceApiClientMock = new Mock<IAttachmentMicroServiceApiClient>();
+            attachmentMicroServiceApiClientMock.Setup(m => m.RegisterAttachment("", "", ""))
+                .Returns(
+                new RegisterResponseDto
+                {
+                    AttachmentId = new Guid(),
+                    Success = true,
+                    Message = "No Error"
+                });
         }
 
         [Test]
@@ -234,7 +244,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FileContent = fileStream
                 };
                 var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
-                
+
                 var exception = Assert.Throws<InvalidOperationException>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
                 Assert.That(exception.Message, Is.EqualTo("Error parsing program 'ABBABAB': Mapping Program not found in master list or exception list.; MetaData=ABBABAB|ABBABAB|Drama;\r\n"));
             }

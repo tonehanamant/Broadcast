@@ -46,11 +46,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static readonly bool WRITE_FILE_TO_DISK = false;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private static IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IAttachmentMicroServiceApiClient _AttachmentMicroServiceApiClient;
 
         [SetUp]
         public void SetUpCampaignServiceIntegrationTests()
         {
-            _LaunchDarklyClientStub = (LaunchDarklyClientStub) IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
             _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
@@ -279,7 +280,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaignToSave = new SaveCampaignDto
                 {
                     Id = foundCampaign.Id,
-                    Name = foundCampaign.Name,                   
+                    Name = foundCampaign.Name,
                     AgencyMasterId = foundCampaign.AgencyMasterId,
                     AdvertiserMasterId = foundCampaign.AdvertiserMasterId,
                     Notes = foundCampaign.Notes,
@@ -617,8 +618,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var user = "IntegrationTestsUser";
 
                 var fileServiceMock = new Mock<IFileService>();
+                var attachmentMicroServiceApiClientMock = new Mock<IAttachmentMicroServiceApiClient>();
+                attachmentMicroServiceApiClientMock.Setup(m => m.RegisterAttachment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(
+                    new RegisterResponseDto
+                    {
+                        AttachmentId = new Guid(),
+                        Success = true,
+                        Message = "No Error"
+                    });
+                var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+                var featureToggleHelperMock = new Mock<IFeatureToggleHelper>();
                 fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
-                var campaignService = _SetupCampaignService(fileServiceMock.Object);
+                var campaignService = _SetupCampaignService(fileServiceMock.Object, attachmentMicroServiceApiClientMock.Object, featureToggleHelperMock.Object,configurationSettingsHelper.Object);
                 var fileId = Guid.Empty;
                 var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                     .GetDataRepository<ISharedFolderFilesRepository>();
@@ -646,11 +658,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        private ICampaignService _SetupCampaignService(IFileService fileService)
+        private ICampaignService _SetupCampaignService(IFileService fileService, IAttachmentMicroServiceApiClient attachmentMicroServiceApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
         {
             var sharedFolderService = new SharedFolderService(
                 fileService,
-                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
+                IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, attachmentMicroServiceApiClient, featureToggleHelper,configurationSettingsHelper);
 
             var campaignService = new CampaignService(
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory,
@@ -668,7 +680,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DaypartCache.Instance,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IAabEngine>(),
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),                IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
                 );
@@ -1001,7 +1014,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
-                await planPricingService .RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
+                await planPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {
@@ -1033,7 +1046,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         private static void _WriteFileToLocalFileSystem<T>(T reportData, string filename)
-        {           
+        {
             if (WRITE_FILE_TO_DISK)
             {
                 if (typeof(T).Name.Equals("CampaignReportData"))
@@ -1101,6 +1114,71 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var foundCampaign = _CampaignService.GetCampaignCopy(campaignId);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void CampaignExport_GenerateCampaignReport_UsingAttachmentMicroService_WithToggleOn()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var user = "IntegrationTestsUser";
+                bool isAttachementMicroServiceEnable = true;
+                var registerResult = new RegisterResponseDto
+                {
+                    AttachmentId = new Guid("a11a76ba-6594-4c62-9ad7-aa8589d8e97b"),
+                    Success = true,
+                    Message = "No Error"
+                };
+                var fileServiceMock = new Mock<IFileService>();
+                var attachmentMicroServiceApiClientMock = new Mock<IAttachmentMicroServiceApiClient>();
+                attachmentMicroServiceApiClientMock.Setup(m => m.RegisterAttachment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(registerResult);
+                attachmentMicroServiceApiClientMock.Setup(m => m.StoreAttachment(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<byte[]>()))
+                .Returns(
+                    new BaseResponseDto
+                    {
+                        success = true,
+                        message = "No Error"
+                    });
+                attachmentMicroServiceApiClientMock.Setup(m => m.RetrieveAttachment(It.IsAny<Guid>()))
+                .Returns(
+                    new RetrieveResponseDto
+                    {
+                        success = true,
+                        message = "No Error",
+                        result = new byte[0]
+                    });
+                attachmentMicroServiceApiClientMock.Setup(m => m.DeleteAttachment(It.IsAny<Guid>()))
+                .Returns(
+                    new BaseResponseDto
+                    {
+                        success = true,
+                        message = "No Error"
+                    });
+                var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+                var featureToggleHelperMock = new Mock<IFeatureToggleHelper>();
+                featureToggleHelperMock.Setup(x => x.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ATTACHMENT_MICRO_SERVICE)).Returns(isAttachementMicroServiceEnable);
+                fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
+                var campaignService = _SetupCampaignService(fileServiceMock.Object, attachmentMicroServiceApiClientMock.Object, featureToggleHelperMock.Object,configurationSettingsHelper.Object);
+                var fileId = Guid.Empty;
+                var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<ISharedFolderFilesRepository>();
+                SharedFolderFile sharedFolderFile = null;
+
+                fileId = campaignService.GenerateCampaignReport(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Contract,
+                    SelectedPlans = new List<int> { 1852, 1853 }
+                }, user, "./Files/Excel templates");
+
+                sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
+                sharedFolderFile.AttachmentId = registerResult.AttachmentId;
+                Assert.AreNotEqual(Guid.Empty, fileId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
             }
         }
     }
