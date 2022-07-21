@@ -1002,13 +1002,13 @@ GO
 
 /*************************************** START BP-3162 **********************************************************************************************/
 
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id')
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id' AND IS_NULLABLE = 'NO')
 BEGIN
 	ALTER TABLE shared_folder_files 
 		DROP COLUMN attachment_id
 END
 
-IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id')
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'shared_folder_files' AND COLUMN_NAME= 'attachment_id')
 BEGIN
 	ALTER TABLE shared_folder_files ADD attachment_id UNIQUEIDENTIFIER NULL
 END
