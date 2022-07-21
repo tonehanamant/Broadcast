@@ -487,14 +487,12 @@ namespace Services.Broadcast.Repositories
                        if (plan.Id == 0)
                        {
                            context.plans.Add(planEntity);
+                           context.SaveChanges();
+                           planEntity.latest_version_id = draftVersion.id;
+                           plan.Id = planEntity.id;
                        }
                        context.SaveChanges();
-
-                       planEntity.latest_version_id = draftVersion.id;
-                       context.SaveChanges();
-
-                       plan.Id = planEntity.id;
-                       plan.VersionId = planEntity.latest_version_id;
+                       plan.VersionId = draftVersion.id;
                    });
         }
 
@@ -1076,7 +1074,7 @@ namespace Services.Broadcast.Repositories
                     is_locked = d.IsLocked,
                     custom_daypart_organization_id = d.DaypartOrganizationId,
                     custom_daypart_name = d.CustomName
-                });
+                }); 
             });
         }
 
