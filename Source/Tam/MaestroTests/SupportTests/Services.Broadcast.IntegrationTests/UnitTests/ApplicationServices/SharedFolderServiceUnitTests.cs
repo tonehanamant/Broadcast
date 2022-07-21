@@ -85,7 +85,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetFileById(It.IsAny<Guid>()))
                 .Returns((SharedFolderFile)null);
 
-            Assert.Throws<Exception>(() => _SharedFolderService.GetAndRemoveFile(fileId), $"There is no file with id: {fileId}");
+            Assert.Throws<InvalidOperationException>(() => _SharedFolderService.GetAndRemoveFile(fileId), $"There is no file with id: {fileId}");
         }
 
         [Test]

@@ -24,7 +24,7 @@ namespace Services.Broadcast.Entities
 
         public Stream FileContent { get; set; }
 
-        public Guid AttachmentId { get; set; }
+        public Guid? AttachmentId { get; set; }
 
         public string FileNameWithExtension
         {

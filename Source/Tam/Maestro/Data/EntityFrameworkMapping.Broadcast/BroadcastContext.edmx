@@ -2352,7 +2352,7 @@
           <Property Name="file_usage" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
-          <Property Name="attachment_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="attachment_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="show_type_mappings">
           <Key>
@@ -2890,7 +2890,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -3059,7 +3059,7 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -3099,7 +3099,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__maest__1D114BD1">
+        <Association Name="FK__genre_map__maest__27114E05">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3111,7 +3111,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__1E05700A">
+        <Association Name="FK__genre_map__mappe__2805723E">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3123,7 +3123,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__02284B6B">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -7697,15 +7697,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
             <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__maest__1D114BD1" Association="Self.FK__genre_map__maest__1D114BD1">
+          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__1E05700A" Association="Self.FK__genre_map__mappe__1E05700A">
+          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__02284B6B" Association="Self.FK__plan_vers__genre__02284B6B">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -14953,7 +14953,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_job_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_export_jobs" />
           <NavigationProperty Name="inventory_files" Relationship="BroadcastModel.FK_inventory_files_error_file_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_files" />
           <NavigationProperty Name="inventory_files1" Relationship="BroadcastModel.FK_inventory_files_shared_folder_files_id" FromRole="shared_folder_files" ToRole="inventory_files" />
-          <Property Name="attachment_id" Type="Guid" Nullable="false" />
+          <Property Name="attachment_id" Type="Guid" />
         </EntityType>
         <EntityType Name="nti_universe_audience_mappings">
           <Key>

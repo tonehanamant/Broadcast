@@ -81,12 +81,16 @@ namespace Services.Broadcast.ApplicationServices
         {
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
-                var registerResult = _AttachmentMicroServiceApiClient.RegisterAttachment(file.FileName, file.CreatedBy, "");
-                if (registerResult != null)
+                if (_IsAttachementMicroServiceEnabled.Value)
                 {
-                    file.AttachmentId = registerResult.AttachmentId;
+                    var registerResult = _AttachmentMicroServiceApiClient.RegisterAttachment(file.FileName, file.CreatedBy, "");
+                    if (registerResult != null)
+                    {
+                        file.AttachmentId = registerResult.AttachmentId;
+                    }
+                    _LogInfo($"Attachment is registered with AttachementId = '{file.AttachmentId}'");
                 }
-                _LogInfo($"Attachment is registered with AttachementId = '{file.AttachmentId}'");
+                
                 file.Id = _SharedFolderFilesRepository.SaveFile(file);
                 _SaveFileContent(file);
 
@@ -117,7 +121,7 @@ namespace Services.Broadcast.ApplicationServices
             var file = _SharedFolderFilesRepository.GetFileById(fileId);
 
             if (file == null)
-                throw new Exception($"There is no file with id: {fileId}");
+                throw new InvalidOperationException($"There is no file with id: {fileId}");
 
             return file;
         }
@@ -127,15 +131,19 @@ namespace Services.Broadcast.ApplicationServices
             if (_IsAttachementMicroServiceEnabled.Value)
             {
                 _LogInfo($"As we are using Attachment Microservice, Create Directory Functionality is not Required");
-                if (file.AttachmentId != null || file.AttachmentId != Guid.Empty)
+                if (file.AttachmentId.HasValue)
                 {
                     byte[] fileContent;
                     using (BinaryReader br = new BinaryReader(file.FileContent))
                     {
                         fileContent = br.ReadBytes((int)file.FileContent.Length);
                     }
-                    var storeResult = _AttachmentMicroServiceApiClient.StoreAttachment(file.AttachmentId, file.FileName, fileContent);
+                    var storeResult = _AttachmentMicroServiceApiClient.StoreAttachment(file.AttachmentId.Value, file.FileName, fileContent);
                     _LogInfo($"Attachment is stored with AttachementId = '{file.AttachmentId}', Success = '{storeResult.success}', Message = '{storeResult.message}' ");
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Attempting to store a file without registering it first.  FileName='{file.FileNameWithExtension}';");
                 }
             }
             else
@@ -156,16 +164,16 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsAttachementMicroServiceEnabled.Value)
             {
-                if (file.AttachmentId != null || file.AttachmentId != Guid.Empty)
+                if (file.AttachmentId.HasValue)
                 {
-                    var retriveResult = _AttachmentMicroServiceApiClient.RetrieveAttachment(file.AttachmentId);
+                    var retriveResult = _AttachmentMicroServiceApiClient.RetrieveAttachment(file.AttachmentId.Value);
                     var memoryStream = new MemoryStream(retriveResult.result);
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     return memoryStream;
                 }
                 else
                 {
-                    throw new Exception($"There is no file with attachment id: {file.AttachmentId}");
+                    throw new InvalidOperationException($"There is no file with attachment id: {file.AttachmentId}");
                 }
             }
             else
@@ -179,10 +187,14 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsAttachementMicroServiceEnabled.Value)
             {
-                if (file.AttachmentId != null || file.AttachmentId != Guid.Empty)
+                if (file.AttachmentId.HasValue)
                 {
-                    var deleteResult = _AttachmentMicroServiceApiClient.DeleteAttachment(file.AttachmentId);
+                    var deleteResult = _AttachmentMicroServiceApiClient.DeleteAttachment(file.AttachmentId.Value);
                     _LogInfo($"Attachment is deleted with AttachementId = '{file.AttachmentId}', Success = '{deleteResult.success}', Message = '{deleteResult.message}' ");
+                }
+                else
+                {
+                    _LogWarning($"Attempting to remove a file that did not have an AttachementId.  FileName='{file.FileNameWithExtension}';");
                 }
             }
             else
