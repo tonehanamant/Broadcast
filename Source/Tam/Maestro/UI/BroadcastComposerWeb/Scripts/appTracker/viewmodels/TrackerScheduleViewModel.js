@@ -226,6 +226,9 @@ var TrackerScheduleViewModel = function (controller) {
         schedule.PostType = $scope.PostTypeId();
         schedule.InventorySource = $scope.InventorySourceId();
         schedule.Equivalized = $scope.Equivalized();
+
+        if (schedule.AdvertiserId === '') { delete schedule.AdvertiserId }
+        if (schedule.AdvertiserMasterId === '') { delete schedule.AdvertiserMasterId }
         return schedule;
     };
 

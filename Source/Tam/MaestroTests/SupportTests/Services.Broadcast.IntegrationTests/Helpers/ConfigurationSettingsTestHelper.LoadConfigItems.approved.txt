@@ -56,7 +56,7 @@
   "BroadcastNotificationEmail": "broadcast@crossmw.com",
   "ReelIsciApi:ApiUrlBase": "TestUrlBase",
   "ReelIsciApi:EncryptedApiKey": "TestKey",
-  "AttachmentMicroServiceApi:ApiBaseUrl": "https://internal-aws-test.cadent.tv/attachmentmicroservice",
+  "AttachmentMicroServiceApi:ApiBaseUrl": "https://internal-aws-test.cadent.tv/attachmentmicroservice/",
   "AttachmentMicroServiceApi:AppName": "Attachments",
   "AttachmentMicroServiceApi:ApplicationId": "D6A7417C-429A-45C4-AFD9-BDA5AEFAADE0"
 }

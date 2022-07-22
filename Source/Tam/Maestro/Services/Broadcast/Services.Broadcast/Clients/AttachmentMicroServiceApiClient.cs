@@ -43,7 +43,7 @@ namespace Services.Broadcast.Clients
             try
             {
                 const string operation = "register";
-                var url = $"{_AttachmentMicroServiceApiUrl.Value}/{_CoreApiVersion}/{operation}";
+                var url = $"{_AttachmentMicroServiceApiUrl.Value}{_CoreApiVersion}/{operation}";
 
                 var request = new RegisterRequestDto
                 {
@@ -75,7 +75,7 @@ namespace Services.Broadcast.Clients
             try
             {
                 const string operation = "store";
-                var url = $"{_AttachmentMicroServiceApiUrl.Value}/{_CoreApiVersion}/{operation}";
+                var url = $"{_AttachmentMicroServiceApiUrl.Value}{_CoreApiVersion}/{operation}";
                 var httpRequestMessage = _GetRequestMessage(url, attachmentId);
                 httpRequestMessage.Headers.Add("attachment_id", Convert.ToString(attachmentId));
                 var byteArrayContent = new ByteArrayContent(fileContent);
@@ -101,7 +101,7 @@ namespace Services.Broadcast.Clients
             try
             {
                 const string operation = "retrieve";
-                var url = $"{_AttachmentMicroServiceApiUrl.Value}/{_CoreApiVersion}/{operation}";
+                var url = $"{_AttachmentMicroServiceApiUrl.Value}{_CoreApiVersion}/{operation}";
                 var httpRequestMessage = _GetRequestMessage(url, attachmentId);
                 httpRequestMessage.Headers.Add("attachment_id", Convert.ToString(attachmentId));
                 var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).GetAwaiter().GetResult();
@@ -126,7 +126,7 @@ namespace Services.Broadcast.Clients
             try
             {
                 const string operation = "delete";
-                var url = $"{_AttachmentMicroServiceApiUrl.Value}/{_CoreApiVersion}/{operation}";
+                var url = $"{_AttachmentMicroServiceApiUrl.Value}{_CoreApiVersion}/{operation}";
                 var httpRequestMessage = _GetRequestMessage(url, attachmentId);
                 httpRequestMessage.Headers.Add("attachment_id", Convert.ToString(attachmentId));
                 var serviceResponse = _HttpClient.SendAsync(httpRequestMessage).GetAwaiter().GetResult();
