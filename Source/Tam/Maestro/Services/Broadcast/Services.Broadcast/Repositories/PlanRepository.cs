@@ -770,7 +770,9 @@ namespace Services.Broadcast.Repositories
                 FluidityPercentage = planVersion.fluidity_percentage,
                 FluidityCategory = planVersion.fluidity_category,
                 FluidityChildCategory = planVersion.fluidity_child_category,
-
+                UnifiedTacticLineId = entity.unified_tactic_line_id,
+                UnifiedCampaignLastSentAt = entity.unified_campaign_last_sent_at,
+                UnifiedCampaignLastReceivedAt = entity.unified_campaign_last_received_at
             };
 
             if (dto.PricingParameters != null)
@@ -1016,9 +1018,9 @@ namespace Services.Broadcast.Repositories
             version.fluidity_percentage = planDto.FluidityPercentage;
             version.fluidity_category = planDto.FluidityCategory;
             version.fluidity_child_category = planDto.FluidityChildCategory;
-            plan.unified_tactic_line_id = planDto.UnifiedTacticLineId;
-            plan.unified_campaign_last_sent_at = planDto.UnifiedCampaignLastSentAt;
-            plan.unified_campaign_last_received_at = planDto.UnifiedCampaignLastReceivedAt;
+            plan.unified_tactic_line_id = planDto.IsDraft == false ? planDto.UnifiedTacticLineId : plan.unified_tactic_line_id;
+            plan.unified_campaign_last_sent_at = planDto.IsDraft == false ? planDto.UnifiedCampaignLastSentAt : plan.unified_campaign_last_sent_at;
+            plan.unified_campaign_last_received_at = planDto.IsDraft == false ? planDto.UnifiedCampaignLastReceivedAt : plan.unified_campaign_last_received_at;
 
             _MapCreativeLengths(version, planDto, context);
             _MapPlanAudienceInfo(version, planDto);

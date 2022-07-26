@@ -1181,6 +1181,80 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
             }
         }
+
+        [Test]
+        [Category("short_running")]
+        public void GetUnifiedCampaignById_WithToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN, true);
+            //var campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetCampaignForSave();
+
+                int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                var foundCampaign = _CampaignService.GetCampaignById(campaignId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(foundCampaign, _GetJsonSettings()));
+            }
+        }
+        [Test]
+        [Category("short_running")]
+        public void GetUnifiedCampaignById_WithToggleOff()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN, false);
+            //var campaignId = 2;
+            using (new TransactionScopeWrapper())
+            {
+                var campaign = _GetCampaignForSave();
+                var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
+                lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = "IntegrationUser"
+                });
+                int campaignId = _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate);
+                string expectedMessage = "Could not find existing campaign with id "+ campaignId +"";
+                var service = new CampaignService(
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignValidator>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IQuarterCalculationEngine>(),
+                    lockingManagerApplicationServiceMock.Object,
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregator>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignAggregationJobTrigger>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandardDaypartService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
+                    _WeeklyBreakdownEngine,
+                    DaypartCache.Instance,
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IFeatureToggleHelper>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IAabEngine>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
+                );
+
+                var exception = Assert.Throws<CadentException>(() => service.GetCampaignById(campaignId));
+
+                Assert.AreEqual(expectedMessage, exception.Message);
+            }
+        }
+        private SaveCampaignDto _GetCampaignForSave()
+        {
+            return new SaveCampaignDto
+            {
+                Name = "Test Campaign",
+                AdvertiserMasterId = new Guid("1806450a-e0a3-416d-b38d-913fb5cf3879"),
+                AgencyMasterId = new Guid("89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b"),
+                Notes = "Notes for CampaignOne.",
+                UnifiedId = "D6A7417C-429A-45C4-AFD9-BDA5AEFCCAE0",
+                UnifiedCampaignLastSentAt = new DateTime(),
+                UnifiedCampaignLastReceivedAt = new DateTime()
+            };
+        }
     }
 }
 

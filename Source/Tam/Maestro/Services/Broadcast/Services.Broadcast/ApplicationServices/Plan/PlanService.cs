@@ -320,7 +320,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
-        private readonly ICampaignServiceApiClient _CampaignServiceApiClient;        
+        private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
         private readonly Lazy<bool> _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -469,7 +469,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 PlanDto beforePlan;
                 var saveState = _DeriveSaveState(plan, out beforePlan);
-
+                _SetUnifiedPlanDetails(plan, beforePlan);
                 if (plan.CreativeLengths.Count == 1)
                 {
                     //if there is only 1 creative length, set the weight to 100%
@@ -1110,7 +1110,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 SpotAllocationModelMode = plan.SpotAllocationModelMode,
                 FluidityPercentage = plan.FluidityPercentage,
                 FluidityCategory = plan.FluidityCategory,
-                FluidityChildCategory = plan.FluidityChildCategory
+                FluidityChildCategory = plan.FluidityChildCategory,
+                UnifiedTacticLineId = plan.UnifiedTacticLineId,
+                UnifiedCampaignLastSentAt = plan.UnifiedCampaignLastSentAt,
+                UnifiedCampaignLastReceivedAt = plan.UnifiedCampaignLastReceivedAt
             };
 
             dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);
@@ -2204,6 +2207,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var fluidityChildCategory = _PlanRepository.GetFluidityChildCategory(parentCategoryId);
 
             return fluidityChildCategory;
+        }
+        private void _SetUnifiedPlanDetails(PlanDto plan,PlanDto beforePlan)
+        {
+            if (beforePlan!=null)
+            {
+                plan.UnifiedTacticLineId = beforePlan.UnifiedTacticLineId;
+                plan.UnifiedCampaignLastSentAt = beforePlan.UnifiedCampaignLastSentAt;
+                plan.UnifiedCampaignLastReceivedAt = beforePlan.UnifiedCampaignLastReceivedAt;
+            }
         }
     }
 }

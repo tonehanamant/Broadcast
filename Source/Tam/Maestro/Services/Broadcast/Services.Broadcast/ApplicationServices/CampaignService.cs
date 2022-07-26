@@ -281,6 +281,13 @@ namespace Services.Broadcast.ApplicationServices
             var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaignId);
 
             _HydrateCampaignWithSummary(campaign, summary);
+            if (!_IsUnifiedCampaignEnabled.Value)
+            {
+                if (campaign.UnifiedId != null)
+                {
+                    throw new CadentException($"Could not find existing campaign with id {campaign.Id}");
+                }
+            }
             return campaign;
         }
 
