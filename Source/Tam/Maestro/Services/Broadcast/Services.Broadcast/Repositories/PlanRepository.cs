@@ -294,6 +294,20 @@ namespace Services.Broadcast.Repositories
         /// <param name="parentCategoryId">The parent category id.</param>
         /// <returns>List of fluidity child category</returns>
         List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId);
+        
+        /// <summary>
+        /// Search the Plan Id
+        /// </summary>
+        /// <param name="planId">Plan Id</param>
+        /// <returns>Return Campaign Id</returns>
+        int SearchPlanByIdExceptUnifiedPlan(int planId);
+
+        /// <summary>
+        /// Search Unified Plan
+        /// </summary>
+        /// <param name="planId"></param>
+        /// <returns>Campaign Id</returns>
+        int SearchPlanByIdWithUnifiedPlan(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -773,6 +787,7 @@ namespace Services.Broadcast.Repositories
                 UnifiedTacticLineId = entity.unified_tactic_line_id,
                 UnifiedCampaignLastSentAt = entity.unified_campaign_last_sent_at,
                 UnifiedCampaignLastReceivedAt = entity.unified_campaign_last_received_at
+                
             };
 
             if (dto.PricingParameters != null)
@@ -2751,7 +2766,7 @@ namespace Services.Broadcast.Repositories
                     Spots = x.spots,
                     Impressions = x.impressions
                 }).ToList(),
-                InventoryMediaWeek = new MediaWeek
+                InventoryMediaWeek = new MediaWeek 
                 {
                     Id = spot.inventory_media_week.id,
                     MediaMonthId = spot.inventory_media_week.media_month_id,
@@ -3153,6 +3168,26 @@ namespace Services.Broadcast.Repositories
                 Id = fluidityCategories.id,
                 Category = fluidityCategories.category
             };
+        }
+
+        /// <inheritdoc/>
+        public int SearchPlanByIdExceptUnifiedPlan(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                int campaignId = context.plans.Where(x => x.id == planId && x.unified_tactic_line_id == null).Select(x=>x.campaign_id).FirstOrDefault();
+                return campaignId;
+            });
+        }
+
+        /// <inheritdoc />
+        public int SearchPlanByIdWithUnifiedPlan(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                int campaignId = context.plans.Where(x => x.id == planId).Select(x => x.campaign_id).FirstOrDefault();
+                return campaignId;
+            });
         }
     }
 }

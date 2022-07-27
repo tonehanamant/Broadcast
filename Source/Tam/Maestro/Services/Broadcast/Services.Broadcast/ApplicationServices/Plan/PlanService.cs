@@ -285,6 +285,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="parentCategoryId">The parent category id.</param>
         /// <returns>List of fluidity child category</returns>
         List<FluidityCategoriesDto> GetFluidityChildCategory(int parentCategoryId);
+
+        /// <summary>
+        /// Search The plan By Id
+        /// </summary>
+        /// <param name="planId"></param>
+        /// <returns>Campaign Id And Plan Id</returns>
+        SearchPlanDto SearchPlan(int planId);
     }
 
     public class PlanService : BroadcastBaseClass, IPlanService
@@ -322,6 +329,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
         private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
         private readonly Lazy<bool> _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
+        private Lazy<bool> _IsUnifiedCampaignEnabled;
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -381,6 +389,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CampaignServiceApiClient = campaignServiceApiClient;
             _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS));
+            _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
 
         internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
@@ -421,7 +431,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 result = _DoSavePlanDraft(plan, createdBy, createdDate);
             }
             else
-            {               
+            {
                 try
                 {
                     result = await _DoSavePlanAsync(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
@@ -434,8 +444,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         throw new PlanValidationException(ex.Message.ToString() + " Try to save the plan as draft");
                     }
                     if (exceptionType == "Services.Broadcast.Exceptions.PlanSaveException")
-                    { 
-                        throw new PlanSaveException(ex.Message.ToString() + " Try to save the plan as draft"); 
+                    {
+                        throw new PlanSaveException(ex.Message.ToString() + " Try to save the plan as draft");
                     }
                     throw new Exception(ex.Message.ToString() + " Try to save the plan as draft");
                 }
@@ -455,7 +465,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const string SW_KEY_POST_PLAN_SAVE = "Post Plan Save";
 
             _LogInfo($"SavePlan starting for planID '{plan.Id}'", logTxId, createdBy);
-           
+
             try
             {
                 var processTimers = new ProcessWorkflowTimers();
@@ -612,7 +622,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             catch (Exception ex)
             {
                 _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
-               throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
+                throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
             }
         }
 
@@ -691,7 +701,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously: false);
-                 return plan.Id;
+                return plan.Id;
             }
             catch (PlanSaveException)
             {
@@ -703,7 +713,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("Error saving the plan draft.  Please see your administrator to check logs.");
             }
         }
-        
+
         internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
         {
             var filteredDayparts = new List<PlanDaypartDto>();
@@ -2216,6 +2226,47 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.UnifiedCampaignLastSentAt = beforePlan.UnifiedCampaignLastSentAt;
                 plan.UnifiedCampaignLastReceivedAt = beforePlan.UnifiedCampaignLastReceivedAt;
             }
+        }
+
+        /// <inheritdoc />
+        public SearchPlanDto SearchPlan(int planId)
+        {
+            SearchPlanDto result;
+            if (_IsUnifiedCampaignEnabled.Value)
+            {
+                var unifiedCampaignId = _PlanRepository.SearchPlanByIdWithUnifiedPlan(planId);
+                result = mapToSearchDto(planId, unifiedCampaignId);
+            }
+            else
+            {
+                var campaignId = _PlanRepository.SearchPlanByIdExceptUnifiedPlan(planId);
+                result = mapToSearchDto(planId, campaignId);
+            }
+            return result;
+        }
+
+        private SearchPlanDto mapToSearchDto(int planId,int campaignId)
+        {
+            SearchPlanDto result;
+            if (campaignId != 0)
+            {
+                result = new SearchPlanDto
+                {
+                    PlanId = planId,
+                    CampaignId = campaignId,
+                    Message = "Plan is Exist"
+                };
+            }
+            else
+            {
+                result = new SearchPlanDto
+                {
+                    PlanId = null,
+                    CampaignId = null,
+                    Message = "The entered Plan ID does not exist"
+                };
+            }
+            return result;
         }
     }
 }

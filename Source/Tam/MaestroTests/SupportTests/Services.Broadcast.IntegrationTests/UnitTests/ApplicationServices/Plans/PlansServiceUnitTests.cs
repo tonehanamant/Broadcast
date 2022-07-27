@@ -4282,5 +4282,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedCallCount, aggregateCallCount, "Invalid call count.");
             _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(1, "automated status update"), Times.Exactly(expectedCallCount));
         }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SearchPlanIf_Exist(bool enableUnifiedCampaign)
+        {
+            // Arrange
+            int planId = 123;
+            int campaignId = 234;
+
+            _PlanRepositoryMock
+                .Setup(s => s.SearchPlanByIdExceptUnifiedPlan(It.IsAny<int>()))
+                .Returns(campaignId);
+
+            _PlanRepositoryMock
+                .Setup(s => s.SearchPlanByIdWithUnifiedPlan(It.IsAny<int>()))
+                .Returns(campaignId);
+
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_UNIFIED_CAMPAIGN] = enableUnifiedCampaign;
+            
+            // Act
+            var result = _PlanService.SearchPlan(planId);
+
+            // Assert
+           Assert.AreEqual(campaignId, result.CampaignId);
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void SearchPlanIf_NotExist(bool enableUnifiedCampaign)
+        {
+            // Arrange
+            int planId = 123;
+            int campaignId = 0;
+
+            _PlanRepositoryMock
+                .Setup(s => s.SearchPlanByIdExceptUnifiedPlan(It.IsAny<int>()))
+                .Returns(campaignId);
+
+            _PlanRepositoryMock
+                .Setup(s => s.SearchPlanByIdWithUnifiedPlan(It.IsAny<int>()))
+                .Returns(campaignId);
+
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_UNIFIED_CAMPAIGN] = enableUnifiedCampaign;
+            // Act           
+            var result = _PlanService.SearchPlan(planId);
+
+            // Assert
+            Assert.AreEqual(null, result.CampaignId);
+        }
     }
 }

@@ -375,5 +375,16 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetFluidityChildCategory(parentCategoryId));
         }
+
+        /// <summary>
+        /// Search the plan by id.
+        /// </summary>
+        /// <returns>Campaign Id and Plan Id</returns>
+        [HttpGet]
+        [Route("search-plan/{planId}")]
+        public BaseResponse<SearchPlanDto> SearchPlanById(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SearchPlan(planId));
+        }
     }
 }
