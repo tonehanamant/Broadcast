@@ -1546,7 +1546,7 @@
       },
       "contract": [
         {
-          "cpm_goal": 1.0,
+          "cpm_goal": 32.000,
           "daypart_weighting": [
             {
               "daypart_goal": 0.5,
@@ -1581,7 +1581,7 @@
           "week_id": 100
         },
         {
-          "cpm_goal": 1.0,
+          "cpm_goal": 19.2000,
           "daypart_weighting": [
             {
               "daypart_goal": 0.5,
@@ -1616,7 +1616,7 @@
           "week_id": 101
         },
         {
-          "cpm_goal": 1.0,
+          "cpm_goal": 48.000,
           "daypart_weighting": [
             {
               "daypart_goal": 0.5,

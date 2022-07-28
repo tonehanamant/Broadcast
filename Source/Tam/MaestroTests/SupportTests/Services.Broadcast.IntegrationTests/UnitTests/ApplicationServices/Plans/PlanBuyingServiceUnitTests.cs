@@ -1322,9 +1322,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(SpotAllocationModelMode.Efficiency)]
         [TestCase(SpotAllocationModelMode.Floor)]
-        public void GetBuyingModelWeeks_Test_WithEfficencyAndFloor_Returns1Cpm(SpotAllocationModelMode allocationMode)
+        public void GetBuyingModelWeeks_Test_WithFloor_Returns1Cpm(SpotAllocationModelMode allocationMode)
         {
             //arrange
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -1372,6 +1371,58 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             //assert
             Assert.IsTrue(result.All(x => x.CpmGoal == 1));
+        }
+
+        [Test]
+        [TestCase(SpotAllocationModelMode.Efficiency)]
+        public void GetBuyingModelWeeks_Test_WithEfficency_ReturnsCpm(SpotAllocationModelMode allocationMode)
+        {
+            //arrange
+            var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
+
+            var buyingParameters = _GetPlanBuyingParametersDto();
+
+            plan.BuyingParameters = buyingParameters;
+            var proprietaryData = new ProprietaryInventoryData();
+            var skippedWeekIds = new List<int>();
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    }
+                });
+
+            var service = _GetService();
+
+            //act
+            var result = service._GetBuyingModelWeeks_v3(plan, buyingParameters, proprietaryData,
+                out skippedWeekIds, allocationMode);
+
+            //assert
+            Assert.IsTrue(result.All(x => x.CpmGoal != 1));
         }
 
         [Test]

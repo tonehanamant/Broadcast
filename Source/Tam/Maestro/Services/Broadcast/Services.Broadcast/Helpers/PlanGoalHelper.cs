@@ -92,11 +92,22 @@ namespace Services.Broadcast.Helpers
         {
             var result = new PlanBudgetResponseByMode();
             var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
-
             if(spotAllocationModelMode == SpotAllocationModelMode.Quality)
             {
                 result.CpmGoal = cpmGoal;
                 result.ImpressionGoal = impressionGoal;
+            }
+            else if (spotAllocationModelMode == SpotAllocationModelMode.Efficiency)
+            {
+                result.CpmGoal = cpmGoal * 0.4m ;
+                if (budgetCpmLever == BudgetCpmLeverEnum.Budget)
+                {
+                    result.ImpressionGoal = impressionGoal * 2.5;
+                }
+                else
+                {
+                    result.ImpressionGoal = impressionGoal;
+                }
             }
             else
             {
