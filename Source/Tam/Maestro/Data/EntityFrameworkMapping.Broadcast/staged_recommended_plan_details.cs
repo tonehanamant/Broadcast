@@ -34,6 +34,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> sunday { get; set; }
         public Nullable<double> contracted_impressions { get; set; }
         public Nullable<double> delivered_impressions { get; set; }
+        public string plan_spot_unique_hash_external { get; set; }
+        public string plan_execution_id_external { get; set; }
     
         public virtual staged_recommended_plans staged_recommended_plans { get; set; }
     }

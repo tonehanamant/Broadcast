@@ -133,6 +133,18 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int? Sunday { get; set; }
 
         /// <summary>
+        /// Gets or sets the spot unique hash external.
+        /// </summary>
+        /// <value>The plan spot unique hash external.</value>
+        public string PlanSpotUniqueHashExternal { get; set; }
+
+        /// <summary>
+        /// Gets or sets the execution identifier external.
+        /// </summary>
+        /// <value>The plan execution identifier external.</value>
+        public string PlanExecutionIdExternal { get; set; }
+
+        /// <summary>
         /// Gets or sets the spot exceptions recommended plan decision.
         /// </summary>
         /// <value>The spot exceptions recommended plan decision.</value>

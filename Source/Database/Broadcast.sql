@@ -1161,6 +1161,53 @@ GO
 
 /*************************************** END BP-5086 ********************************************************/
 
+/*************************************** START BP-4947 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'staged_recommended_plan_details' 
+	AND (COLUMN_NAME = 'plan_spot_unique_hash_external'))
+BEGIN
+
+	DELETE FROM staged_recommended_plan_details
+	DELETE FROM staged_recommended_plans
+	DELETE FROM spot_exceptions_recommended_plan_decision
+	DELETE FROM spot_exceptions_recommended_plan_details
+	DELETE FROM spot_exceptions_recommended_plans
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD plan_spot_unique_hash_external varchar(255) NOT NULL
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD plan_execution_id_external varchar(100) NOT NULL
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD plan_spot_unique_hash_external varchar(255) NOT NULL
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD plan_execution_id_external varchar(100) NOT NULL
+END
+
+IF (OBJECT_ID('FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans') IS NOT NULL)
+BEGIN
+    ALTER TABLE spot_exceptions_recommended_plan_details
+    DROP CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plans' AND (COLUMN_NAME= 'inventory_source_name'))
+BEGIN	
+
+	DELETE FROM spot_exceptions_recommended_plan_decision
+	DELETE FROM spot_exceptions_recommended_plan_details
+	DELETE FROM spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		DROP COLUMN inventory_source_name
+END
+
+GO
+
+/*************************************** END BP-4947 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

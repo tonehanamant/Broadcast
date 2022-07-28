@@ -1,6 +1,10 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Repositories;
 using System;
@@ -13,7 +17,17 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     [Category("short_running")]
     [UseReporter(typeof(DiffReporter))] 
     public class SpotExceptionRepositoryTests
-    {
+    { 
+        private IPlanService _PlanService;
+        private ICampaignService _CampaignService;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
+            _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+        }
+
         [Test]
         public void GetSpotExceptionsRecommendedPlans_RecommendedPlan_DoesNotExist()
         {
@@ -35,6 +49,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Arrange
             var ingestedDateTime = new DateTime(2010, 10, 12);
             var ingestedBy = "Repository Test User";
+            var campaignToSave = _GetValidCampaignForSave();
+            var plans = _GetPlans();
 
             DateTime weekStartDate = new DateTime(2022, 04, 04);
             DateTime weekEndDate = new DateTime(2022, 04, 10);
@@ -43,6 +59,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             {
                 new SpotExceptionsRecommendedPlansDto
                 {
+                    Id = 1,
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                     AmbiguityCode = 1,
                     ExecutionIdExternal = "220609090855BRt8EHXqSy",
@@ -68,6 +85,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 1,
+                            SpotExceptionsRecommendedPlanId = 1,
                             RecommendedPlanId = 334,
                             ExecutionTraceId = 73,
                             Rate = 0.00m,
@@ -95,6 +114,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 2,
+                            SpotExceptionsRecommendedPlanId = 1,
                             RecommendedPlanId = 332,
                             ExecutionTraceId = 75,
                             Rate = 0.00m,
@@ -119,6 +140,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
+                    Id = 2,
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
                     AmbiguityCode = 1,
                     ExecutionIdExternal = "220609090855BRt8EHXqSy",
@@ -144,6 +166,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 3,
+                            SpotExceptionsRecommendedPlanId = 2,
                             RecommendedPlanId = 332,
                             ExecutionTraceId = 623,
                             Rate = 0.00m,
@@ -166,6 +190,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 4,
+                            SpotExceptionsRecommendedPlanId = 2,
                             RecommendedPlanId = 334,
                             ExecutionTraceId = 624,
                             Rate = 0.00m,
@@ -190,6 +216,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
+                    Id = 3 ,
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
                     AmbiguityCode = 1,
                     ExecutionIdExternal = "220609090855BRt8EHXqSy",
@@ -215,6 +242,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 5,
+                            SpotExceptionsRecommendedPlanId = 3,
                             RecommendedPlanId = 332,
                             ExecutionTraceId = 1824,
                             Rate = 0.00m,
@@ -237,6 +266,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 6,
+                            SpotExceptionsRecommendedPlanId = 3,
                             RecommendedPlanId = 334,
                             ExecutionTraceId = 1923,
                             Rate = 0.00m,
@@ -261,6 +292,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 },
                 new SpotExceptionsRecommendedPlansDto
                 {
+                    Id = 4,
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=F",
                     AmbiguityCode = 1,
                     ExecutionIdExternal = "220609090855BRt8EHXqSy",
@@ -286,6 +318,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 7,
+                            SpotExceptionsRecommendedPlanId = 4,
                             RecommendedPlanId = 332,
                             ExecutionTraceId = 2222,
                             Rate = 0.00m,
@@ -308,6 +342,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
                         {
+                            Id = 8,
+                            SpotExceptionsRecommendedPlanId = 4,
                             RecommendedPlanId = 334,
                             ExecutionTraceId = 2223,
                             Rate = 0.00m,
@@ -339,6 +375,11 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             // Act
             using (new TransactionScopeWrapper())
             {
+                _CampaignService.SaveCampaign(campaignToSave, ingestedBy, ingestedDateTime);
+                foreach( var plan in plans)
+                {
+                    _PlanService.SavePlanAsync(plan, ingestedBy, ingestedDateTime);
+                }
                 spotExceptionRepository.AddSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlans);
                 result = spotExceptionRepository.GetSpotExceptionsRecommendedPlans(weekStartDate, weekEndDate);
             }
@@ -675,6 +716,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -697,6 +740,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -775,6 +820,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
                                 UserName = ingestedBy,
@@ -802,6 +849,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -851,6 +900,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -873,6 +924,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -922,6 +975,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -944,6 +999,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -993,6 +1050,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -1015,6 +1074,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -1054,6 +1115,36 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             // Assert
             Assert.AreEqual(result, "Columbus, OH");
+        }
+
+        private SaveCampaignDto _GetValidCampaignForSave()
+        {
+            return new SaveCampaignDto
+            {
+                Name = "Campaign1",
+                AdvertiserMasterId = new Guid("1806450a-e0a3-416d-b38d-913fb5cf3879"),
+                AgencyMasterId = new Guid("89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b"),
+                Notes = "Notes for CampaignOne."
+            };
+        }
+
+        private static List<PlanDto> _GetPlans()
+        {
+            return new List<PlanDto>
+            {
+                new PlanDto
+                {
+                    CampaignId = 1,
+                    Id = 334,
+                    Name = "New Plan" 
+                },
+                new PlanDto
+                {
+                    CampaignId = 1,
+                    Id = 332,
+                    Name = "New Plan"
+                }
+            };
         }
     }
 }

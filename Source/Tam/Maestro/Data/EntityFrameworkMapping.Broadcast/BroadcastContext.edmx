@@ -2485,6 +2485,8 @@
           <Property Name="friday" Type="int" />
           <Property Name="saturday" Type="int" />
           <Property Name="sunday" Type="int" />
+          <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plans">
           <Key>
@@ -2677,6 +2679,8 @@
           <Property Name="sunday" Type="int" />
           <Property Name="contracted_impressions" Type="float" />
           <Property Name="delivered_impressions" Type="float" />
+          <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="staged_recommended_plans">
           <Key>
@@ -18539,6 +18543,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_decision" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plan_decision" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plans" />
+          <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plans">
           <Key>
@@ -18667,6 +18673,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="contracted_impressions" Type="Double" />
           <Property Name="delivered_impressions" Type="Double" />
           <NavigationProperty Name="staged_recommended_plans" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plan_details" ToRole="staged_recommended_plans" />
+          <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_staged_recommended_plan_details_staged_recommended_plans">
           <End Type="BroadcastModel.staged_recommended_plans" Role="staged_recommended_plans" Multiplicity="1" />
@@ -21855,6 +21863,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_recommended_plan_details">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_details">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_details">
+                <ScalarProperty Name="plan_execution_id_external" ColumnName="plan_execution_id_external" />
+                <ScalarProperty Name="plan_spot_unique_hash_external" ColumnName="plan_spot_unique_hash_external" />
                 <ScalarProperty Name="sunday" ColumnName="sunday" />
                 <ScalarProperty Name="saturday" ColumnName="saturday" />
                 <ScalarProperty Name="friday" ColumnName="friday" />
@@ -21934,6 +21944,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="staged_recommended_plan_details">
             <EntityTypeMapping TypeName="BroadcastModel.staged_recommended_plan_details">
               <MappingFragment StoreEntitySet="staged_recommended_plan_details">
+                <ScalarProperty Name="plan_execution_id_external" ColumnName="plan_execution_id_external" />
+                <ScalarProperty Name="plan_spot_unique_hash_external" ColumnName="plan_spot_unique_hash_external" />
                 <ScalarProperty Name="delivered_impressions" ColumnName="delivered_impressions" />
                 <ScalarProperty Name="contracted_impressions" ColumnName="contracted_impressions" />
                 <ScalarProperty Name="sunday" ColumnName="sunday" />
