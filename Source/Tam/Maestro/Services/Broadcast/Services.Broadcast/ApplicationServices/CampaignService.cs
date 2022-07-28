@@ -5,6 +5,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
@@ -21,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -160,6 +162,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="campaignId">campaignId</param>
         /// <returns>campaign with plans</returns>
         CampaignExportDto CampaignExportAvailablePlans(int campaignId);
+        /// <summary>
+        /// Send message  about any update in the unified campaign
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <returns>Message response</returns>
+        Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId);
+
     }
 
     /// <summary>
@@ -191,6 +200,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ILockingEngine _LockingEngine;
         private readonly IPlanService _PlanService;
         private readonly IPlanValidator _PlanValidator;
+        private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
         protected Lazy<bool> _IsUnifiedCampaignEnabled;
 
         public CampaignService(
@@ -208,7 +218,7 @@ namespace Services.Broadcast.ApplicationServices
             IWeeklyBreakdownEngine weeklyBreakdownEngine,
             IDaypartCache daypartCache,
             IFeatureToggleHelper featureToggleHelper,
-            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine, IPlanService PlanService, IPlanValidator PlanValidator) : base(featureToggleHelper, configurationSettingsHelper)
+            IAabEngine aabEngine, IConfigurationSettingsHelper configurationSettingsHelper, ILockingEngine lockingEngine, IPlanService PlanService, IPlanValidator PlanValidator, ICampaignServiceApiClient CampaignServiceApiClient) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -233,6 +243,7 @@ namespace Services.Broadcast.ApplicationServices
             _LockingEngine = lockingEngine;
             _PlanService = PlanService;
             _PlanValidator = PlanValidator;
+            _CampaignServiceApiClient = CampaignServiceApiClient;
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
@@ -1091,6 +1102,14 @@ namespace Services.Broadcast.ApplicationServices
                 campaign.Plans = filteredPlans;
             }
             return filteredPlans;
+        }
+
+        public async Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId)
+        {
+            UnifiedCampaignResponseDto unifiedCampaignResponse = new UnifiedCampaignResponseDto();
+            var campaign = _CampaignRepository.GetCampaign(campaignId);
+            unifiedCampaignResponse = await _CampaignServiceApiClient.NotifyCampaignAsync(campaign.UnifiedId);
+            return unifiedCampaignResponse;
         }
     }
 }

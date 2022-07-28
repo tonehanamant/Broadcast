@@ -206,6 +206,17 @@ namespace BroadcastComposerWeb.Controllers
             return
                 _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
                 .SaveCampaignCopy(campaignCopy, createdBy, DateTime.Now));
+        }        
+
+        [HttpPost]
+        [Route("PublishUnifiedCampaign")]
+        [Authorize]
+        public BaseResponse<UnifiedCampaignResponseDto> PublishUnifiedCampaign(PublishUnifiedCampaignRequestDto publishUnifiedCampaignRequest)
+        {
+            var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
+            .PublishUnifiedCampaign(publishUnifiedCampaignRequest.CampaignId).Result);            
+            return result;
         }
+
     }
 }

@@ -566,6 +566,8 @@
     <Compile Include="Entities\CampaignCopyDto.cs" />
     <Compile Include="Entities\Campaign\CampaignExportDto.cs" />
     <Compile Include="Entities\Campaign\SaveCampaignCopyDto.cs" />
+    <Compile Include="Entities\Campaign\UnifiedCampaignRequestDto.cs" />
+    <Compile Include="Entities\Campaign\UnifiedCampaignResponseDto.cs" />
     <Compile Include="Entities\DaypartDetailDto.cs" />
     <Compile Include="Entities\DTO\PlanBuyingDto.cs" />
     <Compile Include="Entities\DTO\PlanPricingDto.cs" />

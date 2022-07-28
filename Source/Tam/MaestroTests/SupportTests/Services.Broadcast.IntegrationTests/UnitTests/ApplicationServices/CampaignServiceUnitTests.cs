@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
@@ -25,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -68,6 +70,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ILockingEngine> _LockingEngineMock;
         private Mock<IPlanService> _PlanServiceMock;
         private Mock<IPlanValidator> _PlanValidatorMock;
+        private Mock<ICampaignServiceApiClient> _CampaignServiceApiClientMock;
 
         [SetUp]
         public void SetUp()
@@ -97,6 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _LockingEngineMock = new Mock<ILockingEngine>();
             _PlanServiceMock = new Mock<IPlanService>();
             _PlanValidatorMock = new Mock<IPlanValidator>();
+            _CampaignServiceApiClientMock = new Mock<ICampaignServiceApiClient>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
                 .Returns(_StationProgramRepositoryMock.Object);
@@ -2908,7 +2912,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _ConfigurationSettingsHelperMock.Object,
                 _LockingEngineMock.Object,
                 _PlanServiceMock.Object,
-                _PlanValidatorMock.Object
+                _PlanValidatorMock.Object,
+                _CampaignServiceApiClientMock.Object
+               
                 );
         }
 
@@ -3616,6 +3622,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 AgencyMasterId = "68169E0A-98E8-4471-9AFD-37F71946E923",
                 Plans =null
             };
+        }       
+
+        [Test]
+        public async Task PublishUnifiedCampaign()
+        {
+            // Arrange
+            int campaignId = 2;
+            string unifiedId = "5a1521f7-6f1c-435e-90cf-bfc2816f557c";
+            var messageResponse = _GetPublishUnifiedCampaign();
+            _CampaignServiceApiClientMock.SetupSequence(x => x.NotifyCampaignAsync(It.IsAny<string>())).ReturnsAsync(messageResponse);
+            _CampaignRepositoryMock.Setup(x => x.GetCampaign(It.IsAny<int>())).Returns(new CampaignDto
+            {
+                Id = campaignId,
+                AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460"),
+                UnifiedId = unifiedId
+            });
+            
+             var tc = _BuildCampaignService();
+            // Act
+            var result = await tc.PublishUnifiedCampaign(campaignId);
+            // Assert            
+            Assert.AreEqual(messageResponse, result);
+        }
+        private  static UnifiedCampaignResponseDto _GetPublishUnifiedCampaign()
+        {
+            return new UnifiedCampaignResponseDto
+            {
+                 Success =true,
+                 Message = ""
+            };
+        }
+
+        [Test]
+        public void PublishUnifiedCampaign_ThrowsException()
+        {      
+            // Arrange
+            const string expectedMessage = "This is a test exception thrown from PublishUnifiedCampaign";
+
+            int campaignId = 2;            
+            var messageResponse = _GetPublishUnifiedCampaign();
+            _CampaignServiceApiClientMock.SetupSequence(x => x.NotifyCampaignAsync(It.IsAny<string>())).ReturnsAsync(messageResponse);
+            _CampaignRepositoryMock.Setup(x => x.GetCampaign(It.IsAny<int>())).Callback(() => throw new Exception(expectedMessage));
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<Exception>(async () => await tc.PublishUnifiedCampaign(campaignId));           
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
         }
 
         [Test]

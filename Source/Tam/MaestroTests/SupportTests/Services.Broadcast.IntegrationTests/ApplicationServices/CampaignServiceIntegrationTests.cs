@@ -224,7 +224,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignServiceApiClient>()
                 );
 
                 var campaign = _GetValidCampaignForSave();
@@ -683,7 +684,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>(),
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignServiceApiClient>()
                 );
 
             return campaignService;
@@ -1234,7 +1236,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IConfigurationSettingsHelper>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ILockingEngine>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>()
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IPlanValidator>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ICampaignServiceApiClient>()
                 );
 
                 var exception = Assert.Throws<CadentException>(() => service.GetCampaignById(campaignId));
