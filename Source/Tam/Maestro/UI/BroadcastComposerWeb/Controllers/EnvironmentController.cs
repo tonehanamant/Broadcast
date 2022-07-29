@@ -1,5 +1,4 @@
 ﻿using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.ReelRosterIscis;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
-using Services.Broadcast;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
@@ -157,6 +155,15 @@ namespace BroadcastComposerWeb.Controllers
 
             var result = _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IReelIsciIngestService>().TestReelISciApiClient(startDate, numDays));
             return result;
+        }
+
+        [HttpGet]
+        [Route("test-notify-fluidity")]
+        public BaseResponse<string> TestNotifyFluidityPlanAsync(int planId, int planVersionId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().TestNotifyFluidityPlanAsync(planId, planVersionId).Result);
         }
     }
 }

@@ -41,8 +41,10 @@ namespace Services.Broadcast.Clients
         /// </inheritDoc>
         public async Task NotifyFluidityPlanAsync(int planId, int planVersionId)
         {
+            _LogInfo("Attempting to call the CampaignServiceApi to publish a message for Fluidity.");
+
             const string coreApiVersion = "api/v1";                        
-            var requestUri = $"{coreApiVersion}/BroadcastPlans/PublishBroadcastMessage";
+            var requestUri = $"{coreApiVersion}/BroadcastPlans/PublishMessage";
 
             var requestSerialized = new PostDSPDTO
             {
@@ -52,10 +54,11 @@ namespace Services.Broadcast.Clients
             var content = new StringContent(JsonConvert.SerializeObject(requestSerialized), Encoding.UTF8, "application/json");
 
             var httpClient = await _GetSecureHttpClientAsync();
-            var apiResult = await httpClient.PostAsync(requestUri, content);
+            // not sure why we need the .GetAwaiter().GetResult() but we do.
+            var apiResult = httpClient.PostAsync(requestUri, content).GetAwaiter().GetResult();
             if (apiResult.IsSuccessStatusCode)
             {
-                _LogInfo("Successfully Called the api For post the DSP");
+                _LogInfo("Successfully called the CampaignServiceApi to publish a message for Fluidity.");
             }
         }
 
@@ -94,8 +97,6 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException(String.Format("Failed to publish the Unified Campaign. Error: :{0}", ex.Message.ToString()));                
             }            
         }
-
-
 
         private async Task<HttpClient> _GetSecureHttpClientAsync()
         {

@@ -1,10 +1,12 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
@@ -27,18 +29,23 @@ namespace Services.Broadcast.ApplicationServices
         string AuthenticateUserAgainstLaunchDarkly(string username);
 
         string GetBroadcastAppFolderPath();
+
+        Task<string> TestNotifyFluidityPlanAsync(int planId, int planVersionId);
     }
     public class EnvironmentService: BroadcastBaseClass, IEnvironmentService
     {
         private readonly IRatingsRepository _RatingsRepo;
         private readonly IInventoryFileRepository _InventoryFileRepo;
+        private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
 
         public EnvironmentService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+            ICampaignServiceApiClient campaignServiceApiClient,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _RatingsRepo = broadcastDataRepositoryFactory.GetDataRepository<IRatingsRepository>();
             _InventoryFileRepo = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+            _CampaignServiceApiClient = campaignServiceApiClient;
         }
 
         public Dictionary<string, string> GetDbInfo()
@@ -94,6 +101,14 @@ namespace Services.Broadcast.ApplicationServices
         public string GetBroadcastAppFolderPath()
         { 
             return base._GetBroadcastAppFolder();
+        }
+
+        public async Task<string> TestNotifyFluidityPlanAsync(int planId, int planVersionId)
+        {
+            _LogInfo("Attempting to do _CampaignServiceApiClient.NotifyFluidityPlanAsync");
+            await _CampaignServiceApiClient.NotifyFluidityPlanAsync(planId, planVersionId);
+            _LogInfo("Successfully did _CampaignServiceApiClient.NotifyFluidityPlanAsync");
+            return "success!";
         }
     }
 }
