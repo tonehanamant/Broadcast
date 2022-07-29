@@ -5,10 +5,12 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRepository _IInventoryRepository;
         private IProprietaryRepository _ProprietaryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
         [SetUp]
         public void SetUp()
@@ -38,6 +41,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _IInventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ProprietaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
+
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
+        }
+
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -432,38 +445,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyInventoryFileProblems(fileName);
         }
 
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("long_running")]
-        public void Barter_SendFileToDataLake()
-        {
-            const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat.xlsx";
-
-            using (new TransactionScopeWrapper())
-            {
-                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
-                var fileStoreFolder = _GetInventoryUploadFolder();
-                var filePath = Path.Combine(fileStoreFolder, fileName);
-                var proprietaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
-
-                if (fileService.Exists(filePath))
-                {
-                    fileService.Delete(filePath);
-                }
-
-                var request = new FileRequest
-                {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
-                };
-
-                var now = new DateTime(2019, 02, 02);
-                var result = proprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
-
-                Assert.True(fileService.Exists(filePath));
-            }
-        }
-
         protected virtual string _GetInventoryUploadFolder()
         {
             var path = Path.Combine(IntegrationTestHelper.GetBroadcastAppFolder()
@@ -788,7 +769,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_SaveErrorFileToDisk()
         {
             const string fileName = "Barter_BadFormats.xlsx";
-            
+            var inventoryFileRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
+            var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+
             using (new TransactionScopeWrapper())
             {
                 var request = new FileRequest
@@ -799,9 +782,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                
+                var savedInventoryFile = inventoryFileRepo.GetInventoryFileById(result.FileId);
+
                 var errorsFilePath = Path.Combine(IntegrationTestHelper.GetBroadcastAppFolder(), "InventoryUpload", "Errors", 
-                    $"{result.FileId}_{fileName}");
-                var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
+                    $"{savedInventoryFile.ErrorFileSharedFolderFileId}.xlsx");
+                
                 Assert.IsTrue(fileService.Exists(errorsFilePath));
             }
         }
@@ -956,6 +942,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void DownloadErrorFiles()
         {
             const string fileName = @"Diginet_InvalidFile1.xlsx";
+
+            _SetFeatureToggle(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION, true);
+            _SetFeatureToggle(FeatureToggles.ENABLE_ATTACHMENT_MICRO_SERVICE, true);
+
             using (new TransactionScopeWrapper())
             {
                 var request = new FileRequest
@@ -973,7 +963,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 using (var archive = new ZipArchive(errors.Item2, ZipArchiveMode.Read))
                 {
-                    Assert.AreEqual(fileName, archive.Entries[0].FullName);
+                    Assert.IsTrue(archive.Entries[0].FullName.EndsWith(fileName));
                 }
             }
         }

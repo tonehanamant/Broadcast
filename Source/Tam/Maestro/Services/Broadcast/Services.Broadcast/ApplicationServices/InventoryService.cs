@@ -151,7 +151,7 @@ namespace Services.Broadcast.ApplicationServices
             _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
-
+        
         private bool _GetEnableSaveIngestedInventoryFile()
         {
             var toggle =
@@ -910,7 +910,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private Tuple<string, Stream> _BuildPackageReturnForArchiveFile(string archiveFileName, Stream archiveFile)
         {
-            var result = new Tuple<string, Stream>(archiveFileName, archiveFile);;
+            var result = new Tuple<string, Stream>(archiveFileName, archiveFile);
             return result;
         }
 

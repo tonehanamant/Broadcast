@@ -103,8 +103,30 @@ namespace Services.Broadcast.ApplicationServices
         public Stream CreateZipArchive(List<Guid> fileIdsToArchive)
         {
             var fileInfos = fileIdsToArchive.Select(_GetFileInfo).ToList();
-            var filePaths = fileInfos.ToDictionary(f => Path.Combine(f.FolderPath, f.Id.ToString()), f => f.FileNameWithExtension);
             var archiveFile = new MemoryStream();
+
+            if (_IsAttachementMicroServiceEnabled.Value)
+            {
+                using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, leaveOpen: true))
+                {
+                    foreach (var file in fileInfos)
+                    {
+                        var fileContent = _GetFileContent(file);
+                        var archiveEntry = archive.CreateEntry(file.FileNameWithExtension, System.IO.Compression.CompressionLevel.Fastest);
+
+                        using (var zippedStreamEntry = archiveEntry.Open())
+                        {
+                            fileContent.CopyTo(zippedStreamEntry);
+                        }
+                    }
+                }
+
+                archiveFile.Seek(0, SeekOrigin.Begin);
+                return archiveFile;
+            }
+
+            // this is if we have a file system.
+            var filePaths = fileInfos.ToDictionary(f => Path.Combine(f.FolderPath, f.Id.ToString()), f => f.FileNameWithExtension);            
             using (var archive = new ZipArchive(archiveFile, ZipArchiveMode.Create, leaveOpen: true))
             {
                 foreach (var pair in filePaths)

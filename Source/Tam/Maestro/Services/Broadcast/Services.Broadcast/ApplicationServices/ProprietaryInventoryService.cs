@@ -65,17 +65,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryScxDataConverter _InventoryScxDataConverter;
         private readonly IInventoryRatingsProcessingService _InventoryRatingsService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly IInventoryWeekEngine _InventoryWeekEngine;
-        private readonly IFileService _FileService;
+        private readonly IInventoryWeekEngine _InventoryWeekEngine;        
         private readonly IInventoryScxDataPrepFactory _InventoryScxDataPrepFactory;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IStationMappingService _IStationMappingService;
+        private readonly ISharedFolderService _SharedFolderService;
 
         /// <summary>
         /// Spot lengths dictionary where key is the id and value is the duration
         /// </summary>
         private readonly Lazy<Dictionary<int, int>> _SpotLengthDurationsById;
-        private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -89,10 +88,12 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryRatingsProcessingService inventoryRatingsService
             , IQuarterCalculationEngine quarterCalculationEngine
             , IInventoryWeekEngine inventoryWeekEngine
-            , IFileService fileService
             , IInventoryScxDataPrepFactory inventoryScxDataPrepFactory
             , IInventoryProgramsProcessingService inventoryProgramsProcessingService
-            , IStationMappingService stationMappingService, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            , ISharedFolderService sharedFolderService
+            , IStationMappingService stationMappingService
+            , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) 
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -109,20 +110,12 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRatingsService = inventoryRatingsService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _InventoryWeekEngine = inventoryWeekEngine;
-            _FileService = fileService;
             _InventoryScxDataPrepFactory = inventoryScxDataPrepFactory;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _IStationMappingService = stationMappingService;
+            _SharedFolderService = sharedFolderService;
+
             _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
-
-            _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
-        }
-
-        private bool _GetEnableSaveIngestedInventoryFile()
-        {
-            var toggle =
-                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SAVE_INGESTED_INVENTORY_FILE);
-            return toggle;
         }
 
         ///<inheritdoc/>
@@ -156,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
                 if (proprietaryFile.ValidationProblems.Any())
                 {
                     _InventoryRepository.AddValidationProblems(proprietaryFile);
-                    WriteErrorFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName);
+                    WriteErrorFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName, userName, nowDate);
                 }
                 else
                 {
@@ -202,11 +195,6 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
                 _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(proprietaryFile.Id, userName);
-
-                if (_EnableSaveIngestedInventoryFile.Value)
-                {
-                    _SaveInventoryFileToFileStore(request);
-                }
             }            
 
             return new InventoryFileSaveResult
@@ -215,30 +203,6 @@ namespace Services.Broadcast.ApplicationServices
                 ValidationProblems = proprietaryFile.ValidationProblems,
                 Status = proprietaryFile.FileStatus
             };
-        }
-
-        private void _SaveInventoryFileToFileStore(FileRequest request)
-        {
-            try
-            {
-                var filePath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
-                _CreateDirectoryIfNotExists(filePath);
-                _FileService.Copy(request.StreamData, filePath, overwriteExisting: true);
-            }
-            catch (Exception ex)
-            {
-                var msg = "Unable to send file to shared folder and e-mail reporting the error.";
-                _LogError(msg, ex);
-            }
-        }
-        
-        private void _CreateDirectoryIfNotExists(string filePath)
-        {
-            var dir = Path.GetDirectoryName(filePath);
-            if (!_FileService.DirectoryExists(dir))
-            {
-                _FileService.CreateDirectory(dir);
-            }
         }
 
         private void _SetStartAndEndDatesForManifestWeeks(InventoryFileBase inventoryFile, DateTime effectiveDate, DateTime endDate)
@@ -333,14 +297,29 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySource;
         }
 
-        private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName)
+        private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName, string userName, DateTime nowDate)
         {
-	        var saveDirectory = _GetInventoryUploadErrorDirectory();
+            const string fileMediaType = "text/plain";
+            var saveDirectory = _GetInventoryUploadErrorDirectory();
 	        var fullFileName = $@"{fileId}_{fileName}";
-	        var path = Path.Combine(saveDirectory, fullFileName);
 	        stream.Position = 0;
-            _CreateDirectoryIfNotExists(path);
-	        _FileService.Copy(stream, path, true);
+
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = saveDirectory,
+                FileNameWithExtension = fullFileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.InventoryErrorFile,
+                CreatedDate = nowDate,
+                CreatedBy = userName,
+                FileContent = stream
+            };
+
+            _LogInfo($"Saving error file '{fullFileName}' for inventory file '{fileName}'...");
+            var sharedFolderFileId = _SharedFolderService.SaveFile(sharedFolderFile);
+            _LogInfo($"Saved error file '{fullFileName}' for inventory file '{fileName}' as ID '{sharedFolderFileId}'");
+
+            _InventoryFileRepository.SaveErrorFileId(fileId, sharedFolderFileId);
         }
         private string _GetInventoryUploadErrorDirectory()
         {
