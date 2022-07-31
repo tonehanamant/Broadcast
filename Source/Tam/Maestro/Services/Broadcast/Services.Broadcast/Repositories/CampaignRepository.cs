@@ -74,6 +74,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="modifiedDate">The modified date.</param>
         /// <param name="modifiedBy">The modified by.</param>
         void UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy);
+        /// <summary>
+        /// Updates the unified campaign last sentat date.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <param name="unifiedCampaignLastSentAt">unified campaign last sentat date.</param>
+        void UpdateUnifiedCampaignLastSentAt(int campaignId, DateTime unifiedCampaignLastSentAt);
 
         /// <summary>
         /// Gets the campaign copy.
@@ -181,6 +187,19 @@ namespace Services.Broadcast.Repositories
 
                    existingCampaign.modified_by = modifiedBy;
                    existingCampaign.modified_date = modifiedDate;
+
+                   context.SaveChanges();
+               });
+        }
+
+        public void UpdateUnifiedCampaignLastSentAt(int campaignId, DateTime unifiedCampaignLastSentAt)
+        {
+            _InReadUncommitedTransaction(
+               context =>
+               {
+                   var existingCampaign = context.campaigns.Single(x => x.id == campaignId, "Invalid campaign id");
+
+                   existingCampaign.unified_campaign_last_sent_at = unifiedCampaignLastSentAt;                 
 
                    context.SaveChanges();
                });

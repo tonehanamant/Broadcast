@@ -165,9 +165,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Send message  about any update in the unified campaign
         /// </summary>
-        /// <param name="campaignId">The campaign identifier.</param>
+        /// <param name="campaignId">campaignId
+        /// </param>
+        /// <param name="updateddBy">Name of the user who last modified campaign</param>
+        /// <param name="updatedDate">Last modified date of campaign</param>
         /// <returns>Message response</returns>
-        Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId);
+        Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId, string updateddBy, DateTime updatedDate);
 
     }
 
@@ -648,7 +651,7 @@ namespace Services.Broadcast.ApplicationServices
             var plans = campaign.Plans
                 .Select(x =>
                 {
-                    var plan = _PlanRepository.GetPlan(x.PlanId,x.VersionId);
+                    var plan = _PlanRepository.GetPlan(x.PlanId, x.VersionId);
                     DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
                     return plan;
                 }).ToList();
@@ -1012,7 +1015,7 @@ namespace Services.Broadcast.ApplicationServices
             List<PlansCopyDto> filteredPlans = new List<PlansCopyDto>();
             if (campaign.Plans != null && campaign.Plans.Count() > 0)
             {
-                if(campaign.Plans.Any(x => x.IsDraft == true))
+                if (campaign.Plans.Any(x => x.IsDraft == true))
                 {
                     campaign.Plans.RemoveAll(x => x.IsDraft == true);
                     foreach (var plan in campaign.Plans)
@@ -1031,7 +1034,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 else
                 {
-                    campaign.Plans =  campaign.Plans.Where(x => x.VersionId == x.LatestVersionId).ToList();
+                    campaign.Plans = campaign.Plans.Where(x => x.VersionId == x.LatestVersionId).ToList();
                 }
 
             }
@@ -1104,12 +1107,17 @@ namespace Services.Broadcast.ApplicationServices
             return filteredPlans;
         }
 
-        public async Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId)
+        public async Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId,string updateddBy,DateTime updatedDate)
         {
             UnifiedCampaignResponseDto unifiedCampaignResponse = new UnifiedCampaignResponseDto();
             var campaign = _CampaignRepository.GetCampaign(campaignId);
             unifiedCampaignResponse = await _CampaignServiceApiClient.NotifyCampaignAsync(campaign.UnifiedId);
+            if (unifiedCampaignResponse.Success)
+            {
+                _CampaignRepository.UpdateUnifiedCampaignLastSentAt(campaignId, updatedDate);
+                _CampaignRepository.UpdateCampaignLastModified(campaignId, updatedDate, updateddBy);
+            }
             return unifiedCampaignResponse;
-        }
+        }       
     }
 }

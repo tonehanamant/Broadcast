@@ -3622,13 +3622,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 AgencyMasterId = "68169E0A-98E8-4471-9AFD-37F71946E923",
                 Plans =null
             };
-        }       
+        }
 
         [Test]
         public async Task PublishUnifiedCampaign()
         {
             // Arrange
             int campaignId = 2;
+            var updateddBy = "testUser";
+            var updatedDate = DateTime.Now;
             string unifiedId = "5a1521f7-6f1c-435e-90cf-bfc2816f557c";
             var messageResponse = _GetPublishUnifiedCampaign();
             _CampaignServiceApiClientMock.SetupSequence(x => x.NotifyCampaignAsync(It.IsAny<string>())).ReturnsAsync(messageResponse);
@@ -3638,10 +3640,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460"),
                 UnifiedId = unifiedId
             });
-            
-             var tc = _BuildCampaignService();
+            _CampaignRepositoryMock.Setup(x => x.UpdateUnifiedCampaignLastSentAt(It.IsAny<int>(), It.IsAny<DateTime>()));
+            _CampaignRepositoryMock.Setup(x => x.UpdateCampaignLastModified(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<string>()));
+            var tc = _BuildCampaignService();
             // Act
-            var result = await tc.PublishUnifiedCampaign(campaignId);
+            var result = await tc.PublishUnifiedCampaign(campaignId,updateddBy,updatedDate);
             // Assert            
             Assert.AreEqual(messageResponse, result);
         }
@@ -3656,19 +3659,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         public void PublishUnifiedCampaign_ThrowsException()
-        {      
+        {
             // Arrange
             const string expectedMessage = "This is a test exception thrown from PublishUnifiedCampaign";
 
-            int campaignId = 2;            
+            int campaignId = 2;
+            var updateddBy = "testUser";
+            var updatedDate = DateTime.Now;
             var messageResponse = _GetPublishUnifiedCampaign();
             _CampaignServiceApiClientMock.SetupSequence(x => x.NotifyCampaignAsync(It.IsAny<string>())).ReturnsAsync(messageResponse);
             _CampaignRepositoryMock.Setup(x => x.GetCampaign(It.IsAny<int>())).Callback(() => throw new Exception(expectedMessage));
-
+            _CampaignRepositoryMock.Setup(x => x.UpdateUnifiedCampaignLastSentAt(It.IsAny<int>(), It.IsAny<DateTime>()))
+                .Callback(()=> throw new Exception(expectedMessage));
+            _CampaignRepositoryMock.Setup(x => x.UpdateCampaignLastModified(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback(() => throw new Exception(expectedMessage)); 
             var tc = _BuildCampaignService();
 
             // Act
-            var caught = Assert.Throws<Exception>(async () => await tc.PublishUnifiedCampaign(campaignId));           
+            var caught = Assert.Throws<Exception>(async () => await tc.PublishUnifiedCampaign(campaignId,updateddBy,updatedDate));
 
             // Assert
             Assert.AreEqual(expectedMessage, caught.Message);
