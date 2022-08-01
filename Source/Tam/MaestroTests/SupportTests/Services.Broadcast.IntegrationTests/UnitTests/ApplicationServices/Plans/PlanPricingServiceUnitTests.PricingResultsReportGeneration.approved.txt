@@ -4,6 +4,7 @@
   "PlanVersion": "Version 2",
   "SpotAllocations": [
     {
+      "Affiliate": "CBS",
       "CPM": 10.00,
       "DaypartCode": "EF",
       "EndDate": "2020-04-12T00:00:00",
@@ -21,6 +22,7 @@
       "TotalImpressions": 1000.0
     },
     {
+      "Affiliate": "CBS",
       "CPM": 10.00,
       "DaypartCode": "EF",
       "EndDate": "2020-04-19T00:00:00",
@@ -38,6 +40,7 @@
       "TotalImpressions": 1600.0
     },
     {
+      "Affiliate": null,
       "CPM": 10.00,
       "DaypartCode": "PA",
       "EndDate": "2020-04-26T00:00:00",
@@ -55,6 +58,7 @@
       "TotalImpressions": 1500.0
     },
     {
+      "Affiliate": null,
       "CPM": 7.5000,
       "DaypartCode": "PT",
       "EndDate": "2020-05-03T00:00:00",

@@ -498,7 +498,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Station = new DisplayBroadcastStation
                         {
                             LegacyCallLetters = "WCSH",
-                            MarketCode = 100
+                            MarketCode = 100,
+                            Affiliation = "CBS"
                         },
                         ManifestDayparts = new List<StationInventoryManifestDaypart>
                         {

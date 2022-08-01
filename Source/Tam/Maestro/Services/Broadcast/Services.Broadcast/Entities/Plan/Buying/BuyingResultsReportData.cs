@@ -80,6 +80,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
                     Genre = program.Genre,
                     ShowType = program.ShowType,
                     Station = manifest.Station.LegacyCallLetters,
+                    Affiliate = manifest.Station.Affiliation,
                     Market = marketsByCode[manifest.Station.MarketCode.Value],
                     DaypartCode = allocation.StandardDaypart.Code,
                     Spots = allocation.TotalSpots,
@@ -135,6 +136,8 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public string ShowType { get; set; }
 
         public string Station { get; set; }
+
+        public string Affiliate { get; set; }
 
         public string Market { get; set; }
 

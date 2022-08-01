@@ -59,6 +59,7 @@ namespace Services.Broadcast.ReportGenerators.BuyingResults
                     x.Genre,
                     x.ShowType,
                     x.Station,
+                    x.Affiliate,
                     x.Market,
                     x.DaypartCode,
                     x.Spots,
