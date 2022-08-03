@@ -143,15 +143,16 @@ namespace Services.Broadcast.BusinessEngines
                     };
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
-
-                    _UpdateGoalsForWeeklyBreakdownItem(
+                    if (plan.TargetRatingPoints.HasValue)
+                    {
+                        _UpdateGoalsForWeeklyBreakdownItem(
                         impressionsGoal,
                         plan.TargetRatingPoints.Value,
                         budgetGoal,
                         newWeeklyBreakdownItem,
                         impressions,
                         roundRatings: false);
-
+                    }
                     newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
 
                     result.Add(newWeeklyBreakdownItem);
@@ -215,15 +216,16 @@ namespace Services.Broadcast.BusinessEngines
                         };
 
                         var impressions = Math.Floor(breakdownItem.WeeklyImpressions * weighting);
-
-                        _UpdateGoalsForWeeklyBreakdownItem(
+                        if (plan.TargetRatingPoints.HasValue)
+                        {
+                            _UpdateGoalsForWeeklyBreakdownItem(
                             impressionsGoal,
                             plan.TargetRatingPoints.Value,
                             budgetGoal,
                             newWeeklyBreakdownItem,
                             impressions,
                             roundRatings: false);
-
+                        }
                         newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
 
                         result.Add(newWeeklyBreakdownItem);
@@ -285,15 +287,16 @@ namespace Services.Broadcast.BusinessEngines
                     };
 
                     var impressions = week.WeeklyImpressions * combination.Weighting;
-
-                    _UpdateGoalsForWeeklyBreakdownItem(
+                    if (plan.TargetRatingPoints.HasValue)
+                    {
+                        _UpdateGoalsForWeeklyBreakdownItem(
                         impressionsGoal,
                         plan.TargetRatingPoints.Value,
                         budgetGoal,
                         newWeeklyBreakdownItem,
                         impressions,
                         roundRatings: false);
-
+                    }
                     newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.WeeklyImpressions);
 
                     result.Add(newWeeklyBreakdownItem);
@@ -353,15 +356,16 @@ namespace Services.Broadcast.BusinessEngines
                     DaypartOrganizationName = item.DaypartOrganizationName,
                     PlanDaypartId = planDaypartId
                 };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
+                if (plan.TargetImpressions.HasValue && plan.TargetRatingPoints.HasValue && plan.Budget.HasValue)
+                {
+                    _UpdateGoalsForWeeklyBreakdownItem(
                        plan.TargetImpressions.Value,
                        plan.TargetRatingPoints.Value,
                        plan.Budget.Value,
                        newWeeklyBreakdownItem,
                        item.Impressions,
                        roundRatings: true);
-
+                }
                 result.Add(newWeeklyBreakdownItem);
             }            
 
@@ -394,15 +398,16 @@ namespace Services.Broadcast.BusinessEngines
                     WeeklyUnits = item.Units,
                     IsLocked = item.IsLocked
                 };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
+                if (plan.TargetImpressions.HasValue && plan.TargetRatingPoints.HasValue && plan.Budget.HasValue)
+                {
+                    _UpdateGoalsForWeeklyBreakdownItem(
                     plan.TargetImpressions.Value,
                     plan.TargetRatingPoints.Value,
                     plan.Budget.Value,
                     newWeeklyBreakdownItem,
                     item.Impressions,
                     roundRatings: true);
-
+                }
                 result.Add(newWeeklyBreakdownItem);
             }
 
@@ -438,14 +443,15 @@ namespace Services.Broadcast.BusinessEngines
                     WeeklyUnits = week.Units,
                     IsLocked = week.IsLocked
                 };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
+                if (plan.TargetImpressions.HasValue && plan.TargetRatingPoints.HasValue && plan.Budget.HasValue)
+                {
+                    _UpdateGoalsForWeeklyBreakdownItem(
                        plan.TargetImpressions.Value,
                        plan.TargetRatingPoints.Value,
                        plan.Budget.Value,
                        newWeeklyBreakdownItem,
                        week.Impressions, roundRatings: true);
-
+                }
                 result.Add(newWeeklyBreakdownItem);
             }
 
