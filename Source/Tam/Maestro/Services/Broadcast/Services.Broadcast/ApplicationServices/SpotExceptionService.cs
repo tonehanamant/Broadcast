@@ -303,6 +303,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
                                 UserName = "MockData",
@@ -330,6 +332,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -375,6 +379,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -397,6 +403,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -442,6 +450,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -509,6 +519,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -576,6 +588,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -643,6 +657,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -710,6 +726,8 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto

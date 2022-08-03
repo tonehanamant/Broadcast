@@ -260,7 +260,9 @@ namespace Services.Broadcast.Repositories
                                     thursday = recommendedPlanDetails.Thursday,
                                     friday = recommendedPlanDetails.Friday,
                                     saturday = recommendedPlanDetails.Saturday,
-                                    sunday = recommendedPlanDetails.Sunday
+                                    sunday = recommendedPlanDetails.Sunday,
+                                    plan_spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
+                                    plan_execution_id_external = recommendedPlan.ExecutionIdExternal
                                 };
                                 if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
                                 {
