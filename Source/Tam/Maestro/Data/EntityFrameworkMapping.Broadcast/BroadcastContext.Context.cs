@@ -249,5 +249,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
         public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
         public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
+        public virtual DbSet<program_name_genres> program_name_genres { get; set; }
     }
 }

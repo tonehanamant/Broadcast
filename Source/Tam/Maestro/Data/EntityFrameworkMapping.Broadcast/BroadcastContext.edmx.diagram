@@ -575,6 +575,9 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plan_details" Width="1.5" PointX="36.625" PointY="40.75" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.program_name_genres" Width="1.5" PointX="33.875" PointY="36.875" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_genres_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_genres_program_names" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

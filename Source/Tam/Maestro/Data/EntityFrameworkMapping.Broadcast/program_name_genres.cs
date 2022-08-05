@@ -12,16 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class program_names
+    public partial class program_name_genres
     {
-        public program_names()
-        {
-            this.program_name_genres = new HashSet<program_name_genres>();
-        }
-    
         public int id { get; set; }
-        public string program_name { get; set; }
+        public Nullable<int> program_name_id { get; set; }
+        public Nullable<int> genre_id { get; set; }
     
-        public virtual ICollection<program_name_genres> program_name_genres { get; set; }
+        public virtual genre genre { get; set; }
+        public virtual program_names program_names { get; set; }
     }
 }
