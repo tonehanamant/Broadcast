@@ -44,8 +44,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             BroadcastLockResponse broadcastLockResponse = null;
             if(_IsLockingMigrationEnabled.Value)
-            {
-                LockingApiRequest lockingRequest = KeyHelper.GetLokcingRequest(key);
+            {                
+                LockingApiRequest lockingRequest = _GeneralLockingApiClient.GetLockingRequest(key);
                 var lockResponse = _GeneralLockingApiClient.LockObject(lockingRequest);
                 if (lockResponse != null)
                 {
@@ -88,7 +88,9 @@ namespace Services.Broadcast.ApplicationServices
                 string[] lockObject = key.Split(':');
                 if(lockObject.Length > 0)
                 {
-                    var releaseLockResponse = _GeneralLockingApiClient.ReleaseObject(lockObject[0].ToString(), lockObject[1].ToString());
+                    string objectType = lockObject[0].ToString();
+                    string objectId = lockObject[1].ToString();
+                    var releaseLockResponse = _GeneralLockingApiClient.ReleaseObject(objectType, objectId);
                     if(releaseLockResponse != null)
                     {
                         broadcastReleaseLockResponse = new BroadcastReleaseLockResponse

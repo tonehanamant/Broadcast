@@ -21,5 +21,6 @@
         /// Defines the cadent applicationid which can be read from appsettings.json file
         /// </summary>
         public static readonly string ApplicationId = "LockingConfig:ApplicationId";
-    }
+        public static readonly string ObjectTypeSettings = "LockingConfig:ObjectTypeSettings";
+    }   
 }

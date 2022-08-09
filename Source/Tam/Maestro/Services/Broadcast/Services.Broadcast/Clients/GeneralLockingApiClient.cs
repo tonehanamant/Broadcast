@@ -5,6 +5,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Locking;
 using Services.Broadcast.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,12 @@ namespace Services.Broadcast.Clients
         /// <param name="objectId">objectId passes as agrument</param>
         /// <returns>Returns true if lock exits otherwise false</returns>
         bool IsObjectLocked(string objectType, string objectId);
+        /// <summary>
+        /// Get the locking request
+        /// </summary>
+        /// <param name="key">key passes as parameter</param>
+        /// <returns>Locking api request</returns>
+        LockingApiRequest GetLockingRequest(string key);
     }
     /// <summary>
     /// This class contains the new general locking microservice methods 
@@ -89,6 +96,7 @@ namespace Services.Broadcast.Clients
                 }
                 lockingResult.Success = lockingApiItemResponse.Success;
                 lockingResult.Error = lockingApiItemResponse.Message;
+                _LogInfo("Successfully locked the object with: " + JsonConvert.SerializeObject(lockingRequest));
                 return lockingResult;
             }
             catch (Exception ex)
@@ -126,6 +134,7 @@ namespace Services.Broadcast.Clients
                     Success = result.Result.Success,
 
                 };
+                _LogInfo("Successfully released locked the object with: " + JsonConvert.SerializeObject(releaseLock));
                 return releaseLock;
             }
             catch (Exception ex)
@@ -144,9 +153,71 @@ namespace Services.Broadcast.Clients
             bool isObjectLocked = false;
             LockingResultResponse lockingResult = ViewLock(objectType, objectId);
             isObjectLocked = lockingResult.Success;
+            _LogInfo("Successfully get locked object information: " + JsonConvert.SerializeObject(lockingResult));
             return isObjectLocked;
         }
-        
+        /// <summary>
+        /// Get the locking request
+        /// </summary>
+        /// <param name="key">key passes as parameter</param>
+        /// <returns>Locking api request</returns>
+        public LockingApiRequest GetLockingRequest(string key)
+        {
+            string[] lockKeyArray = key.Split(':');
+            return new LockingApiRequest
+            {
+                ObjectType = lockKeyArray[0],
+                ObjectId = lockKeyArray[1],
+                ExpirationTimeSpan = _GetObjectTimeSpan(lockKeyArray[0]),
+                SharedApplications = null,
+                IsShared = false
+            };
+        }
+        /// <summary>
+        /// Read the object setting from appsetting.json file and set the default time expiration for each locking object 
+        /// as  defined in the file
+        /// </summary>
+        /// <param name="objectType">Object type which is going to lock</param>
+        /// <returns>Lock expiration time in minutes</returns>
+        private TimeSpan _GetObjectTimeSpan(string objectType)
+        {
+            try
+            {
+                _LogInfo("Reading information from appsettings.json file.");
+                var objectTypeSettings = _ConfigurationSettingsHelper.GetConfigValue<string>(GeneralLockingApiClientConfigKeys.ObjectTypeSettings);                
+                var result = JsonConvert.DeserializeObject<ObjectTypeSettings>(objectTypeSettings);
+                string expirationTimeSpan;
+                switch (objectType.Trim())
+                {
+                    case "broadcast_campaign":                        
+                        expirationTimeSpan = result.broadcast_campaign.DefaultExpiration;
+                        break;
+                    case "broadcast_proposal":
+                        expirationTimeSpan = result.broadcast_proposal.DefaultExpiration;
+                        break;
+                    case "broadcast_station":
+                        expirationTimeSpan = result.broadcast_station.DefaultExpiration;
+                        break;
+                    case "broadcast_plan":
+                        expirationTimeSpan = result.broadcast_plan.DefaultExpiration;
+                        break;
+                    default:
+                        expirationTimeSpan = "00:15:00";
+                        break;
+                }
+                _LogInfo("Successfully read information from appsettings.json file.");
+                return System.TimeSpan.FromMinutes(_GetMinutesFromTime(expirationTimeSpan));
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while reading lock time information from appsettings.json file, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        private int _GetMinutesFromTime(string expirationTimeSpan)
+        {            
+            string[] arrTime = expirationTimeSpan.Split(':');            
+            return (Convert.ToInt32(arrTime[0]) * 60) + Convert.ToInt32(arrTime[1]) + (Convert.ToInt32(arrTime[2]) / 60);            
+        }
         private LockingResultResponse ViewLock(string objectType, string objectId)
         {
             try
@@ -180,6 +251,7 @@ namespace Services.Broadcast.Clients
                 }
                 lockingResult.Success = lockingApiItemResponse.Success;
                 lockingResult.Error = lockingApiItemResponse.Message;
+                _LogInfo("Successfully get locked object information: " + JsonConvert.SerializeObject(lockingResult));
                 return lockingResult;
             }
             catch (Exception ex)
@@ -203,6 +275,7 @@ namespace Services.Broadcast.Clients
         private string _GetApiUrl()
         {
             var apiUrl = _ConfigurationSettingsHelper.GetConfigValue<string>(GeneralLockingApiClientConfigKeys.ApiBaseUrl);
+            
             return apiUrl;
         }
         private string _GetGeneralLockingApplicationId()

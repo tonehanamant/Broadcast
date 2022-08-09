@@ -597,6 +597,7 @@
     <Compile Include="Entities\Locking\LockingApiResponse.cs" />
     <Compile Include="Entities\Locking\LockingResult.cs" />
     <Compile Include="Entities\Locking\LockingResultResponse.cs" />
+    <Compile Include="Entities\Locking\ObjectTypeSettings.cs" />
     <Compile Include="Entities\Locking\ReleaseApiResponse.cs" />
     <Compile Include="Entities\Locking\ReleaseLockResponse.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryRawDto.cs" />

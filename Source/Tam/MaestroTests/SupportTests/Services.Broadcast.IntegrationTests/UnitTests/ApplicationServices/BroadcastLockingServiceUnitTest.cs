@@ -12,6 +12,8 @@ using Services.Broadcast.Entities;
 using Tam.Maestro.Services.ContractInterfaces;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.Entities.Locking;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -22,14 +24,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IBroadcastLockingService> _LockingManagerApplicationServiceMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelper;
-        protected BroadcastLockingService _GetBroadcastLockingService()
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        protected BroadcastLockingService _GetBroadcastLockingService(bool isLockingMigrationEnabled = false)
         {
-            
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_MIGRATION, isLockingMigrationEnabled);
+
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             return new BroadcastLockingService(
                 _SmsClientMock.Object,
                 _GeneralLockingApiClient.Object,
                 _ConfigurationSettingsHelper.Object,
-                _FeatureToggleHelper.Object
+                featureToggleHelper
                 );
         }
 
@@ -100,6 +106,101 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = Assert.Throws<Exception>(() => tc.GetLockObject(key));
             Assert.AreEqual("Throwing a test exception.", result.Message);
         }
+        [Test]
+        public void LockObject_ToggleOn()
+        {
+            // Arrange
+            var tc = _GetBroadcastLockingService(true);
+            string key = "broadcast_campaign_261";
+            var lockingResponse = _GetLockingResultResponse();
+            var expectedResult = true;         
+            var request = new LockingApiRequest
+            {
+                 ExpirationTimeSpan = TimeSpan.FromSeconds(15),
+                 IsShared = false,
+                 ObjectId = "261",
+                 ObjectType = "broadcast_campaign",
+                 SharedApplications = null
+            };            
+
+            _GeneralLockingApiClient.Setup(x => x.GetLockingRequest(It.IsAny<string>())).
+                Returns(request);
+            _GeneralLockingApiClient.Setup(x => x.LockObject(It.IsAny<LockingApiRequest>()))
+                .Returns(lockingResponse);       
+            var result = tc.LockObject(key);
+
+            //Assert
+            Assert.AreEqual(expectedResult, result.Success);
+        }
+        [Test]
+        public void ReleaseObject_ToggleOn()
+        {
+            // Arrange
+            var tc = _GetBroadcastLockingService(true);
+            string key = "broadcast_campaign:261";
+            var releaseResponse = _GetReleaseLockResponse();
+            var expectedResult = true;
+            var broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
+            {
+                Error = "No Errors",
+                Key = "broadcast_campaign:261",
+                Success = true
+            };
+            _GeneralLockingApiClient.Setup(x => x.ReleaseObject(It.IsAny<string>(), It.IsAny<string>())).
+               Returns(releaseResponse);
+            //Act
+            var result =  tc.ReleaseObject(key);
+            //Assert             
+            Assert.AreEqual(expectedResult, result.Success);
+        }
+        [Test]
+        public void IsObjectLocked_ToggleOn()
+        {
+            //Arrange
+            var tc = _GetBroadcastLockingService(true);
+            string key = "broadcast_campaign:261";            
+            _GeneralLockingApiClient.Setup(x=> x.IsObjectLocked(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(true);
+            //Act
+            var result = tc.IsObjectLocked(key);
+            //Assert
+            Assert.IsTrue(result);
+        }
+        private BroadcastLockResponse _GetLockResponse()
+        {
+            return new BroadcastLockResponse
+            {
+                 Error = "No Errors",
+                 Key = "broadcast_campaign_261",
+                 LockedUserId = "Test",
+                 LockedUserName ="Test User",
+                 LockTimeoutInSeconds = 900,
+                 Success = true,
+            };
+        }
+        private LockingResultResponse _GetLockingResultResponse()
+        {
+            return new LockingResultResponse
+            {
+                Error = "No Errors",
+                Key = "broadcast_campaign_261",
+                LockedUserId = "Test",
+                LockedUserName = "Test User",
+                LockTimeoutInSeconds = 900,
+                Success = true,
+            };
+
+        }
+        private Entities.Locking.ReleaseLockResponse _GetReleaseLockResponse()
+        {
+            return new Entities.Locking.ReleaseLockResponse
+            {
+                Error = "No Errors",
+                Key = "broadcast_campaign:261",
+                Success = true
+            };
+        }
+
 
     }
 }

@@ -100,6 +100,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Cache
             Assert.AreEqual(releaseResponse, result);
             generalLockingApiclient.Verify(s => s.IsObjectLocked(objectType, objectId), Times.Once);
         }
+        [Test]
+        public void GetLockingRequest()
+        {
+            // Arrange
+            var response = _GetLockRequest();
+            var key = "Plan: 550";
+            var apiTokenManager = new Mock<IApiTokenManager>();
+            var generalLockingApiclient = new Mock<IGeneralLockingApiClient>();
+            var featureToggleHelper = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            var client = new Mock<HttpClient>();
+            generalLockingApiclient.Setup(x => x.GetLockingRequest(key))
+               .Returns(response);
+            var tc = new LockingCacheStub(generalLockingApiclient.Object, featureToggleHelper.Object, configurationSettingsHelper.Object);
+            // Act
+            var result = tc.GetLockingRequest(key);                
+            // Assert
+            Assert.AreEqual(response, result);
+            generalLockingApiclient.Verify(s => s.GetLockingRequest(key), Times.Once);
+        }
         private ReleaseLockResponse _GetReleaseLockResponse()
         {
             return new ReleaseLockResponse

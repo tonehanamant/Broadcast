@@ -33,15 +33,23 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         /// <param name="objectId">objectId is passes as argument</param>
         /// <returns>Returns True if object is locked otherwise false</returns>
         bool IsObjectLocked(string objectType, string objectId);
+        /// <summary>
+        /// Supports the unit test cases to get the locking request
+        /// </summary>
+        /// <param name="key">key represents the locking key</param>
+        /// <returns>Locking request</returns>
+        LockingApiRequest GetLockingRequest(string key);
     }
     public class LockingCacheStub : BroadcastBaseClass, ILockingCacheStub
     {
         private const string CACHE_NAME_Lock = "Lock";
         private const string CACHE_NAME_Release = "Release";
         private const string CACHE_NAME_ObjectLocked = "ViewLock";
+        private const string CACHE_NAME_LockingRequest = "LockingRequest";
         private readonly BaseMemoryCache<LockingResultResponse> _LockCache = new BaseMemoryCache<LockingResultResponse>(CACHE_NAME_Lock);
         private readonly BaseMemoryCache<ReleaseLockResponse> _ReleaseCache = new BaseMemoryCache<ReleaseLockResponse>(CACHE_NAME_Release);
         private readonly BaseMemoryCache<bool> _ViewLockedCache = new BaseMemoryCache<bool>(CACHE_NAME_ObjectLocked);
+        private readonly BaseMemoryCache<LockingApiRequest> _GetLokcingRequest = new BaseMemoryCache<LockingApiRequest>(CACHE_NAME_LockingRequest);
         private readonly IGeneralLockingApiClient _GeneralLockingApiClient;
         private readonly Lazy<int> _CacheItemTtlSeconds;
         public LockingCacheStub(IGeneralLockingApiClient generalLockingApiClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
@@ -87,6 +95,18 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             var policy = _GetCacheItemPolicy();
             var result = _ViewLockedCache.GetOrCreate(CACHE_NAME_ObjectLocked, () =>
             _GeneralLockingApiClient.IsObjectLocked(objectType, objectId), policy);
+            return result;
+        }
+        /// <summary>
+        /// Supports the unit test cases to get the locking request
+        /// </summary>
+        /// <param name="key">key represents the locking key</param>
+        /// <returns>Locking request</returns>
+        public LockingApiRequest GetLockingRequest(string key)
+        {
+            var policy = _GetCacheItemPolicy();
+            var result = _GetLokcingRequest.GetOrCreate(CACHE_NAME_LockingRequest, () =>
+            _GeneralLockingApiClient.GetLockingRequest(key), policy);
             return result;
         }
         private int _GetCacheItemTtlSeconds()

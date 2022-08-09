@@ -42,7 +42,7 @@ namespace Services.Broadcast.ApplicationServices
             LockResponse broadcastLockResponse = null;
             if (_IsLockingMigrationEnabled.Value)
             {
-                LockingApiRequest lockingRequest = KeyHelper.GetLokcingRequest(key);
+                LockingApiRequest lockingRequest = _GeneralLockingApiClient.GetLockingRequest(key);
                 var lockResponse = _GeneralLockingApiClient.LockObject(lockingRequest);
                 if (lockResponse != null)
                 {
