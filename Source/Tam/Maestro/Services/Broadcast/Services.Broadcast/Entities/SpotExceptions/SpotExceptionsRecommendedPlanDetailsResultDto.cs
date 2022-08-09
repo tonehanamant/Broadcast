@@ -11,8 +11,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int Id { get; set; }
         public int EstimateId { get; set; }
         public string SpotLengthString { get; set; }
-        public string DaypartCode { get; set; }
-        public string AudienceName { get; set; }
         public string Product { get; set; }
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }
@@ -20,7 +18,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string ProgramName { get; set; }
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
-        public double? Impressions { get; set; }
         public string InventorySourceName { get; set; }
         public List<RecommendedPlanDetailResultDto> Plans { get; set; }
     }
@@ -38,5 +35,9 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string Pacing { get; set; }
         public bool? AcceptedAsInSpec { get; set; }
         public int RecommendedPlanId { get; set; }
+        public string DaypartCode { get; set; }
+        public string AudienceName { get; set; }
+        public string Product { get; set; }
+        public double? Impressions { get; set; }
     }
 }

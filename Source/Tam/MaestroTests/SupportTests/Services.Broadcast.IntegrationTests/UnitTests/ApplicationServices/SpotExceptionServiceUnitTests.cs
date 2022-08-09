@@ -2599,6 +2599,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     new SpotExceptionsRecommendedPlansDto
                     {
+                        Id = 1,
                         SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                         AmbiguityCode = 1,
                         ExecutionIdExternal = "220609090855BRt8EHXqSy",
@@ -2614,103 +2615,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         MarketRank = 33,
                         ProgramName = "CBS Mornings",
                         ProgramGenre = "INFORMATIONAL/NEWS",
-                        IngestedBy= ingestedBy,
-                        IngestedAt= ingestedDateTime,
-                        CreatedBy = ingestedBy,
-                        CreatedAt = ingestedDateTime,
-                        ModifiedBy = ingestedBy,
-                        ModifiedAt = ingestedDateTime,
-                        SpotLength = new SpotLengthDto
-                            {
-                                Id = 14,
-                                Length = 15
-                            },
-                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
-                    },
-                    new SpotExceptionsRecommendedPlansDto
-                    {
-                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
-                        AmbiguityCode = 1,
-                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                        EstimateId = 6616,
-                        InventorySource = "Ference POD",
-                        HouseIsci = "616MAY2913H",
-                        ClientIsci = "QMAY2913OS1H",
-                        SpotLengthId = 3,
-                        ProgramAirTime = new DateTime(2022, 04, 10, 08, 41, 57),
-                        StationLegacyCallLetters = "WDKA",
-                        Affiliate = "IND",
-                        MarketCode = 232,
-                        MarketRank = 3873,
-                        ProgramName = "Mike & Molly",
-                        ProgramGenre = "COMEDY",
-                        IngestedBy= ingestedBy,
-                        IngestedAt= ingestedDateTime,
-                        CreatedBy = ingestedBy,
-                        CreatedAt = ingestedDateTime,
-                        ModifiedBy = ingestedBy,
-                        ModifiedAt = ingestedDateTime,
-                        SpotLength = new SpotLengthDto
-                        {
-                            Id = 15,
-                            Length = 30
-                        },
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-                        {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 332,
-                                ExecutionTraceId = 623,
-                                Rate = 0.00m,
-                                AudienceName = "Women 25-54",
-                                ContractedImpressions = 100000,
-                                DeliveredImpressions = 50000,
-                                IsRecommendedPlan = false,
-                                PlanClearancePercentage = null,
-                                DaypartCode = "EM",
-                                StartTime = 18000,
-                                EndTime = 35999,
-                                Monday = 1,
-                                Tuesday = 1,
-                                Wednesday = 1,
-                                Thursday = 1,
-                                Friday = 1,
-                                Saturday = 1,
-                                Sunday = 1,
-                                RecommendedPlanDetail = new RecommendedPlanDetailDto
-                                {
-                                    Name = "4Q'21 Macy's EM"
-                                },
-                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
-                                {
-                                    Id = 202,
-                                    SpotExceptionsRecommendedPlanDetailId = 102,
-                                    UserName = ingestedBy,
-                                    CreatedAt = ingestedDateTime,
-
-                                },
-                            }
-                        }
-                    },
-                    new SpotExceptionsRecommendedPlansDto
-                    {
-                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
-                        AmbiguityCode = 1,
-                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                        EstimateId = 6289,
-                        InventorySource = "Sinclair Corp - Day Syn 10a-4p",
-                        HouseIsci = "289IT2Y3P2H",
-                        ClientIsci = "QMAY2913OS1H",
-                        SpotLengthId = 3,
-                        ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
-                        StationLegacyCallLetters = "KOMO",
-                        Affiliate = "ABC",
-                        MarketCode = 419,
-                        MarketRank = 11,
-                        ProgramName = "LIVE with Kelly and Ryan",
-                        ProgramGenre = "TALK",
-                        IngestedBy= ingestedBy,
-                        IngestedAt= ingestedDateTime,
+                        IngestedBy = ingestedBy,
+                        IngestedAt = ingestedDateTime,
                         CreatedBy = ingestedBy,
                         CreatedAt = ingestedDateTime,
                         ModifiedBy = ingestedBy,
@@ -2720,12 +2626,59 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Id = 16,
                             Length = 45
                         },
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                         {
                             new SpotExceptionsRecommendedPlanDetailsDto
                             {
-                                RecommendedPlanId = 332,
-                                ExecutionTraceId = 1824,
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 1,
+                                RecommendedPlanId = 301,
+                                ExecutionTraceId = 73,
+                                Rate = 0.00m,
+                                AudienceName = "Women 25-54",
+                                ContractedImpressions = 100000,
+                                DeliveredImpressions = 50000,
+                                IsRecommendedPlan = false,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "SYN",
+                                StartTime = 28800,
+                                EndTime = 7199,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Id = 301,
+                                    Name = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 16,
+                                            Length = 45
+                                        }
+                                    }
+                                },
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 103,
+                                SpotExceptionsRecommendedPlanId = 1,
+                                RecommendedPlanId = 302,
+                                ExecutionTraceId = 75,
                                 Rate = 0.00m,
                                 AudienceName = "Women 25-54",
                                 ContractedImpressions = 100000,
@@ -2744,14 +2697,184 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Sunday = 1,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
-                                    Name = "4Q'21 Macy's EM"
+                                    Id = 302,
+                                    Name = "2Q' 21 Reynolds",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 14,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 15,
+                                            Length = 30
+                                        }
+                                    }
+                                },
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 2,
+                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                        AmbiguityCode = 1,
+                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                        EstimateId = 6840,
+                        InventorySource = "Tegna",
+                        HouseIsci = "840T42AY13H",
+                        ClientIsci = "QMAY2913OS1H",
+                        SpotLengthId = 3,
+                        ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                        StationLegacyCallLetters = "WBNS",
+                        Affiliate = "CBS",
+                        MarketCode = 135,
+                        MarketRank = 33,
+                        ProgramName = "CBS Mornings",
+                        ProgramGenre = "INFORMATIONAL/NEWS",
+                        IngestedBy = ingestedBy,
+                        IngestedAt = ingestedDateTime,
+                        CreatedBy = ingestedBy,
+                        CreatedAt = ingestedDateTime,
+                        ModifiedBy = ingestedBy,
+                        ModifiedAt = ingestedDateTime,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 104,
+                                SpotExceptionsRecommendedPlanId = 2,
+                                RecommendedPlanId = 302,
+                                ExecutionTraceId = 75,
+                                Rate = 0.00m,
+                                AudienceName = "Women 25-54",
+                                ContractedImpressions = 100000,
+                                DeliveredImpressions = 50000,
+                                IsRecommendedPlan = true,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "EM",
+                                StartTime = 18000,
+                                EndTime = 35999,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Id = 302,
+                                    Name = "2Q' 21 Reynolds",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 14,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 15,
+                                            Length = 30
+                                        }
+                                    }
+                                },
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                        AmbiguityCode = 1,
+                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                        EstimateId = 6840,
+                        InventorySource = "Tegna",
+                        HouseIsci = "840T42AY13H",
+                        ClientIsci = "QMAY2913OS1H",
+                        SpotLengthId = 3,
+                        ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                        StationLegacyCallLetters = "WBNS",
+                        Affiliate = "CBS",
+                        MarketCode = 135,
+                        MarketRank = 33,
+                        ProgramName = "CBS Mornings",
+                        ProgramGenre = "INFORMATIONAL/NEWS",
+                        IngestedBy = ingestedBy,
+                        IngestedAt = ingestedDateTime,
+                        CreatedBy = ingestedBy,
+                        CreatedAt = ingestedDateTime,
+                        ModifiedBy = ingestedBy,
+                        ModifiedAt = ingestedDateTime,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 105,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                RecommendedPlanId = 302,
+                                ExecutionTraceId = 75,
+                                Rate = 0.00m,
+                                AudienceName = "Women 25-54",
+                                ContractedImpressions = 100000,
+                                DeliveredImpressions = 50000,
+                                IsRecommendedPlan = true,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "EM",
+                                StartTime = 18000,
+                                EndTime = 35999,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Id = 302,
+                                    Name = "2Q' 21 Reynolds",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 14,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 15,
+                                            Length = 30
+                                        }
+                                    }
                                 },
                                 SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                                 {
-                                    Id = 202,
-                                    SpotExceptionsRecommendedPlanDetailId = 102,
-                                    UserName = ingestedBy,
-                                    CreatedAt = ingestedDateTime,
+                                    Id = 100,
+                                    SpotExceptionsRecommendedPlanDetailId = 105,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25),
                                     SyncedAt = ingestedDateTime,
                                     SyncedBy = ingestedBy
                                 }
@@ -2836,8 +2959,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(s => s.GetSpotExceptionRecommendedPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<SpotExceptionsRecommendedPlansDto>
                 {
-                     new SpotExceptionsRecommendedPlansDto
+                    new SpotExceptionsRecommendedPlansDto
                     {
+                        Id = 1,
                         SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                         AmbiguityCode = 1,
                         ExecutionIdExternal = "220609090855BRt8EHXqSy",
@@ -2853,103 +2977,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         MarketRank = 33,
                         ProgramName = "CBS Mornings",
                         ProgramGenre = "INFORMATIONAL/NEWS",
-                        IngestedBy= ingestedBy,
-                        IngestedAt= ingestedDateTime,
-                        CreatedBy = ingestedBy,
-                        CreatedAt = ingestedDateTime,
-                        ModifiedBy = ingestedBy,
-                        ModifiedAt = ingestedDateTime,
-                        SpotLength = new SpotLengthDto
-                            {
-                                Id = 14,
-                                Length = 15
-                            },
-                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>()
-                    },
-                    new SpotExceptionsRecommendedPlansDto
-                    {
-                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
-                        AmbiguityCode = 1,
-                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                        EstimateId = 6616,
-                        InventorySource = "Ference POD",
-                        HouseIsci = "616MAY2913H",
-                        ClientIsci = "QMAY2913OS1H",
-                        SpotLengthId = 3,
-                        ProgramAirTime = new DateTime(2022, 04, 10, 08, 41, 57),
-                        StationLegacyCallLetters = "WDKA",
-                        Affiliate = "IND",
-                        MarketCode = 232,
-                        MarketRank = 3873,
-                        ProgramName = "Mike & Molly",
-                        ProgramGenre = "COMEDY",
-                        IngestedBy= ingestedBy,
-                        IngestedAt= ingestedDateTime,
-                        CreatedBy = ingestedBy,
-                        CreatedAt = ingestedDateTime,
-                        ModifiedBy = ingestedBy,
-                        ModifiedAt = ingestedDateTime,
-                        SpotLength = new SpotLengthDto
-                        {
-                            Id = 15,
-                            Length = 30
-                        },
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-                        {
-                            new SpotExceptionsRecommendedPlanDetailsDto
-                            {
-                                RecommendedPlanId = 332,
-                                ExecutionTraceId = 623,
-                                Rate = 0.00m,
-                                AudienceName = "Women 25-54",
-                                ContractedImpressions = 100000,
-                                DeliveredImpressions = 50000,
-                                IsRecommendedPlan = false,
-                                PlanClearancePercentage = null,
-                                DaypartCode = "EM",
-                                StartTime = 18000,
-                                EndTime = 35999,
-                                Monday = 1,
-                                Tuesday = 1,
-                                Wednesday = 1,
-                                Thursday = 1,
-                                Friday = 1,
-                                Saturday = 1,
-                                Sunday = 1,
-                                RecommendedPlanDetail = new RecommendedPlanDetailDto
-                                {
-                                    Name = "4Q'21 Macy's EM"
-                                },
-                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
-                                {
-                                    Id = 202,
-                                    SpotExceptionsRecommendedPlanDetailId = 102,
-                                    UserName = ingestedBy,
-                                    CreatedAt = ingestedDateTime,
-
-                                },
-                            }
-                        }
-                    },
-                    new SpotExceptionsRecommendedPlansDto
-                    {
-                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
-                        AmbiguityCode = 1,
-                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                        EstimateId = 6289,
-                        InventorySource = "Sinclair Corp - Day Syn 10a-4p",
-                        HouseIsci = "289IT2Y3P2H",
-                        ClientIsci = "QMAY2913OS1H",
-                        SpotLengthId = 3,
-                        ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
-                        StationLegacyCallLetters = "KOMO",
-                        Affiliate = "ABC",
-                        MarketCode = 419,
-                        MarketRank = 11,
-                        ProgramName = "LIVE with Kelly and Ryan",
-                        ProgramGenre = "TALK",
-                        IngestedBy= ingestedBy,
-                        IngestedAt= ingestedDateTime,
+                        IngestedBy = ingestedBy,
+                        IngestedAt = ingestedDateTime,
                         CreatedBy = ingestedBy,
                         CreatedAt = ingestedDateTime,
                         ModifiedBy = ingestedBy,
@@ -2959,12 +2988,59 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Id = 16,
                             Length = 45
                         },
-                        SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                         {
                             new SpotExceptionsRecommendedPlanDetailsDto
                             {
-                                RecommendedPlanId = 332,
-                                ExecutionTraceId = 1824,
+                                Id = 102,
+                                SpotExceptionsRecommendedPlanId = 1,
+                                RecommendedPlanId = 301,
+                                ExecutionTraceId = 73,
+                                Rate = 0.00m,
+                                AudienceName = "Women 25-54",
+                                ContractedImpressions = 100000,
+                                DeliveredImpressions = 50000,
+                                IsRecommendedPlan = false,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "SYN",
+                                StartTime = 28800,
+                                EndTime = 7199,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Id = 301,
+                                    Name = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 16,
+                                            Length = 45
+                                        }
+                                    }
+                                },
+                                SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
+                                {
+                                    Id = 202,
+                                    SpotExceptionsRecommendedPlanDetailId = 102,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25)
+                                }
+                            },
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 103,
+                                SpotExceptionsRecommendedPlanId = 1,
+                                RecommendedPlanId = 302,
+                                ExecutionTraceId = 75,
                                 Rate = 0.00m,
                                 AudienceName = "Women 25-54",
                                 ContractedImpressions = 100000,
@@ -2983,14 +3059,184 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Sunday = 1,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
-                                    Name = "4Q'21 Macy's EM"
+                                    Id = 302,
+                                    Name = "2Q' 21 Reynolds",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 14,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 15,
+                                            Length = 30
+                                        }
+                                    }
+                                },
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 2,
+                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                        AmbiguityCode = 1,
+                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                        EstimateId = 6840,
+                        InventorySource = "Tegna",
+                        HouseIsci = "840T42AY13H",
+                        ClientIsci = "QMAY2913OS1H",
+                        SpotLengthId = 3,
+                        ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                        StationLegacyCallLetters = "WBNS",
+                        Affiliate = "CBS",
+                        MarketCode = 135,
+                        MarketRank = 33,
+                        ProgramName = "CBS Mornings",
+                        ProgramGenre = "INFORMATIONAL/NEWS",
+                        IngestedBy = ingestedBy,
+                        IngestedAt = ingestedDateTime,
+                        CreatedBy = ingestedBy,
+                        CreatedAt = ingestedDateTime,
+                        ModifiedBy = ingestedBy,
+                        ModifiedAt = ingestedDateTime,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 104,
+                                SpotExceptionsRecommendedPlanId = 2,
+                                RecommendedPlanId = 302,
+                                ExecutionTraceId = 75,
+                                Rate = 0.00m,
+                                AudienceName = "Women 25-54",
+                                ContractedImpressions = 100000,
+                                DeliveredImpressions = 50000,
+                                IsRecommendedPlan = true,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "EM",
+                                StartTime = 18000,
+                                EndTime = 35999,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Id = 302,
+                                    Name = "2Q' 21 Reynolds",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 14,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 15,
+                                            Length = 30
+                                        }
+                                    }
+                                },
+                                SpotExceptionsRecommendedPlanDecision = null
+                            }
+                        }
+                    },
+                    new SpotExceptionsRecommendedPlansDto
+                    {
+                        Id = 3,
+                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
+                        AmbiguityCode = 1,
+                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
+                        EstimateId = 6840,
+                        InventorySource = "Tegna",
+                        HouseIsci = "840T42AY13H",
+                        ClientIsci = "QMAY2913OS1H",
+                        SpotLengthId = 3,
+                        ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                        StationLegacyCallLetters = "WBNS",
+                        Affiliate = "CBS",
+                        MarketCode = 135,
+                        MarketRank = 33,
+                        ProgramName = "CBS Mornings",
+                        ProgramGenre = "INFORMATIONAL/NEWS",
+                        IngestedBy = ingestedBy,
+                        IngestedAt = ingestedDateTime,
+                        CreatedBy = ingestedBy,
+                        CreatedAt = ingestedDateTime,
+                        ModifiedBy = ingestedBy,
+                        ModifiedAt = ingestedDateTime,
+                        SpotLength = new SpotLengthDto
+                        {
+                            Id = 16,
+                            Length = 45
+                        },
+                        SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsDto
+                            {
+                                Id = 105,
+                                SpotExceptionsRecommendedPlanId = 3,
+                                RecommendedPlanId = 302,
+                                ExecutionTraceId = 75,
+                                Rate = 0.00m,
+                                AudienceName = "Women 25-54",
+                                ContractedImpressions = 100000,
+                                DeliveredImpressions = 50000,
+                                IsRecommendedPlan = true,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "EM",
+                                StartTime = 18000,
+                                EndTime = 35999,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                RecommendedPlanDetail = new RecommendedPlanDetailDto
+                                {
+                                    Id = 302,
+                                    Name = "2Q' 21 Reynolds",
+                                    FlightStartDate = new DateTime(2019, 12, 1),
+                                    FlightEndDate = new DateTime(2020, 2, 1),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 14,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 15,
+                                            Length = 30
+                                        }
+                                    }
                                 },
                                 SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                                 {
-                                    Id = 202,
-                                    SpotExceptionsRecommendedPlanDetailId = 102,
-                                    UserName = ingestedBy,
-                                    CreatedAt = ingestedDateTime,
+                                    Id = 100,
+                                    SpotExceptionsRecommendedPlanDetailId = 105,
+                                    UserName = "Test User",
+                                    CreatedAt = new DateTime(2020,10,25),
                                     SyncedAt = ingestedDateTime,
                                     SyncedBy = ingestedBy
                                 }

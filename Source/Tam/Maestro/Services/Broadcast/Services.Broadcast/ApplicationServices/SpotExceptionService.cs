@@ -1278,8 +1278,6 @@ namespace Services.Broadcast.ApplicationServices
                 Id = spotExceptionsRecommendedPlan.Id,
                 EstimateId = spotExceptionsRecommendedPlan.EstimateId,
                 SpotLengthString = spotExceptionsRecommendedPlan.SpotLength != null ? $":{spotExceptionsRecommendedPlan.SpotLength.Length}" : null,
-                DaypartCode = recommendedPlan.DaypartCode,
-                AudienceName = recommendedPlan.AudienceName,
                 Product = _GetProductName(recommendedPlan.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlan.RecommendedPlanDetail.ProductMasterId),
                 FlightStartDate = recommendedPlan.RecommendedPlanDetail.FlightStartDate.ToString(),
                 FlightEndDate = recommendedPlan.RecommendedPlanDetail.FlightEndDate.ToString(),
@@ -1287,7 +1285,6 @@ namespace Services.Broadcast.ApplicationServices
                 ProgramName = spotExceptionsRecommendedPlan.ProgramName,
                 ProgramAirDate = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirDateFormat),
                 ProgramAirTime = spotExceptionsRecommendedPlan.ProgramAirTime.ToString(programAirTimeFormat),
-                Impressions = recommendedPlan.ContractedImpressions,
                 InventorySourceName = spotExceptionsRecommendedPlan.InventorySource,
                 Plans = spotExceptionsRecommendedPlan.SpotExceptionsRecommendedPlanDetails.Select(spotExceptionsRecommendedPlanDetail => new RecommendedPlanDetailResultDto
                 {
@@ -1301,7 +1298,11 @@ namespace Services.Broadcast.ApplicationServices
                     IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null,
                     Pacing = _GetPacing(),
                     AcceptedAsInSpec = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision?.AcceptedAsInSpec,
-                    RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId
+                    RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId,
+                    AudienceName = spotExceptionsRecommendedPlanDetail.AudienceName,
+                    Product = _GetProductName(recommendedPlan.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlan.RecommendedPlanDetail.ProductMasterId),
+                    DaypartCode = spotExceptionsRecommendedPlanDetail.DaypartCode,
+                    Impressions = spotExceptionsRecommendedPlanDetail.DeliveredImpressions/1000,
                 }).ToList()
             };
             if (spotExceptionsRecommendedPlanDetailsResult.Plans != null &&
@@ -1836,6 +1837,7 @@ namespace Services.Broadcast.ApplicationServices
                .Select(activePlan =>
                {
                    var planDetails = activePlan.SpotExceptionsRecommendedPlanDetails;
+                   var activePlanDetails = activePlans.First();
                    return new SpotExceptionsRecommendedActivePlanSpotsDto
                    {
                        Id = activePlan.Id,
@@ -1844,7 +1846,7 @@ namespace Services.Broadcast.ApplicationServices
                        ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
                        ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
                        RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
-                       Pacing = _GetPacing(),
+                       Impressions = activePlanDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
                        ProgramName = activePlan.ProgramName,
                        Affiliate = activePlan.Affiliate,
                        PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),
@@ -1858,6 +1860,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(queuedPlan =>
                 {
                     var planDetails = queuedPlan.SpotExceptionsRecommendedPlanDetails;
+                    var queuedPlanDetails = queuedPlans.First();
                     return new SpotExceptionsRecommendedQueuedPlanSpotsDto
                     {
                         Id = queuedPlan.Id,
@@ -1866,7 +1869,7 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
                         RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
-                        Pacing = _GetPacing(),
+                        Impressions = queuedPlanDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
                         ProgramName = queuedPlan.ProgramName,
                         Affiliate = queuedPlan.Affiliate,
                         PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),
@@ -1881,6 +1884,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(syncedPlan =>
                 {
                     var planDetails = syncedPlan.SpotExceptionsRecommendedPlanDetails;
+                    var syncedPlanDetails = queuedPlans.First();
                     return new SpotExceptionsRecommendedSyncedPlanSpotsDto
                     {
                         Id = syncedPlan.Id,
@@ -1889,7 +1893,7 @@ namespace Services.Broadcast.ApplicationServices
                         ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
                         ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
                         RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
-                        Pacing = _GetPacing(),
+                        Impressions = syncedPlanDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
                         ProgramName = syncedPlan.ProgramName,
                         Affiliate = syncedPlan.Affiliate,
                         PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),

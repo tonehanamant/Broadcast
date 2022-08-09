@@ -27,7 +27,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
         public string RecommendedPlan { get; set; }
-        public string Pacing { get; set; }
+        public double? Impressions { get; set; }
         public string ProgramName { get; set; }
         public string Affiliate { get; set; }
         public int? PlanId { get; set; }
@@ -43,7 +43,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
         public string RecommendedPlan { get; set; }
-        public string Pacing { get; set; }
+        public double? Impressions { get; set; }
         public string ProgramName { get; set; }
         public string Affiliate { get; set; }
         public int? PlanId { get; set; }
@@ -60,7 +60,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string ProgramAirDate { get; set; }
         public string ProgramAirTime { get; set; }
         public string RecommendedPlan { get; set; }
-        public string Pacing { get; set; }
+        public double? Impressions { get; set; }
         public string ProgramName { get; set; }
         public string Affiliate { get; set; }
         public int? PlanId { get; set; }
