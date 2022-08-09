@@ -2,7 +2,20 @@
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
-  "AllocationByAffiliateViewRows": null,
+  "AllocationByAffiliateViewRows": [
+    {
+      "FilterLabel": "A101 AFFILIATION",
+      "Weight": 0.98765371
+    },
+    {
+      "FilterLabel": "ABC",
+      "Weight": 0.00148155
+    },
+    {
+      "FilterLabel": "CBS",
+      "Weight": 0.01086473
+    }
+  ],
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "PRA",
@@ -163,13 +176,13 @@
       "TimePeriods": "12:05AM-12:06AM"
     }
   ],
-  "ExportFileName": "Program_Lineup_Report_B_Brave Plan_NTI_E_10172017.xlsx",
+  "ExportFileName": "Program_Lineup_Report_Brave Plan_NTI_Q_10172017.xlsx",
   "FlightEndDate": "03/14/20",
   "FlightStartDate": "03/01/20",
-  "GuaranteedDemo": "A18-20",
+  "GuaranteedDemo": "W18-20",
   "PlanHeaderName": "Brave Plan | Program Lineup*",
   "PostingType": "NTI",
   "ReportGeneratedDate": "10/17/17",
-  "SpotAllocationModelMode": "Efficiency",
-  "SpotLengths": ":30"
+  "SpotAllocationModelMode": "Quality",
+  "SpotLengths": ":15 eq.,:30,:60 eq."
 }

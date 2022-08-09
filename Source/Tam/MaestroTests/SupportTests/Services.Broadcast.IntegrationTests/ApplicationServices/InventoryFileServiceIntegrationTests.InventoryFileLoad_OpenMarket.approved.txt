@@ -40,5 +40,2541 @@
       "StartDate": "2018-10-29T00:00:00"
     }
   ],
-  "weeksBefore": []
+  "weeksBefore": [
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-07T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-07T00:00:00",
+        "_Id": 771,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-01T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-01T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-14T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-14T00:00:00",
+        "_Id": 772,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-08T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-08T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-21T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-21T00:00:00",
+        "_Id": 773,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-15T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-15T00:00:00"
+    },
+    {
+      "EndDate": "2018-10-28T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-10-28T00:00:00",
+        "_Id": 774,
+        "_MediaMonthId": 445,
+        "_StartDate": "2018-10-22T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-22T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-04T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-04T00:00:00",
+        "_Id": 775,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-10-29T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-10-29T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-11T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-11T00:00:00",
+        "_Id": 776,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-05T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-05T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-18T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-18T00:00:00",
+        "_Id": 777,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-12T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-12T00:00:00"
+    },
+    {
+      "EndDate": "2018-11-25T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-11-25T00:00:00",
+        "_Id": 778,
+        "_MediaMonthId": 446,
+        "_StartDate": "2018-11-19T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-19T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-02T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-02T00:00:00",
+        "_Id": 779,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-11-26T00:00:00",
+        "_WeekNumber": 1,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-11-26T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-09T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-09T00:00:00",
+        "_Id": 780,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-03T00:00:00",
+        "_WeekNumber": 2,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-03T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-16T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-16T00:00:00",
+        "_Id": 781,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-10T00:00:00",
+        "_WeekNumber": 3,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-10T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-23T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-23T00:00:00",
+        "_Id": 782,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-17T00:00:00",
+        "_WeekNumber": 4,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-17T00:00:00"
+    },
+    {
+      "EndDate": "2018-12-30T00:00:00",
+      "MediaWeek": {
+        "_EndDate": "2018-12-30T00:00:00",
+        "_Id": 783,
+        "_MediaMonthId": 447,
+        "_StartDate": "2018-12-24T00:00:00",
+        "_WeekNumber": 5,
+        "IsDirty": true
+      },
+      "Spots": 0,
+      "StartDate": "2018-12-24T00:00:00"
+    }
+  ]
 }

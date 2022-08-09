@@ -13,13 +13,18 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
         private (int Row, int StartColumn, int EndColumn) AllocationsByGenreTable = (Row: 15, StartColumn: 3, EndColumn: 5);
         private (int Row, int StartColumn, int EndColumn) AllocationsByDMATable = (Row: 19, StartColumn: 3, EndColumn: 5);
         private (int Row, int StartColumn, int EndColumn) AllocationsBySpotLengthTable = (Row: 23, StartColumn: 3, EndColumn: 5);
+        private (int Row, int StartColumn, int EndColumn) AllocationByAffiliateTable = (Row: 11, StartColumn: 7, EndColumn: 9);
 
         internal void PopulateTab(ExcelWorksheet worksheet, ProgramLineupReportData reportData)
         {
             _PopulateAllocationTable(worksheet, reportData.AllocationBySpotLengthViewRows, AllocationsBySpotLengthTable);
             _PopulateAllocationTable(worksheet, reportData.AllocationByDMAViewRows, AllocationsByDMATable);
             _PopulateAllocationTable(worksheet, reportData.AllocationByGenreViewRows, AllocationsByGenreTable);
-            _PopulateAllocationTable(worksheet, reportData.AllocationByDaypartViewRows, AllocationsByDaypartTable);            
+            _PopulateAllocationTable(worksheet, reportData.AllocationByDaypartViewRows, AllocationsByDaypartTable);
+            if (reportData?.AllocationByAffiliateViewRows?.Any() ?? false)
+            {
+                _PopulateAllocationTable(worksheet, reportData.AllocationByAffiliateViewRows, AllocationByAffiliateTable);
+            }
         }
 
         private void _PopulateAllocationTable(ExcelWorksheet worksheet

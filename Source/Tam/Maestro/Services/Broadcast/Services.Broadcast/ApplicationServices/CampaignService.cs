@@ -205,6 +205,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanValidator _PlanValidator;
         private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
         protected Lazy<bool> _IsUnifiedCampaignEnabled;
+        protected Lazy<bool> _IsProgramLineupAllocationByAffiliateEnabled;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -249,6 +250,8 @@ namespace Services.Broadcast.ApplicationServices
             _CampaignServiceApiClient = CampaignServiceApiClient;
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
+            _IsProgramLineupAllocationByAffiliateEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE));
         }
 
 
@@ -870,6 +873,7 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
             var manifestDaypartIds = manifestsOpenMarket.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
+            var isProgramLineupAllocationByAffiliateEnabled = _IsProgramLineupAllocationByAffiliateEnabled.Value;
 
             var result = new ProgramLineupReportData(
                 plan,
@@ -885,7 +889,8 @@ namespace Services.Broadcast.ApplicationServices
                 primaryProgramsByManifestDaypartIds,
                 proprietaryInventory,
                 postingType,
-                spotAllocationModelMode
+                spotAllocationModelMode,
+                isProgramLineupAllocationByAffiliateEnabled
                 );
             return result;
         }

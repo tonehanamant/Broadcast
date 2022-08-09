@@ -8282,6 +8282,95 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(expectedResult, plan.Dayparts.Count);
         }
+
+        [Test]
+        public void ProgramLineupReport_WithToggleOn()
+        {
+            // Arrange
+            bool isProgramLineupAllocationByAffiliateEnabled = true;
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            Guid agencyId = new Guid("221116A6-573E-4B10-BB4D-0A2F2913FA6F");
+            Guid advertiserId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907");
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
+                    Equivalized = false,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts(),
+                    BuyingParameters = new PlanBuyingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
+                });
+
+            _PlanBuyingRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForBuyingProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyMasterId = agencyId,
+                    AdvertiserMasterId = advertiserId
+                });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _GetService();
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE] = isProgramLineupAllocationByAffiliateEnabled;
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetLatestBuyingJob(firstPlanId), Times.Once);
+            _AabEngine.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _AabEngine.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
+            _PlanBuyingRepositoryMock.Verify(x => x.GetPlanBuyingAllocatedSpotsByPlanId(firstPlanId, It.IsAny<PostingTypeEnum?>(), It.IsAny<SpotAllocationModelMode?>()), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
     }
 
 }

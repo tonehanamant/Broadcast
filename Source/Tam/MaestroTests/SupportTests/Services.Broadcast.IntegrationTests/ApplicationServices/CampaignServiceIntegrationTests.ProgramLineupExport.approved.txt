@@ -1,6 +1,7 @@
 ﻿{
   "AccountExecutive": "",
   "Agency": "Agency1",
+  "AllocationByAffiliateViewRows": null,
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "MDN",

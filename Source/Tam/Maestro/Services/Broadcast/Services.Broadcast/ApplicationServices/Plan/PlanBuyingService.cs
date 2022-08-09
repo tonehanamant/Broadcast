@@ -286,6 +286,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
         private readonly Lazy<bool> _IsBuyExpRepOrgEnabled;
         private readonly Lazy<bool> _IsParallelPricingEnabled;
+        protected Lazy<bool> _IsProgramLineupAllocationByAffiliateEnabled;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -350,6 +351,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
             _IsBuyExpRepOrgEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.BUY_EXP_REP_ORG));
             _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
+            _IsProgramLineupAllocationByAffiliateEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE));
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath,
@@ -2695,7 +2698,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
         public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
         {
-            var programLineupReportData = GetProgramLineupReportData(request, currentDate);
+            bool isProgramLineupAllocationByAffiliateEnabled = _IsProgramLineupAllocationByAffiliateEnabled.Value;
+            var programLineupReportData = GetProgramLineupReportData(request, currentDate, isProgramLineupAllocationByAffiliateEnabled);
             var reportGenerator = new ProgramLineupReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(programLineupReportData);
 
@@ -2712,7 +2716,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         }
 
-        public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
+        public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate,bool isProgramLineupAllocationByAffiliateEnabled = false)
         {
             if (request.SelectedPlans.IsEmpty())
                 throw new CadentException("Choose at least one plan");
@@ -2756,7 +2760,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 primaryProgramsByManifestDaypartIds,
                 proprietaryInventory,
                 postingType,
-                spotAllocationModelMode
+                spotAllocationModelMode,
+                isProgramLineupAllocationByAffiliateEnabled
                 );
             return result;
         }

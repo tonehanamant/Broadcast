@@ -49,5 +49,6 @@
         public static string ENABLE_LOCKING_MIGRATION = "broadcast-enable-locking-migration";
         public static string ENABLE_UNIFIED_CAMPAIGN = "broadcast-enable-unified-campaign";
         public static string ENABLE_ATTACHMENT_MICRO_SERVICE = "broadcast-enable-attachment-micro-service";
+        public static string ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE = "broadcast-program-lineup-allocation-by-affiliate";
     }
 }

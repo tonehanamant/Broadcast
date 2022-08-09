@@ -36,6 +36,7 @@ namespace Services.Broadcast.Entities.Campaign
         public List<AllocationViewRowDisplay> AllocationByGenreViewRows { get; set; }
         public List<AllocationViewRowDisplay> AllocationByDMAViewRows { get; set; }
         public List<AllocationViewRowDisplay> AllocationBySpotLengthViewRows { get; set; }
+        public List<AllocationViewRowDisplay> AllocationByAffiliateViewRows { get; set; }
 
         private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}_{2}_{3}.xlsx";
         private const string FILENAME_FORMAT_BUYING = "Program_Lineup_Report_B_{0}_{1}_{2}_{3}.xlsx";
@@ -63,7 +64,7 @@ namespace Services.Broadcast.Entities.Campaign
             Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds,
             List<ProgramLineupProprietaryInventory> proprietaryInventory,
             PostingTypeEnum postingType,
-            SpotAllocationModelMode spotAllocationModelMode)
+            SpotAllocationModelMode spotAllocationModelMode, bool isProgramLineupAllocationByAffiliateEnabled)
 
         {
             ExportFileName = _GetFileName(plan.Name, postingType, spotAllocationModelMode, currentDate);
@@ -92,6 +93,10 @@ namespace Services.Broadcast.Entities.Campaign
             AllocationByDMAViewRows = _MapDMAToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
 
             AllocationBySpotLengthViewRows = _MapSpotLengthToAllocationViewRows(allocatedSpots, proprietaryInventory, totalAllocatedImpressions, spotLengths, plan.Equivalized);
+            if (isProgramLineupAllocationByAffiliateEnabled)
+            {
+                AllocationByAffiliateViewRows = _MapAffiliateToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
+            }
         }
 
         public ProgramLineupReportData(
@@ -108,7 +113,7 @@ namespace Services.Broadcast.Entities.Campaign
             Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds,
             List<ProgramLineupProprietaryInventory> proprietaryInventory,
             PostingTypeEnum postingType,
-            SpotAllocationModelMode spotAllocationModelMode)
+            SpotAllocationModelMode spotAllocationModelMode, bool isProgramLineupAllocationByAffiliateEnabled)
 
         {
             ExportFileName = _GetBuyingFileName(plan.Name, postingType, spotAllocationModelMode, currentDate);
@@ -137,6 +142,10 @@ namespace Services.Broadcast.Entities.Campaign
             AllocationByDMAViewRows = _MapDMAToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
 
             AllocationBySpotLengthViewRows = _MapSpotLengthToBuyingAllocationViewRows(allocatedSpots, proprietaryInventory, totalAllocatedImpressions, spotLengths, plan.Equivalized);
+            if (isProgramLineupAllocationByAffiliateEnabled)
+            {
+                AllocationByAffiliateViewRows = _MapAffiliateToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
+            }
         }
         internal string _GetFileName(string planName, PostingTypeEnum postingType, SpotAllocationModelMode spotAllocationModelMode, DateTime currentDate)
         {
@@ -711,6 +720,25 @@ namespace Services.Broadcast.Entities.Campaign
                 });
             });
         }
+
+        private List<AllocationViewRowDisplay> _MapAffiliateToAllocationViewRows(IEnumerable<DetailedViewRowData> dataRows
+            , double totalAllocatedImpressions)
+        {
+            return dataRows
+                .GroupBy(x => new { x.StationAffiliation })
+                .OrderBy(x => x.Key.StationAffiliation)
+               .Select(x =>
+               {
+                   var items = x.ToList();
+                   return new AllocationViewRowDisplay
+                   {
+                       FilterLabel = x.Key.StationAffiliation.ToUpper(),
+                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), totalAllocatedImpressions)
+                   };
+               })
+               .ToList();
+        }
+
         public class DetailedViewRowDisplay
         {
             public int Rank { get; set; }

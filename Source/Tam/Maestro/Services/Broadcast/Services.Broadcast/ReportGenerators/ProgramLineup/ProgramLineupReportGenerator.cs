@@ -15,6 +15,7 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
 
         private readonly string TEMPLATE_FILENAME = "Template - Program Lineup.xlsx";
         private readonly string TEMPLATES_PATH;
+        private readonly string TEMPLATE_FILENAME_WITH_ALLOCATION_BY_AFFILIATE = "Template - Program Lineup with Allocation by Affiliate.xlsx";
 
         public ProgramLineupReportGenerator(string templatesPath)
         {
@@ -36,7 +37,15 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
 
         private ExcelPackage _GetFileWithData(ProgramLineupReportData programLineupReportData)
         {
-            string templateFilePath = Path.Combine(TEMPLATES_PATH, TEMPLATE_FILENAME);
+            string templateFilePath = "";
+            if (programLineupReportData?.AllocationByAffiliateViewRows?.Any() ?? false)
+            {
+                templateFilePath = Path.Combine(TEMPLATES_PATH, TEMPLATE_FILENAME_WITH_ALLOCATION_BY_AFFILIATE);
+            }
+            else
+            {
+                templateFilePath = Path.Combine(TEMPLATES_PATH, TEMPLATE_FILENAME);
+            }
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream: true);
 
             ExcelWorksheet detailedViewTab = ExportSharedLogic.GetWorksheet(templateFilePath, package, DETAILED_VIEW_WORKSHEET_NAME);

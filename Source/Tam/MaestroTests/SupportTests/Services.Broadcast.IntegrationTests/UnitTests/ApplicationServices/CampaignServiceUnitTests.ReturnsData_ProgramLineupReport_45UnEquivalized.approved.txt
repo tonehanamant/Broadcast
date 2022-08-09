@@ -2,6 +2,7 @@
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
+  "AllocationByAffiliateViewRows": null,
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "PRA",
