@@ -305,6 +305,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
                                 UserName = "MockData",
@@ -334,6 +335,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -381,6 +383,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -405,6 +408,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -452,6 +456,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -474,6 +479,7 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -521,6 +527,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -543,6 +550,7 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -590,6 +598,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -612,6 +621,7 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -659,6 +669,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -681,6 +692,7 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -728,6 +740,7 @@ namespace Services.Broadcast.ApplicationServices
                             Sunday = 1,
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -750,6 +763,7 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -1302,7 +1316,7 @@ namespace Services.Broadcast.ApplicationServices
                     AudienceName = spotExceptionsRecommendedPlanDetail.AudienceName,
                     Product = _GetProductName(recommendedPlan.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlan.RecommendedPlanDetail.ProductMasterId),
                     DaypartCode = spotExceptionsRecommendedPlanDetail.DaypartCode,
-                    Impressions = spotExceptionsRecommendedPlanDetail.DeliveredImpressions/1000,
+                    Impressions = spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions/1000,
                 }).ToList()
             };
             if (spotExceptionsRecommendedPlanDetailsResult.Plans != null &&
@@ -1734,9 +1748,8 @@ namespace Services.Broadcast.ApplicationServices
                             AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
                             PlanName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
                             AffectedSpotsCount = activePlan.Count(),
-                            Impressions = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
+                            Impressions = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.SpotDeliveredImpressions).First() / 1000,
                             SpotLengthString = $"{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
-                            Pacing = _GetPacing(),
                             AudienceName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
                             FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
                         };
@@ -1755,9 +1768,8 @@ namespace Services.Broadcast.ApplicationServices
                         AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
                         PlanName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
                         AffectedSpotsCount = completedPlan.Count(),
-                        Impressions = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.DeliveredImpressions).First() / 1000,
+                        Impressions = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.SpotDeliveredImpressions).First() / 1000,
                         SpotLengthString = $"{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
-                        Pacing = _GetPacing(),
                         AudienceName = planDetails.SpotExceptionsRecommendedPlanDetails.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
                         FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
                     };

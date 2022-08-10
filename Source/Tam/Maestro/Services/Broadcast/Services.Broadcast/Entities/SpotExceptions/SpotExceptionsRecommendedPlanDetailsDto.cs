@@ -155,5 +155,10 @@ namespace Services.Broadcast.Entities.SpotExceptions
         /// </summary>
         /// <value>The recommended plan detail.</value>
         public RecommendedPlanDetailDto RecommendedPlanDetail { get; set; }
+
+        /// <summary>
+        /// Get or sets the Impression 
+        /// </summary>
+        public double SpotDeliveredImpressions { get; set; }
     }
 }

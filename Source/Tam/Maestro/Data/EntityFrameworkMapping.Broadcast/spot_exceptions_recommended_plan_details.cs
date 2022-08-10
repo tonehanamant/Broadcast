@@ -41,6 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> sunday { get; set; }
         public string plan_spot_unique_hash_external { get; set; }
         public string plan_execution_id_external { get; set; }
+        public double spot_delivered_impression { get; set; }
     
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }

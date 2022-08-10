@@ -45,13 +45,13 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return context.program_names.Where(p => p.program_name.ToLower().Contains(programSearchString.ToLower()))
-                    .OrderBy(p => p.program_name)
+                    return context.programs.Where(p => p.name.ToLower().Contains(programSearchString.ToLower()))
+                    .OrderBy(p => p.name)
                     .Skip(start - 1).Take(limit)
                     .Select(
                         p => new LookupDto()
                         {
-                            Display = p.program_name,
+                            Display = p.name,
                             Id = p.id
                         }).ToList();
                 });

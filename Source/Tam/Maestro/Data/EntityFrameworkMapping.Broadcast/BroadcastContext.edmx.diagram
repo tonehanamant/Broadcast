@@ -85,7 +85,6 @@
         <AssociationConnector Association="BroadcastModel.FK_nsi_component_audiences_audiences" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_file_detail_problems" Width="2.625" PointX="24.875" PointY="9.375" />
         <EntityTypeShape EntityType="BroadcastModel.proposal_version_detail_criteria_programs" Width="1.5" PointX="7.375" PointY="22.125" />
-        <EntityTypeShape EntityType="BroadcastModel.program_names" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_outbound_file_problems" Width="1.5" PointX="25.75" PointY="1.375" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_outbound_files" Width="1.5" PointX="23.5" PointY="1" />
         <AssociationConnector Association="BroadcastModel.FK_affidavit_outbound_file_problems_affidavit_outbound_files" />
@@ -575,9 +574,9 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plan_details" Width="1.5" PointX="36.625" PointY="40.75" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
-        <EntityTypeShape EntityType="BroadcastModel.program_name_genres" Width="1.5" PointX="33.875" PointY="36.875" />
-        <AssociationConnector Association="BroadcastModel.FK_program_name_genres_genres" />
-        <AssociationConnector Association="BroadcastModel.FK_program_name_genres_program_names" />
+        <EntityTypeShape EntityType="BroadcastModel.program" Width="1.5" PointX="28.25" PointY="55.375" />
+        <AssociationConnector Association="BroadcastModel.FK_programs_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

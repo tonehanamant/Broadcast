@@ -1238,6 +1238,48 @@ GO
 
 /*************************************** END BP-5244 ***************************************/
 
+/*************************************** START BP-5246 ***************************************/
+
+IF OBJECT_ID('programs') IS NULL
+BEGIN
+	IF OBJECT_ID('program_name_genres') IS NOT NULL
+	BEGIN
+		DROP TABLE program_name_genres;
+		DROP TABLE program_names
+	END
+
+	CREATE TABLE dbo.programs
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		name nvarchar(500) NOT NULL,
+		show_type_id int NOT NULL,
+		genre_id int NOT NULL
+	)
+
+	ALTER TABLE programs ADD  CONSTRAINT FK_programs_show_types FOREIGN KEY(show_type_id) REFERENCES show_types(id)
+	ALTER TABLE programs ADD  CONSTRAINT FK_programs_genres FOREIGN KEY(genre_id) REFERENCES genres(id)
+END
+GO
+
+/*************************************** END BP-5246 ***************************************/
+
+/*************************************** START BP-5276 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_details' AND COLUMN_NAME = 'spot_delivered_impression')
+BEGIN
+	
+	DELETE FROM spot_exceptions_recommended_plan_decision
+	DELETE FROM spot_exceptions_recommended_plan_details
+	DELETE FROM spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD spot_delivered_impression float NOT NULL
+END
+GO
+
+/*************************************** END BP-5276 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

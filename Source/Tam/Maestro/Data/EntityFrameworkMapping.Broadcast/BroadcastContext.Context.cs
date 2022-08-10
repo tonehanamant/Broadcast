@@ -70,7 +70,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<nsi_component_audiences> nsi_component_audiences { get; set; }
         public virtual DbSet<affidavit_file_detail_problems> affidavit_file_detail_problems { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_programs> proposal_version_detail_criteria_programs { get; set; }
-        public virtual DbSet<program_names> program_names { get; set; }
         public virtual DbSet<affidavit_outbound_file_problems> affidavit_outbound_file_problems { get; set; }
         public virtual DbSet<affidavit_outbound_files> affidavit_outbound_files { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
@@ -249,6 +248,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
         public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
         public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
-        public virtual DbSet<program_name_genres> program_name_genres { get; set; }
+        public virtual DbSet<program> programs { get; set; }
     }
 }

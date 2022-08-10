@@ -25,7 +25,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int AffectedSpotsCount { get; set; }
         public double? Impressions { get; set; }
         public string SpotLengthString { get; set; }
-        public string Pacing { get; set; }
         public string AudienceName { get; set; }
         public string FlightString { get; set; }
     }
@@ -38,7 +37,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int AffectedSpotsCount { get; set; }
         public double? Impressions { get; set; }
         public string SpotLengthString { get; set; }
-        public string Pacing { get; set; }
         public string AudienceName { get; set; }
         public string FlightString { get; set; }
     }
