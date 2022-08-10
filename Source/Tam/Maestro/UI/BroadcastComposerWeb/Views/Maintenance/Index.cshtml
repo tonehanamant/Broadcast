@@ -833,11 +833,20 @@
     <div id="migrations" class="tabcontent">
         <h1 class="heading">Migrations</h1>
         <div class="form">
-            <label>BP-4425 : Add Genre Exclusions for Daypart.</label>
             @using (Html.BeginForm("GenresDefaultExclusion", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="input-container">
+                    <h4 class="heading">BP-4425 : Add Genre Exclusions for Daypart.</h4>
                     <input class="button" type="submit" value="Genre Exclusions" id="txtGenreExclusions" />
+                </div>
+            }
+
+            @using (Html.BeginForm("PerformInventoryErrorFileMigrationToAttachmentService", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="input-container">
+                    <h4 class="heading">Inventory Error Files</h4>
+                    Migrate the Inventory Error files to the Attachment Service.
+                    <input class="button" type="submit" value="Migrate" id="btnMigrationInventoryErrorFiles" />
                 </div>
             }
         </div>

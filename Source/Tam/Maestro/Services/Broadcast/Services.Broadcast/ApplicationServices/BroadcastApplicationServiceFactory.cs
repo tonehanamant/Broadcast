@@ -296,8 +296,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();
             unityContainer.RegisterType<IBroadcastLockingService, BroadcastLockingService>();
             unityContainer.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
-            
 
+            // Migration Related
+            unityContainer.RegisterType<IInventoryErrorFilesMigrationService, InventoryErrorFilesMigrationService>();
 
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();

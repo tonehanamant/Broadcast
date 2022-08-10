@@ -19,6 +19,8 @@ namespace Services.Broadcast.ApplicationServices
 
         SharedFolderFile GetFile(Guid fileId);
 
+        SharedFolderFile GetFileInfo(Guid fileId);
+
         void RemoveFile(Guid fileId);
 
         SharedFolderFile GetAndRemoveFile(Guid fileId);
@@ -57,17 +59,26 @@ namespace Services.Broadcast.ApplicationServices
             return file;
         }
 
+        public SharedFolderFile GetFileInfo(Guid fileId)
+        {
+            var file = _SharedFolderFilesRepository.GetFileById(fileId);
+
+            if (file == null)
+                throw new InvalidOperationException($"There is no file with id: {fileId}");
+
+            return file;
+        }
+
         public SharedFolderFile GetFile(Guid fileId)
         {
-            var file = _GetFileInfo(fileId);
+            var file = GetFileInfo(fileId);
             file.FileContent = _GetFileContent(file);
-
             return file;
         }
 
         public void RemoveFile(Guid fileId)
         {
-            var file = _GetFileInfo(fileId);
+            var file = GetFileInfo(fileId);
 
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
@@ -102,7 +113,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public Stream CreateZipArchive(List<Guid> fileIdsToArchive)
         {
-            var fileInfos = fileIdsToArchive.Select(_GetFileInfo).ToList();
+            var fileInfos = fileIdsToArchive.Select(GetFileInfo).ToList();
             var archiveFile = new MemoryStream();
 
             if (_IsAttachementMicroServiceEnabled.Value)
@@ -136,17 +147,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             archiveFile.Seek(0, SeekOrigin.Begin);
             return archiveFile;
-        }
-
-        private SharedFolderFile _GetFileInfo(Guid fileId)
-        {
-            var file = _SharedFolderFilesRepository.GetFileById(fileId);
-
-            if (file == null)
-                throw new InvalidOperationException($"There is no file with id: {fileId}");
-
-            return file;
-        }
+        }        
 
         private void _SaveFileContent(SharedFolderFile file)
         {
@@ -229,7 +230,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public void RemoveFileFromFileShare(Guid fileId)
         {
-            var file = _GetFileInfo(fileId);
+            var file = GetFileInfo(fileId);
 
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
