@@ -2150,6 +2150,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planToCopy.Name = campaignPlan.Name;
                 planToCopy.ProductMasterId = Guid.Parse(campaignPlan.ProductMasterId);
                 planToCopy.Id = 0;
+                planToCopy.UnifiedTacticLineId = null;
+                planToCopy.UnifiedCampaignLastSentAt = null;
+                planToCopy.UnifiedCampaignLastReceivedAt = null;
                 DaypartTimeHelper.SubtractOneSecondToEndTime(planToCopy.Dayparts);
                 _PlanValidator.ValidatePlan(planToCopy);
                 _ConvertImpressionsToRawFormat(planToCopy);

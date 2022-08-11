@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -84,6 +85,306 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.AreEqual(username, campaign.ModifiedBy);
                 Assert.AreEqual(nowDate, campaign.ModifiedDate);
             }
+        }
+        [Test]
+        [Category("long_running")]
+        public async Task CopyPlans()
+        {           
+                using (new TransactionScopeWrapper())
+                {
+                    PlanDto newPlan = _GetNewUnifiedPlan();
+                    var campaignId = newPlan.CampaignId;
+                    string createdBy = "integration_test";
+                    DateTime createdDate = new DateTime(2019, 01, 01);
+                    var newPlanId = await _PlanService.SavePlanAsync(newPlan, createdBy, createdDate);
+                    var campaign = _CampaignService.GetCampaignById(newPlan.CampaignId);
+                    var campaignCopy = _GetSaveCampaignCopy(newPlanId);
+                    _PlanService.CopyPlans(campaignId, campaignCopy, createdBy, createdDate);
+                    var latestPlan = _PlanRepository.GetPlansForCampaign(campaignId).OrderByDescending(x=> x.Id).FirstOrDefault();
+                    Assert.AreEqual(null, latestPlan.UnifiedTacticLineId);
+                    Assert.AreEqual(null, latestPlan.UnifiedCampaignLastReceivedAt);
+                    Assert.AreEqual(null, latestPlan.UnifiedCampaignLastSentAt);                   
+                }       
+                 
+
+        }
+        private SaveCampaignCopyDto _GetSaveCampaignCopy(int planId)
+        {
+            return new SaveCampaignCopyDto
+            {
+                Name = "Campaign1",
+                AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                AgencyMasterId = new Guid("A8B10A69-FBD6-43FE-B143-156B7297B62D"),
+                Plans = new List<SavePlansCopyDto>
+                {
+                    new SavePlansCopyDto
+                    {
+                          SourcePlanId =planId,
+                          Name = "New Plan",
+                          ProductMasterId ="6BEF080E-01ED-4D42-BE54-927110457907"
+                    }
+                }
+            };
+        }
+        private static PlanDto _GetNewUnifiedPlan()
+        {
+            return new PlanDto
+            {
+                CampaignId = 1,
+                Equivalized = true,
+                Name = "New Plan",
+                ProductId = 1,
+                ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),              
+                CreativeLengths = new List<CreativeLength> {
+                    new CreativeLength { SpotLengthId = 1, Weight = 50},
+                    new CreativeLength{ SpotLengthId = 2}
+                },
+                Status = PlanStatusEnum.Working,
+                FlightStartDate = new DateTime(2019, 1, 1),
+                FlightEndDate = new DateTime(2019, 1, 31),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightNotes = "Sample notes",
+                FlightNotesInternal = "Sample internal notes",
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019,1,20),
+                    new DateTime(2019,1,24)
+                },
+                AudienceId = AUDIENCE_ID,       //HH
+                AudienceType = AudienceTypeEnum.Nielsen,
+                HUTBookId = 437,
+                PostingType = PostingTypeEnum.NTI,
+                ShareBookId = 437,
+                Budget = 100m,
+                TargetCPM = 12m,
+                TargetImpressions = 100d,
+                TargetCPP = 12m,
+                TargetUniverse = 111222d,
+                Currency = PlanCurrenciesEnum.Impressions,
+                TargetRatingPoints = 100d,
+                CoverageGoalPercent = 80.5,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true}
+                },
+                BlackoutMarkets = new List<PlanBlackoutMarketDto>
+                {
+                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
+                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
+                },
+                ModifiedBy = "Test User",
+                ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 2000,
+                        WeightingGoalPercent = 28.0,
+                        WeekdaysWeighting = 60,
+                        WeekendWeighting = 40,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.8,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 1 } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 25 } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "PG-13",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Young Sheldon"
+                                    }
+                                }
+                            },
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Affiliates = new List<LookupDto> { new LookupDto { Id = 20 } }
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 11,
+                        DaypartTypeId = DaypartTypeEnum.News,
+                        StartTimeSeconds = 1500,
+                        EndTimeSeconds = 2788,
+                        WeightingGoalPercent = 33,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.9,
+                                VpvhType = VpvhTypeEnum.LastYear,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 2 } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 20 } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "G",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Teletubbies"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 3,
+                        DaypartTypeId = DaypartTypeEnum.ROS,
+                        StartTimeSeconds = 57600,
+                        EndTimeSeconds = 68400,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.7,
+                                VpvhType = VpvhTypeEnum.PreviousQuarter,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                ShowTypes = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = 9 },
+                                    new LookupDto { Id = 11 }
+                                }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Genres = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = 12 },
+                                    new LookupDto { Id = 14 }
+                                }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "R",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Power Rangers"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                Vpvh = 0.012,
+                IsAduEnabled = true,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1, MediaWeekId = 784,
+                        StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
+                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 5,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1,
+                        PercentageOfWeek = 50,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2, MediaWeekId = 785,
+                        StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
+                        NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3, MediaWeekId = 786,
+                        StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
+                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4, MediaWeekId = 787,
+                        StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
+                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5, MediaWeekId = 788,
+                        StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
+                        NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 30,
+                        WeeklyUnits = 4
+                    }
+                },
+                ImpressionsPerUnit = 5,
+                UnifiedTacticLineId = "Test",
+                UnifiedCampaignLastSentAt = DateTime.Now,
+                UnifiedCampaignLastReceivedAt = DateTime.Now
+            };
         }
 
         [Test]
