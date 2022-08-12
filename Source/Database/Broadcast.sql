@@ -1208,34 +1208,6 @@ GO
 
 /*************************************** END BP-4947 ***************************************/
 
-
-/*************************************** START BP-5244 ***************************************/
-IF OBJECT_ID('program_names') IS NOT NULL    
-BEGIN                    
-	IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS                         
-	WHERE TABLE_NAME = 'program_names'                         
-	AND COLUMN_NAME= 'program_name')                     
-	BEGIN                        
-		ALTER TABLE program_names                            
-		ALTER COLUMN [program_name] nvarchar(500) NOT NULL                    
-	END
-    IF OBJECT_ID('program_name_genres') IS NULL                    
-	BEGIN                        
-		CREATE TABLE dbo.program_name_genres                        
-		(
-			id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,                            
-			program_name_id int NULL,                            
-			genre_id int NULL                        
-		)
-        ALTER TABLE [dbo].[program_name_genres] ADD CONSTRAINT [FK_program_name_genres_genres] FOREIGN KEY([genre_id]) REFERENCES [dbo].[genres] ([id])
-
-        ALTER TABLE [dbo].[program_name_genres]  WITH CHECK ADD  CONSTRAINT [FK_program_name_genres_program_names] FOREIGN KEY([program_name_id]) REFERENCES [dbo].[program_names]([id])
-      END
-END
-GO
-
-/*************************************** END BP-5244 ***************************************/
-
 /*************************************** START BP-5246 ***************************************/
 IF OBJECT_ID('program_name_genres') IS NOT NULL    
 BEGIN        
