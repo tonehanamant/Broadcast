@@ -1217,7 +1217,7 @@ BEGIN                    
 	AND COLUMN_NAME= 'program_name')                     
 	BEGIN                        
 		ALTER TABLE program_names                            
-		ALTER COLUMN program_name nvarchar(500) NOT NULL                    
+		ALTER COLUMN [program_name] nvarchar(500) NOT NULL                    
 	END
     IF OBJECT_ID('program_name_genres') IS NULL                    
 	BEGIN                        
