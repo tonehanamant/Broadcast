@@ -16,6 +16,7 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
@@ -46,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IGenreCache> _GenreCache;
         private IShowTypeCache _ShowTypeCacheStub;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
-
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private static bool WRITE_FILE_TO_DISK = false;
 
         [SetUp]
@@ -120,6 +121,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 }
             });
 
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingService(
                 _BackgroundJobClientMock.Object,
@@ -131,7 +136,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _ProgramMappingCleanupEngine.Object,
                 _MasterListImporterMock.Object,
                 _DateTimeEngineMock.Object,
-                null, _ConfigurationSettingsHelperMock.Object);
+                featureToggleHelper, _ConfigurationSettingsHelperMock.Object);
         }
 
         [Test]

@@ -18,7 +18,7 @@ namespace Services.Broadcast.ReportGenerators.PricingResults
         private readonly string TOTAL_Fluidity_CELL = "G5";
 
         private (int Row, int Column) TableTopLeftCell = (Row: 9, Column: 1);
-        private (int Row, int Column) TableTopRightCell = (Row: 9, Column: 15);
+        private (int Row, int Column) TableTopRightCell = (Row: 9, Column: 16);
         #endregion
 
         internal void PopulateTab(ExcelWorksheet worksheet, PricingResultsReportData reportData)

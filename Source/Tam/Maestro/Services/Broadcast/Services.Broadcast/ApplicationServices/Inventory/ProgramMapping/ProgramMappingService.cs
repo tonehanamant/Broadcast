@@ -99,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
         private const float MATCH_NOT_FOUND = 0;
+        private Lazy<bool> _IsCentralizedProgramListEnabled;
 
         public ProgramMappingService(
             IBackgroundJobClient backgroundJobClient,
@@ -124,6 +125,8 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramCleanupEngine = programMappingCleanupEngine;
             _MasterProgramListImporter = masterListImporter;
             _DateTimeEngine = dateTimeEngine;
+            _IsCentralizedProgramListEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CENTRALIZED_PROGRAM_LIST));
         }
 
         /// <inheritdoc />
@@ -160,8 +163,16 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"The selected program mapping file has {programMappings.Count} rows, unique mappings: {uniqueProgramMappings.Count}");
 
             WebUtilityHelper.HtmlDecodeProgramNames(uniqueProgramMappings);
+            List<ProgramMappingsDto> masterListPrograms = null;
 
-            var masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
+            if (!_IsCentralizedProgramListEnabled.Value)
+            {
+                masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
+            }
+            else
+            {
+                masterListPrograms = _ProgramMappingRepository.GetProgramsAndGeneresFromDataTable();
+            }
             var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
 
             var programMappingErrors = _ValidateProgramMappings(uniqueProgramMappings, masterListPrograms, programNameExceptions);

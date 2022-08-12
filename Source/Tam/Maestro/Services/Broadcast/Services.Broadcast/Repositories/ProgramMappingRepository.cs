@@ -28,6 +28,12 @@ namespace Services.Broadcast.Repositories
         void CreateProgramMappings(IEnumerable<ProgramMappingsDto> newProgramMappings, string createdBy, DateTime createdAt);
 
         void UpdateProgramMappings(IEnumerable<ProgramMappingsDto> programMappings, string updatedBy, DateTime updatedAt);
+
+        /// <summary>
+        /// Gets the Master Programs From Data Table
+        /// </summary>
+        /// <returns>List Of Master Programs</returns>
+        List<ProgramMappingsDto> GetProgramsAndGeneresFromDataTable();
     }
 
     public class ProgramMappingRepository : BroadcastRepositoryBase, IProgramMappingRepository
@@ -203,6 +209,46 @@ namespace Services.Broadcast.Repositories
             programMapping.official_program_name = programMappingDto.OfficialProgramName;
             programMapping.show_type_id = programMappingDto.OfficialShowType.Id;
             programMapping.genre_id = programMappingDto.OfficialGenre.Id;
+        }
+
+        /// <inheritdoc/>
+        public List<ProgramMappingsDto> GetProgramsAndGeneresFromDataTable()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var mappingEntities = context.programs
+                    .Include(x => x.genre)
+                    .Include(x => x.show_types)
+                    .ToList();
+
+                var programMappings = mappingEntities.Select(_MapToDataTableDto).ToList();
+                return programMappings;
+            });
+        }
+
+        private ProgramMappingsDto _MapToDataTableDto(program programMappings)
+        {
+            if (programMappings == null)
+            {
+                return null;
+            }
+            return new ProgramMappingsDto
+            {
+                Id = programMappings.id,
+                OfficialProgramName = programMappings.name,
+                OfficialGenre = new Genre
+                {
+                    Id = programMappings.genre.id,
+                    Name = programMappings.genre.name,
+                    ProgramSourceId = programMappings.genre.program_source_id
+                },
+                OfficialShowType = new ShowTypeDto
+                {
+                    Id = programMappings.show_types.id,
+                    Name = programMappings.show_types.name,
+                    ShowTypeSource = (ProgramSourceEnum)programMappings.show_types.program_source_id
+                }
+            };
         }
     }
 }

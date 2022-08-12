@@ -6,7 +6,7 @@
       "DecisionString": "Out",
       "EstimateId": 6840,
       "Id": 3,
-      "Impressions": 50.0,
+      "Impressions": 0.0,
       "InventorySource": "Tegna",
       "IsciName": "QMAY2913OS1H",
       "Market": null,
