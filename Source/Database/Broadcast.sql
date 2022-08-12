@@ -1239,7 +1239,7 @@ GO
 /*************************************** START BP-5246 ***************************************/
 IF OBJECT_ID('program_name_genres') IS NOT NULL    
 BEGIN        
-	DROP TABLE program_name_genres;
+	DROP TABLE program_name_genres
 END    
 IF OBJECT_ID('program_names') IS NOT NULL   
 BEGIN                
