@@ -1210,7 +1210,7 @@ GO
 
 
 /*************************************** START BP-5244 ***************************************/
-IF OBJECT_ID('program_name') IS NOT NULL    
+IF OBJECT_ID('program_names') IS NOT NULL    
 BEGIN                    
 	IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS                         
 	WHERE TABLE_NAME = 'program_names'                         
