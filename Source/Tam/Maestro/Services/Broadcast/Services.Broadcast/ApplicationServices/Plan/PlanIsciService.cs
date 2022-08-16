@@ -60,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
         protected Lazy<bool> _IsUnifiedCampaignEnabled;
-
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
         /// </summary>
@@ -86,7 +86,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanIsciRepository = dataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-            _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();            
+            _AudienceRepository = dataRepositoryFactory.GetDataRepository<IAudienceRepository>();
+            _StandardDaypartRepository = dataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
 
             _StandardDaypartService = standardDaypartService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -184,8 +185,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             queryStartDate = isciPlanSearch.WeekStartDate.Value;
             queryEndDate = isciPlanSearch.WeekEndDate.Value;
-
+            //This will always return single week since queryStartDate and queryStartDate will always contain single week
+            var isciFilterWeek = BroadcastWeeksHelper.GetContainingWeeks(queryStartDate, queryStartDate).FirstOrDefault();
             var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(queryStartDate, queryEndDate);
+            List<int> outOfFlightPlans = new List<int>();
+            isciPlans.ForEach(P =>
+            {
+                List<int> daypartDayIds = _GetDaypartDayIds(P.PlanDayparts);
+                var week = BroadcastWeeksHelper.GetContainingWeeks(P.FlightStartDate, P.FlightEndDate).Where(x => x.WeekStartDate == queryStartDate && x.WeekEndDate == x.WeekEndDate).FirstOrDefault();
+                List<int> planFlightDays = P.FlightDays.Where(x => x != null).Cast<int>().ToList();
+                if (week != null)
+                {
+                    int WeekNo = CalculatorHelper.CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, planFlightDays, P.FlightHiatusDays, daypartDayIds, out string activeDaysString);
+
+                    // handle hiatus weeks
+                    if (WeekNo < 1 && week.WeekStartDate == isciFilterWeek.WeekStartDate && week.WeekEndDate == isciFilterWeek.WeekEndDate)
+                    {
+                        outOfFlightPlans.Add(P.Id);
+                    }
+                }
+            }
+            );
+            isciPlans = isciPlans.Where(P => !outOfFlightPlans.Contains(P.Id)).ToList();
             if (!_IsUnifiedCampaignEnabled.Value)
             {
                 isciPlans = isciPlans.Where(x => x.UnifiedTacticLineId == null).ToList();
@@ -257,9 +278,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 return 0;
             }
-                  
+
             List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
-            var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);            
+            var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);
             return totalChangedCount;
         }
 
@@ -273,45 +294,45 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return modifiedCount;
             }
 
-                modified.ForEach(m =>
-            {                
-                var isci = _PlanIsciRepository.GetPlanIscisByMappingId(m.PlanIsciMappingId);
-                isci.ForEach(isc =>
-                {
-                    var toModifyItem = new PlanIsciDto();
-                    toModifyItem.Id = m.PlanIsciMappingId;
-                    toModifyItem.PlanId = isc.PlanId;
-                    toModifyItem.Isci = isc.Isci;
-                    toModifyItem.FlightStartDate = m.FlightStartDate;
-                    toModifyItem.FlightEndDate = m.FlightEndDate;
-                    toModifyItem.SpotLengthId = isc.SpotLengthId;
-                    toModifyItem.StartTime = m.StartTime;
-                    toModifyItem.EndTime = m.EndTime;
-                    toModifyList.Add(toModifyItem);
-                });              
-            });           
+            modified.ForEach(m =>
+        {
+            var isci = _PlanIsciRepository.GetPlanIscisByMappingId(m.PlanIsciMappingId);
+            isci.ForEach(isc =>
+            {
+                var toModifyItem = new PlanIsciDto();
+                toModifyItem.Id = m.PlanIsciMappingId;
+                toModifyItem.PlanId = isc.PlanId;
+                toModifyItem.Isci = isc.Isci;
+                toModifyItem.FlightStartDate = m.FlightStartDate;
+                toModifyItem.FlightEndDate = m.FlightEndDate;
+                toModifyItem.SpotLengthId = isc.SpotLengthId;
+                toModifyItem.StartTime = m.StartTime;
+                toModifyItem.EndTime = m.EndTime;
+                toModifyList.Add(toModifyItem);
+            });
+        });
 
             if (toModifyList.Any())
             {
                 modifiedCount = _PlanIsciRepository.UpdateIsciPlanMappings(toModifyList, modifiedAt, modifiedBy);
-            }           
+            }
             return modifiedCount;
         }
-    
+
         public bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy)
         {
             var createdAt = _DateTimeEngine.GetCurrentMoment();
             var deletedAt = _DateTimeEngine.GetCurrentMoment();
-            var modifiedAt = _DateTimeEngine.GetCurrentMoment();           
+            var modifiedAt = _DateTimeEngine.GetCurrentMoment();
 
             var isciPlanMappingsDeletedCount = _HandleDeleteIsciPlanMapping(saveRequest.IsciPlanMappingsDeleted, createdBy, deletedAt);
-            _LogInfo($"{isciPlanMappingsDeletedCount } IsciPlanMappings are deleted.");
+            _LogInfo($"{isciPlanMappingsDeletedCount} IsciPlanMappings are deleted.");
 
             var addedCount = _HandleNewIsciPlanMapping(saveRequest.IsciPlanMappings, createdBy, createdAt);
             _LogInfo($"{addedCount} IsciPlanMappings were added.");
-            
-               var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
-           
+
+            var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
+
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
 
             return true;
@@ -354,32 +375,32 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString }).ToList();
             var mappingsDetails = new PlanIsciMappingsDetailsDto
+            {
+                PlanId = plan.Id,
+                PlanName = plan.Name,
+                AdvertiserName = advertiserName,
+                SpotLengthString = spotLengthsString,
+                DaypartCode = daypartsString,
+                DemoString = demoString,
+                FlightStartDate = plan.FlightStartDate.Value.ToString("MM/dd/yyyy"),
+                FlightEndDate = plan.FlightEndDate.Value.ToString("MM/dd/yyyy"),
+                FlightString = flightString,
+                IsciPlanMappings = isciMappings.Select(isciMappingsDetail => new IsciMappingDetailsDto
                 {
-                    PlanId = plan.Id,
-                    PlanName = plan.Name,
-                    AdvertiserName = advertiserName,
-                    SpotLengthString = spotLengthsString,
-                    DaypartCode = daypartsString,
-                    DemoString = demoString,
-                    FlightStartDate = plan.FlightStartDate.Value.ToString("MM/dd/yyyy"), 
-                    FlightEndDate = plan.FlightEndDate.Value.ToString("MM/dd/yyyy"),
-                    FlightString = flightString,
-                    IsciPlanMappings = isciMappings.Select(isciMappingsDetail => new IsciMappingDetailsDto
+                    Isci = isciMappingsDetail.Key.Isci,
+                    SpotLengthString = isciMappingsDetail.Key.SpotLengthString,
+                    SpotLengthId = isciMappingsDetail.Key.SpotLengthId,
+                    IsciPlanMappingFlights = isciMappingsDetail.Select(mappingDetail => new MappingDetailsDto
                     {
-                        Isci = isciMappingsDetail.Key.Isci,
-                        SpotLengthString = isciMappingsDetail.Key.SpotLengthString,
-                        SpotLengthId = isciMappingsDetail.Key.SpotLengthId,
-                        IsciPlanMappingFlights = isciMappingsDetail.Select(mappingDetail => new MappingDetailsDto
-                        {
-                            PlanIsciMappingId = mappingDetail.PlanIsciMappingId,
-                            FlightStartDate = mappingDetail.FlightStartDate.ToString("MM/dd/yyyy"),
-                            FlightEndDate = mappingDetail.FlightEndDate.ToString("MM/dd/yyyy"),
-                            FlightString = mappingDetail.FlightString,
-                            StartTime = mappingDetail.StartTime,
-                            EndTime = mappingDetail.EndTime
-                        }).ToList()
-                    }).ToList(),
-                };
+                        PlanIsciMappingId = mappingDetail.PlanIsciMappingId,
+                        FlightStartDate = mappingDetail.FlightStartDate.ToString("MM/dd/yyyy"),
+                        FlightEndDate = mappingDetail.FlightEndDate.ToString("MM/dd/yyyy"),
+                        FlightString = mappingDetail.FlightString,
+                        StartTime = mappingDetail.StartTime,
+                        EndTime = mappingDetail.EndTime
+                    }).ToList()
+                }).ToList(),
+            };
             return mappingsDetails;
         }
 
@@ -395,7 +416,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var result = planIscis.Select(i =>
             {
-                // we are using .First() here as a reel isci should never have same isci with different spot id.
+        // we are using .First() here as a reel isci should never have same isci with different spot id.
                 var spotLengthString = _GetSpotLengthsString(i.SpotLengthId);
                 var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
                 var item = new PlanMappedIsciDetailsDto
@@ -484,6 +505,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = $":{_SpotLengthEngine.GetSpotLengthValueById(spotLengthId)}";
             return result;
+        }
+        private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
+        {
+            // the FE sends with at least 1 empty daypart...
+            // look for valid dayparts for this calculation
+            var validDayparts = planDayparts?.Where(d => d.DaypartCodeId > 0).ToList();
+            if (validDayparts?.Any() != true)
+            {
+                return new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            }
+
+            var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
+            var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
+            return dayIds;
         }
     }
 }

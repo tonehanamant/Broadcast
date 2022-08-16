@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Broadcast.Entities.Plan;
+using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Isci
@@ -19,5 +20,8 @@ namespace Services.Broadcast.Entities.Isci
         public string UnifiedTacticLineId { get; set; }
         public DateTime? UnifiedCampaignLastSentAt { get; set; }
         public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
+        public List<DateTime> FlightHiatusDays { get; set; }
+        public List<int?> FlightDays { get; set; }
+        public List<PlanDaypartDto> PlanDayparts { get; set; }        
     }
 }

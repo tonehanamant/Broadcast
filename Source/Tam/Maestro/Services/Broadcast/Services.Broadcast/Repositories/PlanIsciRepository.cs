@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Isci;
+using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -196,6 +197,8 @@ namespace Services.Broadcast.Repositories
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(y => y.standard_dayparts)))
                                     .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
                                     .Include(p => p.plan_versions.Select(x => x.audience))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
+                                    .Include(p => p.plan_versions.Select(x => x.plan_version_flight_days))
                                     .Include(x => x.plan_iscis)
                                     .ToList();
 
@@ -209,6 +212,9 @@ namespace Services.Broadcast.Repositories
                         AdvertiserMasterId = plan.campaign.advertiser_master_id,
                         SpotLengthValues = planVersion.plan_version_creative_lengths.Select(x => x.spot_lengths.length).ToList(),
                         AudienceCode = planVersion.audience.code,
+                        PlanDayparts= planVersion.plan_version_dayparts.Select(x=>new PlanDaypartDto {DaypartCodeId=x.standard_daypart_id }).ToList(),
+                        FlightHiatusDays = planVersion.plan_version_flight_hiatus_days.Select(x => x.hiatus_day).ToList(),
+                        FlightDays = planVersion.plan_version_flight_days.Select(x => x.day_id).ToList(),
                         Dayparts = planVersion.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
                         FlightStartDate = planVersion.flight_start_date,
                         FlightEndDate = planVersion.flight_end_date,

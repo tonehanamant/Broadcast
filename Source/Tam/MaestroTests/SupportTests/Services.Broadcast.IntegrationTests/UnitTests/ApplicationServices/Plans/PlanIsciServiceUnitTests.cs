@@ -16,9 +16,6 @@ using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Tam.Maestro.Data.Entities;
-using Unity;
 using IsciPlanMappingDto = Services.Broadcast.Entities.Isci.IsciPlanMappingDto;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -32,6 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
+        private Mock<IStandardDaypartRepository> _StandardDaypartRepositoryMock;
         private Mock<IAabEngine> _AabEngineMock;
         private AgencyAdvertiserBrandApiClientStub _AgencyAdvertiserBrandApiClientStub;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
@@ -51,6 +49,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
+            _StandardDaypartRepositoryMock = new Mock<IStandardDaypartRepository>();
             _AabEngineMock = new Mock<IAabEngine>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
@@ -69,6 +68,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IAudienceRepository>())
                 .Returns(_AudienceRepository.Object);
+            _DataRepositoryFactoryMock
+              .Setup(x => x.GetDataRepository<IStandardDaypartRepository>())
+              .Returns(_StandardDaypartRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IReelIsciRepository>())
@@ -86,8 +88,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
-            
-                        
+
+
             _PlanIsciService = new PlanIsciService(
                 _DataRepositoryFactoryMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
@@ -100,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 featureToggleHelper,
                 _ConfigurationSettingsHelperMock.Object);
         }
-        
+
         [Test]
         public void GetMediaMonth()
         {
@@ -245,7 +247,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Equals(result.Count, 0);
         }
-        
+
         [Test]
         public void GetAvailableIscis_NullPlanIsci()
         {
@@ -426,8 +428,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                WeekStartDate = new DateTime(2021, 11, 01),
-                WeekEndDate = new DateTime(2021, 11, 7),
+                WeekStartDate = new DateTime(2022, 08, 01),
+                WeekEndDate = new DateTime(2022, 08, 07),
                 UnmappedOnly = false
             };
 
@@ -445,6 +447,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN", "PMN", "LN" },
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        },
                         ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
                         Iscis = new List<string>()
                         {
@@ -462,6 +487,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        },
                         ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                         {
@@ -479,6 +527,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Dayparts = new List<string>(){ "EN" },
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        },
                         ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
                         Iscis = new List<string>()
                         {
@@ -487,6 +558,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     }
                 });
+            _StandardDaypartRepositoryMock.Setup(x => x.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>())).Returns(new List<int> { 1, 2 });
 
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
@@ -509,8 +581,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                WeekStartDate = new DateTime(2021, 11, 01),
-                WeekEndDate = new DateTime(2021, 11, 7),
+                WeekStartDate = new DateTime(2022, 08, 01),
+                WeekEndDate = new DateTime(2022, 08, 07),
                 UnmappedOnly = false
             };
 
@@ -529,7 +601,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
                         ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
-                        Iscis = new List<string>()
+                        Iscis = new List<string>(),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        }
                     },
                     new IsciPlanDetailDto()
                     {
@@ -542,7 +637,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
                         ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
-                        Iscis = new List<string>()
+                        Iscis = new List<string>(),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        }
                     },
                     new IsciPlanDetailDto()
                     {
@@ -555,10 +673,33 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,07,15),
                         FlightEndDate = new DateTime(2021, 08, 22),
                         ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
-                        Iscis = new List<string>()
+                        Iscis = new List<string>(),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        }
                     }
                 });
-
+            _StandardDaypartRepositoryMock.Setup(x => x.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>())).Returns(new List<int> { 1, 2 });
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
@@ -580,8 +721,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                WeekStartDate = new DateTime(2021, 11, 01),
-                WeekEndDate = new DateTime(2021, 11, 7),
+                WeekStartDate = new DateTime(2022, 08, 01),
+                WeekEndDate = new DateTime(2022, 08, 07),
                 UnmappedOnly = true
             };
 
@@ -600,7 +741,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
                         ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
-                        Iscis = new List<string>()
+                        Iscis = new List<string>(),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        }
                     },
                     new IsciPlanDetailDto()
                     {
@@ -613,7 +777,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,20),
                         FlightEndDate = new DateTime(2021, 08, 28),
                         ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
-                        Iscis = new List<string>()
+                        Iscis = new List<string>(),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
+                        }
                     },
                     new IsciPlanDetailDto()
                     {
@@ -630,10 +817,33 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             "CLDC6513000H",
                             "CUSA1813000H"
+                        },
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2
+                            }
                         }
                     }
                 });
-
+            _StandardDaypartRepositoryMock.Setup(x => x.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>())).Returns(new List<int> { 1, 2 });
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
@@ -647,6 +857,164 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+
+        [Test]
+        public void GetAvailableIsciPlans_FilterPlanNotInFlightWeek()
+        {
+            // Arrange
+            var isciPlanSearch = new IsciSearchDto
+            {
+                WeekStartDate = new DateTime(2022, 08, 01),
+                WeekEndDate = new DateTime(2022, 08, 07),
+                UnmappedOnly = false
+            };
+
+            _PlanIsciRepositoryMock
+                .Setup(s => s.GetAvailableIsciPlans(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<IsciPlanDetailDto>()
+                {
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 219,
+                        Title = "Wellcare CBS Shows",
+                        AdvertiserMasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"),
+                        SpotLengthValues = new List<int>(){ 15, 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN", "PMN", "LN" },
+                        FlightStartDate = new DateTime(2022,06,27),
+                        FlightEndDate = new DateTime(2022, 09, 25),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2022,08,1),
+                            new DateTime(2022,08,2),
+                            new DateTime(2022,08,3),
+                            new DateTime(2022,08,4),
+                            new DateTime(2022,08,5),
+                            new DateTime(2022,08,6),
+                            new DateTime(2022,08,7),
+                            new DateTime(2022,08,8)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 12,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            }
+                        },
+                        ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
+                        Iscis = new List<string>()
+                        {
+                            "OKWF1701H",
+                            "OKWL1702H"
+                        }
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 220,
+                        Title = "Colgate Daytime Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 15},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2022,06,27),
+                        FlightEndDate = new DateTime(2022, 09, 25),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2022,06,27),
+                            new DateTime(2022,06,28)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            }
+                        },
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
+                        Iscis = new List<string>()
+                        {
+                            "OKWF1703H",
+                            "OKWL1704H"
+                        }
+                    },
+                    new IsciPlanDetailDto()
+                    {
+                        Id = 221,
+                        Title = "Colgate Early Morning Upfront",
+                        AdvertiserMasterId = new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"),
+                        SpotLengthValues = new List<int>(){ 30},
+                        AudienceCode = "HH",
+                        Dayparts = new List<string>(){ "EN" },
+                        FlightStartDate = new DateTime(2022,06,27),
+                        FlightEndDate = new DateTime(2022, 09, 25),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2022,07,20),
+                            new DateTime(2022,07,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            }
+                        },
+                        ProductMasterId = new Guid("C2771F6B-8579-486A-910C-FF3C84144DE7"),
+                        Iscis = new List<string>()
+                        {
+                            "CLDC6513000H",
+                            "CUSA1813000H"
+                        }
+                    }
+                });
+            _StandardDaypartRepositoryMock.Setup(x => x.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>())).Returns(new List<int> { 1, 2, });
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertisers())
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()));
+
+            // Act
+            var result = _PlanIsciService.GetAvailableIsciPlans(isciPlanSearch);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
         }
 
         [Test]
@@ -804,8 +1172,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var createdBy = "Test User";
             var mappings = new List<IsciPlanMappingDto>
             {
-                new IsciPlanMappingDto 
-                { 
+                new IsciPlanMappingDto
+                {
                    PlanId = 1,
                    Isci = "MyIsci1",
                    SpotLengthId=1,
@@ -829,7 +1197,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                            new IsciPlanMappingFlightsDto
                            {
                                FlightStartDate=new DateTime(2022,06,27),
-                               FlightEndDate=new DateTime(2022,07,03)                               
+                               FlightEndDate=new DateTime(2022,07,03)
                            }
                    }
                 },
@@ -846,7 +1214,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                FlightEndDate=new DateTime(2022,07,03)
                            }
                    }
-                },                
+                },
             };
 
             _ReelIsciRepository.Setup(s => s.GetReelIscis(It.IsAny<List<string>>()))
@@ -908,10 +1276,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(result);
             _PlanIsciRepositoryMock.Verify(s =>
                 s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
-            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Exactly(0));           
+            _ReelIsciRepository.Verify(s => s.GetReelIscis(It.IsAny<List<string>>()), Times.Exactly(0));
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(saved));
         }
-       
+
         [Test]
         public void GetPlanIsciMappingsDetails()
         {
@@ -950,7 +1318,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightEndDate = DateTime.Parse("11/10/2021"),
                         SpotLengthId=1
                     }
-                }) ;
+                });
 
             _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto
@@ -993,14 +1361,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new AdvertiserDto() { Name = "Acme" });
 
             _AabEngineMock.Setup(s => s.GetAdvertiserProduct(It.IsAny<Guid>(), It.IsAny<Guid>()))
-                .Returns(new ProductDto {Name = "KaBlam!!!" });
+                .Returns(new ProductDto { Name = "KaBlam!!!" });
 
             // Act
             var result = _PlanIsciService.GetPlanIsciMappingsDetails(planId);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }       
+        }
 
         [Test]
         [TestCase("11/1/2021", "11/10/2021", "11/01 - 11/10/2021")]
@@ -1114,8 +1482,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             var isciPlanSearch = new IsciSearchDto
             {
-                WeekStartDate = new DateTime(2021, 11, 01),
-                WeekEndDate = new DateTime(2021, 11, 7),
+                WeekStartDate = new DateTime(2022, 08, 01),
+                WeekEndDate = new DateTime(2022, 08, 07),
                 UnmappedOnly = true
             };
 
@@ -1134,7 +1502,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         FlightStartDate = new DateTime(2021,08,29),
                         FlightEndDate = new DateTime(2021, 08, 31),
                         ProductMasterId = new Guid("6BEF080E-01ED-4D42-BE54-927110457907"),
-                        Iscis = new List<string>()
+                        Iscis = new List<string>(),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            }
+                        }
                     },
                     new IsciPlanDetailDto()
                     {
@@ -1150,10 +1543,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Iscis = new List<string>(),
                         UnifiedTacticLineId = "4CDA98D1-2F34-4B72-A4AD-72A012817E3C",
                         UnifiedCampaignLastSentAt = new DateTime(2021,07,15),
-                        UnifiedCampaignLastReceivedAt = new DateTime(2021,07,15)
+                        UnifiedCampaignLastReceivedAt = new DateTime(2021,07,15),
+                        FlightDays = new List<int?> { 1, 2, 3, 4, 5, 6, 7 },
+                        FlightHiatusDays = new List<DateTime>
+                        {
+                            new DateTime(2019,1,20),
+                            new DateTime(2019,4,15)
+                        },
+                          PlanDayparts = new List<PlanDaypartDto>
+                        {
+                              new PlanDaypartDto
+                            {
+                                DaypartCodeId = 2,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            },
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 11,
+                                StartTimeSeconds = 1500,
+                                EndTimeSeconds = 2788,
+                                WeightingGoalPercent = 33.2,
+
+                            }
+                        }
                     }
                 });
-
+            _StandardDaypartRepositoryMock.Setup(x => x.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>())).Returns(new List<int> { 1, 2, });
             _AabEngineMock
                 .Setup(x => x.GetAdvertisers())
                 .Returns(_AgencyAdvertiserBrandApiClientStub.GetAdvertisers());

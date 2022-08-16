@@ -367,7 +367,7 @@ namespace Services.Broadcast.BusinessEngines
                        roundRatings: true);
                 }
                 result.Add(newWeeklyBreakdownItem);
-            }            
+            }
 
             RecalculatePercentageOfWeekBasedOnImpressions(result);
 
@@ -637,7 +637,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 response.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, response.Weeks);
             }
-            
+
             return response;
         }
 
@@ -650,13 +650,13 @@ namespace Services.Broadcast.BusinessEngines
             {
                 request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
             }
-            
+
             if (_IsWeeklyBreakdownLockEnabled.Value)
             {
                 foreach (var week in request.Weeks)
-                {                   
+                {
                     if (week.IsLocked != true)
-                    {                        
+                    {
                         week.WeeklyBudget = 0;
                         week.WeeklyUnits = 0;
                         week.WeeklyRatings = 0;
@@ -670,7 +670,7 @@ namespace Services.Broadcast.BusinessEngines
             else
             {
                 foreach (var week in request.Weeks)
-                {                  
+                {
                     week.WeeklyBudget = 0;
                     week.WeeklyUnits = 0;
                     week.WeeklyRatings = 0;
@@ -688,7 +688,7 @@ namespace Services.Broadcast.BusinessEngines
                 totalImpressionsPercentage += 100 * weeklyRatio;
             }
 
-            result.Weeks.AddRange(request.Weeks);           
+            result.Weeks.AddRange(request.Weeks);
             result.TotalActiveDays = request.Weeks.Sum(x => x.NumberOfActiveDays);
             result.TotalBudget = request.Weeks.Sum(x => x.WeeklyBudget);
             result.TotalUnits = request.Weeks.Sum(x => x.WeeklyUnits);
@@ -978,7 +978,7 @@ namespace Services.Broadcast.BusinessEngines
             // Handle removal of weeks and week items
             _RemoveOutOfFlightWeeks(request.Weeks, weeks);
             _RemoveWeeksWithCreativeLengthNotPresentingInCurrentCreativeLengthsList(request.Weeks, creativeLengths);
-            
+
             // Handle week item additions
             var oldCreativeLengthIds = request.Weeks.Select(x => x.SpotLengthId.Value).Distinct().ToList();
             var newCreativeLengths = creativeLengths.Where(x => !oldCreativeLengthIds.Contains(x.SpotLengthId)).ToList();
@@ -1138,7 +1138,8 @@ namespace Services.Broadcast.BusinessEngines
                 // we want that added to the amount to redistribute.
                 foreach (var week in weeksToUpdate)
                 {
-                    week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
+                    List<int> daypartDayIds = _GetDaypartDayIds(request.Dayparts);
+                    week.NumberOfActiveDays = CalculatorHelper.CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, daypartDayIds, out string activeDaysString);
                     week.ActiveDays = activeDaysString;
 
                     // handle hiatus weeks
@@ -1169,7 +1170,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var week in weeksToUpdate)
             {
                 if (!week.IsLocked && week.NumberOfActiveDays > 0)
-                {                    
+                {
                     switch (request.WeeklyBreakdownCalculationFrom)
                     {
                         case WeeklyBreakdownCalculationFrom.Ratings:
@@ -1207,7 +1208,7 @@ namespace Services.Broadcast.BusinessEngines
                                 // get the components
                                 var daypartWeight = _GetDaypartWeight(week.DaypartUniquekey, request.Dayparts, request.DeliveryType);
                                 var spotLengthWeight = _GetSpotLengthWeight(week.SpotLengthId, request.CreativeLengths, request.DeliveryType);
-                                
+
                                 var currentImpressions = impressionsForThisWeek * daypartWeight * spotLengthWeight;
                                 week.WeeklyImpressions = Math.Floor(currentImpressions);
                             }
@@ -1282,7 +1283,8 @@ namespace Services.Broadcast.BusinessEngines
                 foreach (var item in standardDayparts)
                 {
                     var planDayparts = request.Dayparts.Where(d => d.DaypartUniquekey == item.DaypartUniquekey).ToList();
-                    var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, planDayparts, out string activeDaysString);
+                    List<int> daypartDayIds = _GetDaypartDayIds(planDayparts);
+                    var activeDays = CalculatorHelper.CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, daypartDayIds, out string activeDaysString);
 
                     var isWeekLocked = request.Weeks.Where(w => w.StartDate == week.WeekStartDate).FirstOrDefault()?.IsLocked ?? false;
 
@@ -1309,7 +1311,8 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
+                List<int> daypartDayIds = _GetDaypartDayIds(request.Dayparts);
+                var activeDays = CalculatorHelper.CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, daypartDayIds, out string activeDaysString);
 
                 resultWeeks.Add(new WeeklyBreakdownWeek
                 {
@@ -1330,7 +1333,8 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
+                List<int> daypartDayIds = _GetDaypartDayIds(request.Dayparts);
+                var activeDays = CalculatorHelper.CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, daypartDayIds, out string activeDaysString);
 
                 foreach (var creativeLength in creativeLengths)
                 {
@@ -1343,7 +1347,7 @@ namespace Services.Broadcast.BusinessEngines
                         MediaWeekId = week.Id,
                         SpotLengthId = creativeLength.SpotLengthId,
                         SpotLengthDuration = _GetWeeklySpotLengthDuration(creativeLength.SpotLengthId)
-                    });                    
+                    });
                 }
             }
         }
@@ -1421,7 +1425,7 @@ namespace Services.Broadcast.BusinessEngines
             var firstWeek = availableWeeks.Where(w => w.StartDate.Equals(firstWeekStart)).ToList();
 
             // distribute the remainder accross the week
-            foreach(var weekItem in firstWeek)
+            foreach (var weekItem in firstWeek)
             {
                 // distribute them per their weight per the current DeliveryType
                 var daypartWeight = _GetDaypartWeight(weekItem.DaypartUniquekey, request.Dayparts, request.DeliveryType);
@@ -1480,79 +1484,6 @@ namespace Services.Broadcast.BusinessEngines
                     });
                 }
             }
-        }
-
-        private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
-        {
-            // the FE sends with at least 1 empty daypart...
-            // look for valid dayparts for this calculation
-            var validDayparts = planDayparts?.Where(d => d.DaypartCodeId > 0).ToList();
-            if (validDayparts?.Any() != true)
-            {
-                return new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            }
-
-            var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
-            var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
-            return dayIds;
-        }
-
-        internal int _CalculateActiveDays(DateTime weekStartDate, DateTime weekEndDate,
-            List<int> flightDays, List<DateTime> hiatusDays, List<PlanDaypartDto> planDayparts,
-            out string activeDaysString)
-        {
-            var daysOfWeek = new List<string> { "M", "Tu", "W", "Th", "F", "Sa", "Su" };
-            activeDaysString = string.Empty;
-            var hiatusDaysInWeek = hiatusDays.Where(x => weekStartDate <= x && weekEndDate >= x).ToList();
-
-            var days = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            var planDaypartDayIds = _GetDaypartDayIds(planDayparts);
-            var nonPlanDaypartDays = days.Except(planDaypartDayIds);
-
-            var nonFlightDays = days.Except(flightDays);
-
-            var toRemove = nonFlightDays.Union(nonPlanDaypartDays).Distinct();
-            foreach (var day in toRemove)
-            {
-                daysOfWeek[day - 1] = null;
-            }
-
-            //if all the week is hiatus, return 0 active days
-            if (hiatusDaysInWeek.Count == 7)
-            {
-                return 0;
-            }
-
-            //construct the active days string
-            //null the hiatus days in the week
-            for (int i = 0; i < daysOfWeek.Count; i++)
-            {
-                if (hiatusDaysInWeek.Contains(weekStartDate.AddDays(i)))
-                {
-                    daysOfWeek[i] = null;
-                }
-            }
-
-            //group the active days that are not null
-            var groupOfActiveDays = daysOfWeek.GroupConnectedItems((a, b) => !string.IsNullOrWhiteSpace(a) && string.IsNullOrWhiteSpace(b));
-            var activeDaysList = new List<string>();
-            foreach (var group in groupOfActiveDays)
-            {
-                //if the group contains 1 or 2 elements, join them by comma
-                if (group.Count() == 1 || group.Count() == 2)
-                {
-                    activeDaysList.Add(string.Join(",", group));
-                }
-                else  //if the group contains more then 3 elements, join the first and the last one with "-"
-                {
-                    activeDaysList.Add($"{group.First()}-{group.Last()}");
-                }
-            }
-
-            activeDaysString = string.Join(",", activeDaysList);
-            var numberOfActiveDays = daysOfWeek.Where(x => x != null).Count();
-            //number of active days this week is 7 minus number of hiatus days
-            return numberOfActiveDays;
         }
 
         private void _UpdateGoalsForWeeklyBreakdownItem(
@@ -1759,7 +1690,7 @@ namespace Services.Broadcast.BusinessEngines
                             * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
 
         private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, bool? equivalized, double impressionsPerUnit, List<CreativeLength> creativeLengths)
-        {           
+        {
             foreach (var week in weeks)
             {
                 if (equivalized ?? false)
@@ -1782,7 +1713,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     week.WeeklyUnits = week.WeeklyImpressions / impressionsPerUnit;
                 }
-                week.WeeklyUnits=Math.Round(week.WeeklyUnits,2);
+                week.WeeklyUnits = Math.Round(week.WeeklyUnits, 2);
             }
         }
 
@@ -1882,6 +1813,21 @@ namespace Services.Broadcast.BusinessEngines
             plan.FlightEndDate = request.FlightEndDate;
             plan.FlightHiatusDays = request.FlightHiatusDays;
             return DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+        }
+
+        private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
+        {
+            // the FE sends with at least 1 empty daypart...
+            // look for valid dayparts for this calculation
+            var validDayparts = planDayparts?.Where(d => d.DaypartCodeId > 0).ToList();
+            if (validDayparts?.Any() != true)
+            {
+                return new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            }
+
+            var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
+            var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
+            return dayIds;
         }
     }
 }

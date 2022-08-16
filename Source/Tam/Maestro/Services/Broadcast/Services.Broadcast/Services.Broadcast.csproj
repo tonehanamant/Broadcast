@@ -1046,6 +1046,7 @@
     <Compile Include="BusinessEngines\CreativeLengthEngine.cs" />
     <Compile Include="Helpers\AsyncTaskHelper.cs" />
     <Compile Include="Helpers\BroadcastWeekHelper.cs" />
+    <Compile Include="Helpers\CalculatorHelper.cs" />
     <Compile Include="Helpers\DaypartHelper.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FeatureToggleHelper.cs" />
