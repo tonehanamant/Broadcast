@@ -7,6 +7,8 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class ProgramMappingServiceTests
     {
         private IProgramMappingService _ProgramMappingService;
-
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
         [SetUp]
         public void SetUp()
         {
@@ -97,7 +99,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             });
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IMasterProgramListImporter>(masterListImporterMock.Object);
-
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();           
+            
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_CENTRALIZED_PROGRAM_LIST] = false;           
             _ProgramMappingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
             var attachmentMicroServiceApiClientMock = new Mock<IAttachmentMicroServiceApiClient>();
             attachmentMicroServiceApiClientMock.Setup(m => m.RegisterAttachment("", "", ""))
@@ -133,6 +137,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(hasContent);
         }
 
+        
         [Test]
         public void ExportUnmappedPrograms()
         {
@@ -155,6 +160,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             //    exportedFile.Stream.CopyTo(fileStream);
             //    exportedFile.Stream.Seek(0, SeekOrigin.Begin);
             //}
+
+            // verify the stream has contents
+            string fileContent;
+            using (var reader = new StreamReader(exportedFile.Stream))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+            var hasContent = fileContent.Length > 0;
+            Assert.IsTrue(hasContent);
+        }
+
+        [Test]
+        public void ExportUnmappedPrograms_ToggleOn()
+        {
+            // the content format, etc is tested via unit tests.
+            // here we will just test that it runs end to end 
+            // and the export stream is not empty
+            const string expectedFileName = "Unmapped_";
+            const string fileExtension = ".zip";
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_CENTRALIZED_PROGRAM_LIST] = true;
+            var exportedFile = _ProgramMappingService.ExportUnmappedPrograms();
+
+            // verify it's named well
+            Assert.IsTrue(exportedFile.Filename.StartsWith(expectedFileName));
+            Assert.IsTrue(exportedFile.Filename.EndsWith(fileExtension));            
 
             // verify the stream has contents
             string fileContent;

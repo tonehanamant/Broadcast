@@ -559,7 +559,15 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _LogInfo("Importing the master program list.");
-            var masterProgramList = _MasterProgramListImporter.ImportMasterProgramList();
+            List<ProgramMappingsDto> masterProgramList = new List<ProgramMappingsDto>();
+            if (_IsCentralizedProgramListEnabled.Value)
+            {
+              masterProgramList =  _ProgramMappingRepository.GetProgramsAndGeneresFromDataTable();
+            }
+            else
+            {
+                masterProgramList = _MasterProgramListImporter.ImportMasterProgramList();
+            }             
             _LogInfo($"Imported the master program list : {masterProgramList.Count} programs");
 
             _LogInfo("Attempting matching suggestions programs against the master program list.");

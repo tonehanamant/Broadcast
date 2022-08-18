@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IProgramNameMappingKeywordRepository> _ProgramNameMappingKeywordRepositoryMock;
         private Mock<IMasterProgramListImporter> _MasterListImporterMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-       
+
         private Mock<IGenreCache> _GenreCache;
         private IShowTypeCache _ShowTypeCacheStub;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
@@ -526,7 +526,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 FileContent = fileStream
             };
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
-          
+
             _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
 
             // Master list
@@ -697,7 +697,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 FileContent = fileStream
             };
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
-           
+
             _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
 
             // Master list
@@ -750,10 +750,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                      ShowTypeName = "Special"
                 }
             });
-            
-            _GenreCache.Setup(s => s.GetMaestroGenreByName(It.IsAny<string>())).Returns<string>(s => new Genre { Name = s});
+
+            _GenreCache.Setup(s => s.GetMaestroGenreByName(It.IsAny<string>())).Returns<string>(s => new Genre { Name = s });
             _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
-            
+
             var exception = Assert.Throws<InvalidOperationException>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now));
             Assert.That(exception.Message, Is.EqualTo("Error parsing program 'Good Morning NFL': Mapping Program name 'Good Morning NFL' found, but mistmatched on Genre. Found expected genres : 'Drama'.; MetaData=Good Morning NFL|Good Morning NFL|Sports;\r\n"));
             fileStream.Close();
@@ -783,7 +783,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 FileContent = fileStream
             };
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
-            
+
             _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
 
             // Master list
@@ -836,7 +836,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                      ShowTypeName = "Special"
                 }
             });
-            
+
             _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
             // this forces a "genre not found" error
             _GenreCache.Setup(s => s.GetMaestroGenreByName(It.IsAny<string>()))
