@@ -2700,7 +2700,7 @@ namespace Services.Broadcast.Repositories
 
                 // get the latest Job
                 var jobEntity = context.plan_version_pricing_job
-                    .Where(j => j.plan_version_id == planVersionId)
+                    .Where(j => j.plan_version_id == planVersionId && j.status==(int)BackgroundJobProcessingStatus.Succeeded)
                     .OrderByDescending(j => j.id)
                     .FirstOrDefault();
 
