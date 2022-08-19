@@ -92,9 +92,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
+                var registerResult = _AttachmentMicroServiceApiClient.RegisterAttachment(file.FileName, file.CreatedBy, "");
                 if (_IsAttachementMicroServiceEnabled.Value)
-                {
-                    var registerResult = _AttachmentMicroServiceApiClient.RegisterAttachment(file.FileName, file.CreatedBy, "");
+                {                   
                     if (registerResult != null)
                     {
                         file.AttachmentId = registerResult.AttachmentId;
