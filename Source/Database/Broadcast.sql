@@ -1249,6 +1249,16 @@ GO
 
 /*************************************** END BP-5276 ***************************************/
 
+/*************************************** START BP-5361 ***************************************/
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_details' AND COLUMN_NAME= 'plan_total_contracted_impressions')
+BEGIN
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD plan_total_contracted_impressions float NULL,
+		    plan_total_delivered_impressions  float NULL
+END
+GO
+/*************************************** END BP-5361 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

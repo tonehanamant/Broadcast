@@ -2490,6 +2490,8 @@
           <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="spot_delivered_impression" Type="float" Nullable="false" />
+          <Property Name="plan_total_contracted_impressions" Type="float" />
+          <Property Name="plan_total_delivered_impressions" Type="float" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plans">
           <Key>
@@ -18568,6 +18570,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="spot_delivered_impression" Type="Double" Nullable="false" />
+          <Property Name="plan_total_contracted_impressions" Type="Double" />
+          <Property Name="plan_total_delivered_impressions" Type="Double" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plans">
           <Key>
@@ -21913,6 +21917,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_recommended_plan_details">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_details">
               <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_details">
+                <ScalarProperty Name="plan_total_delivered_impressions" ColumnName="plan_total_delivered_impressions" />
+                <ScalarProperty Name="plan_total_contracted_impressions" ColumnName="plan_total_contracted_impressions" />
                 <ScalarProperty Name="spot_delivered_impression" ColumnName="spot_delivered_impression" />
                 <ScalarProperty Name="plan_execution_id_external" ColumnName="plan_execution_id_external" />
                 <ScalarProperty Name="plan_spot_unique_hash_external" ColumnName="plan_spot_unique_hash_external" />
