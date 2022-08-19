@@ -78,6 +78,16 @@ namespace Services.Broadcast.ApplicationServices
         /// Export the unmapped programs
         /// </summary>
         ReportOutput ExportUnmappedPrograms();
+
+        /// <summary>
+        /// Loads the Master file.
+        /// </summary>
+        /// <param name="fileStream">The file stream.</param>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="createdDate">The created date.</param>
+        /// <returns>The background jobs Id</returns>
+        void UploadProgramsFromBroadcastOps(Stream fileStream, string fileName, string userName, DateTime createdDate);
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -779,6 +789,43 @@ namespace Services.Broadcast.ApplicationServices
                     throw new InvalidOperationException($"There is error with record OriginalProgramName: {mapping.OriginalProgramName}, OfficialProgramName: {mapping.OfficialProgramName} ", e);
                 }
             }
+        }
+
+        /// <inheritdoc />
+        public void UploadProgramsFromBroadcastOps(Stream fileStream, string fileName, string userName, DateTime createdDate)
+        {
+
+            var masterList = _MasterProgramListImporter.UploadMasterProgramList(fileStream);
+
+            var distinctMasterList = _RemoveDuplicateFromMasterList(masterList);
+
+            var masterDbList = _ProgramMappingRepository.GetMasterPrograms();
+
+            var uniqueList = new List<ProgramMappingsDto>();
+            foreach (var disctinctMaster in distinctMasterList)
+            {
+                var disctinctMasterCount = masterDbList.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper() && x.GenreId == disctinctMaster.OfficialGenre.Id);
+                if (disctinctMasterCount > 0)
+                {
+                    //do nothing
+                }
+                else
+                {
+                    uniqueList.Add(disctinctMaster);
+                }
+            }
+
+            _ProgramMappingRepository.UploadMasterProgramMappings(uniqueList, userName, createdDate);
+        }
+        private List<ProgramMappingsDto> _RemoveDuplicateFromMasterList(List<ProgramMappingsDto> masterList)
+        {
+            var distinctMasterList = masterList
+                .GroupBy(x => new { x.OfficialGenre.Id, x.OfficialProgramName })
+                .Select(x => x.First())
+                .OrderBy(x => x.OfficialProgramName)
+                .ToList();
+
+            return distinctMasterList;
         }
     }
 }

@@ -554,6 +554,7 @@
     <Compile Include="Clients\SpotExceptionsIngestApiConfigKeys.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
+    <Compile Include="Entities\MasterProgramsDto.cs" />
     <Compile Include="Entities\MigrateFilesToAttachmentServiceResult.cs" />
     <Compile Include="Entities\AabAdvertiserDto.cs" />
     <Compile Include="Entities\ApiResponse\ApiResponse.cs" />
@@ -621,6 +622,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultsReportRequest.cs" />
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\Plan\SearchPlanDto.cs" />
+    <Compile Include="Entities\programs.cs" />
     <Compile Include="Entities\RatingsForecastResponseDto.cs" />
     <Compile Include="Entities\RatingsForecastRequestDto.cs" />
     <Compile Include="Entities\RegisterRequestDto.cs" />

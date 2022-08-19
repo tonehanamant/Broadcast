@@ -11,6 +11,7 @@ namespace Services.Broadcast.Converters
     public interface IMasterProgramListImporter
     {
         List<ProgramMappingsDto> ImportMasterProgramList();
+        List<ProgramMappingsDto> UploadMasterProgramList(Stream stream);
     }
 
     public class MasterProgramListImporter : BroadcastBaseClass, IMasterProgramListImporter
@@ -133,5 +134,56 @@ namespace Services.Broadcast.Converters
 
             return fileStream.BaseStream;
         }
+
+        public List<ProgramMappingsDto> UploadMasterProgramList(Stream stream)
+        {
+            var csvFileReader = new CsvFileReader(FileHeaders, Delimiters, throwExceptions: false);
+            var masterList = new List<ProgramMappingsDto>();
+
+            using (csvFileReader.Initialize(stream))
+            {
+                int LineIndex = 1;
+                while (csvFileReader.IsEOF() == false)
+                {
+                    csvFileReader.NextRow();
+                    try
+                    {
+                        var genre = csvFileReader.GetCellValue(Genre);
+                        if (genre == "NULL")
+                        {
+                            _LogWarning($"Line {LineIndex} has an invalid Genre of 'NULL'");
+                        }
+                        else
+                        {
+                            var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(genre, ProgramSourceEnum.Master);
+                            var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
+                            var officialGenre = _GenreCache.GetMaestroGenreByName(maestroGenre.Display);
+
+                            var sourceShowType = _ShowTypeCache.GetMasterShowTypeByName(csvFileReader.GetCellValue(ShowType));
+                            var maestroShowType = _ShowTypeCache.GetMaestroShowTypeByMasterShowType(sourceShowType);
+
+                            var programMapping = new ProgramMappingsDto
+                            {
+                                Id = Convert.ToInt32(csvFileReader.GetCellValue(ProgramId)),
+                                OfficialProgramName = csvFileReader.GetCellValue(Title),
+                                OfficialGenre = officialGenre,
+                                OfficialShowType = maestroShowType
+                            };
+
+                            if (!string.IsNullOrWhiteSpace(programMapping.OfficialProgramName))
+                                masterList.Add(programMapping);
+                        }
+                        LineIndex++;
+                    }
+                    catch (Exception exception)
+                    {
+                        _LogWarning($"Error parsing program mapping in master list with exception: {exception.Message}");
+                    }
+                }
+            }
+
+            return masterList;
+        }
+
     }
 }

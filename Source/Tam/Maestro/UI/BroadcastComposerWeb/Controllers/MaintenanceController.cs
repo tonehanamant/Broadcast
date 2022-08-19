@@ -1037,6 +1037,37 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("UploadProgramsFromBroadcastOps")]
+        public ActionResult UploadProgramsFromBroadcastOps(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                if (!fileName.EndsWith(".txt"))
+                {
+                    TempData["Message"] = "Only Text (.txt) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                        service.UploadProgramsFromBroadcastOps(file.InputStream, fileName, "maintenance controller", DateTime.Now);
+                        TempData["Message"] = $"Master file Uploaded Successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["Message"] = ex.Message;
+                    }
+                }
+            }
+
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
         public ActionResult TestPricingRequestLogBucket()
         {
             try

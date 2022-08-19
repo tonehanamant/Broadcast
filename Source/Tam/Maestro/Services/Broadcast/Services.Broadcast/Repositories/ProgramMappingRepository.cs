@@ -34,6 +34,10 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>List Of Master Programs</returns>
         List<ProgramMappingsDto> GetProgramsAndGeneresFromDataTable();
+
+        void UploadMasterProgramMappings(IEnumerable<ProgramMappingsDto> newProgramMappings, string createdBy, DateTime createdAt);
+
+        List<MasterProgramsDto> GetMasterPrograms();
     }
 
     public class ProgramMappingRepository : BroadcastRepositoryBase, IProgramMappingRepository
@@ -249,6 +253,60 @@ namespace Services.Broadcast.Repositories
                     ShowTypeSource = (ProgramSourceEnum)programMappings.show_types.program_source_id
                 }
             };
+        }
+
+        /// <inheritdoc />
+        public void UploadMasterProgramMappings(IEnumerable<ProgramMappingsDto> masterPrograms, string createdBy, DateTime createdAt)
+        {
+            var chunks = masterPrograms.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
+
+            foreach (var chunk in chunks)
+            {
+                _InReadUncommitedTransaction(context =>
+                {
+                    var recordsToInsert = chunk
+                        .Select(x =>
+                        {
+                            var masterProgram = new programs();
+                            _MapToProgramsDto(x, masterProgram);
+                            return masterProgram;
+                        })
+                        .ToList();
+
+                    BulkInsert(context, recordsToInsert, propertiesToIgnore: new List<string> { "id" });
+                });
+            }
+        }
+
+        public List<MasterProgramsDto> GetMasterPrograms()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var masterEntities = context.programs.ToList();
+
+                var masterPrograms = masterEntities.Select(_MapToMasterProgramsDto).ToList();
+                return masterPrograms;
+            });
+        }
+
+        private MasterProgramsDto _MapToMasterProgramsDto(program masterProgram)
+        {
+            if (masterProgram == null)
+            {
+                return null;
+            }
+            return new MasterProgramsDto
+            {
+                Name = masterProgram.name,
+                ShowTypeId = masterProgram.show_type_id,
+                GenreId = masterProgram.genre_id
+            };
+        }
+        private void _MapToProgramsDto(ProgramMappingsDto programMappingDto, programs masterProgram)
+        {
+            masterProgram.genre_id = programMappingDto.OfficialGenre.Id;
+            masterProgram.name = programMappingDto.OfficialProgramName;
+            masterProgram.show_type_id = programMappingDto.OfficialShowType.Id;
         }
     }
 }
