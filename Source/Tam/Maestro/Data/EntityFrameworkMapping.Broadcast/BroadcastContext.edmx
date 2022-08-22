@@ -173,6 +173,14 @@
           <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="127" Nullable="false" />
         </EntityType>
+        <EntityType Name="campaign_plan_secondary_audiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="campaign_id" Type="int" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="campaign_summaries">
           <Key>
             <PropertyRef Name="id" />
@@ -3301,6 +3309,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="vpvhs">
               <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_campaign_plan_secondary_audiences_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="campaign_plan_secondary_audiences" Type="Self.campaign_plan_secondary_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campaign_plan_secondary_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_campaign_plan_secondary_audiences_campaigns">
+          <End Role="campaigns" Type="Self.campaigns" Multiplicity="1" />
+          <End Role="campaign_plan_secondary_audiences" Type="Self.campaign_plan_secondary_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaigns">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campaign_plan_secondary_audiences">
+              <PropertyRef Name="campaign_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7472,6 +7504,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="audience_audiences" EntityType="Self.audience_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audience_maps" EntityType="Self.audience_maps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="audiences" EntityType="Self.audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="campaign_plan_secondary_audiences" EntityType="Self.campaign_plan_secondary_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="campaign_summaries" EntityType="Self.campaign_summaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="campaigns" EntityType="Self.campaigns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="custom_daypart_organizations" EntityType="Self.custom_daypart_organizations" Schema="dbo" store:Type="Tables" />
@@ -7777,6 +7810,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_audiences_vpvhs" Association="Self.FK_audiences_vpvhs">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="vpvhs" EntitySet="vpvhs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_campaign_plan_secondary_audiences_audiences" Association="Self.FK_campaign_plan_secondary_audiences_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="campaign_plan_secondary_audiences" EntitySet="campaign_plan_secondary_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_campaign_plan_secondary_audiences_campaigns" Association="Self.FK_campaign_plan_secondary_audiences_campaigns">
+            <End Role="campaigns" EntitySet="campaigns" />
+            <End Role="campaign_plan_secondary_audiences" EntitySet="campaign_plan_secondary_audiences" />
           </AssociationSet>
           <AssociationSet Name="FK_campaign_summaries_campaign" Association="Self.FK_campaign_summaries_campaign">
             <End Role="campaigns" EntitySet="campaigns" />
@@ -10672,6 +10713,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program" EntitySet="programs" />
           </AssociationSet>
+          <EntitySet Name="campaign_plan_secondary_audiences" EntityType="BroadcastModel.campaign_plan_secondary_audiences" />
+          <AssociationSet Name="FK_campaign_plan_secondary_audiences_audiences" Association="BroadcastModel.FK_campaign_plan_secondary_audiences_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="campaign_plan_secondary_audiences" EntitySet="campaign_plan_secondary_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_campaign_plan_secondary_audiences_campaigns" Association="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns">
+            <End Role="campaign" EntitySet="campaigns" />
+            <End Role="campaign_plan_secondary_audiences" EntitySet="campaign_plan_secondary_audiences" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -10726,6 +10776,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" FromRole="audience" ToRole="plan_version_audience_daypart_vpvh" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="audience" ToRole="plan_versions" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="audience" ToRole="spot_exceptions_out_of_specs" />
+          <NavigationProperty Name="campaign_plan_secondary_audiences" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_audiences" FromRole="audience" ToRole="campaign_plan_secondary_audiences" />
           </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -13958,6 +14009,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="max_fluidity_percent" Type="Int32" />
           <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="campaign_plan_secondary_audiences" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" FromRole="campaign" ToRole="campaign_plan_secondary_audiences" />
         </EntityType>
         <Association Name="FK_proposals_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
@@ -18750,6 +18802,40 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="campaign_plan_secondary_audiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campaign_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_audiences" FromRole="campaign_plan_secondary_audiences" ToRole="audience" />
+          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" FromRole="campaign_plan_secondary_audiences" ToRole="campaign" />
+        </EntityType>
+        <Association Name="FK_campaign_plan_secondary_audiences_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.campaign_plan_secondary_audiences" Role="campaign_plan_secondary_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campaign_plan_secondary_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_campaign_plan_secondary_audiences_campaigns">
+          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
+          <End Type="BroadcastModel.campaign_plan_secondary_audiences" Role="campaign_plan_secondary_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaign">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="campaign_plan_secondary_audiences">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -22032,6 +22118,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="campaign_plan_secondary_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.campaign_plan_secondary_audiences">
+              <MappingFragment StoreEntitySet="campaign_plan_secondary_audiences">
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

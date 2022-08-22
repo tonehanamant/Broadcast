@@ -354,6 +354,9 @@
     <Compile Include="campaign.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="campaign_plan_secondary_audiences.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="campaign_summaries.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

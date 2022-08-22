@@ -1259,6 +1259,21 @@ END
 GO
 /*************************************** END BP-5361 ***************************************/
 
+/*************************************** END BP-5360 ***************************************/
+IF OBJECT_ID('campaign_plan_secondary_audiences') IS NULL
+BEGIN
+ CREATE TABLE dbo.campaign_plan_secondary_audiences
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,		
+		campaign_id  int NOT NULL,
+		audience_id  int NOT NULL
+	)
+ALTER TABLE campaign_plan_secondary_audiences ADD CONSTRAINT FK_campaign_plan_secondary_audiences_audiences FOREIGN KEY(audience_id) REFERENCES audiences(id)
+ALTER TABLE campaign_plan_secondary_audiences ADD CONSTRAINT FK_campaign_plan_secondary_audiences_campaigns FOREIGN KEY(campaign_id) REFERENCES campaigns(id)
+END
+GO
+/*************************************** END BP-5360 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

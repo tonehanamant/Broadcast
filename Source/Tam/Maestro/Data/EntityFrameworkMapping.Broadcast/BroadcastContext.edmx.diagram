@@ -577,6 +577,9 @@
         <EntityTypeShape EntityType="BroadcastModel.program" Width="1.5" PointX="28.25" PointY="55.375" />
         <AssociationConnector Association="BroadcastModel.FK_programs_genres" />
         <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
+        <EntityTypeShape EntityType="BroadcastModel.campaign_plan_secondary_audiences" Width="1.5" PointX="5" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_campaign_plan_secondary_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
