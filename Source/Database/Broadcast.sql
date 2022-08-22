@@ -1274,6 +1274,19 @@ END
 GO
 /*************************************** END BP-5360 ***************************************/
 
+/*************************************** START BP-5173 ***************************************/
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'staged_recommended_plan_details' AND COLUMN_NAME = 'spot_delivered_impression')
+BEGIN
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD spot_delivered_impression float NULL,
+			plan_total_contracted_impressions float NULL,
+		    plan_total_delivered_impressions  float NULL
+END
+GO
+/*************************************** END BP-5173 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
