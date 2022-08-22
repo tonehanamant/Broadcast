@@ -86,6 +86,11 @@ namespace Services.Broadcast.Clients
                     lockingResult.LockTimeoutInSeconds = 900;
                     lockingResult.LockedUserId = _GetUserName(lockingApiItemResponse.Message);
                     lockingResult.LockedUserName = _GetUserName(lockingApiItemResponse.Message);
+                    if (lockingResult.LockedUserId == String.Empty)
+                    {
+                        _LogInfo("Error occured while locking object, message:" + lockingApiItemResponse.Message);
+                        throw new InvalidOperationException(String.Format("Error occured while locking object, message:{0}", lockingApiItemResponse.Message));
+                    }
                 }
                 else
                 {
@@ -95,7 +100,7 @@ namespace Services.Broadcast.Clients
                     lockingResult.LockedUserName = lockingApiObjectResponse.owner;                                   
                 }
                 lockingResult.Success = lockingApiItemResponse.Success;
-                lockingResult.Error = lockingApiItemResponse.Message;
+                lockingResult.Error = lockingApiItemResponse.Message;                
                 _LogInfo("Successfully locked the object with: " + JsonConvert.SerializeObject(lockingRequest));
                 return lockingResult;
             }
@@ -295,7 +300,7 @@ namespace Services.Broadcast.Clients
         private string _GetUserName(string errorMessage)
         {
             string toBeSearched = "user";
-            string userName = "A User"; 
+            string userName = String.Empty; 
             int ix = errorMessage.IndexOf(toBeSearched);
             if (ix != -1)
             {
