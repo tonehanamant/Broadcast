@@ -911,6 +911,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private PlanPricingResponseDto _CancelCurrentPricingExecution(PlanPricingJob job)
         {
+            var cancelId = Guid.NewGuid();
+            _LogInfo("Cancel operation started. Entered on CancelCurrentPricingExecution...", cancelId);
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
                 throw new CadentException("Error encountered while running Pricing Model, please contact a system administrator for help");
@@ -925,6 +927,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 try
                 {
+                    var deleteId = Guid.NewGuid();
+                    _LogInfo("Cancel operation started. Entered on CancelCurrentPricingExecution...", deleteId);
                     _BackgroundJobClient.Delete(job.HangfireJobId);
                 }
                 catch (Exception ex)
@@ -932,7 +936,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _LogError($"Exception caught attempting to delete hangfire job '{job.HangfireJobId}'.", ex);
                 }
             }
-
+            var cancelDBId = Guid.NewGuid();
+            _LogInfo("Cancel DB operation started. Entered on CancelCurrentPricingExecution...", cancelDBId);
             job.Status = BackgroundJobProcessingStatus.Canceled;
             job.Completed = _DateTimeEngine.GetCurrentMoment();
 
@@ -1445,6 +1450,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             catch (Exception exception) when (exception is ObjectDisposedException || exception is OperationCanceledException)
             {
+                var cancelMessageId = Guid.NewGuid();
+                _LogInfo("Cancel error messages in Db process start...", cancelMessageId);
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, "Running the pricing model was canceled.", diagnostic);
             }
             catch (Exception exception)
