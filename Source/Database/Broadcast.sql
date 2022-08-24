@@ -1301,6 +1301,23 @@ END
 GO
 /*************************************** END BP-5341 ***************************************/
 
+/*************************************** START BP-5343 ***************************************/
+IF EXISTS (SELECT UPPER(IS_NULLABLE) FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'spot_exceptions_recommended_plan_details' 
+	AND COLUMN_NAME= 'spot_delivered_impression' 
+	AND UPPER(IS_NULLABLE) = UPPER('NO'))
+BEGIN
+
+	DELETE FROM spot_exceptions_recommended_plan_decision
+	DELETE FROM spot_exceptions_recommended_plan_details
+	DELETE FROM spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ALTER COLUMN spot_delivered_impression float NULL
+END
+GO
+/*************************************** END BP-5343 ***************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

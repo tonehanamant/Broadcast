@@ -143,6 +143,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 0.0,
                             PlanTotalContractedImpressions = 5000,
                             PlanTotalDeliveredImpressions = 5000,
                             RecommendedPlanDetail = new RecommendedPlanDetailDto
@@ -190,6 +191,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            SpotDeliveredImpressions = 0.0,
                             PlanTotalDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 5000,
                             RecommendedPlanDetail = new RecommendedPlanDetailDto
@@ -2130,6 +2132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                                 {
                                     UserName = ingestedBy,
@@ -2157,6 +2160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
@@ -2211,6 +2215,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null
                             },
                             new SpotExceptionsRecommendedPlanDetailsDto
@@ -2233,6 +2238,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
@@ -2287,6 +2293,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
@@ -2314,6 +2321,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null
                             }
                         }
@@ -2363,6 +2371,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null
                             },
                             new SpotExceptionsRecommendedPlanDetailsDto
@@ -2385,6 +2394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 SpotExceptionsRecommendedPlanDecision = null,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
@@ -2654,6 +2664,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 301,
@@ -2699,6 +2710,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 302,
@@ -2776,6 +2788,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 302,
@@ -2853,6 +2866,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 302,
@@ -3016,6 +3030,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 301,
@@ -3061,6 +3076,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 302,
@@ -3138,6 +3154,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 302,
@@ -3215,6 +3232,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Id = 302,
@@ -3328,6 +3346,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Name = "4Q' 21 Reynolds Foil TDN and SYN Upfront"
@@ -3359,6 +3378,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Friday = 1,
                                 Saturday = 1,
                                 Sunday = 1,
+                                SpotDeliveredImpressions = 0.0,
                                 RecommendedPlanDetail = new RecommendedPlanDetailDto
                                 {
                                     Name = "3Q' 21 Reynolds Foil TDN and SYN Upfront"
