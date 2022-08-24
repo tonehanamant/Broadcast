@@ -25,13 +25,13 @@
       "TotalContractedImpressions": 5.0,
       "TotalDeliveredImpressionsSelected": 10.0,
       "TotalDeliveredImpressionsUnselected": 5.0,
-      "TotalPacingSelected": 0.1,
-      "TotalPacingUnselected": 0.1,
+      "TotalPacingSelected": 100.0,
+      "TotalPacingUnselected": 100.0,
       "WeeklyContractedImpressions": 100.0,
       "WeeklyDeliveredImpressionsSelected": 50.0,
       "WeeklyDeliveredImpressionsUnselected": 50.0,
-      "WeeklyPacingSelected": 0.05,
-      "WeeklyPacingUnselected": 0.05
+      "WeeklyPacingSelected": 50.0,
+      "WeeklyPacingUnselected": 50.0
     },
     {
       "AcceptedAsInSpec": null,
@@ -52,13 +52,13 @@
       "TotalContractedImpressions": 5.0,
       "TotalDeliveredImpressionsSelected": 55.0,
       "TotalDeliveredImpressionsUnselected": 50.0,
-      "TotalPacingSelected": 1.0,
-      "TotalPacingUnselected": 1.0,
+      "TotalPacingSelected": 1000.0,
+      "TotalPacingUnselected": 1000.0,
       "WeeklyContractedImpressions": 100.0,
       "WeeklyDeliveredImpressionsSelected": 50.0,
       "WeeklyDeliveredImpressionsUnselected": 50.0,
-      "WeeklyPacingSelected": 0.05,
-      "WeeklyPacingUnselected": 0.05
+      "WeeklyPacingSelected": 50.0,
+      "WeeklyPacingUnselected": 50.0
     }
   ],
   "Product": null,

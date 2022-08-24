@@ -1348,14 +1348,14 @@ namespace Services.Broadcast.ApplicationServices
                     Impressions = spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions/1000,
                     TotalContractedImpressions = spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions /1000,
                     TotalDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions + spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions) / 1000,
-                    TotalPacingSelected = (((spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100) / 1000,
+                    TotalPacingSelected = ((spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100,
                     TotalDeliveredImpressionsUnselected = spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions/1000,
-                    TotalPacingUnselected = ((spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100 ) / 1000,
+                    TotalPacingUnselected = (spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100,
                     WeeklyContractedImpressions = spotExceptionsRecommendedPlanDetail.ContractedImpressions / 1000,
                     WeeklyDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / 1000,
-                    WeeklyPacingSelected = (((spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100) /1000,
+                    WeeklyPacingSelected = ((spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100,
                     WeeklyDeliveredImpressionsUnselected = spotExceptionsRecommendedPlanDetail.DeliveredImpressions / 1000,
-                    WeeklyPacingUnselected = ((spotExceptionsRecommendedPlanDetail.DeliveredImpressions / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100) / 1000,
+                    WeeklyPacingUnselected = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100,
                 }).ToList()
             };
             if (spotExceptionsRecommendedPlanDetailsResult.Plans != null &&
