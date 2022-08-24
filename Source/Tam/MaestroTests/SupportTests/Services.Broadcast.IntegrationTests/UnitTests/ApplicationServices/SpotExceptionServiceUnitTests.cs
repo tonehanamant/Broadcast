@@ -143,6 +143,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanTotalContractedImpressions = 5000,
+                            PlanTotalDeliveredImpressions = 5000,
                             RecommendedPlanDetail = new RecommendedPlanDetailDto
                             {
                                 Id = 301,
@@ -188,6 +190,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
+                            PlanTotalDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 5000,
                             RecommendedPlanDetail = new RecommendedPlanDetailDto
                             {
                                 Id = 302,

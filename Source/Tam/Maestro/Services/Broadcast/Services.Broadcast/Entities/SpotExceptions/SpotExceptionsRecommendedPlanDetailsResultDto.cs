@@ -39,5 +39,15 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string AudienceName { get; set; }
         public string Product { get; set; }
         public double? Impressions { get; set; }
+        public double? TotalContractedImpressions { get; set; }
+        public double? TotalDeliveredImpressionsSelected { get; set; }
+        public double? TotalPacingSelected { get; set; }
+        public double? TotalDeliveredImpressionsUnselected { get; set; }
+        public double? TotalPacingUnselected { get; set; }
+        public double? WeeklyContractedImpressions { get; set; }
+        public double? WeeklyDeliveredImpressionsSelected { get; set; }
+        public double? WeeklyPacingSelected { get; set; }
+        public double? WeeklyDeliveredImpressionsUnselected { get; set; }
+        public double? WeeklyPacingUnselected { get; set; }
     }
 }

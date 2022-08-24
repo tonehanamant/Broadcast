@@ -306,6 +306,9 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
+
                             SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
                                 UserName = "MockData",
@@ -336,6 +339,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -384,6 +389,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -409,6 +416,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -457,6 +466,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -480,6 +491,8 @@ namespace Services.Broadcast.ApplicationServices
                             Saturday = 1,
                             Sunday = 1,
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -528,6 +541,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -551,6 +566,8 @@ namespace Services.Broadcast.ApplicationServices
                             Saturday = 1,
                             Sunday = 1,
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -599,6 +616,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -622,6 +641,8 @@ namespace Services.Broadcast.ApplicationServices
                             Saturday = 1,
                             Sunday = 1,
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -670,6 +691,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -693,6 +716,8 @@ namespace Services.Broadcast.ApplicationServices
                             Saturday = 1,
                             Sunday = 1,
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -741,6 +766,8 @@ namespace Services.Broadcast.ApplicationServices
                             PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                             PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -764,6 +791,8 @@ namespace Services.Broadcast.ApplicationServices
                             Saturday = 1,
                             Sunday = 1,
                             SpotDeliveredImpressions = 50000,
+                            PlanTotalContractedImpressions = 50000,
+                            PlanTotalDeliveredImpressions = 50000,
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -1310,13 +1339,23 @@ namespace Services.Broadcast.ApplicationServices
                     FlightDateString = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
                     IsRecommendedPlan = spotExceptionsRecommendedPlanDetail.IsRecommendedPlan,
                     IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null,
-                    Pacing = _GetPacing(),
+                    Pacing = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100 + "%",
                     AcceptedAsInSpec = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision?.AcceptedAsInSpec,
                     RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId,
                     AudienceName = spotExceptionsRecommendedPlanDetail.AudienceName,
                     Product = _GetProductName(recommendedPlan.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlan.RecommendedPlanDetail.ProductMasterId),
                     DaypartCode = spotExceptionsRecommendedPlanDetail.DaypartCode,
                     Impressions = spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions/1000,
+                    TotalContractedImpressions = spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions /1000,
+                    TotalDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions + spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions) / 1000,
+                    TotalPacingSelected = (((spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100) / 1000,
+                    TotalDeliveredImpressionsUnselected = spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions/1000,
+                    TotalPacingUnselected = ((spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100 ) / 1000,
+                    WeeklyContractedImpressions = spotExceptionsRecommendedPlanDetail.ContractedImpressions / 1000,
+                    WeeklyDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / 1000,
+                    WeeklyPacingSelected = (((spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100) /1000,
+                    WeeklyDeliveredImpressionsUnselected = spotExceptionsRecommendedPlanDetail.DeliveredImpressions / 1000,
+                    WeeklyPacingUnselected = ((spotExceptionsRecommendedPlanDetail.DeliveredImpressions / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100) / 1000,
                 }).ToList()
             };
             if (spotExceptionsRecommendedPlanDetailsResult.Plans != null &&

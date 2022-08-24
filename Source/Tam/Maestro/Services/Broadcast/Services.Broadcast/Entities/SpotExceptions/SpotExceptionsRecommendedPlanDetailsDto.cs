@@ -160,5 +160,7 @@ namespace Services.Broadcast.Entities.SpotExceptions
         /// Get or sets the Impression 
         /// </summary>
         public double SpotDeliveredImpressions { get; set; }
+        public double? PlanTotalContractedImpressions { get; set; }
+        public double? PlanTotalDeliveredImpressions { get; set; }
     }
 }

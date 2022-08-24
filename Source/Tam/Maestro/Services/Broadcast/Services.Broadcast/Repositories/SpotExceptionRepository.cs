@@ -263,7 +263,9 @@ namespace Services.Broadcast.Repositories
                                     sunday = recommendedPlanDetails.Sunday,
                                     plan_spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
                                     plan_execution_id_external = recommendedPlan.ExecutionIdExternal,
-                                    spot_delivered_impression = recommendedPlanDetails.SpotDeliveredImpressions
+                                    spot_delivered_impression = recommendedPlanDetails.SpotDeliveredImpressions,
+                                    plan_total_contracted_impressions = recommendedPlanDetails.PlanTotalContractedImpressions,
+                                    plan_total_delivered_impressions = recommendedPlanDetails.PlanTotalDeliveredImpressions
                                 };
                                 if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
                                 {
@@ -622,6 +624,8 @@ namespace Services.Broadcast.Repositories
                         Saturday = spotExceptionsRecommendedPlanDetailDb.saturday,
                         Sunday = spotExceptionsRecommendedPlanDetailDb.sunday,
                         SpotDeliveredImpressions = spotExceptionsRecommendedPlanDetailDb.spot_delivered_impression,
+                        PlanTotalContractedImpressions = spotExceptionsRecommendedPlanDetailDb.plan_total_contracted_impressions,
+                        PlanTotalDeliveredImpressions = spotExceptionsRecommendedPlanDetailDb.plan_total_delivered_impressions,
                         RecommendedPlanDetail = new RecommendedPlanDetailDto
                         {
                             Id = spotExceptionsRecommendedPlanDetailDb.recommended_plan_id,
