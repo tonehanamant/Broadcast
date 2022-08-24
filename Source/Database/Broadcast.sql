@@ -1292,6 +1292,16 @@ DELETE FROM program_name_exceptions WHERE custom_program_name = 'TMZ  LIVE'
 GO
 /*************************************** END BP-5366 ***************************************/
 
+/*************************************** START BP-5341 ***************************************/
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME= 'view_details_url')
+BEGIN
+	ALTER TABLE campaigns
+		ADD view_details_url varchar(250) null
+END
+GO
+/*************************************** END BP-5341 ***************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

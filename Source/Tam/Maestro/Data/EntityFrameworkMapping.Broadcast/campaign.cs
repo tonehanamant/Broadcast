@@ -37,6 +37,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> max_fluidity_percent { get; set; }
         public Nullable<System.DateTime> unified_campaign_last_sent_at { get; set; }
         public Nullable<System.DateTime> unified_campaign_last_received_at { get; set; }
+        public string view_details_url { get; set; }
     
         public virtual ICollection<proposal> proposals { get; set; }
         public virtual ICollection<campaign_summaries> campaign_summaries { get; set; }

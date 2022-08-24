@@ -231,6 +231,7 @@
           <Property Name="max_fluidity_percent" Type="int" />
           <Property Name="unified_campaign_last_sent_at" Type="datetime2" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="datetime2" Precision="7" />
+          <Property Name="view_details_url" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="custom_daypart_organizations">
           <Key>
@@ -14010,6 +14011,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
           <NavigationProperty Name="campaign_plan_secondary_audiences" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" FromRole="campaign" ToRole="campaign_plan_secondary_audiences" />
+          <Property Name="view_details_url" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_proposals_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
@@ -20202,6 +20204,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaigns">
             <EntityTypeMapping TypeName="BroadcastModel.campaign">
               <MappingFragment StoreEntitySet="campaigns">
+                <ScalarProperty Name="view_details_url" ColumnName="view_details_url" />
                 <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
                 <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />
                 <ScalarProperty Name="max_fluidity_percent" ColumnName="max_fluidity_percent" />
