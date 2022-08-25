@@ -4426,5 +4426,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        public void GetCampaignWithDefaults()
+        {
+            // Arrange
+            int campaignId = 2;
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignWithDefaults(It.IsAny<int>())).Returns(_GetCampaignWithDefaults(campaignId));
+            var tc = _BuildCampaignService();
+            // Act
+            var result = tc.GetCampaignWithDefaults(campaignId);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private static CampaignWithDefaultsDto _GetCampaignWithDefaults(int campaignId)
+        {
+            return new CampaignWithDefaultsDto
+            {
+                SecondaryAudiences = new List<CampaignPlanSecondaryAudiencesDto>
+                    {
+                        new CampaignPlanSecondaryAudiencesDto
+                        {
+                            Type = AudienceTypeEnum.Nielsen,
+                            AudienceId = 35
+                        },
+                        new CampaignPlanSecondaryAudiencesDto
+                        {
+                            Type = AudienceTypeEnum.Nielsen,
+                            AudienceId = 39
+                        }
+                    },
+                MaxFluidityPercent = 20
+            };
+        }
     }
 }

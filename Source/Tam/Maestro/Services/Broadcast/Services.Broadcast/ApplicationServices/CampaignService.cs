@@ -171,9 +171,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="updatedDate">Last modified date of campaign</param>
         /// <returns>Message response</returns>
         Task<UnifiedCampaignResponseDto> PublishUnifiedCampaign(int campaignId, string updateddBy, DateTime updatedDate);
-
+        /// <summary>
+        /// Get The Campaign with Defaults
+        /// </summary>
+        /// <param name="campaignId">Campaign Id</param>
+        /// <returns>Campaign With Defaults</returns>
+        CampaignWithDefaultsDto GetCampaignWithDefaults(int campaignId);
     }
-
+     
     /// <summary>
     /// Operations related to the Campaign domain.
     /// </summary>
@@ -1123,6 +1128,13 @@ namespace Services.Broadcast.ApplicationServices
                 _CampaignRepository.UpdateCampaignLastModified(campaignId, updatedDate, updateddBy);
             }
             return unifiedCampaignResponse;
-        }       
+        }
+
+        public CampaignWithDefaultsDto GetCampaignWithDefaults(int campaignId)
+        {
+           var campaignWithDefault = _CampaignRepository.GetCampaignWithDefaults(campaignId);
+
+            return campaignWithDefault;
+        }
     }
 }

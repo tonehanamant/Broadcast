@@ -100,6 +100,12 @@ namespace Services.Broadcast.Repositories
         /// <param name="campaignId">campaignId</param>
         /// <returns>returns CampaignExportDto object</returns>
         CampaignExportDto GetCampaignPlanForExport(int campaignId);
+        /// <summary>
+        /// Gets the campaign with Defaults
+        /// </summary>
+        /// <param name="campaignId">campaignId</param>
+        /// <returns>returns CampaignWithDefaultsDto object</returns>
+        CampaignWithDefaultsDto GetCampaignWithDefaults(int campaignId);
     }
 
     /// <summary>
@@ -679,6 +685,42 @@ namespace Services.Broadcast.Repositories
             };
             campaignDto.HasPlans = campaignDto.Plans.Any();
             return campaignDto;
+        }
+
+        /// <inheritdoc />
+        public CampaignWithDefaultsDto GetCampaignWithDefaults(int campaignId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var secondaryAudiences = context.campaigns
+                        .Include(z => z.campaign_plan_secondary_audiences)
+                        .Include(x=>x.campaign_plan_secondary_audiences.Select(z=>z.audience))
+                        .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
+
+                    return _MapToCampaignDefaultDto(secondaryAudiences.campaign_plan_secondary_audiences.ToList(),secondaryAudiences);
+                });
+        }
+
+        private CampaignWithDefaultsDto _MapToCampaignDefaultDto(List<campaign_plan_secondary_audiences> campaignPlanSecondaryAudiences, campaign c)
+        {
+            CampaignWithDefaultsDto campaignWithDefaults = new CampaignWithDefaultsDto();
+            campaignWithDefaults.MaxFluidityPercent = c.max_fluidity_percent;
+            campaignWithDefaults.SecondaryAudiences = _MapToSecondaryAudiencesDto(campaignPlanSecondaryAudiences);
+            return campaignWithDefaults;
+        }
+
+        private List<CampaignPlanSecondaryAudiencesDto> _MapToSecondaryAudiencesDto(List<campaign_plan_secondary_audiences> campaignPlanSecondaryAudiences)
+        {
+            List<CampaignPlanSecondaryAudiencesDto> secondaryAudiences = new List<CampaignPlanSecondaryAudiencesDto>();
+
+            secondaryAudiences = campaignPlanSecondaryAudiences.Select(secondaryAudience => new CampaignPlanSecondaryAudiencesDto
+            {
+                Type = AudienceTypeEnum.Nielsen,
+                AudienceId = secondaryAudience.audience_id
+            }).ToList();
+
+            return secondaryAudiences;
         }
     }
 }

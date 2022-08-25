@@ -1,0 +1,13 @@
+{
+  "MaxFluidityPercent": 20,
+  "SecondaryAudiences": [
+    {
+      "AudienceId": 35,
+      "Type": 1
+    },
+    {
+      "AudienceId": 39,
+      "Type": 1
+    }
+  ]
+}

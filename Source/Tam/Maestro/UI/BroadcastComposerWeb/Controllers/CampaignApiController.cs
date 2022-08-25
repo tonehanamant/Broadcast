@@ -218,5 +218,16 @@ namespace BroadcastComposerWeb.Controllers
             .PublishUnifiedCampaign(publishUnifiedCampaignRequest.CampaignId,updateddBy,DateTime.Now).Result);            
         }
 
+        /// <summary>
+        /// Gets the campaign with defaults.
+        /// </summary>
+        /// <returns>Gets the default values for creating a Campaign</returns>
+        [HttpGet]
+        [Route("CampaignWithDefaults/{campaignId}")]
+        public BaseResponse<CampaignWithDefaultsDto> GetCampaignWithDefaults(int campaignId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>().GetCampaignWithDefaults(campaignId));
+        }
+
     }
 }
