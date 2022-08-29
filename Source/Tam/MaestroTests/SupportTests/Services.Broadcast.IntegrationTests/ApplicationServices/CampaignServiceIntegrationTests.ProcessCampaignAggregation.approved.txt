@@ -95,5 +95,6 @@
   ],
   "UnifiedCampaignLastReceivedAt": null,
   "UnifiedCampaignLastSentAt": null,
-  "UnifiedId": null
+  "UnifiedId": null,
+  "ViewDetailsUrl": "https://cd.cadent.tv/dashboard/campaigns/details/VW5pZmllZFYyLTM0NmI5ZDY5NjAxNjRiOTNiOTZjMTBjOTg4NDhhZDAx"
 }

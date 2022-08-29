@@ -23,5 +23,6 @@
   "PlanStatuses": null,
   "UnifiedCampaignLastReceivedAt": "0001-01-01T00:00:00",
   "UnifiedCampaignLastSentAt": "0001-01-01T00:00:00",
-  "UnifiedId": "D6A7417C-429A-45C4-AFD9-BDA5AEFCCAE0"
+  "UnifiedId": "D6A7417C-429A-45C4-AFD9-BDA5AEFCCAE0",
+  "ViewDetailsUrl": null
 }

@@ -407,7 +407,8 @@ namespace Services.Broadcast.Repositories
                             }).OrderBy(x => x.Year).ThenBy(x => x.Quarter).ToList(),
                             FluidityPercentage = summary.fluidity_percentage
                         };
-                    }).ToList()
+                    }).ToList(),
+                ViewDetailsUrl = campaign.view_details_url
             };
 
             campaignDto.HasPlans = campaignDto.Plans.Any();

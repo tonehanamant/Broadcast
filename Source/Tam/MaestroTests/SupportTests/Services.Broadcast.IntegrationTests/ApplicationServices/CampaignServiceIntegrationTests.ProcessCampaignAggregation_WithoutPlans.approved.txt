@@ -667,5 +667,6 @@
   ],
   "UnifiedCampaignLastReceivedAt": null,
   "UnifiedCampaignLastSentAt": null,
-  "UnifiedId": null
+  "UnifiedId": null,
+  "ViewDetailsUrl": null
 }

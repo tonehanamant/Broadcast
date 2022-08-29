@@ -103,5 +103,6 @@ namespace Services.Broadcast.Entities
         public int? MaxFluidityPercent { get; set; }
         public DateTime? UnifiedCampaignLastSentAt { get; set; }
         public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
+        public string ViewDetailsUrl { get; set; }
     }
 }
