@@ -1339,7 +1339,7 @@ namespace Services.Broadcast.ApplicationServices
                     FlightDateString = $"{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{spotExceptionsRecommendedPlanDetail.RecommendedPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
                     IsRecommendedPlan = spotExceptionsRecommendedPlanDetail.IsRecommendedPlan,
                     IsSelected = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision != null,
-                    Pacing = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100 + "%",
+                    Pacing = _calculatePacing(spotExceptionsRecommendedPlanDetail.DeliveredImpressions, spotExceptionsRecommendedPlanDetail.ContractedImpressions) + "%",
                     AcceptedAsInSpec = spotExceptionsRecommendedPlanDetail.SpotExceptionsRecommendedPlanDecision?.AcceptedAsInSpec,
                     RecommendedPlanId = spotExceptionsRecommendedPlanDetail.RecommendedPlanId,
                     AudienceName = spotExceptionsRecommendedPlanDetail.AudienceName,
@@ -1353,9 +1353,9 @@ namespace Services.Broadcast.ApplicationServices
                     TotalPacingUnselected = (spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100,
                     WeeklyContractedImpressions = spotExceptionsRecommendedPlanDetail.ContractedImpressions / 1000,
                     WeeklyDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / 1000,
-                    WeeklyPacingSelected = ((spotExceptionsRecommendedPlanDetail.DeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100,
+                    WeeklyPacingSelected = _calculateWeeklyPacingSelected(spotExceptionsRecommendedPlanDetail.DeliveredImpressions,spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions,spotExceptionsRecommendedPlanDetail.ContractedImpressions), 
                     WeeklyDeliveredImpressionsUnselected = spotExceptionsRecommendedPlanDetail.DeliveredImpressions / 1000,
-                    WeeklyPacingUnselected = (spotExceptionsRecommendedPlanDetail.DeliveredImpressions / spotExceptionsRecommendedPlanDetail.ContractedImpressions) * 100,
+                    WeeklyPacingUnselected = _calculateWeeklyPacingUnselected(spotExceptionsRecommendedPlanDetail.DeliveredImpressions,spotExceptionsRecommendedPlanDetail.ContractedImpressions), 
                 }).ToList()
             };
             if (spotExceptionsRecommendedPlanDetailsResult.Plans != null &&
@@ -1367,6 +1367,45 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
             return spotExceptionsRecommendedPlanDetailsResult;
+        }
+
+        private double? _calculateWeeklyPacingSelected(double? deliveredImp,double? spotDeliveredImp,double? contractedImp)
+        {
+            if(contractedImp == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                double? weeklyPacingSelected = ((deliveredImp + spotDeliveredImp) / contractedImp) * 100;
+                return weeklyPacingSelected;
+            }
+        }
+
+        private double? _calculateWeeklyPacingUnselected(double? deliveredImp,double? contractedImp)
+        {
+            if (deliveredImp == 0 || contractedImp == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                double? weeklyPacingUnselected = (deliveredImp / contractedImp) * 100;
+                return weeklyPacingUnselected;
+            }
+        }
+
+        private double? _calculatePacing(double? deliveredImp, double? contractedImp)
+        {
+            if (deliveredImp == 0 || contractedImp == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                double? weeklyPacing = (deliveredImp / contractedImp) * 100;
+                return weeklyPacing;
+            }
         }
 
         /// <inheritdoc />
