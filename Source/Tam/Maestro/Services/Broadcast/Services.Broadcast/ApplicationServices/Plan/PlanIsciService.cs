@@ -373,7 +373,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
-            var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString }).ToList();
+            var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString }).OrderByDescending(y => y.Key.SpotLengthId).ThenBy(s => s.Key.Isci).ToList();
+            
             var mappingsDetails = new PlanIsciMappingsDetailsDto
             {
                 PlanId = plan.Id,
@@ -398,7 +399,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         FlightString = mappingDetail.FlightString,
                         StartTime = mappingDetail.StartTime,
                         EndTime = mappingDetail.EndTime
-                    }).ToList()
+                    }).OrderBy(x=>x.FlightStartDate).ToList()
                 }).ToList(),
             };
             return mappingsDetails;

@@ -1347,7 +1347,7 @@ namespace Services.Broadcast.ApplicationServices
                     DaypartCode = spotExceptionsRecommendedPlanDetail.DaypartCode,
                     Impressions = spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions/1000,
                     TotalContractedImpressions = spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions /1000,
-                    TotalDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions + spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions) / 1000,
+                    TotalDeliveredImpressionsSelected = (spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions + spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions) / 1000,
                     TotalPacingSelected = ((spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions + spotExceptionsRecommendedPlanDetail.SpotDeliveredImpressions) / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100,
                     TotalDeliveredImpressionsUnselected = spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions/1000,
                     TotalPacingUnselected = (spotExceptionsRecommendedPlanDetail.PlanTotalDeliveredImpressions / spotExceptionsRecommendedPlanDetail.PlanTotalContractedImpressions) * 100,
