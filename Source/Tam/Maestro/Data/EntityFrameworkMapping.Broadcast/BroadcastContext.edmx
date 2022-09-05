@@ -2498,7 +2498,7 @@
           <Property Name="sunday" Type="int" />
           <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="spot_delivered_impression" Type="float" />
+          <Property Name="spot_delivered_impression" Type="float" Nullable="false" />
           <Property Name="plan_total_contracted_impressions" Type="float" />
           <Property Name="plan_total_delivered_impressions" Type="float" />
         </EntityType>
@@ -3007,6 +3007,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="rep_firm_name" Type="varchar" MaxLength="100" />
           <Property Name="owner_name" Type="varchar" MaxLength="100" />
           <Property Name="is_true_ind" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stations_secondary_affiliations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stations_id" Type="int" Nullable="false" />
+          <Property Name="affiliate_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="system_component_parameters">
           <Key>
@@ -7443,6 +7451,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_stations_secondary_affiliations_affiliates">
+          <End Role="affiliates" Type="Self.affiliates" Multiplicity="1" />
+          <End Role="stations_secondary_affiliations" Type="Self.stations_secondary_affiliations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="affiliates">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="stations_secondary_affiliations">
+              <PropertyRef Name="affiliate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stations_secondary_affiliations_stations">
+          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="stations_secondary_affiliations" Type="Self.stations_secondary_affiliations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="stations_secondary_affiliations">
+              <PropertyRef Name="stations_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_vpvh_audience_mapping_audiences_compose_audiences">
           <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
           <End Role="vpvh_audience_mappings" Type="Self.vpvh_audience_mappings" Multiplicity="*" />
@@ -7711,6 +7743,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="station_mappings" EntityType="Self.station_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_month_details" EntityType="Self.station_month_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stations_secondary_affiliations" EntityType="Self.stations_secondary_affiliations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="timespans" EntityType="Self.timespans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvh_audience_mappings" EntityType="Self.vpvh_audience_mappings" Schema="dbo" store:Type="Tables" />
@@ -9103,6 +9136,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_stations_markets" Association="Self.FK_stations_markets">
             <End Role="markets" EntitySet="markets" />
             <End Role="stations" EntitySet="stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stations_secondary_affiliations_affiliates" Association="Self.FK_stations_secondary_affiliations_affiliates">
+            <End Role="affiliates" EntitySet="affiliates" />
+            <End Role="stations_secondary_affiliations" EntitySet="stations_secondary_affiliations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stations_secondary_affiliations_stations" Association="Self.FK_stations_secondary_affiliations_stations">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="stations_secondary_affiliations" EntitySet="stations_secondary_affiliations" />
           </AssociationSet>
           <AssociationSet Name="FK_vpvh_audience_mapping_audiences_compose_audiences" Association="Self.FK_vpvh_audience_mapping_audiences_compose_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -10722,6 +10763,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_campaign_plan_secondary_audiences_campaigns" Association="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns">
             <End Role="campaign" EntitySet="campaigns" />
             <End Role="campaign_plan_secondary_audiences" EntitySet="campaign_plan_secondary_audiences" />
+          </AssociationSet>
+          <EntitySet Name="stations_secondary_affiliations" EntityType="BroadcastModel.stations_secondary_affiliations" />
+          <AssociationSet Name="FK_stations_secondary_affiliations_affiliates" Association="BroadcastModel.FK_stations_secondary_affiliations_affiliates">
+            <End Role="affiliate" EntitySet="affiliates" />
+            <End Role="stations_secondary_affiliations" EntitySet="stations_secondary_affiliations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stations_secondary_affiliations_stations" Association="BroadcastModel.FK_stations_secondary_affiliations_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="stations_secondary_affiliations" EntitySet="stations_secondary_affiliations" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -14368,6 +14418,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="plan_version_daypart_affiliate_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_affiliate_restrictions_affiliates" FromRole="affiliate" ToRole="plan_version_daypart_affiliate_restrictions" />
+          <NavigationProperty Name="stations_secondary_affiliations" Relationship="BroadcastModel.FK_stations_secondary_affiliations_affiliates" FromRole="affiliate" ToRole="stations_secondary_affiliations" />
         </EntityType>
         <EntityType Name="plan_version_daypart_affiliate_restrictions">
           <Key>
@@ -16558,6 +16609,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
           <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" FromRole="station" ToRole="inventory_proprietary_summary_station_audiences" />
           <NavigationProperty Name="plan_version_buying_band_inventory_stations" Relationship="BroadcastModel.FK_plan_version_buying_band_inventory_stations_stations_id" FromRole="station" ToRole="plan_version_buying_band_inventory_stations" />
+          <NavigationProperty Name="stations_secondary_affiliations" Relationship="BroadcastModel.FK_stations_secondary_affiliations_stations" FromRole="station" ToRole="stations_secondary_affiliations" />
         </EntityType>
         <Association Name="FK_stations_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
@@ -18623,7 +18675,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plans" />
           <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="spot_delivered_impression" Type="Double" />
+          <Property Name="spot_delivered_impression" Type="Double" Nullable="false" />
           <Property Name="plan_total_contracted_impressions" Type="Double" />
           <Property Name="plan_total_delivered_impressions" Type="Double" />
         </EntityType>
@@ -18835,6 +18887,40 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="campaign_plan_secondary_audiences">
               <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="stations_secondary_affiliations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stations_id" Type="Int32" Nullable="false" />
+          <Property Name="affiliate_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="affiliate" Relationship="BroadcastModel.FK_stations_secondary_affiliations_affiliates" FromRole="stations_secondary_affiliations" ToRole="affiliate" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_stations_secondary_affiliations_stations" FromRole="stations_secondary_affiliations" ToRole="station" />
+        </EntityType>
+        <Association Name="FK_stations_secondary_affiliations_affiliates">
+          <End Type="BroadcastModel.affiliate" Role="affiliate" Multiplicity="1" />
+          <End Type="BroadcastModel.stations_secondary_affiliations" Role="stations_secondary_affiliations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="affiliate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="stations_secondary_affiliations">
+              <PropertyRef Name="affiliate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stations_secondary_affiliations_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.stations_secondary_affiliations" Role="stations_secondary_affiliations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="stations_secondary_affiliations">
+              <PropertyRef Name="stations_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -22130,6 +22216,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="campaign_plan_secondary_audiences">
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stations_secondary_affiliations">
+            <EntityTypeMapping TypeName="BroadcastModel.stations_secondary_affiliations">
+              <MappingFragment StoreEntitySet="stations_secondary_affiliations">
+                <ScalarProperty Name="affiliate_id" ColumnName="affiliate_id" />
+                <ScalarProperty Name="stations_id" ColumnName="stations_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

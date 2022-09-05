@@ -912,6 +912,9 @@
     <Compile Include="station.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="stations_secondary_affiliations.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="station_contacts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

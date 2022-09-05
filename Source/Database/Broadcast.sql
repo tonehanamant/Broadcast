@@ -1318,6 +1318,22 @@ END
 GO
 /*************************************** END BP-5343 ***************************************/
 
+/*************************************** START BP-5123 ***************************************/
+
+IF OBJECT_ID('stations_secondary_affiliations') IS NULL
+BEGIN
+ CREATE TABLE dbo.stations_secondary_affiliations
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,		
+		stations_id INT NOT NULL,
+		affiliate_id INT NOT NULL
+	)
+ALTER TABLE stations_secondary_affiliations ADD CONSTRAINT FK_stations_secondary_affiliations_affiliates FOREIGN KEY(affiliate_id) REFERENCES affiliates(id)
+ALTER TABLE stations_secondary_affiliations ADD CONSTRAINT FK_stations_secondary_affiliations_stations FOREIGN KEY(stations_id) REFERENCES stations(id)
+END
+GO
+
+/*************************************** END BP-5123 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

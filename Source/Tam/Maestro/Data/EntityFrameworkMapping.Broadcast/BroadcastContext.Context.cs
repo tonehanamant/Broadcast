@@ -250,5 +250,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
         public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<campaign_plan_secondary_audiences> campaign_plan_secondary_audiences { get; set; }
+        public virtual DbSet<stations_secondary_affiliations> stations_secondary_affiliations { get; set; }
     }
 }

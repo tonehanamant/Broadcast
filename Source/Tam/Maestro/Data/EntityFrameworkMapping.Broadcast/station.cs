@@ -26,6 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_month_details = new HashSet<station_month_details>();
             this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
             this.plan_version_buying_band_inventory_stations = new HashSet<plan_version_buying_band_inventory_stations>();
+            this.stations_secondary_affiliations = new HashSet<stations_secondary_affiliations>();
         }
     
         public Nullable<int> station_code { get; set; }
@@ -51,5 +52,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_month_details> station_month_details { get; set; }
         public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
         public virtual ICollection<plan_version_buying_band_inventory_stations> plan_version_buying_band_inventory_stations { get; set; }
+        public virtual ICollection<stations_secondary_affiliations> stations_secondary_affiliations { get; set; }
     }
 }

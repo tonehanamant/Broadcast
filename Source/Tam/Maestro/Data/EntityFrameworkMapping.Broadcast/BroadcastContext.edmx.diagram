@@ -580,6 +580,9 @@
         <EntityTypeShape EntityType="BroadcastModel.campaign_plan_secondary_audiences" Width="1.5" PointX="5" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_campaign_plan_secondary_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" />
+        <EntityTypeShape EntityType="BroadcastModel.stations_secondary_affiliations" Width="1.5" PointX="11.5" PointY="44.75" />
+        <AssociationConnector Association="BroadcastModel.FK_stations_secondary_affiliations_affiliates" />
+        <AssociationConnector Association="BroadcastModel.FK_stations_secondary_affiliations_stations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
