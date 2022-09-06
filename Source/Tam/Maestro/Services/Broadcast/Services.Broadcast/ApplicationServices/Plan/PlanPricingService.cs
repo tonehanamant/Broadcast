@@ -542,6 +542,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 else
                     planVersionId = plan.VersionId;
 
+                if(plan.IsDraft==false && planPricingParametersDto?.PlanVersionId.Value!= plan.VersionId)
+                {
+                    throw new CadentException("The current plan that you are viewing has been updated. Please close the plan and reopen in order to view the most current information");
+                }
+
                 var job = new PlanPricingJob
                 {
                     PlanVersionId = planVersionId,

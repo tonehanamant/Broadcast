@@ -5198,7 +5198,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Currency = PlanCurrenciesEnum.Impressions,
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
-                Margin = 14
+                Margin = 14               
             };
 
             _PlanRepositoryMock
@@ -5287,6 +5287,132 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+        }
+
+
+        [Test]
+        public async Task QueuePricingJobAsync_WhenVerionIdMismatchWithDb()
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = new PlanPricingParametersDto
+            {
+                PlanId = 222,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = 14,
+                PlanVersionId=78
+
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = 17,
+                    VersionId = 77,
+                    CoverageGoalPercent = 80,
+                    IsDraft=false,
+                    AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
+                .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
+
+            var passedParameters = new List<PlanPricingJob>();
+            _PlanRepositoryMock
+                .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Callback<PlanPricingJob>(p => passedParameters.Add(p))
+                .Returns(jobId);
+
+            var service = _GetService();
+            CadentException caught = null;
+            // Act
+            try
+            {
+                await service.QueuePricingJobAsync(parameters, now, user);
+            }
+            catch (CadentException ex)
+            {
+                caught = ex;
+            }
+            // Assert
+            Assert.IsTrue(caught.Message.Contains($"The current plan that you are viewing has been updated. Please close the plan and reopen in order to view the most current information"));
         }
 
         [Test]
