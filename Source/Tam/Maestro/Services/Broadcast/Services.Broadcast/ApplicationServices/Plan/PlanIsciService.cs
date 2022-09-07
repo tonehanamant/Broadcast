@@ -373,7 +373,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
-            var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString }).OrderByDescending(y => y.Key.SpotLengthId).ThenBy(s => s.Key.Isci).ToList();
+            var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString ,x.SpotLengthValueForSort }).OrderBy(y => y.Key.SpotLengthValueForSort).ThenBy(s => s.Key.Isci).ToList();
             
             var mappingsDetails = new PlanIsciMappingsDetailsDto
             {
@@ -419,6 +419,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
         // we are using .First() here as a reel isci should never have same isci with different spot id.
                 var spotLengthString = _GetSpotLengthsString(i.SpotLengthId);
+                int spotLengthValueForSort = _GetSpotLengthsValue(i.SpotLengthId);
                 var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
                 var item = new PlanMappedIsciDetailsDto
                 {
@@ -430,7 +431,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     FlightEndDate = i.FlightEndDate,
                     FlightString = flightString,
                     StartTime = i.StartTime,
-                    EndTime = i.EndTime
+                    EndTime = i.EndTime,
+                    SpotLengthValueForSort = spotLengthValueForSort
                 };
                 return item;
             })
@@ -507,6 +509,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = $":{_SpotLengthEngine.GetSpotLengthValueById(spotLengthId)}";
             return result;
         }
+
+        private int _GetSpotLengthsValue(int spotLengthId)
+        {
+            int result = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
+            return result;
+        }
+
         private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
         {
             // the FE sends with at least 1 empty daypart...

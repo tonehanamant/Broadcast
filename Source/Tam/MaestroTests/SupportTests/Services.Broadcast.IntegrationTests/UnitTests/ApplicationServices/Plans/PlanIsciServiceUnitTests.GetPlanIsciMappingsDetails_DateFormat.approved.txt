@@ -7,21 +7,6 @@
   "FlightString": "11/01 - 11/10/2021",
   "IsciPlanMappings": [
     {
-      "Isci": "Isci456",
-      "IsciPlanMappingFlights": [
-        {
-          "EndTime": null,
-          "FlightEndDate": "11/10/2021",
-          "FlightStartDate": "11/01/2021",
-          "FlightString": "11/01 - 11/10/2021",
-          "PlanIsciMappingId": 2,
-          "StartTime": null
-        }
-      ],
-      "SpotLengthId": 2,
-      "SpotLengthString": ":60"
-    },
-    {
       "Isci": "Isci123",
       "IsciPlanMappingFlights": [
         {
@@ -50,6 +35,21 @@
       ],
       "SpotLengthId": 1,
       "SpotLengthString": ":30"
+    },
+    {
+      "Isci": "Isci456",
+      "IsciPlanMappingFlights": [
+        {
+          "EndTime": null,
+          "FlightEndDate": "11/10/2021",
+          "FlightStartDate": "11/01/2021",
+          "FlightString": "11/01 - 11/10/2021",
+          "PlanIsciMappingId": 2,
+          "StartTime": null
+        }
+      ],
+      "SpotLengthId": 2,
+      "SpotLengthString": ":60"
     }
   ],
   "PlanId": 23,

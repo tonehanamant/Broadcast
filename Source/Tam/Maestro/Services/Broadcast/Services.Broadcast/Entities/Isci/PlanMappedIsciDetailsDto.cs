@@ -13,5 +13,6 @@ namespace Services.Broadcast.Entities.Isci
         public string FlightString { get; set; }
         public int? StartTime { get; set; }
         public int? EndTime { get; set; }
+        public int SpotLengthValueForSort { get; set; }
     }
 }
