@@ -25,7 +25,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         //[Test]
         public void AddSpotExceptionData()
         {
-            _SpotExceptionService.ClearSpotExceptionData();
+            _SpotExceptionService.ClearSpotExceptionMockData();
             _SpotExceptionService.AddSpotExceptionData(isIntegrationTestDatabase: true);
 
             var weekStartDate = new DateTime(2021, 10, 10);

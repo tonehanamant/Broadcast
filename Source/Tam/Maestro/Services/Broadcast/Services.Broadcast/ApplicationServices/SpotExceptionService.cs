@@ -21,9 +21,14 @@ namespace Services.Broadcast.ApplicationServices
         bool AddSpotExceptionData(bool isIntegrationTestDatabase = false);
 
         /// <summary>
-        /// Clear data from spot exceptions tables.
+        /// Clear mocked data from spot exceptions tables.
         /// </summary>   
-        bool ClearSpotExceptionData();
+        bool ClearSpotExceptionMockData();
+
+        /// <summary>
+        /// Clear all data from spot exceptions tables.
+        /// </summary>   
+        bool ClearSpotExceptionAllData();
 
         /// <summary>
         /// Gets the available outofspecPost within the start and end week
@@ -252,9 +257,15 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        public bool ClearSpotExceptionData()
+        public bool ClearSpotExceptionMockData()
         {
-            var result = _SpotExceptionRepository.ClearSpotExceptionData();
+            var result = _SpotExceptionRepository.ClearSpotExceptionMockData();
+            return result;
+        }
+
+        public bool ClearSpotExceptionAllData()
+        {
+            var result = _SpotExceptionRepository.ClearSpotExceptionAllData();
             return result;
         }
 

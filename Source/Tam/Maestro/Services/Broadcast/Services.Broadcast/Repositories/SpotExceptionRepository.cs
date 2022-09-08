@@ -23,9 +23,15 @@ namespace Services.Broadcast.Repositories
              List<SpotExceptionsOutOfSpecsDto> spotExceptionsOutOfSpecs);
 
         /// <summary>
-        /// Clear data from spot exceptions tables.
+        /// Clear mocked data from spot exceptions tables.
         /// </summary>   
-        bool ClearSpotExceptionData();
+        bool ClearSpotExceptionMockData();
+
+        /// <summary>
+        /// Clear all data from spot exceptions tables.
+        /// </summary>   
+        bool ClearSpotExceptionAllData();
+
         /// <summary>
         /// Gets the available outofspecsPosts within week start and end date
         /// </summary>
@@ -346,7 +352,33 @@ namespace Services.Broadcast.Repositories
             return true;
         }
 
-        public bool ClearSpotExceptionData()
+        public bool ClearSpotExceptionMockData()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_decision "
+                                                    + "WHERE spot_exceptions_recommended_plan_detail_id IN "
+                                                    + "(SELECT id FROM spot_exceptions_recommended_plan_details dts "
+                                                    + "WHERE dts.spot_exceptions_recommended_plan_id IN "
+                                                    + "(SELECT id FROM spot_exceptions_recommended_plans p "
+                                                    + "WHERE p.ingested_by = 'Mock Data'));");
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_details "
+                                                    + "WHERE spot_exceptions_recommended_plan_id IN "
+                                                    + "(SELECT id FROM spot_exceptions_recommended_plans p "
+                                                    + "WHERE p.ingested_by = 'Mock Data');");
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plans "
+                                                    + "WHERE ingested_by = 'Mock Data';");
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_spec_decisions "
+                                                    + "WHERE spot_exceptions_out_of_spec_id IN "
+                                                    + "(SELECT id FROM spot_exceptions_out_of_specs p "
+                                                    + "WHERE p.ingested_by = 'Mock Data');");
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_specs "
+                                                    + "WHERE ingested_by = 'Mock Data';");
+                return true;
+            });
+        }
+
+        public bool ClearSpotExceptionAllData()
         {
             return _InReadUncommitedTransaction(context =>
             {

@@ -849,16 +849,20 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddOrClearSpotExceptionsData(string Add, string Clear)
+        public ActionResult AddOrClearSpotExceptionsData(string addMockData, string clearMockData, string clearAllData)
         {
             var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>();
-            if (!string.IsNullOrEmpty(Add))
+            if (!string.IsNullOrEmpty(addMockData))
             {
                 service.AddSpotExceptionData();
             }
-            if (!string.IsNullOrEmpty(Clear))
+            if (!string.IsNullOrEmpty(clearMockData))
             {
-                service.ClearSpotExceptionData();
+                service.ClearSpotExceptionMockData();
+            }
+            if (!string.IsNullOrEmpty(clearAllData))
+            {
+                service.ClearSpotExceptionAllData();
             }
             return RedirectToAction("Index");
         }
