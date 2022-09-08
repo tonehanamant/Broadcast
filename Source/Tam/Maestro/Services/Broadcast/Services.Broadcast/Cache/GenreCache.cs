@@ -21,12 +21,16 @@ namespace Services.Broadcast.Cache
         LookupDto GetGenreLookupDtoById(int genreId);
         Genre GetGenreById(int genreId);
         Genre GetSourceGenreByName(string genreName, ProgramSourceEnum programSource);
+        /// <summary>
+        /// Get the list of genre based on program source
+        /// </summary>
+        List<Genre> GetGenresBySource(ProgramSourceEnum programSource);
     }
 
     public class GenreCache : IGenreCache
     {
         private readonly Dictionary<int, Genre> _GenresByIds;
-
+        private readonly List<Genre> _Genres;
         private readonly Dictionary<ProgramSourceEnum, Dictionary<string, Genre>> _GenresByNamesBySource;
         private readonly Dictionary<ProgramSourceEnum, Dictionary<int, int>> _MappingsToMaestroGenreBySource;
         private readonly Dictionary<string, Genre> _MaestroGenresByName;
@@ -36,7 +40,7 @@ namespace Services.Broadcast.Cache
             var repository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             var genres = repository.GetAllGenres();
             var genreMappings = repository.GetGenreMappings();
-
+            _Genres = genres.ToList();
             _GenresByNamesBySource = new Dictionary<ProgramSourceEnum, Dictionary<string, Genre>>();
             _MappingsToMaestroGenreBySource = new Dictionary<ProgramSourceEnum, Dictionary<int, int>>();
 
@@ -111,7 +115,15 @@ namespace Services.Broadcast.Cache
 
             return sourceGenre;
         }
-
+        /// <summary>
+        /// Get the list of genre based on program source
+        /// </summary>
+        /// <param name="programSource">programSource either meastro or master</param>
+        /// <returns>list of genre</returns>
+        public List<Genre> GetGenresBySource(ProgramSourceEnum programSource)
+        {
+            return _Genres.Where(x=> x.ProgramSourceId == (int)programSource).ToList();            
+        }
         private LookupDto _ToLookupDto(Genre genre)
         {
             return new LookupDto

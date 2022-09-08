@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
+using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
@@ -47,6 +48,11 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         {
             throw new NotImplementedException();
         }
+
+        public List<Genre> GetGenresBySource(ProgramSourceEnum programSource)
+        {
+            throw new NotImplementedException();
+        }       
 
         public LookupDto GetSourceGenreLookupDtoByName(string genreName, ProgramSourceEnum programSource)
         {

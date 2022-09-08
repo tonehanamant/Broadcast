@@ -1,10 +1,13 @@
-﻿using Services.Broadcast.Cache;
+﻿using OfficeOpenXml;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Services.Broadcast.Converters
 {
@@ -12,6 +15,10 @@ namespace Services.Broadcast.Converters
     {
         List<ProgramMappingsDto> ImportMasterProgramList();
         List<ProgramMappingsDto> UploadMasterProgramList(Stream stream);
+        /// <summary>
+        /// Read the program list file and return the program list
+        /// </summary>
+        List<ProgramMappingsDto> UploadMasterPrograms(Stream stream);
     }
 
     public class MasterProgramListImporter : BroadcastBaseClass, IMasterProgramListImporter
@@ -34,6 +41,7 @@ namespace Services.Broadcast.Converters
         private const string AwayTeamId = "AWAY_TEAM_ID";
         private const string EventLocation = "event_location";
         private const string WwtvTitle = "WWTV_Title";
+        private const string ProgramShowType = "Miscellaneous";
 
         private readonly List<string> FileHeaders = new List<string>
         {
@@ -154,7 +162,7 @@ namespace Services.Broadcast.Converters
                             _LogWarning($"Line {LineIndex} has an invalid Genre of 'NULL'");
                         }
                         else
-                        {
+                        {                           
                             var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(genre, ProgramSourceEnum.Master);
                             var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
                             var officialGenre = _GenreCache.GetMaestroGenreByName(maestroGenre.Display);
@@ -183,6 +191,48 @@ namespace Services.Broadcast.Converters
             }
 
             return masterList;
+        }
+        /// <summary>
+        /// Read the program list file and return the program list
+        /// </summary>
+        /// <param name="stream">Filestream</param>
+        /// <returns>Return the program list</returns>
+        public List<ProgramMappingsDto> UploadMasterPrograms(Stream stream)
+        {
+            var excelProgramList = _ReadProgramFile(stream);
+            var masterList = new List<ProgramMappingsDto>();            
+            List<Genre> genres = _GenreCache.GetGenresBySource(ProgramSourceEnum.Maestro);
+            foreach (var program in excelProgramList)
+            {               
+                    Genre officialGenre = genres.FirstOrDefault(x => x.Name.ToLower() == program.OfficialGenre.Trim().ToLower());                     
+                    var sourceShowType = _ShowTypeCache.GetMaestroShowTypeByName(ProgramShowType);
+                    var programMapping = new ProgramMappingsDto
+                    {
+                        OfficialProgramName = program.OfficialProgramName,
+                        OfficialGenre = officialGenre,
+                        OfficialShowType = sourceShowType
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(programMapping.OfficialProgramName) && officialGenre != null)
+                    {
+                        masterList.Add(programMapping);
+                    }
+                    else
+                    {
+                        _LogInfo(String.Format("Program name {0} could not be proceed as An unknown" +
+                            " {1} genre {2} was discovered: ", program.OfficialProgramName, "Maestro", program.OfficialGenre));
+                    }
+            }
+            return masterList;
+        }
+        private List<ProgramListFileRequestDto> _ReadProgramFile(Stream stream)
+        {
+            var package = new ExcelPackage(stream);
+            var worksheet = package.Workbook.Worksheets[1];
+            var rawPrograms = worksheet.ConvertSheetToObjects<ProgramListFileRequestDto>();
+            // filter out the empty rows the above can pick up
+            var filteredPrograms= rawPrograms.Skip(3).Where(x=> x.OfficialGenre != null && x.OfficialProgramName != null).ToList();
+            return filteredPrograms;
         }
 
     }

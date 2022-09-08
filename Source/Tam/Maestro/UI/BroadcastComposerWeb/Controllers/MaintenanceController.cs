@@ -1070,7 +1070,34 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [HttpPost]
+        [Route("UploadProgramList")]
+        public ActionResult UploadProgramList(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                if (!fileName.EndsWith(".xlsx"))
+                {
+                    TempData["ProgramMessage"] = "Only Excel (.xlsx) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                        service.UploadPrograms(file.InputStream, fileName, "maintenance controller", DateTime.Now);
+                        TempData["ProgramMessage"] = $"Master file Uploaded Successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["ProgramMessage"] = ex.Message;
+                    }
+                }
+            }
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public ActionResult TestPricingRequestLogBucket()
         {

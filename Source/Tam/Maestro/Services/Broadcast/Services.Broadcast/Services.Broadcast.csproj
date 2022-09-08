@@ -624,6 +624,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultsReportRequest.cs" />
     <Compile Include="Entities\Plan\SavePlansCopyDto.cs" />
     <Compile Include="Entities\Plan\SearchPlanDto.cs" />
+    <Compile Include="Entities\ProgramListFileRequestDto.cs" />
     <Compile Include="Entities\programs.cs" />
     <Compile Include="Entities\RatingsForecastResponseDto.cs" />
     <Compile Include="Entities\RatingsForecastRequestDto.cs" />

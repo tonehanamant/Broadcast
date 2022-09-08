@@ -88,6 +88,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="createdDate">The created date.</param>
         /// <returns>The background jobs Id</returns>
         void UploadProgramsFromBroadcastOps(Stream fileStream, string fileName, string userName, DateTime createdDate);
+        /// <summary>
+        /// Loads the Master file.
+        /// </summary>
+        /// <param name="fileStream">The file stream.</param>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="createdDate">The created date.</param>      
+        void UploadPrograms(Stream fileStream, string fileName, string userName, DateTime createdDate);
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -826,6 +834,33 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
 
             return distinctMasterList;
+        }
+        /// <summary>
+        /// Upload the excel of program file this file reads and uploaded to the database with the required checks
+        /// </summary>       
+        public void UploadPrograms(Stream fileStream, string fileName, string userName, DateTime createdDate)
+        {
+            var programs = _MasterProgramListImporter.UploadMasterPrograms(fileStream);             
+
+            var filteredPrograms = _RemoveDuplicateFromMasterList(programs);
+
+            var masterPrograms = _ProgramMappingRepository.GetMasterPrograms();
+
+            var filteredProgramList = new List<ProgramMappingsDto>();
+            foreach (var disctinctMaster in filteredPrograms)
+            {
+                var disctinctMasterCount = masterPrograms.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper() && x.GenreId == disctinctMaster.OfficialGenre.Id);
+                if (disctinctMasterCount > 0)
+                {
+                    //do nothing                    
+                }
+                else
+                {
+                    filteredProgramList.Add(disctinctMaster);
+                }
+            }
+
+            _ProgramMappingRepository.UploadMasterProgramMappings(filteredProgramList, userName, createdDate);
         }
     }
 }

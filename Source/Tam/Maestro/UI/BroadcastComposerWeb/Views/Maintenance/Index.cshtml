@@ -683,6 +683,25 @@
                     <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
                 </div>
             }
+            @using (Html.BeginForm("UploadProgramList", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                 
+                    if(TempData["ProgramMessage"] != null)
+                    {
+                        ViewBag.Message = TempData["ProgramMessage"];
+                    }
+                
+                <div class="form">
+                    <h1 class="heading">Programs - Ingest Broadcast Operations Programs From File</h1>
+                    Ingest the Program List file.
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" value="Submit" id="ingest-master-list" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
+                </div>
+            }
         </div>
         <div class="form">
             <h2 class="heading">Repair Inventory Programs</h2>
