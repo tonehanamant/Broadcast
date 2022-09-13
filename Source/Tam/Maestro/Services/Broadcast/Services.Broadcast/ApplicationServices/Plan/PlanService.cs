@@ -292,8 +292,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId"></param>
         /// <returns>Campaign Id And Plan Id</returns>
         SearchPlanDto SearchPlan(int planId);
-    }
 
+        /// <summary>
+        /// verify current version.
+        /// </summary>        
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="versionId">The plan version identifier.</param>
+        /// <returns>True if the incoming plan version matches with DB plan version</returns>
+        bool IsCurrentVersion(int planId, int versionId);
+    }
     public class PlanService : BroadcastBaseClass, IPlanService
     {
         private readonly IPlanRepository _PlanRepository;
@@ -2221,9 +2228,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return fluidityChildCategory;
         }
-        private void _SetUnifiedPlanDetails(PlanDto plan,PlanDto beforePlan)
+        private void _SetUnifiedPlanDetails(PlanDto plan, PlanDto beforePlan)
         {
-            if (beforePlan!=null)
+            if (beforePlan != null)
             {
                 plan.UnifiedTacticLineId = beforePlan.UnifiedTacticLineId;
                 plan.UnifiedCampaignLastSentAt = beforePlan.UnifiedCampaignLastSentAt;
@@ -2248,7 +2255,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        private SearchPlanDto mapToSearchDto(int planId,int campaignId)
+        private SearchPlanDto mapToSearchDto(int planId, int campaignId)
         {
             SearchPlanDto result;
             if (campaignId != 0)
@@ -2268,6 +2275,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     CampaignId = null,
                     Message = "The entered Plan ID does not exist"
                 };
+            }
+            return result;
+        }
+       
+        /// <inheritdoc/>
+        public bool IsCurrentVersion(int planId, int versionId)
+        {            
+            PlanDto plan = _PlanRepository.GetPlan(planId);
+            bool result= false;
+            if (plan.VersionId == versionId)
+            {
+                result = true;
+            }                                       
+            else
+            {
+                throw new CadentException("The current plan that you are viewing has been updated. Please close the plan and reopen to view the most current information.");
             }
             return result;
         }

@@ -386,5 +386,18 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().SearchPlan(planId));
         }
+
+        /// <summary>
+        /// verify current version.
+        /// </summary>        
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="versionId">The plan version identifier.</param>
+        /// <returns>True if the incoming plan version matches with DB plan version</returns>
+        [HttpGet]
+        [Route("plans/api/v1/is-current-version/{planId}/{versionId}")]
+        public BaseResponse<bool> IsCurrentVersion(int planId,int versionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().IsCurrentVersion(planId, versionId));
+        }
     }
 }

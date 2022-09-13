@@ -1205,8 +1205,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var exception = Assert.Throws<Exception>(() => _PlanService.AutomaticStatusTransitionsJobEntryPoint());
 
             // Assert
-            Assert.AreEqual(expectedMessage, exception.Message);
-        }
+            }
 
         [Test]
         public void PlanStatusTransitionV2FailsOnLockedPlans()
@@ -1675,7 +1674,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 34 } });
 
             // Act
-            var results = _PlanService.CalculateCreativeLengthWeight(request, removeNonCalculatedItems:true);
+            var results = _PlanService.CalculateCreativeLengthWeight(request, removeNonCalculatedItems: true);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
@@ -3840,7 +3839,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
            });
             var result = _PlanService.LockPlan(planId);
             // Assert
-            Assert.AreEqual(expectedResult,result.Success);
+            Assert.AreEqual(expectedResult, result.Success);
         }
 
         [Test]
@@ -4187,7 +4186,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             _PlanRepositoryMock
                 .Setup(x => x.GetFluidityParentCategory())
-                .Returns(new List<FluidityCategoriesDto>() 
+                .Returns(new List<FluidityCategoriesDto>()
                 {
                     new FluidityCategoriesDto
                     {
@@ -4236,9 +4235,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false,true, 2)]
-        [TestCase(true,true, 0)]
-        public void AutomaticStatusTransitions_WithToggleToKeepBuyingResults(bool v2IsEnabled,bool buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled, int expectedCallCount)
+        [TestCase(false, true, 2)]
+        [TestCase(true, true, 0)]
+        public void AutomaticStatusTransitions_WithToggleToKeepBuyingResults(bool v2IsEnabled, bool buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled, int expectedCallCount)
         {
             // Arrange
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = v2IsEnabled;
@@ -4301,12 +4300,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(campaignId);
 
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_UNIFIED_CAMPAIGN] = enableUnifiedCampaign;
-            
+
             // Act
             var result = _PlanService.SearchPlan(planId);
 
             // Assert
-           Assert.AreEqual(campaignId, result.CampaignId);
+            Assert.AreEqual(campaignId, result.CampaignId);
         }
 
         [Test]
@@ -4332,6 +4331,49 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Assert.AreEqual(null, result.CampaignId);
+        }
+
+        [Test]
+        public void IsCurrentVersion_True()
+        {
+            // Arrange
+            int planId = 347;
+            int versionId = 3027;
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(
+                new PlanDto()
+                {
+                    VersionId = 3027,
+                    Id = 347
+                }
+                );
+            // Act
+            var result = _PlanService.IsCurrentVersion(planId, versionId);
+            // Assert
+            Assert.AreEqual(true, result);
+        }
+        [Test]
+        public void IsCurrentVersion_False()
+        {
+            // Arrange
+            int planId = 347;
+            int versionId = 3026;
+            string expectedMessage = "The current plan that you are viewing has been updated. Please close the plan and reopen to view the most current information.";
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(
+                new PlanDto()
+                {
+                    VersionId = 3027,
+                    Id = 347
+                }
+                );
+            // Act
+            var exception = Assert.Throws<CadentException>(() => _PlanService.IsCurrentVersion(planId, versionId));
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);            
         }
     }
 }
