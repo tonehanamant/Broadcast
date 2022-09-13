@@ -1,0 +1,94 @@
+[
+  {
+    "Display": "ABC",
+    "Id": 11
+  },
+  {
+    "Display": "AZA",
+    "Id": 7
+  },
+  {
+    "Display": "BOU",
+    "Id": 3
+  },
+  {
+    "Display": "CBS",
+    "Id": 4
+  },
+  {
+    "Display": "COM",
+    "Id": 2
+  },
+  {
+    "Display": "COZ",
+    "Id": 6
+  },
+  {
+    "Display": "CW",
+    "Id": 8
+  },
+  {
+    "Display": "ETV",
+    "Id": 19
+  },
+  {
+    "Display": "FOX",
+    "Id": 20
+  },
+  {
+    "Display": "GRT",
+    "Id": 9
+  },
+  {
+    "Display": "HI",
+    "Id": 15
+  },
+  {
+    "Display": "IND",
+    "Id": 13
+  },
+  {
+    "Display": "ION",
+    "Id": 22
+  },
+  {
+    "Display": "I-S",
+    "Id": 12
+  },
+  {
+    "Display": "LAF",
+    "Id": 10
+  },
+  {
+    "Display": "MET",
+    "Id": 21
+  },
+  {
+    "Display": "MMX",
+    "Id": 16
+  },
+  {
+    "Display": "MyNet",
+    "Id": 24
+  },
+  {
+    "Display": "NBC",
+    "Id": 5
+  },
+  {
+    "Display": "PBS",
+    "Id": 14
+  },
+  {
+    "Display": "TEL",
+    "Id": 1
+  },
+  {
+    "Display": "UMA",
+    "Id": 18
+  },
+  {
+    "Display": "UNI",
+    "Id": 17
+  }
+]

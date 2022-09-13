@@ -51,5 +51,6 @@
         public static string ENABLE_ATTACHMENT_MICRO_SERVICE = "broadcast-enable-attachment-micro-service";
         public static string ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE = "broadcast-program-lineup-allocation-by-affiliate";
         public static string ENABLE_CENTRALIZED_PROGRAM_LIST = "broadcast-enable-centralized-program-list";
+        public static string ENABLE_STATION_SECONDARY_AFFILIATIONS = "broadcast-enable-station-secondary-affiliations";
     }
 }

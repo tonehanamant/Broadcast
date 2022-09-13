@@ -1333,6 +1333,14 @@ ALTER TABLE stations_secondary_affiliations ADD CONSTRAINT FK_stations_secondary
 END
 GO
 
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'affiliates' AND COLUMN_NAME= 'name')
+BEGIN
+	IF NOT EXISTS (select * from affiliates where name = 'MyNet')
+		BEGIN
+		INSERT INTO affiliates values('MyNet','System',GETDATE(),'System',GETDATE())
+		END
+END
+GO
 /*************************************** END BP-5123 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
