@@ -1343,6 +1343,21 @@ END
 GO
 /*************************************** END BP-5123 ***************************************/
 
+
+/*************************************** START BP-5414 ***************************************/
+if exists(select 1 from audiences where sub_category_code='C')
+begin
+DECLARE @AUDIENCE TABLE
+(ID INT
+)
+INSERT INTO @AUDIENCE
+SELECT id FROM audiences WHERE sub_category_code='C'
+update audiences set sub_category_code='K', [name]=REPLACE([name],'Children','Kids') , 
+code=REPLACE(code,'C','K') where id in(select ID from @AUDIENCE)
+end
+
+/*************************************** END BP-5414 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
