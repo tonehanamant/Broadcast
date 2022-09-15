@@ -1,8 +1,10 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -203,13 +205,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IAabEngine _AabEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IProgramService _ProgramService;
+        private IGenreCache _GenreCache;
         public SpotExceptionService(
             IDataRepositoryFactory dataRepositoryFactory,
             IAabEngine aabEngine,
             IProgramService programService,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper,
-            IDateTimeEngine dateTimeEngine)
+            IDateTimeEngine dateTimeEngine,
+            IGenreCache genreCache)
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionRepository>();
@@ -219,6 +223,7 @@ namespace Services.Broadcast.ApplicationServices
             _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _FeatureToggleHelper = featureToggleHelper;
             _ProgramService = programService;
+            _GenreCache = genreCache;
         }
 
         public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
@@ -1757,18 +1762,9 @@ namespace Services.Broadcast.ApplicationServices
         public List<SpotExceptionsOutOfSpecProgramsDto> GetSpotExceptionsOutOfSpecPrograms(string programNameQuery, string userName)
         {
             SearchRequestProgramDto searchRequest = new SearchRequestProgramDto();
-            List<SpotExceptionsOutOfSpecProgramsDto> result = new List<SpotExceptionsOutOfSpecProgramsDto>();
             searchRequest.ProgramName = programNameQuery;
-            var programList = _ProgramService.GetPrograms(searchRequest, userName);
-            programList.ForEach(p =>
-            {
-                SpotExceptionsOutOfSpecProgramsDto program = new SpotExceptionsOutOfSpecProgramsDto();
-                program.ProgramName = p.Name;
-                program.GenreName = p.Genre.Display;
-                result.Add(program);
-            }
-                );
-            return result;
+            var programList = _LoadProgramFromPrograms(searchRequest);
+            return programList;
         }
 
         /// <inheritdoc />
@@ -2108,6 +2104,32 @@ namespace Services.Broadcast.ApplicationServices
                 spotExceptionsOutofSpecSpotsRequest.WeekStartDate, spotExceptionsOutofSpecSpotsRequest.WeekEndDate);
             var inventorySources = spotExceptionsOutOfSpecResult.Select(x => x.InventorySourceName ?? "Unknown").Distinct().OrderBy(inventorySource => inventorySource).ToList();
             return inventorySources;
+        }
+
+        private List<SpotExceptionsOutOfSpecProgramsDto> _LoadProgramFromPrograms(SearchRequestProgramDto searchRequest)
+        {
+            List<string> programNames = new List<string>();
+            var result = new List<SpotExceptionsOutOfSpecProgramsDto>();
+            var programs = _SpotExceptionRepository.FindProgramFromPrograms(searchRequest.ProgramName);
+            _RemoveVariousAndUnmatchedFromPrograms(programs);
+            programNames = programs.Select(x => x.OfficialProgramName).Distinct().ToList();
+            foreach (var program in programNames)
+            {
+                var listOfProgramNames = programs.Where(x => x.OfficialProgramName.ToLower() == program.ToLower()).ToList();
+                SpotExceptionsOutOfSpecProgramsDto spotExceptionsOutOfSpecProgram = new SpotExceptionsOutOfSpecProgramsDto();
+                spotExceptionsOutOfSpecProgram.ProgramName = program;
+                foreach (var programName in listOfProgramNames)
+                {
+                    spotExceptionsOutOfSpecProgram.Genres.Add(_GenreCache.GetGenreLookupDtoById(programName.GenreId).Display);
+                }
+                result.Add(spotExceptionsOutOfSpecProgram);
+            }
+            return result;
+        }
+        private void _RemoveVariousAndUnmatchedFromPrograms(List<ProgramNameDto> result)
+        {
+            result.RemoveAll(x => _GenreCache.GetGenreLookupDtoById(x.GenreId).Display.Equals("Various", StringComparison.OrdinalIgnoreCase)
+                    || x.OfficialProgramName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

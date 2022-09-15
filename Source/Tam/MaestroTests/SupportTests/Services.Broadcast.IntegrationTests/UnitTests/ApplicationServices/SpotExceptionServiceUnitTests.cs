@@ -5,9 +5,11 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -31,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IAabEngine> _AabEngine;
+        private Mock<IGenreCache> _GenreCacheMock;
 
         [SetUp]
         public void SetUp()
@@ -44,6 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _ProgramService = new Mock<IProgramService>();
+            _GenreCacheMock = new Mock<IGenreCache>();
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionRepository>())
                 .Returns(_SpotExceptionRepositoryMock.Object);
@@ -53,12 +57,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
               .Setup(x => x.GetDataRepository<IPlanRepository>())
               .Returns(_PlanRepositoryMock.Object);
-
             _SpotExceptionService = new SpotExceptionService(_DataRepositoryFactoryMock.Object,
                 _AabEngine.Object,
                 _ProgramService.Object,
                 _FeatureToggleMock.Object,
-                _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object);
+                _ConfigurationSettingsHelperMock.Object, _DateTimeEngineMock.Object,_GenreCacheMock.Object);
         }
 
         [Test]
@@ -2530,22 +2533,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void GetSpotExceptionsOutOfSpecPrograms()
         {
             // Arrange
-            string programNameQuery = "ABC";
-            _ProgramService.Setup(s => s.GetPrograms(It.IsAny<SearchRequestProgramDto>(), It.IsAny<string>()))
-                .Returns(new List<ProgramDto>
+            string programNameQuery = "WNRUSH";
+            _SpotExceptionRepositoryMock.Setup(s => s.FindProgramFromPrograms(It.IsAny<string>()))
+                .Returns(new List<ProgramNameDto>
                     {
-                        new ProgramDto
+                        new ProgramNameDto
                         {
-                            Name = "23ABC NEWS",
-                           Genre= new LookupDto {
-                                    Id= 33,
-                                    Display= "News"
-                                   },
-                            ContentRating= null
+                           OfficialProgramName = "#HTOWNRUSH",
+                           GenreId=  33
                         }
                     }
                 );
-
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                    Id = 1,
+                    Display = "Genre"
+                });
             // Act           
             var result = _SpotExceptionService.GetSpotExceptionsOutOfSpecPrograms(programNameQuery, "TestsUser");
 

@@ -2,6 +2,7 @@
 using EntityFrameworkMapping.Broadcast;
 using Microsoft.EntityFrameworkCore.Internal;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Entities.SpotExceptions;
 using System;
 using System.Collections.Generic;
@@ -204,6 +205,14 @@ namespace Services.Broadcast.Repositories
         /// <returns>
         /// </returns>
         string GetMarketName(int marketCode);
+
+        /// <summary>
+        /// Gets the program Genres List.
+        /// </summary>
+        /// <param name="programSearchString">The program Search String.</param>
+        /// <returns>
+        /// </returns>
+        List<ProgramNameDto> FindProgramFromPrograms(string programSearchString);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -1270,6 +1279,23 @@ namespace Services.Broadcast.Repositories
                                 .Single();
                 return marketName;
             });
+        }
+        /// <inheritdoc />
+        public List<ProgramNameDto> FindProgramFromPrograms(string programSearchString)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.programs
+                        .Where(p => p.name.ToLower().Contains(programSearchString.ToLower()))
+                        .OrderBy(p => p.name)
+                        .Select(
+                            p => new ProgramNameDto
+                            {
+                                OfficialProgramName = p.name,
+                                GenreId = p.genre_id
+                            }).ToList();
+                });
         }
     }
 }

@@ -1,6 +1,8 @@
 [
   {
-    "GenreName": "News",
-    "ProgramName": "23ABC NEWS"
+    "Genres": [
+      "Genre"
+    ],
+    "ProgramName": "#HTOWNRUSH"
   }
 ]
