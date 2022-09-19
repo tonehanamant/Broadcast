@@ -207,6 +207,14 @@ namespace Services.Broadcast.Repositories
         /// <returns>
         /// </returns>
         List<ProgramNameDto> FindProgramFromPrograms(string programSearchString);
+
+        /// <summary>
+        /// Gets the program Genres List from SpotExceptionDecisions.
+        /// </summary>
+        /// <param name="programSearchString">The program Search String.</param>
+        /// <returns>
+        /// </returns>
+        List<ProgramNameDto> FindProgramFromSpotExceptionDecisions(string programSearchString);
     }
 
     public class SpotExceptionRepository : BroadcastRepositoryBase, ISpotExceptionRepository
@@ -1276,6 +1284,23 @@ namespace Services.Broadcast.Repositories
                             {
                                 OfficialProgramName = p.name,
                                 GenreId = p.genre_id
+                            }).ToList();
+                });
+        }
+        /// <inheritdoc />
+        public List<ProgramNameDto> FindProgramFromSpotExceptionDecisions(string programSearchString)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.spot_exceptions_out_of_spec_decisions
+                        .Where(p => p.program_name.ToLower().Contains(programSearchString.ToLower()))
+                        .OrderBy(p => p.program_name)
+                        .Select(
+                            p => new ProgramNameDto
+                            {
+                                OfficialProgramName = p.program_name,
+                                GenreId = context.genres.Single(x => x.name == p.genre_name).id
                             }).ToList();
                 });
         }

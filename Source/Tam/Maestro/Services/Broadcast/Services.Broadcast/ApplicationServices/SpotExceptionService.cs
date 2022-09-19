@@ -281,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "840T42AY13H",
                     ClientIsci = "QMAY2913OS1H",
                     SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 08, 28, 28),
                     StationLegacyCallLetters = "WBNS",
                     Affiliate = "CBS",
                     MarketCode = 135,
@@ -364,7 +364,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "616MAY2913H",
                     ClientIsci = "QMAY2913OS1H",
                     SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 41, 57),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 08, 41, 57),
                     StationLegacyCallLetters = "WDKA",
                     Affiliate = "IND",
                     MarketCode = 232,
@@ -441,7 +441,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "289IT2Y3P2H",
                     ClientIsci = "QMAY2913OS1H",
                     SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 09, 58, 55),
                     StationLegacyCallLetters = "KOMO",
                     Affiliate = "ABC",
                     MarketCode = 419,
@@ -516,7 +516,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "711N51AY18H",
                     ClientIsci = "QMAY2913OS1H",
                     SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 29, 23),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 08, 29, 23),
                     StationLegacyCallLetters = "WEVV",
                     Affiliate = "CBS",
                     MarketCode = 249,
@@ -591,7 +591,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "718MAY2918H",
                     ClientIsci = "QMAY2913OS1H",
                     SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 45, 23),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 09, 45, 23),
                     StationLegacyCallLetters = "NRIS",
                     Affiliate = "CW",
                     MarketCode = 200,
@@ -666,7 +666,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "009UPX0030H",
                     ClientIsci = "DUPX0030000H",
                     SpotLengthId = 2,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 11, 44, 35),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 11, 44, 35),
                     StationLegacyCallLetters = "WMNN",
                     Affiliate = "IND",
                     MarketCode = 140,
@@ -741,7 +741,7 @@ namespace Services.Broadcast.ApplicationServices
                     HouseIsci = "288R2Y1F81H",
                     ClientIsci = "QMAY2913OS1H",
                     SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 14, 45),
+                    ProgramAirTime = new DateTime(2022, 09, 09, 09, 14, 45),
                     StationLegacyCallLetters = "NVCW",
                     Affiliate = "IND",
                     MarketCode = 439,
@@ -823,12 +823,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191756,
                   IsciName="AB82TXT2H",
                   RecommendedPlanId= 215,
-                  ProgramName="Q13 news at 10",
+                  ProgramName="11 ALIVE SPORTS EXTRA",
                   StationLegacyCallLetters="KOB",
                   SpotLengthId= 12,
                   AudienceId= 431,
                   DaypartCode="EMN",
-                  GenreName="Documentary",
+                  GenreName="Sports",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -837,7 +837,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   Impressions=10000,
@@ -865,13 +865,13 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191757,
                   IsciName="AB82VR58",
                   RecommendedPlanId= 216,
-                  ProgramName="FOX 13 10:00 News",
+                  ProgramName="11 NEWS SUNDAY MORNING",
                   StationLegacyCallLetters="KSTP",
                   SpotLengthId= 11,
                   AudienceId= 430,
                   Product="Spotify",
                   DaypartCode="TDNS",
-                  GenreName="Comedy",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -880,7 +880,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -902,12 +902,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191758,
                   IsciName="AB44NR58",
                   RecommendedPlanId= 217,
-                  ProgramName="TEN O'CLOCK NEWS",
+                  ProgramName="11 TV HILL",
                   StationLegacyCallLetters="KHGI",
                   SpotLengthId= 12,
                   AudienceId= 430,
                   DaypartCode="TDNS",
-                  GenreName="Comedy",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -916,7 +916,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -938,12 +938,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191759,
                   IsciName="AB21QR58",
                   RecommendedPlanId= 218,
-                  ProgramName="Product1",
+                  ProgramName="11ALIVE NEWS AT NOON",
                   StationLegacyCallLetters="KWCH",
                   SpotLengthId= 11,
                   AudienceId= 430,
                   DaypartCode="TDNS",
-                  GenreName="Comedy",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -952,7 +952,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -974,12 +974,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191760,
                   IsciName="AB44NR58",
                   RecommendedPlanId= 219,
-                  ProgramName="TProduct2",
+                  ProgramName="12 ANGRY MEN",
                   StationLegacyCallLetters="WDAY",
                   SpotLengthId= 10,
                   AudienceId= 429,
                   DaypartCode="ROSP",
-                  GenreName="Crime",
+                  GenreName="Movie",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -988,7 +988,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2020, 10, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -1010,12 +1010,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191761,
                   IsciName="AB33PR58",
                   RecommendedPlanId= 220,
-                  ProgramName="TEN O'CLOCK NEWS",
+                  ProgramName="12 NEWS @ 11PM",
                   StationLegacyCallLetters="KPNX",
                   SpotLengthId= 10,
                   AudienceId= 428,
                   DaypartCode="EM",
-                  GenreName="Drama",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -1024,7 +1024,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -1046,12 +1046,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191762,
                   IsciName="AB79PR58",
                   RecommendedPlanId= 221,
-                  ProgramName="Product4",
+                  ProgramName="12 NEWS TODAY",
                   StationLegacyCallLetters="KELO",
                   SpotLengthId= 09,
                   AudienceId= 427,
                   DaypartCode="EM",
-                  GenreName="Drama",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -1060,7 +1060,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -1082,12 +1082,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191763,
                   IsciName="AB81GR58",
                   RecommendedPlanId= 222,
-                  ProgramName="Product3",
+                  ProgramName="13ABC ACTION NEWS AT 5:00AM",
                   StationLegacyCallLetters="KXMC",
                   SpotLengthId= 08,
                   AudienceId= 426,
                   DaypartCode="EM",
-                  GenreName="Drama",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -1096,7 +1096,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -1118,12 +1118,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191764,
                   IsciName="AB87GR58",
                   RecommendedPlanId= 223,
-                  ProgramName="Product6",
+                  ProgramName="13WMAZ EYEWITNESS NEWS AT 6",
                   StationLegacyCallLetters="WTTV",
                   SpotLengthId= 07,
                   AudienceId= 425,
                   DaypartCode="EM",
-                  GenreName="Entertainment",
+                  GenreName="News",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -1132,7 +1132,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -1154,12 +1154,12 @@ namespace Services.Broadcast.ApplicationServices
                   EstimateId= 191765,
                   IsciName="AB83PR58",
                   RecommendedPlanId= 224,
-                  ProgramName="Product8",
+                  ProgramName="WIN A DATE WITH TAD HAMILTON!",
                   StationLegacyCallLetters="WCCO",
                   SpotLengthId= 06,
                   AudienceId= 424,
                   DaypartCode="PT",
-                  GenreName="Horror",
+                  GenreName="Movie",
                   DaypartDetail = new DaypartDetailDto
                   {
                       Id = 70612,
@@ -1168,7 +1168,7 @@ namespace Services.Broadcast.ApplicationServices
                   MarketCode = 120,
                   MarketRank = 50,
                   ProgramNetwork = "ABC",
-                  ProgramAirTime = new DateTime(2022, 04, 10),
+                  ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
                   SpotExceptionsOutOfSpecDecision = null,
@@ -1186,7 +1186,6 @@ namespace Services.Broadcast.ApplicationServices
 
             return spotExceptionsOutOfSpecs;
         }
-
 
         private string _GetAdvertiserName(Guid? masterId)
         {
@@ -2059,6 +2058,11 @@ namespace Services.Broadcast.ApplicationServices
             List<string> programNames = new List<string>();
             var result = new List<SpotExceptionsOutOfSpecProgramsDto>();
             var programs = _SpotExceptionRepository.FindProgramFromPrograms(searchRequest.ProgramName);
+            var programsSpotExceptionDecisions = _SpotExceptionRepository.FindProgramFromSpotExceptionDecisions(searchRequest.ProgramName);
+            if (programsSpotExceptionDecisions != null)
+            {
+                programs.AddRange(programsSpotExceptionDecisions);
+            }
             _RemoveVariousAndUnmatchedFromPrograms(programs);
             programNames = programs.Select(x => x.OfficialProgramName).Distinct().ToList();
             foreach (var program in programNames)
