@@ -1300,7 +1300,7 @@ namespace Services.Broadcast.Repositories
                             p => new ProgramNameDto
                             {
                                 OfficialProgramName = p.program_name,
-                                GenreId = context.genres.Single(x => x.name == p.genre_name).id
+                                GenreId = context.genres.FirstOrDefault(x => x.name == p.genre_name).id
                             }).ToList();
                 });
         }
