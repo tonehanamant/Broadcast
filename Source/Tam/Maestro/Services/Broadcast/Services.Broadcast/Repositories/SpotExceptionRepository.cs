@@ -161,12 +161,6 @@ namespace Services.Broadcast.Repositories
         int GetRecommandedPlanDecisionQueuedCount();
 
         /// <summary>
-        /// Gets all genres filter by source.
-        /// </summary>
-        /// <returns>List of genres</returns>
-        List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenresBySourceId();
-
-        /// <summary>
         /// Gets the all Recommended plans Spots
         /// </summary>
         /// <param name="planId">Plan Id</param>
@@ -1157,18 +1151,6 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        /// <inheritdoc />
-        public List<SpotExceptionsOutOfSpecGenreDto> GetSpotExceptionsOutOfSpecGenresBySourceId()
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                    context.genres
-                        .Where(g => g.program_source_id == 1)
-                        .OrderBy(x => x.name)
-                        .Select(_MapToDto)
-                        .ToList()
-                );
-        }
         private SpotExceptionsOutOfSpecGenreDto _MapToDto(genre genre)
         {
             return new SpotExceptionsOutOfSpecGenreDto

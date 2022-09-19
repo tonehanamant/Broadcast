@@ -180,11 +180,14 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Obsolete]
         [Route("out-of-spec-genres")]
         public BaseResponse<List<SpotExceptionsOutOfSpecGenreDto>> GetGenres(string genre = "")
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecGenres(genre));
+            //return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsOutOfSpecGenres(genre));
+            throw new NotSupportedException("We thought this operation is not used, this added  BP-5470 !");
         }
+
         [HttpGet]
         [Route("out-of-spec-programs")]
         public BaseResponse<List<SpotExceptionsOutOfSpecProgramsDto>> GetPrograms(string programNameQuery)
