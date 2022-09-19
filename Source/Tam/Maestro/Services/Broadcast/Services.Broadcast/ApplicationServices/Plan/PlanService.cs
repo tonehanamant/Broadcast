@@ -433,6 +433,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public async Task<int> SavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
             int result;
+            _SetFlightTimes(plan);
             if (_IsPartialPlanSaveEnabled.Value && Convert.ToBoolean(plan.IsDraft))
             {
                 result = _DoSavePlanDraft(plan, createdBy, createdDate);
@@ -460,6 +461,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
+        private void _SetFlightTimes(PlanDto plan)
+        {
+            if (plan.FlightStartDate != null && plan.FlightEndDate != null)
+            {
+                DateTime flightStartDate = (DateTime)plan.FlightStartDate;
+                TimeSpan starttime = new TimeSpan(0, 0, 0);
+                DateTime flightEndDate = (DateTime)plan.FlightEndDate;
+                TimeSpan endTime = new TimeSpan(23, 59, 59);
+                plan.FlightEndDate = flightEndDate.Date + endTime;
+                plan.FlightStartDate = flightStartDate.Date + starttime;
+            }
+        }
         private async Task<int> _DoSavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool shouldPromotePlanPricingResults, bool shouldPromotePlanBuyingResults)
         {
             var logTxId = Guid.NewGuid();

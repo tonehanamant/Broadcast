@@ -3237,6 +3237,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [Category("long_running")]
+        public async Task ValidateFlightTime()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                var expectedStartTime = "12:00:00";
+                var expectedEndTime = "11:59:59";
+                DateTime nowDate = new DateTime(2019, 01, 01);
+                string username = "integration_test";
+                var newPlanId = await _PlanService.SavePlanAsync(newPlan, username, nowDate);
+                var plan = _PlanService.GetPlan(newPlanId);
+                var resultStartTime = Convert.ToDateTime(plan.FlightStartDate).ToString("hh:mm:ss");
+                var resultEndTime = Convert.ToDateTime(plan.FlightEndDate).ToString("hh:mm:ss");
+                Assert.IsTrue(newPlanId > 0);
+                Assert.AreEqual(expectedStartTime, resultStartTime);
+                Assert.AreEqual(expectedEndTime, resultEndTime);
+            }
+        }
+
         private PricingParametersWithoutPlanDto _GetPricingParametersWithoutPlanDto()
         {
             var plan = _GetNewPlan();
