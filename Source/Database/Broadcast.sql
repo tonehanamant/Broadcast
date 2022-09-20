@@ -1732,6 +1732,18 @@ IF NOT EXISTS (SELECT *
 	GO
 /*************************************** END BP-5447 ***************************************/
 
+/*************************************** START BP-5413 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'spot_exceptions_ingest_jobs' AND COLUMN_NAME= 'result')
+BEGIN
+	ALTER TABLE spot_exceptions_ingest_jobs
+		ADD result [nvarchar](max) NULL
+END
+GO
+
+/*************************************** END BP-5413 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

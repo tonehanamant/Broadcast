@@ -2401,6 +2401,7 @@
           <Property Name="error_message" Type="nvarchar(max)" />
           <Property Name="start_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="end_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="result" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="spot_exceptions_out_of_spec_decisions">
           <Key>
@@ -2498,7 +2499,7 @@
           <Property Name="sunday" Type="int" />
           <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="spot_delivered_impression" Type="float" Nullable="false" />
+          <Property Name="spot_delivered_impression" Type="float" />
           <Property Name="plan_total_contracted_impressions" Type="float" />
           <Property Name="plan_total_delivered_impressions" Type="float" />
         </EntityType>
@@ -17294,6 +17295,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="start_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_scx_generation_job_files_shared_folder_files_id">
           <End Type="BroadcastModel.shared_folder_files" Role="shared_folder_files" Multiplicity="0..1" />
@@ -18675,7 +18677,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plans" />
           <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="spot_delivered_impression" Type="Double" Nullable="false" />
+          <Property Name="spot_delivered_impression" Type="Double" />
           <Property Name="plan_total_contracted_impressions" Type="Double" />
           <Property Name="plan_total_delivered_impressions" Type="Double" />
         </EntityType>
@@ -21576,6 +21578,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="spot_exceptions_ingest_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_ingest_jobs">
               <MappingFragment StoreEntitySet="spot_exceptions_ingest_jobs">
+                <ScalarProperty Name="result" ColumnName="result" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="error_message" ColumnName="error_message" />

@@ -22,5 +22,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string error_message { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
+        public string result { get; set; }
     }
 }
