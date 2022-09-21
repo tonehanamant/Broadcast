@@ -398,6 +398,8 @@ namespace Services.Broadcast.Repositories
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plans");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_spec_decisions");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_specs");
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_unposted_no_plan");
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_unposted_no_reel_roster");
                 return true;
             });
         }
