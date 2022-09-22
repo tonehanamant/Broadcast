@@ -36,6 +36,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> delivered_impressions { get; set; }
         public string plan_spot_unique_hash_external { get; set; }
         public string plan_execution_id_external { get; set; }
+        public Nullable<double> spot_delivered_impression { get; set; }
+        public Nullable<double> plan_total_contracted_impressions { get; set; }
+        public Nullable<double> plan_total_delivered_impressions { get; set; }
     
         public virtual staged_recommended_plans staged_recommended_plans { get; set; }
     }

@@ -1744,6 +1744,18 @@ GO
 
 /*************************************** END BP-5413 ***************************************/
 
+/*************************************** START BP-5413 ***************************************/
+
+IF (OBJECT_ID('FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans') IS NULL)
+BEGIN
+    ALTER TABLE spot_exceptions_recommended_plan_details
+	ADD CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
+	FOREIGN KEY(spot_exceptions_recommended_plan_id) REFERENCES spot_exceptions_recommended_plans(id)
+END
+GO
+
+/*************************************** END BP-5413 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
