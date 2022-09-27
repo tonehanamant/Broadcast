@@ -1494,8 +1494,13 @@ namespace Services.Broadcast.BusinessEngines
             double impressions,
             bool roundRatings)
         {
-            var budgetPerOneImpression = totalBudget / (decimal)totalImpressions;
-            var weeklyRatio = impressions / totalImpressions;
+            decimal budgetPerOneImpression=0;
+            double weeklyRatio = 0;
+            if (totalImpressions > 0)
+            {
+                budgetPerOneImpression = totalBudget / (decimal)totalImpressions;
+                weeklyRatio = impressions / totalImpressions;
+            }
 
             breakdownItem.WeeklyImpressions = impressions;
             breakdownItem.WeeklyImpressionsPercentage = Math.Round(100 * weeklyRatio);
