@@ -15,6 +15,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using System;
@@ -157,7 +158,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.Scx
 
             var testClass = _GetTestClass();
 
-            var caught = Assert.Throws<InvalidOperationException>(() => testClass._GetValidatedPlanAndJob(request, out var resultPlan, out var resultJob));
+            var caught = Assert.Throws<CadentException>(() => testClass._GetValidatedPlanAndJob(request, out var resultPlan, out var resultJob));
             Assert.AreEqual(expectedMessage, caught.Message);
         }
 

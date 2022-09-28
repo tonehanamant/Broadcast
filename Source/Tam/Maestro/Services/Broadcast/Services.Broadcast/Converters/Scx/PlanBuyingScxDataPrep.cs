@@ -19,6 +19,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Tam.Maestro.Data.Entities;
 using Newtonsoft.Json;
+using Services.Broadcast.Exceptions;
 
 namespace Services.Broadcast.Converters.Scx
 {
@@ -258,7 +259,7 @@ namespace Services.Broadcast.Converters.Scx
             job = _PlanBuyingRepository.GetLatestBuyingJob(request.PlanId);
             if (job == null)
             {
-                throw new InvalidOperationException($"A buying job execution was not found for plan id '{request.PlanId}'.");
+                throw new CadentException($"A buying job execution was not found for plan id '{request.PlanId}'.");
             }
             if (!job.PlanVersionId.HasValue)
             {
