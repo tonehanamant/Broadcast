@@ -490,6 +490,27 @@ GO
 
 /*************************************** END BP-5413 ***************************************/
 
+
+/*************************************** START BP-5532 ***************************************/
+IF OBJECT_ID('program_genres') IS NULL
+BEGIN
+ CREATE TABLE dbo.program_genres
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,		
+		[name] nvarchar(500) NOT NULL,		
+		genre_id int NOT NULL
+	)
+End
+
+IF NOT EXISTS (SELECT top 1 * FROM   program_genres)
+Begin
+INSERT INTO dbo.program_genres ([name], genre_id)
+select distinct m.official_program_name, g.id as genre_id from program_name_mappings m join genres g on m.genre_id = g.id
+End
+GO
+
+/*************************************** END BP-5532 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
