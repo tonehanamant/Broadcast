@@ -274,6 +274,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -296,12 +297,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
-
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
                             {
                                 UserName = "MockData",
@@ -329,11 +332,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -357,6 +363,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramGenre = "COMEDY",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -379,11 +386,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -406,11 +416,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -432,8 +445,9 @@ namespace Services.Broadcast.ApplicationServices
                     MarketRank = 11,
                     ProgramName = "LIVE with Kelly and Ryan",
                     ProgramGenre = "TALK",
-                    IngestedBy="Mock Data",
-                    IngestedAt=DateTime.Now,
+                    IngestedBy = "Mock Data",
+                    IngestedAt = DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -456,11 +470,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -486,6 +503,11 @@ namespace Services.Broadcast.ApplicationServices
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -509,6 +531,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramGenre = "GAME SHOW",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -531,11 +554,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -561,6 +587,11 @@ namespace Services.Broadcast.ApplicationServices
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -584,6 +615,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramGenre = "REALITY TALK",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -606,11 +638,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwODcxNw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -636,6 +671,11 @@ namespace Services.Broadcast.ApplicationServices
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwODcxNw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -659,6 +699,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -681,11 +722,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDIyMzAzMw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -711,6 +755,11 @@ namespace Services.Broadcast.ApplicationServices
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDIyMzAzMw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -734,6 +783,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramGenre = "GAME SHOW",
                     IngestedBy="Mock Data",
                     IngestedAt=DateTime.Now,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -756,11 +806,14 @@ namespace Services.Broadcast.ApplicationServices
                             Friday = 1,
                             Saturday = 1,
                             Sunday = 1,
-                            PlanSpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            PlanExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDM2NTgwMw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         },
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -786,6 +839,11 @@ namespace Services.Broadcast.ApplicationServices
                             SpotDeliveredImpressions = 50000,
                             PlanTotalContractedImpressions = 50000,
                             PlanTotalDeliveredImpressions = 50000,
+                            IngestedMediaWeekId = 1,
+                            IngestedBy="Mock Data",
+                            IngestedAt=DateTime.Now,
+                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDM2NTgwMw=+",
+                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
                             SpotExceptionsRecommendedPlanDecision = null
                         }
                     }
@@ -824,6 +882,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   Impressions=10000,
                   SpotExceptionsOutOfSpecDecision = new SpotExceptionsOutOfSpecDecisionsDto
                     {
@@ -867,6 +926,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=20000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -903,6 +963,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=30000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -939,6 +1000,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=40000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -975,6 +1037,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=50000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -1011,6 +1074,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=60000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -1047,6 +1111,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=70000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -1083,6 +1148,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=80000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -1119,6 +1185,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=90000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
@@ -1155,6 +1222,7 @@ namespace Services.Broadcast.ApplicationServices
                   ProgramAirTime = new DateTime(2022, 09, 09),
                   IngestedBy="Mock Data",
                   IngestedAt=DateTime.Now,
+                  IngestedMediaWeekId = 1,
                   SpotExceptionsOutOfSpecDecision = null,
                   Impressions=100000,
                   SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
